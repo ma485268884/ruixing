@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.7.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.yintu.ruixing</groupId>
+    <artifactId>ruixing</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>ruixing</name>
+    <modules>
+        <module>ruixing-common</module>
+        <module>ruixing-entity</module>
+        <module>ruixing-dao</module>
+        <module>ruixing-service</module>
+        <module>ruixing-controller</module>
+    </modules>
+    <properties>
+        <ruixing-all.version>${version}</ruixing-all.version>
+        <mybatis-spring-boot-starter.version>2.1.2</mybatis-spring-boot-starter.version>
+        <pagehelper-spring-boot-starter.version>1.2.10</pagehelper-spring-boot-starter.version>
+        <druid.version>1.1.21</druid.version>
+        <fastjson.version>1.2.62</fastjson.version>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>com.yintu.ruixing</groupId>
+                <artifactId>ruixing-common</artifactId>
+                <version>${ruixing-all.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yintu.ruixing</groupId>
+                <artifactId>ruixing-entity</artifactId>
+                <version>${ruixing-all.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yintu.ruixing</groupId>
+                <artifactId>ruixing-dao</artifactId>
+                <version>${ruixing-all.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yintu.ruixing</groupId>
+                <artifactId>ruixing-service</artifactId>
+                <version>${ruixing-all.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+</project>
