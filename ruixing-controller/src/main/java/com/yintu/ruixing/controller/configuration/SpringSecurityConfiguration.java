@@ -31,30 +31,35 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()// 该方法所返回的对象的方法来配置请求级别的安全细节
-                .antMatchers("/druid/**").permitAll()
-                .antMatchers("/api/**").permitAll() // 调用api不需要拦截
-                .antMatchers("/login").permitAll() // 登录页面不拦截
+                .antMatchers("/druid/**").permitAll()// druid不需要拦截
+                .antMatchers("/api/**").permitAll() //  调用api不需要拦截
+                .antMatchers("/login").permitAll() //   登录页面不拦截
                 .antMatchers(HttpMethod.POST, "/checkLogin").permitAll().anyRequest().authenticated()// 对于登录路径不进行拦截
+
                 .and().formLogin()// 配置登录页面
                 .loginPage("/login")// 登录页面的访问路径;
                 .loginProcessingUrl("/checkLogin")// 登录页面下表单提交的路径
                 .failureUrl("/login?paramserror=true")// 登录失败后跳转的路径,为了给客户端提示
                 .defaultSuccessUrl("/index")// 登录成功后默认跳转的路径;
+
                 .and().logout()// 用户退出操作
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))// 用户退出所访问的路径，需要使用Post方式
                 .permitAll().logoutSuccessUrl("/login?logout=true")/// 退出成功所访问的路径
+
                 .and().exceptionHandling().accessDeniedPage("/403")
+
                 .and()
                 .csrf().disable()
                 .headers().frameOptions()// 允许iframe内呈现。
                 .sameOrigin()
+
                 .and().sessionManagement()
                 /*如果用户在不退出登录的情况下使用用户名进行身份验证，并试图对“用户”进行身份验证，
                  * 那么第一个会话将被强制终止并发送到/login?expired页面。
                  */
                 .maximumSessions(1)
-//.expiredUrl("/login?expired=true")//如果是异步请求。无法进行页面跳转;
-// session过期处理策
+                 //.expiredUrl("/login?expired=true")//如果是异步请求。无法进行页面跳转;
+                 // session过期处理策
                 .expiredSessionStrategy(new SessionInformationExpiredStrategy() {
                     @SneakyThrows
                     @Override
@@ -73,7 +78,6 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                     }
                 });
-
     }
 
     /**
