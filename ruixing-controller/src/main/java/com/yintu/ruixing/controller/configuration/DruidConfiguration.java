@@ -1,4 +1,4 @@
-package com.yintu.controller.configuration;
+package com.yintu.ruixing.controller.configuration;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;

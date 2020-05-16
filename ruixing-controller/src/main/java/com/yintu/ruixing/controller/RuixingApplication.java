@@ -1,4 +1,4 @@
-package com.yintu.controller;
+package com.yintu.ruixing.controller;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
