@@ -26,7 +26,7 @@ public class DruidConfiguration {
     public ServletRegistrationBean servletRegistrationBean() {
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
         Map<String, String> initParameters = new HashMap<>();
-        initParameters.put("loginUsername", "admin");
+        initParameters.put("loginUsername", "druidAdmin");
         initParameters.put("loginPassword", "123456");
         initParameters.put("allow", "");//默认允许所有访问
         initParameters.put("deny", "192.168.1.5");
