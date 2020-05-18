@@ -1,8 +1,9 @@
-package com.yintu.ruixing.component;
+package com.yintu.ruixing.configiration;
 
 import com.yintu.ruixing.entity.rbac.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author:mlf
  * @date:2020/5/18 16:23
  */
-@Component
+
 public class CustomUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Autowired
@@ -46,7 +47,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
             }
             username = username.trim();
             UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
-            this.setDetails(request, authRequest);
+            super.setDetails(request, authRequest);
 
             UserEntity principal = new UserEntity();
             principal.setUsername(username);
@@ -54,7 +55,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
             String code = request.getParameter("code");
             checkCode(response, code, verify_code);
 
-            return this.getAuthenticationManager().authenticate(authRequest);
+            return super.getAuthenticationManager().authenticate(authRequest);
         } else {
             checkCode(response, request.getParameter("code"), verify_code);
             return super.attemptAuthentication(request, response);
@@ -67,5 +68,6 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
             throw new AuthenticationServiceException("验证码不正确");
         }
     }
+
 
 }
