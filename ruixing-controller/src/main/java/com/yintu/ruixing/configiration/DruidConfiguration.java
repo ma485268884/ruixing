@@ -1,4 +1,4 @@
-package configiration;
+package com.yintu.ruixing.configiration;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;

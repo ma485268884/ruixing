@@ -1,13 +1,11 @@
-package configiration;
+package com.yintu.ruixing.configiration;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.controller.component.CustomAccessDecisionManager;
-import com.yintu.ruixing.controller.component.CustomFilterInvocationSecurityMetadataSource;
-import com.yintu.ruixing.controller.component.FileUsernamePasswordAuthenticationFilterComponent;
+import com.yintu.ruixing.component.CustomAccessDecisionManager;
+import com.yintu.ruixing.component.CustomFilterInvocationSecurityMetadataSource;
+import com.yintu.ruixing.component.CustomUsernamePasswordAuthenticationFilter;
 import com.yintu.ruixing.entity.rbac.UserEntity;
-import com.yintu.ruixing.service.rbac.UserService;
 import com.yintu.ruixing.service.rbac.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +13,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.session.SessionRegistryImpl;
@@ -25,7 +25,6 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.session.ConcurrentSessionFilter;
 
-import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.util.Map;
@@ -35,10 +34,9 @@ import java.util.Map;
 public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private FileUsernamePasswordAuthenticationFilterComponent fileUsernamePasswordAuthenticationFilterComponent;
+    private CustomUsernamePasswordAuthenticationFilter customUsernamePasswordAuthenticationFilter;
     @Autowired
     private UserServiceImpl userServiceImpl;
-
     @Autowired
     private CustomAccessDecisionManager customAccessDecisionManager;
     @Autowired
@@ -63,6 +61,16 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     SessionRegistryImpl sessionRegistryImpl() {
         return new SessionRegistryImpl();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userServiceImpl);
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/css/**", "/js/**", "/index.html", "/img/**", "/fonts/**", "/favicon.ico", "/verifyCode");
     }
 
     /**
@@ -168,36 +176,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     out.close();
                 }), ConcurrentSessionFilter.class).
 
-                addFilterAt(fileUsernamePasswordAuthenticationFilterComponent, UsernamePasswordAuthenticationFilter.class);
+                addFilterAt(customUsernamePasswordAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
-
-
-//    /**
-//     * 忽略静态资源
-//     */
-//
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        /*
-//         * 在springboot中忽略静态文件路径，直接写静态文件的文件夹 springboot默认有静态文件的放置路径，如果应用spring
-//         * security，配置忽略路径 不应该从springboot默认的静态文件开始
-//         * 如：在本项目中，所有的js和css都放在static下，如果配置忽略路径，则不能以static开始
-//         * 配置成web.ignoring().antMatchers("/static/*");这样是不起作用的
-//         */
-//       // web.ignoring().antMatchers("/themes/**", "/script/**");
-//
-//    }
-
-//    /**
-//     * 配置自定义用户服务
-//     */
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-////        auth.userDetailsService(userDetailsService);
-//////.passwordEncoder(passwordEncoder());
-//
-//    }
-
 
 }
