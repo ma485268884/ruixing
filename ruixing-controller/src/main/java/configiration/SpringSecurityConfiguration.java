@@ -3,19 +3,25 @@ package configiration;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.controller.component.CustomAccessDecisionManager;
+import com.yintu.ruixing.controller.component.CustomFilterInvocationSecurityMetadataSource;
 import com.yintu.ruixing.controller.component.FileUsernamePasswordAuthenticationFilterComponent;
 import com.yintu.ruixing.entity.rbac.UserEntity;
+import com.yintu.ruixing.service.rbac.UserService;
+import com.yintu.ruixing.service.rbac.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.*;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.session.ConcurrentSessionFilter;
 
@@ -27,12 +33,17 @@ import java.util.Map;
 @Configuration // 里面已经包含了@Component 所以不用再上下文中在引入入了
 @EnableWebSecurity
 public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
-    // spring自带的
-//    @Autowired
-//    private UserDetailsService userDetailsService;
 
     @Autowired
     private FileUsernamePasswordAuthenticationFilterComponent fileUsernamePasswordAuthenticationFilterComponent;
+    @Autowired
+    private UserServiceImpl userServiceImpl;
+
+    @Autowired
+    private CustomAccessDecisionManager customAccessDecisionManager;
+    @Autowired
+    private CustomFilterInvocationSecurityMetadataSource customFilterInvocationSecurityMetadataSource;
+
 
     /**
      * 密码加密以及密码匹配bean
@@ -64,7 +75,16 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/**").permitAll() //  调用api不需要拦截
                 .antMatchers("/login.html").permitAll() //   登录页面不拦截
                 .antMatchers(HttpMethod.POST, "/checkLogin").permitAll() //登录页面不拦截
+                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+                    @Override
+                    public <O extends FilterSecurityInterceptor> O postProcess(O object) {
+                        object.setAccessDecisionManager(customAccessDecisionManager);
+                        object.setSecurityMetadataSource(customFilterInvocationSecurityMetadataSource);
+                        return object;
+                    }
+                })
                 .anyRequest().authenticated().and()
+
 
                 .formLogin()
                 .successHandler((request, response, authentication) -> {
@@ -135,75 +155,23 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                             out.flush();
                             out.close();
                         }
-                );
-        http.addFilterAt(new ConcurrentSessionFilter(sessionRegistryImpl(), event -> {
-            HttpServletResponse resp = event.getResponse();
-            resp.setContentType("application/json;charset=utf-8");
-            resp.setStatus(401);
-            PrintWriter out = resp.getWriter();
-            // out.write(new ObjectMapper().writeValueAsString(RespBean.error("您已在另一台设备登录，本次登录已下线!")));
-            Map<String, Object> errorData = ResponseDataUtil.noLogin("您已在另一台设备登录，本次登录已下线!");
-            out.flush();
-            out.close();
-        }), ConcurrentSessionFilter.class);
+                ).and()
 
-        http.addFilterAt(fileUsernamePasswordAuthenticationFilterComponent, UsernamePasswordAuthenticationFilter.class);
+                .addFilterAt(new ConcurrentSessionFilter(sessionRegistryImpl(), event -> {
+                    HttpServletResponse resp = event.getResponse();
+                    resp.setContentType("application/json;charset=utf-8");
+                    resp.setStatus(401);
+                    PrintWriter out = resp.getWriter();
+                    // out.write(new ObjectMapper().writeValueAsString(RespBean.error("您已在另一台设备登录，本次登录已下线!")));
+                    Map<String, Object> errorData = ResponseDataUtil.noLogin("您已在另一台设备登录，本次登录已下线!");
+                    out.flush();
+                    out.close();
+                }), ConcurrentSessionFilter.class).
 
+                addFilterAt(fileUsernamePasswordAuthenticationFilterComponent, UsernamePasswordAuthenticationFilter.class);
 
     }
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//
-//
-////        http.authorizeRequests()// 该方法所返回的对象的方法来配置请求级别的安全细节
-////                .antMatchers("/druid/**").permitAll()// druid不需要拦截
-////                .antMatchers("/api/**").permitAll() //  调用api不需要拦截
-////                .antMatchers("/login.html").permitAll() //   登录页面不拦截
-////                .antMatchers(HttpMethod.POST, "/checkLogin").permitAll().anyRequest().authenticated()// 对于登录路径不进行拦截
-////
-////                .and().formLogin()// 配置登录页面
-////                .loginPage("/login")// 登录页面的访问路径;
-////                .loginProcessingUrl("/checkLogin")// 登录页面下表单提交的路径
-////                .failureUrl("/login?paramserror=true")// 登录失败后跳转的路径,为了给客户端提示
-////                .defaultSuccessUrl("/index")// 登录成功后默认跳转的路径;
-////
-////                .and().logout()// 用户退出操作
-////                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))// 用户退出所访问的路径，需要使用Post方式
-////                .permitAll().logoutSuccessUrl("/login?logout=true")/// 退出成功所访问的路径
-////
-////                .and().exceptionHandling().accessDeniedPage("/403")
-////
-////                .and()
-////                .csrf().disable()
-////                .headers().frameOptions()// 允许iframe内呈现。
-////                .sameOrigin()
-////
-////                .and().sessionManagement()
-////                /*如果用户在不退出登录的情况下使用用户名进行身份验证，并试图对“用户”进行身份验证，
-////                 * 那么第一个会话将被强制终止并发送到/login?expired页面。
-////                 */
-////                .maximumSessions(1)
-////                //.expiredUrl("/login?expired=true")//如果是异步请求。无法进行页面跳转;
-////                // session过期处理策
-////                .expiredSessionStrategy(new SessionInformationExpiredStrategy() {
-////                    @SneakyThrows
-////                    @Override
-////                    public void onExpiredSessionDetected(SessionInformationExpiredEvent event) throws IOException, ServletException {
-////                        String header = event.getRequest().getHeader("X-Requested-With");
-////                        System.out.println("header:" + header);
-////                        if (header != null && header.equals("XMLHttpRequest")) {//异步请求
-////                            JSONObject jo = new JSONObject();
-//////                            jo.put("resultCode", 302);
-//////                            jo.put("redirectUrl", "login?expired=true");
-////                            //返回严格的json数据
-////                            event.getResponse().getWriter().write(jo.toString());
-////                        } else {
-////                            event.getResponse().sendRedirect("/myweb/login?expired=true");
-////                        }
-////
-////                    }
-////                });
-//    }
+
 
 //    /**
 //     * 忽略静态资源
