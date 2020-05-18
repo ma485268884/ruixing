@@ -68,8 +68,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         System.out.println("header:" + header);
                         if (header != null && header.equals("XMLHttpRequest")) {//异步请求
                             JSONObject jo = new JSONObject();
-                            jo.put("resultCode", 302);
-                            jo.put("redirectUrl", "login?expired=true");
+//                            jo.put("resultCode", 302);
+//                            jo.put("redirectUrl", "login?expired=true");
                             //返回严格的json数据
                             event.getResponse().getWriter().write(jo.toString());
                         } else {
