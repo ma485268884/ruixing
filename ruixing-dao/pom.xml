@@ -19,5 +19,10 @@
             <groupId>com.yintu.ruixing</groupId>
             <artifactId>ruixing-entity</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 </project>

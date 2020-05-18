@@ -27,10 +27,11 @@
         <pagehelper-spring-boot-starter.version>1.2.10</pagehelper-spring-boot-starter.version>
         <druid-spring-boot-starter.version>1.1.21</druid-spring-boot-starter.version>
         <fastjson.version>1.2.62</fastjson.version>
+
+        <mybatis-generator-maven-plugin.version>1.4.0</mybatis-generator-maven-plugin.version>
     </properties>
     <dependencyManagement>
         <dependencies>
-
             <dependency>
                 <groupId>com.yintu.ruixing</groupId>
                 <artifactId>ruixing-common</artifactId>
@@ -74,4 +75,30 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.mybatis.generator</groupId>
+                    <artifactId>mybatis-generator-maven-plugin</artifactId>
+                    <version>${mybatis-generator-maven-plugin.version}</version>
+                    <configuration>
+                        <!--配置文件的位置-->
+                        <configurationFile>src/main/resources/generator-config.xml</configurationFile>
+                        <verbose>true</verbose>
+                        <overwrite>true</overwrite>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>Generate MyBatis Artifacts</id>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+    </build>
 </project>
