@@ -1,6 +1,9 @@
 package com.yintu.ruixing.entity.rbac;
 
-public class RolePermissionEntity {
+import java.io.Serializable;
+
+public class RolePermissionEntity implements Serializable {
+    private static final long serialVersionUID = -9115731085227570175L;
     private Long id;
 
     private Long roleId;
