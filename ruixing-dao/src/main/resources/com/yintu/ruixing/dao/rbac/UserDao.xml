@@ -5,9 +5,9 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="truename" jdbcType="VARCHAR" property="truename" />
+    <result column="true_name" jdbcType="VARCHAR" property="trueName" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="emali" jdbcType="VARCHAR" property="emali" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="auth_type" jdbcType="SMALLINT" property="authType" />
     <result column="locked" jdbcType="SMALLINT" property="locked" />
     <result column="enabled" jdbcType="SMALLINT" property="enabled" />
@@ -73,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, password, truename, phone, emali, auth_type, locked, enabled, salt, 
+    id, username, password, true_name, phone, email, auth_type, locked, enabled, salt, 
     login_time
   </sql>
   <select id="selectByExample" parameterType="com.yintu.ruixing.entity.rbac.UserEntityExample" resultMap="BaseResultMap">
@@ -108,11 +108,11 @@
   </delete>
   <insert id="insert" parameterType="com.yintu.ruixing.entity.rbac.UserEntity">
     insert into tb_user (id, username, password, 
-      truename, phone, emali, 
+      true_name, phone, email, 
       auth_type, locked, enabled, 
       salt, login_time)
     values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{truename,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{emali,jdbcType=VARCHAR}, 
+      #{trueName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{authType,jdbcType=SMALLINT}, #{locked,jdbcType=SMALLINT}, #{enabled,jdbcType=SMALLINT}, 
       #{salt,jdbcType=VARCHAR}, #{loginTime,jdbcType=TIMESTAMP})
   </insert>
@@ -128,14 +128,14 @@
       <if test="password != null">
         password,
       </if>
-      <if test="truename != null">
-        truename,
+      <if test="trueName != null">
+        true_name,
       </if>
       <if test="phone != null">
         phone,
       </if>
-      <if test="emali != null">
-        emali,
+      <if test="email != null">
+        email,
       </if>
       <if test="authType != null">
         auth_type,
@@ -163,14 +163,14 @@
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="truename != null">
-        #{truename,jdbcType=VARCHAR},
+      <if test="trueName != null">
+        #{trueName,jdbcType=VARCHAR},
       </if>
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="emali != null">
-        #{emali,jdbcType=VARCHAR},
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
       </if>
       <if test="authType != null">
         #{authType,jdbcType=SMALLINT},
@@ -207,14 +207,14 @@
       <if test="record.password != null">
         password = #{record.password,jdbcType=VARCHAR},
       </if>
-      <if test="record.truename != null">
-        truename = #{record.truename,jdbcType=VARCHAR},
+      <if test="record.trueName != null">
+        true_name = #{record.trueName,jdbcType=VARCHAR},
       </if>
       <if test="record.phone != null">
         phone = #{record.phone,jdbcType=VARCHAR},
       </if>
-      <if test="record.emali != null">
-        emali = #{record.emali,jdbcType=VARCHAR},
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
       </if>
       <if test="record.authType != null">
         auth_type = #{record.authType,jdbcType=SMALLINT},
@@ -241,9 +241,9 @@
     set id = #{record.id,jdbcType=BIGINT},
       username = #{record.username,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
-      truename = #{record.truename,jdbcType=VARCHAR},
+      true_name = #{record.trueName,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
-      emali = #{record.emali,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
       auth_type = #{record.authType,jdbcType=SMALLINT},
       locked = #{record.locked,jdbcType=SMALLINT},
       enabled = #{record.enabled,jdbcType=SMALLINT},
@@ -262,14 +262,14 @@
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="truename != null">
-        truename = #{truename,jdbcType=VARCHAR},
+      <if test="trueName != null">
+        true_name = #{trueName,jdbcType=VARCHAR},
       </if>
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="emali != null">
-        emali = #{emali,jdbcType=VARCHAR},
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
       </if>
       <if test="authType != null">
         auth_type = #{authType,jdbcType=SMALLINT},
@@ -293,9 +293,9 @@
     update tb_user
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      truename = #{truename,jdbcType=VARCHAR},
+      true_name = #{trueName,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
-      emali = #{emali,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
       auth_type = #{authType,jdbcType=SMALLINT},
       locked = #{locked,jdbcType=SMALLINT},
       enabled = #{enabled,jdbcType=SMALLINT},
