@@ -58,8 +58,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                  * 那么第一个会话将被强制终止并发送到/login?expired页面。
                  */
                 .maximumSessions(1)
-                 //.expiredUrl("/login?expired=true")//如果是异步请求。无法进行页面跳转;
-                 // session过期处理策
+                //.expiredUrl("/login?expired=true")//如果是异步请求。无法进行页面跳转;
+                // session过期处理策
                 .expiredSessionStrategy(new SessionInformationExpiredStrategy() {
                     @SneakyThrows
                     @Override
