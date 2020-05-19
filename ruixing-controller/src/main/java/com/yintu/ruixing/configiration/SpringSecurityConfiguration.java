@@ -65,6 +65,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new SessionRegistryImpl();
     }
 
+
     /**
      * 自定义登录拦截器
      *
@@ -91,7 +92,6 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                     PrintWriter out = httpServletResponse.getWriter();
                     Map<String, Object> errorData = ResponseDataUtil.error(authenticationException.getMessage());
-                    // RespBean respBean = RespBean.error(exception.getMessage());
                     if (authenticationException instanceof LockedException) {
                         //  respBean.setMsg("账户被锁定，请联系管理员!");
                         errorData = ResponseDataUtil.error("账户被锁定，请联系管理员");
@@ -123,6 +123,10 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return customUsernamePasswordAuthenticationFilter;
     }
 
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userServiceImpl);
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -153,11 +157,10 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
                     httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     PrintWriter out = httpServletResponse.getWriter();
-                    Map<String, Object> errorData = ResponseDataUtil.noLogin("访问失败");
+                    Map<String, Object> errorData = ResponseDataUtil.error("访问失败，请联系管理员");
                     if (authenticationException instanceof InsufficientAuthenticationException) {
-                        errorData = ResponseDataUtil.noLogin("请求失败，请联系管理员");
+                        errorData = ResponseDataUtil.error("请求失败，请联系管理员");
                     }
-                    //out.write(new ObjectMapper().writeValueAsString(respBean));
                     JSONObject jo = (JSONObject) JSONObject.toJSON(errorData);
                     out.write(jo.toJSONString());
                     out.flush();
@@ -192,9 +195,5 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/css/**", "/js/**", "/index.html", "/img/**", "/fonts/**", "/favicon.ico", "/verifyCode");
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userServiceImpl);
-    }
 
 }

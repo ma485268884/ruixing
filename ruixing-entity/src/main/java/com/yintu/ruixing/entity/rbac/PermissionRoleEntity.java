@@ -1,9 +1,13 @@
 package com.yintu.ruixing.entity.rbac;
 
-import java.io.Serializable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class RolePermissionEntity implements Serializable {
-    private static final long serialVersionUID = -9115731085227570175L;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class PermissionRoleEntity {
     private Long id;
 
     private Long roleId;
