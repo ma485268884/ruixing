@@ -21,8 +21,9 @@ public class RoleServiceImpl implements RoleService {
 
     /**
      * 按照多个id查询多个角色信息
-     * @param ids
-     * @return
+     *
+     * @param ids 多个角色主键
+     * @return 返回多个角色信息
      */
     @Override
     public List<RoleEntity> findByIds(List<Long> ids) {

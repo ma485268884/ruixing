@@ -28,8 +28,8 @@ public class UserRoleServiceImpl implements UserRoleService {
     /**
      * 按照用户id查询出全部角色信息
      *
-     * @param userId
-     * @return
+     * @param userId 用户id
+     * @return 角色全部信息
      */
     @Override
     public List<RoleEntity> findByUserId(Long userId) {

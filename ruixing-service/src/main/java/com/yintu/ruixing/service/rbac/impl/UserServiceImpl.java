@@ -22,6 +22,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRoleService userRoleServicel;
 
+    /**
+     * 按照用户名查询用户信息
+     *
+     * @param username 用户名
+     * @return 用户信息
+     * @throws UsernameNotFoundException 用户未找到异常
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntityExample userEntityExample = new UserEntityExample();
