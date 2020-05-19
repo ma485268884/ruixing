@@ -52,7 +52,7 @@ public class RoleServiceImpl implements RoleService {
         RoleEntityExample roleEntityExample = new RoleEntityExample();
         RoleEntityExample.Criteria criteria = roleEntityExample.createCriteria();
         criteria.andIdIn(ids);
-        return roleDao.selectByExample(roleEntityExample);
+        return ids.size() == 0 ? new ArrayList<>() : roleDao.selectByExample(roleEntityExample);
     }
 
     @Override
