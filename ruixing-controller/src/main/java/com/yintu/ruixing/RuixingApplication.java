@@ -1,4 +1,4 @@
-package com.yintu.ruixing.controller;
+package com.yintu.ruixing;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
