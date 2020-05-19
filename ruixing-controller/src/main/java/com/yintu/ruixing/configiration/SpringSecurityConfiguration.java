@@ -65,6 +65,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new SessionRegistryImpl();
     }
 
+
     /**
      * 自定义登录拦截器
      *
@@ -123,6 +124,10 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return customUsernamePasswordAuthenticationFilter;
     }
 
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userServiceImpl);
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -192,9 +197,5 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/css/**", "/js/**", "/index.html", "/img/**", "/fonts/**", "/favicon.ico", "/verifyCode");
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userServiceImpl);
-    }
 
 }

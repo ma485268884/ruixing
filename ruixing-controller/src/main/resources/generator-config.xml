@@ -42,6 +42,6 @@
 <!--        <table tableName="tb_role" domainObjectName="RoleEntity" mapperName="RoleDao"/>-->
 <!--        <table tableName="tb_user_role" domainObjectName="UserRoleEntity" mapperName="UserRoleDao"/>-->
 <!--        <table tableName="tb_permission" domainObjectName="PermissionEntity" mapperName="PermissionDao"/>-->
-<!--        <table tableName="tb_role_permission" domainObjectName="RolePermissionEntity" mapperName="RolePermissionDao"/>-->
+        <table tableName="tb_permission_role" domainObjectName="PermissionRoleEntity" mapperName="PermissionRoleDao"/>
     </context>
 </generatorConfiguration>
