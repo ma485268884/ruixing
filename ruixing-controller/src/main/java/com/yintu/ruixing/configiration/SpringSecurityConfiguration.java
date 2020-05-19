@@ -95,8 +95,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     PrintWriter out = httpServletResponse.getWriter();
                     Map<String, Object> errorData = ResponseDataUtil.noLogin(authenticationException.getMessage());
                     if (authenticationException instanceof AuthenticationServiceException) {
-                       //服务器异常
-                        errorData=ResponseDataUtil.error(authenticationException.getMessage());
+                        //服务器异常
+                        errorData = ResponseDataUtil.error(authenticationException.getMessage());
                         httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     }
                     if (authenticationException instanceof VerificationCodeException) {
@@ -160,7 +160,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     JSONObject jo = (JSONObject) JSONObject.toJSON(errorData);
                     out.flush();
                     out.close();
-                }).permitAll().and().csrf()
+                })
+                .logoutUrl("/logout").permitAll().and().csrf()
                 .disable().exceptionHandling()
                 .authenticationEntryPoint((HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException authenticationException) -> {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
