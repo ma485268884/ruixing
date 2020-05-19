@@ -4,6 +4,7 @@ import com.yintu.ruixing.dao.rbac.UserDao;
 import com.yintu.ruixing.dao.rbac.UserRoleDao;
 import com.yintu.ruixing.entity.rbac.UserEntity;
 import com.yintu.ruixing.entity.rbac.UserEntityExample;
+import com.yintu.ruixing.service.rbac.RoleService;
 import com.yintu.ruixing.service.rbac.UserRoleService;
 import com.yintu.ruixing.service.rbac.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
     @Autowired
-    private UserRoleService userRoleService;
+    private RoleService roleService;
 
     /**
      * 按照用户名查询用户信息
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("用户名不存在");
         }
         UserEntity userEntity = userEntities.get(0);
-        userEntity.setRoleEntitys(userRoleService.findRolesByUserId(userEntity.getId()));
+        userEntity.setRoleEntitys(roleService.findByUserId(userEntity.getId()));
         return userEntity;
     }
 
