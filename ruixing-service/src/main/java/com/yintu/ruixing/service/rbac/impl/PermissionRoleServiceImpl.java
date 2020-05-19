@@ -29,7 +29,7 @@ public class PermissionRoleServiceImpl implements PermissionRoleService {
      * @return 角色全部信息
      */
     @Override
-    public List<RoleEntity> findByPermissionId(Long permissionId) {
+    public List<RoleEntity> findRolesByPermissionId(Long permissionId) {
         PermissionRoleEntityExample permissionRoleEntityExample = new PermissionRoleEntityExample();
         PermissionRoleEntityExample.Criteria criteria = permissionRoleEntityExample.createCriteria();
         criteria.andPermissionIdEqualTo(permissionId);
