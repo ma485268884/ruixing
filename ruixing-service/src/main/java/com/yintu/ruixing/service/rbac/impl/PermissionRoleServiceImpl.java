@@ -17,27 +17,5 @@ import java.util.List;
  * @date:2020/5/19 12:30
  */
 public class PermissionRoleServiceImpl implements PermissionRoleService {
-    @Autowired
-    private PermissionRoleDao permissionRoleDao;
-    @Autowired
-    private RoleService roleService;
 
-    /**
-     * 按照权限id查询出全部角色信息
-     *
-     * @param permissionId 权限id
-     * @return 角色全部信息
-     */
-    @Override
-    public List<RoleEntity> findRolesByPermissionId(Long permissionId) {
-        PermissionRoleEntityExample permissionRoleEntityExample = new PermissionRoleEntityExample();
-        PermissionRoleEntityExample.Criteria criteria = permissionRoleEntityExample.createCriteria();
-        criteria.andPermissionIdEqualTo(permissionId);
-        List<PermissionRoleEntity> permissionRoleEntities = permissionRoleDao.selectByExample(permissionRoleEntityExample);
-        List<Long> roleIds = new ArrayList<>();
-        for (PermissionRoleEntity permissionRoleEntity : permissionRoleEntities) {
-            roleIds.add(permissionRoleEntity.getRoleId());
-        }
-        return roleService.findByIds(roleIds);
-    }
 }

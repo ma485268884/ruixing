@@ -18,28 +18,5 @@ import java.util.List;
  */
 @Service
 public class UserRoleServiceImpl implements UserRoleService {
-    @Autowired
-    private UserRoleDao userRoleDao;
-    @Autowired
-    private RoleService roleService;
 
-
-    /**
-     * 按照用户id查询出全部角色信息
-     *
-     * @param userId 用户id
-     * @return 角色全部信息
-     */
-    @Override
-    public List<RoleEntity> findRolesByUserId(Long userId) {
-        UserRoleEntityExample userRoleEntityExample = new UserRoleEntityExample();
-        UserRoleEntityExample.Criteria criteria = userRoleEntityExample.createCriteria();
-        criteria.andUserIdEqualTo(userId);
-        List<UserRoleEntity> userRoleEntities = userRoleDao.selectByExample(userRoleEntityExample);
-        List<Long> roleIds = new ArrayList<>();
-        for (UserRoleEntity userRoleEntity : userRoleEntities) {
-            roleIds.add(userRoleEntity.getUserId());
-        }
-        return roleService.findByIds(roleIds);
-    }
 }

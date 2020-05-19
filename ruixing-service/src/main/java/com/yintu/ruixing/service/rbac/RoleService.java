@@ -10,9 +10,26 @@ import java.util.List;
  */
 public interface RoleService {
     /**
-     *按照id集查询角色集
+     * 按照id集查询角色集
+     *
      * @param ids id集
      * @return 角色集
      */
     List<RoleEntity> findByIds(List<Long> ids);
+
+    /**
+     * 按照用户id查询角色集
+     *
+     * @param userId 用户id
+     * @return 返回指定角色集
+     */
+    List<RoleEntity> findByUserId(Long userId);
+
+    /**
+     * 按照权限id查询角色集
+     *
+     * @param permissionId 权限id
+     * @return 返回指定角色集
+     */
+    List<RoleEntity> findByPermissionId(Long permissionId);
 }
