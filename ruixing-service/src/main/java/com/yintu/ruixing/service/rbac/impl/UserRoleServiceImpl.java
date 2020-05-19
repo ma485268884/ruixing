@@ -21,9 +21,8 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Autowired
     private UserRoleDao userRoleDao;
     @Autowired
-    private UserRoleService userRoleService;
-    @Autowired
     private RoleService roleService;
+
 
     /**
      * 按照用户id查询出全部角色信息

@@ -9,6 +9,10 @@ import java.util.List;
  * @date:2020/5/19 9:33
  */
 public interface UserRoleService {
-
-    List<RoleEntity> findByUserId(Long userId);
+    /**
+     * 按照用户id查询角色集
+     * @param userId 用户id
+     * @return 返回指定角色集
+     */
+    List<RoleEntity> findRolesByUserId(Long userId);
 }
