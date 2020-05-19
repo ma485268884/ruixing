@@ -1,8 +1,22 @@
 package com.yintu.ruixing.entity.rbac;
 
-import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public class UserEntity {
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserEntity implements UserDetails {
+    private static final long serialVersionUID = 7348214022276474920L;
     private Long id;
 
     private String username;
@@ -25,91 +39,46 @@ public class UserEntity {
 
     private Date loginTime;
 
-    public Long getId() {
-        return id;
+    private List<RoleEntity> roleEntitys;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> list = new ArrayList<>(roleEntitys.size());
+        for (RoleEntity roleEntity : roleEntitys) {
+            list.add(new SimpleGrantedAuthority(roleEntity.getName()));
+        }
+        return list;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
-    }
-
+    @Override
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+    @Override
+    public String getUsername() {
+        return username;
     }
 
-    public String getTrueName() {
-        return trueName;
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
     }
 
-    public void setTrueName(String trueName) {
-        this.trueName = trueName == null ? null : trueName.trim();
+    @Override
+    public boolean isAccountNonLocked() {
+        return locked == 0;
     }
 
-    public String getPhone() {
-        return phone;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
+    @Override
+    public boolean isEnabled() {
+        return enabled == 1;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
-    }
-
-    public Short getAuthType() {
-        return authType;
-    }
-
-    public void setAuthType(Short authType) {
-        this.authType = authType;
-    }
-
-    public Short getLocked() {
-        return locked;
-    }
-
-    public void setLocked(Short locked) {
-        this.locked = locked;
-    }
-
-    public Short getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Short enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt == null ? null : salt.trim();
-    }
-
-    public Date getLoginTime() {
-        return loginTime;
-    }
-
-    public void setLoginTime(Date loginTime) {
-        this.loginTime = loginTime;
-    }
 }
