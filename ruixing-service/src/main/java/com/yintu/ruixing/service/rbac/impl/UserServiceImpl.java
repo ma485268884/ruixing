@@ -34,10 +34,11 @@ public class UserServiceImpl implements UserService {
         UserEntityExample userEntityExample = new UserEntityExample();
         UserEntityExample.Criteria criteria = userEntityExample.createCriteria();
         criteria.andUsernameEqualTo(username);
-        UserEntity userEntity = userDao.selectByExample(userEntityExample).get(0);
-        if (userEntity == null) {
+        List<UserEntity> userEntities = userDao.selectByExample(userEntityExample);
+        if (userEntities.size() == 0) {
             throw new UsernameNotFoundException("用户名不存在");
         }
+        UserEntity userEntity = userEntities.get(0);
         userEntity.setRoleEntitys(userRoleServicel.findByUserId(userEntity.getId()));
         return userEntity;
     }
