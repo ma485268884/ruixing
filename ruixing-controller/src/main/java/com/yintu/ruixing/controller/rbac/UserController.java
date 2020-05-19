@@ -1,8 +1,10 @@
 package com.yintu.ruixing.controller.rbac;
 
+import com.github.pagehelper.PageHelper;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.dao.rbac.UserDao;
 import com.yintu.ruixing.entity.rbac.UserEntity;
+import com.yintu.ruixing.entity.rbac.UserEntityExample;
 import com.yintu.ruixing.service.rbac.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -41,5 +43,5 @@ public class UserController {
         UserEntity userEntity = userService.findById(id);
         return ResponseDataUtil.ok("查询用户成功", userEntity);
     }
-
+    
 }
