@@ -14,5 +14,5 @@ public interface PermissionService {
      *
      * @return 权限集
      */
-    List<PermissionEntity> findByAllId();
+    List<PermissionEntity> findPermissionAndRole();
 }

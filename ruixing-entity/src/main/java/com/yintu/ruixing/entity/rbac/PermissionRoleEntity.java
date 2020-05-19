@@ -1,5 +1,12 @@
 package com.yintu.ruixing.entity.rbac;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PermissionRoleEntity {
     private Long id;
 

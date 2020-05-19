@@ -4,7 +4,6 @@ import com.yintu.ruixing.dao.rbac.PermissionDao;
 import com.yintu.ruixing.entity.rbac.PermissionEntity;
 import com.yintu.ruixing.entity.rbac.PermissionEntityExample;
 import com.yintu.ruixing.entity.rbac.RoleEntity;
-import com.yintu.ruixing.service.rbac.PermissionRoleService;
 import com.yintu.ruixing.service.rbac.PermissionService;
 import com.yintu.ruixing.service.rbac.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +23,13 @@ public class PermissionServiceImpl implements PermissionService {
     private RoleService roleService;
 
     @Override
-    public List<PermissionEntity> findByAllId() {
+    public List<PermissionEntity> findPermissionAndRole() {
         PermissionEntityExample permissionEntityExample = new PermissionEntityExample();
         List<PermissionEntity> permissionEntities = permissionDao.selectByExample(permissionEntityExample);
         for (PermissionEntity permissionEntity : permissionEntities) {
             List<RoleEntity> roleEntities = roleService.findByPermissionId(permissionEntity.getId());
             permissionEntity.setRoleEntities(roleEntities);
         }
-        return null;
+        return permissionEntities;
     }
 }

@@ -1,17 +1,14 @@
 package com.yintu.ruixing.service.rbac.impl;
 
 import com.yintu.ruixing.dao.rbac.UserDao;
-import com.yintu.ruixing.dao.rbac.UserRoleDao;
 import com.yintu.ruixing.entity.rbac.UserEntity;
 import com.yintu.ruixing.entity.rbac.UserEntityExample;
 import com.yintu.ruixing.service.rbac.RoleService;
-import com.yintu.ruixing.service.rbac.UserRoleService;
 import com.yintu.ruixing.service.rbac.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

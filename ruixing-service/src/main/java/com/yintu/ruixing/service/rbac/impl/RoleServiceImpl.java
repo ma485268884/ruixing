@@ -1,12 +1,10 @@
 package com.yintu.ruixing.service.rbac.impl;
 
-import com.yintu.ruixing.dao.rbac.PermissionDao;
 import com.yintu.ruixing.dao.rbac.PermissionRoleDao;
 import com.yintu.ruixing.dao.rbac.RoleDao;
 import com.yintu.ruixing.dao.rbac.UserRoleDao;
 import com.yintu.ruixing.entity.rbac.*;
 import com.yintu.ruixing.service.rbac.RoleService;
-import com.yintu.ruixing.service.rbac.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +24,7 @@ public class RoleServiceImpl implements RoleService {
     private UserRoleDao userRoleDao;
     @Autowired
     private PermissionRoleDao permissionRoleDao;
-    
+
     @Override
     public List<RoleEntity> findByIds(List<Long> ids) {
         RoleEntityExample roleEntityExample = new RoleEntityExample();
