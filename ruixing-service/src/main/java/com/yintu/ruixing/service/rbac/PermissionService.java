@@ -9,6 +9,10 @@ import java.util.List;
  * @date:2020/5/19 12:13
  */
 public interface PermissionService {
-
+    /**
+     * 查询权限集以及对应的角色集
+     *
+     * @return 权限集
+     */
     List<PermissionEntity> findByAllId();
 }

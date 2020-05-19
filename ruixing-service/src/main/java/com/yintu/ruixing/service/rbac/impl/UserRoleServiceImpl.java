@@ -31,7 +31,7 @@ public class UserRoleServiceImpl implements UserRoleService {
      * @return 角色全部信息
      */
     @Override
-    public List<RoleEntity> findByUserId(Long userId) {
+    public List<RoleEntity> findRolesByUserId(Long userId) {
         UserRoleEntityExample userRoleEntityExample = new UserRoleEntityExample();
         UserRoleEntityExample.Criteria criteria = userRoleEntityExample.createCriteria();
         criteria.andUserIdEqualTo(userId);
