@@ -1,4 +1,4 @@
-package com.yintu.ruixing.controller;
+package com.yintu.ruixing.controller.rbac;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
