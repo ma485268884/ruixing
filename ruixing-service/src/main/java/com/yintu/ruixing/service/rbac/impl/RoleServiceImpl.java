@@ -7,6 +7,7 @@ import com.yintu.ruixing.entity.rbac.*;
 import com.yintu.ruixing.service.rbac.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
  * @date:2020/5/19 9:45
  */
 @Service
+@Transactional
 public class RoleServiceImpl implements RoleService {
 
     @Autowired
@@ -24,6 +26,26 @@ public class RoleServiceImpl implements RoleService {
     private UserRoleDao userRoleDao;
     @Autowired
     private PermissionRoleDao permissionRoleDao;
+
+    @Override
+    public void add(RoleEntity roleEntity) {
+        roleDao.insertSelective(roleEntity);
+    }
+
+    @Override
+    public void edit(RoleEntity roleEntity) {
+        roleDao.updateByPrimaryKeySelective(roleEntity);
+    }
+
+    @Override
+    public void remove(Long id) {
+        roleDao.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public RoleEntity findById(Long id) {
+        return roleDao.selectByPrimaryKey(id);
+    }
 
     @Override
     public List<RoleEntity> findByIds(List<Long> ids) {

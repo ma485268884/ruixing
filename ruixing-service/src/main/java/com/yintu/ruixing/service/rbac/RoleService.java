@@ -10,6 +10,34 @@ import java.util.List;
  */
 public interface RoleService {
     /**
+     * 添加角色
+     *
+     * @param roleEntity 角色信息
+     */
+    void add(RoleEntity roleEntity);
+
+    /**
+     * 删除角色
+     *
+     * @param roleEntity 角色信息
+     */
+    void edit(RoleEntity roleEntity);
+
+    /**
+     * 删除角色
+     *
+     * @param id id
+     */
+    void remove(Long id);
+
+    /**
+     * id查询角色
+     *
+     * @return 角色信息
+     */
+    RoleEntity findById(Long id);
+
+    /**
      * 按照id集查询角色集
      *
      * @param ids id集

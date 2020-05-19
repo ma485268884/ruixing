@@ -9,16 +9,47 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
     @Autowired
     private RoleService roleService;
+
+    @Override
+    public void add(UserEntity userEntity) {
+        userEntity.setLocked((short) 0);
+        userEntity.setEnabled((short) 1);
+        userEntity.setLoginTime(new Date());
+        userDao.insertSelective(userEntity);
+    }
+
+    @Override
+    public void edit(UserEntity userEntity) {
+        userDao.updateByPrimaryKeySelective(userEntity);
+    }
+
+    @Override
+    public void remove(Long id) {
+        userDao.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public UserEntity findById(Long id) {
+        return userDao.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<UserEntity> findAll() {
+        return null;
+    }
 
     /**
      * 按照用户名查询用户信息
@@ -40,5 +71,6 @@ public class UserServiceImpl implements UserService {
         userEntity.setRoleEntitys(roleService.findByUserId(userEntity.getId()));
         return userEntity;
     }
+
 
 }
