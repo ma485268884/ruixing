@@ -6,6 +6,7 @@ import com.yintu.ruixing.entity.rbac.RoleEntityExample;
 import com.yintu.ruixing.service.rbac.RoleService;
 import com.yintu.ruixing.service.rbac.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * @author:mlf
  * @date:2020/5/19 9:45
  */
-
+@Service
 public class RoleServiceImpl implements RoleService {
 
     @Autowired
