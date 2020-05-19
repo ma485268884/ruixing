@@ -1,7 +1,6 @@
 package com.yintu.ruixing.service.rbac;
 
 import com.yintu.ruixing.entity.rbac.RoleEntity;
-import com.yintu.ruixing.entity.rbac.UserRoleEntity;
 
 import java.util.List;
 

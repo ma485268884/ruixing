@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
     @Autowired
-    private UserRoleService userRoleServicel;
+    private UserRoleService userRoleService;
 
     /**
      * 按照用户名查询用户信息
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("用户名不存在");
         }
         UserEntity userEntity = userEntities.get(0);
-        userEntity.setRoleEntitys(userRoleServicel.findByUserId(userEntity.getId()));
+        userEntity.setRoleEntitys(userRoleService.findByUserId(userEntity.getId()));
         return userEntity;
     }
 
