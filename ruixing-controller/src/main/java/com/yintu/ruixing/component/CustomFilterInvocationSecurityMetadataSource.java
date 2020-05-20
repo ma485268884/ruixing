@@ -11,6 +11,7 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
+import javax.print.DocFlavor;
 import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,19 +35,23 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
 
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-        String requestUrl = ((FilterInvocation) object).getRequestUrl();
+        FilterInvocation filterInvocation = (FilterInvocation) object;
+        String requestUrl = filterInvocation.getRequestUrl();
+        String requestMethod = filterInvocation.getRequest().getMethod();
+        //restful 风格api /users/1/roles  数据库是/users+请求方式
+        String newRequestUrl = "/" + requestUrl.split("/")[1];
         List<PermissionEntity> permissionEntities = permissionService.findPermissionAndRole();
         for (PermissionEntity permissionEntity : permissionEntities) {
-            if (antPathMatcher.match(permissionEntity.getUrl(), requestUrl)) {
+            if (antPathMatcher.match(permissionEntity.getUrl(), newRequestUrl) && requestMethod.equals(permissionEntity.getMethod().toUpperCase())) {
                 List<RoleEntity> roleEntities = permissionEntity.getRoleEntities();
                 String[] str = new String[roleEntities.size()];
                 for (int i = 0; i < roleEntities.size(); i++) {
                     str[i] = roleEntities.get(i).getName();
                 }
-                return SecurityConfig.createList(str);
+                return SecurityConfig.createList(str.length == 0 ? new String[]{"ROLE_LOGIN"} : str);
             }
         }
-        return  SecurityConfig.createList("ROLE_LOGIN");
+        return SecurityConfig.createList("ROLE_LOGIN");
     }
 
     @Override
