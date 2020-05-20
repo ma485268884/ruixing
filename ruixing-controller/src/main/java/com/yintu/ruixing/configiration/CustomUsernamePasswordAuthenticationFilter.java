@@ -21,6 +21,10 @@ import javax.servlet.http.HttpServletResponse;
  * @date:2020/5/18 16:23
  */
 
+/**
+ * 自定义用户名密码认证过滤器
+ */
+
 public class CustomUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Autowired
