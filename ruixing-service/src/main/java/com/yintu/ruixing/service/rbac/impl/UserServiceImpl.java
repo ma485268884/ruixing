@@ -1,5 +1,6 @@
 package com.yintu.ruixing.service.rbac.impl;
 
+import com.yintu.ruixing.common.enumobject.EnumAuthType;
 import com.yintu.ruixing.dao.rbac.UserDao;
 import com.yintu.ruixing.entity.rbac.UserEntity;
 import com.yintu.ruixing.entity.rbac.UserEntityExample;
@@ -27,6 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void add(UserEntity userEntity) {
+        userEntity.setAuthType(EnumAuthType.getDefault().getValue());
         userEntity.setLocked((short) 0);
         userEntity.setEnabled((short) 1);
         userEntity.setLoginTime(new Date());
