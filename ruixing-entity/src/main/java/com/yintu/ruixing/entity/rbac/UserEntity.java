@@ -1,5 +1,6 @@
 package com.yintu.ruixing.entity.rbac;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,7 @@ public class UserEntity implements UserDetails {
     private Long id;
 
     private String username;
-
+    @JsonIgnore
     private String password;
 
     private String trueName;
@@ -42,6 +43,7 @@ public class UserEntity implements UserDetails {
     private List<RoleEntity> roleEntitys;
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> list = new ArrayList<>(roleEntitys.size());
         for (RoleEntity roleEntity : roleEntitys) {

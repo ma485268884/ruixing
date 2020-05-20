@@ -8,6 +8,8 @@ import com.yintu.ruixing.service.rbac.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,11 +30,19 @@ public class UserServiceImpl implements UserService {
         userEntity.setLocked((short) 0);
         userEntity.setEnabled((short) 1);
         userEntity.setLoginTime(new Date());
+        String password = userEntity.getPassword();
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        userEntity.setPassword(passwordEncoder.encode(password));
         userDao.insertSelective(userEntity);
     }
 
     @Override
     public void edit(UserEntity userEntity) {
+        String password = userEntity.getPassword();
+        if (!password.isEmpty()) {
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            userEntity.setPassword(passwordEncoder.encode(password));
+        }
         userDao.updateByPrimaryKeySelective(userEntity);
     }
 

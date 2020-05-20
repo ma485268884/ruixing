@@ -10,7 +10,6 @@ import com.yintu.ruixing.service.rbac.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
@@ -28,10 +27,19 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy;
 import org.springframework.security.web.session.ConcurrentSessionFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 
 @Configuration // 里面已经包含了@Component 所以不用再上下文中在引入入了
@@ -83,7 +91,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     PrintWriter out = httpServletResponse.getWriter();
                     UserEntity userEntity = (UserEntity) authentication.getPrincipal();
                     userEntity.setPassword(null);
-                    JSONObject jo = (JSONObject) JSONObject.toJSON(ResponseDataUtil.ok("登录成功!", userEntity));
+                    JSONObject jo = (JSONObject) JSONObject.toJSON(ResponseDataUtil.ok("登录成功", userEntity));
                     out.write(jo.toJSONString());
                     out.flush();
                     out.close();
@@ -95,9 +103,9 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     PrintWriter out = httpServletResponse.getWriter();
                     Map<String, Object> errorData = ResponseDataUtil.noLogin(authenticationException.getMessage());
                     if (authenticationException instanceof AuthenticationServiceException) {
+                        httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                         //服务器异常
                         errorData = ResponseDataUtil.error(authenticationException.getMessage());
-                        httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     }
                     if (authenticationException instanceof VerificationCodeException) {
                         errorData = ResponseDataUtil.noLogin("验证码不正确");
@@ -142,7 +150,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/druid/**").permitAll()
-                .anyRequest().authenticated().and().formLogin()
+                .anyRequest().authenticated().and().formLogin().and().authorizeRequests()
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(O object) {
@@ -150,24 +158,25 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         object.setSecurityMetadataSource(customFilterInvocationSecurityMetadataSource);
                         return object;
                     }
-                }).permitAll().and().logout()
+                }).and().logout()
                 .logoutSuccessHandler((req, resp, authentication) -> {
                     resp.setContentType("application/json;charset=utf-8");
                     resp.setStatus(HttpServletResponse.SC_OK);
                     PrintWriter out = resp.getWriter();
-                    // out.write(new ObjectMapper().writeValueAsString(RespBean.ok("注销成功!")));
-                    Map<String, Object> errorData = ResponseDataUtil.ok("注销成功！");
+                    Map<String, Object> errorData = ResponseDataUtil.ok("注销成功");
                     JSONObject jo = (JSONObject) JSONObject.toJSON(errorData);
+                    out.write(jo.toJSONString());
                     out.flush();
                     out.close();
                 })
-                .logoutUrl("/logout").permitAll().and().csrf()
+                .permitAll().and().csrf()
                 .disable().exceptionHandling()
+                //没有认证时，在这里处理结果，不要重定向
                 .authenticationEntryPoint((HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException authenticationException) -> {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
                     httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     PrintWriter out = httpServletResponse.getWriter();
-                    Map<String, Object> errorData = ResponseDataUtil.noLogin("请求失败，请先登录");
+                    Map<String, Object> errorData = ResponseDataUtil.noLogin("访问失败，请先登录");
                     if (authenticationException instanceof InsufficientAuthenticationException) {
                         errorData = ResponseDataUtil.noLogin("请求失败，请先登录");
                     }
@@ -176,6 +185,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     out.flush();
                     out.close();
                 })
+                //没有权限时，在这里处理结果，不要重定向
                 .accessDeniedHandler((HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException accessDeniedException) -> {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
                     httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
