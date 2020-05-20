@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
 import java.security.Permission;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,8 +20,9 @@ import java.util.List;
  * @author:mlf
  * @date:2020/5/18 19:56
  */
+
 /**
- *（授权）自定义资源（url）权限（role）数据源（从数据库中查出每个Permissiond对应的角色，放到Collection<ConfigAttribute>）
+ * （授权）自定义资源（url）权限（role）数据源（从数据库中查出每个Permissiond对应的角色，放到Collection<ConfigAttribute>）
  */
 @Component
 public class CustomFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
@@ -44,7 +46,7 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
                 return SecurityConfig.createList(str);
             }
         }
-        return SecurityConfig.createList("ROLE_LOGIN");
+        return  SecurityConfig.createList("ROLE_LOGIN");
     }
 
     @Override

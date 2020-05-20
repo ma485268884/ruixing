@@ -25,31 +25,27 @@ import java.util.Collection;
 public class CustomAccessDecisionManager implements AccessDecisionManager {
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
-        //如果当前用户的auth_type为管理员，则次用户拥有所有的权限
-        Object obj = authentication.getPrincipal();
-        if (obj instanceof UserEntity) {
-            UserEntity userEntity = (UserEntity) obj;
-            if (userEntity.getAuthType().equals(EnumAuthType.ADMIN.getValue()))
-                return;
-        }
-        for (ConfigAttribute configAttribute : configAttributes) {
-            String needRole = configAttribute.getAttribute();
-            if ("ROLE_LOGIN".equals(needRole)) {
-                if (authentication instanceof AnonymousAuthenticationToken) {
-                    throw new InsufficientAuthenticationException("尚未登录，请登录");
-                } else {
-                    return;
+        if (authentication instanceof AnonymousAuthenticationToken) {
+            throw new InsufficientAuthenticationException("尚未登录，请登录");
+        } else {
+            for (ConfigAttribute configAttribute : configAttributes) {
+                String needRole = configAttribute.getAttribute();
+                //如果当前用户的auth_type为管理员，则用户拥有所有的权限,否则需要判断当前用户
+                Object obj = authentication.getPrincipal();
+                if (obj instanceof UserEntity) {
+                    UserEntity userEntity = (UserEntity) obj;
+                    if (userEntity.getAuthType().equals(EnumAuthType.ADMIN.getValue()))
+                        return;
+                }
+                Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+                for (GrantedAuthority authority : authorities) {
+                    if (authority.getAuthority().equals(needRole)) {
+                        return;
+                    }
                 }
             }
-            //判断当前用户的auth_type类型为
-            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-            for (GrantedAuthority authority : authorities) {
-                if (authority.getAuthority().equals(needRole)) {
-                    return;
-                }
-            }
+            throw new AccessDeniedException("权限不足，请联系管理员");
         }
-        throw new AccessDeniedException("权限不足，请联系管理员");
     }
 
     @Override

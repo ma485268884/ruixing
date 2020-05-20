@@ -140,9 +140,9 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//           .antMatchers("/druid/**").permitAll()
-//                .anyRequest().authenticated().and().formLogin()
         http.authorizeRequests()
+                .antMatchers("/druid/**").permitAll()
+                .anyRequest().authenticated()
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(O object) {
