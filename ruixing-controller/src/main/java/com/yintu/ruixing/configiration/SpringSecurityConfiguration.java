@@ -5,6 +5,7 @@ import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.component.CustomAccessDecisionManager;
 import com.yintu.ruixing.component.CustomFilterInvocationSecurityMetadataSource;
 import com.yintu.ruixing.entity.rbac.UserEntity;
+import com.yintu.ruixing.exception.VerificationCodeException;
 import com.yintu.ruixing.service.rbac.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -53,6 +54,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
+
     }
 
     /**
@@ -89,24 +91,32 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         );
         customUsernamePasswordAuthenticationFilter.setAuthenticationFailureHandler((HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException authenticationException) -> {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
-                    httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                    httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     PrintWriter out = httpServletResponse.getWriter();
-                    Map<String, Object> errorData = ResponseDataUtil.error(authenticationException.getMessage());
+                    Map<String, Object> errorData = ResponseDataUtil.noLogin(authenticationException.getMessage());
+                    if (authenticationException instanceof AuthenticationServiceException) {
+                        //服务器异常
+                        errorData = ResponseDataUtil.error(authenticationException.getMessage());
+                        httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    }
+                    if (authenticationException instanceof VerificationCodeException) {
+                        errorData = ResponseDataUtil.noLogin("验证码不正确");
+                    }
                     if (authenticationException instanceof LockedException) {
                         //  respBean.setMsg("账户被锁定，请联系管理员!");
-                        errorData = ResponseDataUtil.error("账户被锁定，请联系管理员");
+                        errorData = ResponseDataUtil.noLogin("账户被锁定，请联系管理员");
                     } else if (authenticationException instanceof CredentialsExpiredException) {
                         //  respBean.setMsg("密码过期，请联系管理员!");
-                        errorData = ResponseDataUtil.error("密码过期，请联系管理员");
+                        errorData = ResponseDataUtil.noLogin("密码过期，请联系管理员");
                     } else if (authenticationException instanceof AccountExpiredException) {
                         //  respBean.setMsg("账户过期，请联系管理员!");
-                        errorData = ResponseDataUtil.error("账户过期，请联系管理员");
+                        errorData = ResponseDataUtil.noLogin("账户过期，请联系管理员");
                     } else if (authenticationException instanceof DisabledException) {
                         // respBean.setMsg("账户被禁用，请联系管理员!");
-                        errorData = ResponseDataUtil.error("账户被禁用，请联系管理员");
+                        errorData = ResponseDataUtil.noLogin("账户被禁用，请联系管理员");
                     } else if (authenticationException instanceof BadCredentialsException) {
                         // respBean.setMsg("用户名或者密码输入错误，请重新输入!");
-                        errorData = ResponseDataUtil.error("用户名或者密码输入错误，请重新输入");
+                        errorData = ResponseDataUtil.noLogin("用户名或者密码输入错误，请重新输入");
                     }
                     // out.write(new ObjectMapper().writeValueAsString(respBean));
                     JSONObject jo = (JSONObject) JSONObject.toJSON(errorData);
@@ -116,7 +126,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 }
         );
         customUsernamePasswordAuthenticationFilter.setAuthenticationManager(authenticationManagerBean());
-        customUsernamePasswordAuthenticationFilter.setFilterProcessesUrl("/doLogin");
+        customUsernamePasswordAuthenticationFilter.setFilterProcessesUrl("/login");
         ConcurrentSessionControlAuthenticationStrategy sessionStrategy = new ConcurrentSessionControlAuthenticationStrategy(sessionRegistryImpl());
         sessionStrategy.setMaximumSessions(1);
         customUsernamePasswordAuthenticationFilter.setSessionAuthenticationStrategy(sessionStrategy);
@@ -132,7 +142,6 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/druid/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .anyRequest().authenticated().and().formLogin()
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
@@ -151,15 +160,16 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     JSONObject jo = (JSONObject) JSONObject.toJSON(errorData);
                     out.flush();
                     out.close();
-                }).permitAll().and().csrf()
+                })
+                .logoutUrl("/logout").permitAll().and().csrf()
                 .disable().exceptionHandling()
                 .authenticationEntryPoint((HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException authenticationException) -> {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
                     httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     PrintWriter out = httpServletResponse.getWriter();
-                    Map<String, Object> errorData = ResponseDataUtil.error("访问失败，请联系管理员");
+                    Map<String, Object> errorData = ResponseDataUtil.noLogin("请求失败，请先登录");
                     if (authenticationException instanceof InsufficientAuthenticationException) {
-                        errorData = ResponseDataUtil.error("请求失败，请联系管理员");
+                        errorData = ResponseDataUtil.noLogin("请求失败，请先登录");
                     }
                     JSONObject jo = (JSONObject) JSONObject.toJSON(errorData);
                     out.write(jo.toJSONString());

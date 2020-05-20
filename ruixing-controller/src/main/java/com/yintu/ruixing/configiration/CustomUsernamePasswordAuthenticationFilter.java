@@ -1,6 +1,7 @@
 package com.yintu.ruixing.configiration;
 
 import com.yintu.ruixing.entity.rbac.UserEntity;
+import com.yintu.ruixing.exception.VerificationCodeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,8 +36,6 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         }
         String verify_code = (String) request.getSession().getAttribute("verify_code");
         if (request.getContentType().contains(MediaType.APPLICATION_FORM_URLENCODED_VALUE)) {
-            // Map<String, String> loginData = new HashMap<>();
-            //     loginData = new ObjectMapper().readValue(request.getInputStream(), Map.class);
             String username = super.obtainUsername(request);
             String password = super.obtainPassword(request);
             if (username == null) {
@@ -53,11 +52,11 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
             principal.setUsername(username);
             sessionRegistry.registerNewSession(request.getSession(true).getId(), principal);
             String code = request.getParameter("code");
-            checkCode(response, code, verify_code);
+           // checkCode(response, code, verify_code);
 
             return super.getAuthenticationManager().authenticate(authRequest);
         } else {
-            checkCode(response, request.getParameter("code"), verify_code);
+            //checkCode(response, request.getParameter("code"), verify_code);
             return super.attemptAuthentication(request, response);
         }
     }
@@ -65,7 +64,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
     public void checkCode(HttpServletResponse resp, String code, String verify_code) {
         if (code == null || verify_code == null || "".equals(code) || !verify_code.toLowerCase().equals(code.toLowerCase())) {
             //验证码不正确
-            throw new AuthenticationServiceException("验证码不正确");
+            throw new VerificationCodeException("验证码不正确");
         }
     }
 
