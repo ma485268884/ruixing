@@ -163,7 +163,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 })
                 .permitAll().and().csrf()
                 .disable().exceptionHandling()
-                //没有认证时，在这里处理结果，不要重定向
+                //认证时，在这里处理结果，不要重定向
                 .authenticationEntryPoint((HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException authenticationException) -> {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
                     httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
