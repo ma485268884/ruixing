@@ -3,14 +3,14 @@ package com.yintu.ruixing.entity.rbac;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RolePermissionEntityExample {
+public class PermissionRoleEntityExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public RolePermissionEntityExample() {
+    public PermissionRoleEntityExample() {
         oredCriteria = new ArrayList<>();
     }
 

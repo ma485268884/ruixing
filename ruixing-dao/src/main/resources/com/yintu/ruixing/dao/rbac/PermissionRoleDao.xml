@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yintu.ruixing.dao.rbac.RolePermissionDao">
-  <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.rbac.RolePermissionEntity">
+<mapper namespace="com.yintu.ruixing.dao.rbac.PermissionRoleDao">
+  <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.rbac.PermissionRoleEntity">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="role_id" jdbcType="BIGINT" property="roleId" />
     <result column="permission_id" jdbcType="BIGINT" property="permissionId" />
@@ -67,13 +67,13 @@
   <sql id="Base_Column_List">
     id, role_id, permission_id
   </sql>
-  <select id="selectByExample" parameterType="com.yintu.ruixing.entity.rbac.RolePermissionEntityExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.yintu.ruixing.entity.rbac.PermissionRoleEntityExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from tb_role_permission
+    from tb_permission_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -84,27 +84,27 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from tb_role_permission
+    from tb_permission_role
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from tb_role_permission
+    delete from tb_permission_role
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.yintu.ruixing.entity.rbac.RolePermissionEntityExample">
-    delete from tb_role_permission
+  <delete id="deleteByExample" parameterType="com.yintu.ruixing.entity.rbac.PermissionRoleEntityExample">
+    delete from tb_permission_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.yintu.ruixing.entity.rbac.RolePermissionEntity">
-    insert into tb_role_permission (id, role_id, permission_id
+  <insert id="insert" parameterType="com.yintu.ruixing.entity.rbac.PermissionRoleEntity">
+    insert into tb_permission_role (id, role_id, permission_id
       )
     values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{permissionId,jdbcType=BIGINT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.rbac.RolePermissionEntity">
-    insert into tb_role_permission
+  <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.rbac.PermissionRoleEntity">
+    insert into tb_permission_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -128,14 +128,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.yintu.ruixing.entity.rbac.RolePermissionEntityExample" resultType="java.lang.Long">
-    select count(*) from tb_role_permission
+  <select id="countByExample" parameterType="com.yintu.ruixing.entity.rbac.PermissionRoleEntityExample" resultType="java.lang.Long">
+    select count(*) from tb_permission_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update tb_role_permission
+    update tb_permission_role
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
@@ -152,7 +152,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update tb_role_permission
+    update tb_permission_role
     set id = #{record.id,jdbcType=BIGINT},
       role_id = #{record.roleId,jdbcType=BIGINT},
       permission_id = #{record.permissionId,jdbcType=BIGINT}
@@ -160,8 +160,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.rbac.RolePermissionEntity">
-    update tb_role_permission
+  <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.rbac.PermissionRoleEntity">
+    update tb_permission_role
     <set>
       <if test="roleId != null">
         role_id = #{roleId,jdbcType=BIGINT},
@@ -172,8 +172,8 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.rbac.RolePermissionEntity">
-    update tb_role_permission
+  <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.rbac.PermissionRoleEntity">
+    update tb_permission_role
     set role_id = #{roleId,jdbcType=BIGINT},
       permission_id = #{permissionId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}

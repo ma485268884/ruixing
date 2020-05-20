@@ -1,6 +1,5 @@
 package com.yintu.ruixing.entity.rbac;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEntity implements UserDetails {
-    private static final long serialVersionUID = 840489173773176226L;
+    private static final long serialVersionUID = 7348214022276474920L;
     private Long id;
 
     private String username;
@@ -40,19 +39,26 @@ public class UserEntity implements UserDetails {
 
     private Date loginTime;
 
-    private List<RoleEntity> roleEntities;
-
+    private List<RoleEntity> roleEntitys;
 
     @Override
-    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>(roleEntities.size());
-        for (RoleEntity roleEntity : roleEntities) {
-            authorities.add(new SimpleGrantedAuthority(roleEntity.getName()));
+        List<SimpleGrantedAuthority> list = new ArrayList<>(roleEntitys.size());
+        for (RoleEntity roleEntity : roleEntitys) {
+            list.add(new SimpleGrantedAuthority(roleEntity.getName()));
         }
-        return authorities;
+        return list;
     }
 
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -61,7 +67,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return getLocked() == (short) 0;
+        return locked == 0;
     }
 
     @Override
@@ -71,6 +77,8 @@ public class UserEntity implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return getEnabled() == (short) 1;
+        return enabled == 1;
     }
+
+
 }
