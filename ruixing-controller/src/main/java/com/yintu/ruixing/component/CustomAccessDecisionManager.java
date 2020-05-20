@@ -19,7 +19,7 @@ import java.util.Collection;
  */
 
 /**
- * 自定义权限控制管理器（处理逻辑）
+ * (授权)自定义权限控制管理器（处理逻辑）
  */
 @Component
 public class CustomAccessDecisionManager implements AccessDecisionManager {

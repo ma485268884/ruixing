@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 /**
- * 自定义用户名密码认证过滤器
+ * （登录认证）自定义用户名密码认证过滤器
  */
 
 public class CustomUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
