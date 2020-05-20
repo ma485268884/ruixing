@@ -1,4 +1,4 @@
-package com.yintu.ruixing.configiration;
+package com.yintu.ruixing.component;
 
 import com.yintu.ruixing.entity.rbac.UserEntity;
 import com.yintu.ruixing.exception.VerificationCodeException;

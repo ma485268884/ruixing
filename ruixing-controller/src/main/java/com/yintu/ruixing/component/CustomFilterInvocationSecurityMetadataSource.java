@@ -14,13 +14,13 @@ import org.springframework.util.AntPathMatcher;
 import java.security.Permission;
 import java.util.Collection;
 import java.util.List;
-/*
- *这个类的作用，主要是根据用户传来的请求地址，分析出请求需要的角色
- */
 
 /**
  * @author:mlf
  * @date:2020/5/18 19:56
+ */
+/**
+ *自定义资源（url）权限（role）数据源（从数据库中查出每个Permissiond对应的角色，放到Collection<ConfigAttribute>）
  */
 @Component
 public class CustomFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {

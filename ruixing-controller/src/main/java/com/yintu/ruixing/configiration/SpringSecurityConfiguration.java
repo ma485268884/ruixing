@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.component.CustomAccessDecisionManager;
 import com.yintu.ruixing.component.CustomFilterInvocationSecurityMetadataSource;
+import com.yintu.ruixing.component.CustomUsernamePasswordAuthenticationFilter;
 import com.yintu.ruixing.entity.rbac.UserEntity;
 import com.yintu.ruixing.exception.VerificationCodeException;
 import com.yintu.ruixing.service.rbac.impl.UserServiceImpl;
@@ -27,19 +28,10 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy;
 import org.springframework.security.web.session.ConcurrentSessionFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.OrRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsUtils;
-import org.springframework.web.cors.reactive.CorsConfigurationSource;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Map;
 
 @Configuration // 里面已经包含了@Component 所以不用再上下文中在引入入了
