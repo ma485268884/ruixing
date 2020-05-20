@@ -158,9 +158,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     out.write(jo.toJSONString());
                     out.flush();
                     out.close();
-                })
-                .permitAll().and().csrf()
-                .disable().exceptionHandling()
+                }).permitAll().and().csrf()
+                .disable().cors().and().exceptionHandling()
                 //认证时，在这里处理结果，不要重定向
                 .authenticationEntryPoint((HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException authenticationException) -> {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
@@ -185,24 +184,21 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     out.write(jo.toJSONString());
                     out.flush();
                     out.close();
-
-                }).and()
-                .addFilterAt(new ConcurrentSessionFilter(sessionRegistryImpl(), event -> {
-                    HttpServletResponse resp = event.getResponse();
-                    resp.setContentType("application/json;charset=utf-8");
-                    resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    PrintWriter out = resp.getWriter();
-                    Map<String, Object> errorData = ResponseDataUtil.noLogin("您已在另一台设备登录，本次登录已下线!");
-                    out.flush();
-                    out.close();
-                }), ConcurrentSessionFilter.class)
-                .addFilterAt(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                }).and().addFilterAt(new ConcurrentSessionFilter(sessionRegistryImpl(), event -> {
+            HttpServletResponse resp = event.getResponse();
+            resp.setContentType("application/json;charset=utf-8");
+            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            PrintWriter out = resp.getWriter();
+            Map<String, Object> errorData = ResponseDataUtil.noLogin("您已在另一台设备登录，本次登录已下线!");
+            out.flush();
+            out.close();
+        }), ConcurrentSessionFilter.class).addFilterAt(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**", "/js/**", "/index.html", "/img/**", "/fonts/**", "/favicon.ico", "/verifyCode","/druid/**");
+        web.ignoring().antMatchers("/css/**", "/js/**", "/index.html", "/img/**", "/fonts/**", "/favicon.ico", "/verifyCode", "/druid/**");
     }
 
 
