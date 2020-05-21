@@ -10,7 +10,7 @@
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="auth_type" jdbcType="SMALLINT" property="authType" />
     <result column="locked" jdbcType="SMALLINT" property="locked" />
-    <result column="enabled" jdbcType="SMALLINT" property="enabled" />
+    <result column="enableds" jdbcType="SMALLINT" property="enableds" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
     <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
   </resultMap>
@@ -73,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, password, true_name, phone, email, auth_type, locked, enabled, salt, 
+    id, username, password, true_name, phone, email, auth_type, locked, enableds, salt,
     login_time
   </sql>
   <select id="selectByExample" parameterType="com.yintu.ruixing.entity.UserEntityExample" resultMap="BaseResultMap">
@@ -109,11 +109,11 @@
   <insert id="insert" parameterType="com.yintu.ruixing.entity.UserEntity">
     insert into tb_user (id, username, password, 
       true_name, phone, email, 
-      auth_type, locked, enabled, 
+      auth_type, locked, enableds, 
       salt, login_time)
     values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{trueName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{authType,jdbcType=SMALLINT}, #{locked,jdbcType=SMALLINT}, #{enabled,jdbcType=SMALLINT}, 
+      #{authType,jdbcType=SMALLINT}, #{locked,jdbcType=SMALLINT}, #{enableds,jdbcType=SMALLINT}, 
       #{salt,jdbcType=VARCHAR}, #{loginTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.UserEntity">
@@ -143,8 +143,8 @@
       <if test="locked != null">
         locked,
       </if>
-      <if test="enabled != null">
-        enabled,
+      <if test="enableds != null">
+        enableds,
       </if>
       <if test="salt != null">
         salt,
@@ -178,8 +178,8 @@
       <if test="locked != null">
         #{locked,jdbcType=SMALLINT},
       </if>
-      <if test="enabled != null">
-        #{enabled,jdbcType=SMALLINT},
+      <if test="enableds != null">
+        #{enableds,jdbcType=SMALLINT},
       </if>
       <if test="salt != null">
         #{salt,jdbcType=VARCHAR},
@@ -222,8 +222,8 @@
       <if test="record.locked != null">
         locked = #{record.locked,jdbcType=SMALLINT},
       </if>
-      <if test="record.enabled != null">
-        enabled = #{record.enabled,jdbcType=SMALLINT},
+      <if test="record.enableds != null">
+        enableds = #{record.enableds,jdbcType=SMALLINT},
       </if>
       <if test="record.salt != null">
         salt = #{record.salt,jdbcType=VARCHAR},
@@ -246,7 +246,7 @@
       email = #{record.email,jdbcType=VARCHAR},
       auth_type = #{record.authType,jdbcType=SMALLINT},
       locked = #{record.locked,jdbcType=SMALLINT},
-      enabled = #{record.enabled,jdbcType=SMALLINT},
+      enableds = #{record.enableds,jdbcType=SMALLINT},
       salt = #{record.salt,jdbcType=VARCHAR},
       login_time = #{record.loginTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -277,8 +277,8 @@
       <if test="locked != null">
         locked = #{locked,jdbcType=SMALLINT},
       </if>
-      <if test="enabled != null">
-        enabled = #{enabled,jdbcType=SMALLINT},
+      <if test="enableds != null">
+        enableds = #{enableds,jdbcType=SMALLINT},
       </if>
       <if test="salt != null">
         salt = #{salt,jdbcType=VARCHAR},
@@ -298,7 +298,7 @@
       email = #{email,jdbcType=VARCHAR},
       auth_type = #{authType,jdbcType=SMALLINT},
       locked = #{locked,jdbcType=SMALLINT},
-      enabled = #{enabled,jdbcType=SMALLINT},
+      enableds = #{enableds,jdbcType=SMALLINT},
       salt = #{salt,jdbcType=VARCHAR},
       login_time = #{loginTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
