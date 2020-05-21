@@ -1,9 +1,8 @@
 package com.yintu.ruixing.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +20,9 @@ public class UserEntity implements UserDetails {
     private Long id;
 
     private String username;
+
     @JsonIgnore
+    @JSONField(serialize = false)
     private String password;
 
     private String trueName;
@@ -34,7 +35,7 @@ public class UserEntity implements UserDetails {
 
     private Short locked;
 
-    private Short enabled;
+    private Short enableds;
 
     private String salt;
 
@@ -42,8 +43,10 @@ public class UserEntity implements UserDetails {
 
     private List<RoleEntity> roleEntitys;
 
+
     @Override
     @JsonIgnore
+    @JSONField(serialize = false)
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> list = new ArrayList<>(roleEntitys.size());
         for (RoleEntity roleEntity : roleEntitys) {
@@ -79,7 +82,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return enabled == 1;
+        return enableds == 1;
     }
 
 
