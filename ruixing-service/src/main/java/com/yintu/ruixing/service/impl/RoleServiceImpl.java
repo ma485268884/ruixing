@@ -1,6 +1,4 @@
 package com.yintu.ruixing.service.impl;
-
-import co.yintu.ruyixing.entity.*;
 import com.yintu.ruixing.dao.PermissionRoleDao;
 import com.yintu.ruixing.dao.RoleDao;
 import com.yintu.ruixing.dao.UserRoleDao;
