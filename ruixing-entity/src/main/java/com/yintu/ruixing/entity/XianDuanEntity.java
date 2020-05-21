@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 线段
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

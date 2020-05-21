@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 铁路局
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
