@@ -1,8 +1,8 @@
 package com.yintu.ruixing.component;
 
-import com.yintu.ruixing.entity.rbac.PermissionEntity;
-import com.yintu.ruixing.entity.rbac.RoleEntity;
-import com.yintu.ruixing.service.rbac.PermissionService;
+import com.yintu.ruixing.entity.PermissionEntity;
+import com.yintu.ruixing.entity.RoleEntity;
+import com.yintu.ruixing.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -11,9 +11,6 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
-import javax.print.DocFlavor;
-import java.security.Permission;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 

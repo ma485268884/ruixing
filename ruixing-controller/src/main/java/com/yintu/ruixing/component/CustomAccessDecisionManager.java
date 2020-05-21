@@ -1,7 +1,7 @@
 package com.yintu.ruixing.component;
 
 import com.yintu.ruixing.common.enumobject.EnumAuthType;
-import com.yintu.ruixing.entity.rbac.UserEntity;
+import com.yintu.ruixing.entity.UserEntity;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
