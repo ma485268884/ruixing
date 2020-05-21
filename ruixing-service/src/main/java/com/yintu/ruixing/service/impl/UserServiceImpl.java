@@ -32,8 +32,6 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     @Autowired
     private RoleService roleService;
-    @Autowired
-    private PermissionService permissionService;
 
     @Override
     public void add(UserEntity userEntity) {
@@ -86,9 +84,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageInfo<JSONObject> findAllAndUrlByUserIdAndUrl(Integer pageNumber, Integer pageSize, String username, Long userId, String url) {
-        List<String> strings = permissionService.findByUserIdAndUrl(userId, "/users");
-        Page<UserEntity> userEntityPage = PageHelper.startPage(pageNumber, pageSize);
+    public List<UserEntity> findAllOrByUsername(String username) {
         List<UserEntity> userEntities;
         if (username == null || "".equals(username)) {
             userEntities = this.findAll();
@@ -98,13 +94,7 @@ public class UserServiceImpl implements UserService {
             criteria.andUsernameLike("%" + username + "%");
             userEntities = this.findByExample(userEntityExample);
         }
-        List<JSONObject> jsonObjects = new ArrayList<>();
-        for (UserEntity userEntity : userEntities) {
-            JSONObject jo = (JSONObject) JSONObject.toJSON(userEntity);
-            jo.put("url", strings);
-            jsonObjects.add(jo);
-        }
-        return new PageInfo<>(jsonObjects);
+        return userEntities;
     }
 
 

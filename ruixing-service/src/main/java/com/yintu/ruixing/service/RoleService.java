@@ -78,14 +78,12 @@ public interface RoleService {
     List<RoleEntity> findByPermissionId(Long permissionId);
 
     /**
-     * @param pageNumber 页码
-     * @param pageSize   页数
-     * @param name       角色名
-     * @param userId     用户id
-     * @param url        模块url
-     * @return 角色分页信息
+     * 查询全部角色或者查询按照名称查询
+     *
+     * @param name 角色名字
+     * @return 角色集
      */
-    PageInfo<JSONObject> findAllAndUrlByUserIdAndUrl(Integer pageNumber, Integer pageSize, String name, Long userId, String url);
+    List<RoleEntity> findAllOrByName(String name);
 
 
 }

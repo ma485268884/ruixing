@@ -48,6 +48,6 @@ public interface PermissionService {
      * @param url
      * @return
      */
-    List<String> findByUserIdAndUrl(Long userId, String url);
+    List<String> findRequestMethodsByUserIdAndUrl(Long userId, String url);
 
 }

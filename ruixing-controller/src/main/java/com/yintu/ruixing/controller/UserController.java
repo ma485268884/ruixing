@@ -57,8 +57,14 @@ public class UserController extends BaseController {
 
     @GetMapping("/users")
     public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber, @RequestParam("page_size") Integer pageSize, @RequestParam(value = "search_text", required = false) String username) {
-        PageInfo<JSONObject> pageInfo = userService.findAllAndUrlByUserIdAndUrl(pageNumber, pageSize, username, this.getLoginUserId(), "/users");
-        return ResponseDataUtil.ok("查询用户列表成功", pageInfo);
+        JSONObject jo = new JSONObject();
+        List<String> requestMethods = permissionService.findRequestMethodsByUserIdAndUrl(this.getLoginUserId(), "/users");
+        jo.put("requestMethods", requestMethods);
+        PageHelper.startPage(pageNumber, pageSize);
+        List<UserEntity> userEntities = userService.findAllOrByUsername(username);
+        PageInfo<UserEntity> pageInfo = new PageInfo<>(userEntities);
+        jo.put("pageInfo", pageInfo);
+        return ResponseDataUtil.ok("查询用户列表成功", jo);
     }
 
 

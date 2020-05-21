@@ -57,15 +57,11 @@ public interface UserService extends UserDetailsService {
     List<UserEntity> findByExample(UserEntityExample userEntityExample);
 
     /**
-     * 查询全部用户或者按照用户名查询以及用户权限
-     *
-     * @param pageNumber 页码
-     * @param pageSize   页数
-     * @param userId     用户id
-     * @param url        模块url
-     * @return 用户分页信息
+     * 查询全部用户或者按照用户名查询
+     * @param username 用户名
+     * @return 用户列表信息
      */
-    PageInfo<JSONObject> findAllAndUrlByUserIdAndUrl(Integer pageNumber, Integer pageSize, String username, Long userId, String url);
+    List<UserEntity> findAllOrByUsername(String username);
 
 
 }

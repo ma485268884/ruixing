@@ -57,7 +57,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public List<String> findByUserIdAndUrl(Long userId, String url) {
+    public List<String> findRequestMethodsByUserIdAndUrl(Long userId, String url) {
         return permissionDao.selectByUserIdAndUrl(userId, url);
     }
 }

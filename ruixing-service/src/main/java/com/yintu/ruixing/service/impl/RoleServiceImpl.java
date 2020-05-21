@@ -32,8 +32,6 @@ public class RoleServiceImpl implements RoleService {
     private UserRoleService userRoleService;
     @Autowired
     private PermissionRoleService permissionRoleService;
-    @Autowired
-    private PermissionService permissionService;
 
     @Override
     public void add(RoleEntity roleEntity) {
@@ -75,9 +73,7 @@ public class RoleServiceImpl implements RoleService {
 
 
     @Override
-    public PageInfo<JSONObject> findAllAndUrlByUserIdAndUrl(Integer pageNumber, Integer pageSize, String name, Long userId, String url) {
-        List<String> strings = permissionService.findByUserIdAndUrl(userId, "/users");
-        Page<RoleEntity> roleEntityPage = PageHelper.startPage(pageNumber, pageSize);
+    public List<RoleEntity> findAllOrByName(String name) {
         List<RoleEntity> roleEntities;
         if (name == null || "".equals(name)) {
             roleEntities = this.findAll();
@@ -87,13 +83,7 @@ public class RoleServiceImpl implements RoleService {
             criteria.andNameLike("%" + name + "%");
             roleEntities = this.findByExample(roleEntityExample);
         }
-        List<JSONObject> jsonObjects = new ArrayList<>();
-        for (RoleEntity roleEntity : roleEntities) {
-            JSONObject jo = (JSONObject) JSONObject.toJSON(roleEntity);
-            jo.put("url", strings);
-            jsonObjects.add(jo);
-        }
-        return new PageInfo<>(jsonObjects);
+       return roleEntities;
     }
 
 
