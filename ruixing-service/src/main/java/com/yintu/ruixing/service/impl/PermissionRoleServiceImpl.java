@@ -2,10 +2,13 @@ package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.dao.PermissionRoleDao;
 import com.yintu.ruixing.entity.PermissionRoleEntity;
+import com.yintu.ruixing.entity.PermissionRoleEntityExample;
 import com.yintu.ruixing.service.PermissionRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author:mlf
@@ -36,5 +39,10 @@ public class PermissionRoleServiceImpl implements PermissionRoleService {
     @Override
     public PermissionRoleEntity findById(Long id) {
         return permissionRoleDao.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<PermissionRoleEntity> findByExample(PermissionRoleEntityExample permissionRoleEntityExample) {
+        return permissionRoleDao.selectByExample(permissionRoleEntityExample);
     }
 }

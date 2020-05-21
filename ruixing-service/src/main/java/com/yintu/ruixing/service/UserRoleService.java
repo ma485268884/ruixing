@@ -1,6 +1,9 @@
 package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.entity.UserRoleEntity;
+import com.yintu.ruixing.entity.UserRoleEntityExample;
+
+import java.util.List;
 
 /**
  * @author:mlf
@@ -35,5 +38,14 @@ public interface UserRoleService {
      * @return 用户角色信息
      */
     UserRoleEntity findById(Long id);
+
+
+    /**
+     * 多条件查询用户角色信息
+     *
+     * @param userRoleEntityExample 用户角色条件
+     * @return 用户角色信息集
+     */
+    List<UserRoleEntity> findByExample(UserRoleEntityExample userRoleEntityExample);
 
 }

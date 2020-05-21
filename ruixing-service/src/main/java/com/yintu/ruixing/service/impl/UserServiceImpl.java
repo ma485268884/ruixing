@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
         } else {
             UserEntityExample userEntityExample = new UserEntityExample();
             UserEntityExample.Criteria criteria = userEntityExample.createCriteria();
-            criteria.andUsernameEqualTo(username);
+            criteria.andUsernameLike("%" + username + "%");
             userEntities = this.findByExample(userEntityExample);
         }
         List<JSONObject> jsonObjects = new ArrayList<>();

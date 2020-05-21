@@ -1,6 +1,9 @@
 package com.yintu.ruixing.service;
 
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.entity.RoleEntity;
+import com.yintu.ruixing.entity.RoleEntityExample;
 
 import java.util.List;
 
@@ -38,6 +41,19 @@ public interface RoleService {
     RoleEntity findById(Long id);
 
     /**
+     * @return 角色信息
+     */
+    List<RoleEntity> findAll();
+
+
+    /***
+     * 查询所有的角色信息
+     * @param roleEntityExample 角色条件
+     * @return 角色信息集
+     */
+    List<RoleEntity> findByExample(RoleEntityExample roleEntityExample);
+
+    /**
      * 按照id集查询角色集
      *
      * @param ids id集
@@ -60,4 +76,16 @@ public interface RoleService {
      * @return 返回指定角色集
      */
     List<RoleEntity> findByPermissionId(Long permissionId);
+
+    /**
+     * @param pageNumber 页码
+     * @param pageSize   页数
+     * @param name       角色名
+     * @param userId     用户id
+     * @param url        模块url
+     * @return 角色分页信息
+     */
+    PageInfo<JSONObject> findAllAndUrlByUserIdAndUrl(Integer pageNumber, Integer pageSize, String name, Long userId, String url);
+
+
 }

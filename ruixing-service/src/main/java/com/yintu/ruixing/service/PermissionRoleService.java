@@ -1,6 +1,9 @@
 package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.entity.PermissionRoleEntity;
+import com.yintu.ruixing.entity.PermissionRoleEntityExample;
+
+import java.util.List;
 
 /**
  * @author:mlf
@@ -34,4 +37,12 @@ public interface PermissionRoleService {
      * @return 角色权限信息
      */
     PermissionRoleEntity findById(Long id);
+
+    /**
+     * 多条件查询角色权限信息
+     *
+     * @param permissionRoleEntityExample 角色权限条件
+     * @return 角色权限信息集
+     */
+    List<PermissionRoleEntity> findByExample(PermissionRoleEntityExample permissionRoleEntityExample);
 }
