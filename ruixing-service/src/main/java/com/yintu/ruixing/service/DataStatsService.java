@@ -1,9 +1,12 @@
 package com.yintu.ruixing.service;
 
-import com.yintu.ruixing.entity.CheZhanEntity;
+
+import com.yintu.ruixing.entity.DataStats;
+import com.yintu.ruixing.entity.PageResponseDto;
+
 
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * @author:lcy
@@ -12,6 +15,8 @@ import java.util.Map;
  */
 
 public interface DataStatsService {
-    List<CheZhanEntity> getAllData(Map map);
-
+    //查询所有数据
+    List<DataStats> findAll();
+    //分页查询
+    PageResponseDto<DataStats> getByPage(Integer page, Integer limit);
 }

@@ -1,6 +1,9 @@
 package com.yintu.ruixing.dao;
 
+import com.github.pagehelper.Page;
 import com.yintu.ruixing.entity.CheZhanEntity;
+import com.yintu.ruixing.entity.DataStats;
+import com.yintu.ruixing.entity.TieLuJuEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,8 +18,8 @@ import java.util.Map;
 @Mapper
 public interface DataStatsDao {
 
-    List<CheZhanEntity> getAllData(Map map);
+    public List<DataStats> findAll();
 
-    List<CheZhanEntity> findAllData(CheZhanEntity cheZhanEntity,int pageCount,int pageSize);
+    List<DataStats> getByPage();
 
 }
