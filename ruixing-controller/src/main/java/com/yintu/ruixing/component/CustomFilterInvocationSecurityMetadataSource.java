@@ -1,5 +1,6 @@
 package com.yintu.ruixing.component;
 
+import com.yintu.ruixing.common.util.StringUtils;
 import com.yintu.ruixing.entity.PermissionEntity;
 import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.service.PermissionService;
@@ -36,11 +37,16 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
         String requestUrl = filterInvocation.getRequestUrl();
         String requestMethod = filterInvocation.getRequest().getMethod();
         //restful 风格api /users/1/roles  数据库是/users+请求方式
-        if (requestUrl.split("/").length >= 2)
-            requestUrl = "/" + requestUrl.split("/")[1];
+        String[] strArray = requestUrl.split("/");
+        StringBuilder newRequestUrl = new StringBuilder();
+        for (String s : strArray) {
+            if (!StringUtils.isNumber(s)) {
+                newRequestUrl.append("/").append(s);
+            }
+        }
         List<PermissionEntity> permissionEntities = permissionService.findPermissionAndRole();
         for (PermissionEntity permissionEntity : permissionEntities) {
-            if (antPathMatcher.match(permissionEntity.getUrl(), requestUrl) && requestMethod.equals(permissionEntity.getMethod().toUpperCase())) {
+            if (antPathMatcher.match(permissionEntity.getUrl(), newRequestUrl.toString()) && requestMethod.equals(permissionEntity.getMethod().toUpperCase())) {
                 List<RoleEntity> roleEntities = permissionEntity.getRoleEntities();
                 String[] str = new String[roleEntities.size()];
                 for (int i = 0; i < roleEntities.size(); i++) {
