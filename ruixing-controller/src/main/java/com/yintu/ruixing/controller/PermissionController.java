@@ -1,12 +1,14 @@
 package com.yintu.ruixing.controller;
 
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.PermissionEntity;
 import com.yintu.ruixing.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,5 +46,11 @@ public class PermissionController {
     public Map<String, Object> find(@PathVariable Long id) {
         PermissionEntity permissionEntity = permissionService.findById(id);
         return ResponseDataUtil.ok("查询权限成功", permissionEntity);
+    }
+
+    @GetMapping("/permissions")
+    public Map<String, Object> findAll() {
+        List<TreeNodeUtil> treeNodeUtils = permissionService.findPermissionTree(-1L);
+        return ResponseDataUtil.ok("查询权限列表成功", treeNodeUtils);
     }
 }

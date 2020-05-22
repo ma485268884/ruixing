@@ -47,7 +47,7 @@ public interface RoleService {
 
 
     /***
-     * 查询所有的角色信息
+     * 多条件查询角色信息
      * @param roleEntityExample 角色条件
      * @return 角色信息集
      */

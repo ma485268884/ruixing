@@ -1,5 +1,6 @@
 package com.yintu.ruixing.service.impl;
 
+import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.PermissionDao;
 import com.yintu.ruixing.entity.PermissionEntity;
 import com.yintu.ruixing.entity.PermissionEntityExample;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +48,11 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
+    public List<PermissionEntity> findByExample(PermissionEntityExample permissionEntityExample) {
+        return permissionDao.selectByExample(permissionEntityExample);
+    }
+
+    @Override
     public List<PermissionEntity> findPermissionAndRole() {
         PermissionEntityExample permissionEntityExample = new PermissionEntityExample();
         List<PermissionEntity> permissionEntities = permissionDao.selectByExample(permissionEntityExample);
@@ -60,4 +67,25 @@ public class PermissionServiceImpl implements PermissionService {
     public List<String> findRequestMethodsByUserIdAndUrl(Long userId, String url) {
         return permissionDao.selectByUserIdAndUrl(userId, url);
     }
+
+    @Override
+    public List<TreeNodeUtil> findPermissionTree(Long parentId) {
+        PermissionEntityExample permissionEntityExample = new PermissionEntityExample();
+        PermissionEntityExample.Criteria criteria = permissionEntityExample.createCriteria();
+        criteria.andParentIdEqualTo(parentId);
+        List<PermissionEntity> permissionEntities = this.findByExample(permissionEntityExample);
+
+        List<TreeNodeUtil> treeNodeUtils = new ArrayList<>();
+        for (PermissionEntity permissionEntity : permissionEntities) {
+            TreeNodeUtil treeNodeUtil = new TreeNodeUtil();
+            treeNodeUtil.setId(permissionEntity.getId());
+            treeNodeUtil.setText(permissionEntity.getName());
+            treeNodeUtil.setIcon(permissionEntity.getIconCls());
+            treeNodeUtil.setChildren(this.findPermissionTree(permissionEntity.getId()));
+            treeNodeUtils.add(treeNodeUtil);
+        }
+        return treeNodeUtils;
+    }
+
+
 }

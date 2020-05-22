@@ -91,11 +91,11 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         );
         customUsernamePasswordAuthenticationFilter.setAuthenticationFailureHandler((HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException authenticationException) -> {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
-                    httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                     PrintWriter out = httpServletResponse.getWriter();
                     Map<String, Object> errorData = ResponseDataUtil.noLogin(authenticationException.getMessage());
                     if (authenticationException instanceof AuthenticationServiceException) {
-                        httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                        httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                         //服务器异常
                         errorData = ResponseDataUtil.error(authenticationException.getMessage());
                     }
@@ -163,7 +163,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //认证时，在这里处理结果，不要重定向
                 .authenticationEntryPoint((HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException authenticationException) -> {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
-                    httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                     PrintWriter out = httpServletResponse.getWriter();
                     Map<String, Object> errorData = ResponseDataUtil.noLogin("访问失败，请先登录");
                     if (authenticationException instanceof InsufficientAuthenticationException) {
@@ -177,7 +177,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //没有权限时，在这里处理结果，不要重定向
                 .accessDeniedHandler((HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException accessDeniedException) -> {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
-                    httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                     PrintWriter out = httpServletResponse.getWriter();
                     Map<String, Object> errorData = ResponseDataUtil.noAuthorize(accessDeniedException.getMessage());
                     JSONObject jo = (JSONObject) JSONObject.toJSON(errorData);
@@ -187,7 +187,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 }).and().addFilterAt(new ConcurrentSessionFilter(sessionRegistryImpl(), event -> {
             HttpServletResponse resp = event.getResponse();
             resp.setContentType("application/json;charset=utf-8");
-            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            resp.setStatus(HttpServletResponse.SC_OK);
             PrintWriter out = resp.getWriter();
             Map<String, Object> errorData = ResponseDataUtil.noLogin("您已在另一台设备登录，本次登录已下线!");
             out.flush();
