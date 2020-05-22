@@ -1,11 +1,15 @@
 package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.dao.UserRoleDao;
+import com.yintu.ruixing.entity.PermissionRoleEntity;
 import com.yintu.ruixing.entity.UserRoleEntity;
+import com.yintu.ruixing.entity.UserRoleEntityExample;
 import com.yintu.ruixing.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author:mlf
@@ -36,5 +40,11 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Override
     public UserRoleEntity findById(Long id) {
         return userRoleDao.selectByPrimaryKey(id);
+    }
+
+
+    @Override
+    public List<UserRoleEntity> findByExample(UserRoleEntityExample userRoleEntityExample) {
+        return userRoleDao.selectByExample(userRoleEntityExample);
     }
 }

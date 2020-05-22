@@ -2,7 +2,10 @@ package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.PermissionEntity;
 import com.yintu.ruixing.entity.PermissionEntityExample;
+
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface PermissionDao {
@@ -27,4 +30,6 @@ public interface PermissionDao {
     int updateByPrimaryKeySelective(PermissionEntity record);
 
     int updateByPrimaryKey(PermissionEntity record);
+
+    List<String> selectByUserIdAndUrl(Long userId,String url);
 }

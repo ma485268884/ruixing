@@ -3,6 +3,7 @@ package com.yintu.ruixing.service;
 import com.yintu.ruixing.entity.PermissionEntity;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author:mlf
@@ -41,5 +42,12 @@ public interface PermissionService {
      */
     List<PermissionEntity> findPermissionAndRole();
 
+    /**
+     * 按照用户和模块寻查询权限
+     * @param userId
+     * @param url
+     * @return
+     */
+    List<String> findRequestMethodsByUserIdAndUrl(Long userId, String url);
 
 }

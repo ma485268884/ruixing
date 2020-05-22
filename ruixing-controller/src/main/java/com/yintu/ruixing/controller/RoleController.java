@@ -1,11 +1,16 @@
 package com.yintu.ruixing.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.RoleEntity;
+import com.yintu.ruixing.service.PermissionService;
 import com.yintu.ruixing.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,9 +18,11 @@ import java.util.Map;
  * @date:2020/5/19 17:36
  */
 @RestController
-public class RoleController {
+public class RoleController extends BaseController {
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private PermissionService permissionService;
 
     @PostMapping("/roles")
     public Map<String, Object> add(RoleEntity roleEntity) {
@@ -39,5 +46,17 @@ public class RoleController {
     public Map<String, Object> find(@PathVariable Long id) {
         RoleEntity roleEntity = roleService.findById(id);
         return ResponseDataUtil.ok("查询角色成功", roleEntity);
+    }
+
+    @GetMapping("/roles")
+    public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber, @RequestParam("page_size") Integer pageSize, @RequestParam(value = "search_text", required = false) String name) {
+        JSONObject jo = new JSONObject();
+        List<String> requestMethods = permissionService.findRequestMethodsByUserIdAndUrl(this.getLoginUserId(), "/users");
+        jo.put("requestMethods", requestMethods);
+        PageHelper.startPage(pageNumber, pageSize);
+        List<RoleEntity> roleEntities = roleService.findAllOrByName(name);
+        PageInfo<RoleEntity> pageInfo = new PageInfo<>(roleEntities);
+        jo.put("pageInfo", pageInfo);
+        return ResponseDataUtil.ok("查询角色列表成功", jo);
     }
 }
