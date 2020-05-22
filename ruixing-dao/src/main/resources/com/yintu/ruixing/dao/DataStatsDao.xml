@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.DataStatsDao">
+    <!--查詢所有的车站数据-->
+
+    <select id="findAll" resultType="com.yintu.ruixing.entity.DataStats">
+     SELECT
+		tlj.tlj_name,
+		dwd.dwd_name,
+		xd.xd_name,
+		cz.cz_name,
+		cz.id,
+		cz.cz_ip,
+		cz.cz_type,
+		cz.cz_lasttime,
+		cz.cz_open_stutrs
+	FROM
+		mro_chezhan cz,
+		mro_dianwuduan dwd,
+		mro_tieluju tlj,
+		mro_xianduan xd
+	WHERE
+		tlj.id = dwd.tlj_id
+		AND dwd.id = xd.dwd_id
+		AND xd.id = cz.xd_id
+
+    </select>
+
+    <!--检查项分页查询-->
+
+	<select id="getByPage" resultType="com.yintu.ruixing.entity.DataStats">
+		SELECT
+		tlj.tlj_name,
+		dwd.dwd_name,
+		xd.xd_name,
+		cz.cz_name,
+		cz.id,
+		cz.cz_ip,
+		cz.cz_type,
+		cz.cz_lasttime,
+		cz.cz_open_stutrs
+	FROM
+		mro_chezhan cz,
+		mro_dianwuduan dwd,
+		mro_tieluju tlj,
+		mro_xianduan xd
+	WHERE
+		tlj.id = dwd.tlj_id
+		AND dwd.id = xd.dwd_id
+		AND xd.id = cz.xd_id
+
+	</select>
+
+</mapper>

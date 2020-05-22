@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * 线段
  */
@@ -26,6 +28,5 @@ public class XianDuanEntity {
     private String yuliu2;
 
     private long xd_type;
-
 
 }

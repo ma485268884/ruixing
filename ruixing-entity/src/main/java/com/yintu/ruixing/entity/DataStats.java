@@ -5,14 +5,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 /**
- * 车站   
+ * @author:lcy
+ * @date:2020-05-22 10
+ * 封装数据统计
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CheZhanEntity {
+public class DataStats {
+
+    private String tlj_name;
+
+    private String dwd_name;
+
+    private String xd_name;
+
     private long id;
 
     private String cz_name;
