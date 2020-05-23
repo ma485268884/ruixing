@@ -1,7 +1,7 @@
 package com.yintu.ruixing.service;
 
-import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.PageInfo;
+import com.yintu.ruixing.common.util.TreeNodeUtil;
+import com.yintu.ruixing.entity.PermissionEntity;
 import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.entity.RoleEntityExample;
 
@@ -84,6 +84,24 @@ public interface RoleService {
      * @return 角色集
      */
     List<RoleEntity> findAllOrByName(String name);
+
+    /**
+     * 通过角色id查询权限树
+     *
+     * @param id 角色id
+     * @return 角色信息
+     */
+
+    List<TreeNodeUtil> findPermissionsTreeById(Long id, Long parentId);
+
+
+    /**
+     * 指定角色分配权限
+     *
+     * @param Id            用户id
+     * @param permissionIds 角色id集
+     */
+    void addPermissionsByIdAndPermissionIds(Long Id, Long[] permissionIds);
 
 
 }

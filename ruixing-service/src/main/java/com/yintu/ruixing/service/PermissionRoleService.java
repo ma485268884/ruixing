@@ -2,6 +2,7 @@ package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.entity.PermissionRoleEntity;
 import com.yintu.ruixing.entity.PermissionRoleEntityExample;
+import com.yintu.ruixing.entity.UserRoleEntityExample;
 
 import java.util.List;
 
@@ -30,6 +31,12 @@ public interface PermissionRoleService {
      * @param id id
      */
     void remove(Long id);
+
+    /**
+     *
+     * @param permissionRoleEntityExample 角色权限条件
+     */
+    void removeByExample(PermissionRoleEntityExample permissionRoleEntityExample);
 
     /**
      * id查询角色权限

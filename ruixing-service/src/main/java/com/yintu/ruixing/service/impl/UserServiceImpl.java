@@ -7,10 +7,10 @@ import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.enumobject.EnumAuthType;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.dao.UserDao;
-import com.yintu.ruixing.entity.UserEntity;
-import com.yintu.ruixing.entity.UserEntityExample;
+import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.PermissionService;
 import com.yintu.ruixing.service.RoleService;
+import com.yintu.ruixing.service.UserRoleService;
 import com.yintu.ruixing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,9 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -32,6 +30,8 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private UserRoleService userRoleService;
 
     @Override
     public void add(UserEntity userEntity) {
@@ -119,5 +119,44 @@ public class UserServiceImpl implements UserService {
         return userEntity;
     }
 
+    @Override
+    public List<RoleEntity> findRolesById(Long id) {
+        return roleService.findByUserId(id);
+    }
 
+    @Override
+    public void addRolesByIdAndRoleIds(Long id, Long[] roleIds) {
+        //去重
+        Set<Long> set = new HashSet<>(Arrays.asList(roleIds));
+
+        UserEntity userEntity = this.findById(id);
+        if (userEntity != null) {//判断当前用户是否存在
+            //查询当前用户分配的角色
+            UserRoleEntityExample userRoleEntityExample = new UserRoleEntityExample();
+            UserRoleEntityExample.Criteria criteria = userRoleEntityExample.createCriteria();
+            criteria.andUserIdEqualTo(id);
+            List<UserRoleEntity> userRoleEntities = userRoleService.findByExample(userRoleEntityExample);
+
+            //删除当前用户分配的角色
+            if (userRoleEntities.size() > 0) {
+                List<Long> longs = new ArrayList<>();
+                for (UserRoleEntity userRoleEntity : userRoleEntities) {
+                    longs.add(userRoleEntity.getRoleId());
+                }
+                criteria.andRoleIdIn(longs);
+                userRoleService.removeByExample(userRoleEntityExample);
+            }
+
+            //添加当前用户新分配分配的角色
+            for (Long roleId : set) {
+                RoleEntity roleEntity = roleService.findById(roleId);
+                if (roleEntity != null) {
+                    UserRoleEntity userRoleEntity = new UserRoleEntity();
+                    userRoleEntity.setUserId(id);
+                    userRoleEntity.setRoleId(roleId);
+                    userRoleService.add(userRoleEntity);
+                }
+            }
+        }
+    }
 }

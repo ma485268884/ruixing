@@ -38,6 +38,11 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
+    public void removeByExample(UserRoleEntityExample userRoleEntityExample) {
+        userRoleDao.deleteByExample(userRoleEntityExample);
+    }
+
+    @Override
     public UserRoleEntity findById(Long id) {
         return userRoleDao.selectByPrimaryKey(id);
     }

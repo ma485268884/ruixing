@@ -2,6 +2,7 @@ package com.yintu.ruixing.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
+import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.entity.UserEntityExample;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -58,10 +59,27 @@ public interface UserService extends UserDetailsService {
 
     /**
      * 查询全部用户或者按照用户名查询
+     *
      * @param username 用户名
      * @return 用户列表信息
      */
     List<UserEntity> findAllOrByUsername(String username);
 
+    /**
+     * 通过用户id查询角色
+     *
+     * @param id 用户id
+     * @return 角色信息
+     */
+
+    List<RoleEntity> findRolesById(Long id);
+
+    /**
+     * 指定用户分配角色
+     *
+     * @param Id      用户id
+     * @param roleIds 角色id集
+     */
+    void addRolesByIdAndRoleIds(Long Id, Long[] roleIds);
 
 }

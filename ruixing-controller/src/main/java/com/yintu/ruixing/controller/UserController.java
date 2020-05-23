@@ -4,15 +4,17 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.entity.UserEntity;
+import com.yintu.ruixing.entity.UserRoleEntity;
 import com.yintu.ruixing.service.PermissionService;
+import com.yintu.ruixing.service.UserRoleService;
 import com.yintu.ruixing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author:mlf
@@ -25,6 +27,7 @@ public class UserController extends BaseController {
     private UserService userService;
     @Autowired
     private PermissionService permissionService;
+
 
     @PostMapping("/users")
     public Map<String, Object> add(UserEntity userEntity) {
@@ -63,6 +66,18 @@ public class UserController extends BaseController {
         PageInfo<UserEntity> pageInfo = new PageInfo<>(userEntities);
         jo.put("pageInfo", pageInfo);
         return ResponseDataUtil.ok("查询用户列表成功", jo);
+    }
+
+    @GetMapping("/users/{id}/roles")
+    public Map<String, Object> findRolesById(@PathVariable Long id) {
+        List<RoleEntity> roleEntities = userService.findRolesById(id);
+        return ResponseDataUtil.ok("查询用户角色成功", roleEntities);
+    }
+
+    @PostMapping("/users/{id}/roles")
+    public Map<String, Object> addRolesByIdAndRoleIds(@PathVariable Long id, @RequestParam Long[] roleIds) {
+        userService.addRolesByIdAndRoleIds(id, roleIds);
+        return ResponseDataUtil.ok("分配用户角色成功");
     }
 
 

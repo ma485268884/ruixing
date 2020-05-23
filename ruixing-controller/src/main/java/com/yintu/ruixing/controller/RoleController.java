@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.common.util.TreeNodeUtil;
+import com.yintu.ruixing.entity.PermissionEntity;
 import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.service.PermissionService;
 import com.yintu.ruixing.service.RoleService;
@@ -59,4 +61,17 @@ public class RoleController extends BaseController {
         jo.put("pageInfo", pageInfo);
         return ResponseDataUtil.ok("查询角色列表成功", jo);
     }
+
+    @GetMapping("/roles/{id}/permissions")
+    public Map<String, Object> findRolesById(@PathVariable Long id) {
+        List<TreeNodeUtil> treeNodeUtils = roleService.findPermissionsTreeById(id, -1L);
+        return ResponseDataUtil.ok("查询角色权限成功", treeNodeUtils);
+    }
+
+    @PostMapping("/roles/{id}/permissions")
+    public Map<String, Object> addRolesByIdAndRoleIds(@PathVariable Long id, @RequestParam Long[] permissionIds) {
+        roleService.addPermissionsByIdAndPermissionIds(id, permissionIds);
+        return ResponseDataUtil.ok("分配角色权限成功");
+    }
+
 }

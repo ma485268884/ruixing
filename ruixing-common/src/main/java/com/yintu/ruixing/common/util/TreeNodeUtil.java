@@ -11,7 +11,7 @@ import java.util.Map;
 public class TreeNodeUtil {
 
     private Long id;
-    private String text;
+    private String label;
     private String icon;
     private Map<String, Boolean> state;
     private List<TreeNodeUtil> children;
@@ -26,12 +26,12 @@ public class TreeNodeUtil {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getLabel() {
+        return label;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setLabel(String text) {
+        this.label = text;
     }
 
     public String getIcon() {

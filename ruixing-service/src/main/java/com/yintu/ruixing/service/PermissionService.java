@@ -5,7 +5,6 @@ import com.yintu.ruixing.entity.PermissionEntity;
 import com.yintu.ruixing.entity.PermissionEntityExample;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author:mlf
@@ -44,6 +43,18 @@ public interface PermissionService {
     List<PermissionEntity> findByExample(PermissionEntityExample permissionEntityExample);
 
     /**
+     * @param ids 权限id集合
+     * @return 权限集
+     */
+    List<PermissionEntity> findByIds(List<Long> ids,Long parentId);
+
+    /**
+     * @param roleId 角色id
+     * @return 权限集
+     */
+    List<PermissionEntity> findByRoleId(Long roleId,Long parentId);
+
+    /**
      * 查询权限集以及对应的角色集
      *
      * @return 权限集
@@ -61,9 +72,11 @@ public interface PermissionService {
 
     /**
      * 获取tree
+     *
      * @param parentId 父级id
      * @return
      */
     List<TreeNodeUtil> findPermissionTree(Long parentId);
+
 
 }

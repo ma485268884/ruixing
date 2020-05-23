@@ -2,9 +2,8 @@ package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.PermissionDao;
-import com.yintu.ruixing.entity.PermissionEntity;
-import com.yintu.ruixing.entity.PermissionEntityExample;
-import com.yintu.ruixing.entity.RoleEntity;
+import com.yintu.ruixing.entity.*;
+import com.yintu.ruixing.service.PermissionRoleService;
 import com.yintu.ruixing.service.PermissionService;
 import com.yintu.ruixing.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,8 @@ public class PermissionServiceImpl implements PermissionService {
     private PermissionDao permissionDao;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private PermissionRoleService permissionRoleService;
 
     @Override
     public void add(PermissionEntity permissionEntity) {
@@ -50,6 +51,31 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public List<PermissionEntity> findByExample(PermissionEntityExample permissionEntityExample) {
         return permissionDao.selectByExample(permissionEntityExample);
+    }
+
+    @Override
+    public List<PermissionEntity> findByIds(List<Long> ids,Long parentId) {
+        List<PermissionEntity> permissionEntities = new ArrayList<>();
+        if (ids.size() > 0) {
+            PermissionEntityExample permissionEntityExample = new PermissionEntityExample();
+            PermissionEntityExample.Criteria criteria = permissionEntityExample.createCriteria();
+            criteria.andIdIn(ids);
+            permissionEntities = permissionDao.selectByExample(permissionEntityExample);
+        }
+        return permissionEntities;
+    }
+
+    @Override
+    public List<PermissionEntity> findByRoleId(Long roleId,Long parentId) {
+        PermissionRoleEntityExample permissionRoleEntityExample = new PermissionRoleEntityExample();
+        PermissionRoleEntityExample.Criteria criteria = permissionRoleEntityExample.createCriteria();
+        criteria.andRoleIdEqualTo(roleId);
+        List<PermissionRoleEntity> permissionRoleEntities = permissionRoleService.findByExample(permissionRoleEntityExample);
+        List<Long> permissionIds = new ArrayList<>();
+        for (PermissionRoleEntity permissionRoleEntity : permissionRoleEntities) {
+            permissionIds.add(permissionRoleEntity.getRoleId());
+        }
+        return this.findByIds(permissionIds,parentId);
     }
 
     @Override
@@ -79,7 +105,7 @@ public class PermissionServiceImpl implements PermissionService {
         for (PermissionEntity permissionEntity : permissionEntities) {
             TreeNodeUtil treeNodeUtil = new TreeNodeUtil();
             treeNodeUtil.setId(permissionEntity.getId());
-            treeNodeUtil.setText(permissionEntity.getName());
+            treeNodeUtil.setLabel(permissionEntity.getName());
             treeNodeUtil.setIcon(permissionEntity.getIconCls());
             treeNodeUtil.setChildren(this.findPermissionTree(permissionEntity.getId()));
             treeNodeUtils.add(treeNodeUtil);

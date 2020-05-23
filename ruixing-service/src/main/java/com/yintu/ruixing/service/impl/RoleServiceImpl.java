@@ -1,10 +1,7 @@
 package com.yintu.ruixing.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
+import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.RoleDao;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.PermissionRoleService;
@@ -15,8 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author:mlf
@@ -29,9 +25,12 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleDao roleDao;
     @Autowired
+    private PermissionService permissionService;
+    @Autowired
     private UserRoleService userRoleService;
     @Autowired
     private PermissionRoleService permissionRoleService;
+
 
     @Override
     public void add(RoleEntity roleEntity) {
@@ -83,16 +82,19 @@ public class RoleServiceImpl implements RoleService {
             criteria.andNameLike("%" + name + "%");
             roleEntities = this.findByExample(roleEntityExample);
         }
-       return roleEntities;
+        return roleEntities;
     }
-
 
     @Override
     public List<RoleEntity> findByIds(List<Long> ids) {
-        RoleEntityExample roleEntityExample = new RoleEntityExample();
-        RoleEntityExample.Criteria criteria = roleEntityExample.createCriteria();
-        criteria.andIdIn(ids);
-        return ids.size() == 0 ? new ArrayList<>() : roleDao.selectByExample(roleEntityExample);
+        List<RoleEntity> roleEntities = new ArrayList<>();
+        if (ids.size() > 0) {
+            RoleEntityExample roleEntityExample = new RoleEntityExample();
+            RoleEntityExample.Criteria criteria = roleEntityExample.createCriteria();
+            criteria.andIdIn(ids);
+            roleEntities = roleDao.selectByExample(roleEntityExample);
+        }
+        return roleEntities;
     }
 
 
@@ -109,6 +111,7 @@ public class RoleServiceImpl implements RoleService {
         return this.findByIds(roleIds);
     }
 
+
     @Override
     public List<RoleEntity> findByPermissionId(Long permissionId) {
         PermissionRoleEntityExample permissionRoleEntityExample = new PermissionRoleEntityExample();
@@ -122,4 +125,57 @@ public class RoleServiceImpl implements RoleService {
         return this.findByIds(roleIds);
     }
 
+
+
+    @Override
+    public List<TreeNodeUtil> findPermissionsTreeById(Long id, Long parentId) {
+        List<PermissionEntity> permissionEntities = permissionService.findByRoleId(id, parentId);
+        List<TreeNodeUtil> treeNodeUtils = new ArrayList<>();
+        for (PermissionEntity permissionEntity : permissionEntities) {
+            TreeNodeUtil treeNodeUtil = new TreeNodeUtil();
+            treeNodeUtil.setId(permissionEntity.getId());
+            treeNodeUtil.setLabel(permissionEntity.getName());
+            treeNodeUtil.setIcon(permissionEntity.getIconCls());
+            treeNodeUtil.setChildren(this.findPermissionsTreeById(id, permissionEntity.getId()));
+            treeNodeUtils.add(treeNodeUtil);
+        }
+        return treeNodeUtils;
+    }
+
+
+
+    @Override
+    public void addPermissionsByIdAndPermissionIds(Long id, Long[] permissionIds) {
+        //去重
+        Set<Long> set = new HashSet<>(Arrays.asList(permissionIds));
+        RoleEntity roleEntity = this.findById(id);
+        if (roleEntity != null) {//判断当前用户是否存在
+            //查询当前角色分配的权限
+            PermissionRoleEntityExample permissionRoleEntityExample = new PermissionRoleEntityExample();
+            PermissionRoleEntityExample.Criteria criteria = permissionRoleEntityExample.createCriteria();
+            criteria.andRoleIdEqualTo(id);
+            List<PermissionRoleEntity> permissionRoleEntities = permissionRoleService.findByExample(permissionRoleEntityExample);
+
+            //删除当前角色分配的权限
+            if (permissionRoleEntities.size() > 0) {
+                List<Long> longs = new ArrayList<>();
+                for (PermissionRoleEntity permissionRoleEntity : permissionRoleEntities) {
+                    longs.add(permissionRoleEntity.getPermissionId());
+                }
+                criteria.andPermissionIdIn(longs);
+                permissionRoleService.removeByExample(permissionRoleEntityExample);
+            }
+
+            //添加当前角色新分配的权限
+            for (Long permissionId : set) {
+                PermissionEntity permissionEntity = permissionService.findById(permissionId);
+                if (permissionEntity != null) {
+                    PermissionRoleEntity permissionRoleEntity = new PermissionRoleEntity();
+                    permissionRoleEntity.setRoleId(id);
+                    permissionRoleEntity.setPermissionId(permissionId);
+                    permissionRoleService.add(permissionRoleEntity);
+                }
+            }
+        }
+    }
 }

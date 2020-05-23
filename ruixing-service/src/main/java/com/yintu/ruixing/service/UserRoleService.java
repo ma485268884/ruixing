@@ -33,11 +33,18 @@ public interface UserRoleService {
     void remove(Long id);
 
     /**
+     * 按照条件删除用户角色
+     *
+     * @param userRoleEntityExample 用户角色条件
+     */
+    void removeByExample(UserRoleEntityExample userRoleEntityExample);
+
+    /**
      * id查询角色
      *
      * @return 用户角色信息
      */
-    UserRoleEntity findById(Long id);
+    UserRoleEntity  findById(Long id);
 
 
     /**

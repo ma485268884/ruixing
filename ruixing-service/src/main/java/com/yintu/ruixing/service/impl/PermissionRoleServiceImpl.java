@@ -37,6 +37,11 @@ public class PermissionRoleServiceImpl implements PermissionRoleService {
     }
 
     @Override
+    public void removeByExample(PermissionRoleEntityExample permissionRoleEntityExample) {
+        permissionRoleDao.deleteByExample(permissionRoleEntityExample);
+    }
+
+    @Override
     public PermissionRoleEntity findById(Long id) {
         return permissionRoleDao.selectByPrimaryKey(id);
     }
