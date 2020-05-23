@@ -54,19 +54,20 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public List<PermissionEntity> findByIds(List<Long> ids,Long parentId) {
+    public List<PermissionEntity> findByIds(List<Long> ids, Long parentId) {
         List<PermissionEntity> permissionEntities = new ArrayList<>();
         if (ids.size() > 0) {
             PermissionEntityExample permissionEntityExample = new PermissionEntityExample();
             PermissionEntityExample.Criteria criteria = permissionEntityExample.createCriteria();
             criteria.andIdIn(ids);
-            permissionEntities = permissionDao.selectByExample(permissionEntityExample);
+            criteria.andParentIdEqualTo(parentId);
+            permissionEntities = this.findByExample(permissionEntityExample);
         }
         return permissionEntities;
     }
 
     @Override
-    public List<PermissionEntity> findByRoleId(Long roleId,Long parentId) {
+    public List<PermissionEntity> findByRoleId(Long roleId, Long parentId) {
         PermissionRoleEntityExample permissionRoleEntityExample = new PermissionRoleEntityExample();
         PermissionRoleEntityExample.Criteria criteria = permissionRoleEntityExample.createCriteria();
         criteria.andRoleIdEqualTo(roleId);
@@ -75,13 +76,13 @@ public class PermissionServiceImpl implements PermissionService {
         for (PermissionRoleEntity permissionRoleEntity : permissionRoleEntities) {
             permissionIds.add(permissionRoleEntity.getRoleId());
         }
-        return this.findByIds(permissionIds,parentId);
+        return this.findByIds(permissionIds, parentId);
     }
 
     @Override
     public List<PermissionEntity> findPermissionAndRole() {
         PermissionEntityExample permissionEntityExample = new PermissionEntityExample();
-        List<PermissionEntity> permissionEntities = permissionDao.selectByExample(permissionEntityExample);
+        List<PermissionEntity> permissionEntities = this.findByExample(permissionEntityExample);
         for (PermissionEntity permissionEntity : permissionEntities) {
             List<RoleEntity> roleEntities = roleService.findByPermissionId(permissionEntity.getId());
             permissionEntity.setRoleEntities(roleEntities);
