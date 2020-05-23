@@ -74,7 +74,7 @@ public class PermissionServiceImpl implements PermissionService {
         List<PermissionRoleEntity> permissionRoleEntities = permissionRoleService.findByExample(permissionRoleEntityExample);
         List<Long> permissionIds = new ArrayList<>();
         for (PermissionRoleEntity permissionRoleEntity : permissionRoleEntities) {
-            permissionIds.add(permissionRoleEntity.getRoleId());
+            permissionIds.add(permissionRoleEntity.getPermissionId());
         }
         return this.findByIds(permissionIds, parentId);
     }

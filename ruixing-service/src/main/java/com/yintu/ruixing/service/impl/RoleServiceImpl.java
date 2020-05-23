@@ -129,7 +129,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<TreeNodeUtil> findPermissionsTreeById(Long id, Long parentId) {
-
         List<PermissionEntity> permissionEntities = permissionService.findByRoleId(id, parentId);
         List<TreeNodeUtil> treeNodeUtils = new ArrayList<>();
         for (PermissionEntity permissionEntity : permissionEntities) {
@@ -140,7 +139,6 @@ public class RoleServiceImpl implements RoleService {
             treeNodeUtil.setChildren(this.findPermissionsTreeById(id, permissionEntity.getId()));
             treeNodeUtils.add(treeNodeUtil);
         }
-
         return treeNodeUtils;
     }
 
