@@ -4,7 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.dao.DataStatsDao;
 import com.yintu.ruixing.entity.DataStats;
+import com.yintu.ruixing.entity.DianWuDuanEntity;
 import com.yintu.ruixing.entity.PageResponseDto;
+import com.yintu.ruixing.entity.TieLuJuEntity;
 import com.yintu.ruixing.service.DataStatsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,26 @@ public class DataStatsServiceImpl implements DataStatsService {
         response.setResult(info.getList());
         return response;
 
+    }
+
+    @Override
+    public TieLuJuEntity findTieLuJuById(Long id) {
+        return dataStatsDao.findTieLuJuById(id);
+    }
+
+    @Override
+    public DianWuDuanEntity findDianWuDuanById(Long id) {
+        return dataStatsDao.findDianWuDuanById(id);
+    }
+
+    @Override
+    public void addTieLuJU(TieLuJuEntity tieLuJuEntity) {
+        dataStatsDao.addTieLuJU(tieLuJuEntity);
+    }
+
+    @Override
+    public void editTieLuJuById(Long id) {
+        dataStatsDao.editTieLuJuById(id);
     }
 
 }
