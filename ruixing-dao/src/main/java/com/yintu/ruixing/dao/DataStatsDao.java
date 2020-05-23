@@ -3,6 +3,7 @@ package com.yintu.ruixing.dao;
 import com.github.pagehelper.Page;
 import com.yintu.ruixing.entity.CheZhanEntity;
 import com.yintu.ruixing.entity.DataStats;
+import com.yintu.ruixing.entity.DianWuDuanEntity;
 import com.yintu.ruixing.entity.TieLuJuEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -22,4 +23,11 @@ public interface DataStatsDao {
 
     List<DataStats> getByPage();
 
+    TieLuJuEntity findTieLuJuById(Long id);
+
+    DianWuDuanEntity findDianWuDuanById(Long id);
+
+    void addTieLuJU(TieLuJuEntity tieLuJuEntity);
+
+    void editTieLuJuById(Long id);
 }

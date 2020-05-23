@@ -28,7 +28,7 @@
 
     <!--检查项分页查询-->
 
-	<select id="getByPage" resultType="com.yintu.ruixing.entity.DataStats">
+    <select id="getByPage" resultType="com.yintu.ruixing.entity.DataStats">
 		SELECT
 		tlj.tlj_name,
 		dwd.dwd_name,
@@ -51,4 +51,31 @@
 
 	</select>
 
+    <!--查询铁路局-->
+    <select id="findTieLuJuById" parameterType="Long" resultType="com.yintu.ruixing.entity.TieLuJuEntity">
+		select tlj_name,tlj_miaoshu from mro_tieluju where id=#{id}
+	</select>
+    <!--查询电务段-->
+    <select id="findDianWuDuanById" resultType="com.yintu.ruixing.entity.DianWuDuanEntity">
+
+    </select>
+
+    <!--新增铁路局-->
+    <insert id="addTieLuJU" parameterType="com.yintu.ruixing.entity.TieLuJuEntity">
+		insert into mro_tieluju (id,tlj_name,tlj_miaoshu)
+		values
+		(#{id},#{tlj_name},#{tlj_miaoshu})
+	</insert>
+    <!--通过id修改铁路局信息-->
+    <update id="editTieLuJuById" parameterType="com.yintu.ruixing.entity.TieLuJuEntity">
+        update mro_tieluju
+        <set>
+            <if test="tlj_name !=null">
+                tlj_name=#{tlj_name}
+            </if>
+            <if test="tlj_miaoshu !=null">
+                tlj_miaoshu=#{tlj_miaoshu}
+            </if>
+        </set>
+    </update>
 </mapper>
