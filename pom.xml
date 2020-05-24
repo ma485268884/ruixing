@@ -22,7 +22,7 @@
         <module>ruixing-controller</module>
     </modules>
     <properties>
-        <ruixing-all.version>${version}</ruixing-all.version>
+        <ruixing-all.version>${project.version}</ruixing-all.version>
         <mybatis-spring-boot-starter.version>2.1.2</mybatis-spring-boot-starter.version>
         <pagehelper-spring-boot-starter.version>1.2.10</pagehelper-spring-boot-starter.version>
         <druid-spring-boot-starter.version>1.1.21</druid-spring-boot-starter.version>
@@ -33,22 +33,22 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.yintu.ruixing</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>ruixing-common</artifactId>
                 <version>${ruixing-all.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.yintu.ruixing</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>ruixing-entity</artifactId>
                 <version>${ruixing-all.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.yintu.ruixing</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>ruixing-dao</artifactId>
                 <version>${ruixing-all.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.yintu.ruixing</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>ruixing-service</artifactId>
                 <version>${ruixing-all.version}</version>
             </dependency>
