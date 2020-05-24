@@ -1,14 +1,8 @@
 package com.yintu.ruixing.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.yintu.ruixing.common.enumobject.EnumAuthType;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.dao.UserDao;
 import com.yintu.ruixing.entity.*;
-import com.yintu.ruixing.service.PermissionService;
 import com.yintu.ruixing.service.RoleService;
 import com.yintu.ruixing.service.UserRoleService;
 import com.yintu.ruixing.service.UserService;
@@ -42,7 +36,6 @@ public class UserServiceImpl implements UserService {
         if (userEntities.size() > 0) {
             throw new BaseRuntimeException("添加失败，用户名重复");
         }
-        userEntity.setAuthType(EnumAuthType.getDefault().getValue());
         userEntity.setLocked((short) 0);
         userEntity.setLoginTime(new Date());
         String password = userEntity.getPassword();

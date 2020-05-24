@@ -1,8 +1,6 @@
 package com.yintu.ruixing.controller;
 
 import com.yintu.ruixing.entity.UserEntity;
-import com.yintu.ruixing.exception.GlobalExceptionHandler;
-import org.apache.tomcat.jni.Proc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;

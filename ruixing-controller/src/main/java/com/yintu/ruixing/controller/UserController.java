@@ -6,21 +6,21 @@ import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.entity.UserEntity;
-import com.yintu.ruixing.entity.UserRoleEntity;
 import com.yintu.ruixing.service.PermissionService;
-import com.yintu.ruixing.service.UserRoleService;
 import com.yintu.ruixing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author:mlf
  * @date:2020/5/19 17:20
  */
 @RestController
+@RequestMapping(value = "/users")
 public class UserController extends BaseController {
 
     @Autowired
@@ -29,34 +29,35 @@ public class UserController extends BaseController {
     private PermissionService permissionService;
 
 
-    @PostMapping("/users")
+    @PostMapping
     public Map<String, Object> add(UserEntity userEntity) {
         Assert.notNull(userEntity.getUsername(), "用户名不能为空");
         Assert.notNull(userEntity.getPassword(), "密码不能为空");
+        Assert.notNull(userEntity.getAuthType(), "类型不能为空");
         Assert.notNull(userEntity.getEnableds(), "状态不能为空");
         userService.add(userEntity);
         return ResponseDataUtil.ok("添加用户成功");
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/{id}")
     public Map<String, Object> remove(@PathVariable Long id) {
         userService.remove(id);
         return ResponseDataUtil.ok("删除用户成功");
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping("/{id}")
     public Map<String, Object> edit(@PathVariable Long id, UserEntity userEntity) {
         userService.edit(userEntity);
         return ResponseDataUtil.ok("修改用户成功");
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public Map<String, Object> findById(@PathVariable Long id) {
         UserEntity userEntity = userService.findById(id);
         return ResponseDataUtil.ok("查询用户成功", userEntity);
     }
 
-    @GetMapping("/users")
+    @GetMapping
     public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber, @RequestParam("page_size") Integer pageSize, @RequestParam(value = "search_text", required = false) String username) {
         JSONObject jo = new JSONObject();
         List<String> requestMethods = permissionService.findRequestMethodsByUserIdAndUrl(this.getLoginUserId(), "/users");
@@ -68,13 +69,13 @@ public class UserController extends BaseController {
         return ResponseDataUtil.ok("查询用户列表成功", jo);
     }
 
-    @GetMapping("/users/{id}/roles")
+    @GetMapping("/{id}/roles")
     public Map<String, Object> findRolesById(@PathVariable Long id) {
         List<RoleEntity> roleEntities = userService.findRolesById(id);
         return ResponseDataUtil.ok("查询用户角色成功", roleEntities);
     }
 
-    @PostMapping("/users/{id}/roles")
+    @PostMapping("/{id}/roles")
     public Map<String, Object> addRolesByIdAndRoleIds(@PathVariable Long id, @RequestParam Long[] roleIds) {
         userService.addRolesByIdAndRoleIds(id, roleIds);
         return ResponseDataUtil.ok("分配用户角色成功");
