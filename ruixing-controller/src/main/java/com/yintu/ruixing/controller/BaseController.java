@@ -15,7 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public class BaseController {
 
-    protected static final Logger logger = LoggerFactory.getLogger(BaseController.class);
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * 获取登录用户信息
