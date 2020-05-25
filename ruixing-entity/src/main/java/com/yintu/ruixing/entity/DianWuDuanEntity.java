@@ -19,7 +19,7 @@ public class DianWuDuanEntity {
 
     private long tlj_id;
 
-    private String dud_miaoshu;
+    private String dwd_miaoshu;
 
     private String yuliu1;
 
