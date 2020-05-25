@@ -1,13 +1,11 @@
 package com.yintu.ruixing.service;
 
 
-import com.yintu.ruixing.entity.DataStats;
-import com.yintu.ruixing.entity.DianWuDuanEntity;
-import com.yintu.ruixing.entity.PageResponseDto;
-import com.yintu.ruixing.entity.TieLuJuEntity;
+import com.yintu.ruixing.entity.*;
 
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -29,4 +27,10 @@ public interface DataStatsService {
     void addTieLuJU(TieLuJuEntity tieLuJuEntity);
 
     void editTieLuJuById(Long id);
+
+    void addDianWuDuan(DianWuDuanEntity dianWuDuanEntity);
+
+    void editDianWuDuan(DianWuDuanEntity dianWuDuanEntity);
+
+    void addXianDuan(XianDuanEntity xianDuanEntity);
 }

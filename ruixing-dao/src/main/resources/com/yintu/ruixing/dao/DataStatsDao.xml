@@ -62,9 +62,9 @@
 
     <!--新增铁路局-->
     <insert id="addTieLuJU" parameterType="com.yintu.ruixing.entity.TieLuJuEntity">
-		insert into mro_tieluju (id,tlj_name,tlj_miaoshu)
+		insert into mro_tieluju (tlj_name,tlj_id,tlj_miaoshu)
 		values
-		(#{id},#{tlj_name},#{tlj_miaoshu})
+		(#{tlj_name},#{tlj_id},#{tlj_miaoshu})
 	</insert>
     <!--通过id修改铁路局信息-->
     <update id="editTieLuJuById" parameterType="com.yintu.ruixing.entity.TieLuJuEntity">
@@ -78,4 +78,33 @@
             </if>
         </set>
     </update>
+	<!--新增电务段-->
+	<insert id="addDianWuDuan" parameterType="com.yintu.ruixing.entity.DianWuDuanEntity">
+		insert into mro_dianwuduan(dwd_name,dwd_id,tlj_id,dwd_miaoshu)
+		values
+		(#{dwd_name},#{dwd_id},#{tlj_id},#{dwd_miaoshu})
+	</insert>
+	<!--修改电务段信息-->
+	<update id="editDianWuDuan" parameterType="com.yintu.ruixing.entity.DianWuDuanEntity">
+		update mro_dianwuduan
+		<set>
+			<if test="dwd_name !=null">
+				dwd_name=#{dwd_name}
+			</if>
+			<if test="tlj_id !=null">
+				tlj_id=#{tlj_id}
+			</if>
+			<if test="dwd_miaoshu !=null">
+				dwd_miaoshu=#{dwd_miaoshu}
+			</if>
+		</set>
+		where
+		id=#{id}
+	</update>
+	<!--新增线段-->
+	<insert id="addXianDuan" parameterType="com.yintu.ruixing.entity.XianDuanEntity" >
+		insert into mro_xianduan(xd_name,xd_id,dwd_id,xd_miaoshu)
+		values
+		(#{xd_name},#{xd_id},#{dwd_id},#{xd_miaoshu})
+	</insert>
 </mapper>

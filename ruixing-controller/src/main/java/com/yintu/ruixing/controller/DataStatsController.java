@@ -2,10 +2,7 @@ package com.yintu.ruixing.controller;
 
 import com.yintu.ruixing.common.result.Result;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.entity.DataStats;
-import com.yintu.ruixing.entity.DianWuDuanEntity;
-import com.yintu.ruixing.entity.PageResponseDto;
-import com.yintu.ruixing.entity.TieLuJuEntity;
+import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.DataStatsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -66,4 +63,26 @@ public class DataStatsController {
         dataStatsService.editTieLuJuById(id);
         return ResponseDataUtil.ok("修改铁路局信息成功");
     }
+    //新增电务段
+    @PostMapping("/addDianWuDuan")
+    public Map<String,Object> addDianWuDuan(DianWuDuanEntity dianWuDuanEntity){
+      dataStatsService.addDianWuDuan(dianWuDuanEntity);
+
+        return ResponseDataUtil.ok("新增电务段成功");
+    }
+
+    //修改电务段
+    @PutMapping("/editDianWuDuan/{id}")
+    public Map<String,Object>editDianWuDuan(Long id, DianWuDuanEntity dianWuDuanEntity){
+        dataStatsService.editDianWuDuan(dianWuDuanEntity);
+        return ResponseDataUtil.ok("修改电务段信息成功");
+    }
+
+    //新增线段
+    @PostMapping("/addXianDuan")
+    public Map<String,Object>addXianDuan(XianDuanEntity xianDuanEntity){
+       dataStatsService.addXianDuan(xianDuanEntity);
+        return ResponseDataUtil.ok("新增线段成功");
+    }
+
 }
