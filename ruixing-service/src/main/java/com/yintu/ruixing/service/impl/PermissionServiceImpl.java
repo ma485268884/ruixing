@@ -34,9 +34,10 @@ public class PermissionServiceImpl implements PermissionService {
     public void add(PermissionEntity permissionEntity) {
         Long parentId = permissionEntity.getParentId();
         Assert.notNull(parentId, "父级id不能为空");
-        PermissionEntity parentPermission = this.findById(parentId);
-        if (parentPermission != null) {
-            if (!"".equals(parentPermission.getPath()) && parentPermission.getPath() != null)
+        PermissionEntity parentPermissionEntity = this.findById(parentId);
+        if (parentPermissionEntity != null) {
+            String parentPath = parentPermissionEntity.getPath();
+            if (parentPath != null && !"".equals(parentPath))
                 throw new BaseRuntimeException("当前节点不能添加权限信息");
         } else if (parentId != -1) {
             return;
@@ -44,7 +45,7 @@ public class PermissionServiceImpl implements PermissionService {
         String path = permissionEntity.getPath();
         String url = permissionEntity.getUrl();
         String method = permissionEntity.getMethod();
-        if (!"".equals(path) && path != null) {
+        if (path != null && !"".equals(path)) {
             Assert.notNull(url, "url不能为空");
             Assert.notNull(method, "method不能为空");
             if ("".equals(url) || "".equals(method))
@@ -59,9 +60,10 @@ public class PermissionServiceImpl implements PermissionService {
     public void edit(PermissionEntity permissionEntity) {
         Long parentId = permissionEntity.getParentId();
         Assert.notNull(parentId, "父级id不能为空");
-        PermissionEntity parentPermission = this.findById(parentId);
-        if (parentPermission != null) {
-            if (!"".equals(parentPermission.getPath()) && parentPermission.getPath() != null)
+        PermissionEntity parentPermissionEntity = this.findById(parentId);
+        if (parentPermissionEntity != null) {
+            String parentPath = parentPermissionEntity.getPath();
+            if (parentPath != null && !"".equals(parentPath))
                 throw new BaseRuntimeException("当前节点不能添加权限信息");
         } else if (parentId != -1) {
             return;
@@ -69,7 +71,7 @@ public class PermissionServiceImpl implements PermissionService {
         String path = permissionEntity.getPath();
         String url = permissionEntity.getUrl();
         String method = permissionEntity.getMethod();
-        if (!"".equals(path) && path != null) {
+        if (path != null && !"".equals(path)) {
             Assert.notNull(url, "url不能为空");
             Assert.notNull(method, "method不能为空");
             if ("".equals(url) || "".equals(method))
