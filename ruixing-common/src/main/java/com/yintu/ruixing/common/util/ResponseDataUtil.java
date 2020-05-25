@@ -81,7 +81,7 @@ public class ResponseDataUtil {
         returnData.put(CODE, 401);
         returnData.put(MESSAGE, message);
         returnData.putAll(map);
-        return map;
+        return returnData;
     }
 
     public static Map<String, Object> noAuthorize(String message) {

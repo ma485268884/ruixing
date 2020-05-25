@@ -1,5 +1,6 @@
 package com.yintu.ruixing.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.PermissionEntity;
@@ -8,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author:mlf
@@ -24,16 +24,13 @@ public class PermissionController {
 
     @PostMapping
     public Map<String, Object> add(PermissionEntity permissionEntity) {
-        Assert.notNull(permissionEntity.getParentId(), "父级id不能为空");
-        Assert.notNull(permissionEntity.getUrl(), "URL不能为空");
-        Assert.notNull(permissionEntity.getMethod(), "请求方法不能为空");
         permissionService.add(permissionEntity);
         return ResponseDataUtil.ok("添加权限成功");
     }
 
     @DeleteMapping("/{id}")
     public Map<String, Object> remove(@PathVariable Long id) {
-        permissionService.remove(id);
+        permissionService.removeByParentIdAndIsFirst(id, true);
         return ResponseDataUtil.ok("删除权限成功");
     }
 

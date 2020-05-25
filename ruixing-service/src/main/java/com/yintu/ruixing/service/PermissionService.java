@@ -31,6 +31,13 @@ public interface PermissionService {
     void remove(Long id);
 
     /**
+     * 按照指定条件删除权限
+     *
+     * @param permissionEntityExample 权限id
+     */
+    void removeByExample(PermissionEntityExample permissionEntityExample);
+
+    /**
      * @param id id
      * @return 权限信息
      */
@@ -46,13 +53,13 @@ public interface PermissionService {
      * @param ids 权限id集合
      * @return 权限集
      */
-    List<PermissionEntity> findByIds(List<Long> ids,Long parentId);
+    List<PermissionEntity> findByIds(List<Long> ids, Long parentId);
 
     /**
      * @param roleId 角色id
      * @return 权限集
      */
-    List<PermissionEntity> findByRoleId(Long roleId,Long parentId);
+    List<PermissionEntity> findByRoleId(Long roleId, Long parentId);
 
     /**
      * 查询权限集以及对应的角色集
@@ -77,6 +84,15 @@ public interface PermissionService {
      * @return
      */
     List<TreeNodeUtil> findPermissionTree(Long parentId);
+
+
+    /**
+     * 指定删除id，以及次节点父节点
+     *
+     * @param parentId 权限id
+     * @param isFirst  是否第一次
+     */
+    void removeByParentIdAndIsFirst(Long parentId, Boolean isFirst);
 
 
 }
