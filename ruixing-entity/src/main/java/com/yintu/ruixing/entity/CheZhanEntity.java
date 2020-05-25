@@ -17,6 +17,10 @@ public class CheZhanEntity {
 
     private String cz_name;
 
+    private int cz_id;
+
+    private int xd_id;
+
     private String cz_name_jiancheng;
 
     private String cz_ip;
@@ -29,7 +33,7 @@ public class CheZhanEntity {
 
     private Date cz_lasttime;
 
-    private long xd_id;
+    private long xd_cz_id;
 
     private String cz_miaoshu;
 
