@@ -16,6 +16,8 @@ import java.util.List;
 public class TieLuJuEntity {
     private long id;
 
+    private int tlj;
+
     private String tlj_name;
 
     private String tlj_miaoshu;
