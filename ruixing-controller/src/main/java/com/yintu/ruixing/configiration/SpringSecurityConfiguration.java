@@ -6,7 +6,7 @@ import com.yintu.ruixing.component.CustomAccessDecisionManager;
 import com.yintu.ruixing.component.CustomFilterInvocationSecurityMetadataSource;
 import com.yintu.ruixing.component.CustomUsernamePasswordAuthenticationFilter;
 import com.yintu.ruixing.entity.UserEntity;
-import com.yintu.ruixing.exception.VerificationCodeException;
+import com.yintu.ruixing.component.VerificationCodeException;
 import com.yintu.ruixing.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
