@@ -1,10 +1,7 @@
 package com.yintu.ruixing.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.yintu.ruixing.entity.CheZhanEntity;
-import com.yintu.ruixing.entity.DianWuDuanEntity;
-import com.yintu.ruixing.entity.TieLuJuEntity;
-import com.yintu.ruixing.entity.XianDuanEntity;
+import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.ListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,31 +21,32 @@ public class ListController {
     @Autowired
     private ListService ls;
 
-    @GetMapping("findall")
-    public List<TieLuJuEntity> findall(){
+    @GetMapping("getLieBiao")
+    public List<LieBiaoEntity> getLieBiao(){
         List<TieLuJuEntity> list1 = ls.findall();
-        return list1;
+        for (TieLuJuEntity tieLuJuEntity : list1) {
+            List<DianWuDuanEntity> list2 = ls.findallBytljid(tieLuJuEntity.getId());
+
+            for (DianWuDuanEntity dianWuDuanEntity : list2) {
+                List<XianDuanEntity> list3 = ls.findallBydwdid(dianWuDuanEntity.getId());
+
+                for (XianDuanEntity xianDuanEntity : list3) {
+                    List<CheZhanEntity> list4 = ls.findallByxdid(xianDuanEntity.getId());
+                    System.out.println(list4.toString()+"++++++4++++++++++");
+                        return (List<LieBiaoEntity>) JSONObject.toJSON(list4);
+                }
+                System.out.println(list3.toString()+"++++++3++++++++++");
+                return (List<LieBiaoEntity>) JSONObject.toJSON(list3);
+            }
+            System.out.println(list2.toString()+"++++++2++++++++++");
+            return (List<LieBiaoEntity>) JSONObject.toJSON(list2);
+        }
+        System.out.println(list1.toString()+"+++++++1+++++++++");
+        return (List<LieBiaoEntity>) JSONObject.toJSON(list1);
     }
 
-    @GetMapping("findallBytljid")
-    public String findallBytljid(Long tlj_id){
-
-        List<DianWuDuanEntity> List2= ls.findallBytljid(tlj_id);
-        String str = JSONObject.toJSONString(List2);
-        return str;
-    }
-
-    @GetMapping("findallBydwdid")
-    public String findallBydwdid(Long dwd_id){
-        List<XianDuanEntity> List3= ls.findallBydwdid(dwd_id);
-        String str1 = JSONObject.toJSONString(List3);
-        return str1;
-    }
-
-    @GetMapping("findallByxdid")
-    public String findallByxdid(Long xd_id){
-        List<CheZhanEntity> List4= ls.findallByxdid(xd_id);
-        String str2 = JSONObject.toJSONString(List4);
-        return str2;
+    public List<LieBiaoEntity> getlie(){
+        List<TieLuJuEntity> list5 = ls.findall();
+        fo
     }
 }

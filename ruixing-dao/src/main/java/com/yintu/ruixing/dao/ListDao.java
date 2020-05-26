@@ -1,9 +1,6 @@
 package com.yintu.ruixing.dao;
 
-import com.yintu.ruixing.entity.CheZhanEntity;
-import com.yintu.ruixing.entity.DianWuDuanEntity;
-import com.yintu.ruixing.entity.TieLuJuEntity;
-import com.yintu.ruixing.entity.XianDuanEntity;
+import com.yintu.ruixing.entity.*;
 
 import java.util.List;
 /**
@@ -37,4 +34,5 @@ public interface ListDao {
      * @return 根据传过来的线段ID查找车站
      */
     List<CheZhanEntity>getCheZhan(Long xd_id);
+
 }
