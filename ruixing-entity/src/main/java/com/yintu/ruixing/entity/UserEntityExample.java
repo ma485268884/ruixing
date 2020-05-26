@@ -635,63 +635,63 @@ public class UserEntityExample {
             return (Criteria) this;
         }
 
-        public Criteria andEnabledIsNull() {
-            addCriterion("enabled is null");
+        public Criteria andEnabledsIsNull() {
+            addCriterion("enableds is null");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledIsNotNull() {
-            addCriterion("enabled is not null");
+        public Criteria andEnabledsIsNotNull() {
+            addCriterion("enableds is not null");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledEqualTo(Short value) {
-            addCriterion("enabled =", value, "enabled");
+        public Criteria andEnabledsEqualTo(Short value) {
+            addCriterion("enableds =", value, "enableds");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledNotEqualTo(Short value) {
-            addCriterion("enabled <>", value, "enabled");
+        public Criteria andEnabledsNotEqualTo(Short value) {
+            addCriterion("enableds <>", value, "enableds");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledGreaterThan(Short value) {
-            addCriterion("enabled >", value, "enabled");
+        public Criteria andEnabledsGreaterThan(Short value) {
+            addCriterion("enableds >", value, "enableds");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledGreaterThanOrEqualTo(Short value) {
-            addCriterion("enabled >=", value, "enabled");
+        public Criteria andEnabledsGreaterThanOrEqualTo(Short value) {
+            addCriterion("enableds >=", value, "enableds");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledLessThan(Short value) {
-            addCriterion("enabled <", value, "enabled");
+        public Criteria andEnabledsLessThan(Short value) {
+            addCriterion("enableds <", value, "enableds");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledLessThanOrEqualTo(Short value) {
-            addCriterion("enabled <=", value, "enabled");
+        public Criteria andEnabledsLessThanOrEqualTo(Short value) {
+            addCriterion("enableds <=", value, "enableds");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledIn(List<Short> values) {
-            addCriterion("enabled in", values, "enabled");
+        public Criteria andEnabledsIn(List<Short> values) {
+            addCriterion("enableds in", values, "enableds");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledNotIn(List<Short> values) {
-            addCriterion("enabled not in", values, "enabled");
+        public Criteria andEnabledsNotIn(List<Short> values) {
+            addCriterion("enableds not in", values, "enableds");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledBetween(Short value1, Short value2) {
-            addCriterion("enabled between", value1, value2, "enabled");
+        public Criteria andEnabledsBetween(Short value1, Short value2) {
+            addCriterion("enableds between", value1, value2, "enableds");
             return (Criteria) this;
         }
 
-        public Criteria andEnabledNotBetween(Short value1, Short value2) {
-            addCriterion("enabled not between", value1, value2, "enabled");
+        public Criteria andEnabledsNotBetween(Short value1, Short value2) {
+            addCriterion("enableds not between", value1, value2, "enableds");
             return (Criteria) this;
         }
 
@@ -765,63 +765,63 @@ public class UserEntityExample {
             return (Criteria) this;
         }
 
-        public Criteria andLoginTimeIsNull() {
-            addCriterion("login_time is null");
+        public Criteria andCreateTimeIsNull() {
+            addCriterion("create_time is null");
             return (Criteria) this;
         }
 
-        public Criteria andLoginTimeIsNotNull() {
-            addCriterion("login_time is not null");
+        public Criteria andCreateTimeIsNotNull() {
+            addCriterion("create_time is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLoginTimeEqualTo(Date value) {
-            addCriterion("login_time =", value, "loginTime");
+        public Criteria andCreateTimeEqualTo(Date value) {
+            addCriterion("create_time =", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andLoginTimeNotEqualTo(Date value) {
-            addCriterion("login_time <>", value, "loginTime");
+        public Criteria andCreateTimeNotEqualTo(Date value) {
+            addCriterion("create_time <>", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andLoginTimeGreaterThan(Date value) {
-            addCriterion("login_time >", value, "loginTime");
+        public Criteria andCreateTimeGreaterThan(Date value) {
+            addCriterion("create_time >", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andLoginTimeGreaterThanOrEqualTo(Date value) {
-            addCriterion("login_time >=", value, "loginTime");
+        public Criteria andCreateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("create_time >=", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andLoginTimeLessThan(Date value) {
-            addCriterion("login_time <", value, "loginTime");
+        public Criteria andCreateTimeLessThan(Date value) {
+            addCriterion("create_time <", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andLoginTimeLessThanOrEqualTo(Date value) {
-            addCriterion("login_time <=", value, "loginTime");
+        public Criteria andCreateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("create_time <=", value, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andLoginTimeIn(List<Date> values) {
-            addCriterion("login_time in", values, "loginTime");
+        public Criteria andCreateTimeIn(List<Date> values) {
+            addCriterion("create_time in", values, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andLoginTimeNotIn(List<Date> values) {
-            addCriterion("login_time not in", values, "loginTime");
+        public Criteria andCreateTimeNotIn(List<Date> values) {
+            addCriterion("create_time not in", values, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andLoginTimeBetween(Date value1, Date value2) {
-            addCriterion("login_time between", value1, value2, "loginTime");
+        public Criteria andCreateTimeBetween(Date value1, Date value2) {
+            addCriterion("create_time between", value1, value2, "createTime");
             return (Criteria) this;
         }
 
-        public Criteria andLoginTimeNotBetween(Date value1, Date value2) {
-            addCriterion("login_time not between", value1, value2, "loginTime");
+        public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("create_time not between", value1, value2, "createTime");
             return (Criteria) this;
         }
     }

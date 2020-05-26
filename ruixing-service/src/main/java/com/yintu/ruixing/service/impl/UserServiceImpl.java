@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
             throw new BaseRuntimeException("添加失败，用户名重复");
         }
         userEntity.setLocked((short) 0);
-        userEntity.setLoginTime(new Date());
+        userEntity.setCreateTime(new Date());
         String password = userEntity.getPassword();
         if (password != null && !password.isEmpty()) {
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
