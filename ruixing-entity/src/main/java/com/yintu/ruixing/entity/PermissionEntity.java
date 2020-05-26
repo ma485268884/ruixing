@@ -22,6 +22,8 @@ public class PermissionEntity implements Serializable {
 
     private String method;
 
+    private String path;
+
     private String iconCls;
 
     private String description;

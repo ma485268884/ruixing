@@ -2,13 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yintu.ruixing.dao.PermissionDao">
     <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.PermissionEntity">
-        <id column="id" jdbcType="BIGINT" property="id" />
-        <result column="parent_id" jdbcType="BIGINT" property="parentId" />
-        <result column="name" jdbcType="VARCHAR" property="name" />
-        <result column="url" jdbcType="VARCHAR" property="url" />
-        <result column="method" jdbcType="VARCHAR" property="method" />
-        <result column="icon_cls" jdbcType="VARCHAR" property="iconCls" />
-        <result column="description" jdbcType="VARCHAR" property="description" />
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="method" jdbcType="VARCHAR" property="method"/>
+        <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="icon_cls" jdbcType="VARCHAR" property="iconCls"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -28,7 +29,8 @@
                                 </when>
                                 <when test="criterion.listValue">
                                     and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
                                         #{listItem}
                                     </foreach>
                                 </when>
@@ -57,7 +59,8 @@
                                 </when>
                                 <when test="criterion.listValue">
                                     and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
                                         #{listItem}
                                     </foreach>
                                 </when>
@@ -69,17 +72,18 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        id, parent_id, name, url, method, icon_cls, description
+        id, parent_id, name, url, method, path, icon_cls, description
     </sql>
-    <select id="selectByExample" parameterType="com.yintu.ruixing.entity.PermissionEntityExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.yintu.ruixing.entity.PermissionEntityExample"
+            resultMap="BaseResultMap">
         select
         <if test="distinct">
             distinct
         </if>
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from tb_permission
         <if test="_parameter != null">
-            <include refid="Example_Where_Clause" />
+            <include refid="Example_Where_Clause"/>
         </if>
         <if test="orderByClause != null">
             order by ${orderByClause}
@@ -87,27 +91,28 @@
     </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from tb_permission
         where id = #{id,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete from tb_permission
+        delete
+        from tb_permission
         where id = #{id,jdbcType=BIGINT}
     </delete>
     <delete id="deleteByExample" parameterType="com.yintu.ruixing.entity.PermissionEntityExample">
         delete from tb_permission
         <if test="_parameter != null">
-            <include refid="Example_Where_Clause" />
+            <include refid="Example_Where_Clause"/>
         </if>
     </delete>
     <insert id="insert" parameterType="com.yintu.ruixing.entity.PermissionEntity">
         insert into tb_permission (id, parent_id, name,
-                                   url, method, icon_cls,
-                                   description)
+                                   url, method, path,
+                                   icon_cls, description)
         values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
-                #{url,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, #{iconCls,jdbcType=VARCHAR},
-                #{description,jdbcType=VARCHAR})
+                #{url,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR},
+                #{iconCls,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.PermissionEntity">
         insert into tb_permission
@@ -126,6 +131,9 @@
             </if>
             <if test="method != null">
                 method,
+            </if>
+            <if test="path != null">
+                path,
             </if>
             <if test="iconCls != null">
                 icon_cls,
@@ -150,6 +158,9 @@
             <if test="method != null">
                 #{method,jdbcType=VARCHAR},
             </if>
+            <if test="path != null">
+                #{path,jdbcType=VARCHAR},
+            </if>
             <if test="iconCls != null">
                 #{iconCls,jdbcType=VARCHAR},
             </if>
@@ -158,10 +169,11 @@
             </if>
         </trim>
     </insert>
-    <select id="countByExample" parameterType="com.yintu.ruixing.entity.PermissionEntityExample" resultType="java.lang.Long">
+    <select id="countByExample" parameterType="com.yintu.ruixing.entity.PermissionEntityExample"
+            resultType="java.lang.Long">
         select count(*) from tb_permission
         <if test="_parameter != null">
-            <include refid="Example_Where_Clause" />
+            <include refid="Example_Where_Clause"/>
         </if>
     </select>
     <update id="updateByExampleSelective" parameterType="map">
@@ -182,6 +194,9 @@
             <if test="record.method != null">
                 method = #{record.method,jdbcType=VARCHAR},
             </if>
+            <if test="record.path != null">
+                path = #{record.path,jdbcType=VARCHAR},
+            </if>
             <if test="record.iconCls != null">
                 icon_cls = #{record.iconCls,jdbcType=VARCHAR},
             </if>
@@ -190,7 +205,7 @@
             </if>
         </set>
         <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause" />
+            <include refid="Update_By_Example_Where_Clause"/>
         </if>
     </update>
     <update id="updateByExample" parameterType="map">
@@ -200,10 +215,11 @@
         name = #{record.name,jdbcType=VARCHAR},
         url = #{record.url,jdbcType=VARCHAR},
         method = #{record.method,jdbcType=VARCHAR},
+        path = #{record.path,jdbcType=VARCHAR},
         icon_cls = #{record.iconCls,jdbcType=VARCHAR},
         description = #{record.description,jdbcType=VARCHAR}
         <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause" />
+            <include refid="Update_By_Example_Where_Clause"/>
         </if>
     </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.PermissionEntity">
@@ -221,6 +237,9 @@
             <if test="method != null">
                 method = #{method,jdbcType=VARCHAR},
             </if>
+            <if test="path != null">
+                path = #{path,jdbcType=VARCHAR},
+            </if>
             <if test="iconCls != null">
                 icon_cls = #{iconCls,jdbcType=VARCHAR},
             </if>
@@ -232,16 +251,15 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.PermissionEntity">
         update tb_permission
-        set parent_id = #{parentId,jdbcType=BIGINT},
-            name = #{name,jdbcType=VARCHAR},
-            url = #{url,jdbcType=VARCHAR},
-            method = #{method,jdbcType=VARCHAR},
-            icon_cls = #{iconCls,jdbcType=VARCHAR},
+        set parent_id   = #{parentId,jdbcType=BIGINT},
+            name        = #{name,jdbcType=VARCHAR},
+            url         = #{url,jdbcType=VARCHAR},
+            method      = #{method,jdbcType=VARCHAR},
+            path        = #{path,jdbcType=VARCHAR},
+            icon_cls    = #{iconCls,jdbcType=VARCHAR},
             description = #{description,jdbcType=VARCHAR}
         where id = #{id,jdbcType=BIGINT}
     </update>
-
-
     <resultMap id="selectByUserIdAndUrl" type="String">
         <result column="method" jdbcType="VARCHAR" property="method"/>
     </resultMap>
