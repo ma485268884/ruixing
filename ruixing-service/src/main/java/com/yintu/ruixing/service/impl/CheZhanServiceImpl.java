@@ -27,13 +27,18 @@ public class CheZhanServiceImpl implements CheZhanService {
     }
 
     @Override
-    public void update(Long id) {
-        cheZhanDao.updateCheZhan(id);
+    public void update(CheZhanEntity cheZhanEntity) {
+        cheZhanDao.updateCheZhan(cheZhanEntity);
     }
 
     @Override
     public CheZhanEntity findByCheZhanId(Long id) {
         return cheZhanDao.selectByCheZhan(id);
+    }
+
+    @Override
+    public void delCheZhan(Long id) {
+        cheZhanDao.delCheZhan(id);
     }
 
 }

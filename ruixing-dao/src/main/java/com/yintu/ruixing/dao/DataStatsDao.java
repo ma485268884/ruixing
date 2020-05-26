@@ -1,15 +1,13 @@
 package com.yintu.ruixing.dao;
 
-import com.github.pagehelper.Page;
-import com.yintu.ruixing.entity.CheZhanEntity;
-import com.yintu.ruixing.entity.DataStats;
-import com.yintu.ruixing.entity.DianWuDuanEntity;
-import com.yintu.ruixing.entity.TieLuJuEntity;
+
+import com.yintu.ruixing.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * @author:lcy
@@ -23,11 +21,12 @@ public interface DataStatsDao {
 
     List<DataStats> getByPage();
 
+
     TieLuJuEntity findTieLuJuById(Long id);
 
-    DianWuDuanEntity findDianWuDuanById(Long id);
+    DataStats findDianWuDuanById(@Param("tid") Long tid,@Param("did") Long did);
 
-    void addTieLuJU(TieLuJuEntity tieLuJuEntity);
+    DataStats findXianDuanById(@Param("tid") Long tid,@Param("did") Long did,@Param("xid") Long xid);
 
-    void editTieLuJuById(Long id);
+    DataStats findCheZhanById(@Param("tid") Long tid,@Param("did") Long did,@Param("xid") Long xid,@Param("cid") Long cid);
 }

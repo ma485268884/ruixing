@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.XianDuanDao">
+    <!--新增线段-->
+    <insert id="addXianDuan" parameterType="com.yintu.ruixing.entity.XianDuanEntity" >
+		insert into mro_xianduan(xd_name,xd_id,dwd_id,xd_miaoshu)
+		values
+		(#{xd_name},#{xd_id},#{dwd_id},#{xd_miaoshu})
+	</insert>
+    <!--删除线段-->
+    <delete id="delXianDuan" parameterType="java.lang.Long">
+		delete from mro_xianduan where id=#{id}
+	</delete>
+    <!--更新线段-->
+    <update id="editXianDuan" parameterType="com.yintu.ruixing.entity.XianDuanEntity">
+        update mro_xianduan
+        <set>
+            <if test="xd_id !=null">
+                xd_id=#{xd_id},
+            </if>
+            <if test="xd_name !=null">
+                xd_name=#{xd_name},
+            </if>
+            <if test="xd_miaoshu !=null">
+                xd_miaoshu=#{xd_miaoshu}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <!--查询线段-->
+    <select id="findXianDuanById" parameterType="java.lang.Long" resultType="com.yintu.ruixing.entity.XianDuanEntity">
+        select * from mro_xianduan where id=#{id}
+    </select>
+</mapper>

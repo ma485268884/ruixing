@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.TieLuJuDao">
+    <!--根据id查询铁路局-->
+    <select id="findTieLuJuById" parameterType="long" resultType="com.yintu.ruixing.entity.TieLuJuEntity">
+        select * from mro_tieluju where id=#{id}
+    </select>
+
+    <!--新增铁路局-->
+    <insert id="addTieLuJU" parameterType="com.yintu.ruixing.entity.TieLuJuEntity">
+		insert into mro_tieluju (tlj_name,tlj_id,tlj_miaoshu)
+		values
+		(#{tlj_name},#{tlj_id},#{tlj_miaoshu})
+	</insert>
+    <!--通过id修改铁路局信息-->
+    <update id="editTieLuJuById" parameterType="com.yintu.ruixing.entity.TieLuJuEntity">
+        update mro_tieluju
+        <set>
+            <if test="tlj_name !=null">
+                tlj_name=#{tlj_name}
+            </if>
+            <if test="tlj_miaoshu !=null">
+                tlj_miaoshu=#{tlj_miaoshu}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <!--根据id删除铁路局-->
+    <delete id="delTieLuJu" parameterType="long">
+		delete from mro_tieluju where id=#{id}
+	</delete>
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.DianWuDuanDao">
+    <!--查询电务段-->
+    <select id="findDianWuDuanById" resultType="com.yintu.ruixing.entity.DianWuDuanEntity" parameterType="java.lang.Long">
+        select * from mro_dianwuduan where id =  #{id}
+    </select>
+    
+    <!--新增电务段-->
+    <insert id="addDianWuDuan" parameterType="com.yintu.ruixing.entity.DianWuDuanEntity">
+		insert into mro_dianwuduan(dwd_name,dwd_id,tlj_id,dwd_miaoshu)
+		values
+		(#{dwd_name},#{dwd_id},#{tlj_id},#{dwd_miaoshu})
+	</insert>
+    <!--修改电务段信息-->
+    <update id="editDianWuDuan" parameterType="com.yintu.ruixing.entity.DianWuDuanEntity">
+        update mro_dianwuduan
+        <set>
+            <if test="dwd_name !=null">
+                dwd_name=#{dwd_name}
+            </if>
+            <if test="tlj_id !=null">
+                tlj_id=#{tlj_id}
+            </if>
+            <if test="dwd_miaoshu !=null">
+                dwd_miaoshu=#{dwd_miaoshu}
+            </if>
+        </set>
+        where
+        id=#{id}
+    </update>
+    <!--删除电务段-->
+    <delete id="delDianWuDuan" parameterType="long">
+		delete from mro_dianwuduan where id=#{id}
+	</delete>
+
+</mapper>

@@ -3,16 +3,15 @@ package com.yintu.ruixing.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.dao.DataStatsDao;
-import com.yintu.ruixing.entity.DataStats;
-import com.yintu.ruixing.entity.DianWuDuanEntity;
-import com.yintu.ruixing.entity.PageResponseDto;
-import com.yintu.ruixing.entity.TieLuJuEntity;
+import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.DataStatsService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -53,18 +52,19 @@ public class DataStatsServiceImpl implements DataStatsService {
     }
 
     @Override
-    public DianWuDuanEntity findDianWuDuanById(Long id) {
-        return dataStatsDao.findDianWuDuanById(id);
+    public DataStats findDianWuDuanById(@Param("tid") Long tid,@Param("did") Long did) {
+        return dataStatsDao.findDianWuDuanById(tid,did);
     }
 
     @Override
-    public void addTieLuJU(TieLuJuEntity tieLuJuEntity) {
-        dataStatsDao.addTieLuJU(tieLuJuEntity);
+    public DataStats findXianDuanById(Long tid, Long did, Long xid) {
+        return dataStatsDao.findXianDuanById(tid,did,xid);
     }
 
     @Override
-    public void editTieLuJuById(Long id) {
-        dataStatsDao.editTieLuJuById(id);
+    public DataStats findCheZhanById(Long tid, Long did, Long xid, Long cid) {
+        return dataStatsDao.findCheZhanById(tid,did,xid,cid);
     }
+
 
 }

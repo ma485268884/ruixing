@@ -2,10 +2,7 @@ package com.yintu.ruixing.controller;
 
 import com.yintu.ruixing.common.result.Result;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.entity.DataStats;
-import com.yintu.ruixing.entity.DianWuDuanEntity;
-import com.yintu.ruixing.entity.PageResponseDto;
-import com.yintu.ruixing.entity.TieLuJuEntity;
+import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.DataStatsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +16,7 @@ import java.util.Map;
  * 数据统计
  */
 @RestController
-@RequestMapping("chezhan")
+@RequestMapping("/dataStats")
 public class DataStatsController {
     @Autowired
     private DataStatsService dataStatsService;
@@ -38,32 +35,33 @@ public class DataStatsController {
         return dataStatsService.getByPage(page, limit);
     }
 
-
-    //查询铁路局
-    @GetMapping("/tieluju/{id}")
-    public Result findTieLuJuById(@PathVariable Long id) {
+    //查询层级下的铁路局
+    @GetMapping("/findTieLuJuById/{id}")
+    public Map<String, Object> findTieLuJuById(@PathVariable Long id) {
         TieLuJuEntity tieLuJuEntity = dataStatsService.findTieLuJuById(id);
-        return new Result(true, "查询铁路局成功", tieLuJuEntity);
+        return ResponseDataUtil.ok("查询铁路局成功", tieLuJuEntity);
     }
 
-    //查询铁路局下的查电务段
-
-    @GetMapping("/dianwuduan/{id}")
-    public Result findDianWuDuanById(@PathVariable Long id){
-        DianWuDuanEntity dianWuDuanEntity=dataStatsService.findDianWuDuanById(id);
-        return new Result(true,"查询电务段成功",dianWuDuanEntity);
+    //根据id查询铁路局下的电务段
+    @GetMapping("/findDianWuDuanById/{tid}/{did}")
+    public Map<String, Object> findDianWuDuanById(@PathVariable Long tid, @PathVariable Long did) {
+        DataStats dataStats = dataStatsService.findDianWuDuanById(tid, did);
+        return ResponseDataUtil.ok("查询电务段信息成功", dataStats);
     }
 
-    //新增铁路局
-    @PostMapping("/addTieLuJU")
-    public Map<String,Object> addTieLuJU(TieLuJuEntity tieLuJuEntity){
-        dataStatsService.addTieLuJU(tieLuJuEntity);
-        return ResponseDataUtil.ok("添加铁路局成功");
+    //根据id查询铁路局下的电务段下的线段
+    @GetMapping("/findXianDuanById/{tid}/{did}/{xid}")
+    public Map<String, Object> findXianDuanById(@PathVariable Long tid, @PathVariable Long did, @PathVariable Long xid) {
+        DataStats dataStats = dataStatsService.findXianDuanById(tid, did, xid);
+        return ResponseDataUtil.ok("查询线段信息成功", dataStats);
     }
-    //修改铁路局信息
-    @PutMapping("/editTieLuJu/{id}")
-    public Map<String,Object> editTieLuJu(Long id){
-        dataStatsService.editTieLuJuById(id);
-        return ResponseDataUtil.ok("修改铁路局信息成功");
+
+    //根据id查询铁路局下的电务段下的线段的车站
+    @GetMapping("/findCheZhanById/{tid}/{did}/{xid}/{cid}")
+    public Map<String, Object> findCheZhanById(@PathVariable Long tid, @PathVariable Long did, @PathVariable Long xid, @PathVariable Long cid) {
+        DataStats dataStats = dataStatsService.findCheZhanById(tid, did, xid, cid);
+        return ResponseDataUtil.ok("查询车站信息成功", dataStats);
     }
+
+
 }

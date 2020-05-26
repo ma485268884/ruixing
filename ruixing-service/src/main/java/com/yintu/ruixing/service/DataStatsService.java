@@ -1,13 +1,11 @@
 package com.yintu.ruixing.service;
 
 
-import com.yintu.ruixing.entity.DataStats;
-import com.yintu.ruixing.entity.DianWuDuanEntity;
-import com.yintu.ruixing.entity.PageResponseDto;
-import com.yintu.ruixing.entity.TieLuJuEntity;
+import com.yintu.ruixing.entity.*;
 
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -21,12 +19,14 @@ public interface DataStatsService {
     List<DataStats> findAll();
     //分页查询
     PageResponseDto<DataStats> getByPage(Integer page, Integer limit);
-    //查询铁路局
+
+
     TieLuJuEntity findTieLuJuById(Long id);
 
-    DianWuDuanEntity findDianWuDuanById(Long id);
+    DataStats findDianWuDuanById(Long tid, Long did);
 
-    void addTieLuJU(TieLuJuEntity tieLuJuEntity);
+    DataStats findXianDuanById(Long tid, Long did, Long xid);
 
-    void editTieLuJuById(Long id);
+    DataStats findCheZhanById(Long tid, Long did, Long xid, Long cid);
+
 }

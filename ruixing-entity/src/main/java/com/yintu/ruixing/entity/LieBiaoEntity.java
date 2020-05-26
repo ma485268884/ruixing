@@ -7,21 +7,18 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * 铁路局
- *
+ * 列表展示
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TieLuJuEntity {
-    private long id;
-
-    private int tlj_id;
+public class LieBiaoEntity{
 
     private String tlj_name;
 
-    private String tlj_miaoshu;
+    private String dwd_name;
 
-    private String tlj_beiyong;
+    private String xd_name;
 
+    private String cz_name;
 }
