@@ -80,4 +80,19 @@ public class DataStatsServiceImpl implements DataStatsService {
         dataStatsDao.addXianDuan(xianDuanEntity);
     }
 
+    @Override
+    public void delTieLuJu(Long id) {
+        dataStatsDao.delTieLuJu(id);
+    }
+
+    @Override
+    public void delDianWuDuan(Long id) {
+        dataStatsDao.delDianWuDuan(id);
+    }
+
+    @Override
+    public void delXianDuan(Long id) {
+        dataStatsDao.delXianDuan(id);
+    }
+
 }

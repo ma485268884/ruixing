@@ -78,6 +78,10 @@
             </if>
         </set>
     </update>
+	<!--根据id删除铁路局-->
+	<delete id="delTieLuJu" parameterType="long">
+		delete from mro_tieluju where id=#{id}
+	</delete>
 	<!--新增电务段-->
 	<insert id="addDianWuDuan" parameterType="com.yintu.ruixing.entity.DianWuDuanEntity">
 		insert into mro_dianwuduan(dwd_name,dwd_id,tlj_id,dwd_miaoshu)
@@ -101,10 +105,18 @@
 		where
 		id=#{id}
 	</update>
+	<!--删除电务段-->
+	<delete id="delDianWuDuan" parameterType="long">
+		delete from mro_dianwuduan where id=#{id}
+	</delete>
 	<!--新增线段-->
 	<insert id="addXianDuan" parameterType="com.yintu.ruixing.entity.XianDuanEntity" >
 		insert into mro_xianduan(xd_name,xd_id,dwd_id,xd_miaoshu)
 		values
 		(#{xd_name},#{xd_id},#{dwd_id},#{xd_miaoshu})
 	</insert>
+	<!--删除线段-->
+	<delete id="delXianDuan" parameterType="long">
+		delete from mro_xianduan where id=#{id}
+	</delete>
 </mapper>
