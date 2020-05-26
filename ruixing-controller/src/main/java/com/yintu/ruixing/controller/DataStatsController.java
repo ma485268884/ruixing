@@ -36,71 +36,7 @@ public class DataStatsController {
     }
 
 
-    //查询铁路局
-    @GetMapping("/tieluju/{id}")
-    public Result findTieLuJuById(@PathVariable Long id) {
-        TieLuJuEntity tieLuJuEntity = dataStatsService.findTieLuJuById(id);
-        return new Result(true, "查询铁路局成功", tieLuJuEntity);
-    }
 
-    //查询铁路局下的查电务段
-
-    @GetMapping("/dianwuduan/{id}")
-    public Result findDianWuDuanById(@PathVariable Long id){
-        DianWuDuanEntity dianWuDuanEntity=dataStatsService.findDianWuDuanById(id);
-        return new Result(true,"查询电务段成功",dianWuDuanEntity);
-    }
-
-    //新增铁路局
-    @PostMapping("/addTieLuJU")
-    public Map<String,Object> addTieLuJU(TieLuJuEntity tieLuJuEntity){
-        dataStatsService.addTieLuJU(tieLuJuEntity);
-        return ResponseDataUtil.ok("添加铁路局成功");
-    }
-    //修改铁路局信息
-    @PutMapping("/editTieLuJu/{id}")
-    public Map<String,Object> editTieLuJu(@PathVariable Long id){
-        dataStatsService.editTieLuJuById(id);
-        return ResponseDataUtil.ok("修改铁路局信息成功");
-    }
-    //删除铁路局
-    @DeleteMapping("/delTieLuJu/{id}")
-    public Map<String,Object> delTieLuJu(@PathVariable Long id){
-        dataStatsService.delTieLuJu(id);
-        return ResponseDataUtil.ok("删除铁路局成功");
-    }
-    //新增电务段
-    @PostMapping("/addDianWuDuan")
-    public Map<String,Object> addDianWuDuan(DianWuDuanEntity dianWuDuanEntity){
-      dataStatsService.addDianWuDuan(dianWuDuanEntity);
-
-        return ResponseDataUtil.ok("新增电务段成功");
-    }
-
-    //修改电务段
-    @PutMapping("/editDianWuDuan/{id}")
-    public Map<String,Object>editDianWuDuan(Long id, DianWuDuanEntity dianWuDuanEntity){
-        dataStatsService.editDianWuDuan(dianWuDuanEntity);
-        return ResponseDataUtil.ok("修改电务段信息成功");
-    }
-    //删除电务段
-    @DeleteMapping("/delDianWuDuan/{id}")
-    public Map<String,Object>delDianWuDuan(@PathVariable Long id){
-        dataStatsService.delDianWuDuan(id);
-        return ResponseDataUtil.ok("删除电务段成功");
-    }
-    //新增线段
-    @PostMapping("/addXianDuan")
-    public Map<String,Object>addXianDuan(XianDuanEntity xianDuanEntity){
-       dataStatsService.addXianDuan(xianDuanEntity);
-        return ResponseDataUtil.ok("新增线段成功");
-    }
-    //删除线段
-    @DeleteMapping("/delXianDuan/{id}")
-    public Map<String,Object>delXianDuan(@PathVariable Long id){
-        dataStatsService.delXianDuan(id);
-        return ResponseDataUtil.ok("删除线段成功");
-    }
 
 
 }

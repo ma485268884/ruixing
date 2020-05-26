@@ -19,25 +19,7 @@ public interface DataStatsService {
     List<DataStats> findAll();
     //分页查询
     PageResponseDto<DataStats> getByPage(Integer page, Integer limit);
-    //查询铁路局
-    TieLuJuEntity findTieLuJuById(Long id);
 
-    DianWuDuanEntity findDianWuDuanById(Long id);
 
-    void addTieLuJU(TieLuJuEntity tieLuJuEntity);
-
-    void editTieLuJuById(Long id);
-
-    void addDianWuDuan(DianWuDuanEntity dianWuDuanEntity);
-
-    void editDianWuDuan(DianWuDuanEntity dianWuDuanEntity);
-
-    void addXianDuan(XianDuanEntity xianDuanEntity);
-
-    void delTieLuJu(Long id);
-
-    void delDianWuDuan(Long id);
-
-    void delXianDuan(Long id);
 
 }

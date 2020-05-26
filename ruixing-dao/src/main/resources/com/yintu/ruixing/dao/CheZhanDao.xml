@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yintu.ruixing.dao.CheZhanDao">
-
-<insert id="insertChezhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity">
+    <!--添加车站-->
+    <insert id="insertChezhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity">
         insert into mro_chezhan(cz_name,cz_id,xd_id,cz_miaoshu)
           values(#{cz_name,jdbcType=VARCHAR},#{cz_id,jdbcType=BIGINT},#{xd_id,jdbcType=BIGINT},#{cz_miaoshu,jdbcType=VARCHAR})
     </insert>
+    <!--更新车站-->
     <update id="updateCheZhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity">
         update mro_chezhan
         <set>
-          <if test="cz_name !=null">
-              cz_name = #{cz_name,jdbcType=VARCHAR},
-          </if>
-          <if test="xd_id !=null">
-              xd_id = #{xd_id,jdbcType=BIGINT},
-          </if>
+            <if test="cz_name !=null">
+                cz_name = #{cz_name,jdbcType=VARCHAR},
+            </if>
+            <if test="xd_id !=null">
+                cz_id = #{cz_id,jdbcType=BIGINT},
+            </if>
             <if test="cz_miaoshu !=null">
-              cz_miaoshu = #{cz_miaoshu,jdbcType=VARCHAR}
+                cz_miaoshu = #{cz_miaoshu,jdbcType=VARCHAR}
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <!--查询全部车站-->
+    <select id="selectByCheZhan" parameterType="java.lang.Long" resultType="com.yintu.ruixing.entity.CheZhanEntity">
         select * from mro_chezhan where id =  #{id,jdbcType=BIGINT}
     </select>
+
+    <!--删除车站-->
+    <delete id="delCheZhan" parameterType="java.lang.Long">
+        delete from mro_chezhan where id=#{id}
+    </delete>
 </mapper>

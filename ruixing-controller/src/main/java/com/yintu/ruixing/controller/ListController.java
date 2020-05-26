@@ -20,7 +20,7 @@ import java.util.List;
 public class ListController {
     @Autowired
     private ListService ls;
-
+/*
     @GetMapping("getLieBiao")
     public List<LieBiaoEntity> getLieBiao(){
         List<TieLuJuEntity> list1 = ls.findall();
@@ -48,5 +48,5 @@ public class ListController {
     public List<LieBiaoEntity> getlie(){
         List<TieLuJuEntity> list5 = ls.findall();
         fo
-    }
+    }*/
 }

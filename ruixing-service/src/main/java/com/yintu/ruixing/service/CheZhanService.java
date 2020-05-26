@@ -20,7 +20,7 @@ public interface CheZhanService {
      * @date 2020/5/25 17:04
      * @return 根据id修改车站信息
      */
-    void update(Long id);
+    void update(CheZhanEntity cheZhanEntity);
 
     /**
      * @author Qiao
@@ -28,4 +28,10 @@ public interface CheZhanService {
      * @return 根据id查询车站信息
      */
     CheZhanEntity findByCheZhanId(Long id);
+
+    /**
+     * 根据id删除车站
+     * @param id
+     */
+    void delCheZhan(Long id);
 }

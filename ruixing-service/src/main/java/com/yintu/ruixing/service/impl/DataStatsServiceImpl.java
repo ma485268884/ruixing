@@ -45,54 +45,6 @@ public class DataStatsServiceImpl implements DataStatsService {
 
     }
 
-    @Override
-    public TieLuJuEntity findTieLuJuById(Long id) {
-        return dataStatsDao.findTieLuJuById(id);
-    }
 
-    @Override
-    public DianWuDuanEntity findDianWuDuanById(Long id) {
-        return dataStatsDao.findDianWuDuanById(id);
-    }
-
-    @Override
-    public void addTieLuJU(TieLuJuEntity tieLuJuEntity) {
-        dataStatsDao.addTieLuJU(tieLuJuEntity);
-    }
-
-    @Override
-    public void editTieLuJuById(Long id) {
-        dataStatsDao.editTieLuJuById(id);
-    }
-
-    @Override
-    public void addDianWuDuan(DianWuDuanEntity dianWuDuanEntity) {
-        dataStatsDao.addDianWuDuan(dianWuDuanEntity);
-    }
-
-    @Override
-    public void editDianWuDuan(DianWuDuanEntity dianWuDuanEntity) {
-        dataStatsDao.editDianWuDuan(dianWuDuanEntity);
-    }
-
-    @Override
-    public void addXianDuan(XianDuanEntity xianDuanEntity) {
-        dataStatsDao.addXianDuan(xianDuanEntity);
-    }
-
-    @Override
-    public void delTieLuJu(Long id) {
-        dataStatsDao.delTieLuJu(id);
-    }
-
-    @Override
-    public void delDianWuDuan(Long id) {
-        dataStatsDao.delDianWuDuan(id);
-    }
-
-    @Override
-    public void delXianDuan(Long id) {
-        dataStatsDao.delXianDuan(id);
-    }
 
 }
