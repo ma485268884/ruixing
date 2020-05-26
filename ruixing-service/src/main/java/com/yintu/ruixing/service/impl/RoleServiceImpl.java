@@ -46,6 +46,13 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void edit(RoleEntity roleEntity) {
+        RoleEntityExample roleEntityExample = new RoleEntityExample();
+        RoleEntityExample.Criteria criteria = roleEntityExample.createCriteria();
+        criteria.andNameEqualTo(roleEntity.getName());
+        List<RoleEntity> userEntities = this.findByExample(roleEntityExample);
+        if (userEntities.size() > 0 && !userEntities.get(0).getId().equals(roleEntity.getId())) {
+            throw new BaseRuntimeException("添加失败，角色重复");
+        }
         roleDao.updateByPrimaryKeySelective(roleEntity);
     }
 
@@ -126,7 +133,6 @@ public class RoleServiceImpl implements RoleService {
     }
 
 
-
     @Override
     public List<TreeNodeUtil> findPermissionsTreeById(Long id, Long parentId) {
         List<PermissionEntity> permissionEntities = permissionService.findByRoleId(id, parentId);
@@ -141,7 +147,6 @@ public class RoleServiceImpl implements RoleService {
         }
         return treeNodeUtils;
     }
-
 
 
     @Override

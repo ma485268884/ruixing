@@ -92,7 +92,9 @@
         </root>
     </springProfile>
     <springProfile name="test">
+        <logger name="com.yintu.ruixing.dao" level="debug" />
         <root level="info">
+            <appender-ref ref="console"/>
             <appender-ref ref="allFile"/>
         </root>
     </springProfile>

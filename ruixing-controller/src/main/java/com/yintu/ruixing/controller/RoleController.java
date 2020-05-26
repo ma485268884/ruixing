@@ -9,6 +9,7 @@ import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.service.PermissionService;
 import com.yintu.ruixing.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class RoleController extends BaseController {
 
     @PostMapping
     public Map<String, Object> add(RoleEntity roleEntity) {
+        Assert.notNull(roleEntity.getName(),"角色名不能为空");
         roleService.add(roleEntity);
         return ResponseDataUtil.ok("添加角色成功");
     }

@@ -39,16 +39,25 @@ public class UserServiceImpl implements UserService {
         userEntity.setLocked((short) 0);
         userEntity.setLoginTime(new Date());
         String password = userEntity.getPassword();
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        userEntity.setPassword(passwordEncoder.encode(password));
+        if (password != null && !password.isEmpty()) {
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            userEntity.setPassword(passwordEncoder.encode(password));
+        }
         userDao.insertSelective(userEntity);
 
     }
 
     @Override
     public void edit(UserEntity userEntity) {
+        UserEntityExample userEntityExample = new UserEntityExample();
+        UserEntityExample.Criteria criteria = userEntityExample.createCriteria();
+        criteria.andUsernameEqualTo(userEntity.getUsername());
+        List<UserEntity> userEntities = this.findByExample(userEntityExample);
+        if (userEntities.size() > 0 && !userEntities.get(0).getId().equals(userEntity.getId())) {
+            throw new BaseRuntimeException("修改失败，用户名重复");
+        }
         String password = userEntity.getPassword();
-        if (!password.isEmpty()) {
+        if (password != null && !password.isEmpty()) {
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             userEntity.setPassword(passwordEncoder.encode(password));
         }
