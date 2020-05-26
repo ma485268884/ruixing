@@ -1,4 +1,4 @@
-package com.yintu.ruixing.exception;
+package com.yintu.ruixing.controller;
 
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
@@ -16,8 +16,8 @@ import java.util.Map;
  * @date:2020/5/19 17:14
  */
 @RestControllerAdvice
-public class GlobalExceptionHandler {
-    public static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+public class GlobalExceptionController {
+    public static final Logger logger = LoggerFactory.getLogger(GlobalExceptionController.class);
 
     @ExceptionHandler(SQLException.class)
     public Map<String, Object> sqlException(SQLException e) {
