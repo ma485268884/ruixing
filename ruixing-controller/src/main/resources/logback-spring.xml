@@ -10,8 +10,7 @@
 
     <!-- name的值是变量的名称，value的值时变量定义的值。通过定义的值会被插入到logger上下文中。定义变量后，可以使“${}”来使用变量。 -->
     <!-- 这里定义日志的根目录 -->
-    <property name="logPathWindow" value="C:\\data\\logs\\ruixing"/>
-    <property name="logPathLinux" value="/data/logs/ruixing"/>
+    <property name="logPath" value="/data/logs/ruixing"/>
 
     <!-- appender 负责写日志的组件 -->
 
@@ -34,7 +33,7 @@
     <!-- 时间滚动输出 level为 ALL -->
     <appender name="allFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 正在记录的日志文件的路径及文件名 -->
-        <file>${logPathWindow}/all.log</file>
+        <file>${logPath}/all.log</file>
         <!--日志文件输出格式-->
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
@@ -60,7 +59,7 @@
     <!-- 时间滚动输出 level为 ERROR 日志 -->
     <appender name="errorFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 正在记录的日志文件的路径及文件名 -->
-        <file>${logPathLinux}/error.log</file>
+        <file>${logPath}/error.log</file>
         <!--日志文件输出格式-->
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
@@ -68,7 +67,7 @@
         </encoder>
         <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${logPathLinux}/error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${logPath}/error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>100MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
@@ -93,9 +92,7 @@
         </root>
     </springProfile>
     <springProfile name="test">
-        <logger name="com.yintu.ruixing.dao" level="debug" />
         <root level="info">
-            <appender-ref ref="console"/>
             <appender-ref ref="allFile"/>
         </root>
     </springProfile>
