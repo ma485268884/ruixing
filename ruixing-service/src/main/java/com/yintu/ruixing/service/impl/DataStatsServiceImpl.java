@@ -33,9 +33,9 @@ public class DataStatsServiceImpl implements DataStatsService {
     }
     //分页查询
     @Override
-    public PageResponseDto<DataStats> getByPage(Integer page, Integer limit) {
+    public PageResponseDto<DataStats> getByPage(Integer page, Integer size) {
         List<DataStats> userList = dataStatsDao.getByPage();
-        PageHelper.startPage(page, limit);
+        PageHelper.startPage(page, size);
         PageInfo<DataStats> info = new PageInfo<>(userList);
         PageResponseDto<DataStats> response = new PageResponseDto<>();
         response.setPage(info.getPageNum());
@@ -64,6 +64,16 @@ public class DataStatsServiceImpl implements DataStatsService {
     @Override
     public DataStats findCheZhanById(Long tid, Long did, Long xid, Long cid) {
         return dataStatsDao.findCheZhanById(tid,did,xid,cid);
+    }
+
+    @Override
+    public PageInfo<DataStats> findPage(Integer page, Integer size) {
+        //分页
+        PageHelper.startPage(page,size);
+        //集合查询
+        List<DataStats> all = dataStatsDao.findAll();
+
+        return new PageInfo<DataStats>(all);
     }
 
 

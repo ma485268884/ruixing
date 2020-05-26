@@ -1,5 +1,6 @@
 package com.yintu.ruixing.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.result.Result;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.*;
@@ -28,11 +29,17 @@ public class DataStatsController {
         return new Result(true, "查询数据成功", list);
 
     }
+    //分页查询
+    @GetMapping("/findPage")
+    public PageInfo<DataStats>findPage(Integer page,Integer size){
+        PageInfo<DataStats> pageInfo= dataStatsService.findPage(page,size);
+        return pageInfo;
+    }
 
     //分页查询
     @GetMapping("/page")
-    public PageResponseDto<DataStats> getByPage(Integer page, Integer limit) {
-        return dataStatsService.getByPage(page, limit);
+    public PageResponseDto<DataStats> getByPage(Integer page, Integer size) {
+        return dataStatsService.getByPage(page, size);
     }
 
     //查询层级下的铁路局

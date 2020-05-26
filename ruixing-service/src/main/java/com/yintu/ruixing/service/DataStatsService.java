@@ -1,6 +1,7 @@
 package com.yintu.ruixing.service;
 
 
+import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.entity.*;
 
 
@@ -18,7 +19,7 @@ public interface DataStatsService {
     //查询所有数据
     List<DataStats> findAll();
     //分页查询
-    PageResponseDto<DataStats> getByPage(Integer page, Integer limit);
+    PageResponseDto<DataStats> getByPage(Integer page, Integer size);
 
 
     TieLuJuEntity findTieLuJuById(Long id);
@@ -28,5 +29,7 @@ public interface DataStatsService {
     DataStats findXianDuanById(Long tid, Long did, Long xid);
 
     DataStats findCheZhanById(Long tid, Long did, Long xid, Long cid);
+
+    PageInfo<DataStats> findPage(Integer page, Integer size);
 
 }
