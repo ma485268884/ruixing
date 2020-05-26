@@ -20,8 +20,11 @@ public class DataStats {
     private String tlj_name;
 
     private String dwd_name;
+    private String dwd_miaoshu;
+
 
     private String xd_name;
+    private  String xd_miaoshu;
 
     private long id;
 

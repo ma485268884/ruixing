@@ -21,5 +21,12 @@ public interface DataStatsService {
     PageResponseDto<DataStats> getByPage(Integer page, Integer limit);
 
 
+    TieLuJuEntity findTieLuJuById(Long id);
+
+    DataStats findDianWuDuanById(Long tid, Long did);
+
+    DataStats findXianDuanById(Long tid, Long did, Long xid);
+
+    DataStats findCheZhanById(Long tid, Long did, Long xid, Long cid);
 
 }

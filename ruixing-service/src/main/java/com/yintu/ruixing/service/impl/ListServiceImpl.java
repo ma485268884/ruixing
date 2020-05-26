@@ -8,6 +8,7 @@ import com.yintu.ruixing.entity.XianDuanEntity;
 import com.yintu.ruixing.service.ListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
  * @time: 2020/5/21 17:08
  */
 @Service
+@Transactional
 public class ListServiceImpl implements ListService {
     @Autowired
     private ListDao ld;

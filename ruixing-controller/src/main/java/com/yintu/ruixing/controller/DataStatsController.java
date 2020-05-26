@@ -16,7 +16,7 @@ import java.util.Map;
  * 数据统计
  */
 @RestController
-@RequestMapping("chezhan")
+@RequestMapping("/dataStats")
 public class DataStatsController {
     @Autowired
     private DataStatsService dataStatsService;
@@ -35,8 +35,33 @@ public class DataStatsController {
         return dataStatsService.getByPage(page, limit);
     }
 
+    //查询层级下的铁路局
+    @GetMapping("/findTieLuJuById/{id}")
+    public Map<String, Object> findTieLuJuById(@PathVariable Long id) {
+        TieLuJuEntity tieLuJuEntity = dataStatsService.findTieLuJuById(id);
+        return ResponseDataUtil.ok("查询铁路局成功", tieLuJuEntity);
+    }
 
+    //根据id查询铁路局下的电务段
+    @GetMapping("/findDianWuDuanById/{tid}/{did}")
+    public Map<String, Object> findDianWuDuanById(@PathVariable Long tid, @PathVariable Long did) {
+        DataStats dataStats = dataStatsService.findDianWuDuanById(tid, did);
+        return ResponseDataUtil.ok("查询电务段信息成功", dataStats);
+    }
 
+    //根据id查询铁路局下的电务段下的线段
+    @GetMapping("/findXianDuanById/{tid}/{did}/{xid}")
+    public Map<String, Object> findXianDuanById(@PathVariable Long tid, @PathVariable Long did, @PathVariable Long xid) {
+        DataStats dataStats = dataStatsService.findXianDuanById(tid, did, xid);
+        return ResponseDataUtil.ok("查询线段信息成功", dataStats);
+    }
+
+    //根据id查询铁路局下的电务段下的线段的车站
+    @GetMapping("/findCheZhanById/{tid}/{did}/{xid}/{cid}")
+    public Map<String, Object> findCheZhanById(@PathVariable Long tid, @PathVariable Long did, @PathVariable Long xid, @PathVariable Long cid) {
+        DataStats dataStats = dataStatsService.findCheZhanById(tid, did, xid, cid);
+        return ResponseDataUtil.ok("查询车站信息成功", dataStats);
+    }
 
 
 }

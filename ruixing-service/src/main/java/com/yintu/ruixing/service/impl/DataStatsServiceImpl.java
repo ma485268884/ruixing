@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.dao.DataStatsDao;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.DataStatsService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +46,25 @@ public class DataStatsServiceImpl implements DataStatsService {
 
     }
 
+    @Override
+    public TieLuJuEntity findTieLuJuById(Long id) {
+        return dataStatsDao.findTieLuJuById(id);
+    }
+
+    @Override
+    public DataStats findDianWuDuanById(@Param("tid") Long tid,@Param("did") Long did) {
+        return dataStatsDao.findDianWuDuanById(tid,did);
+    }
+
+    @Override
+    public DataStats findXianDuanById(Long tid, Long did, Long xid) {
+        return dataStatsDao.findXianDuanById(tid,did,xid);
+    }
+
+    @Override
+    public DataStats findCheZhanById(Long tid, Long did, Long xid, Long cid) {
+        return dataStatsDao.findCheZhanById(tid,did,xid,cid);
+    }
 
 
 }

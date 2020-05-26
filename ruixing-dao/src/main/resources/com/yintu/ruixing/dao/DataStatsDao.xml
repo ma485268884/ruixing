@@ -51,5 +51,57 @@
 
 	</select>
 
+    <!--根据id 查询铁路局-->
+    <select id="findTieLuJuById" resultType="com.yintu.ruixing.entity.TieLuJuEntity" parameterType="java.lang.Long">
+		select * from mro_tieluju where id =#{id}
+	</select>
+    <!--根据铁路局tid和电务段did查询对应电务段-->
+    <select id="findDianWuDuanById" parameterType="java.lang.Long" resultType="com.yintu.ruixing.entity.DataStats">
+		SELECT
+			tlj.tlj_name,
+			dwd.dwd_name,
+			dwd.dwd_miaoshu
+		FROM
+			mro_tieluju tlj,
+			mro_dianwuduan dwd
+		WHERE
+		tlj.id = #{tid}
+		AND dwd.id =#{did}
 
+	</select>
+	<!--根据铁路局tid,电务段did和线段xid查询对应线段-->
+	<select id="findXianDuanById" parameterType="java.lang.Long" resultType="com.yintu.ruixing.entity.DataStats">
+		SELECT
+			tlj.tlj_name,
+			dwd.dwd_name,
+			xd.xd_name,
+			xd.xd_miaoshu
+		FROM
+			mro_tieluju tlj,
+			mro_dianwuduan dwd,
+			mro_xianduan xd
+		WHERE
+			tlj.id = #{tid}
+			AND dwd.id =#{did}
+			AND xd.id =#{xid}
+	</select>
+	<!--根据铁路局tid,电务段did,线段xid和车站cid查询对应车站-->
+	<select id="findCheZhanById" resultType="com.yintu.ruixing.entity.DataStats" parameterType="java.lang.Long">
+		SELECT
+			tlj.tlj_name,
+			dwd.dwd_name,
+			xd.xd_name,
+			cz.cz_name,
+			cz.cz_miaoshu
+		FROM
+			mro_tieluju tlj,
+			mro_dianwuduan dwd,
+			mro_xianduan xd,
+			mro_chezhan cz
+		WHERE
+			tlj.id = #{tid}
+			AND dwd.id =#{did}
+			AND xd.id =#{xid}
+			AND cz.id =#{cid}
+	</select>
 </mapper>

@@ -1,12 +1,13 @@
 package com.yintu.ruixing.dao;
 
-import com.github.pagehelper.Page;
+
 import com.yintu.ruixing.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * @author:lcy
@@ -21,4 +22,11 @@ public interface DataStatsDao {
     List<DataStats> getByPage();
 
 
+    TieLuJuEntity findTieLuJuById(Long id);
+
+    DataStats findDianWuDuanById(@Param("tid") Long tid,@Param("did") Long did);
+
+    DataStats findXianDuanById(@Param("tid") Long tid,@Param("did") Long did,@Param("xid") Long xid);
+
+    DataStats findCheZhanById(@Param("tid") Long tid,@Param("did") Long did,@Param("xid") Long xid,@Param("cid") Long cid);
 }
