@@ -52,6 +52,12 @@ public class PermissionServiceImpl implements PermissionService {
                 throw new BaseRuntimeException("url或者method填写有误有误");
             if (!"GET".equals(method.toUpperCase()))
                 throw new BaseRuntimeException("只有请求方式为GET才能添加path");
+            PermissionEntityExample permissionEntityExample = new PermissionEntityExample();
+            PermissionEntityExample.Criteria criteria = permissionEntityExample.createCriteria();
+            criteria.andParentIdEqualTo(parentId).andPathIsNotNull().andPathNotEqualTo("");
+            List<PermissionEntity> permissionEntities = this.findByExample(permissionEntityExample);
+            if (permissionEntities.size() > 0)
+                throw new BaseRuntimeException("path重复");
         }
         permissionDao.insertSelective(permissionEntity);
     }
@@ -78,6 +84,12 @@ public class PermissionServiceImpl implements PermissionService {
                 throw new BaseRuntimeException("url或者method填写有误有误");
             if (!"GET".equals(method.toUpperCase()))
                 throw new BaseRuntimeException("只有请求方式为GET才能添加path");
+            PermissionEntityExample permissionEntityExample = new PermissionEntityExample();
+            PermissionEntityExample.Criteria criteria = permissionEntityExample.createCriteria();
+            criteria.andParentIdEqualTo(parentId).andPathIsNotNull().andPathNotEqualTo("");
+            List<PermissionEntity> permissionEntities = this.findByExample(permissionEntityExample);
+            if (permissionEntities.size() > 0 && permissionEntities.get(0).getId() != null)
+                throw new BaseRuntimeException("path重复");
         }
         permissionDao.updateByPrimaryKeySelective(permissionEntity);
     }
