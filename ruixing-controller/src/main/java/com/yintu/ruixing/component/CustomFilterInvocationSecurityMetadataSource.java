@@ -46,7 +46,7 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
         }
         List<PermissionEntity> permissionEntities = permissionService.findPermissionAndRole();
         for (PermissionEntity permissionEntity : permissionEntities) {
-            if (antPathMatcher.match(permissionEntity.getUrl(), newRequestUrl.toString()) && requestMethod.equals(permissionEntity.getMethod().toUpperCase())) {
+            if (antPathMatcher.match(permissionEntity.getUrl() == null ? "" : permissionEntity.getUrl(), newRequestUrl.toString()) && requestMethod.equals(permissionEntity.getMethod() == null ? permissionEntity.getMethod() : permissionEntity.getMethod().toUpperCase())) {
                 List<RoleEntity> roleEntities = permissionEntity.getRoleEntities();
                 String[] str = new String[roleEntities.size()];
                 for (int i = 0; i < roleEntities.size(); i++) {
