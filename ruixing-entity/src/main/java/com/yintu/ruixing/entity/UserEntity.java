@@ -43,7 +43,13 @@ public class UserEntity implements UserDetails {
     @JSONField(format = "yyyy-MM-dd hh:mm:ss")
     private Date createTime;
 
+    private Short isCustomer;
+
     private List<RoleEntity> roleEntitys;
+
+    private Long departmentId;
+
+    private DepartmentEntity departmentEntity;
 
 
     @Override
