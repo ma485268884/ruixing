@@ -31,11 +31,14 @@ public class UserServiceImpl implements UserService {
     public void add(UserEntity userEntity) {
         UserEntityExample userEntityExample = new UserEntityExample();
         UserEntityExample.Criteria criteria = userEntityExample.createCriteria();
+        criteria.andIsCustomerEqualTo(userEntity.getIsCustomer());
         criteria.andUsernameEqualTo(userEntity.getUsername());
         List<UserEntity> userEntities = this.findByExample(userEntityExample);
         if (userEntities.size() > 0) {
             throw new BaseRuntimeException("添加失败，用户名重复");
         }
+        Short authType = userEntity.getAuthType();
+        userEntity.setAuthType(authType == null ? (short) 0 : (short) 1);
         userEntity.setLocked((short) 0);
         userEntity.setCreateTime(new Date());
         String password = userEntity.getPassword();
@@ -51,11 +54,14 @@ public class UserServiceImpl implements UserService {
     public void edit(UserEntity userEntity) {
         UserEntityExample userEntityExample = new UserEntityExample();
         UserEntityExample.Criteria criteria = userEntityExample.createCriteria();
+        criteria.andIsCustomerEqualTo(userEntity.getIsCustomer());
         criteria.andUsernameEqualTo(userEntity.getUsername());
         List<UserEntity> userEntities = this.findByExample(userEntityExample);
         if (userEntities.size() > 0 && !userEntities.get(0).getId().equals(userEntity.getId())) {
             throw new BaseRuntimeException("修改失败，用户名重复");
         }
+        Short authType = userEntity.getAuthType();
+        userEntity.setAuthType(authType == null ? (short) 0 : (short) 1);
         String password = userEntity.getPassword();
         if (password != null && !password.isEmpty()) {
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -75,8 +81,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserEntity> findAll() {
+    public List<UserEntity> findAll(Short isCustermer) {
         UserEntityExample userEntityExample = new UserEntityExample();
+        UserEntityExample.Criteria criteria = userEntityExample.createCriteria();
+        criteria.andIsCustomerEqualTo(isCustermer);
         return userDao.selectByExample(userEntityExample);
     }
 
@@ -86,13 +94,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserEntity> findAllOrByUsername(String username) {
+    public List<UserEntity> findAllOrByUsername(String username, Short isCustermer) {
         List<UserEntity> userEntities;
         if (username == null || "".equals(username)) {
-            userEntities = this.findAll();
+            userEntities = this.findAll(isCustermer);
         } else {
             UserEntityExample userEntityExample = new UserEntityExample();
             UserEntityExample.Criteria criteria = userEntityExample.createCriteria();
+            criteria.andIsCustomerEqualTo(isCustermer);
             criteria.andUsernameLike("%" + username + "%");
             userEntities = this.findByExample(userEntityExample);
         }

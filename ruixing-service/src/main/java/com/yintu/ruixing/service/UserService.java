@@ -47,7 +47,7 @@ public interface UserService extends UserDetailsService {
      *
      * @return 用户信息
      */
-    List<UserEntity> findAll();
+    List<UserEntity> findAll(Short isCustermer);
 
     /**
      * 通过条件查询用户
@@ -63,7 +63,7 @@ public interface UserService extends UserDetailsService {
      * @param username 用户名
      * @return 用户列表信息
      */
-    List<UserEntity> findAllOrByUsername(String username);
+    List<UserEntity> findAllOrByUsername(String username,Short isCustermer);
 
     /**
      * 通过用户id查询角色
