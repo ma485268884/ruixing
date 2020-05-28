@@ -824,6 +824,126 @@ public class UserEntityExample {
             addCriterion("create_time not between", value1, value2, "createTime");
             return (Criteria) this;
         }
+
+        public Criteria andDepartmentIdIsNull() {
+            addCriterion("department_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdIsNotNull() {
+            addCriterion("department_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdEqualTo(Long value) {
+            addCriterion("department_id =", value, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdNotEqualTo(Long value) {
+            addCriterion("department_id <>", value, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdGreaterThan(Long value) {
+            addCriterion("department_id >", value, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("department_id >=", value, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdLessThan(Long value) {
+            addCriterion("department_id <", value, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdLessThanOrEqualTo(Long value) {
+            addCriterion("department_id <=", value, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdIn(List<Long> values) {
+            addCriterion("department_id in", values, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdNotIn(List<Long> values) {
+            addCriterion("department_id not in", values, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdBetween(Long value1, Long value2) {
+            addCriterion("department_id between", value1, value2, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentIdNotBetween(Long value1, Long value2) {
+            addCriterion("department_id not between", value1, value2, "departmentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCustomerIsNull() {
+            addCriterion("is_customer is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCustomerIsNotNull() {
+            addCriterion("is_customer is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCustomerEqualTo(Short value) {
+            addCriterion("is_customer =", value, "isCustomer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCustomerNotEqualTo(Short value) {
+            addCriterion("is_customer <>", value, "isCustomer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCustomerGreaterThan(Short value) {
+            addCriterion("is_customer >", value, "isCustomer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCustomerGreaterThanOrEqualTo(Short value) {
+            addCriterion("is_customer >=", value, "isCustomer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCustomerLessThan(Short value) {
+            addCriterion("is_customer <", value, "isCustomer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCustomerLessThanOrEqualTo(Short value) {
+            addCriterion("is_customer <=", value, "isCustomer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCustomerIn(List<Short> values) {
+            addCriterion("is_customer in", values, "isCustomer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCustomerNotIn(List<Short> values) {
+            addCriterion("is_customer not in", values, "isCustomer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCustomerBetween(Short value1, Short value2) {
+            addCriterion("is_customer between", value1, value2, "isCustomer");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsCustomerNotBetween(Short value1, Short value2) {
+            addCriterion("is_customer not between", value1, value2, "isCustomer");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

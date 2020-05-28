@@ -113,7 +113,7 @@ public class RoleServiceImpl implements RoleService {
         List<UserRoleEntity> userRoleEntities = userRoleService.findByExample(userRoleEntityExample);
         List<Long> roleIds = new ArrayList<>();
         for (UserRoleEntity userRoleEntity : userRoleEntities) {
-            roleIds.add(userRoleEntity.getUserId());
+            roleIds.add(userRoleEntity.getRoleId());
         }
         return this.findByIds(roleIds);
     }

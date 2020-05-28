@@ -35,6 +35,7 @@ public class UserController extends BaseController {
         Assert.notNull(userEntity.getPassword(), "密码不能为空");
         Assert.notNull(userEntity.getAuthType(), "类型不能为空");
         Assert.notNull(userEntity.getEnableds(), "状态不能为空");
+        Assert.notNull(userEntity.getDepartmentId(), "部门id不能为空");
         userService.add(userEntity);
         return ResponseDataUtil.ok("添加用户成功");
     }
@@ -47,6 +48,11 @@ public class UserController extends BaseController {
 
     @PutMapping("/{id}")
     public Map<String, Object> edit(@PathVariable Long id, UserEntity userEntity) {
+        Assert.notNull(userEntity.getUsername(), "用户名不能为空");
+        Assert.notNull(userEntity.getPassword(), "密码不能为空");
+        Assert.notNull(userEntity.getAuthType(), "类型不能为空");
+        Assert.notNull(userEntity.getEnableds(), "状态不能为空");
+        Assert.notNull(userEntity.getDepartmentId(), "部门id不能为空");
         userService.edit(userEntity);
         return ResponseDataUtil.ok("修改用户成功");
     }

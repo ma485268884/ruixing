@@ -7,7 +7,6 @@ import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.PermissionRoleService;
 import com.yintu.ruixing.service.PermissionService;
 import com.yintu.ruixing.service.RoleService;
-import org.apache.ibatis.executor.BaseExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -176,22 +175,21 @@ public class PermissionServiceImpl implements PermissionService {
 
 
     @Override
-    public void removeByParentIdAndIsFirst(Long parentId, Boolean isFirst) {
+    public void removeByIdAndIsFirst(Long id, Boolean isFirst) {
         if (isFirst) {  //第一次掉用此方法，按照id查询权限信息，删除
-            PermissionEntity permissionEntity = this.findById(parentId);
+            PermissionEntity permissionEntity = this.findById(id);
             if (permissionEntity != null) {
-                this.remove(parentId);
+                this.remove(id);
             }
         }
         PermissionEntityExample permissionEntityExample = new PermissionEntityExample();
         PermissionEntityExample.Criteria criteria = permissionEntityExample.createCriteria();
-        criteria.andParentIdEqualTo(parentId);
-        List<PermissionEntity> permissionEntities = this.findByExample(permissionEntityExample); //按照parentId查询
+        criteria.andParentIdEqualTo(id);
+        List<PermissionEntity> permissionEntities = this.findByExample(permissionEntityExample);
         if (permissionEntities.size() > 0) {
-            for (PermissionEntity permissionEntity : permissionEntities) {//遍历递归删除
+            for (PermissionEntity permissionEntity : permissionEntities) {
                 this.remove(permissionEntity.getId());
-                this.removeByParentIdAndIsFirst(permissionEntity.getId(), false);
-                //注意：先删除再去查询，不会出现查不到情况，原因，递归调用方法，此前方法处于不会结束，也就意味着事物没有结束。当然也可以先去查询，再去删除。
+                this.removeByIdAndIsFirst(permissionEntity.getId(), false);
             }
         }
     }

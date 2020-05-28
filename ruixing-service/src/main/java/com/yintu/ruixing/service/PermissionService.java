@@ -78,10 +78,10 @@ public interface PermissionService {
     List<String> findRequestMethodsByUserIdAndUrl(Long userId, String url);
 
     /**
-     * 获取tree
+     * 获取权限tree
      *
      * @param parentId 父级id
-     * @return
+     * @return 权限树
      */
     List<TreeNodeUtil> findPermissionTree(Long parentId);
 
@@ -89,10 +89,10 @@ public interface PermissionService {
     /**
      * 指定删除id，以及次节点父节点
      *
-     * @param parentId 权限id
+     * @param id 权限id
      * @param isFirst  是否第一次
      */
-    void removeByParentIdAndIsFirst(Long parentId, Boolean isFirst);
+    void removeByIdAndIsFirst(Long id, Boolean isFirst);
 
 
 }

@@ -30,7 +30,7 @@ public class PermissionController {
 
     @DeleteMapping("/{id}")
     public Map<String, Object> remove(@PathVariable Long id) {
-        permissionService.removeByParentIdAndIsFirst(id, true);
+        permissionService.removeByIdAndIsFirst(id, true);
         return ResponseDataUtil.ok("删除权限成功");
     }
 
