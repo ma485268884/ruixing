@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserService {
     public void add(UserEntity userEntity) {
         UserEntityExample userEntityExample = new UserEntityExample();
         UserEntityExample.Criteria criteria = userEntityExample.createCriteria();
-        criteria.andIsCustomerEqualTo(userEntity.getIsCustomer());
         criteria.andUsernameEqualTo(userEntity.getUsername());
         List<UserEntity> userEntities = this.findByExample(userEntityExample);
         if (userEntities.size() > 0) {
@@ -54,14 +53,11 @@ public class UserServiceImpl implements UserService {
     public void edit(UserEntity userEntity) {
         UserEntityExample userEntityExample = new UserEntityExample();
         UserEntityExample.Criteria criteria = userEntityExample.createCriteria();
-        criteria.andIsCustomerEqualTo(userEntity.getIsCustomer());
         criteria.andUsernameEqualTo(userEntity.getUsername());
         List<UserEntity> userEntities = this.findByExample(userEntityExample);
         if (userEntities.size() > 0 && !userEntities.get(0).getId().equals(userEntity.getId())) {
             throw new BaseRuntimeException("修改失败，用户名重复");
         }
-        Short authType = userEntity.getAuthType();
-        userEntity.setAuthType(authType == null ? (short) 0 : (short) 1);
         String password = userEntity.getPassword();
         if (password != null && !password.isEmpty()) {
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

@@ -63,11 +63,18 @@ public class CustomerController extends BaseController {
     }
 
     @GetMapping
-    public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber, @RequestParam("page_size") Integer pageSize, @RequestParam(value = "search_text", required = false) String username) {
+    public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber,
+                                       @RequestParam("page_size") Integer pageSize,
+                                       @RequestParam(value = "search_text", required = false) String username,
+                                       @RequestParam(value = "sortby", required = false) String sortby,
+                                       @RequestParam(value = "order", required = false) String order) {
         JSONObject jo = new JSONObject();
-        List<String> requestMethods = permissionService.findRequestMethodsByUserIdAndUrl(this.getLoginUserId(), "/users");
+        List<String> requestMethods = permissionService.findRequestMethodsByUserIdAndUrl(this.getLoginUserId(), "/customers");
         jo.put("requestMethods", requestMethods);
-        PageHelper.startPage(pageNumber, pageSize);
+        String orderBy = "id DESC";
+        if (sortby != null && !"".equals(sortby) && order != null && !"".equals(order))
+            orderBy = sortby + " " + order;
+        PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<UserEntity> userEntities = userService.findAllOrByUsername(username, (short) 1);
         PageInfo<UserEntity> pageInfo = new PageInfo<>(userEntities);
         jo.put("pageInfo", pageInfo);

@@ -29,7 +29,7 @@ public class RoleController extends BaseController {
 
     @PostMapping
     public Map<String, Object> add(RoleEntity roleEntity) {
-        Assert.notNull(roleEntity.getName(),"角色名不能为空");
+        Assert.notNull(roleEntity.getName(), "角色名不能为空");
         roleService.add(roleEntity);
         return ResponseDataUtil.ok("添加角色成功");
     }
@@ -53,11 +53,18 @@ public class RoleController extends BaseController {
     }
 
     @GetMapping
-    public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber, @RequestParam("page_size") Integer pageSize, @RequestParam(value = "search_text", required = false) String name) {
+    public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber,
+                                       @RequestParam("page_size") Integer pageSize,
+                                       @RequestParam(value = "search_text", required = false) String name,
+                                       @RequestParam(value = "sortby", required = false) String sortby,
+                                       @RequestParam(value = "order", required = false) String order) {
         JSONObject jo = new JSONObject();
         List<String> requestMethods = permissionService.findRequestMethodsByUserIdAndUrl(this.getLoginUserId(), "/users");
         jo.put("requestMethods", requestMethods);
-        PageHelper.startPage(pageNumber, pageSize);
+        String orderBy = "id DESC";
+        if (sortby != null && !"".equals(sortby) && order != null && !"".equals(order))
+            orderBy = sortby + " " + order;
+        PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<RoleEntity> roleEntities = roleService.findAllOrByName(name);
         PageInfo<RoleEntity> pageInfo = new PageInfo<>(roleEntities);
         jo.put("pageInfo", pageInfo);

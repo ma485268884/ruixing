@@ -1,6 +1,7 @@
 package com.yintu.ruixing.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
@@ -66,11 +67,18 @@ public class UserController extends BaseController {
     }
 
     @GetMapping
-    public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber, @RequestParam("page_size") Integer pageSize, @RequestParam(value = "search_text", required = false) String username) {
+    public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber,
+                                       @RequestParam("page_size") Integer pageSize,
+                                       @RequestParam(value = "search_text", required = false) String username,
+                                       @RequestParam(value = "sortby", required = false) String sortby,
+                                       @RequestParam(value = "order", required = false) String order) {
         JSONObject jo = new JSONObject();
         List<String> requestMethods = permissionService.findRequestMethodsByUserIdAndUrl(this.getLoginUserId(), "/users");
         jo.put("requestMethods", requestMethods);
-        PageHelper.startPage(pageNumber, pageSize);
+        String orderBy = "id DESC";
+        if (sortby != null && !"".equals(sortby) && order != null && !"".equals(order))
+            orderBy = sortby + " " + order;
+        Page<UserEntity> page = PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<UserEntity> userEntities = userService.findAllOrByUsername(username, (short) 0);
         PageInfo<UserEntity> pageInfo = new PageInfo<>(userEntities);
         jo.put("pageInfo", pageInfo);
