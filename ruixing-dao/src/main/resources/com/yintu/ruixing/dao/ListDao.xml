@@ -1,20 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.yintu.ruixing.dao.ListDao">
-    
-    <select id="getListTieLuJuAll" resultType="com.yintu.ruixing.entity.TieLuJuEntity">
-          select * from mro_tieluju;
-    </select>
-
-    <select id="getDianWuDuan" resultType="com.yintu.ruixing.entity.DianWuDuanEntity">
-          select dwd.dwd_name,dwd.tlj_id from mro_dianwuduan dwd where dwd.tlj_id=#{tlj_id}
-    </select>
-
-    <select id="getXianDuan" resultType="com.yintu.ruixing.entity.XianDuanEntity">
-          select xd.xd_name,xd.dwd_id from mro_xianduan xd where xd.dwd_id=#{dwd_id}
-    </select>
-
-    <select id="getCheZhan" resultType="com.yintu.ruixing.entity.CheZhanEntity">
-          select cz.cz_name,cz.xd_id from mro_chezhan cz where cz.xd_id=#{xd_id}
-    </select>
+    <resultMap type="com.yintu.ruixing.entity.TieLuJuEntity" id="tieluju">
+        <result property="id" column="id"/>
+        <result property="tljId" column="tlj_id"/>
+        <result property="tljName" column="tlj_name"/>
+        <result property="tljMiaoShu" column="tlj_miaoshu"/>
+    </resultMap>
+    <select id="selectTieLuJuList" resultMap="tieluju">
+    SELECT * FROM `mro_tieluju`
+</select>
+    <resultMap type="com.yintu.ruixing.entity.DianWuDuanEntity" id="dianwuduan">
+        <result property="id" column="id"/>
+        <result property="dwdId" column="dwd_id"/>
+        <result property="tljId" column="tlj_id"/>
+        <result property="dwdName" column="dwd_name"/>
+        <result property="tljDwdId" column="tlj_dwd_id"/>
+        <result property="dwdMiaoShu" column="dwd_miaoshu"/>
+    </resultMap>
+    <select id="selectDwdListBytId" parameterType="long" resultMap="dianwuduan">
+    SELECT * FROM `mro_dianwuduan` WHERE tlj_dwd_id= #{tId}
+</select>
+    <resultMap type="com.yintu.ruixing.entity.XianDuanEntity" id="xianduan">
+        <result property="id" column="id"/>
+        <result property="xdId" column="xd_id"/>
+        <result property="dwdId" column="dwd_id"/>
+        <result property="xdName" column="xd_name"/>
+        <result property="xdZgName" column="xd_zg_name"/>
+        <result property="dwdXdId" column="dwd_xd_id"/>
+        <result property="xdMiaoShu" column="xd_miaoshu"/>
+        <result property="xdType" column="xd_type"/>
+    </resultMap>
+    <select id="selectXdListByDwdId" parameterType="long" resultMap="xianduan">
+    SELECT * FROM `mro_xianduan` WHERE dwd_xd_id= #{dwdId}
+</select>
+    <resultMap type="com.yintu.ruixing.entity.CheZhanEntity" id="chezhan">
+        <result property="id" column="id"/>
+        <result property="czName" column="cz_name"/>
+        <result property="czId" column="cz_id"/>
+        <result property="xdId" column="xd_id"/>
+        <result property="czNameJianCheng" column="cz_name_jiancheng"/>
+        <result property="czIp" column="cz_ip"/>
+        <result property="czType" column="cz_type"/>
+        <result property="czStutrs" column="cz_stutrs"/>
+        <result property="czOpenStutrs" column="cz_open_stutrs"/>
+        <result property="czLastTime" column="cz_lasttime"/>
+        <result property="xdCzId" column="xd_cz_id"/>
+        <result property="czMiaoShu" column="cz_miaoshu"/>
+        <result property="czDuanTou" column="cz_duantou"/>
+    </resultMap>
+    <select id="selectCzListByXdId" parameterType="long" resultMap="chezhan">
+    SELECT * FROM `mro_chezhan` WHERE xd_cz_id= #{xdId}
+</select>
 </mapper>

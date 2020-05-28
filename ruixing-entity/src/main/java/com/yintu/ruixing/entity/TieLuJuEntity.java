@@ -16,12 +16,12 @@ import java.util.List;
 public class TieLuJuEntity {
     private long id;
 
-    private int tlj_id;
+    private int tljId;
 
-    private String tlj_name;
+    private String tljName;
 
-    private String tlj_miaoshu;
+    private String tljMiaoShu;
 
-    private String tlj_beiyong;
+    List<DianWuDuanEntity> dianWuDuanEntities;
 
 }

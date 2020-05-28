@@ -26,5 +26,4 @@ public class PageHelperConfig {
         return pageHelper;
     }
 
-
 }

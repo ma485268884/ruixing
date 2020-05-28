@@ -17,39 +17,44 @@ import java.util.List;
 @AllArgsConstructor
 public class DataStats {
 
-    private String tlj_name;
+    private String tljName;
 
-    private String dwd_name;
-    private String dwd_miaoshu;
+    private String dwdName;
 
+    private String dwdMiaoShu;
 
-    private String xd_name;
-    private  String xd_miaoshu;
+    private String xdName;
+
+    private  String xdMiaoShu;
 
     private long id;
 
-    private String cz_name;
+    private String czName;
 
-    private String cz_name_jiancheng;
+    private int czId;
 
-    private String cz_ip;
+    private int xdId;
 
-    private Long cz_type;
+    private String czNameJianCheng;
 
-    private Long cz_stutrs;
+    private String czIp;
 
-    private Long cz_open_stutrs;
+    private Long czType;
 
-    private Date cz_lasttime;
+    private Long czStutrs;
 
-    private long xd_id;
+    private Long czOpenStutrs;
 
-    private String cz_miaoshu;
+    private Date czLastTime;
+
+    private long xdCzId;
+
+    private String czMiaoShu;
 
     private String yuliu1;
 
     private String yuliu2;
 
-    private long cz_duantou;
+    private long czDuanTou;
 
 }

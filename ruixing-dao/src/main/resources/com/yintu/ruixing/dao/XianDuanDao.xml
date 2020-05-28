@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yintu.ruixing.dao.XianDuanDao">
+
+    <resultMap type="com.yintu.ruixing.entity.XianDuanEntity" id="xianduan">
+        <result property="id" column="id"/>
+        <result property="xdId" column="xd_id"/>
+        <result property="dwdId" column="dwd_id"/>
+        <result property="xdName" column="xd_name"/>
+        <result property="xdZgName" column="xd_zg_name"/>
+        <result property="dwdXdId" column="dwd_xd_id"/>
+        <result property="xdMiaoShu" column="xd_miaoshu"/>
+        <result property="xdType" column="xd_type"/>
+    </resultMap>
+
     <!--新增线段-->
     <insert id="addXianDuan" parameterType="com.yintu.ruixing.entity.XianDuanEntity" >
 		insert into mro_xianduan(xd_name,xd_id,dwd_id,xd_miaoshu)
 		values
-		(#{xd_name},#{xd_id},#{dwd_id},#{xd_miaoshu})
+		(#{xdName},#{xdId},#{dwdId},#{xdMiaoShu})
 	</insert>
     <!--删除线段-->
     <delete id="delXianDuan" parameterType="java.lang.Long">
@@ -15,14 +27,14 @@
     <update id="editXianDuan" parameterType="com.yintu.ruixing.entity.XianDuanEntity">
         update mro_xianduan
         <set>
-            <if test="xd_id !=null">
-                xd_id=#{xd_id},
+            <if test="xdId !=null">
+                xd_id=#{xdId},
             </if>
-            <if test="xd_name !=null">
-                xd_name=#{xd_name},
+            <if test="xdName !=null">
+                xd_name=#{xdName},
             </if>
-            <if test="xd_miaoshu !=null">
-                xd_miaoshu=#{xd_miaoshu}
+            <if test="xdMiaoShu !=null">
+                xd_miaoshu=#{xdMiaoShu}
             </if>
         </set>
         where id=#{id}

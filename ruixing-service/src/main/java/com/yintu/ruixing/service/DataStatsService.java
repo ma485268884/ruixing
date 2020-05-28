@@ -19,7 +19,7 @@ public interface DataStatsService {
     //查询所有数据
     List<DataStats> findAll();
     //分页查询
-    PageResponseDto<DataStats> getByPage(Integer page, Integer size);
+    PageInfo<DataStats> findPage(Integer page, Integer size);
 
 
     TieLuJuEntity findTieLuJuById(Long id);
@@ -30,6 +30,6 @@ public interface DataStatsService {
 
     DataStats findCheZhanById(Long tid, Long did, Long xid, Long cid);
 
-    PageInfo<DataStats> findPage(Integer page, Integer size);
 
+    int delCheZhanListById(int[] ids);
 }

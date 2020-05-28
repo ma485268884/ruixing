@@ -19,9 +19,6 @@ public interface DataStatsDao {
 
     public List<DataStats> findAll();
 
-    List<DataStats> getByPage();
-
-
     TieLuJuEntity findTieLuJuById(Long id);
 
     DataStats findDianWuDuanById(@Param("tid") Long tid,@Param("did") Long did);
@@ -29,4 +26,6 @@ public interface DataStatsDao {
     DataStats findXianDuanById(@Param("tid") Long tid,@Param("did") Long did,@Param("xid") Long xid);
 
     DataStats findCheZhanById(@Param("tid") Long tid,@Param("did") Long did,@Param("xid") Long xid,@Param("cid") Long cid);
+
+    int delCheZhanListById(int[] id);
 }

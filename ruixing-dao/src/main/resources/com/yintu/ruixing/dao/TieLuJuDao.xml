@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yintu.ruixing.dao.TieLuJuDao">
+
+    <resultMap type="com.yintu.ruixing.entity.TieLuJuEntity" id="tieluju">
+        <result property="id" column="id"/>
+        <result property="tljId" column="tlj_id"/>
+        <result property="tljName" column="tlj_name"/>
+        <result property="tljMiaoShu" column="tlj_miaoshu"/>
+    </resultMap>
+
     <!--根据id查询铁路局-->
     <select id="findTieLuJuById" parameterType="long" resultType="com.yintu.ruixing.entity.TieLuJuEntity">
         select * from mro_tieluju where id=#{id}
@@ -10,17 +18,17 @@
     <insert id="addTieLuJU" parameterType="com.yintu.ruixing.entity.TieLuJuEntity">
 		insert into mro_tieluju (tlj_name,tlj_id,tlj_miaoshu)
 		values
-		(#{tlj_name},#{tlj_id},#{tlj_miaoshu})
+		(#{tljName},#{tljId},#{tljMiaoShu})
 	</insert>
     <!--通过id修改铁路局信息-->
     <update id="editTieLuJuById" parameterType="com.yintu.ruixing.entity.TieLuJuEntity">
         update mro_tieluju
         <set>
-            <if test="tlj_name !=null">
-                tlj_name=#{tlj_name}
+            <if test="tljName !=null">
+                tlj_name=#{tljName},
             </if>
-            <if test="tlj_miaoshu !=null">
-                tlj_miaoshu=#{tlj_miaoshu}
+            <if test="tljMiaoShu !=null">
+                tlj_miaoshu=#{tljMiaoShu}
             </if>
         </set>
         where id=#{id}

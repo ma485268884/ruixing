@@ -1,9 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yintu.ruixing.dao.DataStatsDao">
-    <!--查詢所有的车站数据-->
 
-    <select id="findAll" resultType="com.yintu.ruixing.entity.DataStats">
+	<resultMap type="com.yintu.ruixing.entity.DataStats" id="dataStats">
+		<result property="tljName" column="tlj_name"/>
+		<result property="dwdName" column="dwd_name"/>
+		<result property="dwdMiaoShu" column="dwd_miaoshu"/>
+		<result property="xdName" column="xd_name"/>
+		<result property="xdMiaoShu" column="xd_miaoshu"/>
+		<result property="id" column="id"/>
+		<result property="czName" column="cz_name"/>
+		<result property="czId" column="cz_id"/>
+		<result property="xdId" column="xd_id"/>
+		<result property="czNameJianCheng" column="cz_name_jiancheng"/>
+		<result property="czIp" column="cz_ip"/>
+		<result property="czType" column="cz_type"/>
+		<result property="czStutrs" column="cz_stutrs"/>
+		<result property="czOpenStutrs" column="cz_open_stutrs"/>
+		<result property="czLastTime" column="cz_lasttime"/>
+		<result property="xdCzId" column="xd_cz_id"/>
+		<result property="czMiaoShu" column="cz_miaoshu"/>
+		<result property="czDuanTou" column="cz_duantou"/>
+	</resultMap>
+
+    <!--查詢所有的车站数据-->
+    <select id="findAll" resultType="com.yintu.ruixing.entity.DataStats" resultMap="dataStats">
      SELECT
 		tlj.tlj_name,
 		dwd.dwd_name,
@@ -20,43 +41,35 @@
 		mro_tieluju tlj,
 		mro_xianduan xd
 	WHERE
-		tlj.id = dwd.tlj_id
-		AND dwd.id = xd.dwd_id
-		AND xd.id = cz.xd_id
+		tlj.id = dwd.tlj_dwd_id
+		AND dwd.id = xd.dwd_xd_id
+		AND xd.id = cz.xd_cz_id
 
     </select>
 
-    <!--检查项分页查询-->
+	<!--根据id批量删除车站-->
+	<delete id="delCheZhanListById" parameterType="java.util.List" >
+		delete from mro_chezhan
+		where id
+		in
+		<foreach collection="array" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
 
-    <select id="getByPage" resultType="com.yintu.ruixing.entity.DataStats">
-		SELECT
-		tlj.tlj_name,
-		dwd.dwd_name,
-		xd.xd_name,
-		cz.cz_name,
-		cz.id,
-		cz.cz_ip,
-		cz.cz_type,
-		cz.cz_lasttime,
-		cz.cz_open_stutrs
-	FROM
-		mro_chezhan cz,
-		mro_dianwuduan dwd,
-		mro_tieluju tlj,
-		mro_xianduan xd
-	WHERE
-		tlj.id = dwd.tlj_id
-		AND dwd.id = xd.dwd_id
-		AND xd.id = cz.xd_id
-
-	</select>
+	<resultMap type="com.yintu.ruixing.entity.TieLuJuEntity" id="tieluju">
+		<result property="id" column="id"/>
+		<result property="tljId" column="tlj_id"/>
+		<result property="tljName" column="tlj_name"/>
+		<result property="tljMiaoShu" column="tlj_miaoshu"/>
+	</resultMap>
 
     <!--根据id 查询铁路局-->
-    <select id="findTieLuJuById" resultType="com.yintu.ruixing.entity.TieLuJuEntity" parameterType="java.lang.Long">
+    <select id="findTieLuJuById" resultType="com.yintu.ruixing.entity.TieLuJuEntity" parameterType="java.lang.Long" resultMap="tieluju">
 		select * from mro_tieluju where id =#{id}
 	</select>
     <!--根据铁路局tid和电务段did查询对应电务段-->
-    <select id="findDianWuDuanById" parameterType="java.lang.Long" resultType="com.yintu.ruixing.entity.DataStats">
+    <select id="findDianWuDuanById" parameterType="java.lang.Long" resultType="com.yintu.ruixing.entity.DataStats" resultMap="dataStats">
 		SELECT
 			tlj.tlj_name,
 			dwd.dwd_name,
@@ -70,7 +83,7 @@
 
 	</select>
 	<!--根据铁路局tid,电务段did和线段xid查询对应线段-->
-	<select id="findXianDuanById" parameterType="java.lang.Long" resultType="com.yintu.ruixing.entity.DataStats">
+	<select id="findXianDuanById" parameterType="java.lang.Long" resultType="com.yintu.ruixing.entity.DataStats" resultMap="dataStats">
 		SELECT
 			tlj.tlj_name,
 			dwd.dwd_name,
@@ -86,7 +99,7 @@
 			AND xd.id =#{xid}
 	</select>
 	<!--根据铁路局tid,电务段did,线段xid和车站cid查询对应车站-->
-	<select id="findCheZhanById" resultType="com.yintu.ruixing.entity.DataStats" parameterType="java.lang.Long">
+	<select id="findCheZhanById" resultType="com.yintu.ruixing.entity.DataStats" parameterType="java.lang.Long" resultMap="dataStats">
 		SELECT
 			tlj.tlj_name,
 			dwd.dwd_name,

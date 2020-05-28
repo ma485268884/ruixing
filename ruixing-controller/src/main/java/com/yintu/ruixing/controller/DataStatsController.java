@@ -32,16 +32,17 @@ public class DataStatsController {
 
     }
     //分页查询
-    @GetMapping("/findPage")
-    public PageInfo<DataStats>findPage(Integer page,Integer size){
+    @GetMapping("/findPage/{page}/{size}")
+    public PageInfo<DataStats>findPage(@PathVariable Integer page, @PathVariable Integer size){
         PageInfo<DataStats> pageInfo= dataStatsService.findPage(page,size);
         return pageInfo;
     }
 
-    //分页查询
-    @GetMapping("/page")
-    public PageResponseDto<DataStats> getByPage(Integer page, Integer size) {
-        return dataStatsService.getByPage(page, size);
+    //批量删除车站
+    @DeleteMapping("/delCheZhanListById/{ids}")
+    public Map<String,Object> delCheZhanListById(@PathVariable int[] ids){
+        dataStatsService.delCheZhanListById(ids);
+        return ResponseDataUtil.ok("批量删除车站信息成功");
     }
 
     //查询层级下的铁路局

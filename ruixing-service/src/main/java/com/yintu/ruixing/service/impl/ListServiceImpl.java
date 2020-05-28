@@ -25,24 +25,32 @@ public class ListServiceImpl implements ListService {
     @Autowired
     private ListDao ld;
 
-
     @Override
-    public List<TieLuJuEntity> findall() {
-        return ld.getListTieLuJuAll();
+    public Object getMenuList() {
+        //获取铁路局信息
+        List<TieLuJuEntity> tieLuJuEntityDtos = ld.selectTieLuJuList();
+        //遍历铁路局
+        for (TieLuJuEntity tieLuJuEntityDto : tieLuJuEntityDtos) {
+            //获取铁路局id
+            long tId = tieLuJuEntityDto.getId();
+            //根据铁路局id获得电务段信息
+            List<DianWuDuanEntity> dianWuDuanEntityDtos = ld.selectDwdListBytId(tId);
+            //保存电务段信息
+            tieLuJuEntityDto.setDianWuDuanEntities(dianWuDuanEntityDtos);
+            //遍历电务段
+            for (DianWuDuanEntity dianWuDuanEntityDto : dianWuDuanEntityDtos) {
+                //根据遍历的电务段的id 获取对应的线段信息
+                List<XianDuanEntity> xianDuanEntityDtos = ld.selectXdListByDwdId(dianWuDuanEntityDto.getId());
+                dianWuDuanEntityDto.setXianDuanEntities(xianDuanEntityDtos);
+                for (XianDuanEntity xianDuanEntityDto : xianDuanEntityDtos) {
+                    //遍历线段  获取线段id  然后获取对应的车站
+                    List<CheZhanEntity> cheZhanEntities = ld.selectCzListByXdId(xianDuanEntityDto.getId());
+                    xianDuanEntityDto.setCheZhanEntities(cheZhanEntities);
+                }
+            }
+        }
+        return tieLuJuEntityDtos;
     }
 
-    @Override
-    public List<DianWuDuanEntity> findallBytljid(Long tlj_id) {
-        return ld.getDianWuDuan(tlj_id);
-    }
 
-    @Override
-    public List<XianDuanEntity> findallBydwdid(Long dwd_id) {
-        return ld.getXianDuan(dwd_id);
-    }
-
-    @Override
-    public List<CheZhanEntity> findallByxdid(Long xd_id) {
-        return ld.getCheZhan(xd_id);
-    }
 }
