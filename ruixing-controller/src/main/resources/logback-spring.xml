@@ -46,7 +46,7 @@
                 %d{yyyy-MM-dd}：按天进行日志滚动
                 %i：当文件大小超过maxFileSize时，按照i进行文件滚动
             -->
-            <fileNamePattern>${logPathWindow}/all-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${logPath}/all-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>100MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
@@ -88,7 +88,6 @@
         <logger name="com.yintu.ruixing.dao" level="debug" />
         <root level="info">
             <appender-ref ref="console"/>
-            <appender-ref ref="allFile"/>
         </root>
     </springProfile>
     <springProfile name="test">
