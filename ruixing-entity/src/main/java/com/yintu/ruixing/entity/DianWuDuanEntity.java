@@ -15,18 +15,20 @@ import java.util.List;
 public class DianWuDuanEntity {
     private long id;
 
-    private int dwd_id;
+    private int dwdId;
 
-    private int tlj_id;
+    private int tljId;
 
-    private String dwd_name;
+    private String dwdName;
 
-    private long tlj_dwd_id;
+    private long tljDwdId;
 
-    private String dwd_miaoshu;
+    private String dwdMiaoShu;
 
     private String yuliu1;
 
     private String yuliu2;
+
+    List<XianDuanEntity> xianDuanEntities;
 
 }

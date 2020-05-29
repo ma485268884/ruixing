@@ -15,22 +15,24 @@ import java.util.List;
 public class XianDuanEntity {
     private Long id;
 
-    private int xd_id;
+    private int xdId;
 
-    private int dwd_id;
+    private int dwdId;
 
-    private String xd_name;
+    private String xdName;
 
-    private String xd_zg_name;
+    private String xdZgName;
 
-    private Long dwd_xd_id;
+    private Long dwdXdId;
 
-    private  String xd_miaoshu;
+    private  String xdMiaoShu;
 
     private String yuliu1;
 
     private String yuliu2;
 
-    private long xd_type;
+    private long xdType;
+
+    List<CheZhanEntity> cheZhanEntities;
 
 }

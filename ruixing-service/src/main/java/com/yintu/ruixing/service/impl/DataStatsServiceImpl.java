@@ -31,20 +31,7 @@ public class DataStatsServiceImpl implements DataStatsService {
     public List<DataStats> findAll() {
         return dataStatsDao.findAll();
     }
-    //分页查询
-    @Override
-    public PageResponseDto<DataStats> getByPage(Integer page, Integer size) {
-        List<DataStats> userList = dataStatsDao.getByPage();
-        PageHelper.startPage(page, size);
-        PageInfo<DataStats> info = new PageInfo<>(userList);
-        PageResponseDto<DataStats> response = new PageResponseDto<>();
-        response.setPage(info.getPageNum());
-        response.setTotal(info.getTotal());
-        response.setSize(info.getSize());
-        response.setResult(info.getList());
-        return response;
 
-    }
 
     @Override
     public TieLuJuEntity findTieLuJuById(Long id) {
@@ -66,6 +53,13 @@ public class DataStatsServiceImpl implements DataStatsService {
         return dataStatsDao.findCheZhanById(tid,did,xid,cid);
     }
 
+    @Override
+    public int  delCheZhanListById(int[] ids) {
+      //  String[] id = ids.split(",");
+        return dataStatsDao.delCheZhanListById(ids);
+    }
+
+    //分页查询
     @Override
     public PageInfo<DataStats> findPage(Integer page, Integer size) {
         //分页

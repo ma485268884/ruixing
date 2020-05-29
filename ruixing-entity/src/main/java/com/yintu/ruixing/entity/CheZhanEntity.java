@@ -15,32 +15,32 @@ import java.util.Date;
 public class CheZhanEntity {
     private long id;
 
-    private String cz_name;
+    private String czName;
 
-    private int cz_id;
+    private int czId;
 
-    private int xd_id;
+    private int xdId;
 
-    private String cz_name_jiancheng;
+    private String czNameJianCheng;
 
-    private String cz_ip;
+    private String czIp;
 
-    private Long cz_type;
+    private Long czType;
 
-    private Long cz_stutrs;
+    private Long czStutrs;
 
-    private Long cz_open_stutrs;
+    private Long czOpenStutrs;
 
-    private Date cz_lasttime;
+    private Date czLastTime;
 
-    private long xd_cz_id;
+    private long xdCzId;
 
-    private String cz_miaoshu;
+    private String czMiaoShu;
 
     private String yuliu1;
 
     private String yuliu2;
 
-    private long cz_duantou;
+    private long czDuanTou;
 
 }

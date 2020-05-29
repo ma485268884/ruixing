@@ -1,5 +1,7 @@
 package com.yintu.ruixing.controller;
 
+
+
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.result.Result;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
@@ -30,16 +32,17 @@ public class DataStatsController {
 
     }
     //分页查询
-    @GetMapping("/findPage")
-    public PageInfo<DataStats>findPage(Integer page,Integer size){
+    @GetMapping("/findPage/{page}/{size}")
+    public PageInfo<DataStats>findPage(@PathVariable Integer page, @PathVariable Integer size){
         PageInfo<DataStats> pageInfo= dataStatsService.findPage(page,size);
         return pageInfo;
     }
 
-    //分页查询
-    @GetMapping("/page")
-    public PageResponseDto<DataStats> getByPage(Integer page, Integer size) {
-        return dataStatsService.getByPage(page, size);
+    //批量删除车站
+    @DeleteMapping("/delCheZhanListById/{ids}")
+    public Map<String,Object> delCheZhanListById(@PathVariable int[] ids){
+        dataStatsService.delCheZhanListById(ids);
+        return ResponseDataUtil.ok("批量删除车站信息成功");
     }
 
     //查询层级下的铁路局
@@ -69,6 +72,40 @@ public class DataStatsController {
         DataStats dataStats = dataStatsService.findCheZhanById(tid, did, xid, cid);
         return ResponseDataUtil.ok("查询车站信息成功", dataStats);
     }
+
+
+    /**
+     * 获取用户分页信息
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    /*@GetMapping(value = "/getUserPageList")
+    public PageInfo<DataStats> getUserPageList(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "3") int pageSize) {
+
+        // pageNum:表示第几页  pageSize:表示一页展示的数据
+        PageHelper.startPage(pageNum, pageSize);
+        List<DataStats> systemUserPojoList = null;
+
+        try {
+
+            systemUserPojoList = iSystemUserService.select();
+            // 将查询到的数据封装到PageInfo对象
+            PageInfo<SystemUserPojo> systemUserPojoPageInfo = new PageInfo(systemUserPojoList, pageSize);
+            // 分割数据成功
+            return systemUserPojoPageInfo;
+
+        } catch (Exception e) {
+
+            log.error(e.getMessage(), e);
+            // 将查询到的数据封装到PageInfo对象
+            PageInfo<SystemUserPojo> systemUserPojoPageInfo = new PageInfo(null, pageSize);
+            // 分割数据成功
+            return systemUserPojoPageInfo;
+
+        }
+
+    }*/
 
 
 }

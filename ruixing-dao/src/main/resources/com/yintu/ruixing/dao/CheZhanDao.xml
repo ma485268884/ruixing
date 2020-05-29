@@ -1,23 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yintu.ruixing.dao.CheZhanDao">
+    <resultMap type="com.yintu.ruixing.entity.CheZhanEntity" id="chezhan">
+        <result property="id" column="id"/>
+        <result property="czName" column="cz_name"/>
+        <result property="czId" column="cz_id"/>
+        <result property="xdId" column="xd_id"/>
+        <result property="czNameJianCheng" column="cz_name_jiancheng"/>
+        <result property="czIp" column="cz_ip"/>
+        <result property="czType" column="cz_type"/>
+        <result property="czStutrs" column="cz_stutrs"/>
+        <result property="czOpenStutrs" column="cz_open_stutrs"/>
+        <result property="czLastTime" column="cz_lasttime"/>
+        <result property="xdCzId" column="xd_cz_id"/>
+        <result property="czMiaoShu" column="cz_miaoshu"/>
+        <result property="czDuanTou" column="cz_duantou"/>
+    </resultMap>
+
     <!--添加车站-->
-    <insert id="insertChezhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity">
+    <insert id="insertChezhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity" >
         insert into mro_chezhan(cz_name,cz_id,xd_id,cz_miaoshu)
-          values(#{cz_name,jdbcType=VARCHAR},#{cz_id,jdbcType=BIGINT},#{xd_id,jdbcType=BIGINT},#{cz_miaoshu,jdbcType=VARCHAR})
+          values(#{czName,jdbcType=VARCHAR},#{czId,jdbcType=BIGINT},#{xdId,jdbcType=BIGINT},#{czMiaoShu,jdbcType=VARCHAR})
     </insert>
     <!--更新车站-->
-    <update id="updateCheZhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity">
+    <update id="updateCheZhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity" >
         update mro_chezhan
         <set>
-            <if test="cz_name !=null">
-                cz_name = #{cz_name,jdbcType=VARCHAR},
+            <if test="czName !=null">
+                cz_name = #{czName,jdbcType=VARCHAR},
             </if>
-            <if test="xd_id !=null">
-                cz_id = #{cz_id,jdbcType=BIGINT},
+            <if test="czId !=null">
+                cz_id = #{czId,jdbcType=BIGINT},
             </if>
-            <if test="cz_miaoshu !=null">
-                cz_miaoshu = #{cz_miaoshu,jdbcType=VARCHAR}
+            <if test="czMiaoShu !=null">
+                cz_miaoshu = #{czMiaoShu,jdbcType=VARCHAR}
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
