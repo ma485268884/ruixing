@@ -3,6 +3,7 @@ package com.yintu.ruixing.controller;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.DepartmentEntity;
+import com.yintu.ruixing.entity.DepartmentEntityExample;
 import com.yintu.ruixing.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -54,5 +55,11 @@ public class DepartmentController extends BaseController {
     public Map<String, Object> findAll() {
         List<TreeNodeUtil> treeNodeUtils = departmentService.findDepartmentTree(-1L);
         return ResponseDataUtil.ok("查询部门树成功", treeNodeUtils);
+    }
+
+    @GetMapping("/list")
+    public Map<String, Object> findList() {
+        List<DepartmentEntity> departmentEntities = departmentService.findByExample(new DepartmentEntityExample());
+        return ResponseDataUtil.ok("查询部门成功", departmentEntities);
     }
 }
