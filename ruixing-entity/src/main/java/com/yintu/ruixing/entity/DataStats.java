@@ -15,7 +15,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DataStats {
+public class
+DataStats {
 
     private String tljName;
 
@@ -56,5 +57,6 @@ public class DataStats {
     private String yuliu2;
 
     private long czDuanTou;
+
 
 }

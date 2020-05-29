@@ -62,24 +62,38 @@
 		<result property="tljId" column="tlj_id"/>
 		<result property="tljName" column="tlj_name"/>
 		<result property="tljMiaoShu" column="tlj_miaoshu"/>
+		<result property="dwdName" column="dwd_name"/>
 	</resultMap>
 
     <!--根据id 查询铁路局-->
     <select id="findTieLuJuById" resultType="com.yintu.ruixing.entity.TieLuJuEntity" parameterType="java.lang.Long" resultMap="tieluju">
-		select * from mro_tieluju where id =#{id}
+		SELECT
+			tlj.tlj_name,
+			tlj.tlj_miaoshu,
+			dwd.dwd_name
+		FROM
+			mro_tieluju tlj,
+			mro_dianwuduan dwd
+		WHERE
+			tlj.id = dwd.tlj_dwd_id
+			AND
+			tlj.id = #{id}
 	</select>
     <!--根据铁路局tid和电务段did查询对应电务段-->
     <select id="findDianWuDuanById" parameterType="java.lang.Long" resultType="com.yintu.ruixing.entity.DataStats" resultMap="dataStats">
 		SELECT
 			tlj.tlj_name,
 			dwd.dwd_name,
-			dwd.dwd_miaoshu
+			dwd.dwd_miaoshu,
+			xd.xd_name
 		FROM
 			mro_tieluju tlj,
-			mro_dianwuduan dwd
+			mro_dianwuduan dwd,
+			mro_xianduan xd
 		WHERE
-		tlj.id = #{tid}
-		AND dwd.id =#{did}
+			tlj.id = dwd.tlj_dwd_id
+			AND tlj.id = #{tid}
+			AND xd.dwd_xd_id = #{did}
 
 	</select>
 	<!--根据铁路局tid,电务段did和线段xid查询对应线段-->
@@ -88,15 +102,19 @@
 			tlj.tlj_name,
 			dwd.dwd_name,
 			xd.xd_name,
+			cz.cz_name,
 			xd.xd_miaoshu
 		FROM
 			mro_tieluju tlj,
 			mro_dianwuduan dwd,
-			mro_xianduan xd
+			mro_xianduan xd,
+			mro_chezhan cz
 		WHERE
-			tlj.id = #{tid}
-			AND dwd.id =#{did}
-			AND xd.id =#{xid}
+			tlj.id = dwd.tlj_dwd_id
+			AND tlj.id = #{tid}
+			AND xd.dwd_xd_id = #{did}
+			AND cz.xd_cz_id = #{xid}
+
 	</select>
 	<!--根据铁路局tid,电务段did,线段xid和车站cid查询对应车站-->
 	<select id="findCheZhanById" resultType="com.yintu.ruixing.entity.DataStats" parameterType="java.lang.Long" resultMap="dataStats">

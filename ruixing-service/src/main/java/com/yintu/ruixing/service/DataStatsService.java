@@ -22,11 +22,11 @@ public interface DataStatsService {
     PageInfo<DataStats> findPage(Integer page, Integer size);
 
 
-    TieLuJuEntity findTieLuJuById(Long id);
+    List<TieLuJuEntity> findTieLuJuById(Long id);
 
-    DataStats findDianWuDuanById(Long tid, Long did);
+    List<DataStats> findDianWuDuanById(Long tid, Long did);
 
-    DataStats findXianDuanById(Long tid, Long did, Long xid);
+    List<DataStats> findXianDuanById(Long tid, Long did, Long xid);
 
     DataStats findCheZhanById(Long tid, Long did, Long xid, Long cid);
 

@@ -34,23 +34,27 @@ public class DataStatsServiceImpl implements DataStatsService {
 
 
     @Override
-    public TieLuJuEntity findTieLuJuById(Long id) {
-        return dataStatsDao.findTieLuJuById(id);
+    public List<TieLuJuEntity> findTieLuJuById(Long id) {
+       List<TieLuJuEntity> tieLuJuEntities= dataStatsDao.findTieLuJuById(id);
+        return tieLuJuEntities;
     }
 
     @Override
-    public DataStats findDianWuDuanById(@Param("tid") Long tid,@Param("did") Long did) {
-        return dataStatsDao.findDianWuDuanById(tid,did);
+    public List<DataStats> findDianWuDuanById(Long tid, Long did) {
+         List<DataStats> dataStats =dataStatsDao.findDianWuDuanById(tid,did);
+        return dataStats;
     }
 
     @Override
-    public DataStats findXianDuanById(Long tid, Long did, Long xid) {
-        return dataStatsDao.findXianDuanById(tid,did,xid);
+    public List<DataStats> findXianDuanById(Long tid, Long did, Long xid) {
+        List<DataStats> dataStats= dataStatsDao.findXianDuanById(tid,did,xid);
+        return dataStats;
     }
 
     @Override
     public DataStats findCheZhanById(Long tid, Long did, Long xid, Long cid) {
         return dataStatsDao.findCheZhanById(tid,did,xid,cid);
+
     }
 
     @Override
