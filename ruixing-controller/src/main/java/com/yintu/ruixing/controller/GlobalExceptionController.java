@@ -17,7 +17,7 @@ import java.util.Map;
  */
 @RestControllerAdvice
 public class GlobalExceptionController {
-    public static final Logger logger = LoggerFactory.getLogger(GlobalExceptionController.class);
+    public final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @ExceptionHandler(SQLException.class)
     public Map<String, Object> sqlException(SQLException e) {
@@ -30,12 +30,6 @@ public class GlobalExceptionController {
 
     @ExceptionHandler(BaseRuntimeException.class)
     public Map<String, Object> baseRuntimeException(BaseRuntimeException e) {
-        logger.error(e.getMessage());
-        return ResponseDataUtil.error(e.getMessage());
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public Map<String, Object> illegalArgumentException(IllegalArgumentException e) {
         logger.error(e.getMessage());
         return ResponseDataUtil.error(e.getMessage());
     }
