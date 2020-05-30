@@ -86,13 +86,19 @@ public interface RoleService {
     List<RoleEntity> findAllOrByName(String name);
 
     /**
-     * 通过角色id查询权限树
-     *
-     * @param id 角色id
-     * @return 角色信息
+     * @param id       角色id
+     * @param parentId 上级id
+     * @return 权限
      */
 
     List<TreeNodeUtil> findPermissionsTreeById(Long id, Long parentId);
+
+    /**
+     * @param id       角色id
+     * @param parentId 上级id
+     * @return 权限
+     */
+    List<TreeNodeUtil> findPermissionsById(Long id, Long parentId);
 
 
     /**

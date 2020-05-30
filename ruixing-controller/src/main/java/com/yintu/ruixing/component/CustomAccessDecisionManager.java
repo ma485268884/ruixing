@@ -26,7 +26,7 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
         if (authentication instanceof AnonymousAuthenticationToken) {
-            throw new InsufficientAuthenticationException("尚未登录，请登录");
+            throw new InsufficientAuthenticationException("尚未登录，请先登录");
         } else {
             for (ConfigAttribute configAttribute : configAttributes) {
                 String needRole = configAttribute.getAttribute();

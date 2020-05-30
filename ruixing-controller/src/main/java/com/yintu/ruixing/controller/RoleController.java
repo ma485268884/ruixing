@@ -71,9 +71,15 @@ public class RoleController extends BaseController {
         return ResponseDataUtil.ok("查询角色列表成功", jo);
     }
 
+//    @GetMapping("/{id}/permissions")
+//    public Map<String, Object> findRolesById(@PathVariable Long id) {
+//        List<TreeNodeUtil> treeNodeUtils = roleService.findPermissionsTreeById(id, -1L);
+//        return ResponseDataUtil.ok("查询角色权限成功", treeNodeUtils);
+//    }
+
     @GetMapping("/{id}/permissions")
     public Map<String, Object> findRolesById(@PathVariable Long id) {
-        List<TreeNodeUtil> treeNodeUtils = roleService.findPermissionsTreeById(id, -1L);
+        List<TreeNodeUtil> treeNodeUtils = roleService.findPermissionsById(id, 0L);
         return ResponseDataUtil.ok("查询角色权限成功", treeNodeUtils);
     }
 
