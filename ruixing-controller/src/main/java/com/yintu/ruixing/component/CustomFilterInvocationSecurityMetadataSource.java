@@ -12,6 +12,7 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -45,17 +46,16 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
             }
         }
         List<PermissionEntity> permissionEntities = permissionService.findPermissionAndRole();
+        List<ConfigAttribute> configAttributes = new ArrayList<>();
         for (PermissionEntity permissionEntity : permissionEntities) {
             if (antPathMatcher.match(permissionEntity.getUrl() == null ? "" : permissionEntity.getUrl(), newRequestUrl.toString()) && requestMethod.equals(permissionEntity.getMethod() == null ? permissionEntity.getMethod() : permissionEntity.getMethod().toUpperCase())) {
                 List<RoleEntity> roleEntities = permissionEntity.getRoleEntities();
-                String[] str = new String[roleEntities.size()];
-                for (int i = 0; i < roleEntities.size(); i++) {
-                    str[i] = roleEntities.get(i).getName();
+                for (RoleEntity roleEntity : roleEntities) {
+                    configAttributes.add(new SecurityConfig(roleEntity.getName().trim()));
                 }
-                return SecurityConfig.createList(str.length == 0 ? new String[]{"ROLE_LOGIN"} : str);
             }
         }
-        return SecurityConfig.createList("ROLE_LOGIN");
+        return configAttributes;
     }
 
     @Override

@@ -119,7 +119,10 @@ public class PermissionServiceImpl implements PermissionService {
         if (ids.size() > 0) {
             PermissionEntityExample permissionEntityExample = new PermissionEntityExample();
             PermissionEntityExample.Criteria criteria = permissionEntityExample.createCriteria();
-            criteria.andIdIn(ids).andParentIdEqualTo(parentId);
+            criteria.andIdIn(ids);
+            if (parentId.equals(-1L)) {
+                criteria.andParentIdEqualTo(parentId);
+            }
             permissionEntities = this.findByExample(permissionEntityExample);
         }
         return permissionEntities;
