@@ -22,6 +22,8 @@ public class TieLuJuEntity {
 
     private String tljMiaoShu;
 
+    private String dwdName;
+
     List<DianWuDuanEntity> dianWuDuanEntities;
 
 }

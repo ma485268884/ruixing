@@ -19,13 +19,13 @@ public interface DataStatsDao {
 
     public List<DataStats> findAll();
 
-    TieLuJuEntity findTieLuJuById(Long id);
+    List<TieLuJuEntity> findTieLuJuById(Long id);
 
-    DataStats findDianWuDuanById(@Param("tid") Long tid,@Param("did") Long did);
+    List<DataStats> findDianWuDuanById(@Param("tid") Long tid, @Param("did") Long did);
 
-    DataStats findXianDuanById(@Param("tid") Long tid,@Param("did") Long did,@Param("xid") Long xid);
+    List<DataStats> findXianDuanById(@Param("tid") Long tid, @Param("did") Long did, @Param("xid") Long xid);
 
-    DataStats findCheZhanById(@Param("tid") Long tid,@Param("did") Long did,@Param("xid") Long xid,@Param("cid") Long cid);
+    DataStats findCheZhanById(@Param("tid") Long tid, @Param("did") Long did, @Param("xid") Long xid, @Param("cid") Long cid);
 
     int delCheZhanListById(int[] id);
 }

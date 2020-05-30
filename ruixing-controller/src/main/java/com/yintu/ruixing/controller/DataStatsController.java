@@ -48,21 +48,21 @@ public class DataStatsController {
     //查询层级下的铁路局
     @GetMapping("/findTieLuJuById/{id}")
     public Map<String, Object> findTieLuJuById(@PathVariable Long id) {
-        TieLuJuEntity tieLuJuEntity = dataStatsService.findTieLuJuById(id);
+       List<TieLuJuEntity> tieLuJuEntity = dataStatsService.findTieLuJuById(id);
         return ResponseDataUtil.ok("查询铁路局成功", tieLuJuEntity);
     }
 
     //根据id查询铁路局下的电务段
     @GetMapping("/findDianWuDuanById/{tid}/{did}")
     public Map<String, Object> findDianWuDuanById(@PathVariable Long tid, @PathVariable Long did) {
-        DataStats dataStats = dataStatsService.findDianWuDuanById(tid, did);
+        List<DataStats> dataStats = dataStatsService.findDianWuDuanById(tid, did);
         return ResponseDataUtil.ok("查询电务段信息成功", dataStats);
     }
 
     //根据id查询铁路局下的电务段下的线段
     @GetMapping("/findXianDuanById/{tid}/{did}/{xid}")
     public Map<String, Object> findXianDuanById(@PathVariable Long tid, @PathVariable Long did, @PathVariable Long xid) {
-        DataStats dataStats = dataStatsService.findXianDuanById(tid, did, xid);
+        List<DataStats> dataStats = dataStatsService.findXianDuanById(tid, did, xid);
         return ResponseDataUtil.ok("查询线段信息成功", dataStats);
     }
 
