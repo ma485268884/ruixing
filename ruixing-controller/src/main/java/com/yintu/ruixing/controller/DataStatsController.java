@@ -46,9 +46,9 @@ public class DataStatsController {
     }
 
     //查询层级下的铁路局
-    @GetMapping("/findTieLuJuById/{id}")
-    public Map<String, Object> findTieLuJuById(@PathVariable Long id) {
-       List<TieLuJuEntity> tieLuJuEntity = dataStatsService.findTieLuJuById(id);
+    @GetMapping("/findTieLuJuById/{tid}")
+    public Map<String, Object> findTieLuJuById(@PathVariable Long tid) {
+       List<TieLuJuEntity> tieLuJuEntity = dataStatsService.findTieLuJuById(tid);
         return ResponseDataUtil.ok("查询铁路局成功", tieLuJuEntity);
     }
 
@@ -72,40 +72,5 @@ public class DataStatsController {
         DataStats dataStats = dataStatsService.findCheZhanById(tid, did, xid, cid);
         return ResponseDataUtil.ok("查询车站信息成功", dataStats);
     }
-
-
-    /**
-     * 获取用户分页信息
-     * @param pageNum
-     * @param pageSize
-     * @return
-     */
-    /*@GetMapping(value = "/getUserPageList")
-    public PageInfo<DataStats> getUserPageList(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "3") int pageSize) {
-
-        // pageNum:表示第几页  pageSize:表示一页展示的数据
-        PageHelper.startPage(pageNum, pageSize);
-        List<DataStats> systemUserPojoList = null;
-
-        try {
-
-            systemUserPojoList = iSystemUserService.select();
-            // 将查询到的数据封装到PageInfo对象
-            PageInfo<SystemUserPojo> systemUserPojoPageInfo = new PageInfo(systemUserPojoList, pageSize);
-            // 分割数据成功
-            return systemUserPojoPageInfo;
-
-        } catch (Exception e) {
-
-            log.error(e.getMessage(), e);
-            // 将查询到的数据封装到PageInfo对象
-            PageInfo<SystemUserPojo> systemUserPojoPageInfo = new PageInfo(null, pageSize);
-            // 分割数据成功
-            return systemUserPojoPageInfo;
-
-        }
-
-    }*/
-
 
 }

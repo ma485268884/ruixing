@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CheZhanEntity {
-    private long id;
+    private long cid;
 
     private String czName;
 

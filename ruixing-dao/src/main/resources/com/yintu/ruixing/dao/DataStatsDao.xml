@@ -8,7 +8,7 @@
 		<result property="dwdMiaoShu" column="dwd_miaoshu"/>
 		<result property="xdName" column="xd_name"/>
 		<result property="xdMiaoShu" column="xd_miaoshu"/>
-		<result property="id" column="id"/>
+		<result property="cid" column="cid"/>
 		<result property="czName" column="cz_name"/>
 		<result property="czId" column="cz_id"/>
 		<result property="xdId" column="xd_id"/>
@@ -58,7 +58,7 @@
 	</delete>
 
 	<resultMap type="com.yintu.ruixing.entity.TieLuJuEntity" id="tieluju">
-		<result property="id" column="id"/>
+		<result property="tid" column="tid"/>
 		<result property="tljId" column="tlj_id"/>
 		<result property="tljName" column="tlj_name"/>
 		<result property="tljMiaoShu" column="tlj_miaoshu"/>
@@ -75,9 +75,9 @@
 			mro_tieluju tlj,
 			mro_dianwuduan dwd
 		WHERE
-			tlj.id = dwd.tlj_dwd_id
+			tlj.tid = dwd.tlj_dwd_id
 			AND
-			tlj.id = #{id}
+			tlj.tid = #{tid}
 	</select>
     <!--根据铁路局tid和电务段did查询对应电务段-->
     <select id="findDianWuDuanById" parameterType="java.lang.Long" resultType="com.yintu.ruixing.entity.DataStats" resultMap="dataStats">
@@ -91,8 +91,8 @@
 			mro_dianwuduan dwd,
 			mro_xianduan xd
 		WHERE
-			tlj.id = dwd.tlj_dwd_id
-			AND tlj.id = #{tid}
+			tlj.tid = dwd.tlj_dwd_id
+			AND tlj.tid = #{tid}
 			AND xd.dwd_xd_id = #{did}
 
 	</select>
@@ -110,8 +110,8 @@
 			mro_xianduan xd,
 			mro_chezhan cz
 		WHERE
-			tlj.id = dwd.tlj_dwd_id
-			AND tlj.id = #{tid}
+			tlj.tid = dwd.tlj_dwd_id
+			AND tlj.tid = #{tid}
 			AND xd.dwd_xd_id = #{did}
 			AND cz.xd_cz_id = #{xid}
 
@@ -130,9 +130,9 @@
 			mro_xianduan xd,
 			mro_chezhan cz
 		WHERE
-			tlj.id = #{tid}
-			AND dwd.id =#{did}
-			AND xd.id =#{xid}
-			AND cz.id =#{cid}
+			tlj.tid = #{tid}
+			AND dwd.did =#{did}
+			AND xd.xid =#{xid}
+			AND cz.cid =#{cid}
 	</select>
 </mapper>

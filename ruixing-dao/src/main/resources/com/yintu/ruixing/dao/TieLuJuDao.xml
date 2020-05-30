@@ -3,7 +3,7 @@
 <mapper namespace="com.yintu.ruixing.dao.TieLuJuDao">
 
     <resultMap type="com.yintu.ruixing.entity.TieLuJuEntity" id="tieluju">
-        <result property="id" column="id"/>
+        <result property="tid" column="tid"/>
         <result property="tljId" column="tlj_id"/>
         <result property="tljName" column="tlj_name"/>
         <result property="tljMiaoShu" column="tlj_miaoshu"/>
@@ -11,11 +11,11 @@
 
     <!--根据id查询铁路局-->
     <select id="findTieLuJuById" parameterType="long" resultType="com.yintu.ruixing.entity.TieLuJuEntity">
-        select * from mro_tieluju where id=#{id}
+        select * from mro_tieluju where tid=#{tid}
     </select>
 
     <!--新增铁路局-->
-    <insert id="addTieLuJU" parameterType="com.yintu.ruixing.entity.TieLuJuEntity">
+    <insert id="addTieLuJU" parameterType="com.yintu.ruixing.entity.TieLuJuEntity" >
 		insert into mro_tieluju (tlj_name,tlj_id,tlj_miaoshu)
 		values
 		(#{tljName},#{tljId},#{tljMiaoShu})
@@ -31,10 +31,10 @@
                 tlj_miaoshu=#{tljMiaoShu}
             </if>
         </set>
-        where id=#{id}
+        where tid=#{tid}
     </update>
     <!--根据id删除铁路局-->
     <delete id="delTieLuJu" parameterType="long">
-		delete from mro_tieluju where id=#{id}
+		delete from mro_tieluju where tid=#{tid}
 	</delete>
 </mapper>

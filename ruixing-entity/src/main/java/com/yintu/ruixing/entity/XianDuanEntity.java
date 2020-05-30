@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class XianDuanEntity {
-    private Long id;
+    private Long xid;
 
     private int xdId;
 

@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DianWuDuanEntity {
-    private long id;
+    private long did;
 
     private int dwdId;
 

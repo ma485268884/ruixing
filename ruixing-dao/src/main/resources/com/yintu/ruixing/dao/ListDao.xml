@@ -3,7 +3,7 @@
 
 <mapper namespace="com.yintu.ruixing.dao.ListDao">
     <resultMap type="com.yintu.ruixing.entity.TieLuJuEntity" id="tieluju">
-        <result property="id" column="id"/>
+        <result property="tid" column="tid"/>
         <result property="tljId" column="tlj_id"/>
         <result property="tljName" column="tlj_name"/>
         <result property="tljMiaoShu" column="tlj_miaoshu"/>
@@ -12,7 +12,7 @@
     SELECT * FROM `mro_tieluju`
 </select>
     <resultMap type="com.yintu.ruixing.entity.DianWuDuanEntity" id="dianwuduan">
-        <result property="id" column="id"/>
+        <result property="did" column="did"/>
         <result property="dwdId" column="dwd_id"/>
         <result property="tljId" column="tlj_id"/>
         <result property="dwdName" column="dwd_name"/>
@@ -23,7 +23,7 @@
     SELECT * FROM `mro_dianwuduan` WHERE tlj_dwd_id= #{tId}
 </select>
     <resultMap type="com.yintu.ruixing.entity.XianDuanEntity" id="xianduan">
-        <result property="id" column="id"/>
+        <result property="xid" column="xid"/>
         <result property="xdId" column="xd_id"/>
         <result property="dwdId" column="dwd_id"/>
         <result property="xdName" column="xd_name"/>
@@ -36,7 +36,7 @@
     SELECT * FROM `mro_xianduan` WHERE dwd_xd_id= #{dwdId}
 </select>
     <resultMap type="com.yintu.ruixing.entity.CheZhanEntity" id="chezhan">
-        <result property="id" column="id"/>
+        <result property="cid" column="cid"/>
         <result property="czName" column="cz_name"/>
         <result property="czId" column="cz_id"/>
         <result property="xdId" column="xd_id"/>

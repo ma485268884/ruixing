@@ -34,8 +34,8 @@ public class DataStatsServiceImpl implements DataStatsService {
 
 
     @Override
-    public List<TieLuJuEntity> findTieLuJuById(Long id) {
-       List<TieLuJuEntity> tieLuJuEntities= dataStatsDao.findTieLuJuById(id);
+    public List<TieLuJuEntity> findTieLuJuById(Long tid) {
+       List<TieLuJuEntity> tieLuJuEntities= dataStatsDao.findTieLuJuById(tid);
         return tieLuJuEntities;
     }
 

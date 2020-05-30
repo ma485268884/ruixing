@@ -27,21 +27,21 @@ public class CheZhanController {
         cheZhanService.add(cheZhanEntity);
         return ResponseDataUtil.ok("添加车站成功");
     }
-    @PutMapping("/updateCheZhan/{id}")
-    public Map<String,Object> updateCheZhan(@PathVariable Long id ,CheZhanEntity cheZhanEntity){
+    @PutMapping("/updateCheZhan/{cid}")
+    public Map<String,Object> updateCheZhan(@PathVariable Long cid ,CheZhanEntity cheZhanEntity){
         cheZhanService.update(cheZhanEntity);
         return  ResponseDataUtil.ok("修改车站信息成功");
     }
 
-    @GetMapping("/findByCheZhanId/{id}")
-    public  Map<String,Object> findByCheZhanId(@PathVariable Long id){
-        CheZhanEntity cheZhanEntity = cheZhanService.findByCheZhanId(id);
+    @GetMapping("/findByCheZhanId/{cid}")
+    public  Map<String,Object> findByCheZhanId(@PathVariable Long cid){
+        CheZhanEntity cheZhanEntity = cheZhanService.findByCheZhanId(cid);
         return ResponseDataUtil.ok("查询车站信息成功",cheZhanEntity);
     }
     //删除车站
-    @DeleteMapping("/delCheZhan/{id}")
-    public Map<String,Object>delCheZhan(@PathVariable Long id){
-        cheZhanService.delCheZhan(id);
+    @DeleteMapping("/delCheZhan/{cid}")
+    public Map<String,Object>delCheZhan(@PathVariable Long cid){
+        cheZhanService.delCheZhan(cid);
         return ResponseDataUtil.ok("删除车站成功");
     }
 }

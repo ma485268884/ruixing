@@ -8,11 +8,11 @@ import com.yintu.ruixing.entity.DianWuDuanEntity;
  * 电务段
  */
 public interface DianWuDuanService {
-    DianWuDuanEntity findDianWuDuanById(Long id);
+    DianWuDuanEntity findDianWuDuanById(Long did);
 
     void addDianWuDuan(DianWuDuanEntity dianWuDuanEntity);
 
     void editDianWuDuan(DianWuDuanEntity dianWuDuanEntity);
 
-    void delDianWuDuan(Long id);
+    void delDianWuDuan(Long did);
 }

@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TieLuJuEntity {
-    private long id;
+    private long tid;
 
     private int tljId;
 

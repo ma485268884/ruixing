@@ -8,11 +8,11 @@ import com.yintu.ruixing.entity.TieLuJuEntity;
  * 铁路局相关dao
  */
 public interface TieLuJuDao {
-    TieLuJuEntity findTieLuJuById(Long id);
+    TieLuJuEntity findTieLuJuById(Long tid);
 
     void addTieLuJU(TieLuJuEntity tieLuJuEntity);
 
-    void editTieLuJuById(Long id);
+    void editTieLuJuById(Long tid);
 
-    void delTieLuJu(Long id);
+    void delTieLuJu(Long tid);
 }

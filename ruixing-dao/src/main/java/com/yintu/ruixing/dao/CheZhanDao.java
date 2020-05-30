@@ -29,11 +29,11 @@ public interface CheZhanDao {
      * @date 2020/5/25 16:49
      * @return 根据id查询车站信息
      */
-    CheZhanEntity selectByCheZhan(Long id);
+    CheZhanEntity selectByCheZhan(Long cid);
 
     /**
      * 根据id删除车站
-     * @param id
+     * @param cid
      */
-    void delCheZhan(Long id);
+    void delCheZhan(Long cid);
 }

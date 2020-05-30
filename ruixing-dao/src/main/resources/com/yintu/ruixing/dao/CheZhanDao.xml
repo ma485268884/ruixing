@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yintu.ruixing.dao.CheZhanDao">
     <resultMap type="com.yintu.ruixing.entity.CheZhanEntity" id="chezhan">
-        <result property="id" column="id"/>
+        <result property="cid" column="cid"/>
         <result property="czName" column="cz_name"/>
         <result property="czId" column="cz_id"/>
         <result property="xdId" column="xd_id"/>
@@ -36,15 +36,15 @@
                 cz_miaoshu = #{czMiaoShu,jdbcType=VARCHAR}
             </if>
         </set>
-        where id = #{id,jdbcType=BIGINT}
+        where cid = #{cid,jdbcType=BIGINT}
     </update>
     <!--查询全部车站-->
     <select id="selectByCheZhan" parameterType="java.lang.Long" resultType="com.yintu.ruixing.entity.CheZhanEntity">
-        select * from mro_chezhan where id =  #{id,jdbcType=BIGINT}
+        select * from mro_chezhan where cid =  #{cid,jdbcType=BIGINT}
     </select>
 
     <!--删除车站-->
     <delete id="delCheZhan" parameterType="java.lang.Long">
-        delete from mro_chezhan where id=#{id}
+        delete from mro_chezhan where cid=#{cid}
     </delete>
 </mapper>

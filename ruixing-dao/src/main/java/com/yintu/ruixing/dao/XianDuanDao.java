@@ -10,9 +10,9 @@ import com.yintu.ruixing.entity.XianDuanEntity;
 public interface XianDuanDao {
     void addXianDuan(XianDuanEntity xianDuanEntity);
 
-    void delXianDuan(Long id);
+    void delXianDuan(Long xid);
 
     void editXianDuan(XianDuanEntity xianDuanEntity);
 
-    XianDuanEntity findXianDuanById(Long id);
+    XianDuanEntity findXianDuanById(Long xid);
 }

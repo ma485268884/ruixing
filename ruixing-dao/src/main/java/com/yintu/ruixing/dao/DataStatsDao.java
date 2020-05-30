@@ -19,7 +19,7 @@ public interface DataStatsDao {
 
     public List<DataStats> findAll();
 
-    List<TieLuJuEntity> findTieLuJuById(Long id);
+    List<TieLuJuEntity> findTieLuJuById(Long tid);
 
     List<DataStats> findDianWuDuanById(@Param("tid") Long tid, @Param("did") Long did);
 

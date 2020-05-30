@@ -28,8 +28,8 @@ public class XianDuanServiceImpl implements XianDuanService {
     }
 
     @Override
-    public void delXianDuan(Long id) {
-        xianDuanDao.delXianDuan(id);
+    public void delXianDuan(Long xid) {
+        xianDuanDao.delXianDuan(xid);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class XianDuanServiceImpl implements XianDuanService {
     }
 
     @Override
-    public XianDuanEntity findXianDuanById(Long id) {
-        return xianDuanDao.findXianDuanById(id);
+    public XianDuanEntity findXianDuanById(Long xid) {
+        return xianDuanDao.findXianDuanById(xid);
     }
 }

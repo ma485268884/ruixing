@@ -18,8 +18,8 @@ public class TieLuJuServiceImpl implements TieLuJuService {
     @Autowired
     private TieLuJuDao tieLuJuDao;
     @Override
-    public TieLuJuEntity findTieLuJuById(Long id) {
-        return tieLuJuDao.findTieLuJuById(id);
+    public TieLuJuEntity findTieLuJuById(Long tid) {
+        return tieLuJuDao.findTieLuJuById(tid);
     }
 
     @Override
@@ -28,12 +28,12 @@ public class TieLuJuServiceImpl implements TieLuJuService {
     }
 
     @Override
-    public void editTieLuJuById(Long id) {
-        tieLuJuDao.editTieLuJuById(id);
+    public void editTieLuJuById(Long tid) {
+        tieLuJuDao.editTieLuJuById(tid);
     }
 
     @Override
-    public void delTieLuJu(Long id) {
-        tieLuJuDao.delTieLuJu(id);
+    public void delTieLuJu(Long tid) {
+        tieLuJuDao.delTieLuJu(tid);
     }
 }

@@ -18,9 +18,9 @@ public class TieLuJuController {
     @Autowired
     private TieLuJuService tieLuJuService;
     //查询铁路局
-    @GetMapping("/findTieLuJuById/{id}")
-    public Map<String,Object> findTieLuJuById(@PathVariable Long id){
-        TieLuJuEntity tieLuJuEntity=tieLuJuService.findTieLuJuById(id);
+    @GetMapping("/findTieLuJuById/{tid}")
+    public Map<String,Object> findTieLuJuById(@PathVariable Long tid){
+        TieLuJuEntity tieLuJuEntity=tieLuJuService.findTieLuJuById(tid);
         return ResponseDataUtil.ok("查询铁路局成功",tieLuJuEntity);
     }
     //新增铁路局
@@ -30,15 +30,15 @@ public class TieLuJuController {
         return ResponseDataUtil.ok("添加铁路局成功");
     }
     //修改铁路局信息
-    @PutMapping("/editTieLuJu/{id}")
-    public Map<String,Object> editTieLuJu(@PathVariable Long id){
-        tieLuJuService.editTieLuJuById(id);
+    @PutMapping("/editTieLuJu/{tid}")
+    public Map<String,Object> editTieLuJu(@PathVariable Long tid){
+        tieLuJuService.editTieLuJuById(tid);
         return ResponseDataUtil.ok("修改铁路局信息成功");
     }
     //删除铁路局
-    @DeleteMapping("/delTieLuJu/{id}")
-    public Map<String,Object> delTieLuJu(@PathVariable Long id){
-        tieLuJuService.delTieLuJu(id);
+    @DeleteMapping("/delTieLuJu/{tid}")
+    public Map<String,Object> delTieLuJu(@PathVariable Long tid){
+        tieLuJuService.delTieLuJu(tid);
         return ResponseDataUtil.ok("删除铁路局成功");
     }
 

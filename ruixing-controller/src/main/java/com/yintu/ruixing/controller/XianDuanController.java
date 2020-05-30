@@ -28,21 +28,21 @@ public class XianDuanController {
     }
 
     //删除线段
-    @DeleteMapping("/delXianDuan/{id}")
-    public Map<String, Object> delXianDuan(@PathVariable Long id) {
-        xianDuanService.delXianDuan(id);
+    @DeleteMapping("/delXianDuan/{xid}")
+    public Map<String, Object> delXianDuan(@PathVariable Long xid) {
+        xianDuanService.delXianDuan(xid);
         return ResponseDataUtil.ok("删除线段成功");
     }
     //根据更改线段
-    @PutMapping("/editXianDuan/{id}")
-    public Map<String,Object>editXianDuan(Long id, XianDuanEntity xianDuanEntity){
+    @PutMapping("/editXianDuan/{xid}")
+    public Map<String,Object>editXianDuan(Long xid, XianDuanEntity xianDuanEntity){
         xianDuanService.editXianDuan(xianDuanEntity);
         return ResponseDataUtil.ok("修改线段信息成功");
     }
     //根据id查询线段
-    @GetMapping("/findXianDuanById/{id}")
-    public Map<String,Object>findXianDuanById(@PathVariable Long id){
-        XianDuanEntity xianDuanEntity=xianDuanService.findXianDuanById(id);
+    @GetMapping("/findXianDuanById/{xid}")
+    public Map<String,Object>findXianDuanById(@PathVariable Long xid){
+        XianDuanEntity xianDuanEntity=xianDuanService.findXianDuanById(xid);
         return ResponseDataUtil.ok("查询线段成功",xianDuanEntity);
     }
 }

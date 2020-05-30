@@ -3,7 +3,7 @@
 <mapper namespace="com.yintu.ruixing.dao.DianWuDuanDao">
 
     <resultMap type="com.yintu.ruixing.entity.DianWuDuanEntity" id="dianwuduan">
-        <result property="id" column="id"/>
+        <result property="did" column="did"/>
         <result property="dwdId" column="dwd_id"/>
         <result property="tljId" column="tlj_id"/>
         <result property="dwdName" column="dwd_name"/>
@@ -13,11 +13,12 @@
 
     <!--查询电务段-->
     <select id="findDianWuDuanById" resultType="com.yintu.ruixing.entity.DianWuDuanEntity" parameterType="java.lang.Long">
-        select * from mro_dianwuduan where id =  #{id}
+        select * from mro_dianwuduan where did =  #{did}
     </select>
     
     <!--新增电务段-->
     <insert id="addDianWuDuan" parameterType="com.yintu.ruixing.entity.DianWuDuanEntity">
+
 		insert into mro_dianwuduan(dwd_name,dwd_id,tlj_id,dwd_miaoshu)
 		values
 		(#{dwdName},#{dwdId},#{tljId},#{dwdMiaoShu})
@@ -37,11 +38,11 @@
             </if>
         </set>
         where
-        id=#{id}
+        did=#{did}
     </update>
     <!--删除电务段-->
     <delete id="delDianWuDuan" parameterType="long">
-		delete from mro_dianwuduan where id=#{id}
+		delete from mro_dianwuduan where did=#{did}
 	</delete>
 
 </mapper>

@@ -3,7 +3,7 @@
 <mapper namespace="com.yintu.ruixing.dao.XianDuanDao">
 
     <resultMap type="com.yintu.ruixing.entity.XianDuanEntity" id="xianduan">
-        <result property="id" column="id"/>
+        <result property="xid" column="xid"/>
         <result property="xdId" column="xd_id"/>
         <result property="dwdId" column="dwd_id"/>
         <result property="xdName" column="xd_name"/>
@@ -21,7 +21,7 @@
 	</insert>
     <!--删除线段-->
     <delete id="delXianDuan" parameterType="java.lang.Long">
-		delete from mro_xianduan where id=#{id}
+		delete from mro_xianduan where xid=#{xid}
 	</delete>
     <!--更新线段-->
     <update id="editXianDuan" parameterType="com.yintu.ruixing.entity.XianDuanEntity">
@@ -37,10 +37,10 @@
                 xd_miaoshu=#{xdMiaoShu}
             </if>
         </set>
-        where id=#{id}
+        where xid=#{xid}
     </update>
     <!--查询线段-->
     <select id="findXianDuanById" parameterType="java.lang.Long" resultType="com.yintu.ruixing.entity.XianDuanEntity">
-        select * from mro_xianduan where id=#{id}
+        select * from mro_xianduan where xid=#{xid}
     </select>
 </mapper>

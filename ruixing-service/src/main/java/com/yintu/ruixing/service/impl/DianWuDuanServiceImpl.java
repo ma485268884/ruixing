@@ -19,8 +19,8 @@ public class DianWuDuanServiceImpl implements DianWuDuanService {
     @Autowired
     private DianWuDuanDao dianWuDuanDao;
     @Override
-    public DianWuDuanEntity findDianWuDuanById(Long id) {
-        return dianWuDuanDao.findDianWuDuanById(id);
+    public DianWuDuanEntity findDianWuDuanById(Long did) {
+        return dianWuDuanDao.findDianWuDuanById(did);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class DianWuDuanServiceImpl implements DianWuDuanService {
     }
 
     @Override
-    public void delDianWuDuan(Long id) {
-        dianWuDuanDao.delDianWuDuan(id);
+    public void delDianWuDuan(Long did) {
+        dianWuDuanDao.delDianWuDuan(did);
     }
 }

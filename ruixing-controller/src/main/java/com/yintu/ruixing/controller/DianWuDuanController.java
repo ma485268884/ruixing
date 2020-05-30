@@ -19,9 +19,9 @@ public class DianWuDuanController {
     @Autowired
     private DianWuDuanService dianWuDuanService;
     //查询电务段
-    @GetMapping("/findDianWuDuanById/{id}")
-    public Map<String,Object>findDianWuDuanById(@PathVariable Long id){
-        DianWuDuanEntity dianWuDuanEntity=dianWuDuanService.findDianWuDuanById(id);
+    @GetMapping("/findDianWuDuanById/{did}")
+    public Map<String,Object>findDianWuDuanById(@PathVariable Long did){
+        DianWuDuanEntity dianWuDuanEntity=dianWuDuanService.findDianWuDuanById(did);
         return ResponseDataUtil.ok("查询电务段成功",dianWuDuanEntity);
     }
 
@@ -34,15 +34,15 @@ public class DianWuDuanController {
     }
 
     //修改电务段
-    @PutMapping("/editDianWuDuan/{id}")
-    public Map<String,Object>editDianWuDuan(Long id, DianWuDuanEntity dianWuDuanEntity){
+    @PutMapping("/editDianWuDuan/{did}")
+    public Map<String,Object>editDianWuDuan(Long did, DianWuDuanEntity dianWuDuanEntity){
         dianWuDuanService.editDianWuDuan(dianWuDuanEntity);
         return ResponseDataUtil.ok("修改电务段信息成功");
     }
     //删除电务段
-    @DeleteMapping("/delDianWuDuan/{id}")
-    public Map<String,Object>delDianWuDuan(@PathVariable Long id){
-        dianWuDuanService.delDianWuDuan(id);
+    @DeleteMapping("/delDianWuDuan/{did}")
+    public Map<String,Object>delDianWuDuan(@PathVariable Long did){
+        dianWuDuanService.delDianWuDuan(did);
         return ResponseDataUtil.ok("删除电务段成功");
     }
 
