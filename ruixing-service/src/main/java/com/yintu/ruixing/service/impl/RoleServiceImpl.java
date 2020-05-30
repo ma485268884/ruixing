@@ -159,6 +159,9 @@ public class RoleServiceImpl implements RoleService {
                 treeNodeUtil.setId(permissionEntity.getId());
                 treeNodeUtil.setLabel(permissionEntity.getName());
                 treeNodeUtil.setIcon(permissionEntity.getIconCls());
+                Map<String,Object> map=new HashMap<>();
+                map.put("parentId",permissionEntity.getParentId());
+                treeNodeUtil.setA_attr(map);
                 treeNodeUtils.add(treeNodeUtil);
             }
         }

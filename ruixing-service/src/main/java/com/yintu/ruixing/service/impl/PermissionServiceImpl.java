@@ -13,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author:mlf
@@ -170,6 +172,9 @@ public class PermissionServiceImpl implements PermissionService {
             treeNodeUtil.setId(permissionEntity.getId());
             treeNodeUtil.setLabel(permissionEntity.getName());
             treeNodeUtil.setIcon(permissionEntity.getIconCls());
+            Map<String,Object> map=new HashMap<>();
+            map.put("parentId",permissionEntity.getParentId());
+            treeNodeUtil.setA_attr(map);
             treeNodeUtil.setChildren(this.findPermissionTree(permissionEntity.getId()));
             treeNodeUtils.add(treeNodeUtil);
         }
