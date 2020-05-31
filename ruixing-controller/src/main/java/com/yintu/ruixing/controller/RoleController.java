@@ -42,6 +42,7 @@ public class RoleController extends BaseController {
 
     @PutMapping("/{id}")
     public Map<String, Object> edit(@PathVariable Long id, RoleEntity roleEntity) {
+        Assert.notNull(roleEntity.getName(), "角色名不能为空");
         roleService.edit(roleEntity);
         return ResponseDataUtil.ok("修改角色成功");
     }

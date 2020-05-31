@@ -24,6 +24,7 @@ public class PermissionController {
 
     @PostMapping
     public Map<String, Object> add(PermissionEntity permissionEntity) {
+        Assert.notNull(permissionEntity.getName(), "权限名不能为空");
         permissionService.add(permissionEntity);
         return ResponseDataUtil.ok("添加权限成功");
     }
@@ -36,6 +37,7 @@ public class PermissionController {
 
     @PutMapping("/{id}")
     public Map<String, Object> edit(@PathVariable Long id, PermissionEntity permissionEntity) {
+        Assert.notNull(permissionEntity.getName(), "权限名不能为空");
         permissionService.edit(permissionEntity);
         return ResponseDataUtil.ok("修改权限成功");
     }
