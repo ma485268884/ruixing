@@ -55,7 +55,7 @@ public class PermissionServiceImpl implements PermissionService {
                 throw new BaseRuntimeException("只有请求方式为GET才能添加path");
             PermissionEntityExample permissionEntityExample = new PermissionEntityExample();
             PermissionEntityExample.Criteria criteria = permissionEntityExample.createCriteria();
-            criteria.andParentIdEqualTo(parentId).andPathIsNotNull().andPathNotEqualTo("");
+            criteria.andPathIsNotNull().andPathNotEqualTo("");
             List<PermissionEntity> permissionEntities = this.findByExample(permissionEntityExample);
             if (permissionEntities.size() > 0)
                 throw new BaseRuntimeException("path重复");
@@ -87,9 +87,9 @@ public class PermissionServiceImpl implements PermissionService {
                 throw new BaseRuntimeException("只有请求方式为GET才能添加path");
             PermissionEntityExample permissionEntityExample = new PermissionEntityExample();
             PermissionEntityExample.Criteria criteria = permissionEntityExample.createCriteria();
-            criteria.andParentIdEqualTo(parentId).andPathIsNotNull().andPathNotEqualTo("");
+            criteria.andPathIsNotNull().andPathNotEqualTo("");
             List<PermissionEntity> permissionEntities = this.findByExample(permissionEntityExample);
-            if (permissionEntities.size() > 0 && permissionEntities.get(0).getId() != null)
+            if (permissionEntities.size() > 0 && !permissionEntities.get(0).getId().equals(permissionEntity.getId()))
                 throw new BaseRuntimeException("path重复");
         }
         permissionDao.updateByPrimaryKeySelective(permissionEntity);
@@ -172,13 +172,13 @@ public class PermissionServiceImpl implements PermissionService {
             treeNodeUtil.setId(permissionEntity.getId());
             treeNodeUtil.setLabel(permissionEntity.getName());
             treeNodeUtil.setIcon(permissionEntity.getIconCls());
-            Map<String,Object> map=new HashMap<>();
-            map.put("parentId",permissionEntity.getParentId());
-            map.put("url",permissionEntity.getUrl());
-            map.put("method",permissionEntity.getMethod());
-            map.put("path",permissionEntity.getPath());
-            map.put("description",permissionEntity.getDescription());
-            map.put("roleEntities",permissionEntity.getRoleEntities());
+            Map<String, Object> map = new HashMap<>();
+            map.put("parentId", permissionEntity.getParentId());
+            map.put("url", permissionEntity.getUrl());
+            map.put("method", permissionEntity.getMethod());
+            map.put("path", permissionEntity.getPath());
+            map.put("description", permissionEntity.getDescription());
+            map.put("roleEntities", permissionEntity.getRoleEntities());
             treeNodeUtil.setA_attr(map);
             treeNodeUtil.setChildren(this.findPermissionTree(permissionEntity.getId()));
             treeNodeUtils.add(treeNodeUtil);
