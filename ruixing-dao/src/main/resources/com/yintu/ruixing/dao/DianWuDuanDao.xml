@@ -19,9 +19,9 @@
     <!--新增电务段-->
     <insert id="addDianWuDuan" parameterType="com.yintu.ruixing.entity.DianWuDuanEntity">
 
-		insert into mro_dianwuduan(dwd_name,dwd_id,tlj_id,dwd_miaoshu)
+		insert into mro_dianwuduan(dwd_name,dwd_id,tlj_id,dwd_miaoshu,tlj_dwd_id)
 		values
-		(#{dwdName},#{dwdId},#{tljId},#{dwdMiaoShu})
+		(#{dwdName},#{dwdId},#{tljId},#{dwdMiaoShu},#{tid})
 	</insert>
     <!--修改电务段信息-->
     <update id="editDianWuDuan" parameterType="com.yintu.ruixing.entity.DianWuDuanEntity">

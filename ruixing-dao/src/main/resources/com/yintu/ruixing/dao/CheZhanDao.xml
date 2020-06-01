@@ -19,8 +19,8 @@
 
     <!--添加车站-->
     <insert id="insertChezhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity" >
-        insert into mro_chezhan(cz_name,cz_id,xd_id,cz_miaoshu)
-          values(#{czName,jdbcType=VARCHAR},#{czId,jdbcType=BIGINT},#{xdId,jdbcType=BIGINT},#{czMiaoShu,jdbcType=VARCHAR})
+        insert into mro_chezhan(cz_name,cz_id,xd_id,cz_miaoshu,xd_cz_id)
+          values(#{czName,jdbcType=VARCHAR},#{czId,jdbcType=BIGINT},#{xdId,jdbcType=BIGINT},#{czMiaoShu,jdbcType=VARCHAR},#{xid,jdbcType=BIGINT})
     </insert>
     <!--更新车站-->
     <update id="updateCheZhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity" >
@@ -34,6 +34,9 @@
             </if>
             <if test="czMiaoShu !=null">
                 cz_miaoshu = #{czMiaoShu,jdbcType=VARCHAR}
+            </if>
+            <if test="xdCzId !=null">
+                xd_cz_id = #{xdCzId,jdbcType=BIGINT}
             </if>
         </set>
         where cid = #{cid,jdbcType=BIGINT}

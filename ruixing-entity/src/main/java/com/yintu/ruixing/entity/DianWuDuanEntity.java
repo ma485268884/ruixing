@@ -15,9 +15,11 @@ import java.util.List;
 public class DianWuDuanEntity {
     private long did;
 
-    private int dwdId;
+    private long tid;
 
-    private int tljId;
+    private long dwdId;
+
+    private long tljId;
 
     private String dwdName;
 
@@ -30,5 +32,7 @@ public class DianWuDuanEntity {
     private String yuliu2;
 
     List<XianDuanEntity> xianDuanEntities;
+
+    private TieLuJuEntity tieLuJuEntity;
 
 }

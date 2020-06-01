@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.DataShowDao">
+    <resultMap id="datashow" type="com.yintu.ruixing.entity.QuDuanEntity">
+        <id column="id" property="id"></id>
+        <result property="xid" column="xid"></result>
+        <result property="cid" column="cid"></result>
+        <result property="qdName" column="qd_name"></result>
+        <result property="designCarrier" column="Design_carrier"></result>
+        <result property="direction" column="direction"></result>
+    </resultMap>
+
+</mapper>

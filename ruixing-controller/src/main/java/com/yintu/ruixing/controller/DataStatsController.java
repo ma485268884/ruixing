@@ -49,6 +49,7 @@ public class DataStatsController {
     @GetMapping("/findTieLuJuById/{tid}")
     public Map<String, Object> findTieLuJuById(@PathVariable Long tid) {
        List<TieLuJuEntity> tieLuJuEntity = dataStatsService.findTieLuJuById(tid);
+        System.out.println("返回的铁路局信息为"+tieLuJuEntity);
         return ResponseDataUtil.ok("查询铁路局成功", tieLuJuEntity);
     }
 

@@ -33,7 +33,9 @@ public class ListServiceImpl implements ListService {
         //遍历铁路局
         for (TieLuJuEntity tieLuJuEntityDto : tieLuJuEntityDtos) {
             //获取铁路局id
+
             long tId = tieLuJuEntityDto.getTid();
+            System.out.println("铁路局id"+tId);
             //根据铁路局id获得电务段信息
             List<DianWuDuanEntity> dianWuDuanEntityDtos = ld.selectDwdListBytId(tId);
             System.out.println(dianWuDuanEntityDtos);
@@ -56,5 +58,46 @@ public class ListServiceImpl implements ListService {
         return tieLuJuEntityDtos;
     }
 
+    @Override
+    public Object getErJi() {
+        //获取铁路局信息
+        List<TieLuJuEntity> tieLuJuEntityDtos = ld.TieLuJuList();
+        System.out.println(tieLuJuEntityDtos);
+        //遍历铁路局
+        for (TieLuJuEntity tieLuJuEntityDto : tieLuJuEntityDtos) {
+            //获取铁路局id
+            long tId = tieLuJuEntityDto.getTid();
+            //根据铁路局id获得电务段信息
+            List<DianWuDuanEntity> dianWuDuanEntityDtos = ld.DwdListBytId(tId);
+            System.out.println(dianWuDuanEntityDtos);
+            //保存电务段信息
+            tieLuJuEntityDto.setDianWuDuanEntities(dianWuDuanEntityDtos);
+        }
+        return tieLuJuEntityDtos;
+    }
 
+    @Override
+    public Object getSanJi() {
+        List<TieLuJuEntity> tieLuJuEntityDtos = ld.TieLuJuList();
+       // System.out.println("铁路局"+tieLuJuEntityDtos);
+        //遍历铁路局
+        for (TieLuJuEntity tieLuJuEntityDto : tieLuJuEntityDtos) {
+            //获取铁路局id
+            long tId = tieLuJuEntityDto.getTid();
+           // System.out.println("铁路局id"+tId);
+            //根据铁路局id获得电务段信息
+            List<DianWuDuanEntity> dianWuDuanEntityDtos = ld.DwdListBytId(tId);
+            //System.out.println("电务段"+dianWuDuanEntityDtos);
+            //保存电务段信息
+            tieLuJuEntityDto.setDianWuDuanEntities(dianWuDuanEntityDtos);
+            //遍历电务段
+            for (DianWuDuanEntity dianWuDuanEntityDto : dianWuDuanEntityDtos) {
+                //根据遍历的电务段的id 获取对应的线段信息
+                List<XianDuanEntity> xianDuanEntityDtos = ld.XdListByDwdId(dianWuDuanEntityDto.getDid());
+               // System.out.println("线段"+xianDuanEntityDtos);
+                dianWuDuanEntityDto.setXianDuanEntities(xianDuanEntityDtos);
+            }
+        }
+        return tieLuJuEntityDtos;
+    }
 }

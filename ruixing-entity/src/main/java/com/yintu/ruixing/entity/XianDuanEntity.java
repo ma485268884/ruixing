@@ -13,11 +13,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class XianDuanEntity {
-    private Long xid;
+    private long xid;
 
-    private int xdId;
+    private long tid;
 
-    private int dwdId;
+    private long did;
+
+    private long xdId;
+
+    private long dwdId;
 
     private String xdName;
 
@@ -34,5 +38,9 @@ public class XianDuanEntity {
     private long xdType;
 
     List<CheZhanEntity> cheZhanEntities;
+
+    private DianWuDuanEntity dianWuDuanEntity;
+
+    private TieLuJuEntity tieLuJuEntity;
 
 }

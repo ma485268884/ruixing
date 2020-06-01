@@ -27,4 +27,15 @@ public class ListController {
     public Object getLieBiao(){
         return ResponseDataUtil.ok("查询数据成功",ls.getMenuList());
     }
+
+    @GetMapping("/getErJi")
+    public Object getErJi(){
+        return ResponseDataUtil.ok("查询数据成功",ls.getErJi());
+    }
+
+    @GetMapping("/getSanJi")
+    public Object getSanJi(){
+        return ResponseDataUtil.ok("查询数据成功",ls.getSanJi());
+    }
+
 }
