@@ -6,7 +6,7 @@
     <!-- 数据库驱动:选择你的本地硬盘上面的数据库驱动包-->
     <classPathEntry
             location="D:\MavenDB\mysql\mysql-connector-java\8.0.20\mysql-connector-java-8.0.20.jar"/>
-    <context id="context" targetRuntime="MyBatis3Simple">
+    <context id="context" targetRuntime="MyBatis3">
         <!--定义生成的java类的编码格式-->
         <property name="javaFileEncoding" value="UTF-8"/>
         <commentGenerator>
@@ -45,8 +45,12 @@
         <!--        <table tableName="tb_permission" domainObjectName="PermissionEntity1" mapperName="PermissionDao1"/>-->
         <!--        <table tableName="tb_permission_role" domainObjectName="PermissionRoleEntity" mapperName="PermissionRoleDao"/>-->
         <table tableName="mro_baojing" domainObjectName="BaoJingEntity" mapperName="BaoJingDao"
-              />
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
         <table tableName="mro_yujing" domainObjectName="YuJingEntity" mapperName="YuJingDao"
-              />
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
     </context>
 </generatorConfiguration>
