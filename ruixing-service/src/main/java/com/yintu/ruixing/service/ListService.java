@@ -12,4 +12,8 @@ public interface ListService {
     Object getMenuList();
 
 
+    Object getErJi();
+
+    Object getSanJi();
+
 }

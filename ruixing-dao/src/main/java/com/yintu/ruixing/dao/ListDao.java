@@ -14,11 +14,18 @@ public interface ListDao {
 
     List<TieLuJuEntity> selectTieLuJuList();
 
-    List<DianWuDuanEntity> selectDwdListBytId(@Param("tId") long tId);
+    List<DianWuDuanEntity> selectDwdListBytId(@Param("tljId") long tljId);
 
     List<XianDuanEntity> selectXdListByDwdId(@Param("dwdId") long dwdId);
 
-    List<CheZhanEntity> selectCzListByXdId(@Param("xdId") Long dwdId);
+    List<CheZhanEntity> selectCzListByXdId(@Param("xdId") long xdId);
 
 
+
+    List<TieLuJuEntity> TieLuJuList();
+
+    List<DianWuDuanEntity> DwdListBytId(@Param("tljId") long tljId);
+
+
+    List<XianDuanEntity> XdListByDwdId(@Param("dwdId") long dwdId);
 }

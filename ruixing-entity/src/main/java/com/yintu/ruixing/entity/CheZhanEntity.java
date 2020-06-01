@@ -15,11 +15,17 @@ import java.util.Date;
 public class CheZhanEntity {
     private long cid;
 
+    private long tid;
+
+    private long did;
+
+    private long xid;
+
     private String czName;
 
-    private int czId;
+    private long czId;
 
-    private int xdId;
+    private long xdId;
 
     private String czNameJianCheng;
 
@@ -42,5 +48,11 @@ public class CheZhanEntity {
     private String yuliu2;
 
     private long czDuanTou;
+
+    private DianWuDuanEntity dianWuDuanEntity;
+
+    private TieLuJuEntity tieLuJuEntity;
+
+    private XianDuanEntity xianDuanEntity;
 
 }

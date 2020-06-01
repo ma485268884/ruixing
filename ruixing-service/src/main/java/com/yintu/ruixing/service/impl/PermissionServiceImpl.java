@@ -47,18 +47,18 @@ public class PermissionServiceImpl implements PermissionService {
         String url = permissionEntity.getUrl();
         String method = permissionEntity.getMethod();
         if (path != null && !"".equals(path)) {
-            Assert.notNull(url, "url不能为空");
-            Assert.notNull(method, "method不能为空");
+            Assert.notNull(url, "请求路径不能为空");
+            Assert.notNull(method, "请求方式不能为空");
             if ("".equals(url) || "".equals(method))
-                throw new BaseRuntimeException("url或者method填写有误有误");
-            if (!"get".equals(method.toLowerCase()))
-                throw new BaseRuntimeException("只有请求方式为get才能添加path");
+                throw new BaseRuntimeException("请求路径或者请求方式填写有误有误");
+            if (!"GET".equals(method.toUpperCase()))
+                throw new BaseRuntimeException("只有请求方式为GET才能添加跳转路径");
             PermissionEntityExample permissionEntityExample = new PermissionEntityExample();
             PermissionEntityExample.Criteria criteria = permissionEntityExample.createCriteria();
-            criteria.andPathIsNotNull().andPathNotEqualTo("");
+            criteria.andParentIdEqualTo(parentId).andPathIsNotNull().andPathNotEqualTo("");
             List<PermissionEntity> permissionEntities = this.findByExample(permissionEntityExample);
             if (permissionEntities.size() > 0)
-                throw new BaseRuntimeException("path重复");
+                throw new BaseRuntimeException("此请求路径下只能有一个跳转路径");
         }
         permissionDao.insertSelective(permissionEntity);
     }
@@ -79,18 +79,18 @@ public class PermissionServiceImpl implements PermissionService {
         String url = permissionEntity.getUrl();
         String method = permissionEntity.getMethod();
         if (path != null && !"".equals(path)) {
-            Assert.notNull(url, "url不能为空");
-            Assert.notNull(method, "method不能为空");
+            Assert.notNull(url, "请求路径不能为空");
+            Assert.notNull(method, "请求方式不能为空");
             if ("".equals(url) || "".equals(method))
-                throw new BaseRuntimeException("url或者method填写有误有误");
-            if (!"get".equals(method.toLowerCase()))
-                throw new BaseRuntimeException("只有请求方式为get才能添加path");
+                throw new BaseRuntimeException("请求路径或者请求方式填写有误有误");
+            if (!"GET".equals(method.toUpperCase()))
+                throw new BaseRuntimeException("只有请求方式为GET才能添加跳转路径");
             PermissionEntityExample permissionEntityExample = new PermissionEntityExample();
             PermissionEntityExample.Criteria criteria = permissionEntityExample.createCriteria();
-            criteria.andPathIsNotNull().andPathNotEqualTo("");
+            criteria.andParentIdEqualTo(parentId).andPathIsNotNull().andPathNotEqualTo("");
             List<PermissionEntity> permissionEntities = this.findByExample(permissionEntityExample);
             if (permissionEntities.size() > 0 && !permissionEntities.get(0).getId().equals(permissionEntity.getId()))
-                throw new BaseRuntimeException("path重复");
+                throw new BaseRuntimeException("此请求路径下只能有一个跳转路径");
         }
         permissionDao.updateByPrimaryKeySelective(permissionEntity);
     }
@@ -172,13 +172,13 @@ public class PermissionServiceImpl implements PermissionService {
             treeNodeUtil.setId(permissionEntity.getId());
             treeNodeUtil.setLabel(permissionEntity.getName());
             treeNodeUtil.setIcon(permissionEntity.getIconCls());
-            Map<String,Object> map=new HashMap<>();
-            map.put("parentId",permissionEntity.getParentId());
-            map.put("url",permissionEntity.getUrl());
-            map.put("method",permissionEntity.getMethod());
-            map.put("path",permissionEntity.getPath());
-            map.put("description",permissionEntity.getDescription());
-            map.put("roleEntities",permissionEntity.getRoleEntities());
+            Map<String, Object> map = new HashMap<>();
+            map.put("parentId", permissionEntity.getParentId());
+            map.put("url", permissionEntity.getUrl());
+            map.put("method", permissionEntity.getMethod());
+            map.put("path", permissionEntity.getPath());
+            map.put("description", permissionEntity.getDescription());
+            map.put("roleEntities", permissionEntity.getRoleEntities());
             treeNodeUtil.setA_attr(map);
             treeNodeUtil.setChildren(this.findPermissionTree(permissionEntity.getId()));
             treeNodeUtils.add(treeNodeUtil);
