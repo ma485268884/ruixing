@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.BaoJingDao">
+  <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.BaoJingEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="bj_quduandaihao" jdbcType="VARCHAR" property="bjQuduandaihao" />
+    <result column="bj_guzhangdengji" jdbcType="VARCHAR" property="bjGuzhangdengji" />
+    <result column="bj_time" jdbcType="TIMESTAMP" property="bjTime" />
+    <result column="bj_huifu_time" jdbcType="TIMESTAMP" property="bjHuifuTime" />
+    <result column="bj_message" jdbcType="VARCHAR" property="bjMessage" />
+    <result column="bj_status" jdbcType="INTEGER" property="bjStatus" />
+    <result column="bj_gz_status" jdbcType="INTEGER" property="bjGzStatus" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mro_baojing
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yintu.ruixing.entity.BaoJingEntity">
+    insert into mro_baojing (id, bj_quduandaihao, bj_guzhangdengji, 
+      bj_time, bj_huifu_time, bj_message, 
+      bj_status, bj_gz_status)
+    values (#{id,jdbcType=INTEGER}, #{bjQuduandaihao,jdbcType=VARCHAR}, #{bjGuzhangdengji,jdbcType=VARCHAR}, 
+      #{bjTime,jdbcType=TIMESTAMP}, #{bjHuifuTime,jdbcType=TIMESTAMP}, #{bjMessage,jdbcType=VARCHAR}, 
+      #{bjStatus,jdbcType=INTEGER}, #{bjGzStatus,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.BaoJingEntity">
+    update mro_baojing
+    set bj_quduandaihao = #{bjQuduandaihao,jdbcType=VARCHAR},
+      bj_guzhangdengji = #{bjGuzhangdengji,jdbcType=VARCHAR},
+      bj_time = #{bjTime,jdbcType=TIMESTAMP},
+      bj_huifu_time = #{bjHuifuTime,jdbcType=TIMESTAMP},
+      bj_message = #{bjMessage,jdbcType=VARCHAR},
+      bj_status = #{bjStatus,jdbcType=INTEGER},
+      bj_gz_status = #{bjGzStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, bj_quduandaihao, bj_guzhangdengji, bj_time, bj_huifu_time, bj_message, 
+    bj_status, bj_gz_status
+    from mro_baojing
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, bj_quduandaihao, bj_guzhangdengji, bj_time, bj_huifu_time, bj_message, 
+    bj_status, bj_gz_status
+    from mro_baojing
+  </select>
+</mapper>
