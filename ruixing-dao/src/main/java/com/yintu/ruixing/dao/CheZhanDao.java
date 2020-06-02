@@ -15,14 +15,14 @@ public interface CheZhanDao {
      * @date 2020/5/25 16:48
      * @return 添加车站信息
      */
-    int insertChezhan(CheZhanEntity cheZhanEntity);
+    void insertChezhan(CheZhanEntity cheZhanEntity);
 
     /**
      * @author Qiao
      * @date 2020/5/25 16:49
      * @return 根据id修改车站信息
      */
-    int updateCheZhan (CheZhanEntity cheZhanEntity);
+    void updateCheZhan (CheZhanEntity cheZhanEntity);
 
     /**
      * @author Qiao

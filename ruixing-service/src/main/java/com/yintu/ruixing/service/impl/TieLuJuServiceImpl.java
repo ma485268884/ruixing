@@ -28,8 +28,8 @@ public class TieLuJuServiceImpl implements TieLuJuService {
     }
 
     @Override
-    public void editTieLuJuById(Long tid) {
-        tieLuJuDao.editTieLuJuById(tid);
+    public void editTieLuJuById(TieLuJuEntity tieLuJuEntity) {
+        tieLuJuDao.editTieLuJuById(tieLuJuEntity);
     }
 
     @Override

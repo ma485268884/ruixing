@@ -26,13 +26,14 @@ public class TieLuJuController {
     //新增铁路局
     @PostMapping("/addTieLuJU")
     public Map<String,Object> addTieLuJU(TieLuJuEntity tieLuJuEntity){
+
         tieLuJuService.addTieLuJU(tieLuJuEntity);
         return ResponseDataUtil.ok("添加铁路局成功");
     }
     //修改铁路局信息
     @PutMapping("/editTieLuJu/{tid}")
-    public Map<String,Object> editTieLuJu(@PathVariable Long tid){
-        tieLuJuService.editTieLuJuById(tid);
+    public Map<String,Object> editTieLuJu(@PathVariable Long tid ,TieLuJuEntity tieLuJuEntity){
+        tieLuJuService.editTieLuJuById(tieLuJuEntity);
         return ResponseDataUtil.ok("修改铁路局信息成功");
     }
     //删除铁路局

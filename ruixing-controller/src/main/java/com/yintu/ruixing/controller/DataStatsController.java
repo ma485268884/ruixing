@@ -10,6 +10,7 @@ import com.yintu.ruixing.service.DataStatsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +50,6 @@ public class DataStatsController {
     @GetMapping("/findTieLuJuById/{tid}")
     public Map<String, Object> findTieLuJuById(@PathVariable Long tid) {
        List<TieLuJuEntity> tieLuJuEntity = dataStatsService.findTieLuJuById(tid);
-        System.out.println("返回的铁路局信息为"+tieLuJuEntity);
         return ResponseDataUtil.ok("查询铁路局成功", tieLuJuEntity);
     }
 
@@ -57,14 +57,28 @@ public class DataStatsController {
     @GetMapping("/findDianWuDuanById/{tid}/{did}")
     public Map<String, Object> findDianWuDuanById(@PathVariable Long tid, @PathVariable Long did) {
         List<DataStats> dataStats = dataStatsService.findDianWuDuanById(tid, did);
-        return ResponseDataUtil.ok("查询电务段信息成功", dataStats);
+        List<DataStats> list=new ArrayList<>();
+        for (DataStats dataStat : dataStats) {
+            if (dataStat.getTid()==tid && dataStat.getDid()==did){
+                list.add(dataStat);
+                System.out.println("查询结果是"+list);
+            }
+        }
+        return ResponseDataUtil.ok("查询电务段信息成功",list);
     }
 
     //根据id查询铁路局下的电务段下的线段
     @GetMapping("/findXianDuanById/{tid}/{did}/{xid}")
     public Map<String, Object> findXianDuanById(@PathVariable Long tid, @PathVariable Long did, @PathVariable Long xid) {
         List<DataStats> dataStats = dataStatsService.findXianDuanById(tid, did, xid);
-        return ResponseDataUtil.ok("查询线段信息成功", dataStats);
+        List<DataStats> list=new ArrayList<>();
+        for (DataStats dataStat : dataStats) {
+            if (dataStat.getTid()==tid && dataStat.getDid()==did &&dataStat.getXid()==xid){
+                list.add(dataStat);
+            }
+        }
+        System.out.println("查询的所有结果是11"+dataStats);
+        return ResponseDataUtil.ok("查询线段信息成功",list);
     }
 
     //根据id查询铁路局下的电务段下的线段的车站

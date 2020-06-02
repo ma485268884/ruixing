@@ -12,7 +12,7 @@ public interface TieLuJuDao {
 
     void addTieLuJU(TieLuJuEntity tieLuJuEntity);
 
-    void editTieLuJuById(Long tid);
+    void editTieLuJuById(TieLuJuEntity tieLuJuEntity);
 
     void delTieLuJu(Long tid);
 }

@@ -29,7 +29,11 @@ public class CheZhanController {
     }
     @PutMapping("/updateCheZhan/{cid}")
     public Map<String,Object> updateCheZhan(@PathVariable Long cid ,CheZhanEntity cheZhanEntity){
+
+        System.out.println("返回的车站信息"+cheZhanEntity);
+
         cheZhanService.update(cheZhanEntity);
+        System.out.println("更新的车站信息"+cheZhanEntity);
         return  ResponseDataUtil.ok("修改车站信息成功");
     }
 

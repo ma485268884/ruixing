@@ -27,19 +27,19 @@
         update mro_chezhan
         <set>
             <if test="czName !=null">
-                cz_name = #{czName,jdbcType=VARCHAR},
+                cz_name = #{czName},
             </if>
-            <if test="czId !=null">
-                cz_id = #{czId,jdbcType=BIGINT},
-            </if>
+            <!--<if test="czId !=null">
+                cz_id = #{czId},
+            </if>-->
             <if test="czMiaoShu !=null">
-                cz_miaoshu = #{czMiaoShu,jdbcType=VARCHAR}
+                cz_miaoshu = #{czMiaoShu},
             </if>
             <if test="xdCzId !=null">
-                xd_cz_id = #{xdCzId,jdbcType=BIGINT}
+                xd_cz_id = #{xdCzId}
             </if>
         </set>
-        where cid = #{cid,jdbcType=BIGINT}
+        where cid = #{cid}
     </update>
     <!--查询全部车站-->
     <select id="selectByCheZhan" parameterType="java.lang.Long" resultType="com.yintu.ruixing.entity.CheZhanEntity">

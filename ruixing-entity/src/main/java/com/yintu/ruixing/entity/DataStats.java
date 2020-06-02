@@ -18,6 +18,10 @@ import java.util.List;
 public class
 DataStats {
 
+    private long tid;
+    private long did;
+    private long xid;
+    private long cid;
     private String tljName;
 
     private String dwdName;
