@@ -29,7 +29,6 @@ public class DianWuDuanController {
     @PostMapping("/addDianWuDuan")
     public Map<String,Object> addDianWuDuan(DianWuDuanEntity dianWuDuanEntity){
         dianWuDuanService.addDianWuDuan(dianWuDuanEntity);
-
         return ResponseDataUtil.ok("新增电务段成功");
     }
 

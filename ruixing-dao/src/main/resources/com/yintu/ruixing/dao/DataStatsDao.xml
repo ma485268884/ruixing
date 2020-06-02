@@ -68,40 +68,68 @@
     <!--根据id 查询铁路局-->
     <select id="findTieLuJuById" resultType="com.yintu.ruixing.entity.TieLuJuEntity" parameterType="java.lang.Long"
             resultMap="tieluju">
-        SELECT
-        tlj.tlj_name,
-        tlj.tlj_miaoshu,
-        dwd.dwd_name
-        FROM
-        mro_tieluju tlj,
-        mro_dianwuduan dwd
-        WHERE
+		SELECT
+		tlj.tlj_name,
+		tlj.tlj_miaoshu,
+		dwd.dwd_name
+		FROM
+		mro_tieluju tlj
+		left join  mro_dianwuduan dwd
+		on tlj.tid = dwd.tlj_dwd_id
 		<where>
-			<if test=" dwd.tlj_dwd_id !=null">
-				tlj.tid = dwd.tlj_dwd_id
+			<if test=" tid  !=null">
+				tlj.tid = #{tid}
 			</if>
 		</where>
+
+		<!-- SELECT
+		tlj.tlj_name,
+		tlj.tlj_miaoshu,
+		dwd.dwd_name
+		FROM
+		mro_tieluju tlj,
+		mro_dianwuduan dwd
+		WHERE
+		tlj.tid = dwd.tlj_dwd_id
 		and
-        tlj.tid = #{tid}
+		tlj.tid = #{tid} -->
+
     </select>
     <!--根据铁路局tid和电务段did查询对应电务段-->
     <select id="findDianWuDuanById" parameterType="java.lang.Long" resultType="com.yintu.ruixing.entity.DataStats"
             resultMap="dataStats">
+	<!--SELECT
+        tlj.tlj_name,
+        dwd.dwd_name,
+        dwd.dwd_miaoshu,
+        xd.xd_name
+    FROM
+        mro_tieluju tlj,
+        mro_dianwuduan dwd,
+        mro_xianduan xd
+    WHERE
+        tlj.tid = dwd.tlj_dwd_id
+        AND tlj.tid = #{tid}
+        AND xd.dwd_xd_id = #{did}-->
 		SELECT
-			tlj.tlj_name,
-			dwd.dwd_name,
-			dwd.dwd_miaoshu,
-			xd.xd_name
+		tlj.tlj_name,
+		dwd.dwd_name,
+		dwd.dwd_miaoshu,
+		xd.xd_name
 		FROM
-			mro_tieluju tlj,
-			mro_dianwuduan dwd,
-			mro_xianduan xd
-		WHERE
-			tlj.tid = dwd.tlj_dwd_id
-			AND tlj.tid = #{tid}
-			AND xd.dwd_xd_id = #{did}
+		mro_dianwuduan dwd
+		LEFT JOIN mro_tieluju tlj ON tlj.tid = dwd.tlj_dwd_id
+		LEFT JOIN mro_xianduan xd ON
 
-	</select>
+			<if test="tid !=null">
+				tlj.tid = #{tid}
+			</if>
+			and
+			<if test="did !=null">
+				xd.dwd_xd_id = #{did}
+			</if>
+
+</select>
     <!--根据铁路局tid,电务段did和线段xid查询对应线段-->
     <select id="findXianDuanById" parameterType="java.lang.Long" resultType="com.yintu.ruixing.entity.DataStats"
             resultMap="dataStats">
@@ -121,9 +149,33 @@
 			AND tlj.tid = #{tid}
 			AND xd.dwd_xd_id = #{did}
 			AND cz.xd_cz_id = #{xid}
+	<!--SELECT
+    tlj.tlj_name,
+    dwd.dwd_name,
+    xd.xd_name,
+    cz.cz_name,
+    xd.xd_miaoshu
+    FROM
+    mro_xianduan xd
+    LEFT JOIN mro_dianwuduan dwd ON dwd.did = xd.dwd_xd_id
+    LEFT JOIN mro_tieluju tlj ON tlj.tid = dwd.tlj_dwd_id
+    LEFT JOIN mro_chezhan cz ON
+    <if test="tid !=null">
+        tlj.tid = #{tid}
+    </if>
+    and
+    <if test="did !=null">
+        xd.dwd_xd_id = #{did}
+    </if>
+    and
+    <if test="xid !=null">
+       cz.xd_cz_id = #{xid}
+    </if>-->
 
-	</select>
-    <!--根据铁路局tid,电务段did,线段xid和车站cid查询对应车站-->
+
+
+</select>
+<!--根据铁路局tid,电务段did,线段xid和车站cid查询对应车站-->
     <select id="findCheZhanById" resultType="com.yintu.ruixing.entity.DataStats" parameterType="java.lang.Long"
             resultMap="dataStats">
 		SELECT
