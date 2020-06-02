@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author:lcy
  * @date:2020-05-29 20
@@ -12,23 +14,26 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FenXianPanEntity {
+public class FenXianPanEntity implements Serializable {
+    private static final long serialVersionUID = -9023215222748028458L;
+    private Integer id;
 
-    private long id;
+    private Integer xid;//线段id
 
-    private long xid;//线段id
+    private Integer cid;//车站id
 
-    private long cid;//车站id
+    private Integer vSongduanCable;//送端电缆侧电压V
 
-    private long VSongDuanCable;//送端电缆侧电压V
+    private Integer maSongduanCable;//送端电缆侧电流mA
 
-    private long mASongDuanCable;//送端电缆侧电流mA
+    private Integer vShouduanCableHost;//受端电缆侧电流mA
 
-    private long mAShouDuanCable;//受端电缆侧电流mA
+    private Integer vShouduanCableSpare;//受端电缆侧主电压V
 
-    private long VShouDuanCableHost;//受端电缆侧主电压V
+    private Integer maShouduanCable;//受端电缆侧调电压V
 
-    private long VShouDuanCableSpare;//受端电缆侧调电压V
+    private String yuliu;
 
+    private Short type;//类型
 
 }

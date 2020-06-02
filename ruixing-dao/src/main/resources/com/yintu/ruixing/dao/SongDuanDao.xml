@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.SongDuanDao">
+  <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.SongDuanEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="xid" jdbcType="INTEGER" property="xid" />
+    <result column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="V_out_zhu" jdbcType="INTEGER" property="vOutZhu" />
+    <result column="V_out_bei" jdbcType="INTEGER" property="vOutBei" />
+    <result column="mA_out_zhu" jdbcType="INTEGER" property="maOutZhu" />
+    <result column="mA_out_bei" jdbcType="INTEGER" property="maOutBei" />
+    <result column="Hz_up_zhu" jdbcType="INTEGER" property="hzUpZhu" />
+    <result column="Hz_up_bei" jdbcType="INTEGER" property="hzUpBei" />
+    <result column="Hz_down_zhu" jdbcType="INTEGER" property="hzDownZhu" />
+    <result column="Hz_down_bei" jdbcType="INTEGER" property="hzDownBei" />
+    <result column="Hz_low_zhu" jdbcType="INTEGER" property="hzLowZhu" />
+    <result column="Hz_low_bei" jdbcType="INTEGER" property="hzLowBei" />
+    <result column="FBJ_drive_zhu" jdbcType="VARCHAR" property="fbjDriveZhu" />
+    <result column="FBJ_drive_bei" jdbcType="VARCHAR" property="fbjDriveBei" />
+    <result column="FBJ_collection_zhu" jdbcType="VARCHAR" property="fbjCollectionZhu" />
+    <result column="FBJ_collection_bei" jdbcType="VARCHAR" property="fbjCollectionBei" />
+    <result column="yuliu" jdbcType="VARCHAR" property="yuliu" />
+    <result column="type" jdbcType="SMALLINT" property="type" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, xid, cid, V_out_zhu, V_out_bei, mA_out_zhu, mA_out_bei, Hz_up_zhu, Hz_up_bei, 
+    Hz_down_zhu, Hz_down_bei, Hz_low_zhu, Hz_low_bei, FBJ_drive_zhu, FBJ_drive_bei, FBJ_collection_zhu, 
+    FBJ_collection_bei, yuliu, type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mro_songduan
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mro_songduan
+  </select>
+  <select id="selectByCidAndXid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from mro_songduan
+    where cid=#{cid} and
+    xid=#{xid}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mro_songduan
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yintu.ruixing.entity.SongDuanEntity">
+    insert into mro_songduan (id, xid, cid, 
+      V_out_zhu, V_out_bei, mA_out_zhu, 
+      mA_out_bei, Hz_up_zhu, Hz_up_bei, 
+      Hz_down_zhu, Hz_down_bei, Hz_low_zhu, 
+      Hz_low_bei, FBJ_drive_zhu, FBJ_drive_bei, 
+      FBJ_collection_zhu, FBJ_collection_bei, yuliu, 
+      type)
+    values (#{id,jdbcType=INTEGER}, #{xid,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, 
+      #{vOutZhu,jdbcType=INTEGER}, #{vOutBei,jdbcType=INTEGER}, #{maOutZhu,jdbcType=INTEGER}, 
+      #{maOutBei,jdbcType=INTEGER}, #{hzUpZhu,jdbcType=INTEGER}, #{hzUpBei,jdbcType=INTEGER}, 
+      #{hzDownZhu,jdbcType=INTEGER}, #{hzDownBei,jdbcType=INTEGER}, #{hzLowZhu,jdbcType=INTEGER}, 
+      #{hzLowBei,jdbcType=INTEGER}, #{fbjDriveZhu,jdbcType=VARCHAR}, #{fbjDriveBei,jdbcType=VARCHAR}, 
+      #{fbjCollectionZhu,jdbcType=VARCHAR}, #{fbjCollectionBei,jdbcType=VARCHAR}, #{yuliu,jdbcType=VARCHAR}, 
+      #{type,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.SongDuanEntity">
+    insert into mro_songduan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="xid != null">
+        xid,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="vOutZhu != null">
+        V_out_zhu,
+      </if>
+      <if test="vOutBei != null">
+        V_out_bei,
+      </if>
+      <if test="maOutZhu != null">
+        mA_out_zhu,
+      </if>
+      <if test="maOutBei != null">
+        mA_out_bei,
+      </if>
+      <if test="hzUpZhu != null">
+        Hz_up_zhu,
+      </if>
+      <if test="hzUpBei != null">
+        Hz_up_bei,
+      </if>
+      <if test="hzDownZhu != null">
+        Hz_down_zhu,
+      </if>
+      <if test="hzDownBei != null">
+        Hz_down_bei,
+      </if>
+      <if test="hzLowZhu != null">
+        Hz_low_zhu,
+      </if>
+      <if test="hzLowBei != null">
+        Hz_low_bei,
+      </if>
+      <if test="fbjDriveZhu != null">
+        FBJ_drive_zhu,
+      </if>
+      <if test="fbjDriveBei != null">
+        FBJ_drive_bei,
+      </if>
+      <if test="fbjCollectionZhu != null">
+        FBJ_collection_zhu,
+      </if>
+      <if test="fbjCollectionBei != null">
+        FBJ_collection_bei,
+      </if>
+      <if test="yuliu != null">
+        yuliu,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="xid != null">
+        #{xid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="vOutZhu != null">
+        #{vOutZhu,jdbcType=INTEGER},
+      </if>
+      <if test="vOutBei != null">
+        #{vOutBei,jdbcType=INTEGER},
+      </if>
+      <if test="maOutZhu != null">
+        #{maOutZhu,jdbcType=INTEGER},
+      </if>
+      <if test="maOutBei != null">
+        #{maOutBei,jdbcType=INTEGER},
+      </if>
+      <if test="hzUpZhu != null">
+        #{hzUpZhu,jdbcType=INTEGER},
+      </if>
+      <if test="hzUpBei != null">
+        #{hzUpBei,jdbcType=INTEGER},
+      </if>
+      <if test="hzDownZhu != null">
+        #{hzDownZhu,jdbcType=INTEGER},
+      </if>
+      <if test="hzDownBei != null">
+        #{hzDownBei,jdbcType=INTEGER},
+      </if>
+      <if test="hzLowZhu != null">
+        #{hzLowZhu,jdbcType=INTEGER},
+      </if>
+      <if test="hzLowBei != null">
+        #{hzLowBei,jdbcType=INTEGER},
+      </if>
+      <if test="fbjDriveZhu != null">
+        #{fbjDriveZhu,jdbcType=VARCHAR},
+      </if>
+      <if test="fbjDriveBei != null">
+        #{fbjDriveBei,jdbcType=VARCHAR},
+      </if>
+      <if test="fbjCollectionZhu != null">
+        #{fbjCollectionZhu,jdbcType=VARCHAR},
+      </if>
+      <if test="fbjCollectionBei != null">
+        #{fbjCollectionBei,jdbcType=VARCHAR},
+      </if>
+      <if test="yuliu != null">
+        #{yuliu,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.SongDuanEntity">
+    update mro_songduan
+    <set>
+      <if test="xid != null">
+        xid = #{xid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null">
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="vOutZhu != null">
+        V_out_zhu = #{vOutZhu,jdbcType=INTEGER},
+      </if>
+      <if test="vOutBei != null">
+        V_out_bei = #{vOutBei,jdbcType=INTEGER},
+      </if>
+      <if test="maOutZhu != null">
+        mA_out_zhu = #{maOutZhu,jdbcType=INTEGER},
+      </if>
+      <if test="maOutBei != null">
+        mA_out_bei = #{maOutBei,jdbcType=INTEGER},
+      </if>
+      <if test="hzUpZhu != null">
+        Hz_up_zhu = #{hzUpZhu,jdbcType=INTEGER},
+      </if>
+      <if test="hzUpBei != null">
+        Hz_up_bei = #{hzUpBei,jdbcType=INTEGER},
+      </if>
+      <if test="hzDownZhu != null">
+        Hz_down_zhu = #{hzDownZhu,jdbcType=INTEGER},
+      </if>
+      <if test="hzDownBei != null">
+        Hz_down_bei = #{hzDownBei,jdbcType=INTEGER},
+      </if>
+      <if test="hzLowZhu != null">
+        Hz_low_zhu = #{hzLowZhu,jdbcType=INTEGER},
+      </if>
+      <if test="hzLowBei != null">
+        Hz_low_bei = #{hzLowBei,jdbcType=INTEGER},
+      </if>
+      <if test="fbjDriveZhu != null">
+        FBJ_drive_zhu = #{fbjDriveZhu,jdbcType=VARCHAR},
+      </if>
+      <if test="fbjDriveBei != null">
+        FBJ_drive_bei = #{fbjDriveBei,jdbcType=VARCHAR},
+      </if>
+      <if test="fbjCollectionZhu != null">
+        FBJ_collection_zhu = #{fbjCollectionZhu,jdbcType=VARCHAR},
+      </if>
+      <if test="fbjCollectionBei != null">
+        FBJ_collection_bei = #{fbjCollectionBei,jdbcType=VARCHAR},
+      </if>
+      <if test="yuliu != null">
+        yuliu = #{yuliu,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.SongDuanEntity">
+    update mro_songduan
+    set xid = #{xid,jdbcType=INTEGER},
+      cid = #{cid,jdbcType=INTEGER},
+      V_out_zhu = #{vOutZhu,jdbcType=INTEGER},
+      V_out_bei = #{vOutBei,jdbcType=INTEGER},
+      mA_out_zhu = #{maOutZhu,jdbcType=INTEGER},
+      mA_out_bei = #{maOutBei,jdbcType=INTEGER},
+      Hz_up_zhu = #{hzUpZhu,jdbcType=INTEGER},
+      Hz_up_bei = #{hzUpBei,jdbcType=INTEGER},
+      Hz_down_zhu = #{hzDownZhu,jdbcType=INTEGER},
+      Hz_down_bei = #{hzDownBei,jdbcType=INTEGER},
+      Hz_low_zhu = #{hzLowZhu,jdbcType=INTEGER},
+      Hz_low_bei = #{hzLowBei,jdbcType=INTEGER},
+      FBJ_drive_zhu = #{fbjDriveZhu,jdbcType=VARCHAR},
+      FBJ_drive_bei = #{fbjDriveBei,jdbcType=VARCHAR},
+      FBJ_collection_zhu = #{fbjCollectionZhu,jdbcType=VARCHAR},
+      FBJ_collection_bei = #{fbjCollectionBei,jdbcType=VARCHAR},
+      yuliu = #{yuliu,jdbcType=VARCHAR},
+      type = #{type,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

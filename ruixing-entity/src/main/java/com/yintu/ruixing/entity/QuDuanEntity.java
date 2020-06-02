@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author:lcy
  * @date:2020-05-29 14
@@ -12,32 +14,37 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+public class QuDuanEntity implements Serializable {
+    private static final long serialVersionUID = 4434286455780258213L;
+    private Integer id;
 
-public class QuDuanEntity {
+    private Integer xid;//线段id
 
-    private long id;
+    private Integer cid;//车站id
 
-    private long xid;//线段id
+    private String qdName;
 
-    private long cid;//车站id
+    private String designCarrier;//设计载频
 
-    private  String qdName;
+    private String direction;//方向
 
-    private String designCarrier; //设计载频
+    private String gjcollection;//GJ采集
 
-    private String direction;  //方向
+    private String yuliu;
 
-    private String GJcollection;//GJ采集
+    private Short type;//类型
 
-    private SongDuanEntity songDuanEntity;
+    //    private SongDuanEntity songDuanEntity;
+//
+//    private FenXianPanEntity fenXianPanEntity;
+//
+//    private ShouDuanEntity shouDuanEntity;
+//
+//    private ShouDuanTransformer shouDuanTransformer;
+//
+//    private SongDuanTransformer songDuanTransformer;
+//
+//    private TuningEntity tuningEntity;
 
-    private FenXianPanEntity fenXianPanEntity;
 
-    private ShouDuanEntity shouDuanEntity;
-
-    private ShouDuanTransformer shouDuanTransformer;
-
-    private SongDuanTransformer songDuanTransformer;
-
-    private TuningEntity tuningEntity;
 }

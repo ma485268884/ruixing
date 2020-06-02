@@ -22,11 +22,11 @@ public class DataShowDto {
 
     private SongDuanEntity songDuanEntity;
 
-    private SongDuanTransformer songDuanTransformer;
+    private TransformerSongDuanEntity transformerSongDuanEntity;
 
     private TuningEntity tuningEntity;
 
-    private ShouDuanTransformer shouDuanTransformer;
+    private TransformerShouDuanEntity transformerShouDuanEntity;
 
 
 }
