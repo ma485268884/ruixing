@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.TuningDao">
+    <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.TuningEntity">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="xid" jdbcType="INTEGER" property="xid"/>
+        <result column="cid" jdbcType="INTEGER" property="cid"/>
+        <result column="A_longIn_FBA_zhu" jdbcType="INTEGER" property="aLonginFbaZhu"/>
+        <result column="A_longIn_FBA_diao" jdbcType="INTEGER" property="aLonginFbaDiao"/>
+        <result column="A_longOut_FBA_zhu" jdbcType="INTEGER" property="aLongoutFbaZhu"/>
+        <result column="A_longOut_FBA_diao" jdbcType="INTEGER" property="aLongoutFbaDiao"/>
+        <result column="A_shortIn_FBA_zhu" jdbcType="INTEGER" property="aShortinFbaZhu"/>
+        <result column="A_shortIn_FBA_diao" jdbcType="INTEGER" property="aShortinFbaDiao"/>
+        <result column="A_shortOut_FBA_zhu" jdbcType="INTEGER" property="aShortoutFbaZhu"/>
+        <result column="A_shortOut_FBA_diao" jdbcType="INTEGER" property="aShortoutFbaDiao"/>
+        <result column="A_longIn_JBA_zhu" jdbcType="INTEGER" property="aLonginJbaZhu"/>
+        <result column="A_longIn_JBA_diao" jdbcType="INTEGER" property="aLonginJbaDiao"/>
+        <result column="A_longOut_JBA_zhu" jdbcType="INTEGER" property="aLongoutJbaZhu"/>
+        <result column="A_longOut_JBA_diao" jdbcType="INTEGER" property="aLongoutJbaDiao"/>
+        <result column="A_shortIn_JBA_zhu" jdbcType="INTEGER" property="aShortinJbaZhu"/>
+        <result column="A_shortIn_JBA_diao" jdbcType="INTEGER" property="aShortinJbaDiao"/>
+        <result column="A_shortOut_JBA_zhu" jdbcType="INTEGER" property="aShortoutJbaZhu"/>
+        <result column="A_shortOut_JBA_diao" jdbcType="INTEGER" property="aShortoutJbaDiao"/>
+        <result column="yuliu" jdbcType="VARCHAR" property="yuliu"/>
+        <result column="type" jdbcType="SMALLINT" property="type"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, xid, cid, A_longIn_FBA_zhu, A_longIn_FBA_diao, A_longOut_FBA_zhu, A_longOut_FBA_diao,
+    A_shortIn_FBA_zhu, A_shortIn_FBA_diao, A_shortOut_FBA_zhu, A_shortOut_FBA_diao, A_longIn_JBA_zhu, 
+    A_longIn_JBA_diao, A_longOut_JBA_zhu, A_longOut_JBA_diao, A_shortIn_JBA_zhu, A_shortIn_JBA_diao, 
+    A_shortOut_JBA_zhu, A_shortOut_JBA_diao, yuliu, type
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_tuning
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByCidAndXid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_tuning
+        where cid=#{cid} and
+        xid=#{xid}
+    </select>
+    <select id="selectByAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_tuning
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from mro_tuning
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.yintu.ruixing.entity.TuningEntity">
+        insert into mro_tuning (id, xid, cid,
+                                A_longIn_FBA_zhu, A_longIn_FBA_diao, A_longOut_FBA_zhu,
+                                A_longOut_FBA_diao, A_shortIn_FBA_zhu, A_shortIn_FBA_diao,
+                                A_shortOut_FBA_zhu, A_shortOut_FBA_diao, A_longIn_JBA_zhu,
+                                A_longIn_JBA_diao, A_longOut_JBA_zhu, A_longOut_JBA_diao,
+                                A_shortIn_JBA_zhu, A_shortIn_JBA_diao, A_shortOut_JBA_zhu,
+                                A_shortOut_JBA_diao, yuliu, type)
+        values (#{id,jdbcType=INTEGER}, #{xid,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER},
+                #{aLonginFbaZhu,jdbcType=INTEGER}, #{aLonginFbaDiao,jdbcType=INTEGER},
+                #{aLongoutFbaZhu,jdbcType=INTEGER},
+                #{aLongoutFbaDiao,jdbcType=INTEGER}, #{aShortinFbaZhu,jdbcType=INTEGER},
+                #{aShortinFbaDiao,jdbcType=INTEGER},
+                #{aShortoutFbaZhu,jdbcType=INTEGER}, #{aShortoutFbaDiao,jdbcType=INTEGER},
+                #{aLonginJbaZhu,jdbcType=INTEGER},
+                #{aLonginJbaDiao,jdbcType=INTEGER}, #{aLongoutJbaZhu,jdbcType=INTEGER},
+                #{aLongoutJbaDiao,jdbcType=INTEGER},
+                #{aShortinJbaZhu,jdbcType=INTEGER}, #{aShortinJbaDiao,jdbcType=INTEGER},
+                #{aShortoutJbaZhu,jdbcType=INTEGER},
+                #{aShortoutJbaDiao,jdbcType=INTEGER}, #{yuliu,jdbcType=VARCHAR}, #{type,jdbcType=SMALLINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.TuningEntity">
+        insert into mro_tuning
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="xid != null">
+                xid,
+            </if>
+            <if test="cid != null">
+                cid,
+            </if>
+            <if test="aLonginFbaZhu != null">
+                A_longIn_FBA_zhu,
+            </if>
+            <if test="aLonginFbaDiao != null">
+                A_longIn_FBA_diao,
+            </if>
+            <if test="aLongoutFbaZhu != null">
+                A_longOut_FBA_zhu,
+            </if>
+            <if test="aLongoutFbaDiao != null">
+                A_longOut_FBA_diao,
+            </if>
+            <if test="aShortinFbaZhu != null">
+                A_shortIn_FBA_zhu,
+            </if>
+            <if test="aShortinFbaDiao != null">
+                A_shortIn_FBA_diao,
+            </if>
+            <if test="aShortoutFbaZhu != null">
+                A_shortOut_FBA_zhu,
+            </if>
+            <if test="aShortoutFbaDiao != null">
+                A_shortOut_FBA_diao,
+            </if>
+            <if test="aLonginJbaZhu != null">
+                A_longIn_JBA_zhu,
+            </if>
+            <if test="aLonginJbaDiao != null">
+                A_longIn_JBA_diao,
+            </if>
+            <if test="aLongoutJbaZhu != null">
+                A_longOut_JBA_zhu,
+            </if>
+            <if test="aLongoutJbaDiao != null">
+                A_longOut_JBA_diao,
+            </if>
+            <if test="aShortinJbaZhu != null">
+                A_shortIn_JBA_zhu,
+            </if>
+            <if test="aShortinJbaDiao != null">
+                A_shortIn_JBA_diao,
+            </if>
+            <if test="aShortoutJbaZhu != null">
+                A_shortOut_JBA_zhu,
+            </if>
+            <if test="aShortoutJbaDiao != null">
+                A_shortOut_JBA_diao,
+            </if>
+            <if test="yuliu != null">
+                yuliu,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="xid != null">
+                #{xid,jdbcType=INTEGER},
+            </if>
+            <if test="cid != null">
+                #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="aLonginFbaZhu != null">
+                #{aLonginFbaZhu,jdbcType=INTEGER},
+            </if>
+            <if test="aLonginFbaDiao != null">
+                #{aLonginFbaDiao,jdbcType=INTEGER},
+            </if>
+            <if test="aLongoutFbaZhu != null">
+                #{aLongoutFbaZhu,jdbcType=INTEGER},
+            </if>
+            <if test="aLongoutFbaDiao != null">
+                #{aLongoutFbaDiao,jdbcType=INTEGER},
+            </if>
+            <if test="aShortinFbaZhu != null">
+                #{aShortinFbaZhu,jdbcType=INTEGER},
+            </if>
+            <if test="aShortinFbaDiao != null">
+                #{aShortinFbaDiao,jdbcType=INTEGER},
+            </if>
+            <if test="aShortoutFbaZhu != null">
+                #{aShortoutFbaZhu,jdbcType=INTEGER},
+            </if>
+            <if test="aShortoutFbaDiao != null">
+                #{aShortoutFbaDiao,jdbcType=INTEGER},
+            </if>
+            <if test="aLonginJbaZhu != null">
+                #{aLonginJbaZhu,jdbcType=INTEGER},
+            </if>
+            <if test="aLonginJbaDiao != null">
+                #{aLonginJbaDiao,jdbcType=INTEGER},
+            </if>
+            <if test="aLongoutJbaZhu != null">
+                #{aLongoutJbaZhu,jdbcType=INTEGER},
+            </if>
+            <if test="aLongoutJbaDiao != null">
+                #{aLongoutJbaDiao,jdbcType=INTEGER},
+            </if>
+            <if test="aShortinJbaZhu != null">
+                #{aShortinJbaZhu,jdbcType=INTEGER},
+            </if>
+            <if test="aShortinJbaDiao != null">
+                #{aShortinJbaDiao,jdbcType=INTEGER},
+            </if>
+            <if test="aShortoutJbaZhu != null">
+                #{aShortoutJbaZhu,jdbcType=INTEGER},
+            </if>
+            <if test="aShortoutJbaDiao != null">
+                #{aShortoutJbaDiao,jdbcType=INTEGER},
+            </if>
+            <if test="yuliu != null">
+                #{yuliu,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=SMALLINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.TuningEntity">
+        update mro_tuning
+        <set>
+            <if test="xid != null">
+                xid = #{xid,jdbcType=INTEGER},
+            </if>
+            <if test="cid != null">
+                cid = #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="aLonginFbaZhu != null">
+                A_longIn_FBA_zhu = #{aLonginFbaZhu,jdbcType=INTEGER},
+            </if>
+            <if test="aLonginFbaDiao != null">
+                A_longIn_FBA_diao = #{aLonginFbaDiao,jdbcType=INTEGER},
+            </if>
+            <if test="aLongoutFbaZhu != null">
+                A_longOut_FBA_zhu = #{aLongoutFbaZhu,jdbcType=INTEGER},
+            </if>
+            <if test="aLongoutFbaDiao != null">
+                A_longOut_FBA_diao = #{aLongoutFbaDiao,jdbcType=INTEGER},
+            </if>
+            <if test="aShortinFbaZhu != null">
+                A_shortIn_FBA_zhu = #{aShortinFbaZhu,jdbcType=INTEGER},
+            </if>
+            <if test="aShortinFbaDiao != null">
+                A_shortIn_FBA_diao = #{aShortinFbaDiao,jdbcType=INTEGER},
+            </if>
+            <if test="aShortoutFbaZhu != null">
+                A_shortOut_FBA_zhu = #{aShortoutFbaZhu,jdbcType=INTEGER},
+            </if>
+            <if test="aShortoutFbaDiao != null">
+                A_shortOut_FBA_diao = #{aShortoutFbaDiao,jdbcType=INTEGER},
+            </if>
+            <if test="aLonginJbaZhu != null">
+                A_longIn_JBA_zhu = #{aLonginJbaZhu,jdbcType=INTEGER},
+            </if>
+            <if test="aLonginJbaDiao != null">
+                A_longIn_JBA_diao = #{aLonginJbaDiao,jdbcType=INTEGER},
+            </if>
+            <if test="aLongoutJbaZhu != null">
+                A_longOut_JBA_zhu = #{aLongoutJbaZhu,jdbcType=INTEGER},
+            </if>
+            <if test="aLongoutJbaDiao != null">
+                A_longOut_JBA_diao = #{aLongoutJbaDiao,jdbcType=INTEGER},
+            </if>
+            <if test="aShortinJbaZhu != null">
+                A_shortIn_JBA_zhu = #{aShortinJbaZhu,jdbcType=INTEGER},
+            </if>
+            <if test="aShortinJbaDiao != null">
+                A_shortIn_JBA_diao = #{aShortinJbaDiao,jdbcType=INTEGER},
+            </if>
+            <if test="aShortoutJbaZhu != null">
+                A_shortOut_JBA_zhu = #{aShortoutJbaZhu,jdbcType=INTEGER},
+            </if>
+            <if test="aShortoutJbaDiao != null">
+                A_shortOut_JBA_diao = #{aShortoutJbaDiao,jdbcType=INTEGER},
+            </if>
+            <if test="yuliu != null">
+                yuliu = #{yuliu,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=SMALLINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.TuningEntity">
+        update mro_tuning
+        set xid                 = #{xid,jdbcType=INTEGER},
+            cid                 = #{cid,jdbcType=INTEGER},
+            A_longIn_FBA_zhu    = #{aLonginFbaZhu,jdbcType=INTEGER},
+            A_longIn_FBA_diao   = #{aLonginFbaDiao,jdbcType=INTEGER},
+            A_longOut_FBA_zhu   = #{aLongoutFbaZhu,jdbcType=INTEGER},
+            A_longOut_FBA_diao  = #{aLongoutFbaDiao,jdbcType=INTEGER},
+            A_shortIn_FBA_zhu   = #{aShortinFbaZhu,jdbcType=INTEGER},
+            A_shortIn_FBA_diao  = #{aShortinFbaDiao,jdbcType=INTEGER},
+            A_shortOut_FBA_zhu  = #{aShortoutFbaZhu,jdbcType=INTEGER},
+            A_shortOut_FBA_diao = #{aShortoutFbaDiao,jdbcType=INTEGER},
+            A_longIn_JBA_zhu    = #{aLonginJbaZhu,jdbcType=INTEGER},
+            A_longIn_JBA_diao   = #{aLonginJbaDiao,jdbcType=INTEGER},
+            A_longOut_JBA_zhu   = #{aLongoutJbaZhu,jdbcType=INTEGER},
+            A_longOut_JBA_diao  = #{aLongoutJbaDiao,jdbcType=INTEGER},
+            A_shortIn_JBA_zhu   = #{aShortinJbaZhu,jdbcType=INTEGER},
+            A_shortIn_JBA_diao  = #{aShortinJbaDiao,jdbcType=INTEGER},
+            A_shortOut_JBA_zhu  = #{aShortoutJbaZhu,jdbcType=INTEGER},
+            A_shortOut_JBA_diao = #{aShortoutJbaDiao,jdbcType=INTEGER},
+            yuliu               = #{yuliu,jdbcType=VARCHAR},
+            type                = #{type,jdbcType=SMALLINT}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

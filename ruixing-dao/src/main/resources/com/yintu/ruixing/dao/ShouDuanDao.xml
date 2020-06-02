@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.ShouDuanDao">
+  <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.ShouDuanEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="xid" jdbcType="INTEGER" property="xid" />
+    <result column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="V_in_all" jdbcType="INTEGER" property="vInAll" />
+    <result column="mV_in_zhu" jdbcType="INTEGER" property="mvInZhu" />
+    <result column="mV_in_bing" jdbcType="INTEGER" property="mvInBing" />
+    <result column="mV_in_diao_zhu" jdbcType="INTEGER" property="mvInDiaoZhu" />
+    <result column="mV_in_diao_bing" jdbcType="INTEGER" property="mvInDiaoBing" />
+    <result column="Hz_in_low_zhu" jdbcType="INTEGER" property="hzInLowZhu" />
+    <result column="Hz_in_low_bing" jdbcType="INTEGER" property="hzInLowBing" />
+    <result column="GJ_drive_zhu" jdbcType="VARCHAR" property="gjDriveZhu" />
+    <result column="GJ_drive_bing" jdbcType="VARCHAR" property="gjDriveBing" />
+    <result column="GJ_rear_collection_zhu" jdbcType="VARCHAR" property="gjRearCollectionZhu" />
+    <result column="GJ_rear_collection_bing" jdbcType="VARCHAR" property="gjRearCollectionBing" />
+    <result column="baojing_zhu" jdbcType="VARCHAR" property="baojingZhu" />
+    <result column="baojing_bing" jdbcType="VARCHAR" property="baojingBing" />
+    <result column="yuliu" jdbcType="VARCHAR" property="yuliu" />
+    <result column="type" jdbcType="SMALLINT" property="type" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, xid, cid, V_in_all, mV_in_zhu, mV_in_bing, mV_in_diao_zhu, mV_in_diao_bing, Hz_in_low_zhu, 
+    Hz_in_low_bing, GJ_drive_zhu, GJ_drive_bing, GJ_rear_collection_zhu, GJ_rear_collection_bing, 
+    baojing_zhu, baojing_bing, yuliu, type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mro_shouduan
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByAll"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mro_shouduan
+  </select>
+
+  <select id="selectByCidAndXid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from mro_shouduan
+    where cid=#{cid} and
+    xid=#{xid}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mro_shouduan
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yintu.ruixing.entity.ShouDuanEntity">
+    insert into mro_shouduan (id, xid, cid, 
+      V_in_all, mV_in_zhu, mV_in_bing, 
+      mV_in_diao_zhu, mV_in_diao_bing, Hz_in_low_zhu, 
+      Hz_in_low_bing, GJ_drive_zhu, GJ_drive_bing, 
+      GJ_rear_collection_zhu, GJ_rear_collection_bing, 
+      baojing_zhu, baojing_bing, yuliu, 
+      type)
+    values (#{id,jdbcType=INTEGER}, #{xid,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, 
+      #{vInAll,jdbcType=INTEGER}, #{mvInZhu,jdbcType=INTEGER}, #{mvInBing,jdbcType=INTEGER}, 
+      #{mvInDiaoZhu,jdbcType=INTEGER}, #{mvInDiaoBing,jdbcType=INTEGER}, #{hzInLowZhu,jdbcType=INTEGER}, 
+      #{hzInLowBing,jdbcType=INTEGER}, #{gjDriveZhu,jdbcType=VARCHAR}, #{gjDriveBing,jdbcType=VARCHAR}, 
+      #{gjRearCollectionZhu,jdbcType=VARCHAR}, #{gjRearCollectionBing,jdbcType=VARCHAR}, 
+      #{baojingZhu,jdbcType=VARCHAR}, #{baojingBing,jdbcType=VARCHAR}, #{yuliu,jdbcType=VARCHAR}, 
+      #{type,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.ShouDuanEntity">
+    insert into mro_shouduan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="xid != null">
+        xid,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="vInAll != null">
+        V_in_all,
+      </if>
+      <if test="mvInZhu != null">
+        mV_in_zhu,
+      </if>
+      <if test="mvInBing != null">
+        mV_in_bing,
+      </if>
+      <if test="mvInDiaoZhu != null">
+        mV_in_diao_zhu,
+      </if>
+      <if test="mvInDiaoBing != null">
+        mV_in_diao_bing,
+      </if>
+      <if test="hzInLowZhu != null">
+        Hz_in_low_zhu,
+      </if>
+      <if test="hzInLowBing != null">
+        Hz_in_low_bing,
+      </if>
+      <if test="gjDriveZhu != null">
+        GJ_drive_zhu,
+      </if>
+      <if test="gjDriveBing != null">
+        GJ_drive_bing,
+      </if>
+      <if test="gjRearCollectionZhu != null">
+        GJ_rear_collection_zhu,
+      </if>
+      <if test="gjRearCollectionBing != null">
+        GJ_rear_collection_bing,
+      </if>
+      <if test="baojingZhu != null">
+        baojing_zhu,
+      </if>
+      <if test="baojingBing != null">
+        baojing_bing,
+      </if>
+      <if test="yuliu != null">
+        yuliu,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="xid != null">
+        #{xid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="vInAll != null">
+        #{vInAll,jdbcType=INTEGER},
+      </if>
+      <if test="mvInZhu != null">
+        #{mvInZhu,jdbcType=INTEGER},
+      </if>
+      <if test="mvInBing != null">
+        #{mvInBing,jdbcType=INTEGER},
+      </if>
+      <if test="mvInDiaoZhu != null">
+        #{mvInDiaoZhu,jdbcType=INTEGER},
+      </if>
+      <if test="mvInDiaoBing != null">
+        #{mvInDiaoBing,jdbcType=INTEGER},
+      </if>
+      <if test="hzInLowZhu != null">
+        #{hzInLowZhu,jdbcType=INTEGER},
+      </if>
+      <if test="hzInLowBing != null">
+        #{hzInLowBing,jdbcType=INTEGER},
+      </if>
+      <if test="gjDriveZhu != null">
+        #{gjDriveZhu,jdbcType=VARCHAR},
+      </if>
+      <if test="gjDriveBing != null">
+        #{gjDriveBing,jdbcType=VARCHAR},
+      </if>
+      <if test="gjRearCollectionZhu != null">
+        #{gjRearCollectionZhu,jdbcType=VARCHAR},
+      </if>
+      <if test="gjRearCollectionBing != null">
+        #{gjRearCollectionBing,jdbcType=VARCHAR},
+      </if>
+      <if test="baojingZhu != null">
+        #{baojingZhu,jdbcType=VARCHAR},
+      </if>
+      <if test="baojingBing != null">
+        #{baojingBing,jdbcType=VARCHAR},
+      </if>
+      <if test="yuliu != null">
+        #{yuliu,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.ShouDuanEntity">
+    update mro_shouduan
+    <set>
+      <if test="xid != null">
+        xid = #{xid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null">
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="vInAll != null">
+        V_in_all = #{vInAll,jdbcType=INTEGER},
+      </if>
+      <if test="mvInZhu != null">
+        mV_in_zhu = #{mvInZhu,jdbcType=INTEGER},
+      </if>
+      <if test="mvInBing != null">
+        mV_in_bing = #{mvInBing,jdbcType=INTEGER},
+      </if>
+      <if test="mvInDiaoZhu != null">
+        mV_in_diao_zhu = #{mvInDiaoZhu,jdbcType=INTEGER},
+      </if>
+      <if test="mvInDiaoBing != null">
+        mV_in_diao_bing = #{mvInDiaoBing,jdbcType=INTEGER},
+      </if>
+      <if test="hzInLowZhu != null">
+        Hz_in_low_zhu = #{hzInLowZhu,jdbcType=INTEGER},
+      </if>
+      <if test="hzInLowBing != null">
+        Hz_in_low_bing = #{hzInLowBing,jdbcType=INTEGER},
+      </if>
+      <if test="gjDriveZhu != null">
+        GJ_drive_zhu = #{gjDriveZhu,jdbcType=VARCHAR},
+      </if>
+      <if test="gjDriveBing != null">
+        GJ_drive_bing = #{gjDriveBing,jdbcType=VARCHAR},
+      </if>
+      <if test="gjRearCollectionZhu != null">
+        GJ_rear_collection_zhu = #{gjRearCollectionZhu,jdbcType=VARCHAR},
+      </if>
+      <if test="gjRearCollectionBing != null">
+        GJ_rear_collection_bing = #{gjRearCollectionBing,jdbcType=VARCHAR},
+      </if>
+      <if test="baojingZhu != null">
+        baojing_zhu = #{baojingZhu,jdbcType=VARCHAR},
+      </if>
+      <if test="baojingBing != null">
+        baojing_bing = #{baojingBing,jdbcType=VARCHAR},
+      </if>
+      <if test="yuliu != null">
+        yuliu = #{yuliu,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.ShouDuanEntity">
+    update mro_shouduan
+    set xid = #{xid,jdbcType=INTEGER},
+      cid = #{cid,jdbcType=INTEGER},
+      V_in_all = #{vInAll,jdbcType=INTEGER},
+      mV_in_zhu = #{mvInZhu,jdbcType=INTEGER},
+      mV_in_bing = #{mvInBing,jdbcType=INTEGER},
+      mV_in_diao_zhu = #{mvInDiaoZhu,jdbcType=INTEGER},
+      mV_in_diao_bing = #{mvInDiaoBing,jdbcType=INTEGER},
+      Hz_in_low_zhu = #{hzInLowZhu,jdbcType=INTEGER},
+      Hz_in_low_bing = #{hzInLowBing,jdbcType=INTEGER},
+      GJ_drive_zhu = #{gjDriveZhu,jdbcType=VARCHAR},
+      GJ_drive_bing = #{gjDriveBing,jdbcType=VARCHAR},
+      GJ_rear_collection_zhu = #{gjRearCollectionZhu,jdbcType=VARCHAR},
+      GJ_rear_collection_bing = #{gjRearCollectionBing,jdbcType=VARCHAR},
+      baojing_zhu = #{baojingZhu,jdbcType=VARCHAR},
+      baojing_bing = #{baojingBing,jdbcType=VARCHAR},
+      yuliu = #{yuliu,jdbcType=VARCHAR},
+      type = #{type,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

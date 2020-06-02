@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author:lcy
  * @date:2020-05-29 19
@@ -12,41 +14,45 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SongDuanEntity {
+public class SongDuanEntity implements Serializable {
+    private static final long serialVersionUID = -386731962028214111L;
+    private Integer id;
 
-    private long xid;//线段id
+    private Integer xid;//线段id
 
-    private long cid;//车站id
+    private Integer cid;//车站id
 
-    private long id;
+    private Integer vOutZhu;//主机功出电压V
 
-    private long vOutZhu;//主机功出电压V
+    private Integer vOutBei;
 
-    private long vOutBie;
+    private Integer maOutZhu;//主机功出电流mA
 
-    private long mAOutZhu;//主机功出电流mA
+    private Integer maOutBei;
 
-    private long mAOutBie;
+    private Integer hzUpZhu;//主机上边频Hz
 
-    private long HzUpZhu;//主机上边频Hz
+    private Integer hzUpBei;
 
-    private long HzUpBie;
+    private Integer hzDownZhu;//主机下边频Hz
 
-    private long HzDownZhu;//主机下边频Hz
+    private Integer hzDownBei;
 
-    private long HzDownBie;
+    private Integer hzLowZhu;//主机发送低频Hz
 
-    private long HzLowZhu;//主机发送低频Hz
+    private Integer hzLowBei;
 
-    private long HzLowBie;
+    private String fbjDriveZhu;//主机FBJ驱动
 
-    private String FBJDriveZhu;//主机FBJ驱动
+    private String fbjDriveBei;
 
-    private String FBJDriveBei;
+    private String fbjCollectionZhu;//主机FBJ采集
 
-    private String FBJCollectionBie;//主机FBJ采集
+    private String fbjCollectionBei;
 
-    private String FBJCollectionZhu;
+    private String yuliu;
+
+    private Short type;//类型
 
 
 }

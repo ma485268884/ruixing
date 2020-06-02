@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author:lcy
  * @date:2020-05-30 13
@@ -12,38 +14,43 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShouDuanEntity {
+public class ShouDuanEntity implements Serializable {
+    private static final long serialVersionUID = -2713944121051881563L;
+    private Integer id;
 
-    private long xid;//线段id
+    private Integer xid;//线段id
 
-    private long cid;//车站id
+    private Integer cid;//车站id
 
-    private long id;
+    private Integer vInAll;//全机型轨入电压V
 
-    private long VInAll;//全机型轨入电压V
+    private Integer mvInZhu;//主机主接入电压mV
 
-    private long mVInZhu;//主机主接入电压mV
+    private Integer mvInBing;//并机机主接入电压mV
 
-    private long mVInBing;//并机机主接入电压mV
+    private Integer mvInDiaoZhu;//主机调接入电压mV
 
-    private long mVInDiaoZhu;//主机调接入电压mV
+    private Integer mvInDiaoBing;
 
-    private long mVInDiaoBing;
+    private Integer hzInLowZhu;//主机接收低频Hz
 
-    private long HzInLowZhu;//主机接收低频Hz
+    private Integer hzInLowBing;
 
-    private long HzInLowBing;
+    private String gjDriveZhu;//主机GJ驱动
 
-    private String GJDriverZhu;//主机GJ驱动
+    private String gjDriveBing;
 
-    private String GJDriverBing;
+    private String gjRearCollectionZhu;//主机后方GJ采集
 
-    private String GJRearCollectionZhu;//主机后方GJ采集
+    private String gjRearCollectionBing;
 
-    private String GJRearCollectionBing;
+    private String baojingZhu;//主机接收器报警
 
-    private String BaoJingZhu;//主机接收器报警
+    private String baojingBing;
 
-    private String BaoJingBing;
+    private String yuliu;
+
+    private Short type;//类型
+
 
 }

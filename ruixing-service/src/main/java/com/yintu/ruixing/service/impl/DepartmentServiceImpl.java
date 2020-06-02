@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author:mlf
@@ -82,6 +80,10 @@ public class DepartmentServiceImpl implements DepartmentService {
             TreeNodeUtil treeNodeUtil = new TreeNodeUtil();
             treeNodeUtil.setId(departmentEntity.getId());
             treeNodeUtil.setLabel(departmentEntity.getName());
+            Map<String, Object> map = new HashMap<>();
+            map.put("parentId", departmentEntity.getParentId());
+            map.put("create_time",departmentEntity.getCreateTime());
+            treeNodeUtil.setA_attr(map);
             treeNodeUtil.setChildren(this.findDepartmentTree(departmentEntity.getId()));
             treeNodeUtils.add(treeNodeUtil);
         }
