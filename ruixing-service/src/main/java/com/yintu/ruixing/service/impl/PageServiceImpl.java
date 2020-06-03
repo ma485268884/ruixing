@@ -13,4 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class PageServiceImpl implements PageService {
+    @Override
+    public Object page() {
+        return null;
+    }
 }
