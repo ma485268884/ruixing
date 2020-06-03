@@ -34,7 +34,7 @@
                 xd_name=#{xdName},
             </if>
             <if test="xdMiaoShu !=null">
-                xd_miaoshu=#{xdMiaoShu}
+                xd_miaoshu=#{xdMiaoShu},
             </if>
             <if test="dwdXdId !=null">
                 dwd_xd_id=#{dwdXdId}

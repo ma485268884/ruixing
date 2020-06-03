@@ -3,10 +3,10 @@ package com.yintu.ruixing.service;
 
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.entity.*;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -22,13 +22,13 @@ public interface DataStatsService {
     PageInfo<DataStats> findPage(Integer page, Integer size);
 
 
-    List<TieLuJuEntity> findTieLuJuById(Long tid);
+    List<TieLuJuEntity> findTieLuJuById(Long tid,Integer page, Integer size);
 
-    List<DataStats> findDianWuDuanById(Long tid, Long did);
+    List<DataStats> findDianWuDuanById(Long tid, Long did,Integer page, Integer size);
 
-    List<DataStats> findXianDuanById(Long tid, Long did, Long xid);
+    List<DataStats> findXianDuanById(Long tid, Long did, Long xid,Integer page, Integer size);
 
-    DataStats findCheZhanById(Long tid, Long did, Long xid, Long cid);
+    List<DataStats> findCheZhanById(Long tid, Long did, Long xid, Long cid,Integer page, Integer size);
 
     int delCheZhanListById(int[] ids);
 }
