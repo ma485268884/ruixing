@@ -14,12 +14,12 @@ import java.util.Map;
  * 分页
  */
 @RestController
-@RequestMapping("/delet")
+@RequestMapping("/delete")
 public class DeleteController {
     @Autowired
     private DeleteService deleteService;
 
-    @DeleteMapping ("/delTieLuJU/{idtype}/{ids}")
+    @DeleteMapping ("/deleteByIds/{idtype}/{ids}")
     public Map<String, Object> delTieLuJU (@PathVariable String idtype,@PathVariable int[] ids) {
 
         if (idtype.equals("tid")) {

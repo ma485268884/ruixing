@@ -20,6 +20,8 @@ public class DataShowController {
 
     //根据传入的xid和cid和区段号  查询所有相关信息
     public Map<String,Object> allData(Long xid,Long cid,String quduan){
-       return dataShowService.allData(xid,cid,quduan);
+
+        return dataShowService.allData(xid, cid, quduan);
     }
+
 }
