@@ -25,14 +25,10 @@ public class WebSocketServer {
     //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
     public static Map<String, Session> WebSocketServers = new HashMap<>();
 
-
     private final static Logger log = LoggerFactory.getLogger(WebSocketServer.class);
 
-    /**
-     * 连接建立成功调用的方法
-     */
     public WebSocketServer() {
-        System.out.println("初始化！");
+        log.debug("WebSocketServer初始化.......");
     }
 
     @OnOpen
