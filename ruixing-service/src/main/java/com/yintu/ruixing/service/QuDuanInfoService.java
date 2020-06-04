@@ -3,6 +3,7 @@ package com.yintu.ruixing.service;
 import com.yintu.ruixing.entity.QuDuanInfoEntity;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author:mlf
@@ -46,5 +47,23 @@ public interface QuDuanInfoService {
      * @return 区段详情集
      */
     List<QuDuanInfoEntity> findByCidAndXid(Integer cid, Integer xid);
+
+
+    List<Map<String, Object>> findSongDuanAll();
+
+    List<Map<String, Object>> findFenXianPanSongDuanAll();
+
+    List<Map<String, Object>> findFenXianPanShouDuanAll();
+
+    List<Map<String, Object>> findShouDuanAll();
+
+
+    List<Map<String, Object>> findSongDuanTransformerAll();
+
+    List<Map<String, Object>> findSongDuanTuneAll();
+
+    List<Map<String, Object>> findShouDuanTuneAll();
+
+    List<Map<String, Object>> findShouDuanTransformerAll();
 
 }
