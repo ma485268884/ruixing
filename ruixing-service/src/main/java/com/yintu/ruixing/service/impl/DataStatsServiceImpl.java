@@ -34,28 +34,30 @@ public class DataStatsServiceImpl implements DataStatsService {
 
 
     @Override
-    public List<TieLuJuEntity> findTieLuJuById(Long tid) {
+    public List<TieLuJuEntity> findTieLuJuById(Long tid,Integer page, Integer size) {
        List<TieLuJuEntity> tieLuJuEntities= dataStatsDao.findTieLuJuById(tid);
 
         return tieLuJuEntities;
     }
 
     @Override
-    public List<DataStats> findDianWuDuanById(Long tid, Long did) {
+    public List<DataStats> findDianWuDuanById(Long tid, Long did,Integer page, Integer size) {
          List<DataStats> dataStats =dataStatsDao.findDianWuDuanById(tid,did);
+        System.out.println("从后端传来的数据"+dataStats);
         return dataStats;
     }
 
     @Override
-    public List<DataStats> findXianDuanById(Long tid, Long did, Long xid) {
+    public List<DataStats> findXianDuanById(Long tid, Long did, Long xid,Integer page, Integer size) {
         List<DataStats> dataStats= dataStatsDao.findXianDuanById(tid,did,xid);
         return dataStats;
     }
 
     @Override
-    public DataStats findCheZhanById(Long tid, Long did, Long xid, Long cid) {
-        return dataStatsDao.findCheZhanById(tid,did,xid,cid);
-
+    public List<DataStats> findCheZhanById(Long tid, Long did, Long xid, Long cid,Integer page, Integer size) {
+        List<DataStats> dataStats= dataStatsDao.findCheZhanById(tid,did,xid,cid);
+        System.out.println("后端车站信息"+dataStats);
+        return dataStats;
     }
 
     @Override

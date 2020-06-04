@@ -53,7 +53,7 @@
     <!--根据id批量删除车站-->
     <delete id="delCheZhanListById" parameterType="java.util.List">
         delete from mro_chezhan
-        where id
+        where cid
         in
         <foreach collection="array" item="id" open="(" separator="," close=")">
             #{id}
@@ -170,7 +170,7 @@
         dwd.dwd_name,
         xd.xd_name,
         cz.cz_name,
-        cz.cz_miaoshu
+        xd.xd_miaoshu
         FROM
         mro_tieluju tlj,
         mro_dianwuduan dwd,

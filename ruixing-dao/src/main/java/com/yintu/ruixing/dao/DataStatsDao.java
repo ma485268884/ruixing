@@ -25,7 +25,7 @@ public interface DataStatsDao {
 
     List<DataStats> findXianDuanById(@Param("tid") Long tid, @Param("did") Long did, @Param("xid") Long xid);
 
-    DataStats findCheZhanById(@Param("tid") Long tid, @Param("did") Long did, @Param("xid") Long xid, @Param("cid") Long cid);
+    List<DataStats> findCheZhanById(@Param("tid") Long tid, @Param("did") Long did, @Param("xid") Long xid, @Param("cid") Long cid);
 
-    int delCheZhanListById(int[] id);
+    int delCheZhanListById(int[] ids);
 }
