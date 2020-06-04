@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.QuDuanBaseDao">
+  <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.QuDuanBaseEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="line_id" jdbcType="INTEGER" property="lineId" />
+    <result column="zongHe_id" jdbcType="VARCHAR" property="zongheId" />
+    <result column="quDuanSheJi_name" jdbcType="VARCHAR" property="quduanshejiName" />
+    <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName" />
+    <result column="quDuan_length" jdbcType="INTEGER" property="quduanLength" />
+    <result column="carrier" jdbcType="VARCHAR" property="carrier" />
+    <result column="diDuan_type" jdbcType="VARCHAR" property="diduanType" />
+    <result column="xianLuQingKuang" jdbcType="VARCHAR" property="xianluqingkuang" />
+    <result column="bianJie" jdbcType="INTEGER" property="bianjie" />
+    <result column="fenJieDian_where" jdbcType="VARCHAR" property="fenjiedianWhere" />
+    <result column="zhanQuFenJie" jdbcType="INTEGER" property="zhanqufenjie" />
+    <result column="jinZhanXinHaoJi_name" jdbcType="VARCHAR" property="jinzhanxinhaojiName" />
+    <result column="xinHaoJiOrBiaoZhiMing" jdbcType="VARCHAR" property="xinhaojiorbiaozhiming" />
+    <result column="xinHaoBiaoZhiPai_where" jdbcType="VARCHAR" property="xinhaobiaozhipaiWhere" />
+    <result column="xinHaoJi_where" jdbcType="VARCHAR" property="xinhaojiWhere" />
+    <result column="zuoCeJueYuan_type" jdbcType="VARCHAR" property="zuocejueyuanType" />
+    <result column="youCeJueYuan_type" jdbcType="VARCHAR" property="youcejueyuanType" />
+    <result column="zhengXianHouFangQuDuan_ID" jdbcType="VARCHAR" property="zhengxianhoufangquduanId" />
+    <result column="zhengXianQianFangQuDuan_ID" jdbcType="VARCHAR" property="zhengxianqianfangquduanId" />
+    <result column="daoChaGuanLianQuDuan1_ID" jdbcType="VARCHAR" property="daochaguanlianquduan1Id" />
+    <result column="daoChaGuanLianQuDuan2_ID" jdbcType="VARCHAR" property="daochaguanlianquduan2Id" />
+    <result column="dianMaHuaGuiHao" jdbcType="VARCHAR" property="dianmahuaguihao" />
+    <result column="guiNeiDiZhi" jdbcType="INTEGER" property="guineidizhi" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="yuliu" jdbcType="VARCHAR" property="yuliu" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, line_id, zongHe_id, quDuanSheJi_name, quDuanYunYing_name, quDuan_length, carrier, 
+    diDuan_type, xianLuQingKuang, bianJie, fenJieDian_where, zhanQuFenJie, jinZhanXinHaoJi_name, 
+    xinHaoJiOrBiaoZhiMing, xinHaoBiaoZhiPai_where, xinHaoJi_where, zuoCeJueYuan_type, 
+    youCeJueYuan_type, zhengXianHouFangQuDuan_ID, zhengXianQianFangQuDuan_ID, daoChaGuanLianQuDuan1_ID, 
+    daoChaGuanLianQuDuan2_ID, dianMaHuaGuiHao, guiNeiDiZhi, time, yuliu
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mro_quduan_base
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mro_quduan_base
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity">
+    insert into mro_quduan_base (id, line_id, zongHe_id, 
+      quDuanSheJi_name, quDuanYunYing_name, quDuan_length, 
+      carrier, diDuan_type, xianLuQingKuang, 
+      bianJie, fenJieDian_where, zhanQuFenJie, 
+      jinZhanXinHaoJi_name, xinHaoJiOrBiaoZhiMing, 
+      xinHaoBiaoZhiPai_where, xinHaoJi_where, zuoCeJueYuan_type, 
+      youCeJueYuan_type, zhengXianHouFangQuDuan_ID, 
+      zhengXianQianFangQuDuan_ID, daoChaGuanLianQuDuan1_ID, 
+      daoChaGuanLianQuDuan2_ID, dianMaHuaGuiHao, 
+      guiNeiDiZhi, time, yuliu
+      )
+    values (#{id,jdbcType=INTEGER}, #{lineId,jdbcType=INTEGER}, #{zongheId,jdbcType=VARCHAR}, 
+      #{quduanshejiName,jdbcType=VARCHAR}, #{quduanyunyingName,jdbcType=VARCHAR}, #{quduanLength,jdbcType=INTEGER}, 
+      #{carrier,jdbcType=VARCHAR}, #{diduanType,jdbcType=VARCHAR}, #{xianluqingkuang,jdbcType=VARCHAR}, 
+      #{bianjie,jdbcType=INTEGER}, #{fenjiedianWhere,jdbcType=VARCHAR}, #{zhanqufenjie,jdbcType=INTEGER}, 
+      #{jinzhanxinhaojiName,jdbcType=VARCHAR}, #{xinhaojiorbiaozhiming,jdbcType=VARCHAR}, 
+      #{xinhaobiaozhipaiWhere,jdbcType=VARCHAR}, #{xinhaojiWhere,jdbcType=VARCHAR}, #{zuocejueyuanType,jdbcType=VARCHAR}, 
+      #{youcejueyuanType,jdbcType=VARCHAR}, #{zhengxianhoufangquduanId,jdbcType=VARCHAR}, 
+      #{zhengxianqianfangquduanId,jdbcType=VARCHAR}, #{daochaguanlianquduan1Id,jdbcType=VARCHAR}, 
+      #{daochaguanlianquduan2Id,jdbcType=VARCHAR}, #{dianmahuaguihao,jdbcType=VARCHAR}, 
+      #{guineidizhi,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, #{yuliu,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity">
+    insert into mro_quduan_base
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="lineId != null">
+        line_id,
+      </if>
+      <if test="zongheId != null">
+        zongHe_id,
+      </if>
+      <if test="quduanshejiName != null">
+        quDuanSheJi_name,
+      </if>
+      <if test="quduanyunyingName != null">
+        quDuanYunYing_name,
+      </if>
+      <if test="quduanLength != null">
+        quDuan_length,
+      </if>
+      <if test="carrier != null">
+        carrier,
+      </if>
+      <if test="diduanType != null">
+        diDuan_type,
+      </if>
+      <if test="xianluqingkuang != null">
+        xianLuQingKuang,
+      </if>
+      <if test="bianjie != null">
+        bianJie,
+      </if>
+      <if test="fenjiedianWhere != null">
+        fenJieDian_where,
+      </if>
+      <if test="zhanqufenjie != null">
+        zhanQuFenJie,
+      </if>
+      <if test="jinzhanxinhaojiName != null">
+        jinZhanXinHaoJi_name,
+      </if>
+      <if test="xinhaojiorbiaozhiming != null">
+        xinHaoJiOrBiaoZhiMing,
+      </if>
+      <if test="xinhaobiaozhipaiWhere != null">
+        xinHaoBiaoZhiPai_where,
+      </if>
+      <if test="xinhaojiWhere != null">
+        xinHaoJi_where,
+      </if>
+      <if test="zuocejueyuanType != null">
+        zuoCeJueYuan_type,
+      </if>
+      <if test="youcejueyuanType != null">
+        youCeJueYuan_type,
+      </if>
+      <if test="zhengxianhoufangquduanId != null">
+        zhengXianHouFangQuDuan_ID,
+      </if>
+      <if test="zhengxianqianfangquduanId != null">
+        zhengXianQianFangQuDuan_ID,
+      </if>
+      <if test="daochaguanlianquduan1Id != null">
+        daoChaGuanLianQuDuan1_ID,
+      </if>
+      <if test="daochaguanlianquduan2Id != null">
+        daoChaGuanLianQuDuan2_ID,
+      </if>
+      <if test="dianmahuaguihao != null">
+        dianMaHuaGuiHao,
+      </if>
+      <if test="guineidizhi != null">
+        guiNeiDiZhi,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="yuliu != null">
+        yuliu,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="lineId != null">
+        #{lineId,jdbcType=INTEGER},
+      </if>
+      <if test="zongheId != null">
+        #{zongheId,jdbcType=VARCHAR},
+      </if>
+      <if test="quduanshejiName != null">
+        #{quduanshejiName,jdbcType=VARCHAR},
+      </if>
+      <if test="quduanyunyingName != null">
+        #{quduanyunyingName,jdbcType=VARCHAR},
+      </if>
+      <if test="quduanLength != null">
+        #{quduanLength,jdbcType=INTEGER},
+      </if>
+      <if test="carrier != null">
+        #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="diduanType != null">
+        #{diduanType,jdbcType=VARCHAR},
+      </if>
+      <if test="xianluqingkuang != null">
+        #{xianluqingkuang,jdbcType=VARCHAR},
+      </if>
+      <if test="bianjie != null">
+        #{bianjie,jdbcType=INTEGER},
+      </if>
+      <if test="fenjiedianWhere != null">
+        #{fenjiedianWhere,jdbcType=VARCHAR},
+      </if>
+      <if test="zhanqufenjie != null">
+        #{zhanqufenjie,jdbcType=INTEGER},
+      </if>
+      <if test="jinzhanxinhaojiName != null">
+        #{jinzhanxinhaojiName,jdbcType=VARCHAR},
+      </if>
+      <if test="xinhaojiorbiaozhiming != null">
+        #{xinhaojiorbiaozhiming,jdbcType=VARCHAR},
+      </if>
+      <if test="xinhaobiaozhipaiWhere != null">
+        #{xinhaobiaozhipaiWhere,jdbcType=VARCHAR},
+      </if>
+      <if test="xinhaojiWhere != null">
+        #{xinhaojiWhere,jdbcType=VARCHAR},
+      </if>
+      <if test="zuocejueyuanType != null">
+        #{zuocejueyuanType,jdbcType=VARCHAR},
+      </if>
+      <if test="youcejueyuanType != null">
+        #{youcejueyuanType,jdbcType=VARCHAR},
+      </if>
+      <if test="zhengxianhoufangquduanId != null">
+        #{zhengxianhoufangquduanId,jdbcType=VARCHAR},
+      </if>
+      <if test="zhengxianqianfangquduanId != null">
+        #{zhengxianqianfangquduanId,jdbcType=VARCHAR},
+      </if>
+      <if test="daochaguanlianquduan1Id != null">
+        #{daochaguanlianquduan1Id,jdbcType=VARCHAR},
+      </if>
+      <if test="daochaguanlianquduan2Id != null">
+        #{daochaguanlianquduan2Id,jdbcType=VARCHAR},
+      </if>
+      <if test="dianmahuaguihao != null">
+        #{dianmahuaguihao,jdbcType=VARCHAR},
+      </if>
+      <if test="guineidizhi != null">
+        #{guineidizhi,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yuliu != null">
+        #{yuliu,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity">
+    update mro_quduan_base
+    <set>
+      <if test="lineId != null">
+        line_id = #{lineId,jdbcType=INTEGER},
+      </if>
+      <if test="zongheId != null">
+        zongHe_id = #{zongheId,jdbcType=VARCHAR},
+      </if>
+      <if test="quduanshejiName != null">
+        quDuanSheJi_name = #{quduanshejiName,jdbcType=VARCHAR},
+      </if>
+      <if test="quduanyunyingName != null">
+        quDuanYunYing_name = #{quduanyunyingName,jdbcType=VARCHAR},
+      </if>
+      <if test="quduanLength != null">
+        quDuan_length = #{quduanLength,jdbcType=INTEGER},
+      </if>
+      <if test="carrier != null">
+        carrier = #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="diduanType != null">
+        diDuan_type = #{diduanType,jdbcType=VARCHAR},
+      </if>
+      <if test="xianluqingkuang != null">
+        xianLuQingKuang = #{xianluqingkuang,jdbcType=VARCHAR},
+      </if>
+      <if test="bianjie != null">
+        bianJie = #{bianjie,jdbcType=INTEGER},
+      </if>
+      <if test="fenjiedianWhere != null">
+        fenJieDian_where = #{fenjiedianWhere,jdbcType=VARCHAR},
+      </if>
+      <if test="zhanqufenjie != null">
+        zhanQuFenJie = #{zhanqufenjie,jdbcType=INTEGER},
+      </if>
+      <if test="jinzhanxinhaojiName != null">
+        jinZhanXinHaoJi_name = #{jinzhanxinhaojiName,jdbcType=VARCHAR},
+      </if>
+      <if test="xinhaojiorbiaozhiming != null">
+        xinHaoJiOrBiaoZhiMing = #{xinhaojiorbiaozhiming,jdbcType=VARCHAR},
+      </if>
+      <if test="xinhaobiaozhipaiWhere != null">
+        xinHaoBiaoZhiPai_where = #{xinhaobiaozhipaiWhere,jdbcType=VARCHAR},
+      </if>
+      <if test="xinhaojiWhere != null">
+        xinHaoJi_where = #{xinhaojiWhere,jdbcType=VARCHAR},
+      </if>
+      <if test="zuocejueyuanType != null">
+        zuoCeJueYuan_type = #{zuocejueyuanType,jdbcType=VARCHAR},
+      </if>
+      <if test="youcejueyuanType != null">
+        youCeJueYuan_type = #{youcejueyuanType,jdbcType=VARCHAR},
+      </if>
+      <if test="zhengxianhoufangquduanId != null">
+        zhengXianHouFangQuDuan_ID = #{zhengxianhoufangquduanId,jdbcType=VARCHAR},
+      </if>
+      <if test="zhengxianqianfangquduanId != null">
+        zhengXianQianFangQuDuan_ID = #{zhengxianqianfangquduanId,jdbcType=VARCHAR},
+      </if>
+      <if test="daochaguanlianquduan1Id != null">
+        daoChaGuanLianQuDuan1_ID = #{daochaguanlianquduan1Id,jdbcType=VARCHAR},
+      </if>
+      <if test="daochaguanlianquduan2Id != null">
+        daoChaGuanLianQuDuan2_ID = #{daochaguanlianquduan2Id,jdbcType=VARCHAR},
+      </if>
+      <if test="dianmahuaguihao != null">
+        dianMaHuaGuiHao = #{dianmahuaguihao,jdbcType=VARCHAR},
+      </if>
+      <if test="guineidizhi != null">
+        guiNeiDiZhi = #{guineidizhi,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yuliu != null">
+        yuliu = #{yuliu,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity">
+    update mro_quduan_base
+    set line_id = #{lineId,jdbcType=INTEGER},
+      zongHe_id = #{zongheId,jdbcType=VARCHAR},
+      quDuanSheJi_name = #{quduanshejiName,jdbcType=VARCHAR},
+      quDuanYunYing_name = #{quduanyunyingName,jdbcType=VARCHAR},
+      quDuan_length = #{quduanLength,jdbcType=INTEGER},
+      carrier = #{carrier,jdbcType=VARCHAR},
+      diDuan_type = #{diduanType,jdbcType=VARCHAR},
+      xianLuQingKuang = #{xianluqingkuang,jdbcType=VARCHAR},
+      bianJie = #{bianjie,jdbcType=INTEGER},
+      fenJieDian_where = #{fenjiedianWhere,jdbcType=VARCHAR},
+      zhanQuFenJie = #{zhanqufenjie,jdbcType=INTEGER},
+      jinZhanXinHaoJi_name = #{jinzhanxinhaojiName,jdbcType=VARCHAR},
+      xinHaoJiOrBiaoZhiMing = #{xinhaojiorbiaozhiming,jdbcType=VARCHAR},
+      xinHaoBiaoZhiPai_where = #{xinhaobiaozhipaiWhere,jdbcType=VARCHAR},
+      xinHaoJi_where = #{xinhaojiWhere,jdbcType=VARCHAR},
+      zuoCeJueYuan_type = #{zuocejueyuanType,jdbcType=VARCHAR},
+      youCeJueYuan_type = #{youcejueyuanType,jdbcType=VARCHAR},
+      zhengXianHouFangQuDuan_ID = #{zhengxianhoufangquduanId,jdbcType=VARCHAR},
+      zhengXianQianFangQuDuan_ID = #{zhengxianqianfangquduanId,jdbcType=VARCHAR},
+      daoChaGuanLianQuDuan1_ID = #{daochaguanlianquduan1Id,jdbcType=VARCHAR},
+      daoChaGuanLianQuDuan2_ID = #{daochaguanlianquduan2Id,jdbcType=VARCHAR},
+      dianMaHuaGuiHao = #{dianmahuaguihao,jdbcType=VARCHAR},
+      guiNeiDiZhi = #{guineidizhi,jdbcType=INTEGER},
+      time = #{time,jdbcType=TIMESTAMP},
+      yuliu = #{yuliu,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

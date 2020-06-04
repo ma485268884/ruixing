@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author:mlf
@@ -44,4 +45,49 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
     public List<QuDuanInfoEntity> findByCidAndXid(Integer cid, Integer xid) {
         return quDuanInfoDao.selectByXidAndCid(cid, xid);
     }
+
+
+
+
+    @Override
+    public List<Map<String, Object>> findSongDuanAll() {
+        return quDuanInfoDao.selectSongDuanAll();
+    }
+
+    @Override
+    public List<Map<String, Object>> findFenXianPanSongDuanAll() {
+        return quDuanInfoDao.selectFenXianPanSongDuanAll();
+    }
+
+    @Override
+    public List<Map<String, Object>> findFenXianPanShouDuanAll() {
+        return quDuanInfoDao.selectFenXianPanShouDuanAll();
+    }
+
+    @Override
+    public List<Map<String, Object>> findShouDuanAll() {
+        return quDuanInfoDao.selectShouDuanAll();
+    }
+
+
+    @Override
+    public List<Map<String, Object>> findSongDuanTransformerAll() {
+        return quDuanInfoDao.selectSongDuanTransformerAll();
+    }
+
+    @Override
+    public List<Map<String, Object>> findSongDuanTuneAll() {
+        return quDuanInfoDao.selectSongDuanTuneAll();
+    }
+
+    @Override
+    public List<Map<String, Object>> findShouDuanTuneAll() {
+        return quDuanInfoDao.selectShouDuanTuneAll();
+    }
+
+    @Override
+    public List<Map<String, Object>> findShouDuanTransformerAll() {
+        return quDuanInfoDao.selectShouDuanTransformerAll();
+    }
+
 }

@@ -2,12 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yintu.ruixing.dao.QuDuanInfoDao">
     <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.QuDuanInfoEntity">
-        <id column="id" jdbcType="INTEGER" property="id"/>
+        <id column="qiId" jdbcType="INTEGER" property="id"/>
         <result column="xid" jdbcType="INTEGER" property="xid"/>
         <result column="qid" jdbcType="INTEGER" property="qid"/>
         <result column="cid" jdbcType="INTEGER" property="cid"/>
         <result column="typeid" jdbcType="INTEGER" property="typeid"/>
-        <result column="qd_name" jdbcType="VARCHAR" property="qdName"/>
         <result column="Design_carrier" jdbcType="VARCHAR" property="designCarrier"/>
         <result column="direction" jdbcType="VARCHAR" property="direction"/>
         <result column="GJcollection" jdbcType="VARCHAR" property="gjcollection"/>
@@ -71,10 +70,14 @@
         <result column="A_shortIn_JBA_diao" jdbcType="INTEGER" property="aShortinJbaDiao"/>
         <result column="A_shortOut_JBA_zhu" jdbcType="INTEGER" property="aShortoutJbaZhu"/>
         <result column="A_shortOut_JBA_diao" jdbcType="INTEGER" property="aShortoutJbaDiao"/>
-        <result column="yuliu" jdbcType="VARCHAR" property="yuliu"/>
+        <result column="qiYuliu" jdbcType="VARCHAR" property="yuliu"/>
+        <association column="qid" jdbcType="INTEGER" property="quDuanBaseEntity">
+            <id column="qbId" jdbcType="INTEGER" property="id"/>
+            <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
+        </association>
     </resultMap>
     <sql id="Base_Column_List">
-        id, xid, qid, cid, typeid, qd_name, Design_carrier, direction, GJcollection, V_in_all,
+        qi.id as qiId, xid, qid, cid, typeid, Design_carrier, direction, GJcollection, V_in_all,
     mV_in_zhu, mV_in_bing, mV_in_diao_zhu, mV_in_diao_bing, Hz_in_low_zhu, Hz_in_low_bing, 
     GJ_drive_zhu, GJ_drive_bing, GJ_rear_collection_zhu, GJ_rear_collection_bing, baojing_zhu, 
     baojing_bing, V_out_zhu, V_out_bei, mA_out_zhu, mA_out_bei, Hz_up_zhu, Hz_up_bei, 
@@ -85,13 +88,15 @@
     T_FBP, A_longIn_FBA_zhu, A_longIn_FBA_diao, A_longOut_FBA_zhu, A_longOut_FBA_diao, 
     A_shortIn_FBA_zhu, A_shortIn_FBA_diao, A_shortOut_FBA_zhu, A_shortOut_FBA_diao, A_longIn_JBA_zhu, 
     A_longIn_JBA_diao, A_longOut_JBA_zhu, A_longOut_JBA_diao, A_shortIn_JBA_zhu, A_shortIn_JBA_diao, 
-    A_shortOut_JBA_zhu, A_shortOut_JBA_diao, yuliu
+    A_shortOut_JBA_zhu, A_shortOut_JBA_diao, qi.yuliu as qiYuliu,
+    qb.id as qbId,
+    qb.quDuanYunYing_name
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from mro_quduan_info
-        where id = #{id,jdbcType=INTEGER}
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid=qb.id
+        where qi.id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
@@ -100,7 +105,7 @@
     </delete>
     <insert id="insert" parameterType="com.yintu.ruixing.entity.QuDuanInfoEntity">
         insert into mro_quduan_info (id, xid, qid,
-                                     cid, typeid, qd_name,
+                                     cid, typeid,
                                      Design_carrier, direction, GJcollection,
                                      V_in_all, mV_in_zhu, mV_in_bing,
                                      mV_in_diao_zhu, mV_in_diao_bing, Hz_in_low_zhu,
@@ -124,7 +129,7 @@
                                      A_longOut_JBA_diao, A_shortIn_JBA_zhu, A_shortIn_JBA_diao,
                                      A_shortOut_JBA_zhu, A_shortOut_JBA_diao, yuliu)
         values (#{id,jdbcType=INTEGER}, #{xid,jdbcType=INTEGER}, #{qid,jdbcType=INTEGER},
-                #{cid,jdbcType=INTEGER}, #{typeid,jdbcType=INTEGER}, #{qdName,jdbcType=VARCHAR},
+                #{cid,jdbcType=INTEGER}, #{typeid,jdbcType=INTEGER},
                 #{designCarrier,jdbcType=VARCHAR}, #{direction,jdbcType=VARCHAR}, #{gjcollection,jdbcType=VARCHAR},
                 #{vInAll,jdbcType=INTEGER}, #{mvInZhu,jdbcType=INTEGER}, #{mvInBing,jdbcType=INTEGER},
                 #{mvInDiaoZhu,jdbcType=INTEGER}, #{mvInDiaoBing,jdbcType=INTEGER}, #{hzInLowZhu,jdbcType=INTEGER},
@@ -170,9 +175,6 @@
             </if>
             <if test="typeid != null">
                 typeid,
-            </if>
-            <if test="qdName != null">
-                qd_name,
             </if>
             <if test="designCarrier != null">
                 Design_carrier,
@@ -383,9 +385,6 @@
             <if test="typeid != null">
                 #{typeid,jdbcType=INTEGER},
             </if>
-            <if test="qdName != null">
-                #{qdName,jdbcType=VARCHAR},
-            </if>
             <if test="designCarrier != null">
                 #{designCarrier,jdbcType=VARCHAR},
             </if>
@@ -595,9 +594,6 @@
             <if test="typeid != null">
                 typeid = #{typeid,jdbcType=INTEGER},
             </if>
-            <if test="qdName != null">
-                qd_name = #{qdName,jdbcType=VARCHAR},
-            </if>
             <if test="designCarrier != null">
                 Design_carrier = #{designCarrier,jdbcType=VARCHAR},
             </if>
@@ -799,7 +795,6 @@
             qid                     = #{qid,jdbcType=INTEGER},
             cid                     = #{cid,jdbcType=INTEGER},
             typeid                  = #{typeid,jdbcType=INTEGER},
-            qd_name                 = #{qdName,jdbcType=VARCHAR},
             Design_carrier          = #{designCarrier,jdbcType=VARCHAR},
             direction               = #{direction,jdbcType=VARCHAR},
             GJcollection            = #{gjcollection,jdbcType=VARCHAR},
@@ -875,14 +870,15 @@
         where xid = #{xid,jdbcType=INTEGER} and cid=#{cid,jdbcType=INTEGER}
     </select>
 
-    <sql id="Songduan_Column_List">
-        id, xid, qid, cid, typeid,V_out_zhu, V_out_bei, mA_out_zhu, mA_out_bei, Hz_up_zhu, Hz_up_bei,
-    Hz_down_zhu, Hz_down_bei, Hz_low_zhu, Hz_low_bei, FBJ_drive_zhu, FBJ_drive_bei, FBJ_collection_zhu,
-    FBJ_collection_bei
-    </sql>
 
-    <resultMap id="SongduanResultMap" type="com.yintu.ruixing.entity.QuDuanInfoEntity">
-        <id column="id" jdbcType="INTEGER" property="id"/>
+    <sql id="SongDuan_Column_List">
+        qi.id, xid, qid, cid, typeid,V_out_zhu, V_out_bei, mA_out_zhu, mA_out_bei, Hz_up_zhu, Hz_up_bei,
+    Hz_down_zhu, Hz_down_bei, Hz_low_zhu, Hz_low_bei, FBJ_drive_zhu, FBJ_drive_bei, FBJ_collection_zhu,
+    FBJ_collection_bei,
+    qb.quDuanYunYing_name
+    </sql>
+    <resultMap id="SongDuanResultMap" type="Map">
+        <id column="qiId" jdbcType="INTEGER" property="id"/>
         <result column="xid" jdbcType="INTEGER" property="xid"/>
         <result column="qid" jdbcType="INTEGER" property="qid"/>
         <result column="cid" jdbcType="INTEGER" property="cid"/>
@@ -901,10 +897,214 @@
         <result column="FBJ_drive_bei" jdbcType="VARCHAR" property="fbjDriveBei"/>
         <result column="FBJ_collection_zhu" jdbcType="VARCHAR" property="fbjCollectionZhu"/>
         <result column="FBJ_collection_bei" jdbcType="VARCHAR" property="fbjCollectionBei"/>
+        <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
     </resultMap>
-    <select id="selectSongDuanAll"  resultMap="SongduanResultMap">
+    <select id="selectSongDuanAll" resultMap="SongDuanResultMap">
         select
-        <include refid="Songduan_Column_List"/>
-        from mro_quduan_info
+        <include refid="SongDuan_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+    </select>
+
+
+    <sql id="FenXianPanSongDuan_Column_List">
+        qi.id, xid, qid, cid, typeid,V_songduan_Cable, mA_songduan_Cable,quDuanYunYing_name
+    </sql>
+    <resultMap id="FenXianPanSongDuanResultMap" type="Map">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="xid" jdbcType="INTEGER" property="xid"/>
+        <result column="qid" jdbcType="INTEGER" property="qid"/>
+        <result column="cid" jdbcType="INTEGER" property="cid"/>
+        <result column="typeid" jdbcType="INTEGER" property="typeid"/>
+        <result column="V_songduan_Cable" jdbcType="INTEGER" property="vSongduanCable"/>
+        <result column="mA_songduan_Cable" jdbcType="INTEGER" property="maSongduanCable"/>
+        <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
+    </resultMap>
+    <select id="selectFenXianPanSongDuanAll" resultMap="FenXianPanSongDuanResultMap">
+        select
+        <include refid="FenXianPanSongDuan_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+    </select>
+
+
+    <sql id="FenXianPanShouDuan_Column_List">
+        qi.id, xid, qid, cid, typeid, V_shouduan_Cable_host, V_shouduan_Cable_spare,quDuanYunYing_name
+    </sql>
+    <resultMap id="FenXianPanShouDuan_Column_List" type="Map">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="xid" jdbcType="INTEGER" property="xid"/>
+        <result column="qid" jdbcType="INTEGER" property="qid"/>
+        <result column="cid" jdbcType="INTEGER" property="cid"/>
+        <result column="typeid" jdbcType="INTEGER" property="typeid"/>
+        <result column="V_shouduan_Cable_host" jdbcType="INTEGER" property="vShouduanCableHost"/>
+        <result column="V_shouduan_Cable_spare" jdbcType="INTEGER" property="vShouduanCableSpare"/>
+        <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
+    </resultMap>
+    <select id="selectFenXianPanShouDuanAll" resultMap="FenXianPanShouDuan_Column_List">
+        select
+        <include refid="FenXianPanShouDuan_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+    </select>
+
+
+    <sql id="ShouDuan_Column_List">
+        qi.id, xid, qid, cid, typeid,V_in_all,
+    mV_in_zhu, mV_in_bing, mV_in_diao_zhu, mV_in_diao_bing, Hz_in_low_zhu, Hz_in_low_bing,
+    GJ_drive_zhu, GJ_drive_bing, GJ_rear_collection_zhu, GJ_rear_collection_bing, baojing_zhu,
+    baojing_bing,quDuanYunYing_name
+    </sql>
+    <resultMap id="ShouDuanResultMap" type="Map">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="xid" jdbcType="INTEGER" property="xid"/>
+        <result column="qid" jdbcType="INTEGER" property="qid"/>
+        <result column="cid" jdbcType="INTEGER" property="cid"/>
+        <result column="typeid" jdbcType="INTEGER" property="typeid"/>
+        <result column="V_in_all" jdbcType="INTEGER" property="vInAll"/>
+        <result column="mV_in_zhu" jdbcType="INTEGER" property="mvInZhu"/>
+        <result column="mV_in_bing" jdbcType="INTEGER" property="mvInBing"/>
+        <result column="mV_in_diao_zhu" jdbcType="INTEGER" property="mvInDiaoZhu"/>
+        <result column="mV_in_diao_bing" jdbcType="INTEGER" property="mvInDiaoBing"/>
+        <result column="Hz_in_low_zhu" jdbcType="INTEGER" property="hzInLowZhu"/>
+        <result column="Hz_in_low_bing" jdbcType="INTEGER" property="hzInLowBing"/>
+        <result column="GJ_drive_zhu" jdbcType="VARCHAR" property="gjDriveZhu"/>
+        <result column="GJ_drive_bing" jdbcType="VARCHAR" property="gjDriveBing"/>
+        <result column="GJ_rear_collection_zhu" jdbcType="VARCHAR" property="gjRearCollectionZhu"/>
+        <result column="GJ_rear_collection_bing" jdbcType="VARCHAR" property="gjRearCollectionBing"/>
+        <result column="baojing_zhu" jdbcType="VARCHAR" property="baojingZhu"/>
+        <result column="baojing_bing" jdbcType="VARCHAR" property="baojingBing"/>
+        <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
+    </resultMap>
+    <select id="selectShouDuanAll" resultMap="ShouDuanResultMap">
+        select
+        <include refid="ShouDuan_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+    </select>
+
+
+    <sql id="SongDuanTransformer_Column_List">
+        qi.id, xid, qid, cid, typeid,mA_Cable_FBP, A_longIn_FBP, A_longOut_FBP, A_shortIn_FBP, A_shortOut_FBP, T_FBP,quDuanYunYing_name
+    </sql>
+    <resultMap id="SongDuanTransformerResultMap" type="Map">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="xid" jdbcType="INTEGER" property="xid"/>
+        <result column="qid" jdbcType="INTEGER" property="qid"/>
+        <result column="cid" jdbcType="INTEGER" property="cid"/>
+        <result column="typeid" jdbcType="INTEGER" property="typeid"/>
+        <result column="mA_Cable_FBP" jdbcType="INTEGER" property="maCableFbp"/>
+        <result column="A_longIn_FBP" jdbcType="INTEGER" property="aLonginFbp"/>
+        <result column="A_longOut_FBP" jdbcType="INTEGER" property="aLongoutFbp"/>
+        <result column="A_shortIn_FBP" jdbcType="INTEGER" property="aShortinFbp"/>
+        <result column="A_shortOut_FBP" jdbcType="INTEGER" property="aShortoutFbp"/>
+        <result column="T_FBP" jdbcType="INTEGER" property="tFbp"/>
+        <result column="baojing_bing" jdbcType="VARCHAR" property="baojingBing"/>
+        <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
+    </resultMap>
+    <select id="selectSongDuanTransformerAll" resultMap="SongDuanTransformerResultMap">
+        select
+        <include refid="SongDuanTransformer_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+    </select>
+
+    <sql id="SongDuanTune_Column_List">
+        qi.id, xid, qid, cid, typeid,A_longIn_FBA_zhu, A_longIn_FBA_diao, A_longOut_FBA_zhu, A_longOut_FBA_diao,
+    A_shortIn_FBA_zhu, A_shortIn_FBA_diao, A_shortOut_FBA_zhu, A_shortOut_FBA_diao,quDuanYunYing_name
+    </sql>
+    <resultMap id="SongDuanTuneResultMap" type="Map">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="xid" jdbcType="INTEGER" property="xid"/>
+        <result column="qid" jdbcType="INTEGER" property="qid"/>
+        <result column="cid" jdbcType="INTEGER" property="cid"/>
+        <result column="typeid" jdbcType="INTEGER" property="typeid"/>
+        <result column="A_longIn_FBA_zhu" jdbcType="INTEGER" property="aLonginFbaZhu"/>
+        <result column="A_longIn_FBA_diao" jdbcType="INTEGER" property="aLonginFbaDiao"/>
+        <result column="A_longOut_FBA_zhu" jdbcType="INTEGER" property="aLongoutFbaZhu"/>
+        <result column="A_longOut_FBA_diao" jdbcType="INTEGER" property="aLongoutFbaDiao"/>
+        <result column="A_shortIn_FBA_zhu" jdbcType="INTEGER" property="aShortinFbaZhu"/>
+        <result column="A_shortIn_FBA_diao" jdbcType="INTEGER" property="aShortinFbaDiao"/>
+        <result column="A_shortOut_FBA_zhu" jdbcType="INTEGER" property="aShortoutFbaZhu"/>
+        <result column="A_shortOut_FBA_diao" jdbcType="INTEGER" property="aShortoutFbaDiao"/>
+        <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
+    </resultMap>
+    <select id="selectSongDuanTuneAll" resultMap="SongDuanTuneResultMap">
+        select
+        <include refid="SongDuanTune_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+    </select>
+
+
+    <sql id="ShouDuanTune_Column_List">
+        qi.id, xid, qid, cid, typeid,A_longIn_JBA_zhu,A_longIn_JBA_diao, A_longOut_JBA_zhu, A_longOut_JBA_diao,
+     A_shortIn_JBA_zhu, A_shortIn_JBA_diao,A_shortOut_JBA_zhu, A_shortOut_JBA_diao,quDuanYunYing_name
+    </sql>
+    <resultMap id="ShouDuanTuneResultMap" type="Map">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="xid" jdbcType="INTEGER" property="xid"/>
+        <result column="qid" jdbcType="INTEGER" property="qid"/>
+        <result column="cid" jdbcType="INTEGER" property="cid"/>
+        <result column="typeid" jdbcType="INTEGER" property="typeid"/>
+        <result column="A_longIn_JBA_zhu" jdbcType="INTEGER" property="aLonginJbaZhu"/>
+        <result column="A_longIn_JBA_diao" jdbcType="INTEGER" property="aLonginJbaDiao"/>
+        <result column="A_longOut_JBA_zhu" jdbcType="INTEGER" property="aLongoutJbaZhu"/>
+        <result column="A_longOut_JBA_diao" jdbcType="INTEGER" property="aLongoutJbaDiao"/>
+        <result column="A_shortIn_JBA_zhu" jdbcType="INTEGER" property="aShortinJbaZhu"/>
+        <result column="A_shortIn_JBA_diao" jdbcType="INTEGER" property="aShortinJbaDiao"/>
+        <result column="A_shortOut_JBA_zhu" jdbcType="INTEGER" property="aShortoutJbaZhu"/>
+        <result column="A_shortOut_JBA_diao" jdbcType="INTEGER" property="aShortoutJbaDiao"/>
+        <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
+    </resultMap>
+    <select id="selectShouDuanTuneAll" resultMap="ShouDuanTuneResultMap">
+        select
+        <include refid="ShouDuanTune_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+    </select>
+
+
+    <sql id="ShouDuanTransformer_Column_List">
+        qi.id, xid, qid, cid, typeid,mA_Cable_JBP, A_longIn_JBP, A_longOut_JBP, A_shortIn_JBP, A_shortOut_JBP,T_JBP,quDuanYunYing_name
+    </sql>
+    <resultMap id="ShouDuanTransformerResultMap" type="Map">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="xid" jdbcType="INTEGER" property="xid"/>
+        <result column="qid" jdbcType="INTEGER" property="qid"/>
+        <result column="cid" jdbcType="INTEGER" property="cid"/>
+        <result column="typeid" jdbcType="INTEGER" property="typeid"/>
+        <result column="mA_Cable_JBP" jdbcType="INTEGER" property="maCableJbp"/>
+        <result column="A_longIn_JBP" jdbcType="INTEGER" property="aLonginJbp"/>
+        <result column="A_longOut_JBP" jdbcType="INTEGER" property="aLongoutJbp"/>
+        <result column="A_shortIn_JBP" jdbcType="INTEGER" property="aShortinJbp"/>
+        <result column="A_shortOut_JBP" jdbcType="INTEGER" property="aShortoutJbp"/>
+        <result column="T_JBP" jdbcType="INTEGER" property="tJbp"/>
+        <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
+    </resultMap>
+    <select id="selectShouDuanTransformerAll" resultMap="ShouDuanTransformerResultMap">
+        select
+        <include refid="ShouDuanTransformer_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+    </select>
+
+
+    <select id="selectSongDuanByDate" parameterType="Date" resultMap="SongDuanResultMap">
+        select
+        <include refid="SongDuan_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+        where date(qb.time)=date(#{time})
+    </select>
+
+    <select id="selectFenXianPanSongDuanByDate" resultMap="FenXianPanSongDuanResultMap">
+        select
+        <include refid="FenXianPanSongDuan_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+    </select>
+
+
+    <select id="selectFenXianPanShouDuanByDate" resultMap="FenXianPanShouDuan_Column_List">
+        select
+        <include refid="FenXianPanShouDuan_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+    </select>
+
+    <select id="selectShouDuanByDate" resultMap="ShouDuanResultMap">
+        select
+        <include refid="ShouDuan_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
     </select>
 </mapper>
