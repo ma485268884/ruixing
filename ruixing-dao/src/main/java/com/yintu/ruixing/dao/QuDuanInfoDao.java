@@ -2,6 +2,8 @@ package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.QuDuanInfoEntity;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -35,11 +37,11 @@ public interface QuDuanInfoDao {
     List<Map<String, Object>> selectShouDuanTransformerAll();
 
 
-    List<Map<String, Object>> selectSongDuanByDate();
+    List<Map<String, Object>> selectSongDuanByDate(Date data);
 
-    List<Map<String, Object>> selectFenXianPanSongDuanByDate();
+    List<Map<String, Object>> selectFenXianPanSongDuanByDate(Date data);
 
-    List<Map<String, Object>> selectFenXianPanShouDuanByDate();
+    List<Map<String, Object>> selectFenXianPanShouDuanByDate(Date data);
 
     List<Map<String, Object>> selectShouDuanByDate();
 

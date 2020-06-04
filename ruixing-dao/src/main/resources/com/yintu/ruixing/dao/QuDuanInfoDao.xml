@@ -1082,12 +1082,11 @@
     </select>
 
 
-
-
-    <select id="selectSongDuanByDate" resultMap="SongDuanResultMap">
+    <select id="selectSongDuanByDate" parameterType="Date" resultMap="SongDuanResultMap">
         select
         <include refid="SongDuan_Column_List"/>
         from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+        where date(qb.time)=date(#{time})
     </select>
 
     <select id="selectFenXianPanSongDuanByDate" resultMap="FenXianPanSongDuanResultMap">
