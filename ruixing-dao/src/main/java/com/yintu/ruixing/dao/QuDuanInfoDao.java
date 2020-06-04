@@ -35,6 +35,15 @@ public interface QuDuanInfoDao {
     List<Map<String, Object>> selectShouDuanTransformerAll();
 
 
+    List<Map<String, Object>> selectSongDuanByDate();
+
+    List<Map<String, Object>> selectFenXianPanSongDuanByDate();
+
+    List<Map<String, Object>> selectFenXianPanShouDuanByDate();
+
+    List<Map<String, Object>> selectShouDuanByDate();
+
+
     int updateByPrimaryKeySelective(QuDuanInfoEntity record);
 
     int updateByPrimaryKey(QuDuanInfoEntity record);

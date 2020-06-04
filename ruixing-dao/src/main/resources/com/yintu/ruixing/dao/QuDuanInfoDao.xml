@@ -1080,4 +1080,32 @@
         <include refid="ShouDuanTransformer_Column_List"/>
         from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
     </select>
+
+
+
+
+    <select id="selectSongDuanByDate" resultMap="SongDuanResultMap">
+        select
+        <include refid="SongDuan_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+    </select>
+
+    <select id="selectFenXianPanSongDuanByDate" resultMap="FenXianPanSongDuanResultMap">
+        select
+        <include refid="FenXianPanSongDuan_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+    </select>
+
+
+    <select id="selectFenXianPanShouDuanByDate" resultMap="FenXianPanShouDuan_Column_List">
+        select
+        <include refid="FenXianPanShouDuan_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+    </select>
+
+    <select id="selectShouDuanByDate" resultMap="ShouDuanResultMap">
+        select
+        <include refid="ShouDuan_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+    </select>
 </mapper>
