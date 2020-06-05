@@ -883,17 +883,13 @@
 
 
     <sql id="SongDuan_Column_List">
-        qi.id, xid, qid, cid, typeid,V_out_zhu, V_out_bei, mA_out_zhu, mA_out_bei, Hz_up_zhu, Hz_up_bei,
+        qi.id,V_out_zhu, V_out_bei, mA_out_zhu, mA_out_bei, Hz_up_zhu, Hz_up_bei,
     Hz_down_zhu, Hz_down_bei, Hz_low_zhu, Hz_low_bei, FBJ_drive_zhu, FBJ_drive_bei, FBJ_collection_zhu,
     FBJ_collection_bei,
     qb.quDuanYunYing_name
     </sql>
     <resultMap id="SongDuanResultMap" type="Map">
-        <id column="qiId" jdbcType="INTEGER" property="id"/>
-        <result column="xid" jdbcType="INTEGER" property="xid"/>
-        <result column="qid" jdbcType="INTEGER" property="qid"/>
-        <result column="cid" jdbcType="INTEGER" property="cid"/>
-        <result column="typeid" jdbcType="INTEGER" property="typeid"/>
+        <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="V_out_zhu" jdbcType="INTEGER" property="vOutZhu"/>
         <result column="V_out_bei" jdbcType="INTEGER" property="vOutBei"/>
         <result column="mA_out_zhu" jdbcType="INTEGER" property="maOutZhu"/>
@@ -918,14 +914,10 @@
 
 
     <sql id="FenXianPanSongDuan_Column_List">
-        qi.id, xid, qid, cid, typeid,V_songduan_Cable, mA_songduan_Cable,quDuanYunYing_name
+        qi.id,V_songduan_Cable, mA_songduan_Cable,quDuanYunYing_name
     </sql>
     <resultMap id="FenXianPanSongDuanResultMap" type="Map">
         <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="xid" jdbcType="INTEGER" property="xid"/>
-        <result column="qid" jdbcType="INTEGER" property="qid"/>
-        <result column="cid" jdbcType="INTEGER" property="cid"/>
-        <result column="typeid" jdbcType="INTEGER" property="typeid"/>
         <result column="V_songduan_Cable" jdbcType="INTEGER" property="vSongduanCable"/>
         <result column="mA_songduan_Cable" jdbcType="INTEGER" property="maSongduanCable"/>
         <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
@@ -938,14 +930,10 @@
 
 
     <sql id="FenXianPanShouDuan_Column_List">
-        qi.id, xid, qid, cid, typeid, V_shouduan_Cable_host, V_shouduan_Cable_spare,quDuanYunYing_name
+        qi.id, V_shouduan_Cable_host, V_shouduan_Cable_spare,quDuanYunYing_name
     </sql>
     <resultMap id="FenXianPanShouDuan_Column_List" type="Map">
         <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="xid" jdbcType="INTEGER" property="xid"/>
-        <result column="qid" jdbcType="INTEGER" property="qid"/>
-        <result column="cid" jdbcType="INTEGER" property="cid"/>
-        <result column="typeid" jdbcType="INTEGER" property="typeid"/>
         <result column="V_shouduan_Cable_host" jdbcType="INTEGER" property="vShouduanCableHost"/>
         <result column="V_shouduan_Cable_spare" jdbcType="INTEGER" property="vShouduanCableSpare"/>
         <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
@@ -958,10 +946,8 @@
 
 
     <sql id="ShouDuan_Column_List">
-        qi.id, xid, qid, cid, typeid,V_in_all,
-    mV_in_zhu, mV_in_bing, mV_in_diao_zhu, mV_in_diao_bing, Hz_in_low_zhu, Hz_in_low_bing,
-    GJ_drive_zhu, GJ_drive_bing, GJ_rear_collection_zhu, GJ_rear_collection_bing, baojing_zhu,
-    baojing_bing,quDuanYunYing_name
+        qi.id, V_in_all,mV_in_zhu, mV_in_bing, mV_in_diao_zhu, mV_in_diao_bing, Hz_in_low_zhu, Hz_in_low_bing,
+    GJ_drive_zhu, GJ_drive_bing, GJ_rear_collection_zhu, GJ_rear_collection_bing, baojing_zhu,baojing_bing,quDuanYunYing_name
     </sql>
     <resultMap id="ShouDuanResultMap" type="Map">
         <id column="id" jdbcType="INTEGER" property="id"/>
@@ -992,14 +978,10 @@
 
 
     <sql id="SongDuanTransformer_Column_List">
-        qi.id, xid, qid, cid, typeid,mA_Cable_FBP, A_longIn_FBP, A_longOut_FBP, A_shortIn_FBP, A_shortOut_FBP, T_FBP,quDuanYunYing_name
+        qi.id,mA_Cable_FBP, A_longIn_FBP, A_longOut_FBP, A_shortIn_FBP, A_shortOut_FBP, T_FBP,quDuanYunYing_name
     </sql>
     <resultMap id="SongDuanTransformerResultMap" type="Map">
         <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="xid" jdbcType="INTEGER" property="xid"/>
-        <result column="qid" jdbcType="INTEGER" property="qid"/>
-        <result column="cid" jdbcType="INTEGER" property="cid"/>
-        <result column="typeid" jdbcType="INTEGER" property="typeid"/>
         <result column="mA_Cable_FBP" jdbcType="INTEGER" property="maCableFbp"/>
         <result column="A_longIn_FBP" jdbcType="INTEGER" property="aLonginFbp"/>
         <result column="A_longOut_FBP" jdbcType="INTEGER" property="aLongoutFbp"/>
@@ -1016,15 +998,11 @@
     </select>
 
     <sql id="SongDuanTune_Column_List">
-        qi.id, xid, qid, cid, typeid,A_longIn_FBA_zhu, A_longIn_FBA_diao, A_longOut_FBA_zhu, A_longOut_FBA_diao,
+        qi.id,A_longIn_FBA_zhu, A_longIn_FBA_diao, A_longOut_FBA_zhu, A_longOut_FBA_diao,
     A_shortIn_FBA_zhu, A_shortIn_FBA_diao, A_shortOut_FBA_zhu, A_shortOut_FBA_diao,quDuanYunYing_name
     </sql>
     <resultMap id="SongDuanTuneResultMap" type="Map">
         <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="xid" jdbcType="INTEGER" property="xid"/>
-        <result column="qid" jdbcType="INTEGER" property="qid"/>
-        <result column="cid" jdbcType="INTEGER" property="cid"/>
-        <result column="typeid" jdbcType="INTEGER" property="typeid"/>
         <result column="A_longIn_FBA_zhu" jdbcType="INTEGER" property="aLonginFbaZhu"/>
         <result column="A_longIn_FBA_diao" jdbcType="INTEGER" property="aLonginFbaDiao"/>
         <result column="A_longOut_FBA_zhu" jdbcType="INTEGER" property="aLongoutFbaZhu"/>
@@ -1043,15 +1021,11 @@
 
 
     <sql id="ShouDuanTune_Column_List">
-        qi.id, xid, qid, cid, typeid,A_longIn_JBA_zhu,A_longIn_JBA_diao, A_longOut_JBA_zhu, A_longOut_JBA_diao,
+        qi.id, A_longIn_JBA_zhu,A_longIn_JBA_diao, A_longOut_JBA_zhu, A_longOut_JBA_diao,
      A_shortIn_JBA_zhu, A_shortIn_JBA_diao,A_shortOut_JBA_zhu, A_shortOut_JBA_diao,quDuanYunYing_name
     </sql>
     <resultMap id="ShouDuanTuneResultMap" type="Map">
         <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="xid" jdbcType="INTEGER" property="xid"/>
-        <result column="qid" jdbcType="INTEGER" property="qid"/>
-        <result column="cid" jdbcType="INTEGER" property="cid"/>
-        <result column="typeid" jdbcType="INTEGER" property="typeid"/>
         <result column="A_longIn_JBA_zhu" jdbcType="INTEGER" property="aLonginJbaZhu"/>
         <result column="A_longIn_JBA_diao" jdbcType="INTEGER" property="aLonginJbaDiao"/>
         <result column="A_longOut_JBA_zhu" jdbcType="INTEGER" property="aLongoutJbaZhu"/>
@@ -1070,14 +1044,10 @@
 
 
     <sql id="ShouDuanTransformer_Column_List">
-        qi.id, xid, qid, cid, typeid,mA_Cable_JBP, A_longIn_JBP, A_longOut_JBP, A_shortIn_JBP, A_shortOut_JBP,T_JBP,quDuanYunYing_name
+        qi.id, mA_Cable_JBP, A_longIn_JBP, A_longOut_JBP, A_shortIn_JBP, A_shortOut_JBP,T_JBP,quDuanYunYing_name
     </sql>
     <resultMap id="ShouDuanTransformerResultMap" type="Map">
         <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="xid" jdbcType="INTEGER" property="xid"/>
-        <result column="qid" jdbcType="INTEGER" property="qid"/>
-        <result column="cid" jdbcType="INTEGER" property="cid"/>
-        <result column="typeid" jdbcType="INTEGER" property="typeid"/>
         <result column="mA_Cable_JBP" jdbcType="INTEGER" property="maCableJbp"/>
         <result column="A_longIn_JBP" jdbcType="INTEGER" property="aLonginJbp"/>
         <result column="A_longOut_JBP" jdbcType="INTEGER" property="aLongoutJbp"/>
@@ -1091,10 +1061,6 @@
         <include refid="ShouDuanTransformer_Column_List"/>
         from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
     </select>
-
-
-
-
 
 
     <sql id="Statistics_SongDuan_Column_List">

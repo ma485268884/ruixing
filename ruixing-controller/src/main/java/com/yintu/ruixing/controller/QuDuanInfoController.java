@@ -65,7 +65,7 @@ public class QuDuanInfoController extends BaseController {
             default:
                 break;
         }
-        return ResponseDataUtil.ok("查询区段列表成功", maps);
+        return ResponseDataUtil.ok("查询实时报表成功", maps);
     }
 
     @GetMapping("/dailypaper")
