@@ -34,5 +34,11 @@ public class GlobalExceptionController {
         return ResponseDataUtil.error(e.getMessage());
     }
 
+    @ExceptionHandler(RuntimeException.class)
+    public Map<String, Object> baseRuntimeException(RuntimeException e) {
+        logger.error(e.getMessage());
+        return ResponseDataUtil.error(e.getMessage());
+    }
+
 
 }
