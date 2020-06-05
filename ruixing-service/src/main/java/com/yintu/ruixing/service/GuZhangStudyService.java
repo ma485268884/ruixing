@@ -1,6 +1,6 @@
 package com.yintu.ruixing.service;
 
-import com.yintu.ruixing.entity.GuZhangStudyEntity;
+import com.yintu.ruixing.entity.*;
 
 import java.util.List;
 import java.util.Map;
@@ -21,4 +21,22 @@ public interface GuZhangStudyService {
     void deletGuZhang(Long id);
 
     void deletGuZhangList(int[] ids);
+
+   // List<Map<String,Object>> queryUserInfoResultListMap();
+
+
+
+
+
+    List<GuZhangStudyEntity> GuZhangListExcelDownloads();
+
+    List<GuZhangStudyEntity> GuZhangListExcelDownloadsById(Long id);
+
+    List<XianDuanEntity> getXianDuan(XianDuanEntity xianDuanEntity);
+
+    List<CheZhanEntity> getCheZhanByXid(Long xid);
+
+    List<QuDuanBaseEntity> getQuDuanByXid(Long cid);
+
+    List<QuDuanInfoEntity> findGuZhangKuData(Long id);
 }
