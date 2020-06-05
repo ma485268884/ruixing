@@ -2,6 +2,7 @@ package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.entity.QuDuanInfoEntity;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -65,5 +66,15 @@ public interface QuDuanInfoService {
     List<Map<String, Object>> findShouDuanTuneAll();
 
     List<Map<String, Object>> findShouDuanTransformerAll();
+
+
+    List<Map<String, Object>> findStatisticsSongDuanByDate(Date data);
+
+    List<Map<String, Object>> findStatisticsFenXianPanSongDuanByDate(Date data);
+
+    List<Map<String, Object>> findStatisticsFenXianPanShouDuanByDate(Date data);
+
+    List<Map<String, Object>> findStatisticsShouDuanByDate(Date data);
+
 
 }

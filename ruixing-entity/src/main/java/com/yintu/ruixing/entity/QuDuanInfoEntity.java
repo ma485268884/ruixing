@@ -22,6 +22,7 @@ public class QuDuanInfoEntity implements Serializable {
 
     private Integer typeid;//类型id
 
+    private Integer dataZhengchang;
 
     private String designCarrier;
 

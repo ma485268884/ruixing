@@ -35,7 +35,7 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         FilterInvocation filterInvocation = (FilterInvocation) object;
-        String requestUrl = filterInvocation.getRequestUrl();
+        String requestUrl = filterInvocation.getRequestUrl().split("[?]")[0];
         String requestMethod = filterInvocation.getRequest().getMethod();
         //restful 风格api /users/1/roles  数据库是/users+请求方式
         String[] strArray = requestUrl.split("/");

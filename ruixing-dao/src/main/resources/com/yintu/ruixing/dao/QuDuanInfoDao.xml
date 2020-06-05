@@ -7,6 +7,7 @@
         <result column="qid" jdbcType="INTEGER" property="qid"/>
         <result column="cid" jdbcType="INTEGER" property="cid"/>
         <result column="typeid" jdbcType="INTEGER" property="typeid"/>
+        <result column="data_zhengChang" jdbcType="INTEGER" property="dataZhengchang"/>
         <result column="Design_carrier" jdbcType="VARCHAR" property="designCarrier"/>
         <result column="direction" jdbcType="VARCHAR" property="direction"/>
         <result column="GJcollection" jdbcType="VARCHAR" property="gjcollection"/>
@@ -77,7 +78,7 @@
         </association>
     </resultMap>
     <sql id="Base_Column_List">
-        qi.id as qiId, xid, qid, cid, typeid, Design_carrier, direction, GJcollection, V_in_all,
+        qi.id as qiId, xid, qid, cid, typeid, data_zhengChang,Design_carrier, direction, GJcollection, V_in_all,
     mV_in_zhu, mV_in_bing, mV_in_diao_zhu, mV_in_diao_bing, Hz_in_low_zhu, Hz_in_low_bing, 
     GJ_drive_zhu, GJ_drive_bing, GJ_rear_collection_zhu, GJ_rear_collection_bing, baojing_zhu, 
     baojing_bing, V_out_zhu, V_out_bei, mA_out_zhu, mA_out_bei, Hz_up_zhu, Hz_up_bei, 
@@ -105,7 +106,7 @@
     </delete>
     <insert id="insert" parameterType="com.yintu.ruixing.entity.QuDuanInfoEntity">
         insert into mro_quduan_info (id, xid, qid,
-                                     cid, typeid,
+                                     cid, typeid, data_zhengChang,
                                      Design_carrier, direction, GJcollection,
                                      V_in_all, mV_in_zhu, mV_in_bing,
                                      mV_in_diao_zhu, mV_in_diao_bing, Hz_in_low_zhu,
@@ -129,7 +130,7 @@
                                      A_longOut_JBA_diao, A_shortIn_JBA_zhu, A_shortIn_JBA_diao,
                                      A_shortOut_JBA_zhu, A_shortOut_JBA_diao, yuliu)
         values (#{id,jdbcType=INTEGER}, #{xid,jdbcType=INTEGER}, #{qid,jdbcType=INTEGER},
-                #{cid,jdbcType=INTEGER}, #{typeid,jdbcType=INTEGER},
+                #{cid,jdbcType=INTEGER}, #{typeid,jdbcType=INTEGER}, #{dataZhengchang,jdbcType=INTEGER},
                 #{designCarrier,jdbcType=VARCHAR}, #{direction,jdbcType=VARCHAR}, #{gjcollection,jdbcType=VARCHAR},
                 #{vInAll,jdbcType=INTEGER}, #{mvInZhu,jdbcType=INTEGER}, #{mvInBing,jdbcType=INTEGER},
                 #{mvInDiaoZhu,jdbcType=INTEGER}, #{mvInDiaoBing,jdbcType=INTEGER}, #{hzInLowZhu,jdbcType=INTEGER},
@@ -175,6 +176,9 @@
             </if>
             <if test="typeid != null">
                 typeid,
+            </if>
+            <if test="dataZhengchang != null">
+                data_zhengChang,
             </if>
             <if test="designCarrier != null">
                 Design_carrier,
@@ -385,6 +389,9 @@
             <if test="typeid != null">
                 #{typeid,jdbcType=INTEGER},
             </if>
+            <if test="dataZhengchang != null">
+                #{dataZhengchang,jdbcType=INTEGER},
+            </if>
             <if test="designCarrier != null">
                 #{designCarrier,jdbcType=VARCHAR},
             </if>
@@ -594,6 +601,9 @@
             <if test="typeid != null">
                 typeid = #{typeid,jdbcType=INTEGER},
             </if>
+            <if test="dataZhengchang != null">
+                data_zhengChang = #{dataZhengchang,jdbcType=INTEGER},
+            </if>
             <if test="designCarrier != null">
                 Design_carrier = #{designCarrier,jdbcType=VARCHAR},
             </if>
@@ -795,6 +805,7 @@
             qid                     = #{qid,jdbcType=INTEGER},
             cid                     = #{cid,jdbcType=INTEGER},
             typeid                  = #{typeid,jdbcType=INTEGER},
+            data_zhengChang         = #{dataZhengchang,jdbcType=INTEGER},
             Design_carrier          = #{designCarrier,jdbcType=VARCHAR},
             direction               = #{direction,jdbcType=VARCHAR},
             GJcollection            = #{gjcollection,jdbcType=VARCHAR},
@@ -1082,29 +1093,130 @@
     </select>
 
 
-    <select id="selectSongDuanByDate" parameterType="Date" resultMap="SongDuanResultMap">
-        select
-        <include refid="SongDuan_Column_List"/>
-        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
-        where date(qb.time)=date(#{time})
-    </select>
-
-    <select id="selectFenXianPanSongDuanByDate" resultMap="FenXianPanSongDuanResultMap">
-        select
-        <include refid="FenXianPanSongDuan_Column_List"/>
-        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
-    </select>
 
 
-    <select id="selectFenXianPanShouDuanByDate" resultMap="FenXianPanShouDuan_Column_List">
-        select
-        <include refid="FenXianPanShouDuan_Column_List"/>
-        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+
+
+    <sql id="Statistics_SongDuan_Column_List">
+        qb.quDuanYunYing_name,
+        MAX(qi.V_out_zhu) AS max_V_out_zhu,
+        MIN(qi.V_out_zhu) AS min_V_out_zhu,
+        MAX(qi.mA_out_zhu) AS max_mA_out_zhu,
+        MIN(qi.mA_out_zhu) AS min_mA_out_zhu,
+        MAX(qi.V_out_bei) AS max_V_out_bei,
+        MIN(qi.V_out_bei) AS min_V_out_bei,
+        MAX(qi.mA_out_bei) AS max_mA_out_bei,
+        MIN(qi.mA_out_bei) AS min_mA_out_bei
+    </sql>
+    <resultMap id="StatisticsSongDuanResultMap" type="Map">
+        <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quDuanYunYingName"/>
+        <result column="max_V_out_zhu" jdbcType="INTEGER" property="maxVOutZhu"/>
+        <result column="min_V_out_zhu" jdbcType="INTEGER" property="minVOutZhu"/>
+        <result column="max_mA_out_zhu" jdbcType="INTEGER" property="maxMAOutZhu"/>
+        <result column="min_mA_out_zhu" jdbcType="INTEGER" property="minMAOutZhu"/>
+        <result column="max_V_out_bei" jdbcType="INTEGER" property="maxVOutBei"/>
+        <result column="min_V_out_bei" jdbcType="INTEGER" property="minVOutBei"/>
+        <result column="max_mA_out_bei" jdbcType="INTEGER" property="maxMAOutBei"/>
+        <result column="min_mA_out_bei" jdbcType="INTEGER" property="minMAOutBei"/>
+    </resultMap>
+    <select id="selectStatisticsSongDuanByDate" parameterType="Date" resultMap="StatisticsSongDuanResultMap">
+        SELECT
+        <include refid="Statistics_SongDuan_Column_List"/>
+        FROM
+        mro_quduan_info qi
+        INNER JOIN mro_quduan_base qb ON qi.qid = qb.id
+        WHERE
+        DATE(qb.time) = DATE(#{time,jdbcType=TIMESTAMP})
+        GROUP BY
+        qb.quDuanYunYing_name
     </select>
 
-    <select id="selectShouDuanByDate" resultMap="ShouDuanResultMap">
-        select
-        <include refid="ShouDuan_Column_List"/>
-        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+
+    <sql id="Statistics_FenXianPanSongDuan_Column_List">
+        qb.quDuanYunYing_name,
+    MAX( qi.V_songduan_Cable ) AS max_V_songduan_Cable,
+	MIN( qi.V_songduan_Cable ) AS min_V_songduan_Cable,
+	MAX( qi.mA_songduan_Cable ) AS max_mA_songduan_Cable,
+	MIN( qi.mA_songduan_Cable ) AS min_mA_songduan_Cable
+    </sql>
+    <resultMap id="StatisticsFenXianPanSongDuanResultMap" type="Map">
+        <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quDuanYunYingName"/>
+        <result column="max_V_songduan_Cable" jdbcType="INTEGER" property="maxVSongduanCable"/>
+        <result column="min_V_songduan_Cable" jdbcType="INTEGER" property="minVSongduanCable"/>
+        <result column="max_mA_songduan_Cable" jdbcType="INTEGER" property="maxMASongduanCable"/>
+        <result column="min_mA_songduan_Cable" jdbcType="INTEGER" property="minMASongduanCable"/>
+    </resultMap>
+    <select id="selectStatisticsFenXianPanSongDuanByDate" parameterType="Date"
+            resultMap="StatisticsFenXianPanSongDuanResultMap">
+        SELECT
+        <include refid="Statistics_FenXianPanSongDuan_Column_List"/>
+        FROM
+        mro_quduan_info qi
+        INNER JOIN mro_quduan_base qb ON qi.qid = qb.id
+        WHERE
+        DATE(qb.time) = DATE(#{time,jdbcType=TIMESTAMP})
+        GROUP BY
+        qb.quDuanYunYing_name
     </select>
+
+
+    <sql id="Statistics_FenXianPanShouDuan_Column_List">
+        qb.quDuanYunYing_name,
+	MAX( qi.V_shouduan_Cable_host ) AS max_V_shouduan_Cable_host,
+	MIN( qi.V_shouduan_Cable_host ) AS min_shouduan_Cable_host,
+	MAX( qi.V_shouduan_Cable_spare ) AS max_V_shouduan_Cable_spare,
+	MIN( qi.V_shouduan_Cable_spare ) AS min_V_shouduan_Cable_spare,
+	MAX( qi.mA_shouduan_Cable ) AS max_mA_shouduan_Cable,
+	MIN( qi.mA_shouduan_Cable ) AS min_mA_shouduan_Cable
+    </sql>
+    <resultMap id="StatisticsFenXianPanShouDuanColumnList" type="Map">
+        <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quDuanYunYingName"/>
+        <result column="max_V_shouduan_Cable_host" jdbcType="INTEGER" property="maxVShouduanCableHost"/>
+        <result column="min_shouduan_Cable_host" jdbcType="INTEGER" property="minVShouduanCableHost"/>
+        <result column="max_V_shouduan_Cable_spare" jdbcType="INTEGER" property="maxVShouduanCableSpare"/>
+        <result column="min_V_shouduan_Cable_spare" jdbcType="INTEGER" property="minVShouduanCableSpare"/>
+        <result column="max_mA_shouduan_Cable" jdbcType="INTEGER" property="maxMAShouduanCable"/>
+        <result column="min_mA_shouduan_Cable" jdbcType="INTEGER" property="minMAShouduanCable"/>
+    </resultMap>
+    <select id="selectStatisticsFenXianPanShouDuanByDate" resultMap="StatisticsFenXianPanShouDuanColumnList">
+        select
+        <include refid="Statistics_FenXianPanShouDuan_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+        WHERE
+        DATE(qb.time) = DATE(#{time,jdbcType=TIMESTAMP})
+        GROUP BY
+        qb.quDuanYunYing_name
+    </select>
+
+
+    <sql id="Statistics_ShouDuan_Column_List">
+        qb.quDuanYunYing_name,
+	MAX( qi.V_in_all ) AS max_V_in_all,
+	MIN( qi.V_in_all ) AS min_V_in_all,
+	MAX( qi.mV_in_zhu ) AS max_mV_in_zhu,
+	MIN( qi.mV_in_zhu ) AS min_mV_in_zhu,
+	MAX( qi.mV_in_diao_zhu ) AS max_mV_in_diao_zhu,
+	MIN( qi.mV_in_diao_zhu ) AS min_mV_in_diao_zhu
+    </sql>
+
+    <resultMap id="StatisticsShouDuanResultMap" type="Map">
+        <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quDuanYunYingName"/>
+        <result column="max_V_in_all" jdbcType="INTEGER" property="maxVInAll"/>
+        <result column="min_V_in_all" jdbcType="INTEGER" property="minVInAll"/>
+        <result column="max_mV_in_zhu" jdbcType="INTEGER" property="maxMVInZhu"/>
+        <result column="min_mV_in_zhu" jdbcType="INTEGER" property="minMVInZhu"/>
+        <result column="max_mV_in_diao_zhu" jdbcType="INTEGER" property="maxMVInDiaoZhu"/>
+        <result column="min_mV_in_diao_zhu" jdbcType="INTEGER" property="minMVInDiaoZhu"/>
+    </resultMap>
+    <select id="selectStatisticsShouDuanByDate" resultMap="StatisticsShouDuanResultMap">
+        select
+        <include refid="Statistics_ShouDuan_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+        WHERE
+        DATE(qb.time) = DATE(#{time,jdbcType=TIMESTAMP})
+        GROUP BY
+        qb.quDuanYunYing_name
+    </select>
+
+
 </mapper>

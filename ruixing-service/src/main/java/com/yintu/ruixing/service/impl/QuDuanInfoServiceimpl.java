@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -45,8 +46,6 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
     public List<QuDuanInfoEntity> findByCidAndXid(Integer cid, Integer xid) {
         return quDuanInfoDao.selectByXidAndCid(cid, xid);
     }
-
-
 
 
     @Override
@@ -88,6 +87,28 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
     @Override
     public List<Map<String, Object>> findShouDuanTransformerAll() {
         return quDuanInfoDao.selectShouDuanTransformerAll();
+    }
+
+
+    @Override
+    public List<Map<String, Object>> findStatisticsSongDuanByDate(Date time) {
+        return quDuanInfoDao.selectStatisticsSongDuanByDate(time);
+    }
+
+
+    @Override
+    public List<Map<String, Object>> findStatisticsFenXianPanSongDuanByDate(Date time) {
+        return quDuanInfoDao.selectStatisticsFenXianPanSongDuanByDate(time);
+    }
+
+    @Override
+    public List<Map<String, Object>> findStatisticsFenXianPanShouDuanByDate(Date time) {
+        return quDuanInfoDao.selectStatisticsFenXianPanShouDuanByDate(time);
+    }
+
+    @Override
+    public List<Map<String, Object>> findStatisticsShouDuanByDate(Date time) {
+        return quDuanInfoDao.selectStatisticsShouDuanByDate(time);
     }
 
 }
