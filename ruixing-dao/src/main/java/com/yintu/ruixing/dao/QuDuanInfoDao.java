@@ -49,4 +49,8 @@ public interface QuDuanInfoDao {
 
     int updateByPrimaryKey(QuDuanInfoEntity record);
 
+
+    //根据区段id  查询相关的数据
+
+    List<QuDuanInfoEntity> findGuZhangKuData(Integer id);
 }

@@ -1,6 +1,7 @@
 package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.dao.GuZhangStudyDao;
+import com.yintu.ruixing.dao.QuDuanInfoDao;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.GuZhangStudyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,10 @@ public class GuZhangStudyServiceImpl implements GuZhangStudyService {
     @Autowired
     private GuZhangStudyDao guZhangStudyDao;
 
-    @Override
+    @Autowired
+    private QuDuanInfoDao quDuanInfoDao;
+
+    @Override //1
     public List<GuZhangStudyEntity> findGuZhangList(Integer page, Integer size) {
         return guZhangStudyDao.findGuZhangList();
     }
@@ -51,8 +55,9 @@ public class GuZhangStudyServiceImpl implements GuZhangStudyService {
     }
 
 
-    public List<GuZhangStudyEntity> GuZhangListExcelDownloads() {
-        return guZhangStudyDao.GuZhangListExcelDownloads();
+    @Override
+    public List<GuZhangStudyEntity> GuZhangListExcelDownloads(Long[] ids) {
+        return guZhangStudyDao.GuZhangListExcelDownloads(ids);
 
 
     }
@@ -73,12 +78,23 @@ public class GuZhangStudyServiceImpl implements GuZhangStudyService {
     }
 
     @Override
-    public List<QuDuanBaseEntity> getQuDuanByXid(Long cid) {
-        return guZhangStudyDao.getQuDuanByXid(cid);
+    public List<QuDuanBaseEntity> getQuDuanByCid(Long cid) {
+        return guZhangStudyDao.getQuDuanByCid(cid);
     }
 
     @Override
-    public List<QuDuanInfoEntity> findGuZhangKuData(Long id) {
-        return guZhangStudyDao.findGuZhangKuData(id);
+    public List<QuDuanInfoEntity> findGuZhangKuData(Integer id, Integer page, Integer size) {
+        List<QuDuanInfoEntity> guZhangKuData = quDuanInfoDao.findGuZhangKuData(id);
+        return guZhangKuData;
+    }
+
+    @Override
+    public List<QuDuanBaseEntity> findFristId(Integer id) {
+        return guZhangStudyDao.findFristId(id);
+    }
+
+    @Override
+    public List<QuDuanBaseEntity> findLastId(Integer id) {
+        return guZhangStudyDao.findLastId(id);
     }
 }

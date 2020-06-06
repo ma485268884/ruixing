@@ -19,6 +19,7 @@ import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -90,22 +91,22 @@ public class GuZhangStudyController {
 
     //根据线段的id查询对应的车站
     @GetMapping("/getCheZhanByXid/{xid}")
-    public Map<String,Object>getCheZhanByXid(@PathVariable Long xid){
-        List<CheZhanEntity> cheZhanEntity=guZhangStudyService.getCheZhanByXid(xid);
-        return ResponseDataUtil.ok("查询对应车站信息成功",cheZhanEntity);
+    public Map<String, Object> getCheZhanByXid(@PathVariable Long xid) {
+        List<CheZhanEntity> cheZhanEntity = guZhangStudyService.getCheZhanByXid(xid);
+        return ResponseDataUtil.ok("查询对应车站信息成功", cheZhanEntity);
     }
 
     //根据车站的cid查询对应的区段
     @GetMapping("/getQuDuanByCid/{cid}")
-    public Map<String,Object>getQuDuanByXid(@PathVariable Long cid){
-        List<QuDuanBaseEntity> quDuanBaseEntities=guZhangStudyService.getQuDuanByXid(cid);
-        return ResponseDataUtil.ok("查询对应区段信息成功",quDuanBaseEntities);
+    public Map<String, Object> getQuDuanByCid(@PathVariable Long cid) {
+        List<QuDuanBaseEntity> quDuanBaseEntities = guZhangStudyService.getQuDuanByCid(cid);
+        return ResponseDataUtil.ok("查询对应区段信息成功", quDuanBaseEntities);
     }
 
 
-    //下载所有数据到Excel中
-    @GetMapping("/GuZhangListExcelDownloads")
-    public void GuZhangListExcelDownloads(HttpServletResponse response) throws IOException {
+    //根据id批量下载数据到Excel中
+    @GetMapping("/GuZhangListExcelDownloads/{ids}")
+    public void GuZhangListExcelDownloads(@PathVariable Long[] ids, HttpServletResponse response) throws IOException {
         HSSFWorkbook workbook = new HSSFWorkbook();
        /* // 设置字体
         HSSFFont font = workbook.createFont();
@@ -144,7 +145,7 @@ public class GuZhangStudyController {
         style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);*/
 
         HSSFSheet sheet = workbook.createSheet("故障库学习表");
-        List<GuZhangStudyEntity> guzhangList = guZhangStudyService.GuZhangListExcelDownloads();
+        List<GuZhangStudyEntity> guzhangList = guZhangStudyService.GuZhangListExcelDownloads(ids);
         String fileName = "guzhang" + ".xls";//设置要导出的文件的名字
         //新增数据行，并且设置单元格数据
         int rowNum = 1;
@@ -231,9 +232,32 @@ public class GuZhangStudyController {
 
     //故障库查看
     @GetMapping("/findGuZhangKuData/{id}")
-    public Map<String,Object>findGuZhangKuData(@PathVariable Long id){
-        List<QuDuanInfoEntity> quDuanInfoEntityList=guZhangStudyService.findGuZhangKuData(id);
-        return ResponseDataUtil.ok("查询数据成功",quDuanInfoEntityList);
+    public Map<String, Object> findGuZhangKuData(@PathVariable Integer id, Integer page, Integer size) {
+        JSONObject js = new JSONObject();
+        List<QuDuanInfoEntity> quDuanInfoEntities = new ArrayList<>();
+        List<QuDuanBaseEntity> quDuanBaseEntities1 = guZhangStudyService.findFristId(id);
+        if (quDuanBaseEntities1.size() > 0 ) {
+            Integer fristId = quDuanBaseEntities1.get(0).getId();
+            List<QuDuanInfoEntity> quDuanInfoEntityList1 = guZhangStudyService.findGuZhangKuData(fristId, page, size);
+            js.put("后方区段", quDuanInfoEntityList1);
+            quDuanInfoEntities.addAll(quDuanInfoEntityList1);
+        }
+        List<QuDuanBaseEntity> quDuanBaseEntities2 = guZhangStudyService.findLastId(id);
+        if (quDuanBaseEntities2.size() > 0) {
+            Integer lastId = quDuanBaseEntities2.get(0).getId();
+            List<QuDuanInfoEntity> quDuanInfoEntityList2 = guZhangStudyService.findGuZhangKuData(lastId, page, size);
+            js.put("前方区段", quDuanInfoEntityList2);
+            quDuanInfoEntities.addAll(quDuanInfoEntityList2);
+        }
+        List<QuDuanInfoEntity> quDuanInfoEntityList = guZhangStudyService.findGuZhangKuData(id, page, size);
+        js.put("本区段", quDuanInfoEntityList);
+        quDuanInfoEntities.addAll(quDuanInfoEntityList);
+        //分页处理
+        PageHelper.startPage(page, size);
+        PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<QuDuanInfoEntity>(quDuanInfoEntities);
+        js.put("pageInfo", pageInfo);
+
+        return ResponseDataUtil.ok("查询数据成功", js);
     }
 
 

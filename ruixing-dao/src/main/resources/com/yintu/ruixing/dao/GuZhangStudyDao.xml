@@ -25,28 +25,34 @@
     xid, guZhang_xianDuan, guZhang_start_time, zhengChang_time, shenJingWangLuo_code, 
     shiWai_data, qianFangQuDuan_data, houFangQuDuan_data
   </sql>
-
-    <select id="GuZhangListExcelDownloads" resultMap="BaseResultMap">
-    select * from mro_guzhang_study
+    <!--根据id批量下载数据到Excel-->
+    <select id="GuZhangListExcelDownloads" resultMap="BaseResultMap" parameterType="java.util.List">
+        select *
+        from mro_guzhang_study
+        where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
   </select>
-
+    <!--查询所有的数据-->
     <select id="findGuZhangList" resultMap="BaseResultMap">
     select * from mro_guzhang_study
   </select>
-
+    <!--根据id下载单个数据到Excel-->
     <select id="GuZhangListExcelDownloadsById" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from mro_guzhang_study
         where id = #{id,jdbcType=INTEGER}
     </select>
-
+    <!--根据id查询单个信息-->
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from mro_guzhang_study
         where id = #{id,jdbcType=INTEGER}
     </select>
+    <!--根据id删除数据-->
     <delete id="deletGuZhang" parameterType="java.lang.Long">
     delete from mro_guzhang_study
     where id = #{id,jdbcType=INTEGER}
@@ -102,14 +108,14 @@
         cz.xd_cz_id =#{xid}
   </select>
 
-    <!--根据车站id查询对应的区段-->
+    <!--根据车站cid查询对应的区段-->
     <resultMap id="quduan" type="com.yintu.ruixing.entity.QuDuanBaseEntity">
         <result property="id" column="id"/>
         <result property="czQuDuanId" column="cz_qudun_id"/>
         <result property="zongheId" column="zongHe_id"/>
         <result property="quduanyunyingName" column="quDuanYunYing_name"/>
     </resultMap>
-    <select id="getQuDuanByXid" resultMap="quduan" parameterType="java.lang.Long">
+    <select id="getQuDuanByCid" resultMap="quduan" parameterType="java.lang.Long">
         select
             qd.quDuanYunYing_name,qd.zongHe_id,qd.id
         from
@@ -118,10 +124,59 @@
             qd.cz_qudun_id=#{cid}
     </select>
 
+
+    <resultMap id="QuDuanBase" type="com.yintu.ruixing.entity.QuDuanBaseEntity">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+        <result column="line_id" jdbcType="INTEGER" property="lineId" />
+        <result column="zongHe_id" jdbcType="VARCHAR" property="zongheId" />
+        <result column="quDuanSheJi_name" jdbcType="VARCHAR" property="quduanshejiName" />
+        <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName" />
+        <result column="quDuan_length" jdbcType="INTEGER" property="quduanLength" />
+        <result column="carrier" jdbcType="VARCHAR" property="carrier" />
+        <result column="diDuan_type" jdbcType="VARCHAR" property="diduanType" />
+        <result column="xianLuQingKuang" jdbcType="VARCHAR" property="xianluqingkuang" />
+        <result column="bianJie" jdbcType="INTEGER" property="bianjie" />
+        <result column="fenJieDian_where" jdbcType="VARCHAR" property="fenjiedianWhere" />
+        <result column="zhanQuFenJie" jdbcType="INTEGER" property="zhanqufenjie" />
+        <result column="jinZhanXinHaoJi_name" jdbcType="VARCHAR" property="jinzhanxinhaojiName" />
+        <result column="xinHaoJiOrBiaoZhiMing" jdbcType="VARCHAR" property="xinhaojiorbiaozhiming" />
+        <result column="xinHaoBiaoZhiPai_where" jdbcType="VARCHAR" property="xinhaobiaozhipaiWhere" />
+        <result column="xinHaoJi_where" jdbcType="VARCHAR" property="xinhaojiWhere" />
+        <result column="zuoCeJueYuan_type" jdbcType="VARCHAR" property="zuocejueyuanType" />
+        <result column="youCeJueYuan_type" jdbcType="VARCHAR" property="youcejueyuanType" />
+        <result column="zhengXianHouFangQuDuan_ID" jdbcType="VARCHAR" property="zhengxianhoufangquduanId" />
+        <result column="zhengXianQianFangQuDuan_ID" jdbcType="VARCHAR" property="zhengxianqianfangquduanId" />
+        <result column="daoChaGuanLianQuDuan1_ID" jdbcType="VARCHAR" property="daochaguanlianquduan1Id" />
+        <result column="daoChaGuanLianQuDuan2_ID" jdbcType="VARCHAR" property="daochaguanlianquduan2Id" />
+        <result column="dianMaHuaGuiHao" jdbcType="VARCHAR" property="dianmahuaguihao" />
+        <result column="guiNeiDiZhi" jdbcType="INTEGER" property="guineidizhi" />
+        <result column="time" jdbcType="TIMESTAMP" property="time" />
+        <result column="yuliu" jdbcType="VARCHAR" property="yuliu" />
+    </resultMap>
+    <!--根据区段id 查询上一个区段id-->
+    <select id="findFristId" parameterType="java.lang.Integer" resultMap="QuDuanBase">
+        SELECT
+            qd.id
+        FROM
+            mro_quduan_base qd
+        WHERE
+            qd.id = ( SELECT qd.parent_id FROM mro_quduan_base qd WHERE qd.id = #{id} )
+    </select>
+    <!--根据区段id，查询下一个区段id-->
+    <select id="findLastId" parameterType="java.lang.Integer" resultMap="QuDuanBase">
+        SELECT
+            qd.id
+        FROM
+            mro_quduan_base qd
+        WHERE
+            qd.parent_id =#{id}
+
+    </select>
     <!--根据区段id查询对应的数据-->
 
 
-    <insert id="addGuZhang000" parameterType="com.yintu.ruixing.entity.GuZhangStudyEntity">
+    <!--<insert id="addGuZhang000" parameterType="com.yintu.ruixing.entity.GuZhangStudyEntity">
     insert into mro_guzhang_study (id, guZhangJiLu_time, guZhangJiLu_name, 
       guZhang_type, guZhangMiaoShu, cid, 
       guZhang_cheZhan, xid, guZhang_xianDuan, 
@@ -134,7 +189,8 @@
       #{guzhangStartTime,jdbcType=TIMESTAMP}, #{zhengchangTime,jdbcType=TIMESTAMP}, #{shenjingwangluoCode,jdbcType=VARCHAR}, 
       #{shiwaiData,jdbcType=INTEGER}, #{qianfangquduanData,jdbcType=INTEGER}, #{houfangquduanData,jdbcType=INTEGER}
       )
-  </insert>
+  </insert>-->
+    <!--添加数据-->
     <insert id="addGuZhang" parameterType="com.yintu.ruixing.entity.GuZhangStudyEntity">
         insert into mro_guzhang_study
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -238,6 +294,7 @@
             </if>
         </trim>
     </insert>
+    <!--根据id修改数据-->
     <update id="editGuZhang" parameterType="com.yintu.ruixing.entity.GuZhangStudyEntity">
         update mro_guzhang_study
         <set>
@@ -265,16 +322,12 @@
             <if test="guzhangXianduan != null">
                 guZhang_xianDuan = #{guzhangXianduan,jdbcType=VARCHAR},
             </if>
-
-
             <if test="qid != null">
                 qid=#{qid,jdbcType=INTEGER}
             </if>
             <if test="guzhangQuduan != null">
                 guZhang_quDuan= #{guzhangQuduan,jdbcType=VARCHAR},
             </if>
-
-
             <if test="guzhangStartTime != null">
                 guZhang_start_time = #{guzhangStartTime,jdbcType=TIMESTAMP},
             </if>
@@ -296,7 +349,7 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.GuZhangStudyEntity">
+    <!--<update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.GuZhangStudyEntity">
     update mro_guzhang_study
     set guZhangJiLu_time = #{guzhangjiluTime,jdbcType=TIMESTAMP},
       guZhangJiLu_name = #{guzhangjiluName,jdbcType=VARCHAR},
@@ -313,5 +366,5 @@
       qianFangQuDuan_data = #{qianfangquduanData,jdbcType=INTEGER},
       houFangQuDuan_data = #{houfangquduanData,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
-  </update>
+  </update>-->
 </mapper>
