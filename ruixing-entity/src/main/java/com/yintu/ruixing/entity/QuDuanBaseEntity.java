@@ -12,6 +12,8 @@ import java.util.Date;
 public class QuDuanBaseEntity {
     private Integer id;
 
+    private Integer czQuDuanId;
+
     private Integer lineId;
 
     private String zongheId;

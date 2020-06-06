@@ -23,17 +23,17 @@ class RuixingApplicationTests {
     @Autowired
     private PermissionDao permissionDao;
     @Autowired
-    private QuDuanInfoDao quDuanInfoDao;
-
+    private ShouDuanService shouDuanService;
 
     @Test
-    void contextLoads() throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd");
-        Date date = simpleDateFormat.parse("2020-06-04");
-        System.out.println(quDuanInfoDao.selectStatisticsSongDuanByDate(date));
-        System.out.println(quDuanInfoDao.selectStatisticsFenXianPanSongDuanByDate(date));
-        System.out.println(quDuanInfoDao.selectStatisticsFenXianPanShouDuanByDate(date));
-        System.out.println(quDuanInfoDao.selectStatisticsShouDuanByDate(date));
+    void contextLoads() {
+        //System.out.println(userService.loadUserByUsername("d"));
+//        AntPathMatcher antPathMatcher = new AntPathMatcher();
+//        System.out.println(new BCryptPasswordEncoder().encode("123456"));
+//        System.out.println(antPathMatcher.match("/users/**", "/users/121212/role"));
+//        System.out.println(antPathMatcher.match("/users", "/users/121212/role?page=131"));
+//        System.out.println(permissionDao.selectByUserIdAndUrl(1L, "/users"));
+        shouDuanService.findByCidAndXid(1, 1);
 
     }
 }

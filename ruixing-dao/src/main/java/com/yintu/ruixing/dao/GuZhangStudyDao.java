@@ -1,18 +1,24 @@
-package com.yintu.ruixing.service;
+package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.*;
 
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author:lcy
- * @date:2020-06-04 16
- */
-public interface GuZhangStudyService {
-    List<GuZhangStudyEntity> findGuZhangList(Integer page, Integer size);
+public interface GuZhangStudyDao {
+    int deleteByPrimaryKey(Integer id);
 
-    GuZhangStudyEntity findGuZhangById(Long id);
+    int insert(GuZhangStudyEntity record);
+
+    int insertSelective(GuZhangStudyEntity record);
+
+    GuZhangStudyEntity selectByPrimaryKey(Long id);
+
+    int updateByPrimaryKeySelective(GuZhangStudyEntity record);
+
+    int updateByPrimaryKey(GuZhangStudyEntity record);
+
+    List<GuZhangStudyEntity> findGuZhangList();
 
     void addGuZhang(GuZhangStudyEntity guZhangStudyEntity);
 
@@ -22,7 +28,6 @@ public interface GuZhangStudyService {
 
     void deletGuZhangList(int[] ids);
 
-   // List<Map<String,Object>> queryUserInfoResultListMap();
 
 
 
