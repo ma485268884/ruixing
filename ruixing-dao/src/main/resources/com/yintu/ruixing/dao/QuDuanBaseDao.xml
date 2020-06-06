@@ -3,6 +3,7 @@
 <mapper namespace="com.yintu.ruixing.dao.QuDuanBaseDao">
   <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.QuDuanBaseEntity">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="line_id" jdbcType="INTEGER" property="lineId" />
     <result column="zongHe_id" jdbcType="VARCHAR" property="zongheId" />
     <result column="quDuanSheJi_name" jdbcType="VARCHAR" property="quduanshejiName" />

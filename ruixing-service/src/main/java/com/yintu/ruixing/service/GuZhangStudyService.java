@@ -22,13 +22,7 @@ public interface GuZhangStudyService {
 
     void deletGuZhangList(int[] ids);
 
-   // List<Map<String,Object>> queryUserInfoResultListMap();
-
-
-
-
-
-    List<GuZhangStudyEntity> GuZhangListExcelDownloads();
+    List<GuZhangStudyEntity> GuZhangListExcelDownloads(Long[] ids);
 
     List<GuZhangStudyEntity> GuZhangListExcelDownloadsById(Long id);
 
@@ -36,7 +30,11 @@ public interface GuZhangStudyService {
 
     List<CheZhanEntity> getCheZhanByXid(Long xid);
 
-    List<QuDuanBaseEntity> getQuDuanByXid(Long cid);
+    List<QuDuanBaseEntity> getQuDuanByCid(Long cid);
 
-    List<QuDuanInfoEntity> findGuZhangKuData(Long id);
+    List<QuDuanInfoEntity> findGuZhangKuData(Integer id,Integer page,Integer size);
+
+    List<QuDuanBaseEntity> findFristId(Integer id);
+
+    List<QuDuanBaseEntity> findLastId(Integer id);
 }

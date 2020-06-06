@@ -99,6 +99,16 @@
         from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid=qb.id
         where qi.id = #{id,jdbcType=INTEGER}
     </select>
+
+
+
+    <select id="findGuZhangKuData" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid=qb.id
+        where qi.id = #{id,jdbcType=INTEGER}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from mro_quduan_info
@@ -159,6 +169,7 @@
                 #{aShortinJbaDiao,jdbcType=INTEGER},
                 #{aShortoutJbaZhu,jdbcType=INTEGER}, #{aShortoutJbaDiao,jdbcType=INTEGER}, #{yuliu,jdbcType=VARCHAR})
     </insert>
+
     <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.QuDuanInfoEntity">
         insert into mro_quduan_info
         <trim prefix="(" suffix=")" suffixOverrides=",">

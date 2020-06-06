@@ -6,19 +6,26 @@ import java.util.List;
 import java.util.Map;
 
 public interface GuZhangStudyDao {
-    int deleteByPrimaryKey(Integer id);
+
+    /*int deleteByPrimaryKey(Integer id);
 
     int insert(GuZhangStudyEntity record);
 
     int insertSelective(GuZhangStudyEntity record);
 
-    GuZhangStudyEntity selectByPrimaryKey(Long id);
+   // GuZhangStudyEntity selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(GuZhangStudyEntity record);
 
-    int updateByPrimaryKey(GuZhangStudyEntity record);
+    int updateByPrimaryKey(GuZhangStudyEntity record);*/
+
+
+
+
 
     List<GuZhangStudyEntity> findGuZhangList();
+
+    GuZhangStudyEntity selectByPrimaryKey(Long id);
 
     void addGuZhang(GuZhangStudyEntity guZhangStudyEntity);
 
@@ -28,12 +35,7 @@ public interface GuZhangStudyDao {
 
     void deletGuZhangList(int[] ids);
 
-
-
-
-
-
-    List<GuZhangStudyEntity> GuZhangListExcelDownloads();
+    List<GuZhangStudyEntity> GuZhangListExcelDownloads(Long[] ids);
 
     List<GuZhangStudyEntity> GuZhangListExcelDownloadsById(Long id);
 
@@ -41,7 +43,11 @@ public interface GuZhangStudyDao {
 
     List<CheZhanEntity> getCheZhanByXid(Long xid);
 
-    List<QuDuanBaseEntity> getQuDuanByXid(Long cid);
+    List<QuDuanBaseEntity> getQuDuanByCid(Long cid);
 
-    List<QuDuanInfoEntity> findGuZhangKuData(Long id);
+    //List<QuDuanInfoEntity> findGuZhangKuData(Long id,Integer page,Integer size);
+
+    List<QuDuanBaseEntity> findFristId(Integer id);
+
+    List<QuDuanBaseEntity> findLastId(Integer id);
 }
