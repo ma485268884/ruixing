@@ -930,12 +930,13 @@
 
 
     <sql id="FenXianPanShouDuan_Column_List">
-        qi.id, V_shouduan_Cable_host, V_shouduan_Cable_spare,quDuanYunYing_name
+        qi.id, V_shouduan_Cable_host, V_shouduan_Cable_spare,mA_shouduan_Cable,quDuanYunYing_name
     </sql>
     <resultMap id="FenXianPanShouDuan_Column_List" type="Map">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="V_shouduan_Cable_host" jdbcType="INTEGER" property="vShouduanCableHost"/>
         <result column="V_shouduan_Cable_spare" jdbcType="INTEGER" property="vShouduanCableSpare"/>
+        <result column="mA_shouduan_Cable" jdbcType="INTEGER" property="maShouduanCable"/>
         <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
     </resultMap>
     <select id="selectFenXianPanShouDuanAll" resultMap="FenXianPanShouDuan_Column_List">
@@ -946,15 +947,13 @@
 
 
     <sql id="ShouDuan_Column_List">
-        qi.id, V_in_all,mV_in_zhu, mV_in_bing, mV_in_diao_zhu, mV_in_diao_bing, Hz_in_low_zhu, Hz_in_low_bing,
+        qi.id, direction, GJcollection ,V_in_all,mV_in_zhu, mV_in_bing, mV_in_diao_zhu, mV_in_diao_bing, Hz_in_low_zhu, Hz_in_low_bing,
     GJ_drive_zhu, GJ_drive_bing, GJ_rear_collection_zhu, GJ_rear_collection_bing, baojing_zhu,baojing_bing,quDuanYunYing_name
     </sql>
     <resultMap id="ShouDuanResultMap" type="Map">
         <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="xid" jdbcType="INTEGER" property="xid"/>
-        <result column="qid" jdbcType="INTEGER" property="qid"/>
-        <result column="cid" jdbcType="INTEGER" property="cid"/>
-        <result column="typeid" jdbcType="INTEGER" property="typeid"/>
+        <result column="direction" jdbcType="VARCHAR" property="direction"/>
+        <result column="GJcollection" jdbcType="VARCHAR" property="gJcollection"/>
         <result column="V_in_all" jdbcType="INTEGER" property="vInAll"/>
         <result column="mV_in_zhu" jdbcType="INTEGER" property="mvInZhu"/>
         <result column="mV_in_bing" jdbcType="INTEGER" property="mvInBing"/>
