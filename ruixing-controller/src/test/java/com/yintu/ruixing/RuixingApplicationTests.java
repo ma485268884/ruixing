@@ -1,14 +1,19 @@
 package com.yintu.ruixing;
 
 import com.yintu.ruixing.dao.PermissionDao;
-import com.yintu.ruixing.service.QuDuanService;
-import com.yintu.ruixing.service.ShouDuanService;
+import com.yintu.ruixing.dao.QuDuanInfoDao;
+import com.yintu.ruixing.dao.UserDao;
 import com.yintu.ruixing.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.AntPathMatcher;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class RuixingApplicationTests {
@@ -18,17 +23,17 @@ class RuixingApplicationTests {
     @Autowired
     private PermissionDao permissionDao;
     @Autowired
-    private ShouDuanService shouDuanService;
+    private QuDuanInfoDao quDuanInfoDao;
+
 
     @Test
-    void contextLoads() {
-        //System.out.println(userService.loadUserByUsername("d"));
-//        AntPathMatcher antPathMatcher = new AntPathMatcher();
-//        System.out.println(new BCryptPasswordEncoder().encode("123456"));
-//        System.out.println(antPathMatcher.match("/users/**", "/users/121212/role"));
-//        System.out.println(antPathMatcher.match("/users", "/users/121212/role?page=131"));
-//        System.out.println(permissionDao.selectByUserIdAndUrl(1L, "/users"));
-        shouDuanService.findByCidAndXid(1, 1);
+    void contextLoads() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd");
+        Date date = simpleDateFormat.parse("2020-06-04");
+        System.out.println(quDuanInfoDao.selectStatisticsSongDuanByDate(date));
+        System.out.println(quDuanInfoDao.selectStatisticsFenXianPanSongDuanByDate(date));
+        System.out.println(quDuanInfoDao.selectStatisticsFenXianPanShouDuanByDate(date));
+        System.out.println(quDuanInfoDao.selectStatisticsShouDuanByDate(date));
 
     }
 }
