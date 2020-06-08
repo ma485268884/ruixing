@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.crypto.Data;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -235,29 +236,43 @@ public class GuZhangStudyController {
     @GetMapping("/findGuZhangKuData/{id}")
     public Map<String, Object> findGuZhangKuData(@PathVariable Integer id, Integer page, Integer size) {
         JSONObject js = new JSONObject();
+
         List<QuDuanInfoEntity> quDuanInfoEntities = new ArrayList<>();
         List<QuDuanBaseEntity> quDuanBaseEntities1 = guZhangStudyService.findFristId(id);
         if (quDuanBaseEntities1.size() > 0 ) {
             Integer fristId = quDuanBaseEntities1.get(0).getId();
             List<QuDuanInfoEntity> quDuanInfoEntityList1 = guZhangStudyService.findGuZhangKuData(fristId, page, size);
-            js.put("后方区段", quDuanInfoEntityList1);
+            js.put("Frist", quDuanInfoEntityList1);
             quDuanInfoEntities.addAll(quDuanInfoEntityList1);
         }
         List<QuDuanBaseEntity> quDuanBaseEntities2 = guZhangStudyService.findLastId(id);
         if (quDuanBaseEntities2.size() > 0) {
             Integer lastId = quDuanBaseEntities2.get(0).getId();
             List<QuDuanInfoEntity> quDuanInfoEntityList2 = guZhangStudyService.findGuZhangKuData(lastId, page, size);
-            js.put("前方区段", quDuanInfoEntityList2);
+            js.put("Last", quDuanInfoEntityList2);
             quDuanInfoEntities.addAll(quDuanInfoEntityList2);
         }
         List<QuDuanInfoEntity> quDuanInfoEntityList = guZhangStudyService.findGuZhangKuData(id, page, size);
-        js.put("本区段", quDuanInfoEntityList);
+        js.put("Mysel", quDuanInfoEntityList);
         quDuanInfoEntities.addAll(quDuanInfoEntityList);
+        System.out.println("99999"+quDuanInfoEntities);
+        for (QuDuanInfoEntity quDuanInfoEntity : quDuanInfoEntities) {
+            System.out.println("888888"+quDuanInfoEntity);
+            Field[] declaredFields = quDuanInfoEntity.getClass().getDeclaredFields();
+            for (int i = 0; i < declaredFields.length; i++) {
+                System.out.println("123456"+declaredFields[i].getName());
+
+            }
+            System.out.println("77777"+quDuanInfoEntity.getALonginFbaDiao().toString());
+        }
         //分页处理
         PageHelper.startPage(page, size);
         PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<QuDuanInfoEntity>(quDuanInfoEntities);
         js.put("pageInfo", pageInfo);
+        Object frist = js.get("Frist");
 
+        System.out.println("11111111"+js.get("Frist"));
+        System.out.println("54544554"+js);
         return ResponseDataUtil.ok("查询数据成功", js);
     }
 

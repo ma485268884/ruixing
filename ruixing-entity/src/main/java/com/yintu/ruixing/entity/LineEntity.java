@@ -32,6 +32,6 @@ public class LineEntity {
 
     private Integer type;//0：空 ， 1：接近，2：离去
 
-    private QuDuanBaseEntity quDuanBaseEntity;
+   // private QuDuanBaseEntity quDuanBaseEntity;
 
 }

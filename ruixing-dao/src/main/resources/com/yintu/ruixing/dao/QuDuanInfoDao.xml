@@ -6,6 +6,7 @@
         <result column="xid" jdbcType="INTEGER" property="xid"/>
         <result column="qid" jdbcType="INTEGER" property="qid"/>
         <result column="cid" jdbcType="INTEGER" property="cid"/>
+        <result column="sid" jdbcType="INTEGER" property="sid"/>
         <result column="typeid" jdbcType="INTEGER" property="typeid"/>
         <result column="data_zhengChang" jdbcType="INTEGER" property="dataZhengchang"/>
         <result column="Design_carrier" jdbcType="VARCHAR" property="designCarrier"/>

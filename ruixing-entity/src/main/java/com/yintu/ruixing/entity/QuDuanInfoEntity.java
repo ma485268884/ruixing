@@ -20,6 +20,8 @@ public class QuDuanInfoEntity implements Serializable {
 
     private Integer cid;//车站id
 
+    private Integer sid; //设备id
+
     private Integer typeid;//类型id
 
     private Integer dataZhengchang;
@@ -153,5 +155,7 @@ public class QuDuanInfoEntity implements Serializable {
     private String yuliu;
 
     private QuDuanBaseEntity quDuanBaseEntity;
+
+    private SheBeiEntity sheBeiEntity;
 
 }

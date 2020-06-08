@@ -323,7 +323,7 @@
                 guZhang_xianDuan = #{guzhangXianduan,jdbcType=VARCHAR},
             </if>
             <if test="qid != null">
-                qid=#{qid,jdbcType=INTEGER}
+                qid=#{qid,jdbcType=INTEGER},
             </if>
             <if test="guzhangQuduan != null">
                 guZhang_quDuan= #{guzhangQuduan,jdbcType=VARCHAR},

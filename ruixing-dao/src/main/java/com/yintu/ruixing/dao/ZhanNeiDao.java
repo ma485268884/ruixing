@@ -1,5 +1,6 @@
 package com.yintu.ruixing.dao;
 
+import com.yintu.ruixing.entity.LineEntity;
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
 
 import java.util.List;
