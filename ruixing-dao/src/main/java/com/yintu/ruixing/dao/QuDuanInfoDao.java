@@ -45,6 +45,8 @@ public interface QuDuanInfoDao {
     List<Map<String, Object>> selectStatisticsShouDuanByDate(Date data);
 
 
+
+
     int updateByPrimaryKeySelective(QuDuanInfoEntity record);
 
     int updateByPrimaryKey(QuDuanInfoEntity record);

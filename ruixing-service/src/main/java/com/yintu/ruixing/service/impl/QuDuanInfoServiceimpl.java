@@ -111,4 +111,6 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         return quDuanInfoDao.selectStatisticsShouDuanByDate(time);
     }
 
+
+
 }
