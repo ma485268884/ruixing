@@ -69,24 +69,25 @@ public class QuDuanInfoController extends BaseController {
     }
 
     @GetMapping("/dailypaper")
-    public Map<String, Object> findStatisticsSongDuanByDate(@RequestParam("type") Integer selectType, @RequestParam("time") Date time) {
-        List<Map<String, Object>> maps = new ArrayList<>();
-        switch (selectType) {
-            case 1:
-                maps = quDuanInfoService.findStatisticsSongDuanByDate(time);
-                break;
-            case 2:
-                maps = quDuanInfoService.findStatisticsFenXianPanSongDuanByDate(time);
-                break;
-            case 3:
-                maps = quDuanInfoService.findStatisticsFenXianPanShouDuanByDate(time);
-                break;
-            case 4:
-                maps = quDuanInfoService.findStatisticsShouDuanByDate(time);
-                break;
-            default:
-                break;
-        }
+    public Map<String, Object> findStatisticsByDate(@RequestParam("time") Date time) {
+//        List<Map<String, Object>> maps = new ArrayList<>();
+//        switch (selectType) {
+//            case 1:
+//                maps = quDuanInfoService.findStatisticsSongDuanByDate(time);
+//                break;
+//            case 2:
+//                maps = quDuanInfoService.findStatisticsFenXianPanSongDuanByDate(time);
+//                break;
+//            case 3:
+//                maps = quDuanInfoService.findStatisticsFenXianPanShouDuanByDate(time);
+//                break;
+//            case 4:
+//                maps = quDuanInfoService.findStatisticsShouDuanByDate(time);
+//                break;
+//            default:
+//                break;
+//        }
+        List<Map<String, Object>> maps = quDuanInfoService.findStatisticsByDate(time);
         return ResponseDataUtil.ok("查询区段统计列表成功", maps);
     }
 

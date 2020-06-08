@@ -44,6 +44,8 @@ public interface QuDuanInfoDao {
 
     List<Map<String, Object>> selectStatisticsShouDuanByDate(Date data);
 
+    List<Map<String, Object>> selectStatisticsByDate(Date data);
+
 
 
 
