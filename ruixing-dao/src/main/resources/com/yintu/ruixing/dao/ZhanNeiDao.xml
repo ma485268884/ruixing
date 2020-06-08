@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yintu.ruixing.dao.ZhanNeiDao">
-        <resultMap id="line" type="com.yintu.ruixing.entity.LineEntity">
+    <resultMap id="line" type="com.yintu.ruixing.entity.LineEntity">
+        <id property="id" column="id"></id>
+        <result property="lineNumber" column="line_number"/>
+        <result property="leftRight" column="left_right"/>
+        <result property="xid" column="xid"/>
+        <result property="xianDuanName" column="xianduan_name"/>
+        <result property="cid" column="cid"/>
+        <result property="cheZhanName" column="chezhan_name"/>
+        <result property="xianBie" column="xingbie"/>
+        <result property="type" column="type"/>
+        <association jdbcType="com.yintu.ruixing.entity.QuDuanBaseEntity" property="quduan">
+            <id column="qbId" jdbcType="INTEGER" property="id"/>
+            <result column="carrier" jdbcType="VARCHAR" property="carrier"/>
+            <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
+            <result column="guiNeiDiZhi" jdbcType="INTEGER" property="guineidizhi"/>
+            <result column="dianMaHuaGuiHao" jdbcType="VARCHAR" property="dianmahuaguihao"/>
+        </association>
+    </resultMap>
 
-        </resultMap>
 </mapper>

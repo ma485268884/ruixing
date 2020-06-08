@@ -39,6 +39,7 @@ public class GuZhangStudyController {
     public Map<String, Object> findGuZhangList(@RequestParam Integer page, @RequestParam Integer size) {
         JSONObject js = new JSONObject();
         List<GuZhangStudyEntity> guZhangStudyEntity = guZhangStudyService.findGuZhangList(page, size);
+        System.out.println("88888"+guZhangStudyEntity);
         js.put("guZhangStudyEntity", guZhangStudyEntity);
         PageHelper.startPage(page, size);
         List<GuZhangStudyEntity> guZhangList = guZhangStudyService.findGuZhangList(page, size);

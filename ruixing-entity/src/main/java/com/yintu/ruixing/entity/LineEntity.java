@@ -22,7 +22,11 @@ public class LineEntity {
 
     private Integer xid;//线段id
 
-    private String xianDuan;//所属线段
+    private String xianDuanName;//所属线段
+
+    private Integer cid;//车站id
+
+    private String cheZhanName;//所属车站
 
     private Integer xianBie;//0：空 ，1：上行， 2：下行
 
