@@ -22,32 +22,37 @@ public class CheZhanEntity {
     private long xid;
 
     private String czName;
+    private String xdName;
+    private String dwdName;
+    private String tljName;
 
     private long czId;
 
     private long xdId;
 
-    private String czNameJianCheng;
+    private String czNameJianCheng;//图中简称
 
-    private String czIp;
+    private String czIp;//车站IP
 
-    private Long czType;
+    private Long czType;//车站类型 0：未启用/实验站点  1：正式启用
 
-    private Long czStutrs;
+    private Long czStutrs;//车站连接状态  0：已配置未连接  1：连接中
 
-    private Long czOpenStutrs;
+    private Long czOpenStutrs;//开通状态   0：未连接   1：已连接
 
-    private Date czLastTime;
+    private Date czLastTime;//最后连接时间
 
     private long xdCzId;
 
-    private String czMiaoShu;
+    private String czMiaoShu;//车站运用概况
+
+    private long czCaoZuo;//操作 0：断开  ，1：连接
 
     private String yuliu1;
 
     private String yuliu2;
 
-    private long czDuanTou;
+    private long czDuanTou;//是否为端头站   0：是  1：否
 
     private DianWuDuanEntity dianWuDuanEntity;
 

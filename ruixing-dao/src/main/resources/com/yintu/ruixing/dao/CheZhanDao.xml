@@ -11,6 +11,7 @@
         <result property="czType" column="cz_type"/>
         <result property="czStutrs" column="cz_stutrs"/>
         <result property="czOpenStutrs" column="cz_open_stutrs"/>
+        <result property="czCaoZuo" column="cz_caozuo"/>
         <result property="czLastTime" column="cz_lasttime"/>
         <result property="xdCzId" column="xd_cz_id"/>
         <result property="czMiaoShu" column="cz_miaoshu"/>

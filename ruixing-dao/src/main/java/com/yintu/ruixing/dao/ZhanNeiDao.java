@@ -1,5 +1,6 @@
 package com.yintu.ruixing.dao;
 
+import com.yintu.ruixing.entity.CheZhanEntity;
 import com.yintu.ruixing.entity.LineEntity;
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
 
@@ -12,4 +13,8 @@ import java.util.List;
  */
 public interface ZhanNeiDao {
     List<QuDuanBaseEntity> findAllDianMaHua(Long id);
+
+    List<CheZhanEntity> findAllWangLuoLianJie();
+
+    void editWangLuoLianJieById(CheZhanEntity cheZhanEntity);
 }

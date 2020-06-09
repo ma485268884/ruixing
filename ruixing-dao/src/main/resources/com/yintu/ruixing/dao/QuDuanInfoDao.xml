@@ -103,11 +103,99 @@
 
 
 
-    <select id="findGuZhangKuData" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid=qb.id
-        where qi.id = #{id,jdbcType=INTEGER}
+    <resultMap id="quduanBaseResultMap" type="com.yintu.ruixing.entity.QuDuanInfoEntity">
+    <id column="qiId" jdbcType="INTEGER" property="id"/>
+    <result column="xid" jdbcType="INTEGER" property="xid"/>
+    <result column="qid" jdbcType="INTEGER" property="qid"/>
+    <result column="cid" jdbcType="INTEGER" property="cid"/>
+    <result column="sid" jdbcType="INTEGER" property="sid"/>
+    <result column="typeid" jdbcType="INTEGER" property="typeid"/>
+    <result column="data_zhengChang" jdbcType="INTEGER" property="dataZhengchang"/>
+    <result column="Design_carrier" jdbcType="VARCHAR" property="designCarrier"/>
+    <result column="direction" jdbcType="VARCHAR" property="direction"/>
+    <result column="GJcollection" jdbcType="VARCHAR" property="gjcollection"/>
+    <result column="V_in_all" jdbcType="INTEGER" property="vInAll"/>
+    <result column="mV_in_zhu" jdbcType="INTEGER" property="mvInZhu"/>
+    <result column="mV_in_bing" jdbcType="INTEGER" property="mvInBing"/>
+    <result column="mV_in_diao_zhu" jdbcType="INTEGER" property="mvInDiaoZhu"/>
+    <result column="mV_in_diao_bing" jdbcType="INTEGER" property="mvInDiaoBing"/>
+    <result column="Hz_in_low_zhu" jdbcType="INTEGER" property="hzInLowZhu"/>
+    <result column="Hz_in_low_bing" jdbcType="INTEGER" property="hzInLowBing"/>
+    <result column="GJ_drive_zhu" jdbcType="VARCHAR" property="gjDriveZhu"/>
+    <result column="GJ_drive_bing" jdbcType="VARCHAR" property="gjDriveBing"/>
+    <result column="GJ_rear_collection_zhu" jdbcType="VARCHAR" property="gjRearCollectionZhu"/>
+    <result column="GJ_rear_collection_bing" jdbcType="VARCHAR" property="gjRearCollectionBing"/>
+    <result column="baojing_zhu" jdbcType="VARCHAR" property="baojingZhu"/>
+    <result column="baojing_bing" jdbcType="VARCHAR" property="baojingBing"/>
+    <result column="V_out_zhu" jdbcType="INTEGER" property="vOutZhu"/>
+    <result column="V_out_bei" jdbcType="INTEGER" property="vOutBei"/>
+    <result column="mA_out_zhu" jdbcType="INTEGER" property="maOutZhu"/>
+    <result column="mA_out_bei" jdbcType="INTEGER" property="maOutBei"/>
+    <result column="Hz_up_zhu" jdbcType="INTEGER" property="hzUpZhu"/>
+    <result column="Hz_up_bei" jdbcType="INTEGER" property="hzUpBei"/>
+    <result column="Hz_down_zhu" jdbcType="INTEGER" property="hzDownZhu"/>
+    <result column="Hz_down_bei" jdbcType="INTEGER" property="hzDownBei"/>
+    <result column="Hz_low_zhu" jdbcType="INTEGER" property="hzLowZhu"/>
+    <result column="Hz_low_bei" jdbcType="INTEGER" property="hzLowBei"/>
+    <result column="FBJ_drive_zhu" jdbcType="VARCHAR" property="fbjDriveZhu"/>
+    <result column="FBJ_drive_bei" jdbcType="VARCHAR" property="fbjDriveBei"/>
+    <result column="FBJ_collection_zhu" jdbcType="VARCHAR" property="fbjCollectionZhu"/>
+    <result column="FBJ_collection_bei" jdbcType="VARCHAR" property="fbjCollectionBei"/>
+    <result column="V_songduan_Cable" jdbcType="INTEGER" property="vSongduanCable"/>
+    <result column="mA_songduan_Cable" jdbcType="INTEGER" property="maSongduanCable"/>
+    <result column="V_shouduan_Cable_host" jdbcType="INTEGER" property="vShouduanCableHost"/>
+    <result column="V_shouduan_Cable_spare" jdbcType="INTEGER" property="vShouduanCableSpare"/>
+    <result column="mA_shouduan_Cable" jdbcType="INTEGER" property="maShouduanCable"/>
+    <result column="mA_Cable_JBP" jdbcType="INTEGER" property="maCableJbp"/>
+    <result column="A_longIn_JBP" jdbcType="INTEGER" property="aLonginJbp"/>
+    <result column="A_longOut_JBP" jdbcType="INTEGER" property="aLongoutJbp"/>
+    <result column="A_shortIn_JBP" jdbcType="INTEGER" property="aShortinJbp"/>
+    <result column="A_shortOut_JBP" jdbcType="INTEGER" property="aShortoutJbp"/>
+    <result column="T_JBP" jdbcType="INTEGER" property="tJbp"/>
+    <result column="mA_Cable_FBP" jdbcType="INTEGER" property="maCableFbp"/>
+    <result column="A_longIn_FBP" jdbcType="INTEGER" property="aLonginFbp"/>
+    <result column="A_longOut_FBP" jdbcType="INTEGER" property="aLongoutFbp"/>
+    <result column="A_shortIn_FBP" jdbcType="INTEGER" property="aShortinFbp"/>
+    <result column="A_shortOut_FBP" jdbcType="INTEGER" property="aShortoutFbp"/>
+    <result column="T_FBP" jdbcType="INTEGER" property="tFbp"/>
+    <result column="A_longIn_FBA_zhu" jdbcType="INTEGER" property="aLonginFbaZhu"/>
+    <result column="A_longIn_FBA_diao" jdbcType="INTEGER" property="aLonginFbaDiao"/>
+    <result column="A_longOut_FBA_zhu" jdbcType="INTEGER" property="aLongoutFbaZhu"/>
+    <result column="A_longOut_FBA_diao" jdbcType="INTEGER" property="aLongoutFbaDiao"/>
+    <result column="A_shortIn_FBA_zhu" jdbcType="INTEGER" property="aShortinFbaZhu"/>
+    <result column="A_shortIn_FBA_diao" jdbcType="INTEGER" property="aShortinFbaDiao"/>
+    <result column="A_shortOut_FBA_zhu" jdbcType="INTEGER" property="aShortoutFbaZhu"/>
+    <result column="A_shortOut_FBA_diao" jdbcType="INTEGER" property="aShortoutFbaDiao"/>
+    <result column="A_longIn_JBA_zhu" jdbcType="INTEGER" property="aLonginJbaZhu"/>
+    <result column="A_longIn_JBA_diao" jdbcType="INTEGER" property="aLonginJbaDiao"/>
+    <result column="A_longOut_JBA_zhu" jdbcType="INTEGER" property="aLongoutJbaZhu"/>
+    <result column="A_longOut_JBA_diao" jdbcType="INTEGER" property="aLongoutJbaDiao"/>
+    <result column="A_shortIn_JBA_zhu" jdbcType="INTEGER" property="aShortinJbaZhu"/>
+    <result column="A_shortIn_JBA_diao" jdbcType="INTEGER" property="aShortinJbaDiao"/>
+    <result column="A_shortOut_JBA_zhu" jdbcType="INTEGER" property="aShortoutJbaZhu"/>
+    <result column="A_shortOut_JBA_diao" jdbcType="INTEGER" property="aShortoutJbaDiao"/>
+    <result column="qiYuliu" jdbcType="VARCHAR" property="yuliu"/>
+    <!--<association column="qid" jdbcType="INTEGER" property="quDuanBaseEntity">-->
+       <!-- <id column="qbId" jdbcType="INTEGER" property="id"/>-->
+        <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
+        <result column="carrier" jdbcType="VARCHAR" property="carrier"/>
+        <result column="diDuan_type" jdbcType="VARCHAR" property="diduanType"/>
+        <result column="bianJie" jdbcType="INTEGER" property="bianjie"/>
+        <result column="xianLuQingKuang" jdbcType="VARCHAR" property="xianluqingkuang"/>
+        <result column="zhanQuFenJie" jdbcType="INTEGER" property="zhanqufenjie"/>
+    <!--</association>-->
+    </resultMap>
+    <select id="findGuZhangKuData" parameterType="java.lang.Integer" resultMap="quduanBaseResultMap">
+        SELECT
+            qi.*,
+            qb.*
+        FROM
+            mro_quduan_info qi,
+            mro_quduan_base qb
+        WHERE
+            qi.qid = qb.id
+            AND qi.id = #{id,jdbcType=INTEGER}
+
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

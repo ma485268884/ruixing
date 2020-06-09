@@ -29,7 +29,7 @@ public interface GuZhangStudyDao {
 
     void addGuZhang(GuZhangStudyEntity guZhangStudyEntity);
 
-    void editGuZhang(Long id);
+    void editGuZhang(GuZhangStudyEntity guZhangStudyEntity);
 
     void deletGuZhang(Long id);
 

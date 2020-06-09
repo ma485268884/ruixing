@@ -65,8 +65,8 @@ public class GuZhangStudyController {
 
     //根据id修改数据
     @PutMapping("/editGuZhang/{id}")
-    public Map<String, Object> editGuZhang(@PathVariable Long id) {
-        guZhangStudyService.editGuZhang(id);
+    public Map<String, Object> editGuZhang(@PathVariable Long id, GuZhangStudyEntity guZhangStudyEntity) {
+        guZhangStudyService.editGuZhang(guZhangStudyEntity);
         return ResponseDataUtil.ok("修改数据成功");
     }
 
@@ -235,45 +235,59 @@ public class GuZhangStudyController {
     //故障库查看
     @GetMapping("/findGuZhangKuData/{id}")
     public Map<String, Object> findGuZhangKuData(@PathVariable Integer id, Integer page, Integer size) {
-        JSONObject js = new JSONObject();
-
+        //JSONObject js = new JSONObject();
+        Map<String,List<QuDuanInfoEntity>> map=new HashMap<>();
         List<QuDuanInfoEntity> quDuanInfoEntities = new ArrayList<>();
         List<QuDuanBaseEntity> quDuanBaseEntities1 = guZhangStudyService.findFristId(id);
         if (quDuanBaseEntities1.size() > 0 ) {
+
+            //PageHelper.startPage(page, size);
             Integer fristId = quDuanBaseEntities1.get(0).getId();
+
             List<QuDuanInfoEntity> quDuanInfoEntityList1 = guZhangStudyService.findGuZhangKuData(fristId, page, size);
-            js.put("Frist", quDuanInfoEntityList1);
-            quDuanInfoEntities.addAll(quDuanInfoEntityList1);
+            //js.put("Frist", quDuanInfoEntityList1);
+            //map.put("Frist", quDuanInfoEntityList1);
+            PageHelper.startPage(page, size);
+            //List<QuDuanInfoEntity> all = guZhangStudyService.findGuZhangKuData(fristId, page, size);
+            PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<QuDuanInfoEntity>(quDuanInfoEntityList1);
+            //js.put("pageInfo1", pageInfo);
+
+            System.out.println("page"+pageInfo);
+            return ResponseDataUtil.ok("ajdja",pageInfo);
+           // quDuanInfoEntities.addAll(quDuanInfoEntityList1);
         }
-        List<QuDuanBaseEntity> quDuanBaseEntities2 = guZhangStudyService.findLastId(id);
+        /*List<QuDuanBaseEntity> quDuanBaseEntities2 = guZhangStudyService.findLastId(id);
         if (quDuanBaseEntities2.size() > 0) {
             Integer lastId = quDuanBaseEntities2.get(0).getId();
             List<QuDuanInfoEntity> quDuanInfoEntityList2 = guZhangStudyService.findGuZhangKuData(lastId, page, size);
             js.put("Last", quDuanInfoEntityList2);
-            quDuanInfoEntities.addAll(quDuanInfoEntityList2);
+            //map.put("Last", quDuanInfoEntityList2);
+            PageHelper.startPage(page, size);
+            PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<QuDuanInfoEntity>(quDuanInfoEntityList2);
+            js.put("pageInfo2", pageInfo);
+           // quDuanInfoEntities.addAll(quDuanInfoEntityList2);
         }
         List<QuDuanInfoEntity> quDuanInfoEntityList = guZhangStudyService.findGuZhangKuData(id, page, size);
         js.put("Mysel", quDuanInfoEntityList);
-        quDuanInfoEntities.addAll(quDuanInfoEntityList);
-        System.out.println("99999"+quDuanInfoEntities);
-        for (QuDuanInfoEntity quDuanInfoEntity : quDuanInfoEntities) {
-            System.out.println("888888"+quDuanInfoEntity);
-            Field[] declaredFields = quDuanInfoEntity.getClass().getDeclaredFields();
-            for (int i = 0; i < declaredFields.length; i++) {
-                System.out.println("123456"+declaredFields[i].getName());
-
-            }
-            System.out.println("77777"+quDuanInfoEntity.getALonginFbaDiao().toString());
-        }
-        //分页处理
+        //map.put("Mysel", quDuanInfoEntityList);
         PageHelper.startPage(page, size);
-        PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<QuDuanInfoEntity>(quDuanInfoEntities);
+        PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<QuDuanInfoEntity>(quDuanInfoEntityList);
         js.put("pageInfo", pageInfo);
-        Object frist = js.get("Frist");
+        //quDuanInfoEntities.addAll(quDuanInfoEntityList);
 
-        System.out.println("11111111"+js.get("Frist"));
-        System.out.println("54544554"+js);
-        return ResponseDataUtil.ok("查询数据成功", js);
+        //分页处理
+        System.out.println("hahahaahah"+quDuanInfoEntities);
+
+        for (QuDuanInfoEntity quDuanInfoEntity : quDuanInfoEntities) {
+
+            System.out.println("lllllll"+quDuanInfoEntity);
+        }
+        *//*System.out.println("js"+js);
+        PageHelper.startPage(page, size);
+        PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<QuDuanInfoEntity>(quDuanInfoEntities);*//*
+       // js.put("pageInfo", pageInfo);*/
+
+        return ResponseDataUtil.ok("查询数据成功");
     }
 
 
