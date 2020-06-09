@@ -65,4 +65,6 @@ public class QuDuanBaseEntity {
     private Date time;
 
     private String yuliu;
+
+    private LineEntity lineEntity;
 }

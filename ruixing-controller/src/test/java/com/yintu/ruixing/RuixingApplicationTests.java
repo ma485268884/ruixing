@@ -18,7 +18,7 @@ import java.util.Date;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class RuixingApplicationTests {
 
-    @Autowired
+    /*@Autowired
     private UserService userService;
     @Autowired
     private PermissionDao permissionDao;
@@ -35,5 +35,5 @@ class RuixingApplicationTests {
 //        System.out.println(permissionDao.selectByUserIdAndUrl(1L, "/users"));
         shouDuanService.findByCidAndXid(1, 1);
 
-    }
+    }*/
 }
