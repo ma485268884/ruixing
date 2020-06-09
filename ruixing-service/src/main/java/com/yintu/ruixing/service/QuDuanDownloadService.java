@@ -1,6 +1,7 @@
 package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.entity.QuDuanDownloadEntity;
+import com.yintu.ruixing.entity.QuDuanInfoEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,9 @@ public interface QuDuanDownloadService {
 
     List<QuDuanDownloadEntity> findByDateTime(Date startDateTime, Date endDateTime);
 
-    void add(Integer xid, Integer cid, Date date, Integer minute);
+
+    List<QuDuanInfoEntity> findDataById(Integer id);
+
+    void add(Integer xid, Integer cid, Short type, Date startDateTime, Integer minute);
 
 }

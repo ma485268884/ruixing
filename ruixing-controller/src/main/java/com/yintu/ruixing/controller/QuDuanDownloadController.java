@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.QuDuanDownloadEntity;
+import com.yintu.ruixing.entity.QuDuanInfoEntity;
 import com.yintu.ruixing.service.QuDuanDownloadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +27,10 @@ public class QuDuanDownloadController extends BaseController {
     @PostMapping
     public Map<String, Object> add(@RequestParam("xid") Integer xid,
                                    @RequestParam("cid") Integer cid,
-                                   @RequestParam("date") Date date,
+                                   @RequestParam("type") Short type,
+                                   @RequestParam("startDateTime") Date startDateTime,
                                    @RequestParam("minute") Integer minute) {
-        quDuanDownloadService.add(xid, cid, date, minute);
+        quDuanDownloadService.add(xid, cid, type, startDateTime, minute);
         return ResponseDataUtil.ok("添加下载记录成功");
     }
 
@@ -40,9 +42,15 @@ public class QuDuanDownloadController extends BaseController {
 
     }
 
+    @GetMapping("/{id}")
+    public Map<String, Object> findById(@PathVariable Integer id) {
+        List<QuDuanInfoEntity> quDuanInfoEntities = quDuanDownloadService.findDataById(id);
+        return ResponseDataUtil.ok("查询下载记录成功", quDuanInfoEntities);
+    }
+
     @GetMapping
-    public Map<String, Object> findAll(@RequestParam("pageNumber") Integer pageNumber,
-                                       @RequestParam("pageSize") Integer pageSize,
+    public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber,
+                                       @RequestParam("page_size") Integer pageSize,
                                        @RequestParam(value = "sortby", required = false) String sortby,
                                        @RequestParam(value = "order", required = false) String order,
                                        @RequestParam("startDateTime") Date startDateTime,
@@ -53,7 +61,7 @@ public class QuDuanDownloadController extends BaseController {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<QuDuanDownloadEntity> quDuanDownloadEntities = quDuanDownloadService.findByDateTime(startDateTime, endDateTime);
         PageInfo<QuDuanDownloadEntity> pageInfo = new PageInfo<>(quDuanDownloadEntities);
-        return ResponseDataUtil.ok("查询下载记录成功", pageInfo);
+        return ResponseDataUtil.ok("查询下载记录列表成功", pageInfo);
     }
 
 
