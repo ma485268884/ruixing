@@ -29,8 +29,8 @@
         <include refid="Base_Column_List"/>
         ,
         <include refid="Blob_Column_List"/>
-        from mro_quduan_download inner join mro_chezhan cz on qd.cid=cz.cid
-        where id = #{id,jdbcType=INTEGER}
+        from mro_quduan_download qd inner join mro_chezhan cz on qd.cid=cz.cid
+        where qd.id = #{id,jdbcType=INTEGER}
     </select>
     <select id="selectAll" resultMap="ResultMapWithBLOBs">
         select
