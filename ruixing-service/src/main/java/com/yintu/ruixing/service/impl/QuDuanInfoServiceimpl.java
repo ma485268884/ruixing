@@ -47,6 +47,11 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         return quDuanInfoDao.selectByXidAndCid(cid, xid);
     }
 
+    @Override
+    public List<QuDuanInfoEntity> findAll() {
+        return quDuanInfoDao.selectAll();
+    }
+
 
     @Override
     public List<Map<String, Object>> findSongDuanAll() {
@@ -90,27 +95,26 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
     }
 
 
+    @Override
+    public List<Map<String, Object>> findStatisticsSongDuanByDate(Date time) {
+        return quDuanInfoDao.selectStatisticsSongDuanByDate(time);
+    }
 
-//    @Override
-//    public List<Map<String, Object>> findStatisticsSongDuanByDate(Date time) {
-//        return quDuanInfoDao.selectStatisticsSongDuanByDate(time);
-//    }
-//
-//
-//    @Override
-//    public List<Map<String, Object>> findStatisticsFenXianPanSongDuanByDate(Date time) {
-//        return quDuanInfoDao.selectStatisticsFenXianPanSongDuanByDate(time);
-//    }
-//
-//    @Override
-//    public List<Map<String, Object>> findStatisticsFenXianPanShouDuanByDate(Date time) {
-//        return quDuanInfoDao.selectStatisticsFenXianPanShouDuanByDate(time);
-//    }
-//
-//    @Override
-//    public List<Map<String, Object>> findStatisticsShouDuanByDate(Date time) {
-//        return quDuanInfoDao.selectStatisticsShouDuanByDate(time);
-//    }
+
+    @Override
+    public List<Map<String, Object>> findStatisticsFenXianPanSongDuanByDate(Date time) {
+        return quDuanInfoDao.selectStatisticsFenXianPanSongDuanByDate(time);
+    }
+
+    @Override
+    public List<Map<String, Object>> findStatisticsFenXianPanShouDuanByDate(Date time) {
+        return quDuanInfoDao.selectStatisticsFenXianPanShouDuanByDate(time);
+    }
+
+    @Override
+    public List<Map<String, Object>> findStatisticsShouDuanByDate(Date time) {
+        return quDuanInfoDao.selectStatisticsShouDuanByDate(time);
+    }
 
     @Override
     public List<Map<String, Object>> findStatisticsByDate(Date data) {

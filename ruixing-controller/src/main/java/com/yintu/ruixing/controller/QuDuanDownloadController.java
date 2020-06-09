@@ -9,7 +9,6 @@ import com.yintu.ruixing.service.QuDuanDownloadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -49,8 +48,8 @@ public class QuDuanDownloadController extends BaseController {
     }
 
     @GetMapping
-    public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber,
-                                       @RequestParam("page_size") Integer pageSize,
+    public Map<String, Object> findAll(@RequestParam(value = "page_number", defaultValue = "1") Integer pageNumber,
+                                       @RequestParam(value = "page_size", defaultValue = "10") Integer pageSize,
                                        @RequestParam(value = "sortby", required = false) String sortby,
                                        @RequestParam(value = "order", required = false) String order,
                                        @RequestParam("startDateTime") Date startDateTime,
