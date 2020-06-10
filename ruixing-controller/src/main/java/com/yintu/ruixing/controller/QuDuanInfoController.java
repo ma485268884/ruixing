@@ -35,20 +35,33 @@ public class QuDuanInfoController extends BaseController {
         return ResponseDataUtil.ok("查询区段列表成功", quDuanInfoEntities);
     }
 
-
+    /**
+     * 实时报表
+     *
+     * @param pageNumber 页码
+     * @param pageSize   页数
+     * @return
+     */
     @GetMapping("/realreport")
-    public Map<String, Object> findAll(@RequestParam(value = "page_number", defaultValue = "1") Integer pageNumber,
-                                       @RequestParam(value = "page_size", defaultValue = "10") Integer pageSize) {
+    public Map<String, Object> findAll(@RequestParam(value = "page_number") Integer pageNumber,
+                                       @RequestParam(value = "page_size") Integer pageSize) {
         PageHelper.startPage(pageNumber, pageSize);
         List<QuDuanInfoEntity> quDuanInfoEntities = quDuanInfoService.findAll();
         PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<>(quDuanInfoEntities);
         return ResponseDataUtil.ok("查询实时报表成功", pageInfo);
     }
 
-
+    /**
+     * 日报
+     *
+     * @param pageNumber 页码
+     * @param pageSize   页数
+     * @param time       日期
+     * @return
+     */
     @GetMapping("/dailypaper")
-    public Map<String, Object> findStatisticsByDate(@RequestParam(value = "page_number", defaultValue = "1") Integer pageNumber,
-                                                    @RequestParam(value = "page_size", defaultValue = "10") Integer pageSize,
+    public Map<String, Object> findStatisticsByDate(@RequestParam(value = "page_number") Integer pageNumber,
+                                                    @RequestParam(value = "page_size") Integer pageSize,
                                                     @RequestParam("time") Date time) {
         PageHelper.startPage(pageNumber, pageSize);
         List<Map<String, Object>> maps = quDuanInfoService.findStatisticsByDate(time);

@@ -2,6 +2,7 @@ package com.yintu.ruixing.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.QuDuanDownloadEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntity;
@@ -48,8 +49,8 @@ public class QuDuanDownloadController extends BaseController {
     }
 
     @GetMapping
-    public Map<String, Object> findAll(@RequestParam(value = "page_number", defaultValue = "1") Integer pageNumber,
-                                       @RequestParam(value = "page_size", defaultValue = "10") Integer pageSize,
+    public Map<String, Object> findAll(@RequestParam(value = "page_number") Integer pageNumber,
+                                       @RequestParam(value = "page_size") Integer pageSize,
                                        @RequestParam(value = "sortby", required = false) String sortby,
                                        @RequestParam(value = "order", required = false) String order,
                                        @RequestParam("startDateTime") Date startDateTime,
@@ -58,6 +59,8 @@ public class QuDuanDownloadController extends BaseController {
         if (sortby != null && !"".equals(sortby) && order != null && !"".equals(order))
             orderBy = sortby + " " + order;
         PageHelper.startPage(pageNumber, pageSize, orderBy);
+        if (startDateTime.after(endDateTime))
+            throw new BaseRuntimeException("开始时间不能大于结束时间");
         List<QuDuanDownloadEntity> quDuanDownloadEntities = quDuanDownloadService.findByDateTime(startDateTime, endDateTime);
         PageInfo<QuDuanDownloadEntity> pageInfo = new PageInfo<>(quDuanDownloadEntities);
         return ResponseDataUtil.ok("查询下载记录列表成功", pageInfo);
