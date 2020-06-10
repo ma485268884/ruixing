@@ -46,7 +46,11 @@
         ,
         <include refid="Blob_Column_List"/>
         from mro_quduan_download qd inner join mro_chezhan cz on qd.cid=cz.cid
-        where qd.start_time &gt;= #{startDateTime} and qd.end_time &lt;= #{endDateTime}
+        <where>
+            <if test="startDateTime!=null and endDateTime!=null">
+                qd.start_time &gt;= #{startDateTime,jdbcType=TIMESTAMP} and qd.end_time &lt;= #{endDateTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
