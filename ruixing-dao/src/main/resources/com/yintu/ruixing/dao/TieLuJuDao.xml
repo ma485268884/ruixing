@@ -10,7 +10,7 @@
     </resultMap>
 
     <!--根据id查询铁路局-->
-    <select id="findTieLuJuById" parameterType="long" resultType="com.yintu.ruixing.entity.TieLuJuEntity">
+    <select id="findTieLuJuById" parameterType="long" resultMap="tieluju">
         select * from mro_tieluju where tid=#{tid}
     </select>
 

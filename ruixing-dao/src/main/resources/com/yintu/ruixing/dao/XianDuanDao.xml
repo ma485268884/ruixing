@@ -43,7 +43,7 @@
         where xid=#{xid}
     </update>
     <!--查询线段-->
-    <select id="findXianDuanById" parameterType="java.lang.Long" resultType="com.yintu.ruixing.entity.XianDuanEntity">
+    <select id="findXianDuanById" parameterType="java.lang.Long" resultMap="xianduan">
         select * from mro_xianduan where xid=#{xid}
     </select>
 </mapper>

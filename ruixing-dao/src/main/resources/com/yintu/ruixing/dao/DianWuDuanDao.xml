@@ -12,7 +12,7 @@
     </resultMap>
 
     <!--查询电务段-->
-    <select id="findDianWuDuanById" resultType="com.yintu.ruixing.entity.DianWuDuanEntity" parameterType="java.lang.Long">
+    <select id="findDianWuDuanById" resultMap="dianwuduan" parameterType="java.lang.Long">
         select * from mro_dianwuduan where did =  #{did}
     </select>
     

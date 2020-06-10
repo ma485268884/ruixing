@@ -1,5 +1,6 @@
 package com.yintu.ruixing.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -40,7 +41,7 @@ public class GuZhangStudyController {
     public Map<String, Object> findGuZhangList(@RequestParam Integer page, @RequestParam Integer size) {
         JSONObject js = new JSONObject();
         List<GuZhangStudyEntity> guZhangStudyEntity = guZhangStudyService.findGuZhangList(page, size);
-        System.out.println("88888"+guZhangStudyEntity);
+        System.out.println("88888" + guZhangStudyEntity);
         js.put("guZhangStudyEntity", guZhangStudyEntity);
         PageHelper.startPage(page, size);
         List<GuZhangStudyEntity> guZhangList = guZhangStudyService.findGuZhangList(page, size);
@@ -234,60 +235,50 @@ public class GuZhangStudyController {
 
     //故障库查看
     @GetMapping("/findGuZhangKuData/{id}")
-    public Map<String, Object> findGuZhangKuData(@PathVariable Integer id, Integer page, Integer size) {
-        //JSONObject js = new JSONObject();
-        Map<String,List<QuDuanInfoEntity>> map=new HashMap<>();
-        List<QuDuanInfoEntity> quDuanInfoEntities = new ArrayList<>();
+    public Map<String, Object> findGuZhangKuDataById(@PathVariable Integer id, Integer page, Integer size) {
+
+        JSONObject js = new JSONObject();
+        //Map<String, List<QuDuanInfoEntity>> map = new HashMap<>();
+        //List<QuDuanInfoEntity> quDuanInfoEntities = new ArrayList<>();
         List<QuDuanBaseEntity> quDuanBaseEntities1 = guZhangStudyService.findFristId(id);
-        if (quDuanBaseEntities1.size() > 0 ) {
-
-            //PageHelper.startPage(page, size);
+        if (quDuanBaseEntities1.size() > 0) {
             Integer fristId = quDuanBaseEntities1.get(0).getId();
-
             List<QuDuanInfoEntity> quDuanInfoEntityList1 = guZhangStudyService.findGuZhangKuData(fristId, page, size);
-            //js.put("Frist", quDuanInfoEntityList1);
-            //map.put("Frist", quDuanInfoEntityList1);
-            PageHelper.startPage(page, size);
-            //List<QuDuanInfoEntity> all = guZhangStudyService.findGuZhangKuData(fristId, page, size);
-            PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<QuDuanInfoEntity>(quDuanInfoEntityList1);
-            //js.put("pageInfo1", pageInfo);
-
-            System.out.println("page"+pageInfo);
-            return ResponseDataUtil.ok("ajdja",pageInfo);
-           // quDuanInfoEntities.addAll(quDuanInfoEntityList1);
+            js.put("Frist", quDuanInfoEntityList1);
+            //quDuanInfoEntities.addAll(quDuanInfoEntityList1);
         }
-        /*List<QuDuanBaseEntity> quDuanBaseEntities2 = guZhangStudyService.findLastId(id);
+        List<QuDuanBaseEntity> quDuanBaseEntities2 = guZhangStudyService.findLastId(id);
         if (quDuanBaseEntities2.size() > 0) {
             Integer lastId = quDuanBaseEntities2.get(0).getId();
             List<QuDuanInfoEntity> quDuanInfoEntityList2 = guZhangStudyService.findGuZhangKuData(lastId, page, size);
             js.put("Last", quDuanInfoEntityList2);
-            //map.put("Last", quDuanInfoEntityList2);
-            PageHelper.startPage(page, size);
-            PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<QuDuanInfoEntity>(quDuanInfoEntityList2);
-            js.put("pageInfo2", pageInfo);
-           // quDuanInfoEntities.addAll(quDuanInfoEntityList2);
+            //quDuanInfoEntities.addAll(quDuanInfoEntityList2);
         }
         List<QuDuanInfoEntity> quDuanInfoEntityList = guZhangStudyService.findGuZhangKuData(id, page, size);
         js.put("Mysel", quDuanInfoEntityList);
-        //map.put("Mysel", quDuanInfoEntityList);
-        PageHelper.startPage(page, size);
-        PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<QuDuanInfoEntity>(quDuanInfoEntityList);
-        js.put("pageInfo", pageInfo);
         //quDuanInfoEntities.addAll(quDuanInfoEntityList);
-
+        //System.out.println(quDuanInfoEntities);
         //分页处理
-        System.out.println("hahahaahah"+quDuanInfoEntities);
 
+        /*List<QuDuanInfoEntity> list=new ArrayList<>();
+        System.out.println("hahahaahah" + quDuanInfoEntities);
         for (QuDuanInfoEntity quDuanInfoEntity : quDuanInfoEntities) {
+            System.out.println("lllllll" + quDuanInfoEntity);
+            String s = JSONArray.toJSONString(quDuanInfoEntity);
+            list.add(s);
+            String s1 = JSONObject.toJSONString(quDuanInfoEntity);
+            System.out.println("json"+JSONArray.toJSONString(quDuanInfoEntity));
 
-            System.out.println("lllllll"+quDuanInfoEntity);
         }
-        *//*System.out.println("js"+js);
-        PageHelper.startPage(page, size);
-        PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<QuDuanInfoEntity>(quDuanInfoEntities);*//*
-       // js.put("pageInfo", pageInfo);*/
+        System.out.println("ssss"+list);
+        System.out.println("js" + js);
+*/
+        //分页处理
+        /*PageHelper.startPage(page, size);
+        PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<QuDuanInfoEntity>(quDuanInfoEntities);
+        js.put("pageInfo", pageInfo);*/
+        return ResponseDataUtil.ok("查询数据成功",js);
 
-        return ResponseDataUtil.ok("查询数据成功");
     }
 
 

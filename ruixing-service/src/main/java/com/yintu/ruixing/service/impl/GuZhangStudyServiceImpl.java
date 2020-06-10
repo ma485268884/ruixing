@@ -1,5 +1,10 @@
 package com.yintu.ruixing.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.dao.GuZhangStudyDao;
 import com.yintu.ruixing.dao.QuDuanInfoDao;
 import com.yintu.ruixing.entity.*;
@@ -82,19 +87,36 @@ public class GuZhangStudyServiceImpl implements GuZhangStudyService {
         return guZhangStudyDao.getQuDuanByCid(cid);
     }
 
+
+
+
+
     @Override
     public List<QuDuanInfoEntity> findGuZhangKuData(Integer id, Integer page, Integer size) {
-        return quDuanInfoDao.findGuZhangKuData(id);
 
+        List<QuDuanInfoEntity> quDuanInfoEntities= quDuanInfoDao.findGuZhangKuData(id);
+
+        return quDuanInfoEntities;
     }
 
     @Override
     public List<QuDuanBaseEntity> findFristId(Integer id) {
-        return guZhangStudyDao.findFristId(id);
+        return  guZhangStudyDao.findFristId(id);
+
+
     }
 
     @Override
     public List<QuDuanBaseEntity> findLastId(Integer id) {
         return guZhangStudyDao.findLastId(id);
     }
+
+
+
+
+
+
+
+
+
 }

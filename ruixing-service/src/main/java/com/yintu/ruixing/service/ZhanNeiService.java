@@ -2,6 +2,7 @@ package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.entity.CheZhanEntity;
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
+import com.yintu.ruixing.entity.QuDuanInfoEntity;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface ZhanNeiService  {
     List<CheZhanEntity> findAllWangLuoLianJie(Integer page,Integer size);
 
     void editWangLuoLianJieById(CheZhanEntity cheZhanEntity);
+
+    List<QuDuanInfoEntity> findDianMaHuaDatabById(Integer id);
 }
