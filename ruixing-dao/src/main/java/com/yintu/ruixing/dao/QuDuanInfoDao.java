@@ -34,7 +34,7 @@ public interface QuDuanInfoDao {
 
     List<Map<String, Object>> selectShouDuanTransformerAll();
 
-
+    List<QuDuanInfoEntity> selectAll();
 
     List<Map<String, Object>> selectStatisticsSongDuanByDate(Date data);
 
@@ -43,6 +43,8 @@ public interface QuDuanInfoDao {
     List<Map<String, Object>> selectStatisticsFenXianPanShouDuanByDate(Date data);
 
     List<Map<String, Object>> selectStatisticsShouDuanByDate(Date data);
+
+    List<Map<String, Object>> selectStatisticsByDate(Date data);
 
 
     int updateByPrimaryKeySelective(QuDuanInfoEntity record);

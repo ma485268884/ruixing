@@ -47,6 +47,11 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         return quDuanInfoDao.selectByXidAndCid(cid, xid);
     }
 
+    @Override
+    public List<QuDuanInfoEntity> findAll() {
+        return quDuanInfoDao.selectAll();
+    }
+
 
     @Override
     public List<Map<String, Object>> findSongDuanAll() {
@@ -110,5 +115,11 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
     public List<Map<String, Object>> findStatisticsShouDuanByDate(Date time) {
         return quDuanInfoDao.selectStatisticsShouDuanByDate(time);
     }
+
+    @Override
+    public List<Map<String, Object>> findStatisticsByDate(Date data) {
+        return quDuanInfoDao.selectStatisticsByDate(data);
+    }
+
 
 }

@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuDuanBaseEntity {
+public class QuDuanBaseEntity implements Serializable {
+    private static final long serialVersionUID = -8897336182977509111L;
     private Integer id;
 
     private Integer parentId;

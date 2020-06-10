@@ -49,6 +49,12 @@ public interface QuDuanInfoService {
      */
     List<QuDuanInfoEntity> findByCidAndXid(Integer cid, Integer xid);
 
+    /**
+     * 获取全部的区段详情集
+     *
+     * @return 区段详情集
+     */
+    List<QuDuanInfoEntity> findAll();
 
     List<Map<String, Object>> findSongDuanAll();
 
@@ -75,6 +81,8 @@ public interface QuDuanInfoService {
     List<Map<String, Object>> findStatisticsFenXianPanShouDuanByDate(Date data);
 
     List<Map<String, Object>> findStatisticsShouDuanByDate(Date data);
+
+    List<Map<String, Object>> findStatisticsByDate(Date data);
 
 
 }
