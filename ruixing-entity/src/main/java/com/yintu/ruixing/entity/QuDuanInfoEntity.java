@@ -154,6 +154,14 @@ public class QuDuanInfoEntity implements Serializable {
 
     private String yuliu;
 
+    private String quduanyunyingName;
+    private String carrier;
+    private String diduanType;
+    private Integer bianjie;
+    private String xianluqingkuang;
+    private Integer zhanqufenjie;
+    //private Integer id;
+
     private QuDuanBaseEntity quDuanBaseEntity;
 
     private SheBeiEntity sheBeiEntity;

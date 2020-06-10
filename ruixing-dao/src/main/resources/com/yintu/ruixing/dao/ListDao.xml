@@ -40,8 +40,7 @@
         <result property="dwdXdId" column="dwd_xd_id"/>
         <result property="xdMiaoShu" column="xd_miaoshu"/>
         <result property="xdType" column="xd_type"/>
-        <association property="dianWuDuanEntity" javaType="com.yintu.ruixing.entity.DianWuDuanEntity"
-                     column="mro_dianwuduan">
+        <association property="dianWuDuanEntity" javaType="com.yintu.ruixing.entity.DianWuDuanEntity" column="mro_dianwuduan">
             <result property="did" column="did"></result>
         </association>
         <association property="tieLuJuEntity" javaType="com.yintu.ruixing.entity.TieLuJuEntity" column="mro_tieluju">

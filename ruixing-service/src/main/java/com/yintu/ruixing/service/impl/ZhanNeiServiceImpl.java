@@ -1,6 +1,7 @@
 package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.dao.ZhanNeiDao;
+import com.yintu.ruixing.entity.CheZhanEntity;
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.service.ZhanNeiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,15 @@ public class ZhanNeiServiceImpl implements ZhanNeiService {
     @Override
     public List<QuDuanBaseEntity> findAllDianMaHua(Long id) {
         return zhanNeiDao.findAllDianMaHua(id);
+    }
+
+    @Override
+    public List<CheZhanEntity> findAllWangLuoLianJie(Integer page,Integer size) {
+        return zhanNeiDao.findAllWangLuoLianJie();
+    }
+
+    @Override
+    public void editWangLuoLianJieById(CheZhanEntity cheZhanEntity) {
+        zhanNeiDao.editWangLuoLianJieById(cheZhanEntity);
     }
 }

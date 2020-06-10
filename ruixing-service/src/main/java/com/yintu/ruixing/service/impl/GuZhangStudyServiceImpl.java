@@ -40,8 +40,8 @@ public class GuZhangStudyServiceImpl implements GuZhangStudyService {
     }
 
     @Override
-    public void editGuZhang(Long id) {
-        guZhangStudyDao.editGuZhang(id);
+    public void editGuZhang(GuZhangStudyEntity guZhangStudyEntity) {
+        guZhangStudyDao.editGuZhang(guZhangStudyEntity);
     }
 
     @Override
@@ -84,8 +84,8 @@ public class GuZhangStudyServiceImpl implements GuZhangStudyService {
 
     @Override
     public List<QuDuanInfoEntity> findGuZhangKuData(Integer id, Integer page, Integer size) {
-        List<QuDuanInfoEntity> guZhangKuData = quDuanInfoDao.findGuZhangKuData(id);
-        return guZhangKuData;
+        return quDuanInfoDao.findGuZhangKuData(id);
+
     }
 
     @Override

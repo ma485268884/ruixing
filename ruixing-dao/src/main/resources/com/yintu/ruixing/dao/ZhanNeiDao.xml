@@ -56,4 +56,70 @@
             li.cid=#{id}
     </select>
 
+    <resultMap type="com.yintu.ruixing.entity.CheZhanEntity" id="chezhan">
+        <result property="cid" column="cid"/>
+        <result property="czName" column="cz_name"/>
+        <result property="xdName" column="xd_name"/>
+        <result property="dwdName" column="dwd_name"/>
+        <result property="tljName" column="tlj_name"/>
+        <result property="czId" column="cz_id"/>
+        <result property="xdId" column="xd_id"/>
+        <result property="czNameJianCheng" column="cz_name_jiancheng"/>
+        <result property="czIp" column="cz_ip"/>
+        <result property="czType" column="cz_type"/>
+        <result property="czStutrs" column="cz_stutrs"/>
+        <result property="czOpenStutrs" column="cz_open_stutrs"/>
+        <result property="czCaoZuo" column="cz_caozuo"/>
+        <result property="czLastTime" column="cz_lasttime"/>
+        <result property="xdCzId" column="xd_cz_id"/>
+        <result property="czMiaoShu" column="cz_miaoshu"/>
+        <result property="czDuanTou" column="cz_duantou"/>
+    </resultMap>
+    <!--查询车站网络连接相关数据-->
+    <select id="findAllWangLuoLianJie" resultMap="chezhan" >
+        SELECT
+            tlj.tlj_name,
+            dwd.dwd_name,
+            xd.xd_name,
+            cz.cz_name,
+            cz.cz_id,
+            cz.cz_ip,
+            cz.cz_type,
+            cz.cz_stutrs,
+            cz.cz_open_stutrs,
+            cz.cz_lasttime,
+            cz.cz_caozuo
+        FROM
+            mro_tieluju tlj,
+            mro_dianwuduan dwd,
+            mro_xianduan xd,
+            mro_chezhan cz
+        WHERE
+            dwd.tlj_dwd_id = tlj.tid
+            AND xd.dwd_xd_id = dwd.did
+            AND cz.xd_cz_id = xd.xid
+    </select>
+
+    <!--修改网络连接状态-->
+    <update id="editWangLuoLianJieById" parameterType="com.yintu.ruixing.entity.CheZhanEntity">
+        update mro_chezhan
+        <set>
+            <if test="czType !=null">
+                cz_type = #{czType},
+            </if>
+            <if test="czStutrs !=null">
+                cz_stutrs = #{czStutrs},
+            </if>
+            <if test="czOpenStutrs !=null">
+                cz_open_stutrs = #{czOpenStutrs},
+            </if>
+            <if test="czLastTime !=null">
+                cz_lasttime = #{czLastTime},
+            </if>
+            <if test="czCaoZuo !=null">
+                cz_caozuo = #{czCaoZuo}
+            </if>
+        </set>
+    </update>
+
 </mapper>
