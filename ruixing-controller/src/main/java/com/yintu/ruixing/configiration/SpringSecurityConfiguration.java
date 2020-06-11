@@ -95,7 +95,6 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     PrintWriter out = httpServletResponse.getWriter();
                     Map<String, Object> errorData = ResponseDataUtil.noLogin(authenticationException.getMessage());
                     if (authenticationException instanceof AuthenticationServiceException) {
-                        httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                         //服务器异常
                         errorData = ResponseDataUtil.error(authenticationException.getMessage());
                     }

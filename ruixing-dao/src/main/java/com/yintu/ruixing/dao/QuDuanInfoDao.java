@@ -18,31 +18,31 @@ public interface QuDuanInfoDao {
     List<QuDuanInfoEntity> selectByXidAndCid(Integer xid, Integer cid);
 
 
-    List<Map<String, Object>> selectSongDuanAll();
-
-    List<Map<String, Object>> selectFenXianPanSongDuanAll();
-
-    List<Map<String, Object>> selectFenXianPanShouDuanAll();
-
-    List<Map<String, Object>> selectShouDuanAll();
-
-    List<Map<String, Object>> selectSongDuanTransformerAll();
-
-    List<Map<String, Object>> selectSongDuanTuneAll();
-
-    List<Map<String, Object>> selectShouDuanTuneAll();
-
-    List<Map<String, Object>> selectShouDuanTransformerAll();
+//    List<Map<String, Object>> selectSongDuanAll();
+//
+//    List<Map<String, Object>> selectFenXianPanSongDuanAll();
+//
+//    List<Map<String, Object>> selectFenXianPanShouDuanAll();
+//
+//    List<Map<String, Object>> selectShouDuanAll();
+//
+//    List<Map<String, Object>> selectSongDuanTransformerAll();
+//
+//    List<Map<String, Object>> selectSongDuanTuneAll();
+//
+//    List<Map<String, Object>> selectShouDuanTuneAll();
+//
+//    List<Map<String, Object>> selectShouDuanTransformerAll();
 
     List<QuDuanInfoEntity> selectAll();
-
-    List<Map<String, Object>> selectStatisticsSongDuanByDate(Date data);
-
-    List<Map<String, Object>> selectStatisticsFenXianPanSongDuanByDate(Date data);
-
-    List<Map<String, Object>> selectStatisticsFenXianPanShouDuanByDate(Date data);
-
-    List<Map<String, Object>> selectStatisticsShouDuanByDate(Date data);
+//
+//    List<Map<String, Object>> selectStatisticsSongDuanByDate(Date data);
+//
+//    List<Map<String, Object>> selectStatisticsFenXianPanSongDuanByDate(Date data);
+//
+//    List<Map<String, Object>> selectStatisticsFenXianPanShouDuanByDate(Date data);
+//
+//    List<Map<String, Object>> selectStatisticsShouDuanByDate(Date data);
 
     List<Map<String, Object>> selectStatisticsByDate(Date data);
 

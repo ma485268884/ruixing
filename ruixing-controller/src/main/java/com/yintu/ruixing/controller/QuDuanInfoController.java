@@ -22,7 +22,11 @@ public class QuDuanInfoController extends BaseController {
     @Autowired
     private QuDuanInfoService quDuanInfoService;
 
-
+    /**
+     * 数据分析：按照id
+     * @param id 区段id
+     * @return
+     */
     @GetMapping("/{id}")
     public Map<String, Object> findById(@PathVariable Integer id) {
         QuDuanInfoEntity quDuanInfoEntity = quDuanInfoService.findById(id);

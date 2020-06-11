@@ -54,69 +54,6 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
 
 
     @Override
-    public List<Map<String, Object>> findSongDuanAll() {
-        return quDuanInfoDao.selectSongDuanAll();
-    }
-
-    @Override
-    public List<Map<String, Object>> findFenXianPanSongDuanAll() {
-        return quDuanInfoDao.selectFenXianPanSongDuanAll();
-    }
-
-    @Override
-    public List<Map<String, Object>> findFenXianPanShouDuanAll() {
-        return quDuanInfoDao.selectFenXianPanShouDuanAll();
-    }
-
-    @Override
-    public List<Map<String, Object>> findShouDuanAll() {
-        return quDuanInfoDao.selectShouDuanAll();
-    }
-
-
-    @Override
-    public List<Map<String, Object>> findSongDuanTransformerAll() {
-        return quDuanInfoDao.selectSongDuanTransformerAll();
-    }
-
-    @Override
-    public List<Map<String, Object>> findSongDuanTuneAll() {
-        return quDuanInfoDao.selectSongDuanTuneAll();
-    }
-
-    @Override
-    public List<Map<String, Object>> findShouDuanTuneAll() {
-        return quDuanInfoDao.selectShouDuanTuneAll();
-    }
-
-    @Override
-    public List<Map<String, Object>> findShouDuanTransformerAll() {
-        return quDuanInfoDao.selectShouDuanTransformerAll();
-    }
-
-
-    @Override
-    public List<Map<String, Object>> findStatisticsSongDuanByDate(Date time) {
-        return quDuanInfoDao.selectStatisticsSongDuanByDate(time);
-    }
-
-
-    @Override
-    public List<Map<String, Object>> findStatisticsFenXianPanSongDuanByDate(Date time) {
-        return quDuanInfoDao.selectStatisticsFenXianPanSongDuanByDate(time);
-    }
-
-    @Override
-    public List<Map<String, Object>> findStatisticsFenXianPanShouDuanByDate(Date time) {
-        return quDuanInfoDao.selectStatisticsFenXianPanShouDuanByDate(time);
-    }
-
-    @Override
-    public List<Map<String, Object>> findStatisticsShouDuanByDate(Date time) {
-        return quDuanInfoDao.selectStatisticsShouDuanByDate(time);
-    }
-
-    @Override
     public List<Map<String, Object>> findStatisticsByDate(Date data) {
         return quDuanInfoDao.selectStatisticsByDate(data);
     }
