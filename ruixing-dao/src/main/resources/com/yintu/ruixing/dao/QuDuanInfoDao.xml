@@ -100,8 +100,19 @@
         from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid=qb.id
         where qi.id = #{id,jdbcType=INTEGER}
     </select>
+    <!--车站id 查询车站内电码化的信息-->
+    <select id="findGuZhangKuData" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+            qi.*,
+            qb.*
+        FROM
+            mro_quduan_info qi,
+            mro_quduan_base qb
+        WHERE
+            qi.qid = qb.id
+            AND qi.id = #{id,jdbcType=INTEGER}
 
-
+    </select>
 
     <resultMap id="quduanBaseResultMap" type="com.yintu.ruixing.entity.QuDuanInfoEntity">
     <id column="qiId" jdbcType="INTEGER" property="id"/>
@@ -175,27 +186,28 @@
     <result column="A_shortOut_JBA_zhu" jdbcType="INTEGER" property="aShortoutJbaZhu"/>
     <result column="A_shortOut_JBA_diao" jdbcType="INTEGER" property="aShortoutJbaDiao"/>
     <result column="qiYuliu" jdbcType="VARCHAR" property="yuliu"/>
-    <!--<association column="qid" jdbcType="INTEGER" property="quDuanBaseEntity">-->
-       <!-- <id column="qbId" jdbcType="INTEGER" property="id"/>-->
-        <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
-        <result column="carrier" jdbcType="VARCHAR" property="carrier"/>
-        <result column="diDuan_type" jdbcType="VARCHAR" property="diduanType"/>
-        <result column="bianJie" jdbcType="INTEGER" property="bianjie"/>
-        <result column="xianLuQingKuang" jdbcType="VARCHAR" property="xianluqingkuang"/>
-        <result column="zhanQuFenJie" jdbcType="INTEGER" property="zhanqufenjie"/>
-    <!--</association>-->
     </resultMap>
-    <select id="findGuZhangKuData" parameterType="java.lang.Integer" resultMap="quduanBaseResultMap">
-        SELECT
-            qi.*,
-            qb.*
-        FROM
-            mro_quduan_info qi,
-            mro_quduan_base qb
-        WHERE
-            qi.qid = qb.id
-            AND qi.id = #{id,jdbcType=INTEGER}
-
+    <select id="findDianMaHuaDatabById" resultMap="quduanBaseResultMap" parameterType="java.lang.Integer">
+        	select
+            qi.typeid,
+            qi.V_out_zhu,
+            qi.V_out_bei,
+            qi.mA_out_zhu,
+            qi.mA_out_bei,
+            qi.Hz_up_zhu,
+            qi.Hz_up_bei,
+            qi.Hz_down_zhu,
+            qi.Hz_down_bei,
+            qi.Hz_low_zhu,
+            qi.Hz_low_bei,
+            qi.FBJ_drive_zhu,
+            qi.FBJ_drive_bei,
+            qi.FBJ_collection_zhu,
+            qi.FBJ_collection_bei
+            from
+            mro_quduan_info qi
+            where
+            qi.qid=#{id}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
