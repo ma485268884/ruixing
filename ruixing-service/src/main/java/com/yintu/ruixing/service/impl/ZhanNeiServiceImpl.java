@@ -32,7 +32,7 @@ public class ZhanNeiServiceImpl implements ZhanNeiService {
     }
 
     @Override
-    public List<CheZhanEntity> findAllWangLuoLianJie(Integer page,Integer size) {
+    public List<CheZhanEntity> findAllWangLuoLianJie() {
         return zhanNeiDao.findAllWangLuoLianJie();
     }
 
@@ -44,5 +44,10 @@ public class ZhanNeiServiceImpl implements ZhanNeiService {
     @Override
     public List<QuDuanInfoEntity> findDianMaHuaDatabById(Integer id) {
         return quDuanInfoDao.findDianMaHuaDatabById(id);
+    }
+
+    @Override
+    public List<CheZhanEntity> findTieLuJuById(Integer page, Integer size) {
+        return zhanNeiDao.findAllWangLuoLianJie();
     }
 }

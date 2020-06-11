@@ -186,28 +186,37 @@
     <result column="A_shortOut_JBA_zhu" jdbcType="INTEGER" property="aShortoutJbaZhu"/>
     <result column="A_shortOut_JBA_diao" jdbcType="INTEGER" property="aShortoutJbaDiao"/>
     <result column="qiYuliu" jdbcType="VARCHAR" property="yuliu"/>
+        <association column="sid" jdbcType="INTEGER" property="sheBeiEntity">
+            <result column="sb_name" jdbcType="VARCHAR" property="sbName"/>
+        </association>
     </resultMap>
     <select id="findDianMaHuaDatabById" resultMap="quduanBaseResultMap" parameterType="java.lang.Integer">
-        	select
-            qi.typeid,
-            qi.V_out_zhu,
-            qi.V_out_bei,
-            qi.mA_out_zhu,
-            qi.mA_out_bei,
-            qi.Hz_up_zhu,
-            qi.Hz_up_bei,
-            qi.Hz_down_zhu,
-            qi.Hz_down_bei,
-            qi.Hz_low_zhu,
-            qi.Hz_low_bei,
-            qi.FBJ_drive_zhu,
-            qi.FBJ_drive_bei,
-            qi.FBJ_collection_zhu,
-            qi.FBJ_collection_bei
-            from
-            mro_quduan_info qi
-            where
-            qi.qid=#{id}
+                SELECT
+                    qi.typeid,
+                    qi.Design_carrier,
+                    qi.V_out_zhu,
+                    qi.V_out_bei,
+                    qi.mA_out_zhu,
+                    qi.mA_out_bei,
+                    qi.Hz_up_zhu,
+                    qi.Hz_up_bei,
+                    qi.Hz_down_zhu,
+                    qi.Hz_down_bei,
+                    qi.Hz_low_zhu,
+                    qi.Hz_low_bei,
+                    qi.FBJ_drive_zhu,
+                    qi.FBJ_drive_bei,
+                    qi.FBJ_collection_zhu,
+                    qi.FBJ_collection_bei,
+                    sb.sb_name
+                FROM
+                    mro_quduan_info qi,
+                    mro_shebei sb
+                WHERE
+                    sb.id=qi.sid
+                    AND
+                    sb.id = #{id}
+
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.entity.CheZhanEntity;
-import com.yintu.ruixing.entity.LineEntity;
-import com.yintu.ruixing.entity.QuDuanBaseEntity;
-import com.yintu.ruixing.entity.QuDuanInfoEntity;
+import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.ZhanNeiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -53,15 +50,17 @@ public class ZhanNeiController {
     @GetMapping("/findAllWangLuoLianJie")
     public Map<String, Object> findAllWangLuoLianJie(Integer page, Integer size) {
         JSONObject js = new JSONObject();
-        PageHelper.startPage(page, size);
-        List<CheZhanEntity> cheZhanEntities = zhanNeiService.findAllWangLuoLianJie(page, size);
-        //js.put("cheZhanEntities",cheZhanEntities);
+        //PageHelper.startPage(page, size);
+        List<CheZhanEntity> cheZhanEntities = zhanNeiService.findAllWangLuoLianJie();
+        js.put("cheZhanEntities",cheZhanEntities);
         System.out.println("车站信息1" + cheZhanEntities);
-        PageInfo<CheZhanEntity> pageInfo = new PageInfo<>(cheZhanEntities);
+        PageHelper.startPage(page, size);
+        List<CheZhanEntity> all = zhanNeiService.findTieLuJuById( page, size);
+        PageInfo<CheZhanEntity> pageInfo = new PageInfo<>(all);
         System.out.println("车站信息2" + pageInfo);
         js.put("pageInfo", pageInfo);
         System.out.println("pageeee" + pageInfo);
-        return ResponseDataUtil.ok("查询车站信息成功", pageInfo);
+        return ResponseDataUtil.ok("查询车站信息成功", js);
     }
     //根据id更改车站的各个状态
     @PutMapping("/editWangLuoLianJieById/{cid}")

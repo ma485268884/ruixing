@@ -14,9 +14,11 @@ import java.util.List;
 public interface ZhanNeiService  {
     List<QuDuanBaseEntity> findAllDianMaHua(Long id);
 
-    List<CheZhanEntity> findAllWangLuoLianJie(Integer page,Integer size);
+    List<CheZhanEntity> findAllWangLuoLianJie();
 
     void editWangLuoLianJieById(CheZhanEntity cheZhanEntity);
 
     List<QuDuanInfoEntity> findDianMaHuaDatabById(Integer id);
+
+    List<CheZhanEntity> findTieLuJuById(Integer page, Integer size);
 }
