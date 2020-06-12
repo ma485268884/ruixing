@@ -57,4 +57,6 @@ public interface QuDuanInfoDao {
     List<QuDuanInfoEntity> findGuZhangKuData(Integer id);
 
     List<QuDuanInfoEntity> findDianMaHuaDatabById(Integer id);
+
+    List<QuDuanInfoEntity> findQuDuanDataByTime(Date time);
 }

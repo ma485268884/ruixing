@@ -1,13 +1,16 @@
 package com.yintu.ruixing.service.impl;
 
+import com.yintu.ruixing.dao.QuDuanInfoDao;
 import com.yintu.ruixing.dao.QuXianDao;
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
+import com.yintu.ruixing.entity.QuDuanInfoEntity;
 import com.yintu.ruixing.entity.SheBeiEntity;
 import com.yintu.ruixing.service.QuXianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +23,8 @@ import java.util.List;
 public class QuXianServiceImpl implements QuXianService {
     @Autowired
     private QuXianDao quXianDao;
+    @Autowired
+    private QuDuanInfoDao quDuanInfoDao;
 
     @Override
     public List<SheBeiEntity> findSheBeiByCid(Integer id) {
@@ -29,5 +34,10 @@ public class QuXianServiceImpl implements QuXianService {
     @Override
     public List<QuDuanBaseEntity> findQuDuanById(Integer id) {
         return quXianDao.findQuDuanById(id);
+    }
+
+    @Override
+    public List<QuDuanInfoEntity> findQuDuanDataByTime(Date time) {
+        return quDuanInfoDao.findQuDuanDataByTime(time);
     }
 }

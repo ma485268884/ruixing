@@ -1,8 +1,10 @@
 package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
+import com.yintu.ruixing.entity.QuDuanInfoEntity;
 import com.yintu.ruixing.entity.SheBeiEntity;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,4 +16,6 @@ public interface QuXianService {
     List<SheBeiEntity> findSheBeiByCid(Integer id);
 
     List<QuDuanBaseEntity> findQuDuanById(Integer id);
+
+    List<QuDuanInfoEntity> findQuDuanDataByTime(Date time);
 }

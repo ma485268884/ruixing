@@ -2,6 +2,7 @@ package com.yintu.ruixing.controller;
 
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
+import com.yintu.ruixing.entity.QuDuanInfoEntity;
 import com.yintu.ruixing.entity.SheBeiEntity;
 import com.yintu.ruixing.service.QuXianService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -39,5 +41,11 @@ public class QuXianController {
     }
 
 
-
+    //根据所选日期  获取对应的数据
+    @GetMapping("/findQuDuanDataByTime/{time}")
+    public Map<String,Object>findQuDuanDataByTime(@PathVariable("time") Date time){
+        List<QuDuanInfoEntity>quDuanInfoEntities=quXianService.findQuDuanDataByTime(time);
+        System.out.println("riqi"+quDuanInfoEntities);
+        return ResponseDataUtil.ok("查询数据成功",quDuanInfoEntities);
+    }
 }

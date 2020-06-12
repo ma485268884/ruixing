@@ -69,4 +69,6 @@
             and
             qi.sid=#{id}
     </select>
+
+
 </mapper>

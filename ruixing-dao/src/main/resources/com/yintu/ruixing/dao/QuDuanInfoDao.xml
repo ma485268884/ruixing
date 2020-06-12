@@ -114,6 +114,19 @@
 
     </select>
 
+    <!--根据日期  查询对应的数据-->
+    <select id="findQuDuanDataByTime" parameterType="java.util.Date" resultMap="BaseResultMap">
+        SELECT
+            qi.*
+        FROM
+            mro_quduan_info qi,
+            mro_quduan_base qd
+        WHERE
+            qi.qid = qd.id
+            AND DATE_FORMAT ( qd.time, '%Y/%m/%d' ) = #{time}
+
+    </select>
+
     <resultMap id="quduanBaseResultMap" type="com.yintu.ruixing.entity.QuDuanInfoEntity">
     <id column="qiId" jdbcType="INTEGER" property="id"/>
     <result column="xid" jdbcType="INTEGER" property="xid"/>
