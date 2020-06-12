@@ -2,6 +2,8 @@ package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.MenXianEntity;
 
+import java.util.List;
+
 public interface MenXianDao {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface MenXianDao {
     int updateByPrimaryKeySelective(MenXianEntity record);
 
     int updateByPrimaryKey(MenXianEntity record);
+
+    List<MenXianEntity> selectByPropertyIds(Integer[] propertyIds);
 }

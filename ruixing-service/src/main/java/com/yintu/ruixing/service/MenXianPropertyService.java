@@ -1,6 +1,9 @@
 package com.yintu.ruixing.service;
 
+import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.MenXianPropertyEntity;
+
+import java.util.List;
 
 /**
  * @author:mlf
@@ -34,5 +37,19 @@ public interface MenXianPropertyService {
      * @return 门限参数属性信息
      */
     MenXianPropertyEntity findById(Integer id);
+
+    /**
+     * 按照父级id查询门限参数属性树
+     *
+     * @param parentId 父级id
+     * @return 返回门限参数属性树
+     */
+    List<TreeNodeUtil> findByParentId(Integer parentId);
+
+    /**
+     * @param parentId 父级id
+     * @return 返回门限参数属性列表
+     */
+    List<MenXianPropertyEntity> findByNotParentId(Integer parentId);
 
 }

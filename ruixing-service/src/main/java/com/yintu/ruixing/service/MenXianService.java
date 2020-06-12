@@ -17,6 +17,7 @@ public interface MenXianService {
      */
     void add(MenXianEntity menXianEntity);
 
+
     /**
      * 按照id删除门限参数
      *
@@ -36,5 +37,18 @@ public interface MenXianService {
      * @return 门限参数信息
      */
     MenXianEntity findById(Integer id);
+
+    /**
+     * @param menXianEntity 门限参数信息
+     */
+    void addByQuDuan(MenXianEntity menXianEntity);
+
+    /**
+     * 按照属性id集查询门限参数集
+     *
+     * @return 门限参数集
+     */
+    List<MenXianEntity> findByPropertyIds(Integer[] propertyIds);
+
 
 }
