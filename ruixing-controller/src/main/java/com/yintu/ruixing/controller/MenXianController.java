@@ -26,8 +26,6 @@ public class MenXianController extends BaseController {
     @Autowired
     private MenXianService menXianService;
 
-    @Autowired
-    private MenXianPropertyService menXianPropertyService;
 
     @PostMapping
     public Map<String, Object> add(MenXianEntity menXianEntity) {
@@ -61,13 +59,14 @@ public class MenXianController extends BaseController {
     public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber,
                                        @RequestParam("page_size") Integer pageSize,
                                        @RequestParam(value = "sortby", required = false) String sortby,
-                                       @RequestParam(value = "order", required = false) String order) {
+                                       @RequestParam(value = "order", required = false) String order,
+                                       @RequestParam(value = "propertyIds") Integer[] propertyIds) {
         String orderBy = "id DESC";
         if (sortby != null && !"".equals(sortby) && order != null && !"".equals(order))
             orderBy = sortby + " " + order;
         Page<UserEntity> page = PageHelper.startPage(pageNumber, pageSize, orderBy);
-
-        PageInfo<UserEntity> pageInfo = new PageInfo<>(null);
+        List<MenXianEntity> menXianEntities = menXianService.findByPropertyIds(propertyIds);
+        PageInfo<MenXianEntity> pageInfo = new PageInfo<MenXianEntity>(menXianEntities);
 
         return ResponseDataUtil.ok("查询用户列表成功", pageInfo);
     }

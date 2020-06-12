@@ -50,6 +50,7 @@ public class MenXianServiceImpl implements MenXianService {
         return menXianDao.selectByPrimaryKey(id);
     }
 
+
     @Override
     public void addByQuDuan(MenXianEntity menXianEntity) {
         Integer quDuanId = menXianEntity.getQuduanId();
@@ -202,6 +203,11 @@ public class MenXianServiceImpl implements MenXianService {
                 this.add(menXianEntity);
             }
         }
+    }
+
+    @Override
+    public List<MenXianEntity> findByPropertyIds(Integer[] propertyIds) {
+        return menXianDao.selectByPropertyIds(propertyIds);
     }
 
 }

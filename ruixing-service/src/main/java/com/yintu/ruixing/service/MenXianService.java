@@ -2,6 +2,8 @@ package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.entity.MenXianEntity;
 
+import java.util.List;
+
 /**
  * @author:mlf
  * @date:2020/6/12 11:39
@@ -14,6 +16,7 @@ public interface MenXianService {
      * @param menXianEntity 门限参数信息
      */
     void add(MenXianEntity menXianEntity);
+
 
     /**
      * 按照id删除门限参数
@@ -36,9 +39,16 @@ public interface MenXianService {
     MenXianEntity findById(Integer id);
 
     /**
-     *
      * @param menXianEntity 门限参数信息
      */
     void addByQuDuan(MenXianEntity menXianEntity);
+
+    /**
+     * 按照属性id集查询门限参数集
+     *
+     * @return 门限参数集
+     */
+    List<MenXianEntity> findByPropertyIds(Integer[] propertyIds);
+
 
 }
