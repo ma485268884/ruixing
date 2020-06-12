@@ -43,7 +43,7 @@
         where cid = #{cid}
     </update>
     <!--查询全部车站-->
-    <select id="selectByCheZhan" parameterType="java.lang.Long" resultType="com.yintu.ruixing.entity.CheZhanEntity">
+    <select id="selectByCheZhan" parameterType="java.lang.Long" resultMap="chezhan">
         select * from mro_chezhan where cid =  #{cid,jdbcType=BIGINT}
     </select>
 

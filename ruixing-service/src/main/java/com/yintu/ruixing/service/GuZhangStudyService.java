@@ -1,5 +1,6 @@
 package com.yintu.ruixing.service;
 
+import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.entity.*;
 
 import java.util.List;
@@ -32,9 +33,24 @@ public interface GuZhangStudyService {
 
     List<QuDuanBaseEntity> getQuDuanByCid(Long cid);
 
+
+
+
+
     List<QuDuanInfoEntity> findGuZhangKuData(Integer id,Integer page,Integer size);
 
     List<QuDuanBaseEntity> findFristId(Integer id);
 
     List<QuDuanBaseEntity> findLastId(Integer id);
+
+
+
+
+
+
+
+
+
+
+
 }

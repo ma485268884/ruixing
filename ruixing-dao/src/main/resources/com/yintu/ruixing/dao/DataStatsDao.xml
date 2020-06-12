@@ -33,7 +33,7 @@
 		dwd.dwd_name,
 		xd.xd_name,
 		cz.cz_name,
-		cz.id,
+		cz.cid,
 		cz.cz_ip,
 		cz.cz_type,
 		cz.cz_lasttime,

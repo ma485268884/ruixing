@@ -4,9 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.entity.CheZhanEntity;
-import com.yintu.ruixing.entity.LineEntity;
-import com.yintu.ruixing.entity.QuDuanBaseEntity;
+import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.ZhanNeiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +25,7 @@ public class ZhanNeiController {
     @Autowired
     private ZhanNeiService zhanNeiService;
 
-    //根据车站id 查询车站内的信息
+    //根据车站id 查询车站内电码化的信息
     @GetMapping("/findAllDianMaHua/{id}")
     public Map<String, Object> findAllDianMaHua(@PathVariable Long id) {
         List<QuDuanBaseEntity> list = new ArrayList<>();
@@ -41,33 +39,37 @@ public class ZhanNeiController {
         return ResponseDataUtil.ok("查询电码化数据成功", list);
     }
 
-    //根据id查出
-
-
+    //根据电码化的区段id查询出数据展示在列表
+    @GetMapping("/findDianMaHuaDatabById/{id}")
+    public Map<String,Object>findDianMaHuaDatabById(@PathVariable Integer id){
+        List<QuDuanInfoEntity> quDuanInfoEntities=zhanNeiService.findDianMaHuaDatabById(id);
+        return ResponseDataUtil.ok("查询单单个数据成功",quDuanInfoEntities);
+    }
 
     //网络连接
     @GetMapping("/findAllWangLuoLianJie")
-    public Map<String,Object>findAllWangLuoLianJie(Integer page,Integer size){
-        JSONObject js=new JSONObject();
-        List<CheZhanEntity> cheZhanEntities = zhanNeiService.findAllWangLuoLianJie(page, size);
-        //js.put("cheZhanEntities",cheZhanEntities);
-        System.out.println("车站信息1"+cheZhanEntities);
-        PageHelper.startPage(page,size);
-        PageInfo<CheZhanEntity> pageInfo=new PageInfo<>(cheZhanEntities);
-        System.out.println("车站信息2"+pageInfo);
-        //js.put("pageInfo",pageInfo);
-        return ResponseDataUtil.ok("查询车站信息成功",pageInfo);
+    public Map<String, Object> findAllWangLuoLianJie(Integer page, Integer size) {
+        JSONObject js = new JSONObject();
+        //PageHelper.startPage(page, size);
+        List<CheZhanEntity> cheZhanEntities = zhanNeiService.findAllWangLuoLianJie();
+        js.put("cheZhanEntities",cheZhanEntities);
+        System.out.println("车站信息1" + cheZhanEntities);
+        PageHelper.startPage(page, size);
+        List<CheZhanEntity> all = zhanNeiService.findTieLuJuById( page, size);
+        PageInfo<CheZhanEntity> pageInfo = new PageInfo<>(all);
+        System.out.println("车站信息2" + pageInfo);
+        js.put("pageInfo", pageInfo);
+        System.out.println("pageeee" + pageInfo);
+        return ResponseDataUtil.ok("查询车站信息成功", js);
     }
-
-    @PutMapping("/editWangLuoLianJieById/{id}")
-    public Map<String,Object>editWangLuoLianJieById(@PathVariable Long id,CheZhanEntity cheZhanEntity){
+    //根据id更改车站的各个状态
+    @PutMapping("/editWangLuoLianJieById/{cid}")
+    public Map<String, Object> editWangLuoLianJieById(@PathVariable Long cid, CheZhanEntity cheZhanEntity) {
+        System.out.println("1111"+cheZhanEntity);
         zhanNeiService.editWangLuoLianJieById(cheZhanEntity);
+        System.out.println("22222"+cheZhanEntity);
         return ResponseDataUtil.ok("修改信息成功");
     }
-
-
-
-
 
 
 }

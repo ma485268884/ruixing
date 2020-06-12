@@ -1,8 +1,10 @@
 package com.yintu.ruixing.service.impl;
 
+import com.yintu.ruixing.dao.QuDuanInfoDao;
 import com.yintu.ruixing.dao.ZhanNeiDao;
 import com.yintu.ruixing.entity.CheZhanEntity;
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
+import com.yintu.ruixing.entity.QuDuanInfoEntity;
 import com.yintu.ruixing.service.ZhanNeiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ public class ZhanNeiServiceImpl implements ZhanNeiService {
     @Autowired
     private ZhanNeiDao zhanNeiDao;
 
+    @Autowired
+    private QuDuanInfoDao quDuanInfoDao;
 
     @Override
     public List<QuDuanBaseEntity> findAllDianMaHua(Long id) {
@@ -28,12 +32,22 @@ public class ZhanNeiServiceImpl implements ZhanNeiService {
     }
 
     @Override
-    public List<CheZhanEntity> findAllWangLuoLianJie(Integer page,Integer size) {
+    public List<CheZhanEntity> findAllWangLuoLianJie() {
         return zhanNeiDao.findAllWangLuoLianJie();
     }
 
     @Override
     public void editWangLuoLianJieById(CheZhanEntity cheZhanEntity) {
         zhanNeiDao.editWangLuoLianJieById(cheZhanEntity);
+    }
+
+    @Override
+    public List<QuDuanInfoEntity> findDianMaHuaDatabById(Integer id) {
+        return quDuanInfoDao.findDianMaHuaDatabById(id);
+    }
+
+    @Override
+    public List<CheZhanEntity> findTieLuJuById(Integer page, Integer size) {
+        return zhanNeiDao.findAllWangLuoLianJie();
     }
 }

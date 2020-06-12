@@ -88,7 +88,8 @@
             cz.cz_stutrs,
             cz.cz_open_stutrs,
             cz.cz_lasttime,
-            cz.cz_caozuo
+            cz.cz_caozuo,
+            cz.cid
         FROM
             mro_tieluju tlj,
             mro_dianwuduan dwd,
@@ -120,6 +121,7 @@
                 cz_caozuo = #{czCaoZuo}
             </if>
         </set>
+        where cid=#{cid}
     </update>
 
 </mapper>

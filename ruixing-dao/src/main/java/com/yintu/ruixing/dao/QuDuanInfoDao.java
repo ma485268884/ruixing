@@ -55,4 +55,8 @@ public interface QuDuanInfoDao {
     //根据区段id  查询相关的数据
 
     List<QuDuanInfoEntity> findGuZhangKuData(Integer id);
+
+    List<QuDuanInfoEntity> findDianMaHuaDatabById(Integer id);
+
+    List<QuDuanInfoEntity> findQuDuanDataByTime(Date time);
 }
