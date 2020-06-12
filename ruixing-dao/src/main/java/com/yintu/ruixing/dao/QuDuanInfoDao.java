@@ -59,4 +59,6 @@ public interface QuDuanInfoDao {
     List<QuDuanInfoEntity> findDianMaHuaDatabById(Integer id);
 
     List<QuDuanInfoEntity> findQuDuanDataByTime(Date time);
+
+    List<QuDuanInfoEntity> findQuDuanDataByTime2(String format);
 }

@@ -40,4 +40,14 @@ public class QuXianServiceImpl implements QuXianService {
     public List<QuDuanInfoEntity> findQuDuanDataByTime(Date time) {
         return quDuanInfoDao.findQuDuanDataByTime(time);
     }
+
+    @Override
+    public List<QuDuanBaseEntity> findQuDuanDataByTime1(Date time) {
+        return quXianDao.findQuDuanDataByTime1(time);
+    }
+
+    @Override
+    public List<QuDuanInfoEntity> findQuDuanDataByTime2(String format) {
+        return quDuanInfoDao.findQuDuanDataByTime2(format);
+    }
 }

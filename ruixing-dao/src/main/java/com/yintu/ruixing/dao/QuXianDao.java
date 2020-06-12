@@ -18,4 +18,6 @@ public interface QuXianDao {
     List<QuDuanBaseEntity> findQuDuanById(Integer id);
 
     List<QuDuanInfoEntity> findQuDuanDataByTime(Date time);
+
+    List<QuDuanBaseEntity> findQuDuanDataByTime1(Date time);
 }

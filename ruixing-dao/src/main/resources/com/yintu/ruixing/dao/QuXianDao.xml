@@ -70,5 +70,17 @@
             qi.sid=#{id}
     </select>
 
-
+    <!--跟选择的日期  获取对应的24个小时点-->
+    <select id="findQuDuanDataByTime1" resultMap="BaseResultMap" >
+        SELECT
+            qd.time
+        FROM
+            mro_quduan_base qd
+        WHERE
+            DATE( qd.time ) = DATE( #{time,jdbcType=TIMESTAMP} )
+        GROUP BY
+            DATE_FORMAT( qd.time, "%Y-%m-%d %H" )
+        ORDER BY
+	        qd.time ASC
+    </select>
 </mapper>
