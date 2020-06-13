@@ -45,7 +45,7 @@ public interface MenXianService {
      * @param Property 属性id
      * @return 门限参数信息
      */
-    MenXianEntity findByQuDuanIdAndProperty(Integer quDuanId, Integer Property);
+    MenXianEntity findByQuDuanIdAndPropertyId(Integer quDuanId, Integer Property);
 
     /**
      * 按照属性id集查询门限参数集

@@ -38,7 +38,7 @@ public class MenXianServiceImpl implements MenXianService {
             Integer propertyId = menXianEntity.getPropertyId();
             MenXianPropertyEntity menXianPropertyEntity = menXianPropertyService.findById(propertyId);
             if (menXianPropertyEntity != null) {
-                MenXianEntity menXianEntity1 = this.findByQuDuanIdAndProperty(quDuanId, propertyId);
+                MenXianEntity menXianEntity1 = this.findByQuDuanIdAndPropertyId(quDuanId, propertyId);
                 if (menXianEntity1 == null) {
                     String name = menXianPropertyEntity.getName();
                     Integer measuredValue;
@@ -202,7 +202,7 @@ public class MenXianServiceImpl implements MenXianService {
             Integer propertyId = menXianEntity.getPropertyId();
             MenXianPropertyEntity menXianPropertyEntity = menXianPropertyService.findById(propertyId);
             if (menXianPropertyEntity != null) {
-                MenXianEntity menXianEntity1 = this.findByQuDuanIdAndProperty(quDuanId, propertyId);
+                MenXianEntity menXianEntity1 = this.findByQuDuanIdAndPropertyId(quDuanId, propertyId);
                 if (menXianEntity1 != null && menXianEntity.getId().equals(menXianEntity1.getId())) {
                     menXianDao.updateByPrimaryKeySelective(menXianEntity);
                 }
@@ -219,8 +219,8 @@ public class MenXianServiceImpl implements MenXianService {
     }
 
     @Override
-    public MenXianEntity findByQuDuanIdAndProperty(Integer quDuanId, Integer propertyId) {
-        return menXianDao.selectByQuDuanIdAndProperty(quDuanId, propertyId);
+    public MenXianEntity findByQuDuanIdAndPropertyId(Integer quDuanId, Integer propertyId) {
+        return menXianDao.selectByQuDuanIdAndPropertyId(quDuanId, propertyId);
     }
 
     @Override

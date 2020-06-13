@@ -55,7 +55,7 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
                 }
             }
         }
-        return configAttributes;
+        return configAttributes.size() == 0 ? SecurityConfig.createList("ROLE_LOGIN") : configAttributes;
     }
 
     @Override

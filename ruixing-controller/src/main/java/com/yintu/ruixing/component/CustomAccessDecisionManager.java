@@ -37,6 +37,10 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
                     if (userEntity.getAuthType().equals(EnumAuthType.ADMIN.getValue()))
                         return;
                 }
+                //如果当前用户的auth_type不是管理员，则判断是否是ROLE_LOGIN角色
+                if (needRole.equals("ROLE_LOGIN")) {
+                    break;
+                }
                 Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
                 for (GrantedAuthority authority : authorities) {
                     if (authority.getAuthority().equals(needRole)) {

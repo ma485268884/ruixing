@@ -59,9 +59,10 @@ public class MenXianController extends BaseController {
                                        @RequestParam(value = "sortby", required = false) String sortby,
                                        @RequestParam(value = "order", required = false) String order,
                                        @RequestParam Integer[] propertyIds) {
-        String orderBy = "id DESC";
+        String tableName = "m.";
+        String orderBy = tableName + "id DESC";
         if (sortby != null && !"".equals(sortby) && order != null && !"".equals(order))
-            orderBy = sortby + " " + order;
+            orderBy = tableName + sortby + " " + order;
         PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<MenXianEntity> menXianEntities = menXianService.findByPropertyIds(propertyIds);
         PageInfo<MenXianEntity> pageInfo = new PageInfo<>(menXianEntities);
