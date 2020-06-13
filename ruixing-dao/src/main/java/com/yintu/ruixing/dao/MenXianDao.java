@@ -17,5 +17,9 @@ public interface MenXianDao {
 
     int updateByPrimaryKey(MenXianEntity record);
 
+    MenXianEntity selectByQuDuanIdAndProperty(Integer quDuanId, Integer propertyId);
+
     List<MenXianEntity> selectByPropertyIds(Integer[] propertyIds);
+
+
 }

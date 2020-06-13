@@ -166,13 +166,20 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
+    <select id="selectByQuDuanIdAndProperty" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_menxian
+        where quduan_id=#{quDuanId,jdbcType=INTEGER} and property_id=#{propertyId,jdbcType=INTEGER}
+    </select>
+
     <select id="selectByPropertyIds" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from mro_menxian
         where property_id in
         <foreach collection="array" item="propertyId" index="index" open="(" close=")" separator=",">
-            #{propertyId}
+            #{propertyId,jdbcType=INTEGER}
         </foreach>
     </select>
 </mapper>

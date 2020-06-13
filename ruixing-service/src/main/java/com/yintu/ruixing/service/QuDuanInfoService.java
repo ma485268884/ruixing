@@ -57,7 +57,12 @@ public interface QuDuanInfoService {
      */
     List<QuDuanInfoEntity> findAll();
 
-
+    /**
+     * 日报表
+     *
+     * @param data 日期
+     * @return 统计
+     */
     List<Map<String, Object>> findStatisticsByDate(Date data);
 
 

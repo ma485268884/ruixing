@@ -39,9 +39,13 @@ public interface MenXianService {
     MenXianEntity findById(Integer id);
 
     /**
-     * @param menXianEntity 门限参数信息
+     * 查询按照区段id和属性id
+     *
+     * @param quDuanId 区段id
+     * @param Property 属性id
+     * @return 门限参数信息
      */
-    void addByQuDuan(MenXianEntity menXianEntity);
+    MenXianEntity findByQuDuanIdAndProperty(Integer quDuanId, Integer Property);
 
     /**
      * 按照属性id集查询门限参数集

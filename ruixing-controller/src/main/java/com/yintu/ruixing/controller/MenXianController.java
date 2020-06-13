@@ -1,13 +1,11 @@
 package com.yintu.ruixing.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.MenXianEntity;
 import com.yintu.ruixing.entity.UserEntity;
-import com.yintu.ruixing.service.MenXianPropertyService;
 import com.yintu.ruixing.service.MenXianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -31,7 +29,7 @@ public class MenXianController extends BaseController {
     public Map<String, Object> add(MenXianEntity menXianEntity) {
         Assert.notNull(menXianEntity.getQuduanId(), "区段id不能为空");
         Assert.notNull(menXianEntity.getPropertyId(), "属性id不能为空");
-        menXianService.addByQuDuan(menXianEntity);
+        menXianService.add(menXianEntity);
         return ResponseDataUtil.ok("添加门限参数信息成功");
     }
 
@@ -60,14 +58,13 @@ public class MenXianController extends BaseController {
                                        @RequestParam("page_size") Integer pageSize,
                                        @RequestParam(value = "sortby", required = false) String sortby,
                                        @RequestParam(value = "order", required = false) String order,
-                                       @RequestParam(value = "propertyIds") Integer[] propertyIds) {
+                                       @RequestParam Integer[] propertyIds) {
         String orderBy = "id DESC";
         if (sortby != null && !"".equals(sortby) && order != null && !"".equals(order))
             orderBy = sortby + " " + order;
-        Page<UserEntity> page = PageHelper.startPage(pageNumber, pageSize, orderBy);
+        PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<MenXianEntity> menXianEntities = menXianService.findByPropertyIds(propertyIds);
-        PageInfo<MenXianEntity> pageInfo = new PageInfo<MenXianEntity>(menXianEntities);
-
-        return ResponseDataUtil.ok("查询用户列表成功", pageInfo);
+        PageInfo<MenXianEntity> pageInfo = new PageInfo<>(menXianEntities);
+        return ResponseDataUtil.ok("查询门限参数列表成功", pageInfo);
     }
 }
