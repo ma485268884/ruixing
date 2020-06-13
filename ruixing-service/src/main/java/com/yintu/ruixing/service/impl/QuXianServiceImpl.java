@@ -47,7 +47,7 @@ public class QuXianServiceImpl implements QuXianService {
     }
 
     @Override
-    public List<QuDuanInfoEntity> findQuDuanDataByTime2(String format) {
-        return quDuanInfoDao.findQuDuanDataByTime2(format);
+    public Integer findQuDuanDataByTime2(String format,String name) {
+        return quDuanInfoDao.findQuDuanDataByTime2(format,name);
     }
 }

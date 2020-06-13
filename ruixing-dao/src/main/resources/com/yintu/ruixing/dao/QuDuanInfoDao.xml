@@ -135,18 +135,17 @@
            DATE(qd.time) = DATE(#{time,jdbcType=TIMESTAMP})
 
     </select>
-
-    <select id="findQuDuanDataByTime2"  resultMap="BaseResultMap">
+    <!--根据查询日期的24个时间  查询对应的数据   -->
+    <select id="findQuDuanDataByTime2" resultType="java.lang.Integer"  statementType="STATEMENT">
         SELECT
-            qi.*
+            ${name}
         FROM
             mro_quduan_info qi,
             mro_quduan_base qd
         WHERE
             qi.qid = qd.id
             AND
-            DATE_FORMAT ( qd.time, '%Y/%m/%d %H' ) = DATE(#{format,jdbcType=VARCHAR})
-
+            DATE_FORMAT ( qd.time, "%Y/%m/%d %H:%i:%S" ) = DATE_FORMAT("${format}", "%Y/%m/%d %H:%i:%S")
 
     </select>
 

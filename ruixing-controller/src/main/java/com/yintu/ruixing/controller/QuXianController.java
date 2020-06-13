@@ -46,43 +46,25 @@ public class QuXianController {
         return ResponseDataUtil.ok("查询数据成功", quDuanInfoEntities);
     }
 
-    //根据所选日期  获得对应的24个时间点
+    //根据所选日期  获得对应的24个时间点  然后根据时间点和传来的的字段名字 来获取对应的数据
     @GetMapping("/findQuDuanDataByTime1")
     public Map<String, Object> findQuDuanDataByTime1(@RequestParam("time") Date time, @RequestParam("name") String name) {
         Map<String, Object> map = new HashMap<>();
         List<String> list = new ArrayList<>();
         List<Integer> list1 = new ArrayList<>();
-        Date time1=null;
-        String hh=null;
-
         List<QuDuanBaseEntity> quDuanBaseEntities = quXianService.findQuDuanDataByTime1(time); //根据传来的时间 获取查询出来的区段信息
         for (QuDuanBaseEntity quDuanBaseEntity : quDuanBaseEntities) {//遍历区段
-             time1 = quDuanBaseEntity.getTime();//得到查询的时间
-             hh = new SimpleDateFormat("HH").format(time1);//把时间变成小时
+            Date time1 = quDuanBaseEntity.getTime();//得到查询的时间
+           // System.out.println(time1);
+            String hh = new SimpleDateFormat("HH").format(time1);//把时间变成小时
             list.add(hh);//把时间变成小时  存到list里面
             Collections.sort(list);//排序时间  从小到大
             String format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(time1);//把时间转换格式
-            System.out.println("55555+"+format);
-            List<QuDuanInfoEntity> quDuanInfoEntities = quXianService.findQuDuanDataByTime2(format);//根据时间查询区段的所有数据信息
-            System.out.println(quDuanInfoEntities);
+            Integer date = quXianService.findQuDuanDataByTime2(format, name);//根据时间查询区段的所有数据信息
+            list1.add(date);
         }
-
-
-            /*for (QuDuanInfoEntity quDuanInfoEntity : quDuanInfoEntities) {//遍历区段的数据
-                Field[] declaredFields = quDuanInfoEntity.getClass().getDeclaredFields();
-                for (int i = 0; i < declaredFields.length; i++) {
-                    String name1 = declaredFields[i].getName();
-                    if (name1.equals(name)) {
-                        System.out.println("11112121212121212121");
-                    }
-                    System.out.println("name111=" + name1);
-                }
-                list1.add(quDuanInfoEntity.getId());
-            }*/
-
         map.put("hours", list);
         map.put("shuzi", list1);
-        System.out.println(map);
         return ResponseDataUtil.ok("查询数据成功", map);
     }
 }

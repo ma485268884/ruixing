@@ -77,10 +77,10 @@
         FROM
             mro_quduan_base qd
         WHERE
-            DATE( qd.time ) = DATE( #{time,jdbcType=TIMESTAMP} )
+            DATE_FORMAT ( qd.time, "%Y/%m/%d " ) =  DATE_FORMAT( #{time,jdbcType=TIMESTAMP},"%Y/%m/%d " )
         GROUP BY
-            DATE_FORMAT( qd.time, "%Y-%m-%d %H" )
-        ORDER BY
-	        qd.time ASC
+            DATE_FORMAT( qd.time, "%Y/%m/%d %H" )
+
+
     </select>
 </mapper>
