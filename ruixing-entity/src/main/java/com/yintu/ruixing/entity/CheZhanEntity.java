@@ -34,11 +34,11 @@ public class CheZhanEntity {
 
     private String czIp;//车站IP
 
-    private Long czType;//车站类型 0：未启用/实验站点  1：正式启用
+    private long czType;//车站类型 0：未启用/实验站点  1：正式启用
 
-    private Long czStutrs;//车站连接状态  0：已配置未连接  1：连接中
+    private long czStutrs;//车站连接状态  0：已配置未连接  1：连接中
 
-    private Long czOpenStutrs;//开通状态   0：未连接   1：已连接
+    private long czOpenStutrs;//开通状态   0：未连接   1：已连接
 
     private Date czLastTime;//最后连接时间
 

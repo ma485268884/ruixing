@@ -21,5 +21,7 @@ public interface QuXianService {
 
     List<QuDuanBaseEntity> findQuDuanDataByTime1(Date time);
 
-    List<QuDuanInfoEntity> findQuDuanDataByTime2(String format);
+    Integer findQuDuanDataByTime2(String format,String name);
+
+
 }
