@@ -32,7 +32,7 @@ public class QuDuanInfoController extends BaseController {
      *
      * @param xid 线段id
      * @param cid 车站id
-     * @return
+     * @return 车站基础信息集
      */
     @GetMapping
     public Map<String, Object> findByXidAndCid(@RequestParam(value = "xid") Integer xid,
@@ -47,8 +47,8 @@ public class QuDuanInfoController extends BaseController {
      * @param time 时间
      * @return 实时的数据
      */
-    @GetMapping
-    public Map<String, Object> findQidAndTime(@RequestParam("qid") Integer qid, @RequestParam("time") Date time) {
+    @GetMapping("/{qid}")
+    public Map<String, Object> findQidAndTime(@PathVariable Integer qid, @RequestParam("time") Date time) {
         List<QuDuanInfoEntity> quDuanInfoEntities = quDuanInfoService.findQidAndTime(qid, time);
         return ResponseDataUtil.ok("查询区段详情", quDuanInfoEntities);
     }
@@ -60,17 +60,15 @@ public class QuDuanInfoController extends BaseController {
      * @param pageSize   页数
      * @param xid        线段id
      * @param cid        车站id
-     * @param time       时间
      * @return
      */
     @GetMapping("/realreport")
     public Map<String, Object> findByXidAndCidAndTime(@RequestParam(value = "page_number") Integer pageNumber,
                                                       @RequestParam(value = "page_size") Integer pageSize,
                                                       @RequestParam(value = "xid") Integer xid,
-                                                      @RequestParam(value = "cid") Integer cid,
-                                                      @RequestParam(value = "time") Date time) {
+                                                      @RequestParam(value = "cid") Integer cid) {
         PageHelper.startPage(pageNumber, pageSize);
-        List<QuDuanInfoEntity> quDuanInfoEntities = quDuanInfoService.findByXidAndCidAndTime(xid, cid, time);
+        List<QuDuanInfoEntity> quDuanInfoEntities = quDuanInfoService.findByXidAndCidAndTime(xid, cid, new Date());
         PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<>(quDuanInfoEntities);
         return ResponseDataUtil.ok("查询实时报表成功", pageInfo);
     }
