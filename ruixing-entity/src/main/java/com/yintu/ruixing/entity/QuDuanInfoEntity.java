@@ -22,6 +22,8 @@ public class QuDuanInfoEntity implements Serializable {
 
     private Date time;
 
+    private Integer typeid;
+
     private Integer dataZhengchang;
 
     private String designCarrier;
@@ -159,6 +161,7 @@ public class QuDuanInfoEntity implements Serializable {
     private String xianluqingkuang;
     private Integer zhanqufenjie;*/
     //private Integer id;
+
 
     private QuDuanBaseEntity quDuanBaseEntity;
 

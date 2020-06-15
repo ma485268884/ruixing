@@ -122,7 +122,7 @@
 
     </select>
 
-    <!--根据日期  查询对应的数据-->
+    <!--根据日期  查询对应的数据--><!--错误-->
     <select id="findQuDuanDataByTime"  resultMap="BaseResultMap">
         SELECT
             qi.*
@@ -135,7 +135,7 @@
            DATE(qd.time) = DATE(#{time,jdbcType=TIMESTAMP})
 
     </select>
-    <!--根据查询日期的24个时间  查询对应的数据   -->
+    <!--根据查询日期的24个时间  查询对应的数据   --> <!--错误-->
     <select id="findQuDuanDataByTime2" resultType="java.lang.Integer"  statementType="STATEMENT">
         SELECT
             ${name}
@@ -224,10 +224,14 @@
         <association column="sid" jdbcType="INTEGER" property="sheBeiEntity">
             <result column="sb_name" jdbcType="VARCHAR" property="sbName"/>
         </association>
+        <association column="qid" jdbcType="INTEGER" property="quDuanBaseEntity">
+            <result column="typeid" jdbcType="VARCHAR" property="typeid"/>
+        </association>
     </resultMap>
     <select id="findDianMaHuaDatabById" resultMap="quduanBaseResultMap" parameterType="java.lang.Integer">
-        SELECT
-            qi.typeid,
+       SELECT
+        qi.time,
+            qb.typeid,
             qi.Design_carrier,
             qi.V_out_zhu,
             qi.V_out_bei,
@@ -246,11 +250,14 @@
             sb.sb_name
         FROM
             mro_quduan_info qi,
-            mro_shebei sb
+            mro_shebei sb,
+            mro_quduan_base qb
         WHERE
-            sb.id=qi.sid
-          AND
-            qi.qid = #{id}
+            sb.id = qb.sid
+            AND qi.qid = qb.id
+            AND qi.qid = #{id}
+        GROUP BY
+            sb.sb_name
 
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
