@@ -22,6 +22,8 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
     @Autowired
     private QuDuanInfoDao quDuanInfoDao;
 
+
+
     @Override
     public void add(QuDuanInfoEntity quDuanInfoEntity) {
         quDuanInfoDao.insertSelective(quDuanInfoEntity);

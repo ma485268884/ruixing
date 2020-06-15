@@ -3,7 +3,9 @@ package com.yintu.ruixing.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntity;
+import com.yintu.ruixing.service.QuDuanBaseService;
 import com.yintu.ruixing.service.QuDuanInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,16 +24,23 @@ public class QuDuanInfoController extends BaseController {
     @Autowired
     private QuDuanInfoService quDuanInfoService;
 
+    @Autowired
+    private QuDuanBaseService quDuanBaseService;
+
     /**
-     * 数据分析：按照id
+     * 查询车站基础信息集
      *
-     * @param id 区段id
+     * @param xid 线段id
+     * @param cid 车站id
+     * @return
      */
-    @GetMapping("/{id}")
-    public Map<String, Object> findById(@PathVariable Integer id) {
-        QuDuanInfoEntity quDuanInfoEntity = quDuanInfoService.findById(id);
-        return ResponseDataUtil.ok("查询区段成功", quDuanInfoEntity);
+    @GetMapping
+    public Map<String, Object> findByXidAndCid(@RequestParam(value = "xid") Integer xid,
+                                               @RequestParam(value = "cid") Integer cid) {
+        List<QuDuanBaseEntity> quDuanBaseEntities = quDuanBaseService.findByXidAndCid(xid, cid);
+        return ResponseDataUtil.ok("查询区段详情", quDuanBaseEntities);
     }
+
 
     /**
      * @param qid  区段id
@@ -49,13 +58,17 @@ public class QuDuanInfoController extends BaseController {
      *
      * @param pageNumber 页码
      * @param pageSize   页数
+     * @param xid        线段id
+     * @param cid        车站id
+     * @param time       时间
+     * @return
      */
     @GetMapping("/realreport")
-    public Map<String, Object> findAll(@RequestParam(value = "page_number") Integer pageNumber,
-                                       @RequestParam(value = "page_size") Integer pageSize,
-                                       @RequestParam(value = "xid") Integer xid,
-                                       @RequestParam(value = "cid") Integer cid,
-                                       @RequestParam(value = "time") Date time) {
+    public Map<String, Object> findByXidAndCidAndTime(@RequestParam(value = "page_number") Integer pageNumber,
+                                                      @RequestParam(value = "page_size") Integer pageSize,
+                                                      @RequestParam(value = "xid") Integer xid,
+                                                      @RequestParam(value = "cid") Integer cid,
+                                                      @RequestParam(value = "time") Date time) {
         PageHelper.startPage(pageNumber, pageSize);
         List<QuDuanInfoEntity> quDuanInfoEntities = quDuanInfoService.findByXidAndCidAndTime(xid, cid, time);
         PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<>(quDuanInfoEntities);
