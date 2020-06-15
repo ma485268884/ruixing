@@ -4,6 +4,10 @@
   <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.QuDuanBaseEntity">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="xid" jdbcType="INTEGER" property="xid" />
+    <result column="sid" jdbcType="INTEGER" property="sid" />
+    <result column="typeid" jdbcType="INTEGER" property="typeid" />
     <result column="line_id" jdbcType="INTEGER" property="lineId" />
     <result column="zongHe_id" jdbcType="VARCHAR" property="zongheId" />
     <result column="quDuanSheJi_name" jdbcType="VARCHAR" property="quduanshejiName" />
@@ -31,14 +35,15 @@
     <result column="yuliu" jdbcType="VARCHAR" property="yuliu" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, line_id, zongHe_id, quDuanSheJi_name, quDuanYunYing_name, quDuan_length, carrier, 
-    diDuan_type, xianLuQingKuang, bianJie, fenJieDian_where, zhanQuFenJie, jinZhanXinHaoJi_name, 
-    xinHaoJiOrBiaoZhiMing, xinHaoBiaoZhiPai_where, xinHaoJi_where, zuoCeJueYuan_type, 
-    youCeJueYuan_type, zhengXianHouFangQuDuan_ID, zhengXianQianFangQuDuan_ID, daoChaGuanLianQuDuan1_ID, 
-    daoChaGuanLianQuDuan2_ID, dianMaHuaGuiHao, guiNeiDiZhi, time, yuliu
+    id, parent_id, cid, xid, sid, typeid, line_id, zongHe_id, quDuanSheJi_name, quDuanYunYing_name,
+    quDuan_length, carrier, diDuan_type, xianLuQingKuang, bianJie, fenJieDian_where,
+    zhanQuFenJie, jinZhanXinHaoJi_name, xinHaoJiOrBiaoZhiMing, xinHaoBiaoZhiPai_where,
+    xinHaoJi_where, zuoCeJueYuan_type, youCeJueYuan_type, zhengXianHouFangQuDuan_ID,
+    zhengXianQianFangQuDuan_ID, daoChaGuanLianQuDuan1_ID, daoChaGuanLianQuDuan2_ID, dianMaHuaGuiHao,
+    guiNeiDiZhi, yuliu
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from mro_quduan_base
     where id = #{id,jdbcType=INTEGER}
@@ -47,35 +52,50 @@
     delete from mro_quduan_base
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity">
-    insert into mro_quduan_base (id, line_id, zongHe_id, 
-      quDuanSheJi_name, quDuanYunYing_name, quDuan_length, 
-      carrier, diDuan_type, xianLuQingKuang, 
-      bianJie, fenJieDian_where, zhanQuFenJie, 
-      jinZhanXinHaoJi_name, xinHaoJiOrBiaoZhiMing, 
-      xinHaoBiaoZhiPai_where, xinHaoJi_where, zuoCeJueYuan_type, 
-      youCeJueYuan_type, zhengXianHouFangQuDuan_ID, 
-      zhengXianQianFangQuDuan_ID, daoChaGuanLianQuDuan1_ID, 
-      daoChaGuanLianQuDuan2_ID, dianMaHuaGuiHao, 
-      guiNeiDiZhi, time, yuliu
-      )
-    values (#{id,jdbcType=INTEGER}, #{lineId,jdbcType=INTEGER}, #{zongheId,jdbcType=VARCHAR}, 
-      #{quduanshejiName,jdbcType=VARCHAR}, #{quduanyunyingName,jdbcType=VARCHAR}, #{quduanLength,jdbcType=INTEGER}, 
-      #{carrier,jdbcType=VARCHAR}, #{diduanType,jdbcType=VARCHAR}, #{xianluqingkuang,jdbcType=VARCHAR}, 
-      #{bianjie,jdbcType=INTEGER}, #{fenjiedianWhere,jdbcType=VARCHAR}, #{zhanqufenjie,jdbcType=INTEGER}, 
-      #{jinzhanxinhaojiName,jdbcType=VARCHAR}, #{xinhaojiorbiaozhiming,jdbcType=VARCHAR}, 
-      #{xinhaobiaozhipaiWhere,jdbcType=VARCHAR}, #{xinhaojiWhere,jdbcType=VARCHAR}, #{zuocejueyuanType,jdbcType=VARCHAR}, 
-      #{youcejueyuanType,jdbcType=VARCHAR}, #{zhengxianhoufangquduanId,jdbcType=VARCHAR}, 
-      #{zhengxianqianfangquduanId,jdbcType=VARCHAR}, #{daochaguanlianquduan1Id,jdbcType=VARCHAR}, 
-      #{daochaguanlianquduan2Id,jdbcType=VARCHAR}, #{dianmahuaguihao,jdbcType=VARCHAR}, 
-      #{guineidizhi,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, #{yuliu,jdbcType=VARCHAR}
-      )
+  <insert id="insert" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity1">
+    insert into mro_quduan_base (id, parent_id, cid,
+                                 xid, sid, typeid, line_id,
+                                 zongHe_id, quDuanSheJi_name, quDuanYunYing_name,
+                                 quDuan_length, carrier, diDuan_type,
+                                 xianLuQingKuang, bianJie, fenJieDian_where,
+                                 zhanQuFenJie, jinZhanXinHaoJi_name, xinHaoJiOrBiaoZhiMing,
+                                 xinHaoBiaoZhiPai_where, xinHaoJi_where, zuoCeJueYuan_type,
+                                 youCeJueYuan_type, zhengXianHouFangQuDuan_ID,
+                                 zhengXianQianFangQuDuan_ID, daoChaGuanLianQuDuan1_ID,
+                                 daoChaGuanLianQuDuan2_ID, dianMaHuaGuiHao,
+                                 guiNeiDiZhi, yuliu)
+    values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER},
+            #{xid,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER}, #{typeid,jdbcType=INTEGER}, #{lineId,jdbcType=INTEGER},
+            #{zongheId,jdbcType=VARCHAR}, #{quduanshejiName,jdbcType=VARCHAR}, #{quduanyunyingName,jdbcType=VARCHAR},
+            #{quduanLength,jdbcType=INTEGER}, #{carrier,jdbcType=VARCHAR}, #{diduanType,jdbcType=VARCHAR},
+            #{xianluqingkuang,jdbcType=VARCHAR}, #{bianjie,jdbcType=INTEGER}, #{fenjiedianWhere,jdbcType=VARCHAR},
+            #{zhanqufenjie,jdbcType=INTEGER}, #{jinzhanxinhaojiName,jdbcType=VARCHAR}, #{xinhaojiorbiaozhiming,jdbcType=VARCHAR},
+            #{xinhaobiaozhipaiWhere,jdbcType=VARCHAR}, #{xinhaojiWhere,jdbcType=VARCHAR}, #{zuocejueyuanType,jdbcType=VARCHAR},
+            #{youcejueyuanType,jdbcType=VARCHAR}, #{zhengxianhoufangquduanId,jdbcType=VARCHAR},
+            #{zhengxianqianfangquduanId,jdbcType=VARCHAR}, #{daochaguanlianquduan1Id,jdbcType=VARCHAR},
+            #{daochaguanlianquduan2Id,jdbcType=VARCHAR}, #{dianmahuaguihao,jdbcType=VARCHAR},
+            #{guineidizhi,jdbcType=INTEGER}, #{yuliu,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity">
+  <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity1">
     insert into mro_quduan_base
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="xid != null">
+        xid,
+      </if>
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="typeid != null">
+        typeid,
       </if>
       <if test="lineId != null">
         line_id,
@@ -146,9 +166,6 @@
       <if test="guineidizhi != null">
         guiNeiDiZhi,
       </if>
-      <if test="time != null">
-        time,
-      </if>
       <if test="yuliu != null">
         yuliu,
       </if>
@@ -156,6 +173,21 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="xid != null">
+        #{xid,jdbcType=INTEGER},
+      </if>
+      <if test="sid != null">
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="typeid != null">
+        #{typeid,jdbcType=INTEGER},
       </if>
       <if test="lineId != null">
         #{lineId,jdbcType=INTEGER},
@@ -226,17 +258,29 @@
       <if test="guineidizhi != null">
         #{guineidizhi,jdbcType=INTEGER},
       </if>
-      <if test="time != null">
-        #{time,jdbcType=TIMESTAMP},
-      </if>
       <if test="yuliu != null">
         #{yuliu,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity">
+  <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity1">
     update mro_quduan_base
     <set>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null">
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="xid != null">
+        xid = #{xid,jdbcType=INTEGER},
+      </if>
+      <if test="sid != null">
+        sid = #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="typeid != null">
+        typeid = #{typeid,jdbcType=INTEGER},
+      </if>
       <if test="lineId != null">
         line_id = #{lineId,jdbcType=INTEGER},
       </if>
@@ -306,42 +350,43 @@
       <if test="guineidizhi != null">
         guiNeiDiZhi = #{guineidizhi,jdbcType=INTEGER},
       </if>
-      <if test="time != null">
-        time = #{time,jdbcType=TIMESTAMP},
-      </if>
       <if test="yuliu != null">
         yuliu = #{yuliu,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity">
+  <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity1">
     update mro_quduan_base
-    set line_id = #{lineId,jdbcType=INTEGER},
-      zongHe_id = #{zongheId,jdbcType=VARCHAR},
-      quDuanSheJi_name = #{quduanshejiName,jdbcType=VARCHAR},
-      quDuanYunYing_name = #{quduanyunyingName,jdbcType=VARCHAR},
-      quDuan_length = #{quduanLength,jdbcType=INTEGER},
-      carrier = #{carrier,jdbcType=VARCHAR},
-      diDuan_type = #{diduanType,jdbcType=VARCHAR},
-      xianLuQingKuang = #{xianluqingkuang,jdbcType=VARCHAR},
-      bianJie = #{bianjie,jdbcType=INTEGER},
-      fenJieDian_where = #{fenjiedianWhere,jdbcType=VARCHAR},
-      zhanQuFenJie = #{zhanqufenjie,jdbcType=INTEGER},
-      jinZhanXinHaoJi_name = #{jinzhanxinhaojiName,jdbcType=VARCHAR},
-      xinHaoJiOrBiaoZhiMing = #{xinhaojiorbiaozhiming,jdbcType=VARCHAR},
-      xinHaoBiaoZhiPai_where = #{xinhaobiaozhipaiWhere,jdbcType=VARCHAR},
-      xinHaoJi_where = #{xinhaojiWhere,jdbcType=VARCHAR},
-      zuoCeJueYuan_type = #{zuocejueyuanType,jdbcType=VARCHAR},
-      youCeJueYuan_type = #{youcejueyuanType,jdbcType=VARCHAR},
-      zhengXianHouFangQuDuan_ID = #{zhengxianhoufangquduanId,jdbcType=VARCHAR},
-      zhengXianQianFangQuDuan_ID = #{zhengxianqianfangquduanId,jdbcType=VARCHAR},
-      daoChaGuanLianQuDuan1_ID = #{daochaguanlianquduan1Id,jdbcType=VARCHAR},
-      daoChaGuanLianQuDuan2_ID = #{daochaguanlianquduan2Id,jdbcType=VARCHAR},
-      dianMaHuaGuiHao = #{dianmahuaguihao,jdbcType=VARCHAR},
-      guiNeiDiZhi = #{guineidizhi,jdbcType=INTEGER},
-      time = #{time,jdbcType=TIMESTAMP},
-      yuliu = #{yuliu,jdbcType=VARCHAR}
+    set parent_id = #{parentId,jdbcType=INTEGER},
+        cid = #{cid,jdbcType=INTEGER},
+        xid = #{xid,jdbcType=INTEGER},
+        sid = #{sid,jdbcType=INTEGER},
+        typeid = #{typeid,jdbcType=INTEGER},
+        line_id = #{lineId,jdbcType=INTEGER},
+        zongHe_id = #{zongheId,jdbcType=VARCHAR},
+        quDuanSheJi_name = #{quduanshejiName,jdbcType=VARCHAR},
+        quDuanYunYing_name = #{quduanyunyingName,jdbcType=VARCHAR},
+        quDuan_length = #{quduanLength,jdbcType=INTEGER},
+        carrier = #{carrier,jdbcType=VARCHAR},
+        diDuan_type = #{diduanType,jdbcType=VARCHAR},
+        xianLuQingKuang = #{xianluqingkuang,jdbcType=VARCHAR},
+        bianJie = #{bianjie,jdbcType=INTEGER},
+        fenJieDian_where = #{fenjiedianWhere,jdbcType=VARCHAR},
+        zhanQuFenJie = #{zhanqufenjie,jdbcType=INTEGER},
+        jinZhanXinHaoJi_name = #{jinzhanxinhaojiName,jdbcType=VARCHAR},
+        xinHaoJiOrBiaoZhiMing = #{xinhaojiorbiaozhiming,jdbcType=VARCHAR},
+        xinHaoBiaoZhiPai_where = #{xinhaobiaozhipaiWhere,jdbcType=VARCHAR},
+        xinHaoJi_where = #{xinhaojiWhere,jdbcType=VARCHAR},
+        zuoCeJueYuan_type = #{zuocejueyuanType,jdbcType=VARCHAR},
+        youCeJueYuan_type = #{youcejueyuanType,jdbcType=VARCHAR},
+        zhengXianHouFangQuDuan_ID = #{zhengxianhoufangquduanId,jdbcType=VARCHAR},
+        zhengXianQianFangQuDuan_ID = #{zhengxianqianfangquduanId,jdbcType=VARCHAR},
+        daoChaGuanLianQuDuan1_ID = #{daochaguanlianquduan1Id,jdbcType=VARCHAR},
+        daoChaGuanLianQuDuan2_ID = #{daochaguanlianquduan2Id,jdbcType=VARCHAR},
+        dianMaHuaGuiHao = #{dianmahuaguihao,jdbcType=VARCHAR},
+        guiNeiDiZhi = #{guineidizhi,jdbcType=INTEGER},
+        yuliu = #{yuliu,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

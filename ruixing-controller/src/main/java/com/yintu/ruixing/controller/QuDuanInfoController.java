@@ -24,8 +24,8 @@ public class QuDuanInfoController extends BaseController {
 
     /**
      * 数据分析：按照id
+     *
      * @param id 区段id
-     * @return
      */
     @GetMapping("/{id}")
     public Map<String, Object> findById(@PathVariable Integer id) {
@@ -33,10 +33,15 @@ public class QuDuanInfoController extends BaseController {
         return ResponseDataUtil.ok("查询区段成功", quDuanInfoEntity);
     }
 
-    @GetMapping("/{cid}/{xid}")
-    public Map<String, Object> findByCidAndXid(@PathVariable("cid") Integer cid, @PathVariable("xid") Integer xid) {
-        List<QuDuanInfoEntity> quDuanInfoEntities = quDuanInfoService.findByCidAndXid(cid, xid);
-        return ResponseDataUtil.ok("查询区段列表成功", quDuanInfoEntities);
+    /**
+     * @param qid  区段id
+     * @param time 时间
+     * @return 实时的数据
+     */
+    @GetMapping
+    public Map<String, Object> findQidAndTime(@RequestParam("qid") Integer qid, @RequestParam("time") Date time) {
+        List<QuDuanInfoEntity> quDuanInfoEntities = quDuanInfoService.findQidAndTime(qid, time);
+        return ResponseDataUtil.ok("查询区段详情", quDuanInfoEntities);
     }
 
     /**
@@ -44,24 +49,25 @@ public class QuDuanInfoController extends BaseController {
      *
      * @param pageNumber 页码
      * @param pageSize   页数
-     * @return
      */
     @GetMapping("/realreport")
     public Map<String, Object> findAll(@RequestParam(value = "page_number") Integer pageNumber,
-                                       @RequestParam(value = "page_size") Integer pageSize) {
+                                       @RequestParam(value = "page_size") Integer pageSize,
+                                       @RequestParam(value = "xid") Integer xid,
+                                       @RequestParam(value = "cid") Integer cid,
+                                       @RequestParam(value = "time") Date time) {
         PageHelper.startPage(pageNumber, pageSize);
-        List<QuDuanInfoEntity> quDuanInfoEntities = quDuanInfoService.findAll();
+        List<QuDuanInfoEntity> quDuanInfoEntities = quDuanInfoService.findByXidAndCidAndTime(xid, cid, time);
         PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<>(quDuanInfoEntities);
         return ResponseDataUtil.ok("查询实时报表成功", pageInfo);
     }
 
     /**
-     * 日报
+     * 日报表
      *
      * @param pageNumber 页码
      * @param pageSize   页数
      * @param time       日期
-     * @return
      */
     @GetMapping("/dailypaper")
     public Map<String, Object> findStatisticsByDate(@RequestParam(value = "page_number") Integer pageNumber,

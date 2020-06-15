@@ -16,42 +16,16 @@ public interface QuDuanInfoDao {
 
     QuDuanInfoEntity selectByPrimaryKey(Integer id);
 
-    List<QuDuanInfoEntity> selectByXidAndCid(Integer xid, Integer cid);
-
-
-//    List<Map<String, Object>> selectSongDuanAll();
-//
-//    List<Map<String, Object>> selectFenXianPanSongDuanAll();
-//
-//    List<Map<String, Object>> selectFenXianPanShouDuanAll();
-//
-//    List<Map<String, Object>> selectShouDuanAll();
-//
-//    List<Map<String, Object>> selectSongDuanTransformerAll();
-//
-//    List<Map<String, Object>> selectSongDuanTuneAll();
-//
-//    List<Map<String, Object>> selectShouDuanTuneAll();
-//
-//    List<Map<String, Object>> selectShouDuanTransformerAll();
-
-    List<QuDuanInfoEntity> selectAll();
-//
-//    List<Map<String, Object>> selectStatisticsSongDuanByDate(Date data);
-//
-//    List<Map<String, Object>> selectStatisticsFenXianPanSongDuanByDate(Date data);
-//
-//    List<Map<String, Object>> selectStatisticsFenXianPanShouDuanByDate(Date data);
-//
-//    List<Map<String, Object>> selectStatisticsShouDuanByDate(Date data);
-
-    List<Map<String, Object>> selectStatisticsByDate(Date data);
-
-
     int updateByPrimaryKeySelective(QuDuanInfoEntity record);
 
     int updateByPrimaryKey(QuDuanInfoEntity record);
 
+
+    List<QuDuanInfoEntity> selectByQidAndTime(Integer qid, Date time);
+
+    List<QuDuanInfoEntity> selectByXidAndCidAndTime(Integer xid, Integer cid, Date time);
+
+    List<Map<String, Object>> selectStatisticsByDate(Date data);
 
     //根据区段id  查询相关的数据
 
@@ -61,5 +35,5 @@ public interface QuDuanInfoDao {
 
     List<QuDuanInfoEntity> findQuDuanDataByTime(Date time);
 
-    Integer findQuDuanDataByTime2(@Param("format")String format,@Param("name") String name);
+    Integer findQuDuanDataByTime2(@Param("format") String format, @Param("name") String name);
 }

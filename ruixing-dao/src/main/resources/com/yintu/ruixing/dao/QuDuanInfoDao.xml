@@ -99,12 +99,14 @@
         from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid=qb.id
         where qi.id = #{id,jdbcType=INTEGER}
     </select>
-    <select id="selectByXidAndCid" resultMap="BaseResultMap">
+
+    <select id="selectByQidAndTime" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid=qb.id
-        where xid = #{xid,jdbcType=INTEGER} and cid=#{cid,jdbcType=INTEGER}
+        where qi.qid = #{qid,jdbcType=INTEGER} and qi.time=#{time,jdbcType=TIMESTAMP}
     </select>
+
     <!--车站id 查询车站内电码化的信息-->
     <select id="findGuZhangKuData" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT qi.*,
@@ -117,29 +119,21 @@
     </select>
 
     <!--根据日期  查询对应的数据--><!--错误-->
-    <select id="findQuDuanDataByTime"  resultMap="BaseResultMap">
-        SELECT
-            qi.*
-        FROM
-            mro_quduan_info qi,
-            mro_quduan_base qd
-        WHERE
-            qi.qid = qd.id
-          AND
-           DATE(qi.time) = DATE(#{time,jdbcType=TIMESTAMP})
+    <select id="findQuDuanDataByTime" resultMap="BaseResultMap">
+        SELECT qi.*
+        FROM mro_quduan_info qi,
+             mro_quduan_base qd
+        WHERE qi.qid = qd.id
+          AND DATE(qi.time) = DATE(#{time,jdbcType=TIMESTAMP})
 
     </select>
     <!--根据查询日期的24个时间  查询对应的数据   --> <!--错误-->
-    <select id="findQuDuanDataByTime2" resultType="java.lang.Integer"  statementType="STATEMENT">
-        SELECT
-            ${name}
-        FROM
-            mro_quduan_info qi,
-            mro_quduan_base qd
-        WHERE
-            qi.qid = qd.id
-            AND
-            DATE_FORMAT ( qi.time, "%Y/%m/%d %H:%i:%S" ) = DATE_FORMAT("${format}", "%Y/%m/%d %H:%i:%S")
+    <select id="findQuDuanDataByTime2" resultType="java.lang.Integer" statementType="STATEMENT">
+        SELECT ${name}
+        FROM mro_quduan_info qi,
+             mro_quduan_base qd
+        WHERE qi.qid = qd.id
+          AND DATE_FORMAT(qi.time, "%Y/%m/%d %H:%i:%S") = DATE_FORMAT("${format}", "%Y/%m/%d %H:%i:%S")
     </select>
 
     <resultMap id="quduanBaseResultMap" type="com.yintu.ruixing.entity.QuDuanInfoEntity">
@@ -222,34 +216,30 @@
         </association>
     </resultMap>
     <select id="findDianMaHuaDatabById" resultMap="quduanBaseResultMap" parameterType="java.lang.Integer">
-       SELECT
-            qb.typeid,
-            qi.Design_carrier,
-            qi.V_out_zhu,
-            qi.V_out_bei,
-            qi.mA_out_zhu,
-            qi.mA_out_bei,
-            qi.Hz_up_zhu,
-            qi.Hz_up_bei,
-            qi.Hz_down_zhu,
-            qi.Hz_down_bei,
-            qi.Hz_low_zhu,
-            qi.Hz_low_bei,
-            qi.FBJ_drive_zhu,
-            qi.FBJ_drive_bei,
-            qi.FBJ_collection_zhu,
-            qi.FBJ_collection_bei,
-            sb.sb_name
-        FROM
-            mro_quduan_info qi,
-            mro_shebei sb,
-            mro_quduan_base qb
-        WHERE
-            sb.id = qb.sid
-            AND qi.qid = qb.id
-            AND qi.qid = #{id}
-        GROUP BY
-            sb.sb_name
+        SELECT qb.typeid,
+               qi.Design_carrier,
+               qi.V_out_zhu,
+               qi.V_out_bei,
+               qi.mA_out_zhu,
+               qi.mA_out_bei,
+               qi.Hz_up_zhu,
+               qi.Hz_up_bei,
+               qi.Hz_down_zhu,
+               qi.Hz_down_bei,
+               qi.Hz_low_zhu,
+               qi.Hz_low_bei,
+               qi.FBJ_drive_zhu,
+               qi.FBJ_drive_bei,
+               qi.FBJ_collection_zhu,
+               qi.FBJ_collection_bei,
+               sb.sb_name
+        FROM mro_quduan_info qi,
+             mro_shebei sb,
+             mro_quduan_base qb
+        WHERE sb.id = qb.sid
+          AND qi.qid = qb.id
+          AND qi.qid = #{id}
+        GROUP BY sb.sb_name
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
@@ -257,8 +247,8 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.yintu.ruixing.entity.QuDuanInfoEntity">
-        insert into mro_quduan_info (id, xid, qid,
-                                     cid, typeid, data_zhengChang,
+        insert into mro_quduan_info (id, qid,
+                                     data_zhengChang,
                                      Design_carrier, direction, GJcollection,
                                      V_in_all, mV_in_zhu, mV_in_bing,
                                      mV_in_diao_zhu, mV_in_diao_bing, Hz_in_low_zhu,
@@ -281,8 +271,7 @@
                                      A_longIn_JBA_zhu, A_longIn_JBA_diao, A_longOut_JBA_zhu,
                                      A_longOut_JBA_diao, A_shortIn_JBA_zhu, A_shortIn_JBA_diao,
                                      A_shortOut_JBA_zhu, A_shortOut_JBA_diao, yuliu)
-        values (#{id,jdbcType=INTEGER}, #{xid,jdbcType=INTEGER}, #{qid,jdbcType=INTEGER},
-                #{cid,jdbcType=INTEGER}, #{typeid,jdbcType=INTEGER}, #{dataZhengchang,jdbcType=INTEGER},
+        values (#{id,jdbcType=INTEGER}, #{qid,jdbcType=INTEGER}, #{dataZhengchang,jdbcType=INTEGER},
                 #{designCarrier,jdbcType=VARCHAR}, #{direction,jdbcType=VARCHAR}, #{gjcollection,jdbcType=VARCHAR},
                 #{vInAll,jdbcType=INTEGER}, #{mvInZhu,jdbcType=INTEGER}, #{mvInBing,jdbcType=INTEGER},
                 #{mvInDiaoZhu,jdbcType=INTEGER}, #{mvInDiaoBing,jdbcType=INTEGER}, #{hzInLowZhu,jdbcType=INTEGER},
@@ -318,17 +307,8 @@
             <if test="id != null">
                 id,
             </if>
-            <if test="xid != null">
-                xid,
-            </if>
             <if test="qid != null">
                 qid,
-            </if>
-            <if test="cid != null">
-                cid,
-            </if>
-            <if test="typeid != null">
-                typeid,
             </if>
             <if test="dataZhengchang != null">
                 data_zhengChang,
@@ -742,17 +722,8 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.QuDuanInfoEntity">
         update mro_quduan_info
         <set>
-            <if test="xid != null">
-                xid = #{xid,jdbcType=INTEGER},
-            </if>
             <if test="qid != null">
                 qid = #{qid,jdbcType=INTEGER},
-            </if>
-            <if test="cid != null">
-                cid = #{cid,jdbcType=INTEGER},
-            </if>
-            <if test="typeid != null">
-                typeid = #{typeid,jdbcType=INTEGER},
             </if>
             <if test="dataZhengchang != null">
                 data_zhengChang = #{dataZhengchang,jdbcType=INTEGER},
@@ -954,10 +925,7 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.QuDuanInfoEntity">
         update mro_quduan_info
-        set xid                     = #{xid,jdbcType=INTEGER},
-            qid                     = #{qid,jdbcType=INTEGER},
-            cid                     = #{cid,jdbcType=INTEGER},
-            typeid                  = #{typeid,jdbcType=INTEGER},
+        set qid                     = #{qid,jdbcType=INTEGER},
             data_zhengChang         = #{dataZhengchang,jdbcType=INTEGER},
             Design_carrier          = #{designCarrier,jdbcType=VARCHAR},
             direction               = #{direction,jdbcType=VARCHAR},
@@ -1123,12 +1091,16 @@
 
         <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
     </resultMap>
-    <select id="selectAll" resultMap="AllResultMap">
+
+    <select id="selectByXidAndCidAndTime" resultMap="AllResultMap">
         select
         <include refid="all_Column_List"/>
-        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id order by qi.id DESC
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+        where qb.xid=#{xid,jdbcType=INTEGER} and
+        qb.cid=#{cid,jdbcType=INTEGER} and
+        DATE(qi.time) = DATE(#{time,jdbcType=TIMESTAMP})
+        order by qi.id DESC
     </select>
-
     <!--日报表-->
     <sql id="Statistics__Column_List">
         qb.quDuanYunYing_name,
@@ -1202,6 +1174,6 @@
         WHERE
         DATE(qi.time) = DATE(#{time,jdbcType=TIMESTAMP})
         GROUP BY
-        qb.quDuanYunYing_name
+        qi.qid
     </select>
 </mapper>

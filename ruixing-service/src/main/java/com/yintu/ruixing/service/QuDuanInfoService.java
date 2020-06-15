@@ -41,13 +41,11 @@ public interface QuDuanInfoService {
     QuDuanInfoEntity findById(Integer id);
 
     /**
-     * 按照车站和线段查询区段详情集
-     *
-     * @param cid 车站id
-     * @param xid 线段id
-     * @return 区段详情集
+     * @param qid  区段信息id
+     * @param time 时间
+     * @return 区段详情集合
      */
-    List<QuDuanInfoEntity> findByCidAndXid(Integer cid, Integer xid);
+    List<QuDuanInfoEntity> findQidAndTime(Integer qid, Date time);
 
 
     /**
@@ -55,7 +53,7 @@ public interface QuDuanInfoService {
      *
      * @return 区段详情集
      */
-    List<QuDuanInfoEntity> findAll();
+    List<QuDuanInfoEntity> findByXidAndCidAndTime(Integer xid, Integer cid, Date time);
 
     /**
      * 日报表
