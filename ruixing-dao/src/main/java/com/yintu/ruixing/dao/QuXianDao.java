@@ -15,7 +15,7 @@ import java.util.List;
 public interface QuXianDao {
     List<SheBeiEntity> findSheBeiByCid(Integer id);
 
-    List<QuDuanBaseEntity> findQuDuanById(Integer id);
+    List<String> findQuDuanById(Integer id);
 
     List<QuDuanInfoEntity> findQuDuanDataByTime(Date time);
 

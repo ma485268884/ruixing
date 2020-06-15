@@ -15,7 +15,7 @@ import java.util.List;
 public interface QuXianService {
     List<SheBeiEntity> findSheBeiByCid(Integer id);
 
-    List<QuDuanBaseEntity> findQuDuanById(Integer id);
+    List<String> findQuDuanById(Integer id);
 
     List<QuDuanInfoEntity> findQuDuanDataByTime(Date time);
 
@@ -24,4 +24,5 @@ public interface QuXianService {
     Integer findQuDuanDataByTime2(String format,String name);
 
 
+    Integer findQuDuanData(Date startTime, Date endTime, String quduanName, String shuxingName);
 }

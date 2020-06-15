@@ -32,7 +32,7 @@ public class QuXianServiceImpl implements QuXianService {
     }
 
     @Override
-    public List<QuDuanBaseEntity> findQuDuanById(Integer id) {
+    public List<String> findQuDuanById(Integer id) {
         return quXianDao.findQuDuanById(id);
     }
 
@@ -49,5 +49,10 @@ public class QuXianServiceImpl implements QuXianService {
     @Override
     public Integer findQuDuanDataByTime2(String format,String name) {
         return quDuanInfoDao.findQuDuanDataByTime2(format,name);
+    }
+
+    @Override
+    public Integer findQuDuanData(Date startTime, Date endTime, String quduanName, String shuxingName) {
+        return quDuanInfoDao.findQuDuanData(startTime,endTime,quduanName,shuxingName);
     }
 }

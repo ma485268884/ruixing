@@ -145,7 +145,27 @@
         WHERE
             qi.qid = qd.id
             AND
-            DATE_FORMAT ( qd.time, "%Y/%m/%d %H:%i:%S" ) = DATE_FORMAT("${format}", "%Y/%m/%d %H:%i:%S")
+            DATE_FORMAT ( qi.time, "%Y/%m/%d %H:%i:%S" ) = DATE_FORMAT("${format}", "%Y/%m/%d %H:%i:%S")
+
+    </select>
+
+    <!--根据传来的时间段和区段名和属性名 按秒来 查询对应的数据   -->
+    <select id="findQuDuanData" resultType="java.lang.Integer"  statementType="STATEMENT">
+        select
+        ${shuxingName}
+        from
+        mro_quduan_info qi,
+        mro_quduan_base qb
+        where
+        qi.qid=qb.id
+        and
+        qb.quDuanYunYing_name="${quduanName}"
+        and
+        DATE_FORMAT(qi.time,"%Y/%m/%d %H:%i:%S")
+        BETWEEN
+        DATE_FORMAT("${startTime}", "%Y/%m/%d %H:%i:%S")
+        and
+        DATE_FORMAT("${endTime}", "%Y/%m/%d %H:%i:%S")
 
     </select>
 
