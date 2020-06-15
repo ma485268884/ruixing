@@ -22,6 +22,8 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
     @Autowired
     private QuDuanInfoDao quDuanInfoDao;
 
+
+
     @Override
     public void add(QuDuanInfoEntity quDuanInfoEntity) {
         quDuanInfoDao.insertSelective(quDuanInfoEntity);
@@ -43,13 +45,14 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
     }
 
     @Override
-    public List<QuDuanInfoEntity> findByCidAndXid(Integer cid, Integer xid) {
-        return quDuanInfoDao.selectByXidAndCid(cid, xid);
+    public List<QuDuanInfoEntity> findQidAndTime(Integer qid, Date time) {
+        return quDuanInfoDao.selectByQidAndTime(qid, time);
     }
 
+
     @Override
-    public List<QuDuanInfoEntity> findAll() {
-        return quDuanInfoDao.selectAll();
+    public List<QuDuanInfoEntity> findByXidAndCidAndTime(Integer xid, Integer cid, Date time) {
+        return quDuanInfoDao.selectByXidAndCidAndTime(xid, cid, time);
     }
 
 

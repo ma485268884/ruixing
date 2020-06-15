@@ -3,7 +3,9 @@ package com.yintu.ruixing.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntity;
+import com.yintu.ruixing.service.QuDuanBaseService;
 import com.yintu.ruixing.service.QuDuanInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,21 +24,33 @@ public class QuDuanInfoController extends BaseController {
     @Autowired
     private QuDuanInfoService quDuanInfoService;
 
+    @Autowired
+    private QuDuanBaseService quDuanBaseService;
+
     /**
-     * 数据分析：按照id
-     * @param id 区段id
-     * @return
+     * 查询车站基础信息集
+     *
+     * @param xid 线段id
+     * @param cid 车站id
+     * @return 车站基础信息集
      */
-    @GetMapping("/{id}")
-    public Map<String, Object> findById(@PathVariable Integer id) {
-        QuDuanInfoEntity quDuanInfoEntity = quDuanInfoService.findById(id);
-        return ResponseDataUtil.ok("查询区段成功", quDuanInfoEntity);
+    @GetMapping
+    public Map<String, Object> findByXidAndCid(@RequestParam(value = "xid") Integer xid,
+                                               @RequestParam(value = "cid") Integer cid) {
+        List<QuDuanBaseEntity> quDuanBaseEntities = quDuanBaseService.findByXidAndCid(xid, cid);
+        return ResponseDataUtil.ok("查询区段详情", quDuanBaseEntities);
     }
 
-    @GetMapping("/{cid}/{xid}")
-    public Map<String, Object> findByCidAndXid(@PathVariable("cid") Integer cid, @PathVariable("xid") Integer xid) {
-        List<QuDuanInfoEntity> quDuanInfoEntities = quDuanInfoService.findByCidAndXid(cid, xid);
-        return ResponseDataUtil.ok("查询区段列表成功", quDuanInfoEntities);
+
+    /**
+     * @param qid  区段id
+     * @param time 时间
+     * @return 实时的数据
+     */
+    @GetMapping("/{qid}")
+    public Map<String, Object> findQidAndTime(@PathVariable Integer qid, @RequestParam("time") Date time) {
+        List<QuDuanInfoEntity> quDuanInfoEntities = quDuanInfoService.findQidAndTime(qid, time);
+        return ResponseDataUtil.ok("查询区段详情", quDuanInfoEntities);
     }
 
     /**
@@ -44,24 +58,27 @@ public class QuDuanInfoController extends BaseController {
      *
      * @param pageNumber 页码
      * @param pageSize   页数
+     * @param xid        线段id
+     * @param cid        车站id
      * @return
      */
     @GetMapping("/realreport")
-    public Map<String, Object> findAll(@RequestParam(value = "page_number") Integer pageNumber,
-                                       @RequestParam(value = "page_size") Integer pageSize) {
+    public Map<String, Object> findByXidAndCidAndTime(@RequestParam(value = "page_number") Integer pageNumber,
+                                                      @RequestParam(value = "page_size") Integer pageSize,
+                                                      @RequestParam(value = "xid") Integer xid,
+                                                      @RequestParam(value = "cid") Integer cid) {
         PageHelper.startPage(pageNumber, pageSize);
-        List<QuDuanInfoEntity> quDuanInfoEntities = quDuanInfoService.findAll();
+        List<QuDuanInfoEntity> quDuanInfoEntities = quDuanInfoService.findByXidAndCidAndTime(xid, cid, new Date());
         PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<>(quDuanInfoEntities);
         return ResponseDataUtil.ok("查询实时报表成功", pageInfo);
     }
 
     /**
-     * 日报
+     * 日报表
      *
      * @param pageNumber 页码
      * @param pageSize   页数
      * @param time       日期
-     * @return
      */
     @GetMapping("/dailypaper")
     public Map<String, Object> findStatisticsByDate(@RequestParam(value = "page_number") Integer pageNumber,

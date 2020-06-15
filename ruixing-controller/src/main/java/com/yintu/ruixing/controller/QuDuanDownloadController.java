@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.entity.QuDuanDownloadEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntity;
 import com.yintu.ruixing.service.QuDuanDownloadService;
@@ -44,8 +45,8 @@ public class QuDuanDownloadController extends BaseController {
 
     @GetMapping("/{id}")
     public Map<String, Object> findById(@PathVariable Integer id) {
-        List<QuDuanInfoEntity> quDuanInfoEntities = quDuanDownloadService.findDataById(id);
-        return ResponseDataUtil.ok("查询下载记录成功", quDuanInfoEntities);
+        List<QuDuanBaseEntity> quDuanBaseEntities = quDuanDownloadService.findDataById(id);
+        return ResponseDataUtil.ok("查询下载记录成功", quDuanBaseEntities);
     }
 
     @GetMapping

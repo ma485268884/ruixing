@@ -24,8 +24,6 @@ public class QuDuanBaseEntity implements Serializable {
 
     private Integer typeid;//类型id
 
-    private Integer czQuDuanId;
-
     private Integer lineId;
 
     private String zongheId;

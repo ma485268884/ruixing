@@ -3,8 +3,10 @@ package com.yintu.ruixing.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.dao.QuDuanDownloadDao;
+import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.entity.QuDuanDownloadEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntity;
+import com.yintu.ruixing.service.QuDuanBaseService;
 import com.yintu.ruixing.service.QuDuanDownloadService;
 import com.yintu.ruixing.service.QuDuanInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
 
     @Autowired
     private QuDuanDownloadDao quDuanDownloadDao;
+    @Autowired
+    private QuDuanBaseService quDuanBaseService;
     @Autowired
     private QuDuanInfoService quDuanInfoService;
 
@@ -60,19 +64,19 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
     }
 
     @Override
-    public List<QuDuanInfoEntity> findDataById(Integer id) {
+    public List<QuDuanBaseEntity> findDataById(Integer id) {
         QuDuanDownloadEntity quDuanDownloadEntity = this.findById(id);
-        List<QuDuanInfoEntity> quDuanInfoEntities = new ArrayList<>();
+        List<QuDuanBaseEntity> quDuanBaseEntities = new ArrayList<>();
         if (quDuanDownloadEntity != null) {
             String data = quDuanDownloadEntity.getData();
             List<Integer> quDuanIds = JSONArray.parseArray(data, Integer.class);
             for (Integer quDuanId : quDuanIds) {
-                QuDuanInfoEntity quDuanInfoEntity = quDuanInfoService.findById(quDuanId);
-                quDuanInfoEntities.add(quDuanInfoEntity);
+                QuDuanBaseEntity quDuanBaseEntity = quDuanBaseService.findById(quDuanId);
+                quDuanBaseEntities.add(quDuanBaseEntity);
             }
 
         }
-        return quDuanInfoEntities;
+        return quDuanBaseEntities;
     }
 
     @Override
@@ -81,10 +85,10 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
         time.setTime(startDateTime);
         time.add(Calendar.MINUTE, minute);
         Date endDateTime = time.getTime();
-        List<QuDuanInfoEntity> quDuanInfoEntities = quDuanInfoService.findByCidAndXid(xid, cid);
+        List<QuDuanBaseEntity> quDuanBaseEntities = quDuanBaseService.findByXidAndCid(xid, cid);
         List<Integer> quDuanIds = new ArrayList<>();
-        for (QuDuanInfoEntity quDuanInfoEntity : quDuanInfoEntities) {
-            quDuanIds.add(quDuanInfoEntity.getId());
+        for (QuDuanBaseEntity quDuanBaseEntity : quDuanBaseEntities) {
+            quDuanIds.add(quDuanBaseEntity.getId());
         }
         JSONArray ja = (JSONArray) JSONArray.toJSON(quDuanIds);
         QuDuanDownloadEntity quDuanDownloadEntity = new QuDuanDownloadEntity();
