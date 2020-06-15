@@ -49,9 +49,10 @@ public interface QuDuanInfoService {
 
 
     /**
-     * 获取全部的区段详情集
-     *
-     * @return 区段详情集
+     * @param xid  线段id
+     * @param cid  车站id
+     * @param time 时间
+     * @return
      */
     List<QuDuanInfoEntity> findByXidAndCidAndTime(Integer xid, Integer cid, Date time);
 

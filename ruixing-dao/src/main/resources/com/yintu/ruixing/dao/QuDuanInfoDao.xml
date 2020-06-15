@@ -1096,11 +1096,20 @@
         select
         <include refid="all_Column_List"/>
         from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
-        where qb.xid=#{xid,jdbcType=INTEGER} and
-        qb.cid=#{cid,jdbcType=INTEGER} and
-        DATE(qi.time) = DATE(#{time,jdbcType=TIMESTAMP})
+        <where>
+            <if test="xid!=null">
+                and qb.xid=#{xid,jdbcType=INTEGER}
+            </if>
+            <if test="cid!=null">
+                and qb.cid=#{cid,jdbcType=INTEGER}
+            </if>
+            <if test="time!=null">
+                and DATE(qi.time) = DATE(#{time,jdbcType=TIMESTAMP})
+            </if>
+        </where>
         order by qi.id DESC
     </select>
+
     <!--日报表-->
     <sql id="Statistics__Column_List">
         qb.quDuanYunYing_name,

@@ -52,7 +52,7 @@
     delete from mro_quduan_base
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity1">
+  <insert id="insert" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity">
     insert into mro_quduan_base (id, parent_id, cid,
                                  xid, sid, typeid, line_id,
                                  zongHe_id, quDuanSheJi_name, quDuanYunYing_name,
@@ -76,7 +76,7 @@
             #{daochaguanlianquduan2Id,jdbcType=VARCHAR}, #{dianmahuaguihao,jdbcType=VARCHAR},
             #{guineidizhi,jdbcType=INTEGER}, #{yuliu,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity1">
+  <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity">
     insert into mro_quduan_base
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -263,7 +263,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity1">
+  <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity">
     update mro_quduan_base
     <set>
       <if test="parentId != null">
@@ -356,7 +356,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity1">
+  <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity">
     update mro_quduan_base
     set parent_id = #{parentId,jdbcType=INTEGER},
         cid = #{cid,jdbcType=INTEGER},

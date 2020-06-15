@@ -70,6 +70,8 @@ public class QuDuanBaseEntity implements Serializable {
 
     private Integer guineidizhi;
 
+    private Date time;
+
     private String yuliu;
 
     private LineEntity lineEntity;
