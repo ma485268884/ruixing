@@ -67,4 +67,15 @@ public class QuXianController {
         map.put("shuzi", list1);
         return ResponseDataUtil.ok("查询数据成功", map);
     }
+
+    //根据车站id   获取车站下 的所有区段
+    /*@GetMapping("/findQuDuanById{id}")
+    public Map<String,Object>findQuDuanById(@PathVariable Integer id){
+        quXianService.findQuDuanById(id);
+        return null;
+    }*/
+
+
+
+
 }
