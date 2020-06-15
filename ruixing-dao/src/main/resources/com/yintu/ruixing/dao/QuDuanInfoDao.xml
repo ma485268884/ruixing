@@ -3,11 +3,8 @@
 <mapper namespace="com.yintu.ruixing.dao.QuDuanInfoDao">
     <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.QuDuanInfoEntity">
         <id column="qiId" jdbcType="INTEGER" property="id"/>
-        <result column="xid" jdbcType="INTEGER" property="xid"/>
         <result column="qid" jdbcType="INTEGER" property="qid"/>
-        <result column="cid" jdbcType="INTEGER" property="cid"/>
-        <result column="sid" jdbcType="INTEGER" property="sid"/>
-        <result column="typeid" jdbcType="INTEGER" property="typeid"/>
+        <result column="time" jdbcType="TIMESTAMP" property="time"/>
         <result column="data_zhengChang" jdbcType="INTEGER" property="dataZhengchang"/>
         <result column="Design_carrier" jdbcType="VARCHAR" property="designCarrier"/>
         <result column="direction" jdbcType="VARCHAR" property="direction"/>
@@ -79,7 +76,7 @@
         </association>
     </resultMap>
     <sql id="Base_Column_List">
-        qi.id as qiId, xid, qid, cid, typeid, data_zhengChang,Design_carrier, direction, GJcollection, V_in_all,
+        qi.id as qiId,time,qid,data_zhengChang,Design_carrier, direction, GJcollection, V_in_all,
     mV_in_zhu, mV_in_bing, mV_in_diao_zhu, mV_in_diao_bing, Hz_in_low_zhu, Hz_in_low_bing, 
     GJ_drive_zhu, GJ_drive_bing, GJ_rear_collection_zhu, GJ_rear_collection_bing, baojing_zhu, 
     baojing_bing, V_out_zhu, V_out_bei, mA_out_zhu, mA_out_bei, Hz_up_zhu, Hz_up_bei, 
@@ -110,42 +107,31 @@
     </select>
     <!--车站id 查询车站内电码化的信息-->
     <select id="findGuZhangKuData" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        SELECT
-            qi.*,
-            qb.*
-        FROM
-            mro_quduan_info qi,
-            mro_quduan_base qb
-        WHERE
-            qi.qid = qb.id
+        SELECT qi.*,
+               qb.*
+        FROM mro_quduan_info qi,
+             mro_quduan_base qb
+        WHERE qi.qid = qb.id
           AND qi.id = #{id,jdbcType=INTEGER}
 
     </select>
 
     <!--根据日期  查询对应的数据-->
-    <select id="findQuDuanDataByTime"  resultMap="BaseResultMap">
-        SELECT
-            qi.*
-        FROM
-            mro_quduan_info qi,
-            mro_quduan_base qd
-        WHERE
-            qi.qid = qd.id
-          AND
-           DATE(qd.time) = DATE(#{time,jdbcType=TIMESTAMP})
+    <select id="findQuDuanDataByTime" resultMap="BaseResultMap">
+        SELECT qi.*
+        FROM mro_quduan_info qi,
+             mro_quduan_base qd
+        WHERE qi.qid = qd.id
+          AND DATE(qd.time) = DATE(#{time,jdbcType=TIMESTAMP})
 
     </select>
     <!--根据查询日期的24个时间  查询对应的数据   -->
-    <select id="findQuDuanDataByTime2" resultType="java.lang.Integer"  statementType="STATEMENT">
-        SELECT
-            ${name}
-        FROM
-            mro_quduan_info qi,
-            mro_quduan_base qd
-        WHERE
-            qi.qid = qd.id
-            AND
-            DATE_FORMAT ( qd.time, "%Y/%m/%d %H:%i:%S" ) = DATE_FORMAT("${format}", "%Y/%m/%d %H:%i:%S")
+    <select id="findQuDuanDataByTime2" resultType="java.lang.Integer" statementType="STATEMENT">
+        SELECT ${name}
+        FROM mro_quduan_info qi,
+             mro_quduan_base qd
+        WHERE qi.qid = qd.id
+          AND DATE_FORMAT(qd.time, "%Y/%m/%d %H:%i:%S") = DATE_FORMAT("${format}", "%Y/%m/%d %H:%i:%S")
 
     </select>
 
@@ -226,31 +212,27 @@
         </association>
     </resultMap>
     <select id="findDianMaHuaDatabById" resultMap="quduanBaseResultMap" parameterType="java.lang.Integer">
-        SELECT
-            qi.typeid,
-            qi.Design_carrier,
-            qi.V_out_zhu,
-            qi.V_out_bei,
-            qi.mA_out_zhu,
-            qi.mA_out_bei,
-            qi.Hz_up_zhu,
-            qi.Hz_up_bei,
-            qi.Hz_down_zhu,
-            qi.Hz_down_bei,
-            qi.Hz_low_zhu,
-            qi.Hz_low_bei,
-            qi.FBJ_drive_zhu,
-            qi.FBJ_drive_bei,
-            qi.FBJ_collection_zhu,
-            qi.FBJ_collection_bei,
-            sb.sb_name
-        FROM
-            mro_quduan_info qi,
-            mro_shebei sb
-        WHERE
-            sb.id=qi.sid
-          AND
-            qi.qid = #{id}
+        SELECT qi.typeid,
+               qi.Design_carrier,
+               qi.V_out_zhu,
+               qi.V_out_bei,
+               qi.mA_out_zhu,
+               qi.mA_out_bei,
+               qi.Hz_up_zhu,
+               qi.Hz_up_bei,
+               qi.Hz_down_zhu,
+               qi.Hz_down_bei,
+               qi.Hz_low_zhu,
+               qi.Hz_low_bei,
+               qi.FBJ_drive_zhu,
+               qi.FBJ_drive_bei,
+               qi.FBJ_collection_zhu,
+               qi.FBJ_collection_bei,
+               sb.sb_name
+        FROM mro_quduan_info qi,
+             mro_shebei sb
+        WHERE sb.id = qi.sid
+          AND qi.qid = #{id}
 
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -1031,7 +1013,7 @@
 
     <!--实时报表-->
     <sql id="all_Column_List">
-    qi.id,V_out_zhu, V_out_bei, mA_out_zhu, mA_out_bei, Hz_up_zhu, Hz_up_bei,Hz_down_zhu, Hz_down_bei, Hz_low_zhu, Hz_low_bei, FBJ_drive_zhu, FBJ_drive_bei, FBJ_collection_zhu,FBJ_collection_bei,
+        qi.id,V_out_zhu, V_out_bei, mA_out_zhu, mA_out_bei, Hz_up_zhu, Hz_up_bei,Hz_down_zhu, Hz_down_bei, Hz_low_zhu, Hz_low_bei, FBJ_drive_zhu, FBJ_drive_bei, FBJ_collection_zhu,FBJ_collection_bei,
 
     V_songduan_Cable, mA_songduan_Cable,
 
@@ -1089,7 +1071,6 @@
         <result column="GJ_rear_collection_bing" jdbcType="VARCHAR" property="gjRearCollectionBing"/>
         <result column="baojing_zhu" jdbcType="VARCHAR" property="baojingZhu"/>
         <result column="baojing_bing" jdbcType="VARCHAR" property="baojingBing"/>
-
 
 
         <result column="mA_Cable_FBP" jdbcType="INTEGER" property="maCableFbp"/>
@@ -1203,7 +1184,7 @@
         mro_quduan_info qi
         INNER JOIN mro_quduan_base qb ON qi.qid = qb.id
         WHERE
-        DATE(qb.time) = DATE(#{time,jdbcType=TIMESTAMP})
+        DATE(qi.time) = DATE(#{time,jdbcType=TIMESTAMP})
         GROUP BY
         qb.quDuanYunYing_name
     </select>
