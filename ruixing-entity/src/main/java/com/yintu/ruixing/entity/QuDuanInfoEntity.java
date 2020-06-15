@@ -6,25 +6,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.ANY, getterVisibility=JsonAutoDetect.Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE)
 public class QuDuanInfoEntity implements Serializable {
 
     private static final long serialVersionUID = 6316073388211334021L;
+
     private Integer id;
 
-    private Integer xid;//线段id
+    private Integer qid;
 
-    private Integer qid;//区段id
-
-    private Integer cid;//车站id
-
-    private Integer sid; //设备id
-
-    private Integer typeid;//类型id
+    private Date time;
 
     private Integer dataZhengchang;
 
