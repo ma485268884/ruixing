@@ -158,14 +158,9 @@
         DATE_FORMAT("${startTime}", "%Y/%m/%d %H:%i:%S")
         and
         DATE_FORMAT("${endTime}", "%Y/%m/%d %H:%i:%S")
-
-    <select id="findQuDuanDataByTime2" resultType="java.lang.Integer" statementType="STATEMENT">
-        SELECT ${name}
-        FROM mro_quduan_info qi,
-             mro_quduan_base qd
-        WHERE qi.qid = qd.id
-          AND DATE_FORMAT(qi.time, "%Y/%m/%d %H:%i:%S") = DATE_FORMAT("${format}", "%Y/%m/%d %H:%i:%S")
     </select>
+
+
 
     <resultMap id="quduanBaseResultMap" type="com.yintu.ruixing.entity.QuDuanInfoEntity">
         <id column="qiId" jdbcType="INTEGER" property="id"/>

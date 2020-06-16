@@ -37,5 +37,5 @@ public interface QuDuanInfoDao {
 
     Integer findQuDuanDataByTime2(@Param("format") String format, @Param("name") String name);
 
-    Integer findQuDuanData(Date startTime, Date endTime, String quduanName, String shuxingName);
+    Integer findQuDuanData(@Param("startTime")Date startTime, @Param("endTime")Date endTime, @Param("quduanName")String quduanName, @Param("shuxingName")String shuxingName);
 }
