@@ -128,6 +128,37 @@
 
     </select>
     <!--根据查询日期的24个时间  查询对应的数据   --> <!--错误-->
+    <select id="findQuDuanDataByTime2" resultType="java.lang.Integer"  statementType="STATEMENT">
+        SELECT
+            ${name}
+        FROM
+            mro_quduan_info qi,
+            mro_quduan_base qd
+        WHERE
+            qi.qid = qd.id
+            AND
+            DATE_FORMAT ( qi.time, "%Y/%m/%d %H:%i:%S" ) = DATE_FORMAT("${format}", "%Y/%m/%d %H:%i:%S")
+
+    </select>
+
+    <!--根据传来的时间段和区段名和属性名 按秒来 查询对应的数据   -->
+    <select id="findQuDuanData" resultType="java.lang.Integer"  statementType="STATEMENT">
+        select
+        ${shuxingName}
+        from
+        mro_quduan_info qi,
+        mro_quduan_base qb
+        where
+        qi.qid=qb.id
+        and
+        qb.quDuanYunYing_name="${quduanName}"
+        and
+        DATE_FORMAT(qi.time,"%Y/%m/%d %H:%i:%S")
+        BETWEEN
+        DATE_FORMAT("${startTime}", "%Y/%m/%d %H:%i:%S")
+        and
+        DATE_FORMAT("${endTime}", "%Y/%m/%d %H:%i:%S")
+
     <select id="findQuDuanDataByTime2" resultType="java.lang.Integer" statementType="STATEMENT">
         SELECT ${name}
         FROM mro_quduan_info qi,

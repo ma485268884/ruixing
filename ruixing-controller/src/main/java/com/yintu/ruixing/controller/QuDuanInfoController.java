@@ -28,7 +28,7 @@ public class QuDuanInfoController extends BaseController {
     private QuDuanBaseService quDuanBaseService;
 
     /**
-     * 查询车站基础信息集
+     * 查询区段基础信息集
      *
      * @param xid 线段id
      * @param cid 车站id
@@ -38,11 +38,12 @@ public class QuDuanInfoController extends BaseController {
     public Map<String, Object> findByXidAndCid(@RequestParam(value = "xid") Integer xid,
                                                @RequestParam(value = "cid") Integer cid) {
         List<QuDuanBaseEntity> quDuanBaseEntities = quDuanBaseService.findByXidAndCid(xid, cid);
-        return ResponseDataUtil.ok("查询区段详情", quDuanBaseEntities);
+        return ResponseDataUtil.ok("查询区段基础信息列表", quDuanBaseEntities);
     }
 
 
     /**
+     * 数据分析
      * @param qid  区段id
      * @param time 时间
      * @return 实时的数据

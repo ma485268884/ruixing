@@ -55,31 +55,30 @@
         <result column="time" jdbcType="TIMESTAMP" property="time" />
         <result column="yuliu" jdbcType="VARCHAR" property="yuliu" />
     </resultMap>
-    <!--根据sid查询对应的区段-->
+    <!--根据cid查询对应的区段-->
     <select id="findQuDuanById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-
             select
-            qb.id,
-            qb.quDuanYunYing_name
+            qb.quDuanYunYing_name,
+            qb.id
             from
             mro_quduan_info qi,
             mro_quduan_base qb
             where
             qi.qid=qb.id
             and
-            qi.sid=#{id}
+            qb.cid=#{id}
     </select>
 
     <!--跟选择的日期  获取对应的24个小时点-->
     <select id="findQuDuanDataByTime1" resultMap="BaseResultMap" >
         SELECT
-            qd.time
+            qi.time
         FROM
-            mro_quduan_base qd
+            mro_quduan_info qi
         WHERE
-            DATE_FORMAT ( qd.time, "%Y/%m/%d " ) =  DATE_FORMAT( #{time,jdbcType=TIMESTAMP},"%Y/%m/%d " )
+            DATE_FORMAT ( qi.time, "%Y/%m/%d " ) =  DATE_FORMAT( #{time,jdbcType=TIMESTAMP},"%Y/%m/%d " )
         GROUP BY
-            DATE_FORMAT( qd.time, "%Y/%m/%d %H" )
+            DATE_FORMAT( qi.time, "%Y/%m/%d %H" )
 
 
     </select>
