@@ -20,7 +20,12 @@ public interface QuDuanInfoDao {
 
     int updateByPrimaryKey(QuDuanInfoEntity record);
 
-
+    /**
+     *
+     * @param qid
+     * @param time
+     * @return
+     */
     List<QuDuanInfoEntity> selectByQidAndTime(Integer qid, Date time);
 
     List<QuDuanInfoEntity> selectByXidAndCidAndTime(Integer xid, Integer cid, Date time);
