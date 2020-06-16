@@ -104,7 +104,7 @@
         select
         <include refid="Base_Column_List"/>
         from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid=qb.id
-        where qi.qid = #{qid,jdbcType=INTEGER} and qi.time=#{time,jdbcType=TIMESTAMP}
+        where qb.id = #{qid,jdbcType=INTEGER} and qi.time=#{time,jdbcType=TIMESTAMP}
     </select>
 
     <!--车站id 查询车站内电码化的信息-->
