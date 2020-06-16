@@ -73,6 +73,7 @@
         <association column="qid" jdbcType="INTEGER" property="quDuanBaseEntity">
             <id column="qbId" jdbcType="INTEGER" property="id"/>
             <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
+            <result column="typeid" jdbcType="VARCHAR" property="typeid"/>
         </association>
     </resultMap>
     <sql id="Base_Column_List">
@@ -89,7 +90,8 @@
     A_longIn_JBA_diao, A_longOut_JBA_zhu, A_longOut_JBA_diao, A_shortIn_JBA_zhu, A_shortIn_JBA_diao, 
     A_shortOut_JBA_zhu, A_shortOut_JBA_diao, qi.yuliu as qiYuliu,
     qb.id as qbId,
-    qb.quDuanYunYing_name
+    qb.quDuanYunYing_name,
+    qb.typeid
     </sql>
 
     <!--自定义查询-->
@@ -128,38 +130,28 @@
 
     </select>
     <!--根据查询日期的24个时间  查询对应的数据   --> <!--错误-->
-    <select id="findQuDuanDataByTime2" resultType="java.lang.Integer"  statementType="STATEMENT">
-        SELECT
-            ${name}
-        FROM
-            mro_quduan_info qi,
-            mro_quduan_base qd
-        WHERE
-            qi.qid = qd.id
-            AND
-            DATE_FORMAT ( qi.time, "%Y/%m/%d %H:%i:%S" ) = DATE_FORMAT("${format}", "%Y/%m/%d %H:%i:%S")
+    <select id="findQuDuanDataByTime2" resultType="java.lang.Integer" statementType="STATEMENT">
+        SELECT ${name}
+        FROM mro_quduan_info qi,
+             mro_quduan_base qd
+        WHERE qi.qid = qd.id
+          AND DATE_FORMAT(qi.time, "%Y/%m/%d %H:%i:%S") = DATE_FORMAT("${format}", "%Y/%m/%d %H:%i:%S")
 
     </select>
 
     <!--根据传来的时间段和区段名和属性名 按秒来 查询对应的数据   -->
-    <select id="findQuDuanData" resultType="java.lang.Integer"  statementType="STATEMENT">
-        select
-        ${shuxingName}
-        from
-        mro_quduan_info qi,
-        mro_quduan_base qb
-        where
-        qi.qid=qb.id
-        and
-        qb.quDuanYunYing_name="${quduanName}"
-        and
-        DATE_FORMAT(qi.time,"%Y/%m/%d %H:%i:%S")
-        BETWEEN
-        DATE_FORMAT("${startTime}", "%Y/%m/%d %H:%i:%S")
-        and
-        DATE_FORMAT("${endTime}", "%Y/%m/%d %H:%i:%S")
+    <select id="findQuDuanData" resultType="java.lang.Integer" statementType="STATEMENT">
+        select ${shuxingName}
+        from mro_quduan_info qi,
+             mro_quduan_base qb
+        where qi.qid = qb.id
+          and qb.quDuanYunYing_name = "${quduanName}"
+          and DATE_FORMAT(qi.time, "%Y/%m/%d %H:%i:%S")
+            BETWEEN
+            DATE_FORMAT("${startTime}", "%Y/%m/%d %H:%i:%S")
+            and
+            DATE_FORMAT("${endTime}", "%Y/%m/%d %H:%i:%S")
     </select>
-
 
 
     <resultMap id="quduanBaseResultMap" type="com.yintu.ruixing.entity.QuDuanInfoEntity">
@@ -1039,6 +1031,7 @@
     A_longIn_JBA_zhu,A_longIn_JBA_diao, A_longOut_JBA_zhu, A_longOut_JBA_diao,A_shortIn_JBA_zhu, A_shortIn_JBA_diao,A_shortOut_JBA_zhu, A_shortOut_JBA_diao,
 
     mA_Cable_JBP, A_longIn_JBP, A_longOut_JBP, A_shortIn_JBP, A_shortOut_JBP,T_JBP,
+
     qb.quDuanYunYing_name
 
     </sql>
@@ -1137,8 +1130,10 @@
 
     <!--日报表-->
     <sql id="Statistics__Column_List">
-        qb.quDuanYunYing_name,
-        MAX(qi.V_out_zhu) AS max_V_out_zhu,
+
+        MAX
+            (qi.V_out_zhu)
+            AS max_V_out_zhu,
         MIN(qi.V_out_zhu) AS min_V_out_zhu,
         MAX(qi.mA_out_zhu) AS max_mA_out_zhu,
         MIN(qi.mA_out_zhu) AS min_mA_out_zhu,
@@ -1164,7 +1159,9 @@
 	   MAX( qi.mV_in_zhu ) AS max_mV_in_zhu,
 	   MIN( qi.mV_in_zhu ) AS min_mV_in_zhu,
 	   MAX( qi.mV_in_diao_zhu ) AS max_mV_in_diao_zhu,
-	   MIN( qi.mV_in_diao_zhu ) AS min_mV_in_diao_zhu
+	   MIN( qi.mV_in_diao_zhu ) AS min_mV_in_diao_zhu,
+
+       qb.quDuanYunYing_name
     </sql>
 
     <resultMap id="StatisticsResultMap" type="Map">
