@@ -28,7 +28,7 @@ public class QuDuanInfoController extends BaseController {
     private QuDuanBaseService quDuanBaseService;
 
     /**
-     * 查询区段基础信息集
+     * 查询区段基础信息列表
      *
      * @param xid 线段id
      * @param cid 车站id
