@@ -23,7 +23,6 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
     private QuDuanInfoDao quDuanInfoDao;
 
 
-
     @Override
     public void add(QuDuanInfoEntity quDuanInfoEntity) {
         quDuanInfoDao.insertSelective(quDuanInfoEntity);
@@ -57,8 +56,8 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
 
 
     @Override
-    public List<Map<String, Object>> findStatisticsByDate(Date data) {
-        return quDuanInfoDao.selectStatisticsByDate(data);
+    public List<Map<String, Object>> findStatisticsByDate(Integer xid, Integer cid, Date time) {
+        return quDuanInfoDao.selectStatisticsByDate(xid, cid, time);
     }
 
 

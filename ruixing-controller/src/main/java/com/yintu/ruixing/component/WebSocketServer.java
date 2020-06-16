@@ -28,7 +28,7 @@ public class WebSocketServer {
     private final static Logger log = LoggerFactory.getLogger(WebSocketServer.class);
 
     public WebSocketServer() {
-        log.debug("WebSocketServer初始化.......");
+        log.info("WebSocketServer初始化.......");
     }
 
     @OnOpen

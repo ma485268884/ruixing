@@ -59,10 +59,10 @@ public interface QuDuanInfoService {
     /**
      * 日报表
      *
-     * @param data 日期
+     * @param time 日期
      * @return 统计
      */
-    List<Map<String, Object>> findStatisticsByDate(Date data);
+    List<Map<String, Object>> findStatisticsByDate(Integer xid, Integer cid,Date time);
 
 
 }

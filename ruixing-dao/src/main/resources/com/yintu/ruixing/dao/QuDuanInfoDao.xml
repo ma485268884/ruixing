@@ -1039,7 +1039,7 @@
     A_longIn_JBA_zhu,A_longIn_JBA_diao, A_longOut_JBA_zhu, A_longOut_JBA_diao,A_shortIn_JBA_zhu, A_shortIn_JBA_diao,A_shortOut_JBA_zhu, A_shortOut_JBA_diao,
 
     mA_Cable_JBP, A_longIn_JBP, A_longOut_JBP, A_shortIn_JBP, A_shortOut_JBP,T_JBP,
-    quDuanYunYing_name
+    qb.quDuanYunYing_name
 
     </sql>
     <resultMap id="AllResultMap" type="Map">
@@ -1133,7 +1133,6 @@
                 and DATE(qi.time) = DATE(#{time,jdbcType=TIMESTAMP})
             </if>
         </where>
-        order by qi.id DESC
     </select>
 
     <!--日报表-->
@@ -1206,8 +1205,17 @@
         FROM
         mro_quduan_info qi
         INNER JOIN mro_quduan_base qb ON qi.qid = qb.id
-        WHERE
-        DATE(qi.time) = DATE(#{time,jdbcType=TIMESTAMP})
+        <where>
+            <if test="xid!=null">
+                and qb.xid=#{xid,jdbcType=INTEGER}
+            </if>
+            <if test="cid!=null">
+                and qb.cid=#{cid,jdbcType=INTEGER}
+            </if>
+            <if test="time!=null">
+                and DATE(qi.time) = DATE(#{time,jdbcType=TIMESTAMP})
+            </if>
+        </where>
         GROUP BY
         qi.qid
     </select>
