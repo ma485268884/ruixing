@@ -47,7 +47,7 @@ public class QuXianController {
         System.out.println("riqi" + quDuanInfoEntities);
         return ResponseDataUtil.ok("查询数据成功", quDuanInfoEntities);
     }
-
+    //日报表
     //根据所选日期  获得对应的24个时间点  然后根据时间点和传来的的字段名字 来获取对应的数据
         @GetMapping("/findQuDuanDataByTime1")
     public Map<String, Object> findQuDuanDataByTime1(@RequestParam("time") Date time, @RequestParam("name") String name) {
@@ -83,27 +83,21 @@ public class QuXianController {
                                             @RequestParam("endTime") Date endTime,
                                             @RequestParam("quduanName") String quduanName,
                                             @RequestParam("shuxingName") String shuxingName) throws Exception {
-        List<String> list = new ArrayList<>();
-        List<Integer> list1 = new ArrayList<>();
-        Map<String,Object> map=new HashMap();
-        long time=endTime.getTime()-startTime.getTime();//得到这两个时间差
-        String hh = new SimpleDateFormat("ss").format(time);//把时间变成秒
-        System.out.println(hh);
-        map.put("shijian",time);
-        Integer date=quXianService.findQuDuanData(startTime,endTime,quduanName,shuxingName);
-        list1.add(date);
-        map.put("shuju",list1);
+        List<Long> list = new ArrayList<>();
+        Map<String,Object> map=new HashMap<>();
+        long time=endTime.getTime()-startTime.getTime();//得到这两个时间差 单位是秒
+        for (long i = 0; i < time/1000; i++) {
+            list.add(i);
+        }
+        map.put("shijian",list);
+        String starttime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(startTime);//把开始时间转换格式
+        String endtime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(endTime);//把结束时间转换格式
+        List<Integer> date=quXianService.findQuDuanData(starttime,endtime,quduanName,shuxingName);
+        map.put("shuju",date);
         return ResponseDataUtil.ok("查询数据成功",map);
     }
 
-   /* public static void main(String[] args) {
-        DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        String starttime = df.format(startTime);
-        String endtimre = df.format(endTime);
-        Date startparse = df.parse(starttime);
-        Date endparse = df.parse(endtimre);
-        long diff = endparse.getTime()-startparse.getTime();
-    }*/
+
 
 
 }
