@@ -23,9 +23,11 @@ public interface QuDuanInfoDao {
 
     List<QuDuanInfoEntity> selectByQidAndTime(Integer qid, Date time);
 
+    List<Integer> selectByXidAndCidAndBetweenAndTime(Integer xid, Integer cid, Date startTime, Date endTime);
+
     List<QuDuanInfoEntity> selectByXidAndCidAndTime(Integer xid, Integer cid, Date time);
 
-    List<Map<String, Object>> selectStatisticsByDate(Date data);
+    List<Map<String, Object>> selectStatisticsByDate(Integer xid, Integer cid, Date time);
 
     //根据区段id  查询相关的数据
 

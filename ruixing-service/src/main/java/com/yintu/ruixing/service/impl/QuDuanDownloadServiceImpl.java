@@ -85,12 +85,8 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
         time.setTime(startDateTime);
         time.add(Calendar.MINUTE, minute);
         Date endDateTime = time.getTime();
-        List<QuDuanBaseEntity> quDuanBaseEntities = quDuanBaseService.findByXidAndCid(xid, cid);
-        List<Integer> quDuanIds = new ArrayList<>();
-        for (QuDuanBaseEntity quDuanBaseEntity : quDuanBaseEntities) {
-            quDuanIds.add(quDuanBaseEntity.getId());
-        }
-        JSONArray ja = (JSONArray) JSONArray.toJSON(quDuanIds);
+        List<Integer> quDuanInfoIds = quDuanInfoService.findByXidAndCidAndBetweenAndTime(xid, cid, startDateTime, endDateTime);
+        JSONArray ja = (JSONArray) JSONArray.toJSON(quDuanInfoIds);
         QuDuanDownloadEntity quDuanDownloadEntity = new QuDuanDownloadEntity();
         quDuanDownloadEntity.setXid(xid);
         quDuanDownloadEntity.setCid(cid);

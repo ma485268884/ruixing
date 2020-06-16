@@ -73,6 +73,7 @@
         <association column="qid" jdbcType="INTEGER" property="quDuanBaseEntity">
             <id column="qbId" jdbcType="INTEGER" property="id"/>
             <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
+            <result column="typeid" jdbcType="VARCHAR" property="typeid"/>
         </association>
     </resultMap>
     <sql id="Base_Column_List">
@@ -89,7 +90,8 @@
     A_longIn_JBA_diao, A_longOut_JBA_zhu, A_longOut_JBA_diao, A_shortIn_JBA_zhu, A_shortIn_JBA_diao, 
     A_shortOut_JBA_zhu, A_shortOut_JBA_diao, qi.yuliu as qiYuliu,
     qb.id as qbId,
-    qb.quDuanYunYing_name
+    qb.quDuanYunYing_name,
+    qb.typeid
     </sql>
 
     <!--自定义查询-->
@@ -104,7 +106,14 @@
         select
         <include refid="Base_Column_List"/>
         from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid=qb.id
-        where qi.qid = #{qid,jdbcType=INTEGER} and qi.time=#{time,jdbcType=TIMESTAMP}
+        <where>
+            <if test="qid!=null">
+                and qi.qid=#{qid,jdbcType=INTEGER}
+            </if>
+            <if test="time!=null">
+                and qi.time=#{time,jdbcType=TIMESTAMP}
+            </if>
+        </where>
     </select>
 
     <!--车站id 查询车站内电码化的信息-->
@@ -159,7 +168,6 @@
         and
         DATE_FORMAT("${endtime}", "%Y/%m/%d %H:%i:%S")
     </select>
-
 
 
     <resultMap id="quduanBaseResultMap" type="com.yintu.ruixing.entity.QuDuanInfoEntity">
@@ -1020,6 +1028,23 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
+    <!--数据下载-->
+    <select id="selectByXidAndCidAndBetweenAndTime" resultType="Integer">
+        select
+        qi.id
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+        <where>
+            <if test="xid!=null">
+                and qb.xid=#{xid,jdbcType=INTEGER}
+            </if>
+            <if test="cid!=null">
+                and qb.cid=#{cid,jdbcType=INTEGER}
+            </if>
+            <if test="startTime!=null and endTime!=null">
+                and qi.time between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
 
     <!--实时报表-->
     <sql id="all_Column_List">
@@ -1039,7 +1064,8 @@
     A_longIn_JBA_zhu,A_longIn_JBA_diao, A_longOut_JBA_zhu, A_longOut_JBA_diao,A_shortIn_JBA_zhu, A_shortIn_JBA_diao,A_shortOut_JBA_zhu, A_shortOut_JBA_diao,
 
     mA_Cable_JBP, A_longIn_JBP, A_longOut_JBP, A_shortIn_JBP, A_shortOut_JBP,T_JBP,
-    quDuanYunYing_name
+
+    qb.quDuanYunYing_name
 
     </sql>
     <resultMap id="AllResultMap" type="Map">
@@ -1133,14 +1159,13 @@
                 and DATE(qi.time) = DATE(#{time,jdbcType=TIMESTAMP})
             </if>
         </where>
-        order by qi.id DESC
     </select>
 
     <!--日报表-->
     <sql id="Statistics__Column_List">
-        qb.quDuanYunYing_name,
-        MAX(qi.V_out_zhu) AS max_V_out_zhu,
-        MIN(qi.V_out_zhu) AS min_V_out_zhu,
+        MIN
+            (qi.V_out_zhu)
+            AS min_V_out_zhu,
         MAX(qi.mA_out_zhu) AS max_mA_out_zhu,
         MIN(qi.mA_out_zhu) AS min_mA_out_zhu,
         MAX(qi.V_out_bei) AS max_V_out_bei,
@@ -1165,7 +1190,9 @@
 	   MAX( qi.mV_in_zhu ) AS max_mV_in_zhu,
 	   MIN( qi.mV_in_zhu ) AS min_mV_in_zhu,
 	   MAX( qi.mV_in_diao_zhu ) AS max_mV_in_diao_zhu,
-	   MIN( qi.mV_in_diao_zhu ) AS min_mV_in_diao_zhu
+	   MIN( qi.mV_in_diao_zhu ) AS min_mV_in_diao_zhu,
+
+       qb.quDuanYunYing_name
     </sql>
 
     <resultMap id="StatisticsResultMap" type="Map">
@@ -1206,8 +1233,17 @@
         FROM
         mro_quduan_info qi
         INNER JOIN mro_quduan_base qb ON qi.qid = qb.id
-        WHERE
-        DATE(qi.time) = DATE(#{time,jdbcType=TIMESTAMP})
+        <where>
+            <if test="xid!=null">
+                and qb.xid=#{xid,jdbcType=INTEGER}
+            </if>
+            <if test="cid!=null">
+                and qb.cid=#{cid,jdbcType=INTEGER}
+            </if>
+            <if test="time!=null">
+                and DATE(qi.time) = DATE(#{time,jdbcType=TIMESTAMP})
+            </if>
+        </where>
         GROUP BY
         qi.qid
     </select>

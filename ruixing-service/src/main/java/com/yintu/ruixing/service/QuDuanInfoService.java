@@ -47,6 +47,16 @@ public interface QuDuanInfoService {
      */
     List<QuDuanInfoEntity> findQidAndTime(Integer qid, Date time);
 
+    /**
+     *
+     * @param xid 线段id
+     * @param cid  车站id
+     * @param startTime 开始时间
+     * @param endTime 结束时间
+     * @return
+     */
+    List<Integer> findByXidAndCidAndBetweenAndTime(Integer xid, Integer cid, Date startTime, Date endTime);
+
 
     /**
      * @param xid  线段id
@@ -59,10 +69,10 @@ public interface QuDuanInfoService {
     /**
      * 日报表
      *
-     * @param data 日期
+     * @param time 日期
      * @return 统计
      */
-    List<Map<String, Object>> findStatisticsByDate(Date data);
+    List<Map<String, Object>> findStatisticsByDate(Integer xid, Integer cid, Date time);
 
 
 }
