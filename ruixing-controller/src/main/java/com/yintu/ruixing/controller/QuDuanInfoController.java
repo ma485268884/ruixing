@@ -49,8 +49,8 @@ public class QuDuanInfoController extends BaseController {
      * @param time 时间
      * @return 实时的数据
      */
-    @GetMapping("/dataanalysis/{qid}")
-    public Map<String, Object> findQidAndTime(@PathVariable Integer qid, @RequestParam("time") Date time) {
+    @GetMapping("/dataanalysis")
+    public Map<String, Object> findQidAndTime(@RequestParam("qid") Integer qid, @RequestParam("time") Date time) {
         List<QuDuanInfoEntity> quDuanInfoEntities = quDuanInfoService.findQidAndTime(qid, time);
         return ResponseDataUtil.ok("查询区段详情", quDuanInfoEntities);
     }
