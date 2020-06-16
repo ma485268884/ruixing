@@ -20,12 +20,7 @@ public interface QuDuanInfoDao {
 
     int updateByPrimaryKey(QuDuanInfoEntity record);
 
-    /**
-     *
-     * @param qid
-     * @param time
-     * @return
-     */
+
     List<QuDuanInfoEntity> selectByQidAndTime(Integer qid, Date time);
 
     List<QuDuanInfoEntity> selectByXidAndCidAndTime(Integer xid, Integer cid, Date time);
@@ -41,4 +36,6 @@ public interface QuDuanInfoDao {
     List<QuDuanInfoEntity> findQuDuanDataByTime(Date time);
 
     Integer findQuDuanDataByTime2(@Param("format") String format, @Param("name") String name);
+
+    Integer findQuDuanData(Date startTime, Date endTime, String quduanName, String shuxingName);
 }
