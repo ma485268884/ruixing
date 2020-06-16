@@ -106,7 +106,14 @@
         select
         <include refid="Base_Column_List"/>
         from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid=qb.id
-        where qi.qid = #{qid,jdbcType=INTEGER} and qi.time=#{time,jdbcType=TIMESTAMP}
+        <where>
+            <if test="qid!=null">
+                and qi.qid=#{qid,jdbcType=INTEGER}
+            </if>
+            <if test="time!=null">
+                and qi.time=#{time,jdbcType=TIMESTAMP}
+            </if>
+        </where>
     </select>
 
     <!--车站id 查询车站内电码化的信息-->
@@ -1130,10 +1137,6 @@
 
     <!--日报表-->
     <sql id="Statistics__Column_List">
-
-        MAX
-            (qi.V_out_zhu)
-            AS max_V_out_zhu,
         MIN(qi.V_out_zhu) AS min_V_out_zhu,
         MAX(qi.mA_out_zhu) AS max_mA_out_zhu,
         MIN(qi.mA_out_zhu) AS min_mA_out_zhu,
