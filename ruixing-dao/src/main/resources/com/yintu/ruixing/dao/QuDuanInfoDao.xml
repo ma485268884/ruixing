@@ -1019,6 +1019,23 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
+    <!--数据下载-->
+    <select id="selectByXidAndCidAndBetweenAndTime" resultType="Integer">
+        select
+        qi.id
+        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+        <where>
+            <if test="xid!=null">
+                and qb.xid=#{xid,jdbcType=INTEGER}
+            </if>
+            <if test="cid!=null">
+                and qb.cid=#{cid,jdbcType=INTEGER}
+            </if>
+            <if test="startTime!=null and endTime!=null">
+                and qi.time between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
 
     <!--实时报表-->
     <sql id="all_Column_List">
@@ -1137,7 +1154,9 @@
 
     <!--日报表-->
     <sql id="Statistics__Column_List">
-        MIN(qi.V_out_zhu) AS min_V_out_zhu,
+        MIN
+            (qi.V_out_zhu)
+            AS min_V_out_zhu,
         MAX(qi.mA_out_zhu) AS max_mA_out_zhu,
         MIN(qi.mA_out_zhu) AS min_mA_out_zhu,
         MAX(qi.V_out_bei) AS max_V_out_bei,

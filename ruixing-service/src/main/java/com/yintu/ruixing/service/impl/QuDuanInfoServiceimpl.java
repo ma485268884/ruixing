@@ -48,6 +48,11 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         return quDuanInfoDao.selectByQidAndTime(qid, time);
     }
 
+    @Override
+    public List<Integer> findByXidAndCidAndBetweenAndTime(Integer xid, Integer cid, Date startTime, Date endTime) {
+        return quDuanInfoDao.selectByXidAndCidAndBetweenAndTime(xid, cid, startTime, endTime);
+    }
+
 
     @Override
     public List<QuDuanInfoEntity> findByXidAndCidAndTime(Integer xid, Integer cid, Date time) {

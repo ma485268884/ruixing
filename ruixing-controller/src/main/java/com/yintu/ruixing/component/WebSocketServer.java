@@ -9,7 +9,6 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * @author:mlf
@@ -17,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
  */
 
 @Component
-@ServerEndpoint("/websocket/{name}")
+@ServerEndpoint("/websocket/test")
 public class WebSocketServer {
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static int onlineCount = 0;
@@ -25,15 +24,15 @@ public class WebSocketServer {
     //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
     public static Map<String, Session> WebSocketServers = new HashMap<>();
 
-    private final static Logger log = LoggerFactory.getLogger(WebSocketServer.class);
+    private final static Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
 
     public WebSocketServer() {
-        log.info("WebSocketServer初始化.......");
+        logger.info("WebSocketServer初始化.......");
     }
 
     @OnOpen
     public void onOpen(Session session) {
-        System.out.println("open:" + session.getId());
+        logger.info("onOpen.............." + session);
         WebSocketServers.put(session.getId(), session); //加入set中
         addOnlineCount();           //在线数加1
     }
@@ -43,7 +42,7 @@ public class WebSocketServer {
      */
     @OnClose
     public void onClose(Session session) {
-        System.out.println("close:" + session.getId());
+        logger.info("onClose.............." + session);
         WebSocketServers.remove(session.getId());  //从set中删除
         subOnlineCount();           //在线数减1
     }
@@ -69,6 +68,7 @@ public class WebSocketServer {
      */
     @OnError
     public void onError(Session session, Throwable error) {
+        logger.info("onError.............." + session + error);
     }
 
 
