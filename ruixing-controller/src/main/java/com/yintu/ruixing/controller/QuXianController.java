@@ -3,6 +3,7 @@ package com.yintu.ruixing.controller;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntity;
+import com.yintu.ruixing.entity.QuDuanShuXingEntity;
 import com.yintu.ruixing.entity.SheBeiEntity;
 import com.yintu.ruixing.service.QuXianService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,13 +77,28 @@ public class QuXianController {
         List<String> quDuanBaseEntities =quXianService.findQuDuanById(id);
         return ResponseDataUtil.ok("查询区段成功",quDuanBaseEntities);
     }
+    //获取区段的属性名
+    @RequestMapping("/shuXingMing")
+    public Map<String,Object>shuXingMing(){
+        List<QuDuanShuXingEntity> quDuanShuXingEntities=quXianService.shuXingMing();
+        return ResponseDataUtil.ok("查询区段名成功",quDuanShuXingEntities);
+    }
 
-    //根据传进来的区段id 和本区段所选择的属性  包括传进来的日期获取对应的数据
+
+
+
+
+    //根据传进来的区段id 和本区段所选择的属性id  包括传进来的日期获取对应的数据
     @GetMapping("/findQuDuanData")
     public Map<String,Object>findQuDuanData(@RequestParam("startTime") Date startTime,
                                             @RequestParam("endTime") Date endTime,
-                                            @RequestParam("quduanName") String[] quduanName,
-                                            @RequestParam("shuxingName") String[] shuxingName) throws Exception {
+                                            @RequestParam("shuxingId") int[] shuxingId,
+                                            @RequestParam("quduanName") String[] quduanName) throws Exception {
+        List<String> sqlname=quXianService.findShuXingName(shuxingId);
+        String[] name=new String[sqlname.size()];
+        for (int i = 0; i < sqlname.size(); i++) {
+            name[i]=sqlname.get(i);
+        }
         List<String> list = new ArrayList<>();
         Map<String,Object> map=new HashMap<>();
         long time=endTime.getTime()-startTime.getTime();//得到这两个时间差 单位是秒
@@ -94,7 +110,7 @@ public class QuXianController {
         map.put("shijian",list);
         String starttime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(startTime);//把开始时间转换格式
         String endtime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(endTime);//把结束时间转换格式
-        List<Integer> date=quXianService.findQuDuanData(starttime,endtime,quduanName,shuxingName);
+        List<Integer> date=quXianService.findQuDuanData(starttime,endtime,name,quduanName);
         map.put("shuju",date);
         return ResponseDataUtil.ok("查询数据成功",map);
     }

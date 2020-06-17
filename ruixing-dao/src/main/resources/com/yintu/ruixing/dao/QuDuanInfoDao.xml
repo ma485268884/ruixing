@@ -153,8 +153,8 @@
     <!--根据传来的时间段和区段名和属性名 按秒来 查询对应的数据   -->
     <select id="findQuDuanData" resultType="java.lang.Integer"  statementType="STATEMENT">
         select
-        <foreach collection="array" item="id" open="(" separator="," close=")">
-            ${shuxingName}
+        <foreach collection="name" item="id" open="(" separator="," close=")">
+            #{name}
         </foreach>
         from
         mro_quduan_info qi,
@@ -162,8 +162,8 @@
         where
         qi.qid=qb.id
         and
-        <foreach collection="array" item="id" open="(" separator="," close=")">
-            qb.quDuanYunYing_name="${quduanName}"
+        <foreach collection="quduanName" item="id" open="(" separator="," close=")">
+            qb.quDuanYunYing_name="#{quduanName}"
         </foreach>
         and
         DATE_FORMAT(qi.time,"%Y/%m/%d %H:%i:%S")
