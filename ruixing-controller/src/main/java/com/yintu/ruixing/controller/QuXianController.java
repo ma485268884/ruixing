@@ -81,13 +81,15 @@ public class QuXianController {
     @GetMapping("/findQuDuanData")
     public Map<String,Object>findQuDuanData(@RequestParam("startTime") Date startTime,
                                             @RequestParam("endTime") Date endTime,
-                                            @RequestParam("quduanName") String quduanName,
-                                            @RequestParam("shuxingName") String shuxingName) throws Exception {
-        List<Long> list = new ArrayList<>();
+                                            @RequestParam("quduanName") String[] quduanName,
+                                            @RequestParam("shuxingName") String[] shuxingName) throws Exception {
+        List<String> list = new ArrayList<>();
         Map<String,Object> map=new HashMap<>();
         long time=endTime.getTime()-startTime.getTime();//得到这两个时间差 单位是秒
+        Integer j=0;
         for (long i = 0; i < time/1000; i++) {
-            list.add(i);
+            j++;
+            list.add(j.toString());
         }
         map.put("shijian",list);
         String starttime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(startTime);//把开始时间转换格式

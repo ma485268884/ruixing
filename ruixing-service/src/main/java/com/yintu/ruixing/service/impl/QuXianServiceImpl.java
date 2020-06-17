@@ -54,7 +54,7 @@ public class QuXianServiceImpl implements QuXianService {
 
 
     @Override
-    public  List<Integer> findQuDuanData(String starttime, String endtime, String quduanName, String shuxingName) {
+    public  List<Integer> findQuDuanData(String starttime, String endtime, String[] quduanName, String[] shuxingName) {
         return quDuanInfoDao.findQuDuanData(starttime,endtime,quduanName,shuxingName);
     }
 }

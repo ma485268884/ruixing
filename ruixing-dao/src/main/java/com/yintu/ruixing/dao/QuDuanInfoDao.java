@@ -39,5 +39,6 @@ public interface QuDuanInfoDao {
     //根据传过来的数据查询数据 展示在曲线上
     Integer findQuDuanDataByTime2(@Param("format") String format, @Param("name") String name);
 
-    List<Integer> findQuDuanData(@Param("starttime")String starttime, @Param("endtime")String endtime, @Param("quduanName")String quduanName, @Param("shuxingName")String shuxingName);
+    List<Integer> findQuDuanData(@Param("starttime")String starttime, @Param("endtime")String endtime,
+                                 @Param("quduanName")String[] quduanName, @Param("shuxingName")String[] shuxingName);
 }
