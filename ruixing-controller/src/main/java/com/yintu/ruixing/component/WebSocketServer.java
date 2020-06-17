@@ -18,13 +18,13 @@ import java.util.Map;
 @Component
 @ServerEndpoint("/websocket/test")
 public class WebSocketServer {
+    //日志
+    private final static Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static int onlineCount = 0;
-
     //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
     public static Map<String, Session> WebSocketServers = new HashMap<>();
 
-    private final static Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
 
     public WebSocketServer() {
         logger.info("WebSocketServer初始化.......");
@@ -53,12 +53,16 @@ public class WebSocketServer {
      * @param message 客户端发送过来的消息
      */
     @OnMessage
-    public void onMessage(String message, Session session) throws IOException {
+    public void onMessage(String message, Session session) {
         for (String s : WebSocketServers.keySet()) {
-            if (s.equals(session.getId()))
-                continue;
-            WebSocketServers.get(s).getBasicRemote().sendText(message);
+            logger.info(WebSocketServers.get(s).getId());
         }
+        session.getAsyncRemote().sendText(message, sendResult -> {
+            if (!sendResult.isOK()) {
+                logger.error(sendResult.getException().getMessage());
+            }
+            logger.info("发送成功");
+        });
     }
 
 
@@ -68,7 +72,7 @@ public class WebSocketServer {
      */
     @OnError
     public void onError(Session session, Throwable error) {
-        logger.info("onError.............." + session + error);
+        logger.error("onError.............." + error.getMessage());
     }
 
 
