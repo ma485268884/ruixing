@@ -48,7 +48,8 @@
         from mro_quduan_download qd inner join mro_chezhan cz on qd.cid=cz.cid
         <where>
             <if test="startDateTime!=null and endDateTime!=null">
-                qd.start_time &gt;= #{startDateTime,jdbcType=TIMESTAMP} and qd.end_time &lt;= #{endDateTime,jdbcType=TIMESTAMP}
+                qd.start_time &gt;= #{startDateTime,jdbcType=TIMESTAMP} and qd.end_time &lt;=
+                #{endDateTime,jdbcType=TIMESTAMP}
             </if>
         </where>
     </select>
@@ -66,7 +67,7 @@
                 #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{status,jdbcType=SMALLINT},
                 #{type,jdbcType=SMALLINT}, #{data,jdbcType=LONGVARCHAR})
     </insert>
-    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.QuDuanDownloadEntity">
+    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.QuDuanDownloadEntity" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
         insert into mro_quduan_download
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

@@ -1,16 +1,19 @@
 package com.yintu.ruixing.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.entity.QuDuanDownloadEntity;
-import com.yintu.ruixing.entity.QuDuanInfoEntity;
 import com.yintu.ruixing.service.QuDuanDownloadService;
+import com.yintu.ruixing.websocket.WebSocketBrowserServer;
+import com.yintu.ruixing.websocket.WebSocketClientServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -25,13 +28,28 @@ public class QuDuanDownloadController extends BaseController {
     @Autowired
     private QuDuanDownloadService quDuanDownloadService;
 
+    @Autowired
+    private WebSocketClientServer webSocketClientServer;
+
+
     @PostMapping
     public Map<String, Object> add(@RequestParam("xid") Integer xid,
                                    @RequestParam("cid") Integer cid,
                                    @RequestParam("type") Short type,
                                    @RequestParam("startDateTime") Date startDateTime,
                                    @RequestParam("minute") Integer minute) {
-        quDuanDownloadService.add(xid, cid, type, startDateTime, minute);
+        Calendar time = Calendar.getInstance();
+        time.setTime(startDateTime);
+        time.add(Calendar.MINUTE, minute);
+        Date endDateTime = time.getTime();
+        Integer id = quDuanDownloadService.add(xid, cid, type, startDateTime, endDateTime);
+        JSONObject jo = new JSONObject();
+        jo.put("id", id);
+        jo.put("xid", xid);
+        jo.put("cid", cid);
+        jo.put("startDateTime", startDateTime);
+        jo.put("endDateTime", endDateTime);
+        webSocketClientServer.sendMessage(jo);
         return ResponseDataUtil.ok("添加下载记录成功");
     }
 

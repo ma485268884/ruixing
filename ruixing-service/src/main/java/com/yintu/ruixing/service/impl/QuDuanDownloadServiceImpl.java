@@ -35,7 +35,7 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
 
     @Override
     public void add(QuDuanDownloadEntity quDuanDownloadEntity) {
-        quDuanDownloadDao.insert(quDuanDownloadEntity);
+        quDuanDownloadDao.insertSelective(quDuanDownloadEntity);
     }
 
     @Override
@@ -80,21 +80,19 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
     }
 
     @Override
-    public void add(Integer xid, Integer cid, Short type, Date startDateTime, Integer minute) {
-        Calendar time = Calendar.getInstance();
-        time.setTime(startDateTime);
-        time.add(Calendar.MINUTE, minute);
-        Date endDateTime = time.getTime();
+    public Integer add(Integer xid, Integer cid, Short type, Date startDateTime, Date endDateTime) {
         List<Integer> quDuanInfoIds = quDuanInfoService.findByXidAndCidAndBetweenAndTime(xid, cid, startDateTime, endDateTime);
         JSONArray ja = (JSONArray) JSONArray.toJSON(quDuanInfoIds);
         QuDuanDownloadEntity quDuanDownloadEntity = new QuDuanDownloadEntity();
         quDuanDownloadEntity.setXid(xid);
         quDuanDownloadEntity.setCid(cid);
         quDuanDownloadEntity.setType(type);
-        quDuanDownloadEntity.setStatus((short) 1);
+        quDuanDownloadEntity.setStatus((short) 0);
         quDuanDownloadEntity.setData(ja.toJSONString());
         quDuanDownloadEntity.setStartTime(startDateTime);
         quDuanDownloadEntity.setEndTime(endDateTime);
         this.add(quDuanDownloadEntity);
+        return quDuanDownloadEntity.getId();
     }
+
 }

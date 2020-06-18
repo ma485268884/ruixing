@@ -28,6 +28,6 @@ public interface QuDuanDownloadService {
 
     List<QuDuanBaseEntity> findDataById(Integer id);
 
-    void add(Integer xid, Integer cid, Short type, Date startDateTime, Integer minute);
+    Integer add(Integer xid, Integer cid, Short type, Date startDateTime, Date endDateTime);
 
 }
