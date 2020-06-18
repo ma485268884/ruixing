@@ -16,6 +16,8 @@
         <result property="xdCzId" column="xd_cz_id"/>
         <result property="czMiaoShu" column="cz_miaoshu"/>
         <result property="czDuanTou" column="cz_duantou"/>
+        <result property="czPeiZhiState" column="cz_peizhi_state"/>
+        <result property="czJson" column="cz_json"/>
     </resultMap>
 
     <!--添加车站-->

@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class
-DataStats {
+DataStatsEntity {
 
     private long tid;
     private long did;
@@ -27,6 +27,16 @@ DataStats {
     private String dwdName;
 
     private String dwdMiaoShu;
+
+    private String tljMiaoShu;
+
+    private Integer xdState;//'线段设置状态  0：未设置  1：已设置',
+
+    private String xdJson;//储存的json',
+
+    private Integer czState;//'车站设置状态  0：未设置  1：已设置',
+
+    private String czJson;//储存的json',
 
     private String xdName;
 
@@ -39,6 +49,10 @@ DataStats {
     private int czId;
 
     private int xdId;
+
+    private int tljId;
+
+    private int dwdId;
 
     private String czNameJianCheng;
 

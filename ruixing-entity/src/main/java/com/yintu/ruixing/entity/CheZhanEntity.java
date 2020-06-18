@@ -54,6 +54,10 @@ public class CheZhanEntity {
 
     private long czDuanTou;//是否为端头站   0：是  1：否
 
+    private int czPeiZhiState; //车站配置状态  0：未配置    1：已配置
+
+    private String czJson; //车站储存json
+
     private DianWuDuanEntity dianWuDuanEntity;
 
     private TieLuJuEntity tieLuJuEntity;

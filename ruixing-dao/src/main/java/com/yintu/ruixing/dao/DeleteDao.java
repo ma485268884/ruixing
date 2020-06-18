@@ -1,10 +1,5 @@
 package com.yintu.ruixing.dao;
 
-import com.yintu.ruixing.entity.DataStats;
-
-
-import java.util.List;
-
 /**
  * @author:lcy
  * @date:2020-06-02 20
@@ -12,13 +7,13 @@ import java.util.List;
  */
 public interface DeleteDao {
 /*
-    List<DataStats> tljPage();
+    List<DataStatsEntity> tljPage();
 
-    List<DataStats> dwdPage();
+    List<DataStatsEntity> dwdPage();
 
-    List<DataStats> czPage();
+    List<DataStatsEntity> czPage();
 
-    List<DataStats> xdPage();*/
+    List<DataStatsEntity> xdPage();*/
 
     int delTieLuJU(int[] ids);
 

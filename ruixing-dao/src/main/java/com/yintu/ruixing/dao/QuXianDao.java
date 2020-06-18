@@ -25,5 +25,5 @@ public interface QuXianDao {
 
     List<QuDuanShuXingEntity> shuXingMing();
 
-    List<String> shuxingId(@Param("shuxingId")int[] shuxingId);
+    List<String> findShuXingName(Integer[] shuxingId);
 }

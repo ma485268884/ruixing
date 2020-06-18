@@ -3,7 +3,6 @@ package com.yintu.ruixing.service;
 
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.entity.*;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.util.List;
@@ -17,18 +16,42 @@ import java.util.List;
 
 public interface DataStatsService {
     //查询所有数据
-    List<DataStats> findAll();
+    List<DataStatsEntity> findAll();
     //分页查询
-    PageInfo<DataStats> findPage(Integer page, Integer size);
+    PageInfo<DataStatsEntity> findPage(Integer page, Integer size);
 
 
-    List<TieLuJuEntity> findTieLuJuById(Long tid,Integer page, Integer size);
+    List<DataStatsEntity> findTieLuJuById(Long tid, Integer page, Integer size);
+    List<DataStatsEntity> findDianWuDuanCheZhanById(Long did, Integer page, Integer size);
+    List<DataStatsEntity> findXianDuanCheZhanById(Long xid, Integer page, Integer size);
+    List<DataStatsEntity> findCheZhanById(Long cid, Integer page, Integer size);
 
-    List<DataStats> findDianWuDuanById(Long tid, Long did,Integer page, Integer size);
 
-    List<DataStats> findXianDuanById(Long tid, Long did, Long xid,Integer page, Integer size);
 
-    List<DataStats> findCheZhanById(Long tid, Long did, Long xid, Long cid,Integer page, Integer size);
+
+
+
+    List<DataStatsEntity> findDianWuDuanById(Long tid, Long did, Integer page, Integer size);
+
+    List<DataStatsEntity> findXianDuanById(Long tid, Long did, Long xid, Integer page, Integer size);
+
+    List<DataStatsEntity> findCheZhanById(Long tid, Long did, Long xid, Long cid, Integer page, Integer size);
 
     int delCheZhanListById(int[] ids);
+
+
+
+
+    List<DataStatsEntity> findAllCheZhan(Integer page, Integer size);
+
+    void editStateByXid(XianDuanEntity xianDuanEntity);
+    void editStateByCid(CheZhanEntity cheZhanEntity);
+
+    List<TieLuJuEntity> findAllTieLuJu(TieLuJuEntity tieLuJuEntity);
+
+    List<DianWuDuanEntity> findDianWuDuanByTid(Integer tid);
+
+    List<XianDuanEntity> findXianDuanByDid(Integer did);
+
+    List<CheZhanEntity> findCheZhanByXid(Integer xid);
 }
