@@ -51,7 +51,7 @@ public class RoleServiceImpl implements RoleService {
         criteria.andNameEqualTo(roleEntity.getName());
         List<RoleEntity> userEntities = this.findByExample(roleEntityExample);
         if (userEntities.size() > 0 && !userEntities.get(0).getId().equals(roleEntity.getId())) {
-            throw new BaseRuntimeException("添加失败，角色重复");
+            throw new BaseRuntimeException("修改失败，角色重复");
         }
         roleDao.updateByPrimaryKeySelective(roleEntity);
     }

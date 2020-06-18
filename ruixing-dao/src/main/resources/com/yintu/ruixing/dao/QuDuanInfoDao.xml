@@ -1167,9 +1167,7 @@
 
     <!--日报表-->
     <sql id="Statistics__Column_List">
-        MIN
-            (qi.V_out_zhu)
-            AS min_V_out_zhu,
+        MIN(qi.V_out_zhu) AS min_V_out_zhu,
         MAX(qi.mA_out_zhu) AS max_mA_out_zhu,
         MIN(qi.mA_out_zhu) AS min_mA_out_zhu,
         MAX(qi.V_out_bei) AS max_V_out_bei,
