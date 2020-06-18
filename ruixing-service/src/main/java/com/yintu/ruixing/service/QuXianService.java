@@ -2,6 +2,7 @@ package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntity;
+import com.yintu.ruixing.entity.QuDuanShuXingEntity;
 import com.yintu.ruixing.entity.SheBeiEntity;
 
 import java.util.Date;
@@ -24,5 +25,10 @@ public interface QuXianService {
     Integer findQuDuanDataByTime2(String format,String name);
 
 
-    Integer findQuDuanData(Date startTime, Date endTime, String quduanName, String shuxingName);
+    List<Integer> findQuDuanData(String starttime, String endtime, String[] name, String[] quduanName);
+
+
+    List<QuDuanShuXingEntity> shuXingMing();
+
+    List<String> findShuXingName(int[] shuxingId);
 }

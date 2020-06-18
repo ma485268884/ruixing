@@ -4,6 +4,7 @@ import com.yintu.ruixing.dao.QuDuanInfoDao;
 import com.yintu.ruixing.dao.QuXianDao;
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntity;
+import com.yintu.ruixing.entity.QuDuanShuXingEntity;
 import com.yintu.ruixing.entity.SheBeiEntity;
 import com.yintu.ruixing.service.QuXianService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +52,20 @@ public class QuXianServiceImpl implements QuXianService {
         return quDuanInfoDao.findQuDuanDataByTime2(format,name);
     }
 
+
+
     @Override
-    public Integer findQuDuanData(Date startTime, Date endTime, String quduanName, String shuxingName) {
-        return quDuanInfoDao.findQuDuanData(startTime,endTime,quduanName,shuxingName);
+    public  List<Integer> findQuDuanData(String starttime, String endtime,  String[] name, String[] quduanName) {
+        return quDuanInfoDao.findQuDuanData(starttime,endtime,name,quduanName);
+    }
+
+    @Override
+    public List<QuDuanShuXingEntity> shuXingMing() {
+        return quXianDao.shuXingMing();
+    }
+
+    @Override
+    public List<String> findShuXingName(int[] shuxingId) {
+        return quXianDao.shuxingId(shuxingId);
     }
 }

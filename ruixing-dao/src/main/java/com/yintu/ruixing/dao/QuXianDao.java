@@ -2,7 +2,9 @@ package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntity;
+import com.yintu.ruixing.entity.QuDuanShuXingEntity;
 import com.yintu.ruixing.entity.SheBeiEntity;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -20,4 +22,8 @@ public interface QuXianDao {
     List<QuDuanInfoEntity> findQuDuanDataByTime(Date time);
 
     List<QuDuanBaseEntity> findQuDuanDataByTime1(Date time);
+
+    List<QuDuanShuXingEntity> shuXingMing();
+
+    List<String> shuxingId(@Param("shuxingId")int[] shuxingId);
 }
