@@ -98,7 +98,7 @@ public interface RoleService {
      * @param parentId 上级id
      * @return 权限
      */
-    List<TreeNodeUtil> findPermissionsById(Long id, Long parentId);
+    void findPermissionsById(Long id, Long parentId, List<TreeNodeUtil> treeNodeUtils);
 
 
     /**

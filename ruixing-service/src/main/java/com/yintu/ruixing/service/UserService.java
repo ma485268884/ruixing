@@ -2,6 +2,7 @@ package com.yintu.ruixing.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
+import com.yintu.ruixing.entity.PermissionEntity;
 import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.entity.UserEntityExample;
@@ -63,7 +64,7 @@ public interface UserService extends UserDetailsService {
      * @param username 用户名
      * @return 用户列表信息
      */
-    List<UserEntity> findAllOrByUsername(String username,Short isCustermer);
+    List<UserEntity> findAllOrByUsername(String username, Short isCustermer);
 
     /**
      * 通过用户id查询角色
@@ -81,5 +82,15 @@ public interface UserService extends UserDetailsService {
      * @param roleIds 角色id集
      */
     void addRolesByIdAndRoleIds(Long Id, Long[] roleIds);
+
+    /**
+     * 通过用户id查询权限
+     *
+     * @param id       用户id
+     * @param parentId 父级id
+     * @return 权限信息集
+     */
+    List<PermissionEntity> findPermissionById(Long id, Long parentId);
+
 
 }

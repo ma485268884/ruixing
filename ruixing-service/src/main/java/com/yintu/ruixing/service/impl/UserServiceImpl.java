@@ -1,11 +1,10 @@
 package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
+import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.UserDao;
 import com.yintu.ruixing.entity.*;
-import com.yintu.ruixing.service.RoleService;
-import com.yintu.ruixing.service.UserRoleService;
-import com.yintu.ruixing.service.UserService;
+import com.yintu.ruixing.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,6 +25,10 @@ public class UserServiceImpl implements UserService {
     private RoleService roleService;
     @Autowired
     private UserRoleService userRoleService;
+    @Autowired
+    private PermissionService permissionService;
+    @Autowired
+    private PermissionRoleService permissionRoleService;
 
     @Override
     public void add(UserEntity userEntity) {
@@ -42,7 +45,7 @@ public class UserServiceImpl implements UserService {
             throw new BaseRuntimeException("添加失败，用户名重复");
         }
         Short authType = userEntity.getAuthType();
-        userEntity.setAuthType(authType == null ? (short) 0 : (short) 1);
+        userEntity.setAuthType(authType == null ? (short) 0 : authType);
         userEntity.setLocked((short) 0);
         userEntity.setCreateTime(new Date());
         String password = userEntity.getPassword();
@@ -175,5 +178,31 @@ public class UserServiceImpl implements UserService {
                 }
             }
         }
+    }
+
+    @Override
+    public List<PermissionEntity> findPermissionById(Long id, Long parentId) {
+        List<PermissionEntity> permissionEntities = userDao.selectPermissionById(id,parentId);
+        List<TreeNodeUtil> treeNodeUtils = new ArrayList<>();
+        for (PermissionEntity permissionEntity : permissionEntities) {
+            if (permissionEntity.getUrl() != null && !"".equals(permissionEntity.getUrl()) &&
+                    permissionEntity.getMethod() != null && !"".equals(permissionEntity.getMethod())) {
+                TreeNodeUtil treeNodeUtil = new TreeNodeUtil();
+                treeNodeUtil.setId(permissionEntity.getId());
+                treeNodeUtil.setLabel(permissionEntity.getName());
+                treeNodeUtil.setIcon(permissionEntity.getIconCls());
+                Map<String,Object> map=new HashMap<>();
+                map.put("parentId",permissionEntity.getParentId());
+                map.put("url",permissionEntity.getUrl());
+                map.put("method",permissionEntity.getMethod());
+                map.put("path",permissionEntity.getPath());
+                map.put("description",permissionEntity.getDescription());
+                map.put("roleEntities",permissionEntity.getRoleEntities());
+                treeNodeUtil.setA_attr(map);
+                treeNodeUtils.add(treeNodeUtil);
+            }
+        }
+
+        return null;
     }
 }
