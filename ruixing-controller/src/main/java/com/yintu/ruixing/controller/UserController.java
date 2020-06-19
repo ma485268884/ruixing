@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yintu.ruixing.common.enumobject.EnumAuthType;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.RoleEntity;
@@ -105,7 +106,7 @@ public class UserController extends BaseController {
      */
     @GetMapping("/menuBar")
     public Map<String, Object> findUserMenuBar() {
-        List<TreeNodeUtil> treeNodeUtils = userService.findPermissionById(this.getLoginUserId(), -1L);
+        List<TreeNodeUtil> treeNodeUtils = EnumAuthType.ADMIN.getValue().equals(this.getLoginAuthType()) ? userService.findPermission(-1L, (short) 1) : userService.findPermissionById(this.getLoginUserId(), -1L, (short) 1);
         return ResponseDataUtil.ok("获取菜单栏成功", treeNodeUtils);
     }
 

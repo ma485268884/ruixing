@@ -1,16 +1,12 @@
 package com.yintu.ruixing.service;
 
-import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
-import com.yintu.ruixing.entity.PermissionEntity;
 import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.entity.UserEntityExample;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
-import java.util.Map;
 
 public interface UserService extends UserDetailsService {
 
@@ -89,9 +85,16 @@ public interface UserService extends UserDetailsService {
      *
      * @param id       用户id
      * @param parentId 父级id
-     * @return 权限书信息集
+     * @return 权限树信息集
      */
-    List<TreeNodeUtil> findPermissionById(Long id, Long parentId);
+    List<TreeNodeUtil> findPermissionById(Long id, Long parentId,Short isMemu);
+
+    /**
+     * 查询全部权限
+     *
+     * @return 权限树信息集
+     */
+    List<TreeNodeUtil> findPermission(Long parentId,Short isMemu);
 
 
 }

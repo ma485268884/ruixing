@@ -351,15 +351,15 @@
 
 
     <resultMap id="BasePermissionResultMap" type="com.yintu.ruixing.entity.PermissionEntity">
-        <id column="id" jdbcType="BIGINT" property="id" />
-        <result column="parent_id" jdbcType="BIGINT" property="parentId" />
-        <result column="name" jdbcType="VARCHAR" property="name" />
-        <result column="url" jdbcType="VARCHAR" property="url" />
-        <result column="method" jdbcType="VARCHAR" property="method" />
-        <result column="is_menu" jdbcType="SMALLINT" property="isMenu" />
-        <result column="path" jdbcType="VARCHAR" property="path" />
-        <result column="icon_cls" jdbcType="VARCHAR" property="iconCls" />
-        <result column="description" jdbcType="VARCHAR" property="description" />
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="method" jdbcType="VARCHAR" property="method"/>
+        <result column="is_menu" jdbcType="SMALLINT" property="isMenu"/>
+        <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="icon_cls" jdbcType="VARCHAR" property="iconCls"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
     </resultMap>
     <select id="selectPermissionById" resultMap="BasePermissionResultMap">
         SELECT p.*
@@ -372,5 +372,12 @@
           and p.parent_id = #{parentId}
           and p.is_menu = #{isMenu}
         GROUP BY p.id
+    </select>
+
+    <select id="selectPermission" resultMap="BasePermissionResultMap">
+        SELECT p.*
+        FROM tb_permission p
+        where p.parent_id = #{parentId}
+          and p.is_menu = #{isMenu}
     </select>
 </mapper>

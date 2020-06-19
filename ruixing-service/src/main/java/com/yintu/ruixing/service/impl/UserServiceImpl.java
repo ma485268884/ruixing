@@ -181,18 +181,40 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
-
     @Override
-    public List<TreeNodeUtil> findPermissionById(Long id, Long parentId) {
-        List<PermissionEntity> permissionEntities = userDao.selectPermissionById(id, parentId, (short) 1);
+    public List<TreeNodeUtil> findPermissionById(Long id, Long parentId, Short isMemu) {
+        List<PermissionEntity> permissionEntities = userDao.selectPermissionById(id, parentId, isMemu);
         List<TreeNodeUtil> treeNodeUtils = new ArrayList<>();
         for (PermissionEntity permissionEntity : permissionEntities) {
             TreeNodeUtil treeNodeUtil = new TreeNodeUtil();
             treeNodeUtil.setId(permissionEntity.getId());
             treeNodeUtil.setLabel(permissionEntity.getName());
             treeNodeUtil.setIcon(permissionEntity.getIconCls());
-            treeNodeUtil.setChildren(this.findPermissionById(id, permissionEntity.getId()));
+            treeNodeUtil.setChildren(this.findPermissionById(id, permissionEntity.getId(), isMemu));
+            Map<String, Object> map = new HashMap<>();
+            map.put("parentId", permissionEntity.getParentId());
+            map.put("url", permissionEntity.getUrl());
+            map.put("method", permissionEntity.getMethod());
+            map.put("isMenu", permissionEntity.getIsMenu());
+            map.put("path", permissionEntity.getPath());
+            map.put("description", permissionEntity.getDescription());
+            map.put("roleEntities", permissionEntity.getRoleEntities());
+            treeNodeUtil.setA_attr(map);
+            treeNodeUtils.add(treeNodeUtil);
+        }
+        return treeNodeUtils;
+    }
+
+    @Override
+    public List<TreeNodeUtil> findPermission(Long parentId, Short isMemu) {
+        List<PermissionEntity> permissionEntities = userDao.selectPermission(parentId, isMemu);
+        List<TreeNodeUtil> treeNodeUtils = new ArrayList<>();
+        for (PermissionEntity permissionEntity : permissionEntities) {
+            TreeNodeUtil treeNodeUtil = new TreeNodeUtil();
+            treeNodeUtil.setId(permissionEntity.getId());
+            treeNodeUtil.setLabel(permissionEntity.getName());
+            treeNodeUtil.setIcon(permissionEntity.getIconCls());
+            treeNodeUtil.setChildren(this.findPermission(permissionEntity.getId(), isMemu));
             Map<String, Object> map = new HashMap<>();
             map.put("parentId", permissionEntity.getParentId());
             map.put("url", permissionEntity.getUrl());
