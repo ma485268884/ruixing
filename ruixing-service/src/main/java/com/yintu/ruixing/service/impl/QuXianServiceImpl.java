@@ -55,8 +55,8 @@ public class QuXianServiceImpl implements QuXianService {
 
 
     @Override
-    public  List<Integer> findQuDuanData(String starttime, String endtime,  String[] name, String[] quduanName) {
-        return quDuanInfoDao.findQuDuanData(starttime,endtime,name,quduanName);
+    public  List<Integer> findQuDuanData(String starttime, String endtime,  String shuxingname, String quduanname) {
+        return quDuanInfoDao.findQuDuanData(starttime,endtime,shuxingname,quduanname);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class QuXianServiceImpl implements QuXianService {
     }
 
     @Override
-    public List<String> findShuXingName(int[] shuxingId) {
-        return quXianDao.shuxingId(shuxingId);
+    public List<String> findShuXingName(Integer[] shuxingId) {
+        return quXianDao.findShuXingName(shuxingId);
     }
 }

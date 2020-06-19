@@ -1,8 +1,5 @@
 package com.yintu.ruixing.service;
 
-import com.github.pagehelper.PageInfo;
-import com.yintu.ruixing.entity.DataStats;
-
 
 /**
  * @author:lcy
@@ -12,13 +9,13 @@ import com.yintu.ruixing.entity.DataStats;
 public interface DeleteService {
 
 
-   /* PageInfo<DataStats> tljPage(String id, Integer page, Integer size );
+   /* PageInfo<DataStatsEntity> tljPage(String id, Integer page, Integer size );
 
-    PageInfo<DataStats> dwdPage(String id, Integer page, Integer size);
+    PageInfo<DataStatsEntity> dwdPage(String id, Integer page, Integer size);
 
-    PageInfo<DataStats> czPage(String id, Integer page, Integer size);
+    PageInfo<DataStatsEntity> czPage(String id, Integer page, Integer size);
 
-    PageInfo<DataStats> xdPage(String id, Integer page, Integer size);
+    PageInfo<DataStatsEntity> xdPage(String id, Integer page, Integer size);
 */
 
     int  delTieLuJU(int[] ids);

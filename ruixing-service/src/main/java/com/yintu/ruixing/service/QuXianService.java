@@ -25,10 +25,10 @@ public interface QuXianService {
     Integer findQuDuanDataByTime2(String format,String name);
 
 
-    List<Integer> findQuDuanData(String starttime, String endtime, String[] name, String[] quduanName);
+    List<Integer> findQuDuanData(String starttime, String endtime, String shuxingname, String quduanname);
 
 
     List<QuDuanShuXingEntity> shuXingMing();
 
-    List<String> findShuXingName(int[] shuxingId);
+    List<String> findShuXingName(Integer[] shuxingId);
 }
