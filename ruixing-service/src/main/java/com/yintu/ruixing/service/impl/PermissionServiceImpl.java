@@ -41,7 +41,7 @@ public class PermissionServiceImpl implements PermissionService {
             if (parentPath != null && !"".equals(parentPath))
                 throw new BaseRuntimeException("当前节点不能添加权限信息");
         } else if (parentId != -1) {
-            return;
+            throw new BaseRuntimeException("父节点ID有误");
         }
         String path = permissionEntity.getPath();
         String url = permissionEntity.getUrl();
@@ -53,12 +53,6 @@ public class PermissionServiceImpl implements PermissionService {
                 throw new BaseRuntimeException("请求路径或者请求方式填写有误有误");
             if (!"GET".equals(method.toUpperCase()))
                 throw new BaseRuntimeException("只有请求方式为GET才能添加跳转路径");
-//            PermissionEntityExample permissionEntityExample = new PermissionEntityExample();
-//            PermissionEntityExample.Criteria criteria = permissionEntityExample.createCriteria();
-//            criteria.andParentIdEqualTo(parentId).andPathIsNotNull().andPathNotEqualTo("");
-//            List<PermissionEntity> permissionEntities = this.findByExample(permissionEntityExample);
-//            if (permissionEntities.size() > 0)
-//                throw new BaseRuntimeException("此请求路径下只能有一个跳转路径");
         }
         permissionDao.insertSelective(permissionEntity);
     }
@@ -73,7 +67,7 @@ public class PermissionServiceImpl implements PermissionService {
             if (parentPath != null && !"".equals(parentPath))
                 throw new BaseRuntimeException("当前节点不能添加权限信息");
         } else if (parentId != -1) {
-            return;
+            throw new BaseRuntimeException("父节点ID有误");
         }
         String path = permissionEntity.getPath();
         String url = permissionEntity.getUrl();
@@ -85,12 +79,6 @@ public class PermissionServiceImpl implements PermissionService {
                 throw new BaseRuntimeException("请求路径或者请求方式填写有误有误");
             if (!"GET".equals(method.toUpperCase()))
                 throw new BaseRuntimeException("只有请求方式为GET才能添加跳转路径");
-//            PermissionEntityExample permissionEntityExample = new PermissionEntityExample();
-//            PermissionEntityExample.Criteria criteria = permissionEntityExample.createCriteria();
-//            criteria.andParentIdEqualTo(parentId).andPathIsNotNull().andPathNotEqualTo("");
-//            List<PermissionEntity> permissionEntities = this.findByExample(permissionEntityExample);
-//            if (permissionEntities.size() > 0 && !permissionEntities.get(0).getId().equals(permissionEntity.getId()))
-//                throw new BaseRuntimeException("此请求路径下只能有一个跳转路径");
         }
         permissionDao.updateByPrimaryKeySelective(permissionEntity);
     }
