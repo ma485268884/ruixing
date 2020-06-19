@@ -2,6 +2,7 @@ package com.yintu.ruixing.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
+import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.PermissionEntity;
 import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.entity.UserEntity;
@@ -84,13 +85,13 @@ public interface UserService extends UserDetailsService {
     void addRolesByIdAndRoleIds(Long Id, Long[] roleIds);
 
     /**
-     * 通过用户id查询权限
+     * 通过用户id查询权限(用户菜单栏)
      *
      * @param id       用户id
      * @param parentId 父级id
-     * @return 权限信息集
+     * @return 权限书信息集
      */
-    List<PermissionEntity> findPermissionById(Long id, Long parentId);
+    List<TreeNodeUtil> findPermissionById(Long id, Long parentId);
 
 
 }

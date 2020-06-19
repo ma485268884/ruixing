@@ -181,28 +181,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<PermissionEntity> findPermissionById(Long id, Long parentId) {
+    public List<TreeNodeUtil> findPermissionById(Long id, Long parentId) {
         List<PermissionEntity> permissionEntities = userDao.selectPermissionById(id,parentId);
         List<TreeNodeUtil> treeNodeUtils = new ArrayList<>();
         for (PermissionEntity permissionEntity : permissionEntities) {
-            if (permissionEntity.getUrl() != null && !"".equals(permissionEntity.getUrl()) &&
-                    permissionEntity.getMethod() != null && !"".equals(permissionEntity.getMethod())) {
-                TreeNodeUtil treeNodeUtil = new TreeNodeUtil();
-                treeNodeUtil.setId(permissionEntity.getId());
-                treeNodeUtil.setLabel(permissionEntity.getName());
-                treeNodeUtil.setIcon(permissionEntity.getIconCls());
-                Map<String,Object> map=new HashMap<>();
-                map.put("parentId",permissionEntity.getParentId());
-                map.put("url",permissionEntity.getUrl());
-                map.put("method",permissionEntity.getMethod());
-                map.put("path",permissionEntity.getPath());
-                map.put("description",permissionEntity.getDescription());
-                map.put("roleEntities",permissionEntity.getRoleEntities());
-                treeNodeUtil.setA_attr(map);
-                treeNodeUtils.add(treeNodeUtil);
-            }
+            TreeNodeUtil treeNodeUtil = new TreeNodeUtil();
+            treeNodeUtil.setId(permissionEntity.getId());
+            treeNodeUtil.setLabel(permissionEntity.getName());
+            treeNodeUtil.setIcon(permissionEntity.getIconCls());
+            treeNodeUtil.setChildren(this.findPermissionById(id, permissionEntity.getId()));
+            Map<String, Object> map = new HashMap<>();
+            map.put("parentId", permissionEntity.getParentId());
+            map.put("url", permissionEntity.getUrl());
+            map.put("method", permissionEntity.getMethod());
+            map.put("path", permissionEntity.getPath());
+            map.put("description", permissionEntity.getDescription());
+            map.put("roleEntities", permissionEntity.getRoleEntities());
+            treeNodeUtil.setA_attr(map);
+            treeNodeUtils.add(treeNodeUtil);
         }
-
-        return null;
+        return treeNodeUtils;
     }
 }
