@@ -48,4 +48,16 @@
     <select id="findXianDuanById" parameterType="java.lang.Long" resultMap="xianduan">
         select * from mro_xianduan where xid=#{xid}
     </select>
+    <!--查询下级是否存在-->
+    <select id="findId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+            SELECT
+            cz.xd_cz_id
+            FROM
+            mro_xianduan xd,
+            mro_chezhan cz
+            where
+            xd.xid=cz.xd_cz_id
+            and
+            xid=#{xid}
+    </select>
 </mapper>

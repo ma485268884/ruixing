@@ -50,19 +50,19 @@ public class DataStatsController {
 
     //查询所有的车站  展示在列表
     @RequestMapping("/findAllCheZhan")
-    public Map<String,Object>findAllCheZhan(@RequestParam(value = "page", required = false) Integer page,
-                                            @RequestParam(value = "size", required = false) Integer size){
+    public Map<String, Object> findAllCheZhan(@RequestParam(value = "page", required = false) Integer page,
+                                              @RequestParam(value = "size", required = false) Integer size) {
         JSONObject jo = new JSONObject();
-        PageHelper.startPage(page,size);
-        List<DataStatsEntity> dataStatEntities =dataStatsService.findAllCheZhan(page,size);
-        jo.put("dataStatEntities",dataStatEntities);
-        PageInfo<DataStatsEntity> pageInfo=new PageInfo<>(dataStatEntities);
-        jo.put("pageInfo",pageInfo);
+        PageHelper.startPage(page, size);
+        List<DataStatsEntity> dataStatEntities = dataStatsService.findAllCheZhan(page, size);
+        jo.put("dataStatEntities", dataStatEntities);
+        PageInfo<DataStatsEntity> pageInfo = new PageInfo<>(dataStatEntities);
+        jo.put("pageInfo", pageInfo);
         return ResponseDataUtil.ok("查询所有车站信息成功", jo);
     }
 
     //根据铁路局id  查询此铁路局下的所有车站
-    @GetMapping ("/findTieLuJuById/{tid}")
+    @GetMapping("/findTieLuJuById/{tid}")
     public Map<String, Object> findTieLuJuById(@PathVariable Long tid,
                                                @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
         JSONObject jo = new JSONObject();
@@ -75,10 +75,11 @@ public class DataStatsController {
         //System.out.println("分页为" + pageInfo);
         return ResponseDataUtil.ok("查询铁路局成功", jo);
     }
+
     //根据电务段id  查询此电务段下的所有车站
-    @GetMapping ("/findDianWuDuanCheZhanById/{did}")
+    @GetMapping("/findDianWuDuanCheZhanById/{did}")
     public Map<String, Object> findDianWuDuanById(@PathVariable Long did,
-                                               @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
+                                                  @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
         JSONObject jo = new JSONObject();
         List<DataStatsEntity> dianwuduan = dataStatsService.findDianWuDuanCheZhanById(did, page, size);
         jo.put("dianwuduan", dianwuduan);
@@ -91,9 +92,9 @@ public class DataStatsController {
     }
 
     //根据线段id  查询此线段下的所有车站
-    @GetMapping ("/findXianDuanCheZhanById/{xid}")
+    @GetMapping("/findXianDuanCheZhanById/{xid}")
     public Map<String, Object> findXianDuanCheZhanById(@PathVariable Long xid,
-                                                  @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
+                                                       @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
         JSONObject jo = new JSONObject();
         List<DataStatsEntity> xianduan = dataStatsService.findXianDuanCheZhanById(xid, page, size);
         jo.put("xianduan", xianduan);
@@ -106,9 +107,10 @@ public class DataStatsController {
     }
 
     //根据车站id  查询车站信息
-    @GetMapping ("/findCheZhanById/{cid}")
+    @GetMapping("/findCheZhanById/{cid}")
     public Map<String, Object> findCheZhanById(@PathVariable Long cid,
-                                                       @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size) {
+                                               @RequestParam(value = "page", required = false) Integer page,
+                                               @RequestParam(value = "size", required = false) Integer size) {
         JSONObject jo = new JSONObject();
         List<DataStatsEntity> chezhan = dataStatsService.findCheZhanById(cid, page, size);
         jo.put("chezhan", chezhan);
@@ -123,51 +125,129 @@ public class DataStatsController {
 
     //根据线段id更改状态
     @PutMapping("/editStateByXid/{xid}")
-    public Map<String,Object>editStateByXid(@PathVariable Integer xid ,XianDuanEntity xianDuanEntity){
+    public Map<String, Object> editStateByXid(@PathVariable Integer xid, XianDuanEntity xianDuanEntity) {
         dataStatsService.editStateByXid(xianDuanEntity);
         return ResponseDataUtil.ok("更改线段状态成功");
     }
 
     //根据车站id更改状态
     @PutMapping("/editStateByCid/{cid}")
-    public Map<String,Object>editStateByCid(@PathVariable Integer cid ,CheZhanEntity cheZhanEntity){
+    public Map<String, Object> editStateByCid(@PathVariable Integer cid, CheZhanEntity cheZhanEntity) {
         dataStatsService.editStateByCid(cheZhanEntity);
         return ResponseDataUtil.ok("更改线段状态成功");
     }
 
     //查询所有的铁路局的名字  和 id
     @GetMapping("/findAllTieLuJu")
-    public Map<String,Object>findAllTieLuJu(TieLuJuEntity tieLuJuEntity){
-        List<TieLuJuEntity> tieLuJuEntities=dataStatsService.findAllTieLuJu(tieLuJuEntity);
-        return ResponseDataUtil.ok("查询铁路局成功",tieLuJuEntities);
+    public Map<String, Object> findAllTieLuJu(TieLuJuEntity tieLuJuEntity) {
+        List<TieLuJuEntity> tieLuJuEntities = dataStatsService.findAllTieLuJu(tieLuJuEntity);
+        return ResponseDataUtil.ok("查询铁路局成功", tieLuJuEntities);
     }
+
     //根据铁路局的id  查询对应的电务段
     @GetMapping("/findDianWuDuanByTid/{tid}")
-    public Map<String,Object>findDianWuDuanByTid(@PathVariable Integer tid){
-        List<DianWuDuanEntity> dianWuDuanEntities=dataStatsService.findDianWuDuanByTid(tid);
-        return ResponseDataUtil.ok("查询电务段成功",dianWuDuanEntities);
+    public Map<String, Object> findDianWuDuanByTid(@PathVariable Integer tid) {
+        List<DianWuDuanEntity> dianWuDuanEntities = dataStatsService.findDianWuDuanByTid(tid);
+        return ResponseDataUtil.ok("查询电务段成功", dianWuDuanEntities);
     }
 
     //根据电务段的id  查找线段的名字和id
     @GetMapping("/findXianDuanByDid/{did}")
-    public Map<String,Object>findXianDuanByDid(@PathVariable Integer did){
-        List<XianDuanEntity> xianDuanEntities=dataStatsService.findXianDuanByDid(did);
-        return ResponseDataUtil.ok("查询线段成功",xianDuanEntities);
+    public Map<String, Object> findXianDuanByDid(@PathVariable Integer did) {
+        List<XianDuanEntity> xianDuanEntities = dataStatsService.findXianDuanByDid(did);
+        return ResponseDataUtil.ok("查询线段成功", xianDuanEntities);
     }
 
     //根据线段的id  查找车站的名字和id
     @GetMapping("/findCheZhanByXid/{xid}")
-    public Map<String,Object>findCheZhanByXid(@PathVariable Integer xid){
-        List<CheZhanEntity> cheZhanEntities=dataStatsService.findCheZhanByXid(xid);
-        return ResponseDataUtil.ok("查询车站成功",cheZhanEntities);
+    public Map<String, Object> findCheZhanByXid(@PathVariable Integer xid) {
+        List<CheZhanEntity> cheZhanEntities = dataStatsService.findCheZhanByXid(xid);
+        return ResponseDataUtil.ok("查询车站成功", cheZhanEntities);
     }
 
 
+    //查询站外所有的区段信息  排除电码化
+    @GetMapping("/findAllQuDuan")
+    public Map<String, Object> findAllQuDuan(@RequestParam(value = "page", required = false) Integer page,
+                                             @RequestParam(value = "size", required = false) Integer size) {
+        JSONObject jo = new JSONObject();
+        PageHelper.startPage(page, size);
+        List<QuDuanBaseEntity> quDuanBaseEntities = dataStatsService.findAllQuDuan(page, size);
+        jo.put("quDuanBaseEntities", quDuanBaseEntities);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo = new PageInfo<>(quDuanBaseEntities);
+        jo.put("quDuanBaseEntityPageInfo", quDuanBaseEntityPageInfo);
+        return ResponseDataUtil.ok("查询所有站外区段成功", quDuanBaseEntityPageInfo);
+    }
 
+    //查询所有的电码化区段
+    @GetMapping("/findAllDianMaHua")
+    public Map<String, Object> findAllDianMaHua(@RequestParam(value = "page", required = false) Integer page,
+                                                @RequestParam(value = "size", required = false) Integer size) {
+        JSONObject jo = new JSONObject();
+        PageHelper.startPage(page, size);
+        List<QuDuanBaseEntity> quDuanBaseEntities = dataStatsService.findAllDianMaHua(page, size);
+        jo.put("quDuanBaseEntities", quDuanBaseEntities);
+        PageInfo<QuDuanBaseEntity> pageInfo = new PageInfo<>(quDuanBaseEntities);
+        jo.put("pageInfo", pageInfo);
+        return ResponseDataUtil.ok("查询电码化成功", jo);
+    }
 
+    //根据车站的cid  查找本车站下的所有站外的区段
 
+    @GetMapping("/findAllQuDuanByCid/{cid}")
+    public Map<String, Object> findAllQuDuanByCid(@PathVariable Integer cid,
+                                                  @RequestParam(value = "page", required = false) Integer page,
+                                                  @RequestParam(value = "size", required = false) Integer size) {
+        JSONObject jo = new JSONObject();
+        PageHelper.startPage(page, size);
+        List<QuDuanBaseEntity> quDuanBaseEntities = dataStatsService.findAllQuDuanByCid(cid, page, size);
+        jo.put("quDuanBaseEntities", quDuanBaseEntities);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo = new PageInfo<>(quDuanBaseEntities);
+        jo.put("quDuanBaseEntityPageInfo", quDuanBaseEntityPageInfo);
+        return ResponseDataUtil.ok("查询所有站外区段成功", quDuanBaseEntityPageInfo);
+    }
 
+    //根据车站的cid  查询所有的电码化区段
 
+    @GetMapping("/findAllDianMaHuaByCid/{cid}")
+    public Map<String, Object> findAllDianMaHuaByCid(@PathVariable Integer cid,
+                                                     @RequestParam(value = "page", required = false) Integer page,
+                                                     @RequestParam(value = "size", required = false) Integer size) {
+        JSONObject jo = new JSONObject();
+        PageHelper.startPage(page, size);
+        List<QuDuanBaseEntity> quDuanBaseEntities = dataStatsService.findAllDianMaHuaByCid(cid, page, size);
+        jo.put("quDuanBaseEntities", quDuanBaseEntities);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo = new PageInfo<>(quDuanBaseEntities);
+        jo.put("quDuanBaseEntityPageInfo", quDuanBaseEntityPageInfo);
+        return ResponseDataUtil.ok("查询所有站外区段成功", quDuanBaseEntityPageInfo);
+    }
+
+    //新增站外区段  包括电码化
+    @PostMapping("/addQuDuan")
+    public Map<String, Object> addQuDuan(QuDuanBaseEntity quDuanBaseEntity) {
+        dataStatsService.addQuDuan(quDuanBaseEntity);
+        return ResponseDataUtil.ok("添加站外区段数据成功");
+    }
+    //根据区段id编辑区段信息  包括电码化
+    @PutMapping("/editQuDuanById/{id}")
+    public Map<String,Object>editQuDuanById(@PathVariable Integer id,QuDuanBaseEntity quDuanBaseEntity){
+        dataStatsService.editQuDuanById(quDuanBaseEntity);
+        return ResponseDataUtil.ok("修改区段信息成功");
+    }
+
+    //根据区段id删除区段信息
+    @DeleteMapping("/deletQuDuanById/{id}")
+    public Map<String,Object>deletQuDuanById(@PathVariable Integer id){
+        dataStatsService.deletQuDuanById(id);
+        return ResponseDataUtil.ok("删除区段数据成功");
+    }
+
+    //根据id批量删除区段数据
+    @DeleteMapping("/deletQuDuanByIds/{ids}")
+    public Map<String,Object>deletQuDuanByIds(@PathVariable Integer[] ids){
+        dataStatsService.deletQuDuanByIds(ids);
+        return ResponseDataUtil.ok("批量删除成功");
+    }
 
 
 

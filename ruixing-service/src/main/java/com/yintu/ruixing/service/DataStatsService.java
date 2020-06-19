@@ -54,4 +54,20 @@ public interface DataStatsService {
     List<XianDuanEntity> findXianDuanByDid(Integer did);
 
     List<CheZhanEntity> findCheZhanByXid(Integer xid);
+
+    List<QuDuanBaseEntity> findAllQuDuan(Integer page,Integer size);
+
+    List<QuDuanBaseEntity> findAllDianMaHua(Integer page, Integer size);
+
+    List<QuDuanBaseEntity> findAllQuDuanByCid(Integer cid, Integer page, Integer size);
+
+    List<QuDuanBaseEntity> findAllDianMaHuaByCid(Integer cid, Integer page, Integer size);
+
+    void addQuDuan(QuDuanBaseEntity quDuanBaseEntity);
+
+    void editQuDuanById(QuDuanBaseEntity quDuanBaseEntity);
+
+    void deletQuDuanById(Integer id);
+
+    void deletQuDuanByIds(Integer[] ids);
 }

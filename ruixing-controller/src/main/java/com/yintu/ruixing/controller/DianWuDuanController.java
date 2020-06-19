@@ -6,6 +6,7 @@ import com.yintu.ruixing.service.DianWuDuanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,8 +42,14 @@ public class DianWuDuanController {
     //删除电务段
     @DeleteMapping("/delDianWuDuan/{did}")
     public Map<String,Object>delDianWuDuan(@PathVariable Long did){
-        dianWuDuanService.delDianWuDuan(did);
-        return ResponseDataUtil.ok("删除电务段成功");
+        List<Integer> list=dianWuDuanService.findId(did);
+        if (list.size()<=0){
+            dianWuDuanService.delDianWuDuan(did);
+            return ResponseDataUtil.ok("删除电务段成功");
+        }else {
+            return ResponseDataUtil.error("删除电务段失败");
+        }
+
     }
 
 }

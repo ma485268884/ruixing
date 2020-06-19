@@ -18,6 +18,8 @@
         <result property="czDuanTou" column="cz_duantou"/>
         <result property="czPeiZhiState" column="cz_peizhi_state"/>
         <result property="czJson" column="cz_json"/>
+        <result property="czRSheBei" column="cz_r_shebei"/>
+        <result property="czZhongJiZhan" column="cz_zhongjizhan"/>
     </resultMap>
 
     <!--添加车站-->

@@ -8,7 +8,10 @@
         <result column="xid" jdbcType="INTEGER" property="xid"/>
         <result column="sid" jdbcType="INTEGER" property="sid"/>
         <result column="typeid" jdbcType="INTEGER" property="typeid"/>
-        <result column="line_id" jdbcType="INTEGER" property="lineId"/>
+        <result column="line" jdbcType="VARCHAR" property="line"/>
+        <result column="left_right" jdbcType="VARCHAR" property="letRight"/>
+        <result column="xingbie" jdbcType="INTEGER" property="xingBie"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
         <result column="zongHe_id" jdbcType="VARCHAR" property="zongheId"/>
         <result column="quDuanSheJi_name" jdbcType="VARCHAR" property="quduanshejiName"/>
         <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
@@ -33,9 +36,17 @@
         <result column="guiNeiDiZhi" jdbcType="INTEGER" property="guineidizhi"/>
         <result column="time" jdbcType="TIMESTAMP" property="time"/>
         <result column="yuliu" jdbcType="VARCHAR" property="yuliu"/>
+        <association property="xianDuanEntity"  javaType="XianDuanEntity" >
+            <result column="xid" property="xid"></result>
+            <result column="xd_name" property="xdName"></result>
+        </association>
+        <association property="cheZhanEntity" javaType="CheZhanEntity" >
+            <result column="cid" property="cid"></result>
+            <result column="cz_name" property="czName"></result>
+        </association>
     </resultMap>
     <sql id="Base_Column_List">
-        id, parent_id, cid, xid, sid, typeid, line_id, zongHe_id, quDuanSheJi_name, quDuanYunYing_name,
+        id, parent_id, cid, xid, sid, typeid, line,left_right,xingbie, zongHe_id,type,quDuanSheJi_name, quDuanYunYing_name,
     quDuan_length, carrier, diDuan_type, xianLuQingKuang, bianJie, fenJieDian_where,
     zhanQuFenJie, jinZhanXinHaoJi_name, xinHaoJiOrBiaoZhiMing, xinHaoBiaoZhiPai_where,
     xinHaoJi_where, zuoCeJueYuan_type, youCeJueYuan_type, zhengXianHouFangQuDuan_ID,
@@ -54,10 +65,21 @@
         from mro_quduan_base
         where xid = #{xid,jdbcType=INTEGER} and cid = #{cid,jdbcType=INTEGER}
     </select>
+    <!--根据区段id删除对应的区段-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from mro_quduan_base
         where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <!--批量删除区段-->
+    <delete id="deletQuDuanByIds" parameterType="java.util.List">
+        delete
+        from mro_quduan_base
+        where id
+        in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </delete>
     <insert id="insert" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity">
         insert into mro_quduan_base (id, parent_id, cid,
@@ -87,6 +109,77 @@
                 #{daochaguanlianquduan2Id,jdbcType=VARCHAR}, #{dianmahuaguihao,jdbcType=VARCHAR},
                 #{guineidizhi,jdbcType=INTEGER}, #{yuliu,jdbcType=VARCHAR})
     </insert>
+
+
+
+
+    <!--查询站外所有区段信息-->
+    <select id="findAllQuDuan" resultMap="BaseResultMap">
+        SELECT
+            cz.cz_name,
+            xd.xd_name,
+            qb.*
+        FROM
+            mro_quduan_base qb,
+            mro_xianduan xd,
+            mro_chezhan cz
+        WHERE
+            qb.cid = cz.cid
+            AND qb.xid = xd.xid
+            AND line != '电码化'
+
+    </select>
+    <!--查询电码化区段信息-->
+    <select id="findAllDianMaHua" resultMap="BaseResultMap">
+        SELECT
+            cz.cz_name,
+            xd.xd_name,
+            qb.*
+        FROM
+            mro_quduan_base qb,
+            mro_xianduan xd,
+            mro_chezhan cz
+        WHERE
+            qb.cid = cz.cid
+            AND qb.xid = xd.xid
+            AND line = '电码化'
+    </select>
+
+    <!--根据车站cid  查询站外所有区段信息-->
+    <select id="findAllQuDuanByCid" resultMap="BaseResultMap">
+        SELECT
+            cz.cz_name,
+            xd.xd_name,
+            qb.*
+        FROM
+            mro_quduan_base qb,
+            mro_xianduan xd,
+            mro_chezhan cz
+        WHERE
+            qb.cid = cz.cid
+            AND qb.xid = xd.xid
+            AND line != '电码化'
+            AND cz.cid=#{cid}
+    </select>
+
+    <!--根据车站cid  查询所有电码化区段信息-->
+    <select id="findAllDianMaHuaByCid" resultMap="BaseResultMap">
+        SELECT
+            cz.cz_name,
+            xd.xd_name,
+            qb.*
+        FROM
+            mro_quduan_base qb,
+            mro_xianduan xd,
+            mro_chezhan cz
+        WHERE
+            qb.cid = cz.cid
+            AND qb.xid = xd.xid
+            AND line = '电码化'
+            AND cz.cid=#{cid}
+    </select>
+
+    <!--新增区段信息  包括电码化的信息-->
     <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity">
         insert into mro_quduan_base
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -108,8 +201,17 @@
             <if test="typeid != null">
                 typeid,
             </if>
-            <if test="lineId != null">
-                line_id,
+            <if test="line != null">
+                line,
+            </if>
+            <if test="leftRight != null">
+                left_right,
+            </if>
+            <if test="xingBie != null">
+                xingbie,
+            </if>
+            <if test="type != null">
+                type,
             </if>
             <if test="zongheId != null">
                 zongHe_id,
@@ -200,8 +302,17 @@
             <if test="typeid != null">
                 #{typeid,jdbcType=INTEGER},
             </if>
-            <if test="lineId != null">
-                #{lineId,jdbcType=INTEGER},
+            <if test="line != null">
+                #{line,jdbcType=INTEGER},
+            </if>
+            <if test="leftRight != null">
+                left_right,
+            </if>
+            <if test="xingBie != null">
+                xingbie,
+            </if>
+            <if test="type != null">
+                type,
             </if>
             <if test="zongheId != null">
                 #{zongheId,jdbcType=VARCHAR},
@@ -274,6 +385,7 @@
             </if>
         </trim>
     </insert>
+    <!--根据车站id  更改信息-->
     <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity">
         update mro_quduan_base
         <set>
@@ -292,8 +404,17 @@
             <if test="typeid != null">
                 typeid = #{typeid,jdbcType=INTEGER},
             </if>
-            <if test="lineId != null">
-                line_id = #{lineId,jdbcType=INTEGER},
+            <if test="line != null">
+                line = #{line,jdbcType=VARCHAR},
+            </if>
+            <if test="leftRight != null">
+                left_right = #{leftRight,jdbcType=VARCHAR},
+            </if>
+            <if test="xingBie != null">
+                xingbie = #{xingBie,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
             </if>
             <if test="zongheId != null">
                 zongHe_id = #{zongheId,jdbcType=VARCHAR},

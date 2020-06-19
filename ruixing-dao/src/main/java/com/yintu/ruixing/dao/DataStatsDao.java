@@ -52,4 +52,6 @@ public interface DataStatsDao {
     List<XianDuanEntity> findXianDuanByDid(Integer did);
 
     List<CheZhanEntity> findCheZhanByXid(Integer xid);
+
+    List<QuDuanBaseEntity> findAllQuDuan();
 }

@@ -45,4 +45,16 @@
 		delete from mro_dianwuduan where did=#{did}
 	</delete>
 
+    <!--查询下级是否存在-->
+    <select id="findId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT
+        xd.dwd_xd_id
+        FROM
+        mro_dianwuduan dwd,
+        mro_xianduan xd
+        where
+        dwd.did=xd.dwd_xd_id
+        and
+        did=#{did}
+    </select>
 </mapper>

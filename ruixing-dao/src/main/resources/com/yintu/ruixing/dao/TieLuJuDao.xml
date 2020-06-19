@@ -37,4 +37,17 @@
     <delete id="delTieLuJu" parameterType="long">
 		delete from mro_tieluju where tid=#{tid}
 	</delete>
+
+    <!--查询下级是否存在-->
+    <select id="findId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT
+        dwd.tlj_dwd_id
+        FROM
+        mro_tieluju tlj,
+        mro_dianwuduan dwd
+        where
+        tlj.tid=dwd.tlj_dwd_id
+        and
+        tid=#{tid}
+    </select>
 </mapper>

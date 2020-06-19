@@ -6,6 +6,7 @@ import com.yintu.ruixing.service.TieLuJuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,8 +40,14 @@ public class TieLuJuController {
     //删除铁路局
     @DeleteMapping("/delTieLuJu/{tid}")
     public Map<String,Object> delTieLuJu(@PathVariable Long tid){
-        tieLuJuService.delTieLuJu(tid);
-        return ResponseDataUtil.ok("删除铁路局成功");
+        List<Integer> list=tieLuJuService.findId(tid);
+        if (list.size()<=0){
+            tieLuJuService.delTieLuJu(tid);
+            return ResponseDataUtil.ok("删除铁路局成功");
+        }else {
+            return ResponseDataUtil.error("删除铁路局失败");
+        }
+
     }
 
 }

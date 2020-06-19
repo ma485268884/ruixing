@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author:lcy
  * @date:2020-05-26 11
@@ -40,5 +42,10 @@ public class XianDuanServiceImpl implements XianDuanService {
     @Override
     public XianDuanEntity findXianDuanById(Long xid) {
         return xianDuanDao.findXianDuanById(xid);
+    }
+
+    @Override
+    public List<Integer> findId(Long xid) {
+        return xianDuanDao.findId(xid);
     }
 }

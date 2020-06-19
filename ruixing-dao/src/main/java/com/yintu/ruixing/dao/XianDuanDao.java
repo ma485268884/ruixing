@@ -2,6 +2,8 @@ package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.XianDuanEntity;
 
+import java.util.List;
+
 /**
  * @author:lcy
  * @date:2020-05-26 11
@@ -15,4 +17,6 @@ public interface XianDuanDao {
     void editXianDuan(XianDuanEntity xianDuanEntity);
 
     XianDuanEntity findXianDuanById(Long xid);
+
+    List<Integer> findId(Long xid);
 }

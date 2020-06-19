@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author:lcy
  * @date:2020-05-26 11
@@ -15,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class TieLuJuServiceImpl implements TieLuJuService {
+
+
     @Autowired
     private TieLuJuDao tieLuJuDao;
     @Override
@@ -35,5 +39,10 @@ public class TieLuJuServiceImpl implements TieLuJuService {
     @Override
     public void delTieLuJu(Long tid) {
         tieLuJuDao.delTieLuJu(tid);
+    }
+
+    @Override
+    public List<Integer> findId(Long tid) {
+        return tieLuJuDao.findId(tid);
     }
 }

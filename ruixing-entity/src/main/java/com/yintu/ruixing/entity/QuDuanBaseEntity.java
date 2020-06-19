@@ -24,7 +24,13 @@ public class QuDuanBaseEntity implements Serializable {
 
     private Integer typeid;//类型id
 
-    private Integer lineId;
+    private String line;//线路情况： 分1,2,3,4,站内，电码化
+
+    private String leftRight;//左右侧 ，站内和电码化为空
+
+    private  Integer xingBie;//0：空 ，1：上行， 2：下行
+
+    private Integer type;//0：空 ， 1：接近，2：离去
 
     private String zongheId;
 
@@ -75,4 +81,6 @@ public class QuDuanBaseEntity implements Serializable {
     private String yuliu;
 
     private LineEntity lineEntity;
+    private XianDuanEntity xianDuanEntity;
+    private CheZhanEntity cheZhanEntity;
 }

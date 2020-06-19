@@ -2,6 +2,8 @@ package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.TieLuJuEntity;
 
+import java.util.List;
+
 /**
  * @author:lcy
  * @date:2020-05-26 11
@@ -15,4 +17,6 @@ public interface TieLuJuDao {
     void editTieLuJuById(TieLuJuEntity tieLuJuEntity);
 
     void delTieLuJu(Long tid);
+
+    List<Integer> findId(Long tid);
 }

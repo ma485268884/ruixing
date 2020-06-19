@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author:lcy
  * @date:2020-05-26 11
@@ -36,5 +38,10 @@ public class DianWuDuanServiceImpl implements DianWuDuanService {
     @Override
     public void delDianWuDuan(Long did) {
         dianWuDuanDao.delDianWuDuan(did);
+    }
+
+    @Override
+    public List<Integer> findId(Long did) {
+        return dianWuDuanDao.findId(did);
     }
 }

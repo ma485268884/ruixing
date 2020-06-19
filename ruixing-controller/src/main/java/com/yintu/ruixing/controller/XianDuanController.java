@@ -7,6 +7,7 @@ import com.yintu.ruixing.service.XianDuanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,8 +31,14 @@ public class XianDuanController {
     //删除线段
     @DeleteMapping("/delXianDuan/{xid}")
     public Map<String, Object> delXianDuan(@PathVariable Long xid) {
-        xianDuanService.delXianDuan(xid);
-        return ResponseDataUtil.ok("删除线段成功");
+        List<Integer> list=xianDuanService.findId(xid);
+        if (list.size()<=0){
+            xianDuanService.delXianDuan(xid);
+            return ResponseDataUtil.ok("删除线段成功");
+        }else {
+            return ResponseDataUtil.error("删除线段失败");
+        }
+
     }
     //根据更改线段
     @PutMapping("/editXianDuan/{xid}")

@@ -3,6 +3,7 @@ package com.yintu.ruixing.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.dao.DataStatsDao;
+import com.yintu.ruixing.dao.QuDuanBaseDao;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.DataStatsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class DataStatsServiceImpl implements DataStatsService {
 
     @Autowired
     private DataStatsDao dataStatsDao;
+
+    @Autowired
+    private QuDuanBaseDao quDuanBaseDao;
     //查询所有数据
     @Override
     public List<DataStatsEntity> findAll() {
@@ -91,6 +95,46 @@ public class DataStatsServiceImpl implements DataStatsService {
     @Override
     public List<CheZhanEntity> findCheZhanByXid(Integer xid) {
         return dataStatsDao.findCheZhanByXid(xid);
+    }
+
+    @Override
+    public List<QuDuanBaseEntity> findAllQuDuan(Integer page,Integer size) {
+        return quDuanBaseDao.findAllQuDuan();
+    }
+
+    @Override
+    public List<QuDuanBaseEntity> findAllDianMaHua(Integer page, Integer size) {
+        return quDuanBaseDao.findAllDianMaHua();
+    }
+
+    @Override
+    public List<QuDuanBaseEntity> findAllQuDuanByCid(Integer cid, Integer page, Integer size) {
+        return quDuanBaseDao.findAllQuDuanByCid(cid);
+    }
+
+    @Override
+    public List<QuDuanBaseEntity> findAllDianMaHuaByCid(Integer cid, Integer page, Integer size) {
+        return quDuanBaseDao.findAllDianMaHuaByCid(cid);
+    }
+
+    @Override
+    public void addQuDuan(QuDuanBaseEntity quDuanBaseEntity) {
+        quDuanBaseDao.insertSelective(quDuanBaseEntity);
+    }
+
+    @Override
+    public void editQuDuanById(QuDuanBaseEntity quDuanBaseEntity) {
+        quDuanBaseDao.updateByPrimaryKeySelective(quDuanBaseEntity);
+    }
+
+    @Override
+    public void deletQuDuanById(Integer id) {
+        quDuanBaseDao.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public void deletQuDuanByIds(Integer[] ids) {
+        quDuanBaseDao.deletQuDuanByIds(ids);
     }
 
 
