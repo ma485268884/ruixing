@@ -434,6 +434,66 @@ public class PermissionEntityExample {
             return (Criteria) this;
         }
 
+        public Criteria andIsMenuIsNull() {
+            addCriterion("is_menu is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsMenuIsNotNull() {
+            addCriterion("is_menu is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsMenuEqualTo(Short value) {
+            addCriterion("is_menu =", value, "isMenu");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsMenuNotEqualTo(Short value) {
+            addCriterion("is_menu <>", value, "isMenu");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsMenuGreaterThan(Short value) {
+            addCriterion("is_menu >", value, "isMenu");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsMenuGreaterThanOrEqualTo(Short value) {
+            addCriterion("is_menu >=", value, "isMenu");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsMenuLessThan(Short value) {
+            addCriterion("is_menu <", value, "isMenu");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsMenuLessThanOrEqualTo(Short value) {
+            addCriterion("is_menu <=", value, "isMenu");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsMenuIn(List<Short> values) {
+            addCriterion("is_menu in", values, "isMenu");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsMenuNotIn(List<Short> values) {
+            addCriterion("is_menu not in", values, "isMenu");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsMenuBetween(Short value1, Short value2) {
+            addCriterion("is_menu between", value1, value2, "isMenu");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsMenuNotBetween(Short value1, Short value2) {
+            addCriterion("is_menu not between", value1, value2, "isMenu");
+            return (Criteria) this;
+        }
+
         public Criteria andPathIsNull() {
             addCriterion("path is null");
             return (Criteria) this;

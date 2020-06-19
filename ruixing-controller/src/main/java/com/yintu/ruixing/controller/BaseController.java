@@ -29,9 +29,18 @@ public class BaseController {
     /**
      * 获取登录用户信息id
      *
-     * @return 用户信息
+     * @return 用户id值
      */
     protected Long getLoginUserId() {
         return this.getLoginUser().getId();
+    }
+
+    /**
+     * 获取登录用户类型
+     *
+     * @return 用户类型值
+     */
+    protected Short getLoginAuthType() {
+        return this.getLoginUser().getAuthType();
     }
 }

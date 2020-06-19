@@ -12,8 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author:mlf
@@ -76,11 +79,13 @@ public class RoleController extends BaseController {
 //    public Map<String, Object> findRolesById(@PathVariable Long id) {
 //        List<TreeNodeUtil> treeNodeUtils = roleService.findPermissionsTreeById(id, -1L);
 //        return ResponseDataUtil.ok("查询角色权限成功", treeNodeUtils);
+//
 //    }
 
     @GetMapping("/{id}/permissions")
     public Map<String, Object> findRolesById(@PathVariable Long id) {
-        List<TreeNodeUtil> treeNodeUtils = roleService.findPermissionsById(id, 0L);
+        List<TreeNodeUtil> treeNodeUtils = new ArrayList<>();
+        roleService.findPermissionsById(id, -1L, treeNodeUtils);
         return ResponseDataUtil.ok("查询角色权限成功", treeNodeUtils);
     }
 

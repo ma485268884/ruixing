@@ -348,4 +348,36 @@
             is_customer   = #{isCustomer,jdbcType=SMALLINT}
         where id = #{id,jdbcType=BIGINT}
     </update>
+
+
+    <resultMap id="BasePermissionResultMap" type="com.yintu.ruixing.entity.PermissionEntity">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="method" jdbcType="VARCHAR" property="method"/>
+        <result column="is_menu" jdbcType="SMALLINT" property="isMenu"/>
+        <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="icon_cls" jdbcType="VARCHAR" property="iconCls"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+    </resultMap>
+    <select id="selectPermissionById" resultMap="BasePermissionResultMap">
+        SELECT p.*
+        FROM tb_user u
+                 INNER JOIN tb_user_role ur ON u.id = ur.user_id
+                 INNER JOIN tb_role r ON r.id = ur.role_id
+                 INNER JOIN tb_permission_role pr ON r.id = pr.role_id
+                 INNER JOIN tb_permission p ON p.id = pr.permission_id
+        where u.id = #{id}
+          and p.parent_id = #{parentId}
+          and p.is_menu = #{isMenu}
+        GROUP BY p.id
+    </select>
+
+    <select id="selectPermission" resultMap="BasePermissionResultMap">
+        SELECT p.*
+        FROM tb_permission p
+        where p.parent_id = #{parentId}
+          and p.is_menu = #{isMenu}
+    </select>
 </mapper>

@@ -53,6 +53,8 @@ public class WebSocketClientServer {
     public void onMessage(String message) {
         logger.info("onMessage................原始数据：" + message);
         JSONObject jo = JSONObject.parseObject(message);
+        Integer id = jo.getInteger("id");
+
     }
 
     /**

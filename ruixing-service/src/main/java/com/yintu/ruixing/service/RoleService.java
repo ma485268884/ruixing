@@ -94,11 +94,11 @@ public interface RoleService {
     List<TreeNodeUtil> findPermissionsTreeById(Long id, Long parentId);
 
     /**
-     * @param id       角色id
-     * @param parentId 上级id
-     * @return 权限
+     * @param id            角色
+     * @param parentId      父级id
+     * @param treeNodeUtils 每一个权限树的最后一级集合
      */
-    List<TreeNodeUtil> findPermissionsById(Long id, Long parentId);
+    void findPermissionsById(Long id, Long parentId, List<TreeNodeUtil> treeNodeUtils);
 
 
     /**

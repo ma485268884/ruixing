@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yintu.ruixing.common.enumobject.EnumAuthType;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.PermissionService;
@@ -95,6 +97,19 @@ public class UserController extends BaseController {
     public Map<String, Object> addRolesByIdAndRoleIds(@PathVariable Long id, @RequestParam Long[] roleIds) {
         userService.addRolesByIdAndRoleIds(id, roleIds);
         return ResponseDataUtil.ok("分配用户角色成功");
+    }
+
+    /**
+     * 获取当前用户菜单栏
+     *
+     * @return 当前用户权限
+     */
+    @GetMapping("/menuBar")
+    public Map<String, Object> findUserMenuBar() {
+        List<TreeNodeUtil> treeNodeUtils = EnumAuthType.ADMIN.getValue().equals(this.getLoginAuthType()) ?
+                userService.findPermission(-1L, (short) 1) :
+                userService.findPermissionById(this.getLoginUserId(), -1L, (short) 1);
+        return ResponseDataUtil.ok("获取菜单栏成功", treeNodeUtils);
     }
 
 

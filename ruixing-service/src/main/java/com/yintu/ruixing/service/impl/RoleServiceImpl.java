@@ -25,9 +25,9 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleDao roleDao;
     @Autowired
-    private PermissionService permissionService;
-    @Autowired
     private UserRoleService userRoleService;
+    @Autowired
+    private PermissionService permissionService;
     @Autowired
     private PermissionRoleService permissionRoleService;
 
@@ -143,34 +143,45 @@ public class RoleServiceImpl implements RoleService {
             treeNodeUtil.setLabel(permissionEntity.getName());
             treeNodeUtil.setIcon(permissionEntity.getIconCls());
             treeNodeUtil.setChildren(this.findPermissionsTreeById(id, permissionEntity.getId()));
+            Map<String, Object> map = new HashMap<>();
+            map.put("parentId", permissionEntity.getParentId());
+            map.put("url", permissionEntity.getUrl());
+            map.put("method", permissionEntity.getMethod());
+            map.put("isMenu", permissionEntity.getIsMenu());
+            map.put("path", permissionEntity.getPath());
+            map.put("description", permissionEntity.getDescription());
+            map.put("roleEntities", permissionEntity.getRoleEntities());
+            treeNodeUtil.setA_attr(map);
             treeNodeUtils.add(treeNodeUtil);
         }
         return treeNodeUtils;
     }
 
+
     @Override
-    public List<TreeNodeUtil> findPermissionsById(Long id, Long parentId) {
+    public void findPermissionsById(Long id, Long parentId, List<TreeNodeUtil> treeNodeUtils) {
         List<PermissionEntity> permissionEntities = permissionService.findByRoleId(id, parentId);
-        List<TreeNodeUtil> treeNodeUtils = new ArrayList<>();
         for (PermissionEntity permissionEntity : permissionEntities) {
-            if (permissionEntity.getUrl() != null && !"".equals(permissionEntity.getUrl()) &&
-                    permissionEntity.getMethod() != null && !"".equals(permissionEntity.getMethod())) {
+            List<PermissionEntity> permission = permissionService.findByRoleId(id, permissionEntity.getId());
+            if (permission.size() > 0) {
+                findPermissionsById(id, permissionEntity.getId(), treeNodeUtils);
+            } else {
                 TreeNodeUtil treeNodeUtil = new TreeNodeUtil();
                 treeNodeUtil.setId(permissionEntity.getId());
                 treeNodeUtil.setLabel(permissionEntity.getName());
                 treeNodeUtil.setIcon(permissionEntity.getIconCls());
-                Map<String,Object> map=new HashMap<>();
-                map.put("parentId",permissionEntity.getParentId());
-                map.put("url",permissionEntity.getUrl());
-                map.put("method",permissionEntity.getMethod());
-                map.put("path",permissionEntity.getPath());
-                map.put("description",permissionEntity.getDescription());
-                map.put("roleEntities",permissionEntity.getRoleEntities());
+                Map<String, Object> map = new HashMap<>();
+                map.put("parentId", permissionEntity.getParentId());
+                map.put("url", permissionEntity.getUrl());
+                map.put("method", permissionEntity.getMethod());
+                map.put("isMenu", permissionEntity.getIsMenu());
+                map.put("path", permissionEntity.getPath());
+                map.put("description", permissionEntity.getDescription());
+                map.put("roleEntities", permissionEntity.getRoleEntities());
                 treeNodeUtil.setA_attr(map);
                 treeNodeUtils.add(treeNodeUtil);
             }
         }
-        return treeNodeUtils;
     }
 
 
