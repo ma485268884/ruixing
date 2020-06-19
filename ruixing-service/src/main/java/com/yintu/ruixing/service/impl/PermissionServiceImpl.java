@@ -161,6 +161,7 @@ public class PermissionServiceImpl implements PermissionService {
             map.put("parentId", permissionEntity.getParentId());
             map.put("url", permissionEntity.getUrl());
             map.put("method", permissionEntity.getMethod());
+            map.put("isMenu", permissionEntity.getIsMenu());
             map.put("path", permissionEntity.getPath());
             map.put("description", permissionEntity.getDescription());
             map.put("roleEntities", permissionEntity.getRoleEntities());

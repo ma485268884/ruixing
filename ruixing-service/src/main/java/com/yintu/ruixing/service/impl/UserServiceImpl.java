@@ -180,9 +180,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
+
+
     @Override
     public List<TreeNodeUtil> findPermissionById(Long id, Long parentId) {
-        List<PermissionEntity> permissionEntities = userDao.selectPermissionById(id,parentId);
+        List<PermissionEntity> permissionEntities = userDao.selectPermissionById(id, parentId, (short) 1);
         List<TreeNodeUtil> treeNodeUtils = new ArrayList<>();
         for (PermissionEntity permissionEntity : permissionEntities) {
             TreeNodeUtil treeNodeUtil = new TreeNodeUtil();
@@ -194,6 +197,7 @@ public class UserServiceImpl implements UserService {
             map.put("parentId", permissionEntity.getParentId());
             map.put("url", permissionEntity.getUrl());
             map.put("method", permissionEntity.getMethod());
+            map.put("isMenu", permissionEntity.getIsMenu());
             map.put("path", permissionEntity.getPath());
             map.put("description", permissionEntity.getDescription());
             map.put("roleEntities", permissionEntity.getRoleEntities());

@@ -31,6 +31,6 @@ public interface UserDao {
 
     int updateByPrimaryKey(UserEntity record);
 
-    List<PermissionEntity> selectPermissionById(Long id, Long parentId);
+    List<PermissionEntity> selectPermissionById(Long id, Long parentId,Short isMenu);
 
 }
