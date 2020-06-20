@@ -99,18 +99,4 @@ public class UserController extends BaseController {
         return ResponseDataUtil.ok("分配用户角色成功");
     }
 
-    /**
-     * 获取当前用户菜单栏
-     *
-     * @return 当前用户权限
-     */
-    @GetMapping("/menuBar")
-    public Map<String, Object> findUserMenuBar() {
-        List<TreeNodeUtil> treeNodeUtils = EnumAuthType.ADMIN.getValue().equals(this.getLoginAuthType()) ?
-                userService.findPermission(-1L, (short) 1) :
-                userService.findPermissionById(this.getLoginUserId(), -1L, (short) 1);
-        return ResponseDataUtil.ok("获取菜单栏成功", treeNodeUtils);
-    }
-
-
 }

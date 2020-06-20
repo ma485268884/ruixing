@@ -9,7 +9,9 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.web.FilterInvocation;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 
 import java.util.Collection;
 
@@ -23,9 +25,18 @@ import java.util.Collection;
  */
 @Component
 public class CustomAccessDecisionManager implements AccessDecisionManager {
+    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
+
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
+        //此处判断没有登录访问或者没有权限访问的url都可以通过
+        if (object instanceof FilterInvocation) {
+            FilterInvocation filterInvocation = (FilterInvocation) object;
+            if (antPathMatcher.match("/common/**", filterInvocation.getRequestUrl()))
+                return;
+        }
         if (authentication instanceof AnonymousAuthenticationToken) {
+            System.out.println(object.getClass().getName());
             throw new InsufficientAuthenticationException("尚未登录，请先登录");
         } else {
             for (ConfigAttribute configAttribute : configAttributes) {
