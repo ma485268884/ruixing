@@ -134,7 +134,20 @@ public class DataStatsController {
     @PutMapping("/editStateByCid/{cid}")
     public Map<String, Object> editStateByCid(@PathVariable Integer cid, CheZhanEntity cheZhanEntity) {
         dataStatsService.editStateByCid(cheZhanEntity);
-        return ResponseDataUtil.ok("更改线段状态成功");
+        return ResponseDataUtil.ok("更改车站状态成功");
+    }
+
+    //根据线段id 清除json  和更改状态
+    @PutMapping("/qingChuaByXid/{xid}")
+    public Map<String,Object>qingChuaByXid(@PathVariable Integer xid,XianDuanEntity xianDuanEntity){
+       dataStatsService.qingChuaByXid(xianDuanEntity);
+       return ResponseDataUtil.ok("清除线段成功");
+    }
+    //根据车站id  清除json  和更改状态
+    @PutMapping("/qingChuaByCid/{cid}")
+    public Map<String,Object>qingChuaByCid(@PathVariable Integer cid,CheZhanEntity cheZhanEntity){
+        dataStatsService.qingChuaByCid(cheZhanEntity);
+        return ResponseDataUtil.ok("清除车站成功");
     }
 
     //查询所有的铁路局的名字  和 id
@@ -276,7 +289,7 @@ public class DataStatsController {
 
 
 
-
+/*
     //根据id查询铁路局下的电务段
     @PostMapping("/findDianWuDuanById/{tid}/{did}")
     public Map<String, Object> findDianWuDuanById(@PathVariable Long tid, @PathVariable Long did,
@@ -331,6 +344,6 @@ public class DataStatsController {
         jo.put("pageInfo", pageInfo);
         System.out.println("分页为" + pageInfo);
         return ResponseDataUtil.ok("查询车站信息成功", jo);
-    }
+    }*/
 
 }

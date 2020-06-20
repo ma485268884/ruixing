@@ -62,10 +62,12 @@ public class DataStatsServiceImpl implements DataStatsService {
 
     @Override
     public void editStateByXid(XianDuanEntity xianDuanEntity) {
+        xianDuanEntity.setXdState(1);
         dataStatsDao.editStateByXid(xianDuanEntity);
     }
     @Override
     public void editStateByCid(CheZhanEntity cheZhanEntity) {
+        cheZhanEntity.setCzState(1);
         dataStatsDao.editStateByCid(cheZhanEntity);
     }
 
@@ -137,6 +139,20 @@ public class DataStatsServiceImpl implements DataStatsService {
         quDuanBaseDao.deletQuDuanByIds(ids);
     }
 
+    @Override
+    public void qingChuaByXid(XianDuanEntity xianDuanEntity) {
+        xianDuanEntity.setXdState(0);
+        xianDuanEntity.setXdJson(null);
+        dataStatsDao.qingChuaByXid(xianDuanEntity);
+    }
+
+    @Override
+    public void qingChuaByCid(CheZhanEntity cheZhanEntity) {
+        cheZhanEntity.setCzState(0);
+        cheZhanEntity.setCzJson(null);
+        dataStatsDao.qingChuaByCid(cheZhanEntity);
+    }
+
 
     @Override
     public List<DataStatsEntity> findAllCheZhan(Integer page, Integer size) {
@@ -150,26 +166,28 @@ public class DataStatsServiceImpl implements DataStatsService {
 
 
 
-
+/*
     @Override
     public List<DataStatsEntity> findDianWuDuanById(Long tid, Long did, Integer page, Integer size) {
          List<DataStatsEntity> dataStatEntities =dataStatsDao.findDianWuDuanById(tid,did);
         System.out.println("从后端传来的数据"+ dataStatEntities);
         return dataStatEntities;
     }
-
     @Override
     public List<DataStatsEntity> findXianDuanById(Long tid, Long did, Long xid, Integer page, Integer size) {
         List<DataStatsEntity> dataStatEntities = dataStatsDao.findXianDuanById(tid,did,xid);
         return dataStatEntities;
     }
-
     @Override
     public List<DataStatsEntity> findCheZhanById(Long tid, Long did, Long xid, Long cid, Integer page, Integer size) {
         List<DataStatsEntity> dataStatEntities = dataStatsDao.findCheZhanById(tid,did,xid,cid);
         System.out.println("后端车站信息"+ dataStatEntities);
         return dataStatEntities;
     }
+
+    */
+
+
 
     @Override
     public int  delCheZhanListById(int[] ids) {

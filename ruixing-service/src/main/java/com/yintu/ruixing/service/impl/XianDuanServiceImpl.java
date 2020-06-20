@@ -21,11 +21,9 @@ public class XianDuanServiceImpl implements XianDuanService {
     @Autowired
     private XianDuanDao xianDuanDao;
 
-
-
-
     @Override
     public void addXianDuan(XianDuanEntity xianDuanEntity) {
+        xianDuanEntity.setXdState(0);
         xianDuanDao.addXianDuan(xianDuanEntity);
     }
 

@@ -31,11 +31,12 @@ public interface DataStatsService {
 
 
 
-    List<DataStatsEntity> findDianWuDuanById(Long tid, Long did, Integer page, Integer size);
+  /*  List<DataStatsEntity> findDianWuDuanById(Long tid, Long did, Integer page, Integer size);
 
     List<DataStatsEntity> findXianDuanById(Long tid, Long did, Long xid, Integer page, Integer size);
 
     List<DataStatsEntity> findCheZhanById(Long tid, Long did, Long xid, Long cid, Integer page, Integer size);
+    */
 
     int delCheZhanListById(int[] ids);
 
@@ -70,4 +71,8 @@ public interface DataStatsService {
     void deletQuDuanById(Integer id);
 
     void deletQuDuanByIds(Integer[] ids);
+
+    void qingChuaByXid(XianDuanEntity xianDuanEntity);
+
+    void qingChuaByCid(CheZhanEntity cheZhanEntity);
 }

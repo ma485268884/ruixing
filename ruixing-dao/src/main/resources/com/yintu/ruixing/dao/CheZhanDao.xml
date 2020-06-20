@@ -34,9 +34,9 @@
             <if test="czName !=null">
                 cz_name = #{czName},
             </if>
-            <!--<if test="czId !=null">
-                cz_id = #{czId},
-            </if>-->
+            <if test="xdId !=null">
+                xd_id = #{xdId},
+            </if>
             <if test="czMiaoShu !=null">
                 cz_miaoshu = #{czMiaoShu},
             </if>

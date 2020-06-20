@@ -77,6 +77,7 @@
                 cz.cz_miaoshu,
                 xd.xd_state,
                 xd.xd_json,
+                xd.xid,
                 cz.cz_state,
                 cz.cz_json,
                 cz.cz_id,
@@ -131,7 +132,11 @@
         xd.xd_state,
         xd.xd_json,
         cz.cz_state,
-        cz.cz_json
+        cz.cz_json,
+        cz.cid,
+        cz.cz_id,
+        cz.xd_id,
+        cz.xd_cz_id
         FROM
         mro_tieluju tlj,
         mro_dianwuduan dwd,
@@ -158,7 +163,11 @@
             xd.xd_state,
             xd.xd_json,
             cz.cz_state,
-            cz.cz_json
+            cz.cz_json,
+            cz.cid,
+            cz.cz_id,
+            cz.xd_id,
+            cz.xd_cz_id
         FROM
             mro_tieluju tlj,
             mro_dianwuduan dwd,
@@ -178,14 +187,17 @@
             tlj.tlj_name,
             dwd.dwd_name,
             xd.xd_name,
-            xd.xd_id,
             xd.xd_miaoshu,
             xd.xd_state,
             xd.xd_json,
             cz.cz_name,
             cz.cz_state,
             cz.cz_json,
-            cz.cz_miaoshu
+            cz.cz_miaoshu,
+            cz.cid,
+            cz.cz_id,
+            cz.xd_id,
+            cz.xd_cz_id
         FROM
             mro_tieluju tlj,
             mro_dianwuduan dwd,
@@ -211,7 +223,11 @@
             cz.cz_json,
             cz.cz_name,
             cz.cz_id,
-            cz.cz_miaoshu
+            cz.cz_miaoshu,
+            cz.cid,
+            cz.cz_id,
+            cz.xd_id,
+            cz.xd_cz_id
         FROM
             mro_tieluju tlj,
             mro_dianwuduan dwd,
@@ -254,6 +270,23 @@
         where cid = #{cid}
     </update>
 
+    <!--清除线段的json  和更改状态-->
+    <update id="qingChuaByXid" parameterType="com.yintu.ruixing.entity.XianDuanEntity" >
+        update mro_xianduan
+            set
+                xd_state = #{xdState},
+                xd_json = #{xdJson}
+        where xid = #{xid}
+    </update>
+
+    <!--清除车站的json  和更改状态-->
+    <update id="qingChuaByCid" parameterType="com.yintu.ruixing.entity.CheZhanEntity" >
+        update mro_chezhan
+            set
+                cz_state = #{czState},
+                cz_json = #{czJson}
+        where cid = #{cid}
+    </update>
 
 
     <!--查询所有的铁路局-->

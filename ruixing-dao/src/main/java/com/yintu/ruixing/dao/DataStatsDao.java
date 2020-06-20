@@ -29,12 +29,14 @@ public interface DataStatsDao {
 
 
 
-
+/*
     List<DataStatsEntity> findDianWuDuanById(@Param("tid") Long tid, @Param("did") Long did);
 
     List<DataStatsEntity> findXianDuanById(@Param("tid") Long tid, @Param("did") Long did, @Param("xid") Long xid);
 
     List<DataStatsEntity> findCheZhanById(@Param("tid") Long tid, @Param("did") Long did, @Param("xid") Long xid, @Param("cid") Long cid);
+
+    */
 
     int delCheZhanListById(int[] ids);
 
@@ -54,4 +56,8 @@ public interface DataStatsDao {
     List<CheZhanEntity> findCheZhanByXid(Integer xid);
 
     List<QuDuanBaseEntity> findAllQuDuan();
+
+    void qingChuaByXid(XianDuanEntity xianDuanEntity);
+
+    void qingChuaByCid(CheZhanEntity cheZhanEntity);
 }

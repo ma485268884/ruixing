@@ -23,6 +23,7 @@ public class CheZhanServiceImpl implements CheZhanService {
 
     @Override
     public void add(CheZhanEntity cheZhanEntity) {
+        cheZhanEntity.setCzState(0);
         cheZhanDao.insertChezhan(cheZhanEntity);
     }
 
