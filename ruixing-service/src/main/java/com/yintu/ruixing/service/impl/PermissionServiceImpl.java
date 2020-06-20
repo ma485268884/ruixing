@@ -42,14 +42,8 @@ public class PermissionServiceImpl implements PermissionService {
         } else if (parentId != -1) {
             throw new BaseRuntimeException("父节点ID有误");
         }
-        String path = permissionEntity.getPath();
-        Short isMenu = permissionEntity.getIsMenu();
-        Assert.notNull(isMenu, "菜单项不能为空");
-        if (path != null && !"".equals(path)) {
-            if (isMenu.equals((short) 0))
-                throw new BaseRuntimeException("菜单项选择有误");
-        }
 
+        Short isMenu = permissionEntity.getIsMenu();
         String url = permissionEntity.getUrl();
         String method = permissionEntity.getMethod();
         if (isMenu.equals((short) 1)) {
@@ -61,6 +55,12 @@ public class PermissionServiceImpl implements PermissionService {
             Assert.notNull(method, "请求方式不能为空");
             if ("".equals(url) || "".equals(method))
                 throw new BaseRuntimeException("请求路径或者请求方式不能为空");
+        }
+        String path = permissionEntity.getPath();
+        Assert.notNull(isMenu, "菜单项不能为空");
+        if (path != null && !"".equals(path)) {
+            if (isMenu.equals((short) 0))
+                throw new BaseRuntimeException("菜单项选择有误");
         }
         permissionDao.insertSelective(permissionEntity);
     }
@@ -76,14 +76,7 @@ public class PermissionServiceImpl implements PermissionService {
         } else if (parentId != -1) {
             throw new BaseRuntimeException("父节点ID有误");
         }
-        String path = permissionEntity.getPath();
         Short isMenu = permissionEntity.getIsMenu();
-        if (path != null && !"".equals(path)) {
-            Assert.notNull(isMenu, "菜单项不能为空");
-            if (isMenu.equals((short) 0))
-                throw new BaseRuntimeException("菜单项选择有误");
-        }
-
         String url = permissionEntity.getUrl();
         String method = permissionEntity.getMethod();
         if (isMenu.equals((short) 1)) {
@@ -95,6 +88,12 @@ public class PermissionServiceImpl implements PermissionService {
             Assert.notNull(method, "请求方式不能为空");
             if ("".equals(url) || "".equals(method))
                 throw new BaseRuntimeException("请求路径或者请求方式不能为空");
+        }
+        String path = permissionEntity.getPath();
+        Assert.notNull(isMenu, "菜单项不能为空");
+        if (path != null && !"".equals(path)) {
+            if (isMenu.equals((short) 0))
+                throw new BaseRuntimeException("菜单项选择有误");
         }
         permissionDao.updateByPrimaryKeySelective(permissionEntity);
     }
