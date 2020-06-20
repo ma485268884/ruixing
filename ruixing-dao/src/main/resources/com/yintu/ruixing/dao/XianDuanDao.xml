@@ -29,11 +29,11 @@
     <update id="editXianDuan" parameterType="com.yintu.ruixing.entity.XianDuanEntity">
         update mro_xianduan
         <set>
-            <if test="xdId !=null">
-                xd_id=#{xdId},
-            </if>
             <if test="xdName !=null">
                 xd_name=#{xdName},
+            </if>
+            <if test="dwdId !=null">
+                dwd_id=#{dwdId},
             </if>
             <if test="xdMiaoShu !=null">
                 xd_miaoshu=#{xdMiaoShu},

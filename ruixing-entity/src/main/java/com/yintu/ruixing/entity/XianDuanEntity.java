@@ -13,15 +13,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class XianDuanEntity {
-    private long xid;
+    private Long xid;
 
-    private long tid;
+    private Long tid;
 
-    private long did;
+    private Long did;
 
-    private long xdId;
+    private Long xdId;
 
-    private long dwdId;
+    private Long dwdId;
 
     private String xdName;
 
@@ -35,9 +35,9 @@ public class XianDuanEntity {
 
     private String yuliu2;
 
-    private long xdType;
+    private Long xdType;
 
-    private int xdState;//线段设置状态  0：未设置  1：已设置
+    private Integer xdState;//线段设置状态  0：未设置  1：已设置
 
     private String xdJson;//储存的json
 
