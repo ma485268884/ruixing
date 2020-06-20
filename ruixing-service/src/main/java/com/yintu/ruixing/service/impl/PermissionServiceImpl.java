@@ -36,7 +36,7 @@ public class PermissionServiceImpl implements PermissionService {
         Long parentId = permissionEntity.getParentId();
         PermissionEntity parentPermissionEntity = this.findById(parentId);
         if (parentPermissionEntity != null) {
-            Short parentIsMenu = permissionEntity.getIsMenu();
+            Short parentIsMenu = parentPermissionEntity.getIsMenu();
             if (parentIsMenu.equals((short) 0))
                 throw new BaseRuntimeException("当前节点不能添加子节点");
         } else if (parentId != -1) {
@@ -44,18 +44,23 @@ public class PermissionServiceImpl implements PermissionService {
         }
         String path = permissionEntity.getPath();
         Short isMenu = permissionEntity.getIsMenu();
+        Assert.notNull(isMenu, "菜单项不能为空");
         if (path != null && !"".equals(path)) {
-            Assert.notNull(isMenu, "菜单项不能为空");
             if (isMenu.equals((short) 0))
                 throw new BaseRuntimeException("菜单项选择有误");
         }
+
+        String url = permissionEntity.getUrl();
+        String method = permissionEntity.getMethod();
+        if (isMenu.equals((short) 1)) {
+            if (url != null || method != null)
+                throw new BaseRuntimeException("请求路径或者请求方式填写有误");
+        }
         if (isMenu.equals((short) 0)) {
-            String url = permissionEntity.getUrl();
-            String method = permissionEntity.getMethod();
             Assert.notNull(url, "请求路径不能为空");
             Assert.notNull(method, "请求方式不能为空");
             if ("".equals(url) || "".equals(method))
-                throw new BaseRuntimeException("请求路径或者请求方式填写有误");
+                throw new BaseRuntimeException("请求路径或者请求方式不能为空");
         }
         permissionDao.insertSelective(permissionEntity);
     }
@@ -65,9 +70,9 @@ public class PermissionServiceImpl implements PermissionService {
         Long parentId = permissionEntity.getParentId();
         PermissionEntity parentPermissionEntity = this.findById(parentId);
         if (parentPermissionEntity != null) {
-            Short parentIsMenu = permissionEntity.getIsMenu();
+            Short parentIsMenu = parentPermissionEntity.getIsMenu();
             if (parentIsMenu.equals((short) 0))
-                throw new BaseRuntimeException("当前节点不能添加子节点");
+                throw new BaseRuntimeException("当前节点不能修改子节点");
         } else if (parentId != -1) {
             throw new BaseRuntimeException("父节点ID有误");
         }
@@ -78,13 +83,18 @@ public class PermissionServiceImpl implements PermissionService {
             if (isMenu.equals((short) 0))
                 throw new BaseRuntimeException("菜单项选择有误");
         }
+
+        String url = permissionEntity.getUrl();
+        String method = permissionEntity.getMethod();
+        if (isMenu.equals((short) 1)) {
+            if (url != null || method != null)
+                throw new BaseRuntimeException("请求路径或者请求方式填写有误");
+        }
         if (isMenu.equals((short) 0)) {
-            String url = permissionEntity.getUrl();
-            String method = permissionEntity.getMethod();
             Assert.notNull(url, "请求路径不能为空");
             Assert.notNull(method, "请求方式不能为空");
             if ("".equals(url) || "".equals(method))
-                throw new BaseRuntimeException("请求路径或者请求方式填写有误");
+                throw new BaseRuntimeException("请求路径或者请求方式不能为空");
         }
         permissionDao.updateByPrimaryKeySelective(permissionEntity);
     }
