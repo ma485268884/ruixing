@@ -36,12 +36,11 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
                 return;
         }
         if (authentication instanceof AnonymousAuthenticationToken) {
-            System.out.println(object.getClass().getName());
             throw new InsufficientAuthenticationException("尚未登录，请先登录");
         } else {
             for (ConfigAttribute configAttribute : configAttributes) {
                 String needRole = configAttribute.getAttribute();
-                //如果当前用户的auth_type为管理员，则用户拥有所有的权限,否则需要判断当前用户
+                //如果当前用户的auth_type为管理员，则用户拥有所有的权限,否则需要判断当前用户是否具有角色权限
                 Object obj = authentication.getPrincipal();
                 if (obj instanceof UserEntity) {
                     UserEntity userEntity = (UserEntity) obj;
