@@ -23,7 +23,7 @@ public class BaseController {
     protected UserEntity getLoginUser() {
         SecurityContext sc = SecurityContextHolder.getContext();
         Authentication auth = sc.getAuthentication();
-        return auth.getPrincipal() instanceof String ? null : (UserEntity) auth.getPrincipal();
+        return (UserEntity) auth.getPrincipal();
     }
 
     /**

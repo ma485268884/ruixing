@@ -57,7 +57,14 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
                 }
             }
         }
-        return configAttributes.size() == 0 ? SecurityConfig.createList("ROLE_LOGIN") : configAttributes;
+        if (configAttributes.size() == 0) {
+            if (antPathMatcher.match("/common/**", filterInvocation.getRequestUrl())) {
+                return SecurityConfig.createList("ROLE_ALL_PERMISSION");
+            } else {
+                return SecurityConfig.createList("ROLE_NULL_PERMISSION");
+            }
+        }
+        return configAttributes;
     }
 
     @Override
