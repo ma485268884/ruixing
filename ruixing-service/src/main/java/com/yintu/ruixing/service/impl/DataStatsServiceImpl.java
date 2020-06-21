@@ -2,6 +2,7 @@ package com.yintu.ruixing.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.dao.DataStatsDao;
 import com.yintu.ruixing.dao.QuDuanBaseDao;
 import com.yintu.ruixing.entity.*;
@@ -121,8 +122,16 @@ public class DataStatsServiceImpl implements DataStatsService {
 
     @Override
     public void addQuDuan(QuDuanBaseEntity quDuanBaseEntity) {
-        quDuanBaseDao.insertSelective(quDuanBaseEntity);
+        Integer i=quDuanBaseDao.lastParentid();//查询表中最后一列数据的id
+        quDuanBaseEntity.setParentId(i);//得到新增数据的parentid
+       quDuanBaseDao.insertSelective(quDuanBaseEntity);
     }
+ /*   @Override
+    public void addQuDuan(QuDuanBaseEntity quDuanBaseEntity) {
+        quDuanBaseEntity.setParentId(0);
+       quDuanBaseDao.insertSelective(quDuanBaseEntity);
+
+    }*/
 
     @Override
     public void editQuDuanById(QuDuanBaseEntity quDuanBaseEntity) {
@@ -131,11 +140,19 @@ public class DataStatsServiceImpl implements DataStatsService {
 
     @Override
     public void deletQuDuanById(Integer id) {
+        Integer parentid=quDuanBaseDao.findParentid(id);//根据区段id  查询出对应的parentid
+        Integer id1=quDuanBaseDao.findId(id);//根据传来的id  作为parentid  查找出对应的id
+        quDuanBaseDao.updateParentid(id1,parentid);
         quDuanBaseDao.deleteByPrimaryKey(id);
     }
 
     @Override
     public void deletQuDuanByIds(Integer[] ids) {
+        Integer fristid=ids[0];//获取数组的第一个数据id
+        Integer lastid=ids[ids.length-1];//获得数组的最后一个数据id
+        Integer parentid=quDuanBaseDao.findParentid(fristid);//查找出对应的parentid
+        Integer id1=quDuanBaseDao.findId(lastid);//作为parentid  查找对应的id
+        quDuanBaseDao.updateParentid(id1,parentid);
         quDuanBaseDao.deletQuDuanByIds(ids);
     }
 

@@ -1,6 +1,7 @@
 package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -37,4 +38,12 @@ public interface QuDuanBaseDao {
     void deleteByPrimaryKey(Integer id);
 
     void deletQuDuanByIds(Integer[] ids);
+
+    Integer lastParentid();
+
+    Integer findParentid(Integer id);
+
+    Integer findId(Integer id);
+
+    void updateParentid(@Param("id1") Integer id1,@Param("parentid") Integer parentid);
 }

@@ -1,7 +1,7 @@
 package com.yintu.ruixing.service.impl;
 
-import com.yintu.ruixing.dao.BaoJingDao;
-import com.yintu.ruixing.entity.BaoJingEntity;
+import com.yintu.ruixing.dao.BaoJingYuJingDao;
+import com.yintu.ruixing.entity.BaoJingYuJingEntity;
 import com.yintu.ruixing.service.BaojingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,25 +15,25 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class BaoJingServiceImpl implements BaojingService {
     @Autowired
-    private BaoJingDao baojingDao;
+    private BaoJingYuJingDao baojingDaoJingYu;
 
     @Override
-    public void add(BaoJingEntity baoJingEntity) {
-        baojingDao.insertSelective(baoJingEntity);
+    public void add(BaoJingYuJingEntity baoJingYuJingEntity) {
+        baojingDaoJingYu.insertSelective(baoJingYuJingEntity);
     }
 
     @Override
     public void remove(Integer id) {
-        baojingDao.deleteByPrimaryKey(id);
+        baojingDaoJingYu.deleteByPrimaryKey(id);
     }
 
     @Override
-    public void edit(BaoJingEntity baoJingEntity) {
-        baojingDao.updateByPrimaryKeySelective(baoJingEntity);
+    public void edit(BaoJingYuJingEntity baoJingYuJingEntity) {
+        baojingDaoJingYu.updateByPrimaryKeySelective(baoJingYuJingEntity);
     }
 
     @Override
-    public BaoJingEntity findById(Integer id) {
-        return baojingDao.selectByPrimaryKey(id);
+    public BaoJingYuJingEntity findById(Integer id) {
+        return baojingDaoJingYu.selectByPrimaryKey(id);
     }
 }
