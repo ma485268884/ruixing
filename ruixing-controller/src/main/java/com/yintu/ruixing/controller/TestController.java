@@ -23,10 +23,10 @@ public class TestController {
 
     @PostMapping("/baojing")
     public Map<String, Object> test(@RequestBody JSONObject jsonObject) throws IOException {
-        Map<String, Session> webSocketServers = WebSocketServer.webSocketClientSession;
-        for (String s : webSocketServers.keySet()) {
-            webSocketServers.get(s).getBasicRemote().sendText(jsonObject.toString());
-        }
+//        Map<String, Session> webSocketServers = WebSocketServer
+//        for (String s : webSocketServers.keySet()) {
+//            webSocketServers.get(s).getBasicRemote().sendText(jsonObject.toString());
+//        }
         return ResponseDataUtil.ok("提交成功");
     }
 }

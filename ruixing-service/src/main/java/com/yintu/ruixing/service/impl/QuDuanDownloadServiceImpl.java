@@ -85,10 +85,13 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
     }
 
     @Override
-    public Integer add(Integer tid, Integer did, Integer xid, Integer cid,Integer sid, Short type, Date startDateTime, Date endDateTime) {
+    public Integer add(Integer tid, Integer did, Integer xid, Integer cid, Integer sid, Short type, Date startDateTime, Date endDateTime) {
         QuDuanDownloadEntity quDuanDownloadEntity = new QuDuanDownloadEntity();
+        quDuanDownloadEntity.setTid(tid);
+        quDuanDownloadEntity.setDid(did);
         quDuanDownloadEntity.setXid(xid);
         quDuanDownloadEntity.setCid(cid);
+        quDuanDownloadEntity.setSid(sid);
         quDuanDownloadEntity.setStartTime(startDateTime);
         quDuanDownloadEntity.setEndTime(endDateTime);
 
@@ -97,8 +100,6 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
         this.add(quDuanDownloadEntity);
         return quDuanDownloadEntity.getId();
     }
-
-
 
 
     @Override
@@ -116,6 +117,7 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
             this.quDuanDownloadService = quDuanDownloadService;
             this.id = id;
         }
+
         @Override
         public void run() {
             QuDuanDownloadEntity quDuanDownloadEntity = quDuanDownloadService.findById(id);

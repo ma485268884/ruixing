@@ -1,8 +1,12 @@
 package com.yintu.ruixing.websocket;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yintu.ruixing.common.util.SpringContextUtil;
+import com.yintu.ruixing.service.QuDuanBaseService;
+import com.yintu.ruixing.service.QuDuanDownloadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -32,7 +36,7 @@ public class WebSocketServer {
 
     @OnOpen
     public void onOpen(Session session) {
-        logger.info("onOpen.............." + session);
+        logger.info("onOpen..............");
         SessionInfo sessionInfo = new SessionInfo();
         sessionInfo.setSession(session);
         webSocketSession.put(session.getId(), sessionInfo);
@@ -43,7 +47,7 @@ public class WebSocketServer {
      */
     @OnClose
     public void onClose(Session session) {
-        logger.info("onClose.............." + session);
+        logger.info("onClose..............");
         String sessionId = session.getId();
         SessionInfo sessionInfo = webSocketSession.get(sessionId);
         if (sessionInfo != null && sessionInfo.getSession() != null) {
@@ -89,6 +93,8 @@ public class WebSocketServer {
             sessionInfo.setSid(jo.getInteger("sid"));
         } else if (messageType.equals(1)) {
             Integer taskId = jo.getInteger("taskId");
+            QuDuanDownloadService quDuanDownloadService = SpringContextUtil.getBean(QuDuanDownloadService.class);
+            quDuanDownloadService.callbackEdit(taskId);
         }
 
 
@@ -109,7 +115,9 @@ public class WebSocketServer {
                                 Session session = s.getSession();
                                 if (session != null && session.isOpen()) {
                                     try {
-                                        session.getBasicRemote().sendText(taskId.toString());
+                                        JSONObject jo = new JSONObject();
+                                        jo.put("taskId", taskId);
+                                        session.getBasicRemote().sendText(jo.toJSONString());
                                     } catch (IOException e) {
                                         logger.error(e.getMessage());
                                     }
