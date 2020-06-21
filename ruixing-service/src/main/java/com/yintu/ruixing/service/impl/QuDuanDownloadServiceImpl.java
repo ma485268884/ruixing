@@ -9,6 +9,7 @@ import com.yintu.ruixing.entity.QuDuanInfoEntity;
 import com.yintu.ruixing.service.QuDuanBaseService;
 import com.yintu.ruixing.service.QuDuanDownloadService;
 import com.yintu.ruixing.service.QuDuanInfoService;
+import org.apache.tomcat.util.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author:mlf
@@ -33,6 +36,8 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
     @Autowired
     private QuDuanInfoService quDuanInfoService;
 
+    private final ExecutorService executorService = Executors.newFixedThreadPool(3);
+
     @Override
     public void add(QuDuanDownloadEntity quDuanDownloadEntity) {
         quDuanDownloadDao.insertSelective(quDuanDownloadEntity);
@@ -44,8 +49,8 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
     }
 
     @Override
-    public void edit(Integer id) {
-        quDuanDownloadDao.deleteByPrimaryKey(id);
+    public void edit(QuDuanDownloadEntity quDuanDownloadEntity) {
+        quDuanDownloadDao.updateByPrimaryKeySelective(quDuanDownloadEntity);
     }
 
     @Override
@@ -80,19 +85,58 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
     }
 
     @Override
-    public Integer add(Integer xid, Integer cid, Short type, Date startDateTime, Date endDateTime) {
-        List<Integer> quDuanInfoIds = quDuanInfoService.findByXidAndCidAndBetweenAndTime(xid, cid, startDateTime, endDateTime);
-        JSONArray ja = (JSONArray) JSONArray.toJSON(quDuanInfoIds);
+    public Integer add(Integer tid, Integer did, Integer xid, Integer cid, Integer sid, Short type, Date startDateTime, Date endDateTime) {
         QuDuanDownloadEntity quDuanDownloadEntity = new QuDuanDownloadEntity();
+        quDuanDownloadEntity.setTid(tid);
+        quDuanDownloadEntity.setDid(did);
         quDuanDownloadEntity.setXid(xid);
         quDuanDownloadEntity.setCid(cid);
-        quDuanDownloadEntity.setType(type);
-        quDuanDownloadEntity.setStatus((short) 0);
-        quDuanDownloadEntity.setData(ja.toJSONString());
+        quDuanDownloadEntity.setSid(sid);
         quDuanDownloadEntity.setStartTime(startDateTime);
         quDuanDownloadEntity.setEndTime(endDateTime);
+
+        quDuanDownloadEntity.setStatus((short) 0);
+        quDuanDownloadEntity.setType(type);
         this.add(quDuanDownloadEntity);
         return quDuanDownloadEntity.getId();
     }
 
+
+    @Override
+    public void callbackEdit(Integer id) {
+        executorService.submit(new QuDuanInfoRunnable(this, id));
+    }
+
+    //异步更新数据
+    class QuDuanInfoRunnable implements Runnable {
+
+        private final QuDuanDownloadService quDuanDownloadService;
+        private final Integer id;
+
+        private QuDuanInfoRunnable(QuDuanDownloadService quDuanDownloadService, Integer id) {
+            this.quDuanDownloadService = quDuanDownloadService;
+            this.id = id;
+        }
+
+        @Override
+        public void run() {
+            QuDuanDownloadEntity quDuanDownloadEntity = quDuanDownloadService.findById(id);
+            if (quDuanDownloadEntity != null) {
+                Integer tid = quDuanDownloadEntity.getTid();
+                Integer did = quDuanDownloadEntity.getDid();
+                Integer xid = quDuanDownloadEntity.getXid();
+                Integer cid = quDuanDownloadEntity.getCid();
+                Date startDateTime = quDuanDownloadEntity.getStartTime();
+                Date endDateTime = quDuanDownloadEntity.getEndTime();
+                List<Integer> quDuanInfoIds = quDuanInfoService.findByXidAndCidAndBetweenAndTime(xid, cid, startDateTime, endDateTime);
+                JSONArray ja = (JSONArray) JSONArray.toJSON(quDuanInfoIds);
+                quDuanDownloadEntity.setStatus((short) 1);
+                quDuanDownloadEntity.setData(ja.toJSONString());
+                quDuanDownloadService.edit(quDuanDownloadEntity);
+            }
+        }
+
+    }
+
 }
+

@@ -2,7 +2,7 @@ package com.yintu.ruixing.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.websocket.WebSocketBrowserServer;
+import com.yintu.ruixing.websocket.WebSocketServer;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +23,10 @@ public class TestController {
 
     @PostMapping("/baojing")
     public Map<String, Object> test(@RequestBody JSONObject jsonObject) throws IOException {
-        Map<String, Session> webSocketServers = WebSocketBrowserServer.webSocketClientSession;
-        for (String s : webSocketServers.keySet()) {
-            webSocketServers.get(s).getBasicRemote().sendText(jsonObject.toString());
-        }
+//        Map<String, Session> webSocketServers = WebSocketServer
+//        for (String s : webSocketServers.keySet()) {
+//            webSocketServers.get(s).getBasicRemote().sendText(jsonObject.toString());
+//        }
         return ResponseDataUtil.ok("提交成功");
     }
 }
