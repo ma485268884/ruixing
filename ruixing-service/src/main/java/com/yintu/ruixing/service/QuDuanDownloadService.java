@@ -17,7 +17,7 @@ public interface QuDuanDownloadService {
 
     void remove(Integer id);
 
-    void edit(Integer id);
+    void edit(QuDuanDownloadEntity quDuanDownloadEntity);
 
     QuDuanDownloadEntity findById(Integer id);
 
@@ -28,6 +28,8 @@ public interface QuDuanDownloadService {
 
     List<QuDuanBaseEntity> findDataById(Integer id);
 
-    Integer add(Integer xid, Integer cid, Short type, Date startDateTime, Date endDateTime);
+    Integer add(Integer tid, Integer did, Integer xid, Integer cid, Integer sid, Short type, Date startDateTime, Date endDateTime);
+
+    void callbackEdit(Integer id);
 
 }

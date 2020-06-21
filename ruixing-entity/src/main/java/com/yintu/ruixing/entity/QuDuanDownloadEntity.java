@@ -14,9 +14,15 @@ public class QuDuanDownloadEntity implements Serializable {
     private static final long serialVersionUID = 2346042164264973184L;
     private Integer id;
 
+    private Integer tid;
+
+    private Integer did;
+
     private Integer xid;
 
     private Integer cid;
+
+    private Integer sid;
 
     private Date startTime;
 
