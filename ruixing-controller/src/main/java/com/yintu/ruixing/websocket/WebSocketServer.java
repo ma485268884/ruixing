@@ -86,12 +86,14 @@ public class WebSocketServer {
         //messageType:消息类型  taskId:任务id
         Integer messageType = jo.getInteger("messageType");//0.标识消息 1.通知消息
         if (messageType.equals(0)) {
+            logger.info("第一次发送标识消息");
             sessionInfo.setTid(jo.getInteger("tid"));
             sessionInfo.setDid(jo.getInteger("did"));
             sessionInfo.setXid(jo.getInteger("xid"));
             sessionInfo.setCid(jo.getInteger("cid"));
             sessionInfo.setSid(jo.getInteger("sid"));
         } else if (messageType.equals(1)) {
+            logger.info("第二次发送通知消息");
             Integer taskId = jo.getInteger("taskId");
             QuDuanDownloadService quDuanDownloadService = SpringContextUtil.getBean(QuDuanDownloadService.class);
             quDuanDownloadService.callbackEdit(taskId);
@@ -101,7 +103,7 @@ public class WebSocketServer {
     }
 
     /**
-     * @param sessionInfo 表示信息
+     * @param sessionInfo 标识信息
      * @param taskId      任务id
      */
     public void sendMessage(SessionInfo sessionInfo, Integer taskId) {

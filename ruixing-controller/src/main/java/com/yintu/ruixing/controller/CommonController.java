@@ -32,7 +32,7 @@ public class CommonController extends BaseController {
      */
     @GetMapping("/menu")
     public Map<String, Object> findUserMenuBar() {
-        List<TreeNodeUtil> treeNodeUtils = this.getLoginUser() == null ? new ArrayList<>() : this.getLoginAuthType().equals((EnumAuthType.ADMIN.getValue())) ?
+        List<TreeNodeUtil> treeNodeUtils = this.getLoginAuthType().equals((EnumAuthType.ADMIN.getValue())) ?
                 userService.findPermission(-1L, (short) 1) :
                 userService.findPermissionById(this.getLoginUserId(), -1L, (short) 1);
         return ResponseDataUtil.ok("获取菜单栏成功", treeNodeUtils);
