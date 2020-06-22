@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.QuDuanDownloadDao">
+  <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.QuDuanDownloadEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="tid" jdbcType="INTEGER" property="tid" />
+    <result column="did" jdbcType="INTEGER" property="did" />
+    <result column="xid" jdbcType="INTEGER" property="xid" />
+    <result column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="sid" jdbcType="INTEGER" property="sid" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
+    <result column="type" jdbcType="SMALLINT" property="type" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yintu.ruixing.entity.QuDuanDownloadEntity">
+    <result column="data" jdbcType="LONGVARCHAR" property="data" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, tid, did, xid, cid, sid, start_time, end_time, status, type
+  </sql>
+  <sql id="Blob_Column_List">
+    data
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from mro_quduan_download
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List"/>
+    ,
+    <include refid="Blob_Column_List"/>
+    from mro_quduan_download qd inner join mro_chezhan cz on qd.cid=cz.cid
+  </select>
+
+  <select id="selectByDateTime" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List"/>
+    ,
+    <include refid="Blob_Column_List"/>
+    from mro_quduan_download qd inner join mro_chezhan cz on qd.cid=cz.cid
+    <where>
+      <if test="startDateTime!=null and endDateTime!=null">
+        qd.start_time &gt;= #{startDateTime,jdbcType=TIMESTAMP} and qd.end_time &lt;=
+        #{endDateTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mro_quduan_download
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yintu.ruixing.entity.QuDuanDownloadEntity" >
+    insert into mro_quduan_download (id, tid, did,
+      xid, cid, sid, start_time,
+      end_time, status, type,
+      data)
+    values (#{id,jdbcType=INTEGER}, #{tid,jdbcType=INTEGER}, #{did,jdbcType=INTEGER},
+      #{xid,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP},
+      #{endTime,jdbcType=TIMESTAMP}, #{status,jdbcType=SMALLINT}, #{type,jdbcType=SMALLINT},
+      #{data,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.QuDuanDownloadEntity" useGeneratedKeys="true" keyProperty="id">
+    insert into mro_quduan_download
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tid != null">
+        tid,
+      </if>
+      <if test="did != null">
+        did,
+      </if>
+      <if test="xid != null">
+        xid,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="data != null">
+        data,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tid != null">
+        #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="did != null">
+        #{did,jdbcType=INTEGER},
+      </if>
+      <if test="xid != null">
+        #{xid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="sid != null">
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="data != null">
+        #{data,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.QuDuanDownloadEntity">
+    update mro_quduan_download
+    <set>
+      <if test="tid != null">
+        tid = #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="did != null">
+        did = #{did,jdbcType=INTEGER},
+      </if>
+      <if test="xid != null">
+        xid = #{xid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null">
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="sid != null">
+        sid = #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="data != null">
+        data = #{data,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yintu.ruixing.entity.QuDuanDownloadEntity">
+    update mro_quduan_download
+    set tid = #{tid,jdbcType=INTEGER},
+      did = #{did,jdbcType=INTEGER},
+      xid = #{xid,jdbcType=INTEGER},
+      cid = #{cid,jdbcType=INTEGER},
+      sid = #{sid,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=SMALLINT},
+      type = #{type,jdbcType=SMALLINT},
+      data = #{data,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.QuDuanDownloadEntity">
+    update mro_quduan_download
+    set tid = #{tid,jdbcType=INTEGER},
+      did = #{did,jdbcType=INTEGER},
+      xid = #{xid,jdbcType=INTEGER},
+      cid = #{cid,jdbcType=INTEGER},
+      sid = #{sid,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=SMALLINT},
+      type = #{type,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
