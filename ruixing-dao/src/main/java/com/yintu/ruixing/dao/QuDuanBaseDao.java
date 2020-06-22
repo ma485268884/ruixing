@@ -46,4 +46,6 @@ public interface QuDuanBaseDao {
     Integer findId(Integer id);
 
     void updateParentid(@Param("id1") Integer id1,@Param("parentid") Integer parentid);
+
+    List<QuDuanBaseEntity> findAllQuDuanName();
 }

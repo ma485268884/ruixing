@@ -2,6 +2,7 @@ package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.BaoJingYuJingEntity;
+import com.yintu.ruixing.entity.QuDuanBaseEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -15,5 +16,10 @@ public interface BaoJingYuJingPropertyService {
 
     List<BaoJingYuJingEntity> findAllYuJingBaoJing(Integer page, Integer size);
 
-    List<BaoJingYuJingEntity> findYuJingBaoJingBySouSuo(Integer[] ids, Integer sid, Integer qid, Date startTime, Date endTime, Integer tianchang, Integer lvchuhuifu, Integer lvchuhuifu1, Integer page, Integer size);
+    List<BaoJingYuJingEntity> findYuJingBaoJingBySouSuo(Integer[] ids, Integer sid, Integer qid,
+                                                        Date startTime, Date huifuTime, Integer tianChuang,
+                                                        Integer lvChuHuiFu, Integer lvChuKaiTong, Integer page, Integer size);
+
+    List<QuDuanBaseEntity> findAllQuDuan();
+
 }

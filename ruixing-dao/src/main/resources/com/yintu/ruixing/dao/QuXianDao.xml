@@ -57,16 +57,14 @@
     </resultMap>
     <!--根据cid查询对应的区段-->
     <select id="findQuDuanById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-            select
+          SELECT
             qb.quDuanYunYing_name,
             qb.id
-            from
-            mro_quduan_info qi,
+          FROM
             mro_quduan_base qb
-            where
-            qi.qid=qb.id
-            and
-            qb.cid=#{id}
+          WHERE
+            qb.cid=#{cid}
+
     </select>
 
     <!--跟选择的日期  获取对应的24个小时点-->
@@ -91,6 +89,16 @@
       select sqlname from mro_quduan_shuxing
       where id
       in <foreach collection="array" index="index" item="id" open="(" separator="," close=")">
+        #{id}
+    </foreach>
+    </select>
+
+
+    <!--根据传来的区段属性id数组  查询对应的汉字属性名-->
+    <select id="findShuXingHanZiName" resultType="java.lang.String" parameterType="java.lang.Integer">
+        select name from mro_quduan_shuxing
+        where id
+        in <foreach collection="array" index="index" item="id" open="(" separator="," close=")">
         #{id}
     </foreach>
     </select>

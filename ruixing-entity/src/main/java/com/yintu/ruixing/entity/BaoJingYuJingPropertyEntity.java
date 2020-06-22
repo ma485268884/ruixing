@@ -20,7 +20,8 @@ public class BaoJingYuJingPropertyEntity implements Serializable {
     private Integer id;
 
     private String name;
-    private String name1;
+
+    private String ziName;
 
 
 

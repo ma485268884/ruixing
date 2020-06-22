@@ -13,7 +13,7 @@
         <result column="lvchukaitong" jdbcType="INTEGER" property="lvChuKaiTong"/>
         <association property="baoJingYuJingPropertyEntity" javaType="BaoJingYuJingPropertyEntity">
             <result column="name" property="name"></result>
-            <result column="name1" property="name1"></result>
+            <result column="ziName" property="ziName"></result>
         </association>
     </resultMap>
     <sql id="Base_Column_List">
@@ -21,43 +21,68 @@
   </sql>
     <!--查询所有的情况-->
     <select id="findAllYuJingBaoJing" resultMap="BaseResultMap">
-    SELECT
-    yb.NAME,
-    ybb.NAME name1,
-    bj.*
-    FROM
-    mro_yj_bj yb,
-    mro_yj_bj ybb,
-    mro_baojing_yujing bj,
-    mro_shebei sb
-    WHERE
-    ybb.id = bj.bid
-    AND sb.id = bj.sid
-    AND ybb.parent_id = yb.id
+        SELECT
+        yb.NAME,
+        ybb.NAME ziName,
+        bj.*
+        FROM
+        mro_yj_bj yb,
+        mro_yj_bj ybb,
+        mro_baojing_yujing bj,
+        mro_shebei sb
+        WHERE
+        ybb.id = bj.bid
+        AND sb.id = bj.sid
+        AND ybb.parent_id = yb.id
   </select>
 
     <!--根据搜索  来查询数据-->
     <select id="findYuJingBaoJingBySouSuo" resultMap="BaseResultMap">
 
-            SELECT
-            yb.NAME,
-            ybb.NAME,
-            bj.*
+        SELECT
+        yb.NAME,
+        ybb.NAME ziName,
+        bj.*
         FROM
-            mro_yj_bj yb,
-            mro_yj_bj ybb,
-            mro_baojing_yujing bj,
-            mro_shebei sb
-        WHERE
-            ybb.id = bj.bid
-            AND sb.id = bj.sid
+        mro_yj_bj yb,
+        mro_yj_bj ybb,
+        mro_baojing_yujing bj,
+        mro_shebei sb
+        <where>
+            ybb.id
+            in
+            <if test="ids !=null">
+                <foreach collection="ids" item="id" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            and ybb.id = bj.bid
             AND ybb.parent_id = yb.id
-            AND ybb.qid =1
-            and sb.id=1
-            and ybb.id=2
-            and
-            starttime='2020-06-17 16:47:04'
-
+            <if test="sid !=null">
+            AND sb.id = bj.sid
+            </if>
+            <if test="qid !=null">
+                AND bj.qid = #{qid}
+            </if>
+            <if test="tianChuang !=null">
+                AND bj.tianchuang = #{tianChuang}
+            </if>
+            <if test="lvChuHuiFu !=null">
+                AND bj.lvchuhuifu = #{lvChuHuiFu}
+            </if>
+            <if test="lvChuKaiTong !=null">
+                AND bj.lvchukaitong = #{lvChuKaiTong}
+            </if>
+            AND DATE_FORMAT( starttime, "%Y/%m/%d %H:%i:%S" )
+            AND DATE_FORMAT( huifu_time, "%Y/%m/%d %H:%i:%S" )
+            <if test="startTime !=null">
+                AND DATE_FORMAT( #{startTime}, "%Y/%m/%d %H:%i:%S" )
+            </if>
+            <if test="huifuTime !=null">
+                AND DATE_FORMAT( #{huifuTime}, "%Y/%m/%d %H:%i:%S" )
+            </if>
+        </where>
+        GROUP BY ybb.id
 
     </select>
 
