@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.SolutionStatusDao">
+  <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.SolutionStatusEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="year_id" jdbcType="INTEGER" property="yearId" />
+    <result column="project_id" jdbcType="INTEGER" property="projectId" />
+    <result column="file_type_id" jdbcType="INTEGER" property="fileTypeId" />
+    <result column="task_status" jdbcType="SMALLINT" property="taskStatus" />
+    <result column="task_finish_date" jdbcType="TIMESTAMP" property="taskFinishDate" />
+    <result column="project_status" jdbcType="SMALLINT" property="projectStatus" />
+    <result column="auditor_id" jdbcType="INTEGER" property="auditorId" />
+    <result column="file_path" jdbcType="VARCHAR" property="filePath" />
+    <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+    <result column="release_status" jdbcType="SMALLINT" property="releaseStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, year_id, project_id, file_type_id, task_status, task_finish_date, project_status, 
+    auditor_id, file_path, file_name, release_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mro_solution_status
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mro_solution_status
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yintu.ruixing.entity.SolutionStatusEntity">
+    insert into mro_solution_status (id, year_id, project_id, 
+      file_type_id, task_status, task_finish_date, 
+      project_status, auditor_id, file_path, 
+      file_name, release_status)
+    values (#{id,jdbcType=INTEGER}, #{yearId,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, 
+      #{fileTypeId,jdbcType=INTEGER}, #{taskStatus,jdbcType=SMALLINT}, #{taskFinishDate,jdbcType=TIMESTAMP}, 
+      #{projectStatus,jdbcType=SMALLINT}, #{auditorId,jdbcType=INTEGER}, #{filePath,jdbcType=VARCHAR}, 
+      #{fileName,jdbcType=VARCHAR}, #{releaseStatus,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.SolutionStatusEntity">
+    insert into mro_solution_status
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="yearId != null">
+        year_id,
+      </if>
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="fileTypeId != null">
+        file_type_id,
+      </if>
+      <if test="taskStatus != null">
+        task_status,
+      </if>
+      <if test="taskFinishDate != null">
+        task_finish_date,
+      </if>
+      <if test="projectStatus != null">
+        project_status,
+      </if>
+      <if test="auditorId != null">
+        auditor_id,
+      </if>
+      <if test="filePath != null">
+        file_path,
+      </if>
+      <if test="fileName != null">
+        file_name,
+      </if>
+      <if test="releaseStatus != null">
+        release_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="yearId != null">
+        #{yearId,jdbcType=INTEGER},
+      </if>
+      <if test="projectId != null">
+        #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="fileTypeId != null">
+        #{fileTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="taskStatus != null">
+        #{taskStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="taskFinishDate != null">
+        #{taskFinishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectStatus != null">
+        #{projectStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="auditorId != null">
+        #{auditorId,jdbcType=INTEGER},
+      </if>
+      <if test="filePath != null">
+        #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseStatus != null">
+        #{releaseStatus,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.SolutionStatusEntity">
+    update mro_solution_status
+    <set>
+      <if test="yearId != null">
+        year_id = #{yearId,jdbcType=INTEGER},
+      </if>
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="fileTypeId != null">
+        file_type_id = #{fileTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="taskStatus != null">
+        task_status = #{taskStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="taskFinishDate != null">
+        task_finish_date = #{taskFinishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectStatus != null">
+        project_status = #{projectStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="auditorId != null">
+        auditor_id = #{auditorId,jdbcType=INTEGER},
+      </if>
+      <if test="filePath != null">
+        file_path = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseStatus != null">
+        release_status = #{releaseStatus,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.SolutionStatusEntity">
+    update mro_solution_status
+    set year_id = #{yearId,jdbcType=INTEGER},
+      project_id = #{projectId,jdbcType=INTEGER},
+      file_type_id = #{fileTypeId,jdbcType=INTEGER},
+      task_status = #{taskStatus,jdbcType=SMALLINT},
+      task_finish_date = #{taskFinishDate,jdbcType=TIMESTAMP},
+      project_status = #{projectStatus,jdbcType=SMALLINT},
+      auditor_id = #{auditorId,jdbcType=INTEGER},
+      file_path = #{filePath,jdbcType=VARCHAR},
+      file_name = #{fileName,jdbcType=VARCHAR},
+      release_status = #{releaseStatus,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -34,11 +34,7 @@ public class UserServiceImpl implements UserService {
     public void add(UserEntity userEntity) {
         UserEntityExample userEntityExample = new UserEntityExample();
         UserEntityExample.Criteria criteria = userEntityExample.createCriteria();
-        if (Short.valueOf((short) 1).equals(userEntity.getIsCustomer())) {
-            criteria.andIsCustomerEqualTo((short) 1);
-        } else {
-            criteria.andIsCustomerEqualTo((short) 0);
-        }
+        criteria.andIsCustomerEqualTo(userEntity.getIsCustomer());
         criteria.andUsernameEqualTo(userEntity.getUsername());
         List<UserEntity> userEntities = this.findByExample(userEntityExample);
         if (userEntities.size() > 0) {
@@ -61,11 +57,7 @@ public class UserServiceImpl implements UserService {
     public void edit(UserEntity userEntity) {
         UserEntityExample userEntityExample = new UserEntityExample();
         UserEntityExample.Criteria criteria = userEntityExample.createCriteria();
-        if (Short.valueOf((short) 1).equals(userEntity.getIsCustomer())) {
-            criteria.andIsCustomerEqualTo((short) 1);
-        } else {
-            criteria.andIsCustomerEqualTo((short) 0);
-        }
+        criteria.andIsCustomerEqualTo(userEntity.getIsCustomer());
         criteria.andUsernameEqualTo(userEntity.getUsername());
         List<UserEntity> userEntities = this.findByExample(userEntityExample);
         if (userEntities.size() > 0 && !userEntities.get(0).getId().equals(userEntity.getId())) {
