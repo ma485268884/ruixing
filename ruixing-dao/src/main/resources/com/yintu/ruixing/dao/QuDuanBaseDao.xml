@@ -180,6 +180,42 @@
             AND qb.cid=#{cid}
     </select>
 
+    <!--获取区段表最后一列数据的id-->
+    <select id="lastParentid" resultType="java.lang.Integer">
+        SELECT
+            id
+        FROM
+            mro_quduan_base
+        ORDER BY
+            id DESC
+            LIMIT 1
+    </select>
+    <!--根据区段id  查询对应的parentid-->
+    <select id="findParentid" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT
+            parent_id
+        FROM
+            mro_quduan_base
+        WHERE
+            id =#{id}
+    </select>
+    <!--根据区段id  作为parentid  来查找对应的id-->
+    <select id="findId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT
+            id
+        FROM
+            mro_quduan_base
+        WHERE
+            parent_id =#{id}
+    </select>
+    <!--根据查询出来的id 和parendid 来进行更改-->
+    <update id="updateParentid" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity">
+        update mro_quduan_base
+        set
+        parent_id = #{parentid,jdbcType=INTEGER}
+        where
+        id = #{id1,jdbcType=INTEGER}
+    </update>
     <!--新增区段信息  包括电码化的信息-->
     <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.QuDuanBaseEntity">
         insert into mro_quduan_base
@@ -310,16 +346,16 @@
                 #{typeid,jdbcType=INTEGER},
             </if>
             <if test="line != null">
-                #{line,jdbcType=INTEGER},
+                #{line,jdbcType=VARCHAR},
             </if>
             <if test="leftRight != null">
-                left_right,
+                #{letRight,jdbcType=VARCHAR},
             </if>
             <if test="xingBie != null">
-                xingbie,
+                #{xingBie,jdbcType=INTEGER},
             </if>
             <if test="type != null">
-                type,
+                #{type,jdbcType=INTEGER},
             </if>
             <if test="zongheId != null">
                 #{zongheId,jdbcType=VARCHAR},

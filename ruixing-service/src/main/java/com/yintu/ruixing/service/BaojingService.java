@@ -1,6 +1,6 @@
 package com.yintu.ruixing.service;
 
-import com.yintu.ruixing.entity.BaoJingEntity;
+import com.yintu.ruixing.entity.BaoJingYuJingEntity;
 
 /**
  * @author:mlf
@@ -11,9 +11,9 @@ public interface BaojingService {
     /**
      * 添加报警信息
      *
-     * @param baoJingEntity 报警信息
+     * @param baoJingYuJingEntity 报警信息
      */
-    void add(BaoJingEntity baoJingEntity);
+    void add(BaoJingYuJingEntity baoJingYuJingEntity);
 
     /**
      * id删除报警信息
@@ -25,9 +25,9 @@ public interface BaojingService {
     /**
      * 修改报警信息
      *
-     * @param baoJingEntity 报警信息
+     * @param baoJingYuJingEntity 报警信息
      */
-    void edit(BaoJingEntity baoJingEntity);
+    void edit(BaoJingYuJingEntity baoJingYuJingEntity);
 
     /**
      * 按照id查询报警信息
@@ -35,5 +35,5 @@ public interface BaojingService {
      * @param id 报警信息id
      * @return 报警信息
      */
-    BaoJingEntity findById(Integer id);
+    BaoJingYuJingEntity findById(Integer id);
 }
