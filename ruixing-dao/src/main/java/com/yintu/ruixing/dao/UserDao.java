@@ -33,6 +33,6 @@ public interface UserDao {
 
     List<PermissionEntity> selectPermissionById(Long id, Long parentId, Short isMenu);
 
-    List<PermissionEntity> selectPermission(Long parentId, Short isMenu);
+    List<PermissionEntity> selectPermission(@Param("parentId") Long parentId, @Param("isMenu") Short isMenu);
 
 }
