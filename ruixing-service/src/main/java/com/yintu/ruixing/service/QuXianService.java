@@ -14,11 +14,11 @@ import java.util.List;
  * 曲线相关
  */
 public interface QuXianService {
-    List<SheBeiEntity> findSheBeiByCid(Integer id);
+    //List<SheBeiEntity> findSheBeiByCid(Integer id);
 
     List<String> findQuDuanById(Integer id);
 
-    List<QuDuanInfoEntity> findQuDuanDataByTime(Date time);
+    //List<QuDuanInfoEntity> findQuDuanDataByTime(Date time);
 
     List<QuDuanBaseEntity> findQuDuanDataByTime1(Date time);
 
@@ -31,4 +31,6 @@ public interface QuXianService {
     List<QuDuanShuXingEntity> shuXingMing();
 
     List<String> findShuXingName(Integer[] shuxingId);
+
+    List<String> findShuXingHanZiName(Integer[] shuxingId);
 }

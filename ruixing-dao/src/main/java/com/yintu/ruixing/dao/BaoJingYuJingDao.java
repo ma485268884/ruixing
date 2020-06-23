@@ -1,6 +1,7 @@
 package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.BaoJingYuJingEntity;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -25,5 +26,7 @@ public interface BaoJingYuJingDao {
 
     List<BaoJingYuJingEntity> findAllYuJingBaoJing();
 
-    List<BaoJingYuJingEntity> findYuJingBaoJingBySouSuo(Integer[] ids, Integer sid, Integer qid, Date startTime, Date endTime, Integer tianchang, Integer lvchuhuifu, Integer lvchuhuifu1);
+    List<BaoJingYuJingEntity> findYuJingBaoJingBySouSuo(@Param("ids") Integer[] ids,@Param("sid") Integer sid,@Param("qid") Integer qid,
+                                                        @Param("startTime") Date startTime,@Param("huifuTime") Date huifuTime,@Param("tianChuang") Integer tianChuang,
+                                                        @Param("lvChuHuiFu") Integer lvChuHuiFu,@Param("lvChuKaiTong") Integer lvChuKaiTong);
 }

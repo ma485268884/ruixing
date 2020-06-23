@@ -112,6 +112,14 @@
     </insert>
 
 
+    <!--查询区段的名字和id  用在报警预警页面-->
+    <select id="findAllQuDuanName" resultMap="BaseResultMap">
+        select
+        id,
+        quDuanYunYing_name
+        from
+        mro_quduan_base
+    </select>
 
 
     <!--查询站外所有区段信息-->

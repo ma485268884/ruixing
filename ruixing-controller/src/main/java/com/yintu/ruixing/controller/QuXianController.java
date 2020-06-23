@@ -27,12 +27,12 @@ public class QuXianController {
     @Autowired
     private QuXianService quXianService;
 
-    //根据车站cid查询 对应的设备
+   /* //根据车站cid查询 对应的设备
     @GetMapping("/findSheBeiByCid/{id}")
     public Map<String, Object> findSheBeiByCid(@PathVariable Integer id) {
         List<SheBeiEntity> sheBeiEntities = quXianService.findSheBeiByCid(id);
         return ResponseDataUtil.ok("查询设备成功", sheBeiEntities);
-    }
+    }*/
 
     //根据sid查询对应的区段
     /*@GetMapping("/findQuDuanById/{id}")
@@ -42,15 +42,15 @@ public class QuXianController {
     }*/
 
 
-    //根据所选日期  获取对应的数据
+   /* //根据所选日期  获取对应的数据
     @GetMapping("/findQuDuanDataByTime")
     public Map<String, Object> findQuDuanDataByTime(@RequestParam("time") Date time) {
         List<QuDuanInfoEntity> quDuanInfoEntities = quXianService.findQuDuanDataByTime(time);
         System.out.println("riqi" + quDuanInfoEntities);
         return ResponseDataUtil.ok("查询数据成功", quDuanInfoEntities);
-    }
+    }*/
 
-    //日报表
+    //日报表   --> 待定
     //根据所选日期  获得对应的24个时间点  然后根据时间点和传来的的字段名字 来获取对应的数据
     @GetMapping("/findQuDuanDataByTime1")
     public Map<String, Object> findQuDuanDataByTime1(@RequestParam("time") Date time, @RequestParam("name") String name) {
@@ -107,7 +107,8 @@ public class QuXianController {
         js.put("shijian", list);
         String starttime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(startTime);//把开始时间转换格式
         String endtime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(endTime);//把结束时间转换格式
-        List<String> sqlname = quXianService.findShuXingName(shuxingId);
+        List<String> sqlname = quXianService.findShuXingName(shuxingId);//获取区段属性的英文名
+        List<String>name=quXianService.findShuXingHanZiName(shuxingId);//获取区段属性的中文名
         System.out.println("11111" + sqlname);
         //String[] name=new String[sqlname.size()];
         Integer k = 0;
@@ -115,12 +116,12 @@ public class QuXianController {
             k++;
             System.out.println("222222" + sqlname.get(i));//获得每一个属性名
             String shuxingname = sqlname.get(i);
-            //name[i]=sqlname.get(i);
             System.out.println("123=" + quduanName[i]);//获得每一个区段名
             String quduanname = quduanName[i];
             List<Integer> date = quXianService.findQuDuanData(starttime, endtime, shuxingname, quduanname);
             map.put("shuju" + k.toString(), date);
             js.put("shuju" + k.toString(), date);
+            js.put("mingzi" + k.toString(), name.get(i));
         }
         return ResponseDataUtil.ok("查询数据成功", js);
     }

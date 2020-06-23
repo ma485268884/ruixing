@@ -3,8 +3,10 @@ package com.yintu.ruixing.service.impl;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.BaoJingYuJingDao;
 import com.yintu.ruixing.dao.BaoJingYuJingPropertyDao;
+import com.yintu.ruixing.dao.QuDuanBaseDao;
 import com.yintu.ruixing.entity.BaoJingYuJingEntity;
 import com.yintu.ruixing.entity.BaoJingYuJingPropertyEntity;
+import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.service.BaoJingYuJingPropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,8 @@ public class BaoJingYuJingPropertyServiceImpl implements BaoJingYuJingPropertySe
     private BaoJingYuJingPropertyDao baoJingYuJingPropertyDao;
     @Autowired
     private BaoJingYuJingDao baoJingYuJingDao;
+    @Autowired
+    private QuDuanBaseDao quDuanBaseDao;
 
     @Override
     public List<TreeNodeUtil> findBaoJingYuJingTree(Integer parentId) {
@@ -47,7 +51,17 @@ public class BaoJingYuJingPropertyServiceImpl implements BaoJingYuJingPropertySe
     }
 
     @Override
-    public List<BaoJingYuJingEntity> findYuJingBaoJingBySouSuo(Integer[] ids, Integer sid, Integer qid, Date startTime, Date endTime, Integer tianchang, Integer lvchuhuifu, Integer lvchuhuifu1, Integer page, Integer size) {
-        return baoJingYuJingDao.findYuJingBaoJingBySouSuo(ids,sid,qid,startTime,endTime,tianchang,lvchuhuifu,lvchuhuifu1);
+    public List<BaoJingYuJingEntity> findYuJingBaoJingBySouSuo(Integer[] ids, Integer sid, Integer qid,
+                                                               Date startTime, Date huifuTime, Integer tianChuang,
+                                                               Integer lvChuHuiFu, Integer lvChuKaiTong, Integer page, Integer size) {
+        return baoJingYuJingDao.findYuJingBaoJingBySouSuo(ids,sid,qid,startTime,huifuTime,tianChuang,lvChuHuiFu,lvChuKaiTong);
+    }
+
+    @Override
+    public List<QuDuanBaseEntity> findAllQuDuan() {
+       // List<QuDuanBaseEntity> list1=null;
+        List<QuDuanBaseEntity>list=quDuanBaseDao.findAllQuDuanName();
+
+        return list;
     }
 }

@@ -27,21 +27,21 @@ public class QuXianServiceImpl implements QuXianService {
     @Autowired
     private QuDuanInfoDao quDuanInfoDao;
 
-    @Override
+   /* @Override
     public List<SheBeiEntity> findSheBeiByCid(Integer id) {
         return quXianDao.findSheBeiByCid(id);
     }
-
+*/
     @Override
     public List<String> findQuDuanById(Integer id) {
         return quXianDao.findQuDuanById(id);
     }
 
-    @Override
+   /* @Override
     public List<QuDuanInfoEntity> findQuDuanDataByTime(Date time) {
         return quDuanInfoDao.findQuDuanDataByTime(time);
     }
-
+*/
     @Override
     public List<QuDuanBaseEntity> findQuDuanDataByTime1(Date time) {
         return quXianDao.findQuDuanDataByTime1(time);
@@ -67,5 +67,10 @@ public class QuXianServiceImpl implements QuXianService {
     @Override
     public List<String> findShuXingName(Integer[] shuxingId) {
         return quXianDao.findShuXingName(shuxingId);
+    }
+
+    @Override
+    public List<String> findShuXingHanZiName(Integer[] shuxingId) {
+        return quXianDao.findShuXingHanZiName(shuxingId);
     }
 }
