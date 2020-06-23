@@ -2,6 +2,8 @@ package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.SolutionStatusEntity;
 
+import java.util.List;
+
 public interface SolutionStatusDao {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,9 @@ public interface SolutionStatusDao {
     int updateByPrimaryKeySelective(SolutionStatusEntity record);
 
     int updateByPrimaryKey(SolutionStatusEntity record);
+
+    List<SolutionStatusEntity> selectByYearIdOrProjectIdOrFileTypeIdAndType(Integer id, Short nameType,Short type);
+
+    List <SolutionStatusEntity> selectByProjectNameAndType(String projectName,Short type);
+
 }

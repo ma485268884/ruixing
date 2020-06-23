@@ -10,6 +10,7 @@ import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.SolutionStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -24,23 +25,28 @@ public class PreSalesStatusController extends BaseController {
     @Autowired
     private SolutionStatusService solutionStatusService;
 
-
     @PostMapping
-    public Map<String, Object> add(SolutionStatusEntity solutionStatusEntity) {
+    public Map<String, Object> add(@RequestParam("file") MultipartFile multipartFile, SolutionStatusEntity solutionStatusEntity) {
+
         Integer yearId = solutionStatusEntity.getYearId();
         Integer projectId = solutionStatusEntity.getProjectId();
-        Integer file_type_id = solutionStatusEntity.getFileTypeId();
+        Integer fileTypeId = solutionStatusEntity.getFileTypeId();
         if (yearId == null)
             throw new BaseRuntimeException("年份id不能为空");
         if (projectId == null)
             throw new BaseRuntimeException("项目id不能为空");
-        if (file_type_id == null)
+        if (fileTypeId == null)
             throw new BaseRuntimeException("文件类型id不能为空");
         solutionStatusEntity.setType((short) 1);
         solutionStatusService.add(solutionStatusEntity);
         return ResponseDataUtil.ok("添加售前技术支持状态成功");
     }
 
+    @DeleteMapping
+    public Map<String, Object> removeMuch(Integer[] ids) {
+        solutionStatusService.removeMuch(ids);
+        return ResponseDataUtil.ok("删除售前技术支持状态成功");
+    }
 
     @DeleteMapping("/{id}")
     public Map<String, Object> remove(@PathVariable Integer id) {

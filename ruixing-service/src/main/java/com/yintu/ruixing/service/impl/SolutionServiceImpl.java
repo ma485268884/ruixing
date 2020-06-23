@@ -3,7 +3,9 @@ package com.yintu.ruixing.service.impl;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.SolutionDao;
 import com.yintu.ruixing.entity.SolutionEntity;
+import com.yintu.ruixing.entity.SolutionStatusEntity;
 import com.yintu.ruixing.service.SolutionService;
+import com.yintu.ruixing.service.SolutionStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +25,8 @@ public class SolutionServiceImpl implements SolutionService {
 
     @Autowired
     private SolutionDao solutionDao;
+    @Autowired
+    private SolutionStatusService solutionStatusService;
 
     @Override
     public void add(SolutionEntity entity) {
@@ -54,8 +58,13 @@ public class SolutionServiceImpl implements SolutionService {
 
 
     @Override
+    public List<SolutionEntity> findByParentIdAndType(Integer parentId, Short type) {
+        return solutionDao.selectPartByParentIdAndType(parentId, type);
+    }
+
+    @Override
     public List<TreeNodeUtil> findTreeByParentIdAndType(Integer parentId, Short type) {
-        List<SolutionEntity> solutionEntities = solutionDao.selectPartByParentIdAndType(parentId, type);
+        List<SolutionEntity> solutionEntities = this.findByParentIdAndType(parentId, type);
         List<TreeNodeUtil> treeNodeUtils = new ArrayList<>();
         for (SolutionEntity solutionEntity : solutionEntities) {
             TreeNodeUtil treeNodeUtil = new TreeNodeUtil();
@@ -79,5 +88,10 @@ public class SolutionServiceImpl implements SolutionService {
             this.remove(solutionEntity.getId());
             this.removeTreeByIdAndType(solutionEntity.getId(), type);
         }
+    }
+
+    @Override
+    public List<SolutionStatusEntity> findStatusById(Integer id, Short nameType, Short type) {
+        return solutionStatusService.findByYearIdOrProjectIdOrFileTypeIdAndType(id, nameType, type);
     }
 }

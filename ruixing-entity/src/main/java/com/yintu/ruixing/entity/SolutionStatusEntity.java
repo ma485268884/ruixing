@@ -34,4 +34,12 @@ public class SolutionStatusEntity implements Serializable {
 
     private Short releaseStatus;
 
+    private Short type;
+
+    private String yearName;
+
+    private String projectName;
+
+    private String fileTypeName;
+
 }
