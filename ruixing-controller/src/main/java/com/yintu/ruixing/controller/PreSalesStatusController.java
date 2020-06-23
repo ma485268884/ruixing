@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
+import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.SolutionStatusEntity;
 import com.yintu.ruixing.entity.UserEntity;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -26,8 +28,8 @@ public class PreSalesStatusController extends BaseController {
     private SolutionStatusService solutionStatusService;
 
     @PostMapping
-    public Map<String, Object> add(@RequestParam("file") MultipartFile multipartFile, SolutionStatusEntity solutionStatusEntity) {
-
+    public Map<String, Object> add(@RequestParam("file") MultipartFile multipartFile, SolutionStatusEntity solutionStatusEntity) throws IOException {
+        FileUploadUtil.save(multipartFile.getInputStream(), multipartFile.getOriginalFilename());
         Integer yearId = solutionStatusEntity.getYearId();
         Integer projectId = solutionStatusEntity.getProjectId();
         Integer fileTypeId = solutionStatusEntity.getFileTypeId();
