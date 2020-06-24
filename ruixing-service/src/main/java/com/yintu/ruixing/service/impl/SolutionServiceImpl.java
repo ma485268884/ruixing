@@ -85,7 +85,9 @@ public class SolutionServiceImpl implements SolutionService {
             map.put("nameType", solutionEntity.getNameType());
             map.put("type", solutionEntity.getType());
             treeNodeUtil.setA_attr(map);
-            treeNodeUtil.setChildren(this.findTreeByParentIdAndType(solutionEntity.getId(), type));
+            if (this.findByParentIdAndType(solutionEntity.getId(), type).size() > 0) {
+                treeNodeUtil.setChildren(this.findTreeByParentIdAndType(solutionEntity.getId(), type));
+            }
             treeNodeUtils.add(treeNodeUtil);
         }
         return treeNodeUtils;

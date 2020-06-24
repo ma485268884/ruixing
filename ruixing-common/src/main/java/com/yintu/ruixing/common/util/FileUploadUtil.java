@@ -48,11 +48,11 @@ public class FileUploadUtil {
                 if (!filePath.mkdirs())
                     throw new RuntimeException("创建文件夹失败");
 
+
             String filePathName = filePath.getPath() + "\\" + fileName;
             File file = new File(filePathName);
             if (file.exists())
                 throw new BaseRuntimeException("文件存在");
-
             fos = new FileOutputStream(file);
             inFileChannel = fis.getChannel();
             outFileChannel = fos.getChannel();
@@ -88,15 +88,50 @@ public class FileUploadUtil {
     }
 
 
+    public static void get(OutputStream outputStream, String filePathName) {
+        FileInputStream fis = null;
+        try {
+            File file = new File(defaultBaseFilePath + filePathName);
+            if (file.exists()) {
+                fis = new FileInputStream(file);
+                byte[] byteArr = new byte[1024];
+                while ((fis.read(byteArr)) != -1) {
+                    outputStream.write(byteArr, 0, byteArr.length);
+                    outputStream.flush();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fis != null) {
+                    fis.close();
+                }
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
     public static void delete(String filePathName) {
         File file = new File(defaultBaseFilePath + filePathName);
         if (file.exists()) {
             if (file.delete()) {
                 File parentFile = file.getParentFile();
                 if (parentFile.exists()) {
-                    parentFile.delete();
+                    if (parentFile.delete()) {
+                        System.out.println("");
+                    }
                 }
             }
         }
     }
+
+
 }
+

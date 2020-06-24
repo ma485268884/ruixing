@@ -3,15 +3,20 @@ package com.yintu.ruixing.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.deploy.net.HttpResponse;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
+import com.yintu.ruixing.common.util.CastArrayUtil;
 import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.SolutionStatusEntity;
 import com.yintu.ruixing.service.SolutionStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -50,15 +55,10 @@ public class PreSalesStatusController extends BaseController {
         return ResponseDataUtil.ok("添加售前技术支持状态成功");
     }
 
-    @DeleteMapping
-    public Map<String, Object> removeMuch(Integer[] ids) {
-        solutionStatusService.removeMuch(ids);
-        return ResponseDataUtil.ok("删除售前技术支持状态成功");
-    }
 
-    @DeleteMapping("/{id}")
-    public Map<String, Object> remove(@PathVariable Integer id) {
-        solutionStatusService.remove(id);
+    @DeleteMapping("/{ids}")
+    public Map<String, Object> remove(@PathVariable Integer[] ids) {
+        solutionStatusService.removeMuch(ids);
         return ResponseDataUtil.ok("删除售前技术支持状态成功");
     }
 
@@ -94,6 +94,7 @@ public class PreSalesStatusController extends BaseController {
         return ResponseDataUtil.ok("查询售前技术支持状态成功", solutionStatusEntity);
     }
 
+
     @GetMapping
     public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber,
                                        @RequestParam("page_size") Integer pageSize,
@@ -110,5 +111,19 @@ public class PreSalesStatusController extends BaseController {
         return ResponseDataUtil.ok("查询售前技术支持状态列表成功", pageInfo);
     }
 
-
+    @GetMapping("/downloads/{id}")
+    public Map<String, Object> downloadFile(@PathVariable Integer id, HttpServletResponse response) throws IOException {
+        SolutionStatusEntity solutionStatusEntity = solutionStatusService.findById(id);
+        if (solutionStatusEntity != null) {
+            String filePath = solutionStatusEntity.getFilePath();
+            String fileName = solutionStatusEntity.getFileName();
+            if (filePath != null && !"".equals(filePath) && fileName != null && !"".equals(fileName)) {
+                //response.setCharacterEncoding("utf-8");
+                response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+                response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+                FileUploadUtil.get(response.getOutputStream(), filePath + "\\" + fileName);
+            }
+        }
+        return ResponseDataUtil.ok("下载售前技术支持状态列表文件成功");
+    }
 }
