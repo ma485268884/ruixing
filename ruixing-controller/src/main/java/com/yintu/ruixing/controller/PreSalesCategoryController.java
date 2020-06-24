@@ -4,6 +4,7 @@ import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.SolutionEntity;
+import com.yintu.ruixing.entity.SolutionStatusEntity;
 import com.yintu.ruixing.service.SolutionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,8 @@ import java.util.Map;
  */
 
 @RestController
-@RequestMapping("/presavless")
-public class PreSalesSupportController extends BaseController {
+@RequestMapping("/presales/category")
+public class PreSalesCategoryController extends BaseController {
     @Autowired
     private SolutionService solutionService;
 
@@ -67,5 +68,18 @@ public class PreSalesSupportController extends BaseController {
         List<TreeNodeUtil> treeNodeUtils = solutionService.findTreeByParentIdAndType(-1, (short) 1);
         return ResponseDataUtil.ok("查询售前技术支持类别树成功", treeNodeUtils);
     }
+
+    @GetMapping("/list")
+    public Map<String, Object> findList(@RequestParam("parentId") Integer parentId) {
+        List<SolutionEntity> solutionEntities = solutionService.findByParentIdAndType(parentId, (short) 1);
+        return ResponseDataUtil.ok("查询售前技术支持类别列表成功", solutionEntities);
+    }
+
+    @GetMapping("/{id}/status")
+    public Map<String, Object> findStatus(@PathVariable Integer id, @RequestParam("nameType") Short nameType) {
+        List<SolutionStatusEntity> solutionStatusEntities = solutionService.findStatusById(id, nameType, (short) 1);
+        return ResponseDataUtil.ok("查询售前技术支持类别状态列表成功", solutionStatusEntities);
+    }
+
 
 }
