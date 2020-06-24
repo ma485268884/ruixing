@@ -2,6 +2,7 @@ package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.ChanPinJiaoFuDao;
+import com.yintu.ruixing.entity.ChanPinJiaoFuEntity;
 import com.yintu.ruixing.entity.ChanPinJiaoFuPropertyEntity;
 import com.yintu.ruixing.service.ChanPinJiaoFuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Author Mis.liu
+ * @Author Mr.liu
  * @Date 2020/6/23 16:33
  * @Version 1.0
  * 需求:产品交付模块
@@ -26,6 +27,37 @@ public class ChanPinJiaoFuServiceImpl implements ChanPinJiaoFuService {
     @Override
     public Integer findAllDataShu() {
         return chanPinJiaoFuDao.findAllDataShu();
+    }
+
+    @Override
+    public List<Integer> findParedId(Integer id) {
+        return chanPinJiaoFuDao.findParedId(id);
+    }
+
+
+    @Override
+    public List<ChanPinJiaoFuEntity> findXiangMuDataById(Integer id) {
+        return chanPinJiaoFuDao.findXiangMuDataById(id);
+    }
+
+    @Override
+    public List<ChanPinJiaoFuEntity> findXiangMuData(String bianhao, String name, Integer page, Integer size) {
+        return chanPinJiaoFuDao.findXiangMuData(bianhao,name);
+    }
+
+    @Override
+    public List<ChanPinJiaoFuEntity> findAllXiangMuState(Integer page,Integer size) {
+        return chanPinJiaoFuDao.findAllXiangMuState();
+    }
+
+    @Override
+    public void deleteDataShuById(Integer id) {
+        chanPinJiaoFuDao.deleteDataShuById(id);
+    }
+
+    @Override
+    public void editDataShuById(ChanPinJiaoFuPropertyEntity chanPinJiaoFuPropertyEntity) {
+        chanPinJiaoFuDao.editDataShuById(chanPinJiaoFuPropertyEntity);
     }
 
     @Override
