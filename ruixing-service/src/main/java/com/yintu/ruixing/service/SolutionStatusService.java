@@ -33,4 +33,11 @@ public interface SolutionStatusService extends BaseService<SolutionStatusEntity,
      */
     List<SolutionStatusEntity> findByProjectNameAndType(String projectName, Short type);
 
+    /**
+     * @param fileName 文件名
+     * @param type     解决方案模块标识
+     * @return
+     */
+    List<SolutionStatusEntity> findByFileNameAndType(String fileName, Short type);
+
 }

@@ -6,34 +6,35 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.Properties;
+import java.util.UUID;
 
 /**
  * @author:mlf
  * @date:2020/6/23 19:28
  */
 public class FileUploadUtil {
-    public static final String WINDOW_FILE_PATH = "C:\\files\\";
-    public static final String LINUX_FILE_PATH = "/files/";
-    public static String FINAL_PATH = null;
+    public static final String WINDOW_BASE_FILE_PATH = "C:\\data\\files\\ruixing";
+    public static final String LINUX_BASE_FILE_PATH = "/data/files/ruixing";
+    public static String defaultBaseFilePath = WINDOW_BASE_FILE_PATH;
 
     static {
         Properties props = System.getProperties(); //系统属性
         String osName = props.getProperty("os.name");
         String os = osName.split(" ")[0];
-        FINAL_PATH = "Windows".equals(os) ? WINDOW_FILE_PATH : LINUX_FILE_PATH;
-        File file = new File(FINAL_PATH);
+        defaultBaseFilePath = "Windows".equals(os) ? WINDOW_BASE_FILE_PATH : LINUX_BASE_FILE_PATH;
+        File file = new File(defaultBaseFilePath);
         if (!file.exists())
             if (!file.mkdirs())
                 throw new RuntimeException("创建文件夹失败");
     }
 
     /**
-     * 指定文件名保存磁盘返回绝对路径
+     * 指定文件名保存磁盘返回相对路径
      *
      * @param fileName 文件名
      */
     public static String save(InputStream is, String fileName) {
-        String filePathName = null;
+        String uuidValue = null;
         FileInputStream fis = is instanceof FileInputStream ? (FileInputStream) is : null;
         FileOutputStream fos = null;
         FileChannel inFileChannel = null;
@@ -41,10 +42,17 @@ public class FileUploadUtil {
         try {
             if (fis == null)
                 throw new RuntimeException("输入流有误");
-            filePathName = FINAL_PATH + fileName;
+            uuidValue = "\\" + UUID.randomUUID().toString();
+            File filePath = new File(defaultBaseFilePath + uuidValue);
+            if (!filePath.exists())
+                if (!filePath.mkdirs())
+                    throw new RuntimeException("创建文件夹失败");
+
+            String filePathName = filePath.getPath() + "\\" + fileName;
             File file = new File(filePathName);
             if (file.exists())
                 throw new BaseRuntimeException("文件存在");
+
             fos = new FileOutputStream(file);
             inFileChannel = fis.getChannel();
             outFileChannel = fos.getChannel();
@@ -76,6 +84,19 @@ public class FileUploadUtil {
             }
 
         }
-        return filePathName;
+        return uuidValue;
+    }
+
+
+    public static void delete(String filePathName) {
+        File file = new File(defaultBaseFilePath + filePathName);
+        if (file.exists()) {
+            if (file.delete()) {
+                File parentFile = file.getParentFile();
+                if (parentFile.exists()) {
+                    parentFile.delete();
+                }
+            }
+        }
     }
 }

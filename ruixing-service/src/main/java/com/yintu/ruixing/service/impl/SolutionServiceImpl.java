@@ -34,6 +34,16 @@ public class SolutionServiceImpl implements SolutionService {
         SolutionEntity solutionEntity = this.findById(parentId);
         if (solutionEntity != null) {
             solutionDao.insertSelective(entity);
+            if (entity.getNameType().equals((short) 2)) {
+                SolutionEntity solutionEntity1 = new SolutionEntity();
+                solutionEntity1.setParentId(entity.getId());
+                solutionEntity1.setName("输入文件");
+                solutionEntity1.setNameType((short) 3);
+                solutionEntity1.setType((short) 1);
+                solutionDao.insertSelective(solutionEntity1);
+                solutionEntity1.setName("输出文件");
+                solutionDao.insertSelective(solutionEntity1);
+            }
         }
     }
 

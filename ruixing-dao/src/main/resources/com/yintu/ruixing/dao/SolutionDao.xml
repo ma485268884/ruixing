@@ -28,7 +28,7 @@
         values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
                 #{nameType,jdbcType=SMALLINT}, #{type,jdbcType=SMALLINT})
     </insert>
-    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.SolutionEntity">
+    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.SolutionEntity" useGeneratedKeys="true" keyProperty="id">
         insert into mro_solution
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -92,7 +92,6 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-
     <select id="selectPartByParentIdAndType" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -106,5 +105,4 @@
             </if>
         </where>
     </select>
-
 </mapper>

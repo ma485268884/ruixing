@@ -17,8 +17,9 @@ public interface SolutionStatusDao {
 
     int updateByPrimaryKey(SolutionStatusEntity record);
 
-    List<SolutionStatusEntity> selectByYearIdOrProjectIdOrFileTypeIdAndType(Integer id, Short nameType,Short type);
+    List<SolutionStatusEntity> selectByYearIdOrProjectIdOrFileTypeIdAndType(Integer id, Short nameType, Short type);
 
-    List <SolutionStatusEntity> selectByProjectNameAndType(String projectName,Short type);
+    List<SolutionStatusEntity> selectByProjectNameAndType(String projectName, Short type);
 
+    List<SolutionStatusEntity> selectByFileNameAndType(String fileName, Short type);
 }

@@ -7,7 +7,6 @@ import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.SolutionStatusEntity;
-import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.SolutionStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,10 +25,10 @@ import java.util.Map;
 public class PreSalesStatusController extends BaseController {
     @Autowired
     private SolutionStatusService solutionStatusService;
+    private final Short FLAG = new Short("1");
 
     @PostMapping
     public Map<String, Object> add(@RequestParam("file") MultipartFile multipartFile, SolutionStatusEntity solutionStatusEntity) throws IOException {
-        FileUploadUtil.save(multipartFile.getInputStream(), multipartFile.getOriginalFilename());
         Integer yearId = solutionStatusEntity.getYearId();
         Integer projectId = solutionStatusEntity.getProjectId();
         Integer fileTypeId = solutionStatusEntity.getFileTypeId();
@@ -39,7 +38,14 @@ public class PreSalesStatusController extends BaseController {
             throw new BaseRuntimeException("项目id不能为空");
         if (fileTypeId == null)
             throw new BaseRuntimeException("文件类型id不能为空");
-        solutionStatusEntity.setType((short) 1);
+        String fileName = multipartFile.getOriginalFilename();
+        List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByFileNameAndType(fileName, FLAG);
+        if (solutionStatusEntities.size() > 0)
+            throw new BaseRuntimeException("文件名重复");
+        String filePathName = FileUploadUtil.save(multipartFile.getInputStream(), fileName);
+        solutionStatusEntity.setFileName(fileName);
+        solutionStatusEntity.setFilePath(filePathName);
+        solutionStatusEntity.setType(FLAG);
         solutionStatusService.add(solutionStatusEntity);
         return ResponseDataUtil.ok("添加售前技术支持状态成功");
     }
@@ -57,7 +63,7 @@ public class PreSalesStatusController extends BaseController {
     }
 
     @PutMapping("/{id}")
-    public Map<String, Object> edit(SolutionStatusEntity solutionStatusEntity) {
+    public Map<String, Object> edit(@RequestParam("file") MultipartFile multipartFile, @PathVariable Integer id, SolutionStatusEntity solutionStatusEntity) throws IOException {
         Integer yearId = solutionStatusEntity.getYearId();
         Integer projectId = solutionStatusEntity.getProjectId();
         Integer file_type_id = solutionStatusEntity.getFileTypeId();
@@ -67,8 +73,18 @@ public class PreSalesStatusController extends BaseController {
             throw new BaseRuntimeException("项目id不能为空");
         if (file_type_id == null)
             throw new BaseRuntimeException("文件类型id不能为空");
-        solutionStatusEntity.setType((short) 1);
-        solutionStatusService.add(solutionStatusEntity);
+        String fileName = multipartFile.getOriginalFilename();
+        List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByFileNameAndType(fileName, FLAG);
+        if (solutionStatusEntities.size() > 0 && !solutionStatusEntities.get(0).getId().equals(id))
+            throw new BaseRuntimeException("文件名重复");
+        SolutionStatusEntity s = solutionStatusService.findById(id);
+        if (s != null)
+            FileUploadUtil.delete(s.getFilePath() + "\\" + s.getFileName());
+        String filePathName = FileUploadUtil.save(multipartFile.getInputStream(), fileName);
+        solutionStatusEntity.setFileName(fileName);
+        solutionStatusEntity.setFilePath(filePathName);
+        solutionStatusEntity.setType(FLAG);
+        solutionStatusService.edit(solutionStatusEntity);
         return ResponseDataUtil.ok("修改售前技术支持状态成功");
     }
 
@@ -89,7 +105,7 @@ public class PreSalesStatusController extends BaseController {
         if (sortby != null && !"".equals(sortby) && order != null && !"".equals(order))
             orderBy = sortby + " " + order;
         PageHelper.startPage(pageNumber, pageSize, orderBy);
-        List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByProjectNameAndType(projectName, (short) 1);
+        List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByProjectNameAndType(projectName, FLAG);
         PageInfo<SolutionStatusEntity> pageInfo = new PageInfo<>(solutionStatusEntities);
         return ResponseDataUtil.ok("查询售前技术支持状态列表成功", pageInfo);
     }
