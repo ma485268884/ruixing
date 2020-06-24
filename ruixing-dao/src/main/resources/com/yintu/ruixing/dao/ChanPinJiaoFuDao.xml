@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.ChanPinJiaoFuDao">
+    <resultMap id="ChanPinJiaoFuProperty" type="com.yintu.ruixing.entity.ChanPinJiaoFuPropertyEntity">
+        <id property="id" jdbcType="INTEGER" column="id"></id>
+        <result property="name" jdbcType="VARCHAR" column="name" ></result>
+        <result property="parendId" jdbcType="INTEGER" column="paent_id"></result>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, parent_id, name
+    </sql>
+    <!--查询数据表中是否有第一条数据-->
+    <select id="findAllDataShu" resultMap="ChanPinJiaoFuProperty">
+       SELECT
+            parent_id
+        FROM
+            mro_chanpinjiaofu_property
+    </select>
+
+    <!--添加第一条数据  或者所有数据-->
+    <insert id="fristData" parameterType="com.yintu.ruixing.entity.ChanPinJiaoFuPropertyEntity">
+        insert into mro_chanpinjiaofu_property(name,parend_id)
+        values (#{name},#{parendId})
+    </insert>
+
+    <!--查询产品交付的树形结构-->
+    <select id="findChanPinJiaoFuShuXing" parameterType="java.lang.Integer" resultMap="ChanPinJiaoFuProperty">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_chanpinjiaofu_property
+        where parent_id = #{parentId,jdbcType=INTEGER}
+    </select>
+
+    <!--根据选择的id  修改树形数据-->
+    <update id="editDataShuById" parameterType="com.yintu.ruixing.entity.ChanPinJiaoFuPropertyEntity" >
+        update mro_chanpinjiaofu_property
+        <set>
+            <if test="name !=null">
+                name=#{name }
+            </if>
+            <if test="parendId !=null">
+                parend_id=#{parendId }
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!--根据传来的id  当作parendid  来查询对应的id个数-->
+    <select id="findParedId" parameterType="java.lang.Integer">
+        select id from mro_chanpinjiaofu_property where parend_id=#{id}
+    </select>
+
+    <!--根据传来的id  删除对应的数据-->
+    <delete id="deleteDataShuById" parameterType="java.lang.Integer">
+        delete from mro_chanpinjiaofu_property where id=#{id}
+    </delete>
+
+
+
+    <resultMap id="ChanPinJiaoFu" type="com.yintu.ruixing.entity.ChanPinJiaoFuEntity">
+        <id property="id" jdbcType="INTEGER" column="id"></id>
+        <result property="shuId" jdbcType="INTEGER" column="shuid"></result>
+        <result property="xiangMuName" jdbcType="INTEGER" column="xiangmu_name"></result>
+        <result property="xiangMuState" jdbcType="INTEGER" column="xiangmu_state"></result>
+        <result property="xiaoShouState" jdbcType="INTEGER" column="xiaoshou_state"></result>
+        <result property="faHouState" jdbcType="INTEGER" column="fahuo_state"></result>
+        <result property="qianShouState" jdbcType="INTEGER" column="qianshou_state"></result>
+        <result property="yanGongState" jdbcType="INTEGER" column="yangong_state"></result>
+        <result property="xianChangFuWu" jdbcType="INTEGER" column="xianchangfuwu"></result>
+        <association property="chanPinJiaoFuPropertyEntity" javaType="ChanPinJiaoFuPropertyEntity">
+            <result property="name" jdbcType="VARCHAR" column="name" ></result>
+        </association>
+    </resultMap>
+    <!--查询所有的项目状态-->
+    <select id="findAllXiangMuState" resultMap="ChanPinJiaoFu">
+        SELECT
+            cp.NAME,
+            cf.*
+        FROM
+            mro_chanpinjiaofu_property cp,
+            mro_chanpinjiaofu cf
+        WHERE
+            cp.id = cf.shu_id
+    </select>
+
+    <!--根据项目编号 项目名称 查询数据-->
+    <select id="findXiangMuData" resultMap="ChanPinJiaoFu">
+        SELECT
+            cp.NAME,
+            cf.*
+        FROM
+            mro_chanpinjiaofu_property cp,
+            mro_chanpinjiaofu cf
+            <where>
+                cp.id = cf.shu_id
+                <if test="name !=null">
+                    cf.xiangmu_name=#{name }
+                </if>
+                and
+                <if test="bianhao !=null">
+                    cp.name=#{bianhao }
+                </if>
+            </where>
+    </select>
+
+    <!--根据树形结构的id  查找对应的数据-->
+    <select id="findXiangMuDataById" parameterType="java.lang.Integer" resultMap="ChanPinJiaoFu">
+        SELECT
+            cp.NAME,
+            cf.*
+        FROM
+            mro_chanpinjiaofu_property cp,
+            mro_chanpinjiaofu cf
+        WHERE
+            cp.id = cf.shu_id
+            AND cp.id = #{id}
+    </select>
+</mapper>

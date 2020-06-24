@@ -3,10 +3,9 @@ package com.yintu.ruixing.dao;
 import com.yintu.ruixing.entity.PermissionEntity;
 import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.entity.UserEntityExample;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
 
 public interface UserDao {
     long countByExample(UserEntityExample example);
@@ -33,6 +32,6 @@ public interface UserDao {
 
     List<PermissionEntity> selectPermissionById(Long id, Long parentId, Short isMenu);
 
-    List<PermissionEntity> selectPermission(@Param("parentId") Long parentId, @Param("isMenu") Short isMenu);
+    List<PermissionEntity> selectPermission(@Param("parentId") Long parentId,@Param("isMenu") Short isMenu);
 
 }

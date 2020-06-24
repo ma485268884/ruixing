@@ -79,7 +79,5 @@ public class BaoJingYuJingPropertyController {
         }catch (Exception e){
             return ResponseDataUtil.error("请选择要查询的报警或者预警名称");
         }
-
-
     }
 }
