@@ -22,4 +22,6 @@ public interface SolutionStatusDao {
     List<SolutionStatusEntity> selectByProjectNameAndType(String projectName, Short type);
 
     List<SolutionStatusEntity> selectByFileNameAndType(String fileName, Short type);
+
+    List<SolutionStatusEntity> selectByIdsAndType(Integer[] ids, Short type);
 }

@@ -302,4 +302,30 @@
             </if>
         </where>
     </select>
+    <select id="selectByIdsAndType" resultMap="ResultMap">
+        SELECT ss.*,
+        s.`name` file_type_name
+        FROM (
+        SELECT ss.*,
+        s.`name` project_name
+        FROM (
+        SELECT ss.*,
+        s.`name` year_name
+        FROM mro_solution_status ss
+        INNER JOIN mro_solution s ON ss.year_id = s.id
+        ) ss
+        INNER JOIN mro_solution s ON ss.project_id = s.id
+        ) ss
+        INNER JOIN mro_solution s ON ss.file_type_id = s.id
+        <where>
+            ss.id in
+            <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+            <if test="type !=null">
+                and ss.type=#{type}
+            </if>
+        </where>
+    </select>
+
 </mapper>

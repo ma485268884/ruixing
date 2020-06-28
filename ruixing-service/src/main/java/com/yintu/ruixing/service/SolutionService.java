@@ -13,6 +13,10 @@ import java.util.List;
  */
 public interface SolutionService extends BaseService<SolutionEntity, Integer> {
 
+
+    List<SolutionEntity> findByNameAndType(String name, Short type);
+
+
     /**
      * 按照父级id查询目录列表
      *
