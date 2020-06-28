@@ -30,20 +30,22 @@ public class SolutionServiceImpl implements SolutionService {
 
     @Override
     public void add(SolutionEntity entity) {
-        Integer parentId = entity.getParentId();
-        SolutionEntity solutionEntity = this.findById(parentId);
-        if (solutionEntity != null) {
-            solutionDao.insertSelective(entity);
-            if (entity.getNameType().equals((short) 2)) {
-                SolutionEntity solutionEntity1 = new SolutionEntity();
-                solutionEntity1.setParentId(entity.getId());
-                solutionEntity1.setName("输入文件");
-                solutionEntity1.setNameType((short) 3);
-                solutionEntity1.setType((short) 1);
-                solutionDao.insertSelective(solutionEntity1);
-                solutionEntity1.setName("输出文件");
-                solutionDao.insertSelective(solutionEntity1);
+        SolutionEntity s = this.findById(entity.getParentId());
+        if (s != null || entity.getParentId() == -1) {
+            List<SolutionEntity> solutionEntities = this.findByNameAndType(entity.getName(), entity.getType());
+            if (solutionEntities.size() == 0) {
+                solutionDao.insertSelective(entity);
             }
+        }
+        if (entity.getNameType().equals((short) 2)) {
+            SolutionEntity solutionEntity = new SolutionEntity();
+            solutionEntity.setParentId(entity.getId());
+            solutionEntity.setName("输入文件");
+            solutionEntity.setNameType((short) 3);
+            solutionEntity.setType(entity.getType());
+            solutionDao.insertSelective(solutionEntity);
+            solutionEntity.setName("输出文件");
+            solutionDao.insertSelective(solutionEntity);
         }
     }
 
@@ -54,11 +56,14 @@ public class SolutionServiceImpl implements SolutionService {
 
     @Override
     public void edit(SolutionEntity entity) {
-        Integer parentId = entity.getParentId();
-        SolutionEntity solutionEntity = this.findById(parentId);
-        if (solutionEntity != null) {
-            solutionDao.updateByPrimaryKeySelective(entity);
+        SolutionEntity s = this.findById(entity.getParentId());
+        if (s != null || entity.getParentId() == -1) {
+            List<SolutionEntity> solutionEntities = this.findByNameAndType(entity.getName(), entity.getType());
+            if (solutionEntities.size() == 0 || !solutionEntities.get(0).getId().equals(entity.getId())) {
+                solutionDao.updateByPrimaryKeySelective(entity);
+            }
         }
+
     }
 
     @Override
@@ -66,6 +71,11 @@ public class SolutionServiceImpl implements SolutionService {
         return solutionDao.selectByPrimaryKey(id);
     }
 
+
+    @Override
+    public List<SolutionEntity> findByNameAndType(String name, Short type) {
+        return solutionDao.selectByNameAndType(name, type);
+    }
 
     @Override
     public List<SolutionEntity> findByParentIdAndType(Integer parentId, Short type) {

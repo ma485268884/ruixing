@@ -8,7 +8,6 @@ import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.SolutionStatusEntity;
 import com.yintu.ruixing.service.SolutionStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +26,7 @@ import java.util.Map;
 public class PreSalesStatusController extends BaseController {
     @Autowired
     private SolutionStatusService solutionStatusService;
-    private final Short FLAG = new Short("1");
+    private final Short FLAG = new Short("1");//模块标识
 
     @PostMapping
     @ResponseBody

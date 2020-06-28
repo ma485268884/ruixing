@@ -92,6 +92,19 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
+    <select id="selectByNameAndType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_solution
+        <where>
+            <if test="name!=null and name!=''">
+                name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="type!=null">
+                and type = #{type,jdbcType=SMALLINT}
+            </if>
+        </where>
+    </select>
     <select id="selectPartByParentIdAndType" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

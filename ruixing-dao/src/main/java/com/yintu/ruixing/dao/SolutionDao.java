@@ -17,6 +17,8 @@ public interface SolutionDao {
 
     int updateByPrimaryKey(SolutionEntity record);
 
-    List<SolutionEntity> selectPartByParentIdAndType(Integer parentId,Short type);
+    List<SolutionEntity> selectByNameAndType(String name, Short type);
+
+    List<SolutionEntity> selectPartByParentIdAndType(Integer parentId, Short type);
 
 }
