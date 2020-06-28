@@ -67,6 +67,12 @@
         <result property="qianShouState" jdbcType="INTEGER" column="qianshou_state"></result>
         <result property="yanGongState" jdbcType="INTEGER" column="yangong_state"></result>
         <result property="xianChangFuWu" jdbcType="INTEGER" column="xianchangfuwu"></result>
+        <result property="faHuoTiXingTime" jdbcType="INTEGER" column="fahuo_tixing_time"></result>
+        <result property="fileType" jdbcType="INTEGER" column="file_type"></result>
+        <result property="faBuType" jdbcType="INTEGER" column="fabu_type"></result>
+        <result property="fileName" jdbcType="INTEGER" column="file_name"></result>
+        <result property="filePath" jdbcType="INTEGER" column="file_path"></result>
+        <result property="auditorId" jdbcType="INTEGER" column="auditor_id"></result>
         <association property="chanPinJiaoFuPropertyEntity" javaType="ChanPinJiaoFuPropertyEntity">
             <result property="name" jdbcType="VARCHAR" column="name" ></result>
         </association>
@@ -94,16 +100,25 @@
             <where>
                 cp.id = cf.shu_id
                 <if test="name !=null">
-                    cf.xiangmu_name=#{name }
+                    cf.xiangmu_name=#{name}
                 </if>
                 and
                 <if test="bianhao !=null">
-                    cp.name=#{bianhao }
+                    cp.name=#{bianhao}
                 </if>
             </where>
     </select>
 
-    <!--根据树形结构的id  查找对应的数据-->
+    <!--根据树形结构的id作为parendid  查找对应的id-->
+    <select id="findIdS" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT
+            id
+        FROM
+            mro_chanpinjiaofu_property
+        WHERE
+            parent_id =#{id}
+
+    </select>
     <select id="findXiangMuDataById" parameterType="java.lang.Integer" resultMap="ChanPinJiaoFu">
         SELECT
             cp.NAME,
@@ -113,6 +128,6 @@
             mro_chanpinjiaofu cf
         WHERE
             cp.id = cf.shu_id
-            AND cp.id = #{id}
+            AND cp.id =#{idd}
     </select>
 </mapper>

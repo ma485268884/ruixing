@@ -36,8 +36,13 @@ public class ChanPinJiaoFuServiceImpl implements ChanPinJiaoFuService {
 
 
     @Override
-    public List<ChanPinJiaoFuEntity> findXiangMuDataById(Integer id) {
-        return chanPinJiaoFuDao.findXiangMuDataById(id);
+    public List<ChanPinJiaoFuEntity> findXiangMuDataById(Integer idd) {
+        return chanPinJiaoFuDao.findXiangMuDataById(idd);
+    }
+
+    @Override
+    public List<Integer> findIdS(Integer id) {
+        return chanPinJiaoFuDao.findIdS(id);
     }
 
     @Override

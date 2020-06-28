@@ -32,5 +32,7 @@ public interface ChanPinJiaoFuService {
 
     List<ChanPinJiaoFuEntity> findXiangMuData(String bianhao, String name, Integer page, Integer size);
 
-    List<ChanPinJiaoFuEntity> findXiangMuDataById(Integer id);
+    List<Integer> findIdS(Integer id);
+
+    List<ChanPinJiaoFuEntity> findXiangMuDataById(Integer idd);
 }
