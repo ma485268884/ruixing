@@ -3,6 +3,9 @@ package com.yintu.ruixing.service;
 import com.yintu.ruixing.common.util.BaseService;
 import com.yintu.ruixing.entity.SolutionStatusEntity;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 /**
@@ -39,5 +42,22 @@ public interface SolutionStatusService extends BaseService<SolutionStatusEntity,
      * @return
      */
     List<SolutionStatusEntity> findByFileNameAndType(String fileName, Short type);
+
+    /**
+     * @param ids  id集合
+     * @param type 解决方案模块标识
+     * @return
+     */
+    List<SolutionStatusEntity> findByIdsAndType(Integer[] ids, Short type);
+
+    /**
+     * 导出文件
+     *
+     * @param response
+     * @param ids
+     * @param type
+     * @throws IOException
+     */
+    void exportFile(HttpServletResponse response, Integer[] ids, Short type) throws IOException;
 
 }

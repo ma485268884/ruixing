@@ -1,5 +1,7 @@
 package com.yintu.ruixing.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
@@ -76,9 +78,18 @@ public class PreSalesCategoryController extends BaseController {
     }
 
     @GetMapping("/{id}/status")
-    public Map<String, Object> findStatus(@PathVariable Integer id, @RequestParam("nameType") Short nameType) {
+    public Map<String, Object> findStatus(@PathVariable Integer id, @RequestParam("name_type") Short nameType,
+                                          @RequestParam("page_number") Integer pageNumber,
+                                          @RequestParam("page_size") Integer pageSize,
+                                          @RequestParam(value = "sortby", required = false) String sortby,
+                                          @RequestParam(value = "order", required = false) String order) {
+        String orderBy = "ss.id DESC";
+        if (sortby != null && !"".equals(sortby) && order != null && !"".equals(order))
+            orderBy = sortby + " " + order;
+        PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<SolutionStatusEntity> solutionStatusEntities = solutionService.findStatusById(id, nameType, (short) 1);
-        return ResponseDataUtil.ok("查询售前技术支持类别状态列表成功", solutionStatusEntities);
+        PageInfo<SolutionStatusEntity> pageInfo = new PageInfo<>(solutionStatusEntities);
+        return ResponseDataUtil.ok("查询售前技术支持类别状态列表成功", pageInfo);
     }
 
 

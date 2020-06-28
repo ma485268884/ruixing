@@ -3,6 +3,8 @@ package com.yintu.ruixing;
 import com.yintu.ruixing.dao.PermissionDao;
 import com.yintu.ruixing.dao.QuDuanInfoDao;
 import com.yintu.ruixing.dao.UserDao;
+import com.yintu.ruixing.entity.SolutionStatusEntity;
+import com.yintu.ruixing.service.SolutionStatusService;
 import com.yintu.ruixing.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,26 +16,24 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class RuixingApplicationTests {
 
-    /*@Autowired
+    @Autowired
     private UserService userService;
+
     @Autowired
-    private PermissionDao permissionDao;
-    @Autowired
-    private ShouDuanService shouDuanService;
+    SolutionStatusService solutionStatusService;
+
 
     @Test
     void contextLoads() {
-        //System.out.println(userService.loadUserByUsername("d"));
-//        AntPathMatcher antPathMatcher = new AntPathMatcher();
-//        System.out.println(new BCryptPasswordEncoder().encode("123456"));
-//        System.out.println(antPathMatcher.match("/users/**", "/users/121212/role"));
-//        System.out.println(antPathMatcher.match("/users", "/users/121212/role?page=131"));
-//        System.out.println(permissionDao.selectByUserIdAndUrl(1L, "/users"));
-        shouDuanService.findByCidAndXid(1, 1);
+        Integer[] ids = new Integer[]{1, 2, 3};
+        List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByIdsAndType(ids, (short) 1);
+        System.out.println(solutionStatusEntities);
 
-    }*/
+
+    }
 }
