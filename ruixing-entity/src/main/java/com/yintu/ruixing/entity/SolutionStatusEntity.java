@@ -26,11 +26,13 @@ public class SolutionStatusEntity implements Serializable {
 
     private Short projectStatus;
 
-    private Integer auditorId;
-
     private String filePath;
 
     private String fileName;
+
+    private Integer auditorId;
+
+    private Integer bidderId;
 
     private Short releaseStatus;
 

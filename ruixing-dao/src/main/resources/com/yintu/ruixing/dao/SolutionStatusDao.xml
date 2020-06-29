@@ -9,15 +9,16 @@
         <result column="task_status" jdbcType="SMALLINT" property="taskStatus"/>
         <result column="task_finish_date" jdbcType="TIMESTAMP" property="taskFinishDate"/>
         <result column="project_status" jdbcType="SMALLINT" property="projectStatus"/>
-        <result column="auditor_id" jdbcType="INTEGER" property="auditorId"/>
         <result column="file_path" jdbcType="VARCHAR" property="filePath"/>
         <result column="file_name" jdbcType="VARCHAR" property="fileName"/>
+        <result column="auditor_id" jdbcType="INTEGER" property="auditorId"/>
+        <result column="bidder_id" jdbcType="INTEGER" property="bidderId"/>
         <result column="release_status" jdbcType="SMALLINT" property="releaseStatus"/>
         <result column="type" jdbcType="SMALLINT" property="type"/>
     </resultMap>
     <sql id="Base_Column_List">
         id, year_id, project_id, file_type_id, task_status, task_finish_date, project_status,
-    auditor_id, file_path, file_name, release_status,type
+    file_path, file_name, auditor_id,bidder_id, release_status,type
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select

@@ -1,5 +1,6 @@
 package com.yintu.ruixing.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
@@ -30,7 +31,7 @@ public class PreSalesStatusController extends BaseController {
 
     @PostMapping
     @ResponseBody
-    public Map<String, Object> add(@RequestParam("file") MultipartFile multipartFile, SolutionStatusEntity solutionStatusEntity) throws IOException {
+    public Map<String, Object> add(SolutionStatusEntity solutionStatusEntity) throws IOException {
         Integer yearId = solutionStatusEntity.getYearId();
         Integer projectId = solutionStatusEntity.getProjectId();
         Integer fileTypeId = solutionStatusEntity.getFileTypeId();
@@ -40,13 +41,9 @@ public class PreSalesStatusController extends BaseController {
             throw new BaseRuntimeException("项目id不能为空");
         if (fileTypeId == null)
             throw new BaseRuntimeException("文件类型id不能为空");
-        String fileName = multipartFile.getOriginalFilename();
-        List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByFileNameAndType(fileName, FLAG);
+        List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByFileNameAndType(solutionStatusEntity.getFileName(), FLAG);
         if (solutionStatusEntities.size() > 0)
             throw new BaseRuntimeException("文件名重复");
-        String filePathName = FileUploadUtil.save(multipartFile.getInputStream(), fileName);
-        solutionStatusEntity.setFileName(fileName);
-        solutionStatusEntity.setFilePath(filePathName);
         solutionStatusEntity.setType(FLAG);
         solutionStatusService.add(solutionStatusEntity);
         return ResponseDataUtil.ok("添加售前技术支持状态成功");
@@ -62,7 +59,7 @@ public class PreSalesStatusController extends BaseController {
 
     @PutMapping("/{id}")
     @ResponseBody
-    public Map<String, Object> edit(@RequestParam("file") MultipartFile multipartFile, @PathVariable Integer id, SolutionStatusEntity solutionStatusEntity) throws IOException {
+    public Map<String, Object> edit(@PathVariable Integer id, SolutionStatusEntity solutionStatusEntity) throws IOException {
         Integer yearId = solutionStatusEntity.getYearId();
         Integer projectId = solutionStatusEntity.getProjectId();
         Integer file_type_id = solutionStatusEntity.getFileTypeId();
@@ -72,16 +69,9 @@ public class PreSalesStatusController extends BaseController {
             throw new BaseRuntimeException("项目id不能为空");
         if (file_type_id == null)
             throw new BaseRuntimeException("文件类型id不能为空");
-        String fileName = multipartFile.getOriginalFilename();
-        List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByFileNameAndType(fileName, FLAG);
+        List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByFileNameAndType(solutionStatusEntity.getFileName(), FLAG);
         if (solutionStatusEntities.size() > 0 && !solutionStatusEntities.get(0).getId().equals(id))
             throw new BaseRuntimeException("文件名重复");
-        SolutionStatusEntity s = solutionStatusService.findById(id);
-        if (s != null)
-            FileUploadUtil.delete(s.getFilePath() + "\\" + s.getFileName());
-        String filePathName = FileUploadUtil.save(multipartFile.getInputStream(), fileName);
-        solutionStatusEntity.setFileName(fileName);
-        solutionStatusEntity.setFilePath(filePathName);
         solutionStatusEntity.setType(FLAG);
         solutionStatusService.edit(solutionStatusEntity);
         return ResponseDataUtil.ok("修改售前技术支持状态成功");
@@ -109,6 +99,17 @@ public class PreSalesStatusController extends BaseController {
         List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByProjectNameAndType(projectName, FLAG);
         PageInfo<SolutionStatusEntity> pageInfo = new PageInfo<>(solutionStatusEntities);
         return ResponseDataUtil.ok("查询售前技术支持状态列表成功", pageInfo);
+    }
+
+    @PostMapping("/uploads")
+    @ResponseBody
+    public Map<String, Object> uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+        String fileName = multipartFile.getOriginalFilename();
+        String filePath = FileUploadUtil.save(multipartFile.getInputStream(), fileName);
+        JSONObject jo = new JSONObject();
+        jo.put("filePath", filePath);
+        jo.put("fileName", fileName);
+        return ResponseDataUtil.ok("上传售前技术支持状态文件成功", jo);
     }
 
     @GetMapping("/downloads/{id}")
