@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +34,7 @@ public class PreSalesStatusController extends BaseController {
     @PostMapping
     @ResponseBody
     public Map<String, Object> add(SolutionStatusEntity solutionStatusEntity) {
+        System.out.println(solutionStatusEntity);
         Integer yearId = solutionStatusEntity.getYearId();
         Integer projectId = solutionStatusEntity.getProjectId();
         Integer fileTypeId = solutionStatusEntity.getFileTypeId();

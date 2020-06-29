@@ -77,7 +77,7 @@ public class SolutionStatusServiceImpl implements SolutionStatusService {
     @Override
     public void exportFile(HttpServletResponse response, Integer[] ids, Short type) throws IOException {
         //excel标题
-        String title = "售前技术支持项目状态列表";
+        String title = type.equals((short) 1) ? "售前技术支持项目状态列表" : type.equals((short) 2) ? "招投标技术支持项目状态列表" : type.equals((short) 3) ? "设计联络及后续技术交流项目状态列表" : "";
         //excel表名
         String[] headers = {"序号", "年份", "项目名称", "文件类型", "文件名称", "任务状态", "项目状态"};
         //excel文件名
