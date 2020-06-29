@@ -45,19 +45,19 @@ public class UserEntity implements UserDetails {
 
     private Short isCustomer;
 
-    private List<RoleEntity> roleEntitys;
+    private List<RoleEntity> roleEntities;
 
     private Long departmentId;
 
-    private DepartmentEntity departmentEntity;
+    private DepartmentEntity departmentEntities;
 
 
     @Override
     @JsonIgnore
     @JSONField(serialize = false)
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> list = new ArrayList<>(roleEntitys.size());
-        for (RoleEntity roleEntity : roleEntitys) {
+        List<SimpleGrantedAuthority> list = new ArrayList<>(roleEntities.size());
+        for (RoleEntity roleEntity : roleEntities) {
             list.add(new SimpleGrantedAuthority(roleEntity.getName()));
         }
         return list;

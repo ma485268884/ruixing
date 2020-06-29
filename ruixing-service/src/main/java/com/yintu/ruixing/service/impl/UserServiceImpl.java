@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("用户名不存在");
         }
         UserEntity userEntity = userEntities.get(0);
-        userEntity.setRoleEntitys(roleService.findByUserId(userEntity.getId()));
+        userEntity.setRoleEntities(roleService.findByUserId(userEntity.getId()));
         return userEntity;
     }
 
