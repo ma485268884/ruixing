@@ -36,12 +36,20 @@ public class PreSalesStatusController extends BaseController {
         Integer yearId = solutionStatusEntity.getYearId();
         Integer projectId = solutionStatusEntity.getProjectId();
         Integer fileTypeId = solutionStatusEntity.getFileTypeId();
+        String filePath = solutionStatusEntity.getFilePath();
+        String fileName = solutionStatusEntity.getFileName();
         if (yearId == null)
             throw new BaseRuntimeException("年份id不能为空");
         if (projectId == null)
             throw new BaseRuntimeException("项目id不能为空");
         if (fileTypeId == null)
             throw new BaseRuntimeException("文件类型id不能为空");
+        if (filePath == null || "".equals(filePath)) {
+            throw new BaseRuntimeException("文件路径不能为空");
+        }
+        if (fileName == null || "".equals(fileName)) {
+            throw new BaseRuntimeException("文件名不能为空");
+        }
         List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByFileNameAndType(solutionStatusEntity.getFileName(), FLAG);
         if (solutionStatusEntities.size() > 0)
             throw new BaseRuntimeException("文件名重复");
@@ -63,13 +71,21 @@ public class PreSalesStatusController extends BaseController {
     public Map<String, Object> edit(@PathVariable Integer id, SolutionStatusEntity solutionStatusEntity) {
         Integer yearId = solutionStatusEntity.getYearId();
         Integer projectId = solutionStatusEntity.getProjectId();
-        Integer file_type_id = solutionStatusEntity.getFileTypeId();
+        Integer fileTypeId = solutionStatusEntity.getFileTypeId();
+        String filePath = solutionStatusEntity.getFilePath();
+        String fileName = solutionStatusEntity.getFileName();
         if (yearId == null)
             throw new BaseRuntimeException("年份id不能为空");
         if (projectId == null)
             throw new BaseRuntimeException("项目id不能为空");
-        if (file_type_id == null)
+        if (fileTypeId == null)
             throw new BaseRuntimeException("文件类型id不能为空");
+        if (filePath == null || "".equals(filePath)) {
+            throw new BaseRuntimeException("文件路径不能为空");
+        }
+        if (fileName == null || "".equals(fileName)) {
+            throw new BaseRuntimeException("文件名不能为空");
+        }
         List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByFileNameAndType(solutionStatusEntity.getFileName(), FLAG);
         if (solutionStatusEntities.size() > 0 && !solutionStatusEntities.get(0).getId().equals(id))
             throw new BaseRuntimeException("文件名重复");

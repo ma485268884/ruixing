@@ -26,6 +26,19 @@
         from mro_solution_status
         where id = #{id,jdbcType=INTEGER}
     </select>
+    <select id="selectByFileNameAndType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_solution_status
+        <where>
+            <if test="fileName!=null">
+                and file_name=#{fileName,jdbcType=VARCHAR}
+            </if>
+            <if test="type!=null">
+                and type = #{type,jdbcType=SMALLINT}
+            </if>
+        </where>
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from mro_solution_status
@@ -300,19 +313,7 @@
             </if>
         </where>
     </select>
-    <select id="selectByFileNameAndType" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from mro_solution_status
-        <where>
-            <if test="fileName!=null and fileName!=''">
-                and file_name=#{fileName,jdbcType=VARCHAR}
-            </if>
-            <if test="type!=null">
-                and type = #{type,jdbcType=SMALLINT}
-            </if>
-        </where>
-    </select>
+
     <select id="selectByIdsAndType" resultMap="ResultMap">
         SELECT ss.*,
         s.`name` file_type_name

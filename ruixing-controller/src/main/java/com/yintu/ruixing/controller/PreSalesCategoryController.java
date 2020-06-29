@@ -48,7 +48,7 @@ public class PreSalesCategoryController extends BaseController {
     }
 
     @PutMapping("/{id}")
-    public Map<String, Object> edit(SolutionEntity solutionEntity) {
+    public Map<String, Object> edit(@PathVariable Integer id, SolutionEntity solutionEntity) {
         Integer parentId = solutionEntity.getParentId();
         String name = solutionEntity.getName();
         if (parentId == null)
