@@ -19,4 +19,6 @@ public class ChanPinJiaoFuPropertyEntity {
     private String name;
 
     private Integer parentId;
+
+    private Integer nameType;//名称类型 1：项目编号 2.项目名称 3.输入文件 4：输出文件',
 }

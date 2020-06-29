@@ -2,6 +2,7 @@ package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.ChanPinJiaoFuEntity;
 import com.yintu.ruixing.entity.ChanPinJiaoFuPropertyEntity;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -29,9 +30,21 @@ public interface ChanPinJiaoFuDao {
 
     List<ChanPinJiaoFuEntity> findAllXiangMuState();
 
-    List<ChanPinJiaoFuEntity> findXiangMuData(String bianhao, String name);
+    List<ChanPinJiaoFuEntity> findXiangMuData(@Param("bianhao") String bianhao,@Param("name") String name);
 
     List<Integer> findIdS(Integer id);
 
     List<ChanPinJiaoFuEntity> findXiangMuDataById(Integer idd);
+
+    List<ChanPinJiaoFuEntity> findXiangMuDataByIds(@Param("firstid") Integer firstid,@Param("secondid") Integer secondid,@Param("fileid") Integer fileid);
+
+    ChanPinJiaoFuEntity findById(Integer id);
+
+    void addXiangMuData(ChanPinJiaoFuEntity chanPinJiaoFuEntity);
+
+    void editXiangMuDataById(ChanPinJiaoFuEntity chanPinJiaoFuEntity);
+
+    void deletXiangMuDataById(Integer id);
+
+    void deletXiangMuDataByIds(Integer[] ids);
 }

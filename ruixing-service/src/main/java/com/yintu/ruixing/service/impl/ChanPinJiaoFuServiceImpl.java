@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author Mr.liu
@@ -34,6 +36,36 @@ public class ChanPinJiaoFuServiceImpl implements ChanPinJiaoFuService {
         return chanPinJiaoFuDao.findParedId(id);
     }
 
+
+    @Override
+    public void deletXiangMuDataByIds(Integer[] ids) {
+        chanPinJiaoFuDao.deletXiangMuDataByIds(ids);
+    }
+
+    @Override
+    public void deletXiangMuDataById(Integer id) {
+        chanPinJiaoFuDao.deletXiangMuDataById(id);
+    }
+
+    @Override
+    public void editXiangMuDataById(ChanPinJiaoFuEntity chanPinJiaoFuEntity) {
+        chanPinJiaoFuDao.editXiangMuDataById(chanPinJiaoFuEntity);
+    }
+
+    @Override
+    public void addXiangMuData(ChanPinJiaoFuEntity chanPinJiaoFuEntity) {
+        chanPinJiaoFuDao.addXiangMuData(chanPinJiaoFuEntity);
+    }
+
+    @Override
+    public ChanPinJiaoFuEntity findById(Integer id) {
+        return chanPinJiaoFuDao.findById(id);
+    }
+
+    @Override
+    public List<ChanPinJiaoFuEntity> findXiangMuDataByIds(Integer firstid, Integer secondid, Integer fileid, Integer page, Integer size) {
+        return chanPinJiaoFuDao.findXiangMuDataByIds(firstid,secondid,fileid);
+    }
 
     @Override
     public List<ChanPinJiaoFuEntity> findXiangMuDataById(Integer idd) {
@@ -73,6 +105,10 @@ public class ChanPinJiaoFuServiceImpl implements ChanPinJiaoFuService {
             TreeNodeUtil treeNodeUtil=new TreeNodeUtil();
             treeNodeUtil.setId((long) chanPinJiaoFuPropertyEntity.getId());
             treeNodeUtil.setLabel(chanPinJiaoFuPropertyEntity.getName());
+            Map<String,Object> map=new HashMap<>();
+            map.put("nameType",(long) chanPinJiaoFuPropertyEntity.getNameType());
+            map.put("parentId",(long) chanPinJiaoFuPropertyEntity.getParentId());
+            treeNodeUtil.setA_attr(map);
             treeNodeUtil.setChildren(this.findChanPinJiaoFuShuXing(chanPinJiaoFuPropertyEntity.getId()));
             treeNodeUtils.add(treeNodeUtil);
         }
