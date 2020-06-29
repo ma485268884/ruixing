@@ -35,11 +35,11 @@
         insert into mro_solution_status (id, year_id, project_id,
                                          file_type_id, task_status, task_finish_date,
                                          project_status, auditor_id, file_path,
-                                         file_name, release_status, type)
+                                         file_name, bidder_id, release_status, type)
         values (#{id,jdbcType=INTEGER}, #{yearId,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER},
                 #{fileTypeId,jdbcType=INTEGER}, #{taskStatus,jdbcType=SMALLINT}, #{taskFinishDate,jdbcType=TIMESTAMP},
                 #{projectStatus,jdbcType=SMALLINT}, #{auditorId,jdbcType=INTEGER}, #{filePath,jdbcType=VARCHAR},
-                #{fileName,jdbcType=VARCHAR}, #{releaseStatus,jdbcType=SMALLINT}, #{type,jdbcType=SMALLINT})
+                #{fileName,jdbcType=VARCHAR}, #{bidder_id,jdbcType=INTEGER}, #{releaseStatus,jdbcType=SMALLINT}, #{type,jdbcType=SMALLINT})
     </insert>
     <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.SolutionStatusEntity">
         insert into mro_solution_status
@@ -73,6 +73,9 @@
             </if>
             <if test="fileName != null">
                 file_name,
+            </if>
+            <if test="bidderId != null">
+                bidder_id,
             </if>
             <if test="releaseStatus != null">
                 release_status,
@@ -112,6 +115,9 @@
             <if test="fileName != null">
                 #{fileName,jdbcType=VARCHAR},
             </if>
+            <if test="bidderId != null">
+                #{bidderId,jdbcType=INTEGER},
+            </if>
             <if test="releaseStatus != null">
                 #{releaseStatus,jdbcType=SMALLINT},
             </if>
@@ -150,6 +156,9 @@
             <if test="fileName != null">
                 file_name = #{fileName,jdbcType=VARCHAR},
             </if>
+            <if test="bidderId != null">
+                bidder_id=#{bidderId,jdbcType=INTEGER},
+            </if>
             <if test="releaseStatus != null">
                 release_status = #{releaseStatus,jdbcType=SMALLINT},
             </if>
@@ -170,6 +179,7 @@
             auditor_id       = #{auditorId,jdbcType=INTEGER},
             file_path        = #{filePath,jdbcType=VARCHAR},
             file_name        = #{fileName,jdbcType=VARCHAR},
+            bidder_id        = #{bidderId,jdbcType=INTEGER},
             release_status   = #{releaseStatus,jdbcType=SMALLINT},
             type             = #{type,jdbcType=SMALLINT}
         where id = #{id,jdbcType=INTEGER}

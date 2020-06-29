@@ -6,8 +6,6 @@ import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.common.util.TreeNodeUtil;
-import com.yintu.ruixing.entity.SolutionEntity;
 import com.yintu.ruixing.entity.SolutionStatusEntity;
 import com.yintu.ruixing.service.SolutionStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +45,7 @@ public class BiddingStatusController extends BaseController {
             throw new BaseRuntimeException("文件名重复");
         solutionStatusEntity.setType(FLAG);
         solutionStatusService.add(solutionStatusEntity);
-        return ResponseDataUtil.ok("添加售前技术支持状态成功");
+        return ResponseDataUtil.ok("添加投招标技术支持状态成功");
     }
 
 
@@ -55,7 +53,7 @@ public class BiddingStatusController extends BaseController {
     @ResponseBody
     public Map<String, Object> remove(@PathVariable Integer[] ids) {
         solutionStatusService.removeMuch(ids);
-        return ResponseDataUtil.ok("删除售前技术支持状态成功");
+        return ResponseDataUtil.ok("删除投招标技术支持状态成功");
     }
 
     @PutMapping("/{id}")
@@ -75,14 +73,14 @@ public class BiddingStatusController extends BaseController {
             throw new BaseRuntimeException("文件名重复");
         solutionStatusEntity.setType(FLAG);
         solutionStatusService.edit(solutionStatusEntity);
-        return ResponseDataUtil.ok("修改售前技术支持状态成功");
+        return ResponseDataUtil.ok("修改投招标技术支持状态成功");
     }
 
     @GetMapping("/{id}")
     @ResponseBody
     public Map<String, Object> findById(@PathVariable Integer id) {
         SolutionStatusEntity solutionStatusEntity = solutionStatusService.findById(id);
-        return ResponseDataUtil.ok("查询售前技术支持状态成功", solutionStatusEntity);
+        return ResponseDataUtil.ok("查询投招标技术支持状态成功", solutionStatusEntity);
     }
 
 
@@ -99,7 +97,7 @@ public class BiddingStatusController extends BaseController {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByProjectNameAndType(projectName, FLAG);
         PageInfo<SolutionStatusEntity> pageInfo = new PageInfo<>(solutionStatusEntities);
-        return ResponseDataUtil.ok("查询售前技术支持状态列表成功", pageInfo);
+        return ResponseDataUtil.ok("查询投招标技术支持状态列表成功", pageInfo);
     }
 
     @PostMapping("/uploads")
@@ -110,7 +108,7 @@ public class BiddingStatusController extends BaseController {
         JSONObject jo = new JSONObject();
         jo.put("filePath", filePath);
         jo.put("fileName", fileName);
-        return ResponseDataUtil.ok("上传售前技术支持状态文件成功", jo);
+        return ResponseDataUtil.ok("上传投招标技术支持状态文件成功", jo);
     }
 
     @GetMapping("/downloads/{id}")

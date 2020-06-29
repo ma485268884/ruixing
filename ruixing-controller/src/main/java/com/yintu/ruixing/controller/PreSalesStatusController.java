@@ -32,6 +32,7 @@ public class PreSalesStatusController extends BaseController {
     @PostMapping
     @ResponseBody
     public Map<String, Object> add(SolutionStatusEntity solutionStatusEntity) {
+        System.out.println(solutionStatusEntity);
         Integer yearId = solutionStatusEntity.getYearId();
         Integer projectId = solutionStatusEntity.getProjectId();
         Integer fileTypeId = solutionStatusEntity.getFileTypeId();
