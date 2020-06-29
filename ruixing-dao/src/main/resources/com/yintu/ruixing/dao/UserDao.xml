@@ -15,7 +15,7 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="department_id" jdbcType="BIGINT" property="departmentId"/>
         <result column="is_customer" jdbcType="SMALLINT" property="isCustomer"/>
-        <association column="department_id" property="departmentEntities">
+        <association column="department_id" property="departmentEntity">
             <id column="did" property="id"/>
             <result column="dparent_id" property="parentId"/>
             <result column="dname" property="name"/>

@@ -49,7 +49,7 @@ public class UserEntity implements UserDetails {
 
     private Long departmentId;
 
-    private DepartmentEntity departmentEntities;
+    private DepartmentEntity departmentEntity;
 
 
     @Override
