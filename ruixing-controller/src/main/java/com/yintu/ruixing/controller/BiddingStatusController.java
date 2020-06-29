@@ -32,7 +32,7 @@ public class BiddingStatusController extends BaseController {
 
     @PostMapping
     @ResponseBody
-    public Map<String, Object> add(@RequestParam("file") MultipartFile multipartFile, SolutionStatusEntity solutionStatusEntity) throws IOException {
+    public Map<String, Object> add(SolutionStatusEntity solutionStatusEntity) {
         Integer yearId = solutionStatusEntity.getYearId();
         Integer projectId = solutionStatusEntity.getProjectId();
         Integer fileTypeId = solutionStatusEntity.getFileTypeId();
@@ -42,13 +42,9 @@ public class BiddingStatusController extends BaseController {
             throw new BaseRuntimeException("项目id不能为空");
         if (fileTypeId == null)
             throw new BaseRuntimeException("文件类型id不能为空");
-        String fileName = multipartFile.getOriginalFilename();
-        List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByFileNameAndType(fileName, FLAG);
+        List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByFileNameAndType(solutionStatusEntity.getFileName(), FLAG);
         if (solutionStatusEntities.size() > 0)
             throw new BaseRuntimeException("文件名重复");
-        String filePathName = FileUploadUtil.save(multipartFile.getInputStream(), fileName);
-        solutionStatusEntity.setFileName(fileName);
-        solutionStatusEntity.setFilePath(filePathName);
         solutionStatusEntity.setType(FLAG);
         solutionStatusService.add(solutionStatusEntity);
         return ResponseDataUtil.ok("添加售前技术支持状态成功");
@@ -64,7 +60,7 @@ public class BiddingStatusController extends BaseController {
 
     @PutMapping("/{id}")
     @ResponseBody
-    public Map<String, Object> edit(@RequestParam("file") MultipartFile multipartFile, @PathVariable Integer id, SolutionStatusEntity solutionStatusEntity) throws IOException {
+    public Map<String, Object> edit(@PathVariable Integer id, SolutionStatusEntity solutionStatusEntity) {
         Integer yearId = solutionStatusEntity.getYearId();
         Integer projectId = solutionStatusEntity.getProjectId();
         Integer file_type_id = solutionStatusEntity.getFileTypeId();
@@ -74,16 +70,9 @@ public class BiddingStatusController extends BaseController {
             throw new BaseRuntimeException("项目id不能为空");
         if (file_type_id == null)
             throw new BaseRuntimeException("文件类型id不能为空");
-        String fileName = multipartFile.getOriginalFilename();
-        List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByFileNameAndType(fileName, FLAG);
+        List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByFileNameAndType(solutionStatusEntity.getFileName(), FLAG);
         if (solutionStatusEntities.size() > 0 && !solutionStatusEntities.get(0).getId().equals(id))
             throw new BaseRuntimeException("文件名重复");
-        SolutionStatusEntity s = solutionStatusService.findById(id);
-        if (s != null)
-            FileUploadUtil.delete(s.getFilePath() + "\\" + s.getFileName());
-        String filePathName = FileUploadUtil.save(multipartFile.getInputStream(), fileName);
-        solutionStatusEntity.setFileName(fileName);
-        solutionStatusEntity.setFilePath(filePathName);
         solutionStatusEntity.setType(FLAG);
         solutionStatusService.edit(solutionStatusEntity);
         return ResponseDataUtil.ok("修改售前技术支持状态成功");

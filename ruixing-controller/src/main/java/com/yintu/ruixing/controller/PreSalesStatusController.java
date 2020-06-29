@@ -31,7 +31,7 @@ public class PreSalesStatusController extends BaseController {
 
     @PostMapping
     @ResponseBody
-    public Map<String, Object> add(SolutionStatusEntity solutionStatusEntity) throws IOException {
+    public Map<String, Object> add(SolutionStatusEntity solutionStatusEntity) {
         Integer yearId = solutionStatusEntity.getYearId();
         Integer projectId = solutionStatusEntity.getProjectId();
         Integer fileTypeId = solutionStatusEntity.getFileTypeId();
@@ -59,7 +59,7 @@ public class PreSalesStatusController extends BaseController {
 
     @PutMapping("/{id}")
     @ResponseBody
-    public Map<String, Object> edit(@PathVariable Integer id, SolutionStatusEntity solutionStatusEntity) throws IOException {
+    public Map<String, Object> edit(@PathVariable Integer id, SolutionStatusEntity solutionStatusEntity) {
         Integer yearId = solutionStatusEntity.getYearId();
         Integer projectId = solutionStatusEntity.getProjectId();
         Integer file_type_id = solutionStatusEntity.getFileTypeId();
@@ -73,7 +73,6 @@ public class PreSalesStatusController extends BaseController {
         if (solutionStatusEntities.size() > 0 && !solutionStatusEntities.get(0).getId().equals(id))
             throw new BaseRuntimeException("文件名重复");
         solutionStatusEntity.setType(FLAG);
-        solutionStatusService.edit(solutionStatusEntity);
         return ResponseDataUtil.ok("修改售前技术支持状态成功");
     }
 
