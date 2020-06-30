@@ -1,11 +1,14 @@
 package com.yintu.ruixing.service.impl;
 
+import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.PreSaleDao;
 import com.yintu.ruixing.entity.PreSaleEntity;
 import com.yintu.ruixing.service.PreSaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author:mlf
@@ -38,5 +41,22 @@ public class PreSaleServiceImpl implements PreSaleService {
     @Override
     public PreSaleEntity findById(Integer id) {
         return preSaleDao.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Integer> findByDistinctProjectDate() {
+        return preSaleDao.selectByDistinctProjectDate();
+    }
+
+    @Override
+    public List<String> findByYear(Integer year) {
+        return preSaleDao.selectByYear(year);
+    }
+
+    @Override
+    public List<TreeNodeUtil> findByTree() {
+
+
+        return null;
     }
 }

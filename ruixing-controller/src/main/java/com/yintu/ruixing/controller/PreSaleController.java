@@ -15,7 +15,7 @@ import java.util.Map;
  * @date:2020/6/30 19:12
  */
 @RestController
-@RequestMapping("/pre/sale")
+@RequestMapping("/pre/sales")
 public class PreSaleController extends SessionController implements BaseController<PreSaleEntity, Integer> {
 
     @Autowired
@@ -44,6 +44,11 @@ public class PreSaleController extends SessionController implements BaseControll
     public Map<String, Object> findById(@PathVariable Integer id) {
         PreSaleEntity preSaleEntity = preSaleService.findById(id);
         return ResponseDataUtil.ok("查询售前技术支持信息成功", preSaleEntity);
+    }
+
+    @GetMapping
+    public Map<String, Object> findTree() {
+        return ResponseDataUtil.ok("查询售前技术支持全部信息成功", null);
     }
 
 }
