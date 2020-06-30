@@ -20,34 +20,44 @@ import java.util.Map;
 
 /**
  * @author:mlf
- * @date:2020/6/28 17:16
- * 解决方案：招投标技术支持模块
+ * @date:2020/6/30 11:58
+ * 解决方案：设计联络及后续技术交流
  */
 @Controller
-@RequestMapping("/bidding/status")
-public class BiddingStatusController extends BaseController {
+@RequestMapping("/devise/status")
+public class DeviseStatusController extends BaseController {
     @Autowired
     private SolutionStatusService solutionStatusService;
-    private final Short FLAG = new Short("2");//模块标识
+
+    private final Short FLAG = new Short("3");//模块标识
 
     @PostMapping
     @ResponseBody
     public Map<String, Object> add(SolutionStatusEntity solutionStatusEntity) {
+        System.out.println(solutionStatusEntity);
         Integer yearId = solutionStatusEntity.getYearId();
         Integer projectId = solutionStatusEntity.getProjectId();
         Integer fileTypeId = solutionStatusEntity.getFileTypeId();
+        String filePath = solutionStatusEntity.getFilePath();
+        String fileName = solutionStatusEntity.getFileName();
         if (yearId == null)
             throw new BaseRuntimeException("年份id不能为空");
         if (projectId == null)
             throw new BaseRuntimeException("项目id不能为空");
         if (fileTypeId == null)
             throw new BaseRuntimeException("文件类型id不能为空");
+        if (filePath == null || "".equals(filePath)) {
+            throw new BaseRuntimeException("文件路径不能为空");
+        }
+        if (fileName == null || "".equals(fileName)) {
+            throw new BaseRuntimeException("文件名不能为空");
+        }
         List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByFileNameAndType(solutionStatusEntity.getFileName(), FLAG);
         if (solutionStatusEntities.size() > 0)
             throw new BaseRuntimeException("文件名重复");
         solutionStatusEntity.setType(FLAG);
         solutionStatusService.add(solutionStatusEntity);
-        return ResponseDataUtil.ok("添加投招标技术支持状态成功");
+        return ResponseDataUtil.ok("添加售前技术支持状态成功");
     }
 
 
@@ -55,7 +65,7 @@ public class BiddingStatusController extends BaseController {
     @ResponseBody
     public Map<String, Object> remove(@PathVariable Integer[] ids) {
         solutionStatusService.removeMuch(ids);
-        return ResponseDataUtil.ok("删除投招标技术支持状态成功");
+        return ResponseDataUtil.ok("删除售前技术支持状态成功");
     }
 
     @PutMapping("/{id}")
@@ -63,26 +73,34 @@ public class BiddingStatusController extends BaseController {
     public Map<String, Object> edit(@PathVariable Integer id, SolutionStatusEntity solutionStatusEntity) {
         Integer yearId = solutionStatusEntity.getYearId();
         Integer projectId = solutionStatusEntity.getProjectId();
-        Integer file_type_id = solutionStatusEntity.getFileTypeId();
+        Integer fileTypeId = solutionStatusEntity.getFileTypeId();
+        String filePath = solutionStatusEntity.getFilePath();
+        String fileName = solutionStatusEntity.getFileName();
         if (yearId == null)
             throw new BaseRuntimeException("年份id不能为空");
         if (projectId == null)
             throw new BaseRuntimeException("项目id不能为空");
-        if (file_type_id == null)
+        if (fileTypeId == null)
             throw new BaseRuntimeException("文件类型id不能为空");
+        if (filePath == null || "".equals(filePath)) {
+            throw new BaseRuntimeException("文件路径不能为空");
+        }
+        if (fileName == null || "".equals(fileName)) {
+            throw new BaseRuntimeException("文件名不能为空");
+        }
         List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByFileNameAndType(solutionStatusEntity.getFileName(), FLAG);
         if (solutionStatusEntities.size() > 0 && !solutionStatusEntities.get(0).getId().equals(id))
             throw new BaseRuntimeException("文件名重复");
         solutionStatusEntity.setType(FLAG);
         solutionStatusService.edit(solutionStatusEntity);
-        return ResponseDataUtil.ok("修改投招标技术支持状态成功");
+        return ResponseDataUtil.ok("修改售前技术支持状态成功");
     }
 
     @GetMapping("/{id}")
     @ResponseBody
     public Map<String, Object> findById(@PathVariable Integer id) {
         SolutionStatusEntity solutionStatusEntity = solutionStatusService.findById(id);
-        return ResponseDataUtil.ok("查询投招标技术支持状态成功", solutionStatusEntity);
+        return ResponseDataUtil.ok("查询售前技术支持状态成功", solutionStatusEntity);
     }
 
 
@@ -99,7 +117,7 @@ public class BiddingStatusController extends BaseController {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<SolutionStatusEntity> solutionStatusEntities = solutionStatusService.findByProjectNameAndType(projectName, FLAG);
         PageInfo<SolutionStatusEntity> pageInfo = new PageInfo<>(solutionStatusEntities);
-        return ResponseDataUtil.ok("查询投招标技术支持状态列表成功", pageInfo);
+        return ResponseDataUtil.ok("查询售前技术支持状态列表成功", pageInfo);
     }
 
     @PostMapping("/uploads")
@@ -110,7 +128,7 @@ public class BiddingStatusController extends BaseController {
         JSONObject jo = new JSONObject();
         jo.put("filePath", filePath);
         jo.put("fileName", fileName);
-        return ResponseDataUtil.ok("上传投招标技术支持状态文件成功", jo);
+        return ResponseDataUtil.ok("上传售前技术支持状态文件成功", jo);
     }
 
     @GetMapping("/downloads/{id}")
@@ -133,5 +151,4 @@ public class BiddingStatusController extends BaseController {
     public void exportFile(@PathVariable Integer[] ids, HttpServletResponse response) throws IOException {
         solutionStatusService.exportFile(response, ids, FLAG);
     }
-
 }
