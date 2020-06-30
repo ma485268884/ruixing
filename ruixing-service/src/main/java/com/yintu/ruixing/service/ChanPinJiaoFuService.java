@@ -35,4 +35,16 @@ public interface ChanPinJiaoFuService {
     List<Integer> findIdS(Integer id);
 
     List<ChanPinJiaoFuEntity> findXiangMuDataById(Integer idd);
+
+    List<ChanPinJiaoFuEntity> findXiangMuDataByIds(Integer firstid, Integer secondid, Integer fileid, Integer page, Integer size);
+
+    ChanPinJiaoFuEntity findById(Integer id);
+
+    void addXiangMuData(ChanPinJiaoFuEntity chanPinJiaoFuEntity);
+
+    void editXiangMuDataById(ChanPinJiaoFuEntity chanPinJiaoFuEntity);
+
+    void deletXiangMuDataById(Integer id);
+
+    void deletXiangMuDataByIds(Integer[] ids);
 }

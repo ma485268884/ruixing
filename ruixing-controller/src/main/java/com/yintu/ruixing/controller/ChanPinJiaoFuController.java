@@ -3,6 +3,7 @@ package com.yintu.ruixing.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.ChanPinJiaoFuEntity;
@@ -10,7 +11,10 @@ import com.yintu.ruixing.entity.ChanPinJiaoFuPropertyEntity;
 import com.yintu.ruixing.service.ChanPinJiaoFuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -33,17 +37,19 @@ public class ChanPinJiaoFuController {
         return ResponseDataUtil.ok("查询产品交付树结构成功", treeNodeUtils);
     }
 
-    //当表中没有数据时  添加第一条数据
+    //当表中没有数据时  添加第一条数据   添加树形数据
     @PostMapping("/addDataShu")
     public Map<String, Object> addDataShu(ChanPinJiaoFuPropertyEntity chanPinJiaoFuPropertyEntity) {
-        Integer parendid = chanPinJiaoFuService.findAllDataShu();
+        /*Integer parendid = chanPinJiaoFuService.findAllDataShu();
         if (parendid == null) {
             chanPinJiaoFuService.addfristData(chanPinJiaoFuPropertyEntity);
             return ResponseDataUtil.ok("添加第一条数据成功");
         } else {
             chanPinJiaoFuService.addDataShu(chanPinJiaoFuPropertyEntity);
             return ResponseDataUtil.ok("添加数据成功");
-        }
+        }*/
+        chanPinJiaoFuService.addDataShu(chanPinJiaoFuPropertyEntity);
+        return ResponseDataUtil.ok("添加数据成功");
     }
 
     //根据选择id编辑树形结构数据
@@ -126,5 +132,75 @@ public class ChanPinJiaoFuController {
             return ResponseDataUtil.ok("dadsd9894", chanPinJiaoFuEntitiess);
         }
         return ResponseDataUtil.ok("dadsd", null);
+    }
+
+    //根据树形结构的id  查询对应的所有数据
+    @GetMapping("/findXiangMuDataByIds")
+    public Map<String, Object> findXiangMuDataByIds(Integer firstid, Integer secondid,
+                                                    Integer fileid, Integer page, Integer size) {
+        JSONObject js = new JSONObject();
+        PageHelper.startPage(page, size);
+        List<ChanPinJiaoFuEntity> chanPinJiaoFuEntityList = chanPinJiaoFuService.findXiangMuDataByIds(firstid, secondid, fileid, page, size);
+        js.put("chanPinJiaoFuEntityList", chanPinJiaoFuEntityList);
+        PageInfo<ChanPinJiaoFuEntity> info = new PageInfo<>(chanPinJiaoFuEntityList);
+        js.put("info", info);
+        return ResponseDataUtil.ok("查询数据成功", js);
+    }
+
+    //上传文件
+    @PostMapping("/uploads")
+    @ResponseBody
+    public Map<String, Object> uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+        String fileName = multipartFile.getOriginalFilename();
+        String filePath = FileUploadUtil.save(multipartFile.getInputStream(), fileName);
+        JSONObject jo = new JSONObject();
+        jo.put("filePath", filePath);
+        jo.put("fileName", fileName);
+        return ResponseDataUtil.ok("上传文件成功", jo);
+    }
+
+    //根据id 下载文件
+    @GetMapping("/downloads/{id}")
+    public void downloadFile(@PathVariable Integer id, HttpServletResponse response) throws IOException {
+        ChanPinJiaoFuEntity chanPinJiaoFuEntity = chanPinJiaoFuService.findById(id);
+        if (chanPinJiaoFuEntity != null) {
+            String filePath = chanPinJiaoFuEntity.getFilePath();
+            String fileName = chanPinJiaoFuEntity.getFileName();
+            if (filePath != null && !"".equals(filePath) && fileName != null && !"".equals(fileName)) {
+                response.setContentType("application/octet-stream;charset=ISO8859-1");
+                response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
+                response.addHeader("Pargam", "no-cache");
+                response.addHeader("Cache-Control", "no-cache");
+                FileUploadUtil.get(response.getOutputStream(), filePath + "\\" + fileName);
+            }
+        }
+    }
+
+    //新增项目交付管理状态
+    @PostMapping("/addXiangMuData")
+    public Map<String, Object> addXiangMuData(ChanPinJiaoFuEntity chanPinJiaoFuEntity) {
+        chanPinJiaoFuService.addXiangMuData(chanPinJiaoFuEntity);
+        return ResponseDataUtil.ok("新增产品交付状态成功");
+    }
+
+    //根据id  编辑项目交付管理状态
+    @PutMapping("/editXiangMuDataById/{id}")
+    public Map<String, Object> editXiangMuDataById(@PathVariable Integer id, ChanPinJiaoFuEntity chanPinJiaoFuEntity) {
+        chanPinJiaoFuService.editXiangMuDataById(chanPinJiaoFuEntity);
+        return ResponseDataUtil.ok("编辑产品交付状态成功");
+    }
+
+    //根据id  删除对应的项目交付管理状态
+    @DeleteMapping("/deletXiangMuDataById/{id}")
+    public Map<String, Object> deletXiangMuDataById(@PathVariable Integer id) {
+        chanPinJiaoFuService.deletXiangMuDataById(id);
+        return ResponseDataUtil.ok("删除成功");
+    }
+
+    //根据id 批量删除项目交付管理状态
+    @DeleteMapping("/deletXiangMuDataByIds/{ids}")
+    public Map<String,Object>deletXiangMuDataByIds(@PathVariable Integer[] ids){
+        chanPinJiaoFuService.deletXiangMuDataByIds(ids);
+        return ResponseDataUtil.ok("批量删除数据成功");
     }
 }
