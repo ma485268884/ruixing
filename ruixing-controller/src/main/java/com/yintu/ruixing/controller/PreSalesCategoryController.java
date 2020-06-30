@@ -22,7 +22,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/presales/category")
-public class PreSalesCategoryController extends BaseController {
+public class PreSalesCategoryController extends SessionController {
     @Autowired
     private SolutionService solutionService;
     private final Short FLAG = new Short("1");//模块标识

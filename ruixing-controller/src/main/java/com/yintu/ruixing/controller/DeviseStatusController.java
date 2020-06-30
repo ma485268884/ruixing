@@ -25,7 +25,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/devise/status")
-public class DeviseStatusController extends BaseController {
+public class DeviseStatusController extends SessionController {
     @Autowired
     private SolutionStatusService solutionStatusService;
 

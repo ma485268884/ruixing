@@ -17,7 +17,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/properties")
-public class MenXianPropertyController extends BaseController {
+public class MenXianPropertyController extends SessionController {
 
     @Autowired
     private MenXianPropertyService menXianPropertyService;

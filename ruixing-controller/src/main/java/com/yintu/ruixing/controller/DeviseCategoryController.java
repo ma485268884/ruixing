@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/devise/category")
-public class DeviseCategoryController extends BaseController {
+public class DeviseCategoryController extends SessionController {
     @Autowired
     private SolutionService solutionService;
 

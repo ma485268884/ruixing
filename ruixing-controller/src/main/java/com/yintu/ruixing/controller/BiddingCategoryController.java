@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/bidding/category")
-public class BiddingCategoryController extends BaseController {
+public class BiddingCategoryController extends SessionController {
     @Autowired
     private SolutionService solutionService;
 

@@ -4,13 +4,11 @@ import com.yintu.ruixing.common.enumobject.EnumAuthType;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.service.UserService;
-import org.apache.commons.collections4.list.TreeList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +18,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/common")
-public class CommonController extends BaseController {
+public class CommonController extends SessionController {
 
     @Autowired
     private UserService userService;

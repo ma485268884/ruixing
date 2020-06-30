@@ -1,11 +1,9 @@
 package com.yintu.ruixing.controller;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.MenXianEntity;
-import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.MenXianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -20,7 +18,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/menxians")
-public class MenXianController extends BaseController {
+public class MenXianController extends SessionController {
     @Autowired
     private MenXianService menXianService;
 

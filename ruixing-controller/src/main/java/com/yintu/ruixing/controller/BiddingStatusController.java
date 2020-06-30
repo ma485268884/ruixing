@@ -25,7 +25,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/bidding/status")
-public class BiddingStatusController extends BaseController {
+public class BiddingStatusController extends SessionController {
     @Autowired
     private SolutionStatusService solutionStatusService;
     private final Short FLAG = new Short("2");//模块标识

@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author:mlf
@@ -24,7 +22,7 @@ import java.util.stream.Stream;
  */
 @RestController
 @RequestMapping("/roles")
-public class RoleController extends BaseController {
+public class RoleController extends SessionController {
     @Autowired
     private RoleService roleService;
     @Autowired

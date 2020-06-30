@@ -4,9 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.yintu.ruixing.common.enumobject.EnumAuthType;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.PermissionService;
@@ -24,7 +22,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping(value = "/users")
-public class UserController extends BaseController {
+public class UserController extends SessionController {
 
     @Autowired
     private UserService userService;
