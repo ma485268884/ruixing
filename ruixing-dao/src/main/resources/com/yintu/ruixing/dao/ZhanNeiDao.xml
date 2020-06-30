@@ -48,12 +48,10 @@
             qd.dianMaHuaGuiHao,
             qd.guiNeiDiZhi
         FROM
-            mro_line li,
             mro_quduan_base qd
         WHERE
-            li.id = qd.line_id
-            and
-            li.cid=#{id}
+            qd.line = '电码化'
+            AND qd.cid = #{id}
     </select>
 
     <resultMap type="com.yintu.ruixing.entity.CheZhanEntity" id="chezhan">
