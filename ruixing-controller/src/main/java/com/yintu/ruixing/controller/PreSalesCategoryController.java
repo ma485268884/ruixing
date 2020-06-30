@@ -17,11 +17,12 @@ import java.util.Map;
 /**
  * @author:mlf
  * @date:2020/6/22 17:39
+ * 解决方案：售前技术支持模块
  */
 
 @RestController
 @RequestMapping("/presales/category")
-public class PreSalesCategoryController extends BaseController {
+public class PreSalesCategoryController extends SessionController {
     @Autowired
     private SolutionService solutionService;
     private final Short FLAG = new Short("1");//模块标识

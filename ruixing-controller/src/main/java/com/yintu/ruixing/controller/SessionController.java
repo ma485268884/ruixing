@@ -11,7 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * @author:mlf
  * @date:2020/5/21 10:47
  */
-public class BaseController {
+public class SessionController {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 

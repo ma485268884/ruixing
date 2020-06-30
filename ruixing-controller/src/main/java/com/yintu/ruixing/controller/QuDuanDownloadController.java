@@ -23,7 +23,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/downloads")
-public class QuDuanDownloadController extends BaseController {
+public class QuDuanDownloadController extends SessionController {
     @Autowired
     private QuDuanDownloadService quDuanDownloadService;
     @Autowired

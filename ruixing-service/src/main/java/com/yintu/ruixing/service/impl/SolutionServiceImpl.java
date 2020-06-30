@@ -44,6 +44,7 @@ public class SolutionServiceImpl implements SolutionService {
             solutionEntity.setNameType((short) 3);
             solutionEntity.setType(entity.getType());
             solutionDao.insertSelective(solutionEntity);
+            solutionEntity.setId(null);
             solutionEntity.setName("输出文件");
             solutionDao.insertSelective(solutionEntity);
         }

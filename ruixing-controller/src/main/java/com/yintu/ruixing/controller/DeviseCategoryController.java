@@ -16,17 +16,16 @@ import java.util.Map;
 
 /**
  * @author:mlf
- * @date:2020/6/28 16:48
- * 解决方案：招投标技术支持模块
+ * @date:2020/6/30 11:56
+ * 解决方案：设计联络及后续技术交流
  */
 @RestController
-@RequestMapping("/bidding/category")
-public class BiddingCategoryController extends SessionController {
+@RequestMapping("/devise/category")
+public class DeviseCategoryController extends SessionController {
     @Autowired
     private SolutionService solutionService;
 
-    private final Short FLAG = new Short("2");//模块标识
-
+    private final Short FLAG = new Short("3");//模块标识
 
     @PostMapping
     public Map<String, Object> add(SolutionEntity solutionEntity) {
@@ -38,7 +37,7 @@ public class BiddingCategoryController extends SessionController {
             throw new BaseRuntimeException("目录名不能为空");
         solutionEntity.setType(FLAG);
         solutionService.add(solutionEntity);
-        return ResponseDataUtil.ok("添加投招标技术支持类别成功");
+        return ResponseDataUtil.ok("添加设计联络及后续技术交流类别成功");
     }
 
 
@@ -46,11 +45,11 @@ public class BiddingCategoryController extends SessionController {
     public Map<String, Object> remove(@PathVariable Integer id) {
         solutionService.remove(id);//删除此类别id
         solutionService.removeTreeByIdAndType(id, FLAG);//删除此类别下的子节点
-        return ResponseDataUtil.ok("删除投招标技术支持类别成功");
+        return ResponseDataUtil.ok("删除设计联络及后续技术交流类别成功");
     }
 
     @PutMapping("/{id}")
-    public Map<String, Object> edit(SolutionEntity solutionEntity) {
+    public Map<String, Object> edit(@PathVariable Integer id, SolutionEntity solutionEntity) {
         Integer parentId = solutionEntity.getParentId();
         String name = solutionEntity.getName();
         if (parentId == null)
@@ -59,25 +58,25 @@ public class BiddingCategoryController extends SessionController {
             throw new BaseRuntimeException("目录名不能为空");
         solutionEntity.setType(FLAG);
         solutionService.edit(solutionEntity);
-        return ResponseDataUtil.ok("修改投招标技术支持类别成功");
+        return ResponseDataUtil.ok("修改设计联络及后续技术交流类别成功");
     }
 
     @GetMapping("/{id}")
     public Map<String, Object> findById(@PathVariable Integer id) {
         SolutionEntity solutionEntity = solutionService.findById(id);
-        return ResponseDataUtil.ok("查询投招标技术支持类别成功", solutionEntity);
+        return ResponseDataUtil.ok("查询设计联络及后续技术交流类别成功", solutionEntity);
     }
 
     @GetMapping
     public Map<String, Object> findAll() {
         List<TreeNodeUtil> treeNodeUtils = solutionService.findTreeByParentIdAndType(-1, FLAG);
-        return ResponseDataUtil.ok("查询投招标技术支持类别树成功", treeNodeUtils);
+        return ResponseDataUtil.ok("查询设计联络及后续技术交流类别树成功", treeNodeUtils);
     }
 
     @GetMapping("/list")
     public Map<String, Object> findList(@RequestParam("parentId") Integer parentId) {
         List<SolutionEntity> solutionEntities = solutionService.findByParentIdAndType(parentId, FLAG);
-        return ResponseDataUtil.ok("查询投招标技术支持类别列表成功", solutionEntities);
+        return ResponseDataUtil.ok("查询设计联络及后续技术交流类别成功", solutionEntities);
     }
 
     @GetMapping("/{id}/status")
@@ -92,6 +91,6 @@ public class BiddingCategoryController extends SessionController {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<SolutionStatusEntity> solutionStatusEntities = solutionService.findStatusById(id, nameType, FLAG);
         PageInfo<SolutionStatusEntity> pageInfo = new PageInfo<>(solutionStatusEntities);
-        return ResponseDataUtil.ok("查询投招标技术支持状态列表成功", pageInfo);
+        return ResponseDataUtil.ok("查询设计联络及后续技术交流列表成功", pageInfo);
     }
 }

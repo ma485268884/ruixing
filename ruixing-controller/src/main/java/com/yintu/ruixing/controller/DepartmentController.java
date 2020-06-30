@@ -18,7 +18,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/departments")
-public class DepartmentController extends BaseController {
+public class DepartmentController extends SessionController {
     @Autowired
     private DepartmentService departmentService;
 

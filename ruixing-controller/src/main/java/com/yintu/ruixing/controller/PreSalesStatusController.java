@@ -21,10 +21,11 @@ import java.util.Map;
 /**
  * @author:mlf
  * @date:2020/6/23 9:56
+ * 解决方案：售前技术支持模块
  */
 @Controller
 @RequestMapping("/presales/status")
-public class PreSalesStatusController extends BaseController {
+public class PreSalesStatusController extends SessionController {
     @Autowired
     private SolutionStatusService solutionStatusService;
     private final Short FLAG = new Short("1");//模块标识
@@ -90,6 +91,7 @@ public class PreSalesStatusController extends BaseController {
         if (solutionStatusEntities.size() > 0 && !solutionStatusEntities.get(0).getId().equals(id))
             throw new BaseRuntimeException("文件名重复");
         solutionStatusEntity.setType(FLAG);
+        solutionStatusService.edit(solutionStatusEntity);
         return ResponseDataUtil.ok("修改售前技术支持状态成功");
     }
 

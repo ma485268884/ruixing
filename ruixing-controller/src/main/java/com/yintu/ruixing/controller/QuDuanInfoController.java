@@ -20,7 +20,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/quduans")
-public class QuDuanInfoController extends BaseController {
+public class QuDuanInfoController extends SessionController {
     @Autowired
     private QuDuanInfoService quDuanInfoService;
 
