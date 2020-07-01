@@ -13,6 +13,8 @@ public interface PreSaleDao {
 
     PreSaleEntity selectByPrimaryKey(Integer id);
 
+    List<PreSaleEntity> selectByAll();
+
     int updateByPrimaryKeySelective(PreSaleEntity record);
 
     int updateByPrimaryKey(PreSaleEntity record);

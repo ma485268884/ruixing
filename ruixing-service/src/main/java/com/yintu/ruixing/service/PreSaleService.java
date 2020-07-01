@@ -12,6 +12,9 @@ import java.util.List;
  */
 public interface PreSaleService extends BaseService<PreSaleEntity, Integer> {
 
+
+    List<PreSaleEntity> findAll();
+
     /**
      * 按照项目日期去重
      *
@@ -33,5 +36,6 @@ public interface PreSaleService extends BaseService<PreSaleEntity, Integer> {
      * @return 树信息集合
      */
     List<TreeNodeUtil> findByTree();
+
 
 }
