@@ -38,6 +38,21 @@ public class ChanPinJiaoFuServiceImpl implements ChanPinJiaoFuService {
 
 
     @Override
+    public List<ChanPinJiaoFuEntity> findXiangMuDataByIdThird(Integer id, Integer page, Integer size) {
+        return chanPinJiaoFuDao.findXiangMuDataByIdThird(id);
+    }
+
+    @Override
+    public List<ChanPinJiaoFuEntity> findXiangMuDataByIdSecond(Integer id, Integer page, Integer size) {
+        return chanPinJiaoFuDao.findXiangMuDataByIdSecond(id);
+    }
+
+    @Override
+    public List<ChanPinJiaoFuEntity> findXiangMuDataByIdFirst(Integer id, Integer page, Integer size) {
+        return chanPinJiaoFuDao.findXiangMuDataByIdFirst(id);
+    }
+
+    @Override
     public void deletXiangMuDataByIds(Integer[] ids) {
         chanPinJiaoFuDao.deletXiangMuDataByIds(ids);
     }
@@ -109,7 +124,9 @@ public class ChanPinJiaoFuServiceImpl implements ChanPinJiaoFuService {
             map.put("nameType",(long) chanPinJiaoFuPropertyEntity.getNameType());
             map.put("parentId",(long) chanPinJiaoFuPropertyEntity.getParentId());
             treeNodeUtil.setA_attr(map);
-            treeNodeUtil.setChildren(this.findChanPinJiaoFuShuXing(chanPinJiaoFuPropertyEntity.getId()));
+            if (chanPinJiaoFuDao.findChanPinJiaoFuShuXing(chanPinJiaoFuPropertyEntity.getId()).size()>0){
+                treeNodeUtil.setChildren(this.findChanPinJiaoFuShuXing(chanPinJiaoFuPropertyEntity.getId()));
+            }
             treeNodeUtils.add(treeNodeUtil);
         }
         return treeNodeUtils;

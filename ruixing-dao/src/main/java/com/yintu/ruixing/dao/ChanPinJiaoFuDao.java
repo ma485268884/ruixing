@@ -47,4 +47,10 @@ public interface ChanPinJiaoFuDao {
     void deletXiangMuDataById(Integer id);
 
     void deletXiangMuDataByIds(Integer[] ids);
+
+    List<ChanPinJiaoFuEntity> findXiangMuDataByIdFirst(Integer id);
+
+    List<ChanPinJiaoFuEntity> findXiangMuDataByIdSecond(Integer id);
+
+    List<ChanPinJiaoFuEntity> findXiangMuDataByIdThird(Integer id);
 }

@@ -135,7 +135,7 @@ public class ChanPinJiaoFuController {
     }
 
     //根据树形结构的id  查询对应的所有数据
-    @GetMapping("/findXiangMuDataByIds")
+    /*@GetMapping("/findXiangMuDataByIds")
     public Map<String, Object> findXiangMuDataByIds(Integer firstid, Integer secondid,
                                                     Integer fileid, Integer page, Integer size) {
         JSONObject js = new JSONObject();
@@ -145,9 +145,41 @@ public class ChanPinJiaoFuController {
         PageInfo<ChanPinJiaoFuEntity> info = new PageInfo<>(chanPinJiaoFuEntityList);
         js.put("info", info);
         return ResponseDataUtil.ok("查询数据成功", js);
+    }*/
+
+    @GetMapping("/findXiangMuDataByIds")
+    public Map<String, Object> findXiangMuDataByIds(Integer parentId, Integer id,
+                                                     Integer page, Integer size) {
+        if (parentId==-1){
+            JSONObject js = new JSONObject();
+            PageHelper.startPage(page, size);
+            List<ChanPinJiaoFuEntity> chanPinJiaoFuEntityList = chanPinJiaoFuService.findXiangMuDataByIdFirst(id, page, size);
+            js.put("chanPinJiaoFuEntityList", chanPinJiaoFuEntityList);
+            PageInfo<ChanPinJiaoFuEntity> info = new PageInfo<>(chanPinJiaoFuEntityList);
+            js.put("info", info);
+            return ResponseDataUtil.ok("查询数据成功", js);
+        }if (parentId==1 || parentId==2 ||parentId==3){
+            JSONObject js = new JSONObject();
+            PageHelper.startPage(page, size);
+            List<ChanPinJiaoFuEntity> chanPinJiaoFuEntityList = chanPinJiaoFuService.findXiangMuDataByIdSecond(id, page, size);
+            js.put("chanPinJiaoFuEntityList", chanPinJiaoFuEntityList);
+            PageInfo<ChanPinJiaoFuEntity> info = new PageInfo<>(chanPinJiaoFuEntityList);
+            js.put("info", info);
+            return ResponseDataUtil.ok("查询数据成功", js);
+        }else {
+            JSONObject js = new JSONObject();
+            PageHelper.startPage(page, size);
+            List<ChanPinJiaoFuEntity> chanPinJiaoFuEntityList = chanPinJiaoFuService.findXiangMuDataByIdThird(id, page, size);
+            js.put("chanPinJiaoFuEntityList", chanPinJiaoFuEntityList);
+            PageInfo<ChanPinJiaoFuEntity> info = new PageInfo<>(chanPinJiaoFuEntityList);
+            js.put("info", info);
+            return ResponseDataUtil.ok("查询数据成功", js);
+        }
+
     }
 
-    //上传文件
+
+        //上传文件
     @PostMapping("/uploads")
     @ResponseBody
     public Map<String, Object> uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {

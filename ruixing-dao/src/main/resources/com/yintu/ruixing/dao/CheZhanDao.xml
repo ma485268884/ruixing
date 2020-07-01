@@ -20,12 +20,13 @@
         <result property="czJson" column="cz_json"/>
         <result property="czRSheBei" column="cz_r_shebei"/>
         <result property="czZhongJiZhan" column="cz_zhongjizhan"/>
+        <result property="czState" column="cz_state"/>
     </resultMap>
 
     <!--添加车站-->
     <insert id="insertChezhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity" >
-        insert into mro_chezhan(cz_name,cz_id,xd_id,cz_miaoshu,xd_cz_id)
-          values(#{czName,jdbcType=VARCHAR},#{czId,jdbcType=BIGINT},#{xdId,jdbcType=BIGINT},#{czMiaoShu,jdbcType=VARCHAR},#{xid,jdbcType=BIGINT})
+        insert into mro_chezhan(cz_name,cz_id,xd_id,cz_miaoshu,xd_cz_id,cz_state)
+          values(#{czName,jdbcType=VARCHAR},#{czId,jdbcType=BIGINT},#{xdId,jdbcType=BIGINT},#{czMiaoShu,jdbcType=VARCHAR},#{xid,jdbcType=BIGINT},#{czState,jdbcType=BIGINT})
     </insert>
     <!--更新车站-->
     <update id="updateCheZhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity" >
