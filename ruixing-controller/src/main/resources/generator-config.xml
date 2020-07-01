@@ -44,7 +44,7 @@
         <!--        <table tableName="tb_user_role" domainObjectName="UserRoleEntity" mapperName="UserRoleDao"/>-->
         <!--        <table tableName="tb_permission" domainObjectName="PermissionEntity1" mapperName="PermissionDao1"/>-->
         <!--        <table tableName="tb_permission_role" domainObjectName="PermissionRoleEntity" mapperName="PermissionRoleDao"/>-->
-        <table tableName="mro_chanpinjiaofu" domainObjectName="ChanPinJiaoFuEntity" mapperName="ChanPinJiaoFuDao"
+        <table tableName="mro_chanpinjiaofu_xiangmu" domainObjectName="ChanPinJiaoFuXiangMuEntity" mapperName="ChanPinJiaoFuXiangMuDao"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"/>
