@@ -7,22 +7,18 @@
         <result column="path" jdbcType="VARCHAR" property="path"/>
         <result column="upload_datetime" jdbcType="TIMESTAMP" property="uploadDatetime"/>
         <result column="type" jdbcType="SMALLINT" property="type"/>
+        <result column="release_status" jdbcType="SMALLINT" property="releaseStatus"/>
         <result column="auditor_id" jdbcType="INTEGER" property="auditorId"/>
         <result column="pre_sale_id" jdbcType="INTEGER" property="preSaleId"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, name, path, upload_datetime, type, auditor_id, pre_sale_id
+        id, name, path, upload_datetime, type, release_status, auditor_id, pre_sale_id
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from mro_pre_sale_file
         where id = #{id,jdbcType=INTEGER}
-    </select>
-    <select id="selectByAll"  resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from mro_pre_sale_file
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
@@ -31,13 +27,14 @@
     </delete>
     <insert id="insert" parameterType="com.yintu.ruixing.entity.PreSaleFileEntity">
         insert into mro_pre_sale_file (id, name, path,
-                                       upload_datetime, type, auditor_id,
+                                       upload_datetime, type,
+                                       release_status, auditor_id,
                                        pre_sale_id)
         values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR},
-                #{uploadDatetime,jdbcType=TIMESTAMP}, #{type,jdbcType=SMALLINT}, #{auditorId,jdbcType=INTEGER},
+                #{uploadDatetime,jdbcType=TIMESTAMP}, #{type,jdbcType=SMALLINT}, #{releaseStatus,jdbcType=SMALLINT}, #{auditorId,jdbcType=INTEGER},
                 #{preSaleId,jdbcType=INTEGER})
     </insert>
-    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.PreSaleFileEntity">
+    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.PreSaleFileEntity" useGeneratedKeys="true" keyProperty="id">
         insert into mro_pre_sale_file
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -55,12 +52,19 @@
             <if test="type != null">
                 type,
             </if>
+            <if test="releaseStatus != null">
+                #{releaseStatus,jdbcType=SMALLINT},
+            </if>
+            <if test="releaseStatus != null">
+                release_status,
+            </if>
             <if test="auditorId != null">
                 auditor_id,
             </if>
             <if test="preSaleId != null">
                 pre_sale_id,
             </if>
+
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -77,6 +81,9 @@
             </if>
             <if test="type != null">
                 #{type,jdbcType=SMALLINT},
+            </if>
+            <if test="releaseStatus != null">
+                release_status = #{releaseStatus,jdbcType=SMALLINT},
             </if>
             <if test="auditorId != null">
                 #{auditorId,jdbcType=INTEGER},
@@ -101,6 +108,9 @@
             <if test="type != null">
                 type = #{type,jdbcType=SMALLINT},
             </if>
+            <if test="releaseStatus != null">
+                release_status = #{releaseStatus,jdbcType=SMALLINT},
+            </if>
             <if test="auditorId != null">
                 auditor_id = #{auditorId,jdbcType=INTEGER},
             </if>
@@ -116,6 +126,8 @@
             path            = #{path,jdbcType=VARCHAR},
             upload_datetime = #{uploadDatetime,jdbcType=TIMESTAMP},
             type            = #{type,jdbcType=SMALLINT},
+            release_status  = #{releaseStatus,jdbcType=SMALLINT},
+            release_status  = #{releaseStatus,jdbcType=SMALLINT},
             auditor_id      = #{auditorId,jdbcType=INTEGER},
             pre_sale_id     = #{preSaleId,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
@@ -127,6 +139,7 @@
         <result column="path" jdbcType="VARCHAR" property="path"/>
         <result column="upload_datetime" jdbcType="TIMESTAMP" property="uploadDatetime"/>
         <result column="type" jdbcType="SMALLINT" property="type"/>
+        <result column="release_status" jdbcType="SMALLINT" property="releaseStatus"/>
         <result column="auditor_id" jdbcType="INTEGER" property="auditorId"/>
         <result column="pre_sale_id" jdbcType="INTEGER" property="preSaleId"/>
         <association column="pre_sale_id" property="preSaleEntity">
@@ -136,12 +149,11 @@
             <result column="project_date" jdbcType="DATE" property="projectDate"/>
             <result column="task_status" jdbcType="SMALLINT" property="taskStatus"/>
             <result column="task_finish_date" jdbcType="TIMESTAMP" property="taskFinishDate"/>
-            <result column="release_status" jdbcType="SMALLINT" property="releaseStatus"/>
         </association>
     </resultMap>
     <sql id="Connect_Column_List">
-        psf.id as psf_id, psf.name, psf.path, psf.upload_datetime, psf.type, psf.auditor_id, psf.pre_sale_id,
-        ps.id as ps_id , ps.project_name, ps.project_status, ps.project_date, ps.task_status, ps.task_finish_date, ps.release_status
+        psf.id as psf_id, psf.name, psf.path, psf.upload_datetime, psf.type,psf.release_status, psf.auditor_id, psf.pre_sale_id,
+        ps.id as ps_id , ps.project_name, ps.project_status, ps.project_date, ps.task_status, ps.task_finish_date
     </sql>
     <sql id="Connect_condition_List">
         <where>
@@ -149,14 +161,20 @@
                 and YEAR(ps.project_date) = #{year}
             </if>
             <if test="projectName!=null">
-                and ps.project_name like #{projectName}
+                and ps.project_name like concat('%',#{projectName},'%')
+            </if>
+            <if test="ids!=null">
+                and psf.id in
+                <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
             </if>
             <if test="type!=null">
                 and psf.type = #{type}
             </if>
         </where>
     </sql>
-    <select id="selectByYearAndProjectNameAndType" resultMap="ConnectResultMap">
+    <select id="selectByCondition" resultMap="ConnectResultMap">
         select
         <include refid="Connect_Column_List"/>
         from mro_pre_sale_file psf inner join mro_pre_sale ps on psf.pre_sale_id=ps.id

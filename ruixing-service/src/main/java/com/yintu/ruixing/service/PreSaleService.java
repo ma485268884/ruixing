@@ -5,6 +5,7 @@ import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.PreSaleEntity;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author:mlf
@@ -26,9 +27,9 @@ public interface PreSaleService extends BaseService<PreSaleEntity, Integer> {
      * 根据年份查询项目名称
      *
      * @param year 年份
-     * @return 项目名
+     * @return 项目id  项目名称
      */
-    List<String> findByYear(Integer year);
+    List<Map<String, Object>> findByYear(Integer year);
 
     /**
      * 年份 项目名 文件类型三级树

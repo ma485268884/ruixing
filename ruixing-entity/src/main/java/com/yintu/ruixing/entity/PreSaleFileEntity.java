@@ -24,6 +24,8 @@ public class PreSaleFileEntity implements Serializable {
 
     private Short type;
 
+    private Short releaseStatus;
+
     private Integer auditorId;
 
     private Integer preSaleId;

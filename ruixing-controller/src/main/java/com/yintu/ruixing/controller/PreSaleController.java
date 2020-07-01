@@ -1,6 +1,7 @@
 package com.yintu.ruixing.controller;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
@@ -59,21 +60,22 @@ public class PreSaleController extends SessionController implements BaseControll
     }
 
     @GetMapping("/list")
-    public Map<String, Object> findByAll() {
+    public Map<String, Object> findAll() {
         List<PreSaleEntity> preSaleEntities = preSaleService.findAll();
-        return ResponseDataUtil.ok("查询售前技术支持信息树成功", preSaleEntities);
+        return ResponseDataUtil.ok("查询售前技术支持信息列表成功", preSaleEntities);
     }
 
     @GetMapping("/search")
-    public Map<String, Object> search(@RequestParam("page_number") Integer pageNumber,
-                                      @RequestParam("page_size") Integer pageSize,
-                                      @RequestParam(value = "order_by", required = false, defaultValue = "psf.id DESC") String orderBy,
-                                      @RequestParam(value = "year", required = false) Integer year,
-                                      @RequestParam(value = "project_name", required = false) String projectName,
-                                      @RequestParam(value = "type", required = false) String type) {
+    public Map<String, Object> findBySearch(@RequestParam("page_number") Integer pageNumber,
+                                            @RequestParam("page_size") Integer pageSize,
+                                            @RequestParam(value = "order_by", required = false, defaultValue = "psf.id DESC") String orderBy,
+                                            @RequestParam(value = "year", required = false) Integer year,
+                                            @RequestParam(value = "project_name", required = false) String projectName,
+                                            @RequestParam(value = "type", required = false) String type) {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<PreSaleFileEntity> preSaleFileEntities = preSaleFileService.findByYearAndProjectNameAndType(year, projectName, type);
-        return ResponseDataUtil.ok("查询售前技术支持文件信息成功", preSaleFileEntities);
+        PageInfo<PreSaleFileEntity> pageInfo = new PageInfo<>(preSaleFileEntities);
+        return ResponseDataUtil.ok("查询售前技术支持以及文件信息列表成功", pageInfo);
     }
 
 

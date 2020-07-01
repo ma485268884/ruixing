@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author:mlf
@@ -46,7 +47,7 @@ public class PreSaleServiceImpl implements PreSaleService {
 
     @Override
     public List<PreSaleEntity> findAll() {
-        return preSaleDao.selectByAll();
+        return preSaleDao.selectAll();
     }
 
     @Override
@@ -55,7 +56,7 @@ public class PreSaleServiceImpl implements PreSaleService {
     }
 
     @Override
-    public List<String> findByYear(Integer year) {
+    public List<Map<String, Object>> findByYear(Integer year) {
         return preSaleDao.selectByYear(year);
     }
 
@@ -64,7 +65,7 @@ public class PreSaleServiceImpl implements PreSaleService {
         List<Integer> years = this.findByDistinctProjectDate();
         List<TreeNodeUtil> firstTreeNodeUtils = new ArrayList<>();
         for (Integer year : years) {
-            List<String> projectNames = this.findByYear(year);
+            List<Map<String, Object>> maps = this.findByYear(year);
             List<TreeNodeUtil> secondTreeNodeUtils = new ArrayList<>();
 
             TreeNodeUtil firstTreeNodeUtil = new TreeNodeUtil();
@@ -73,12 +74,13 @@ public class PreSaleServiceImpl implements PreSaleService {
             firstTreeNodeUtil.setChildren(secondTreeNodeUtils);
             firstTreeNodeUtils.add(firstTreeNodeUtil);
 
-            for (String projectName : projectNames) {
+            for (Map<String, Object> map : maps) {
                 List<TreeNodeUtil> thirdTreeNodeUtils = new ArrayList<>();
 
                 TreeNodeUtil secondTreeNodeUtil = new TreeNodeUtil();
                 secondTreeNodeUtil.setId(2L);
-                secondTreeNodeUtil.setLabel(projectName);
+                secondTreeNodeUtil.setLabel((String) map.get("projectName"));
+                secondTreeNodeUtil.setA_attr(map);
                 secondTreeNodeUtil.setChildren(thirdTreeNodeUtils);
                 secondTreeNodeUtils.add(secondTreeNodeUtil);
 

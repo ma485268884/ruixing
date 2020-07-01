@@ -17,5 +17,5 @@ public interface PreSaleFileDao {
 
     int updateByPrimaryKey(PreSaleFileEntity record);
 
-    List<PreSaleFileEntity> selectByYearAndProjectNameAndType(Integer year, String projectName, Short type);
+    List<PreSaleFileEntity> selectByCondition(Integer year, String projectName, Integer[] ids, Short type);
 }
