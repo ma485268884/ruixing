@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author:mlf
@@ -44,19 +46,54 @@ public class PreSaleServiceImpl implements PreSaleService {
     }
 
     @Override
+    public List<PreSaleEntity> findAll() {
+        return preSaleDao.selectAll();
+    }
+
+    @Override
     public List<Integer> findByDistinctProjectDate() {
         return preSaleDao.selectByDistinctProjectDate();
     }
 
     @Override
-    public List<String> findByYear(Integer year) {
+    public List<Map<String, Object>> findByYear(Integer year) {
         return preSaleDao.selectByYear(year);
     }
 
     @Override
     public List<TreeNodeUtil> findByTree() {
+        List<Integer> years = this.findByDistinctProjectDate();
+        List<TreeNodeUtil> firstTreeNodeUtils = new ArrayList<>();
+        for (Integer year : years) {
+            List<Map<String, Object>> maps = this.findByYear(year);
+            List<TreeNodeUtil> secondTreeNodeUtils = new ArrayList<>();
 
+            TreeNodeUtil firstTreeNodeUtil = new TreeNodeUtil();
+            firstTreeNodeUtil.setId(1L);
+            firstTreeNodeUtil.setLabel(String.valueOf(year));
+            firstTreeNodeUtil.setChildren(secondTreeNodeUtils);
+            firstTreeNodeUtils.add(firstTreeNodeUtil);
 
-        return null;
+            for (Map<String, Object> map : maps) {
+                List<TreeNodeUtil> thirdTreeNodeUtils = new ArrayList<>();
+
+                TreeNodeUtil secondTreeNodeUtil = new TreeNodeUtil();
+                secondTreeNodeUtil.setId(2L);
+                secondTreeNodeUtil.setLabel((String) map.get("projectName"));
+                secondTreeNodeUtil.setA_attr(map);
+                secondTreeNodeUtil.setChildren(thirdTreeNodeUtils);
+                secondTreeNodeUtils.add(secondTreeNodeUtil);
+
+                TreeNodeUtil thirdTreeNodeUtil1 = new TreeNodeUtil();
+                thirdTreeNodeUtil1.setId(3L);
+                thirdTreeNodeUtil1.setLabel("输入文件");
+                TreeNodeUtil thirdTreeNodeUtil2 = new TreeNodeUtil();
+                thirdTreeNodeUtil2.setId(3L);
+                thirdTreeNodeUtil2.setLabel("输出文件");
+                thirdTreeNodeUtils.add(thirdTreeNodeUtil1);
+                thirdTreeNodeUtils.add(thirdTreeNodeUtil2);
+            }
+        }
+        return firstTreeNodeUtils;
     }
 }

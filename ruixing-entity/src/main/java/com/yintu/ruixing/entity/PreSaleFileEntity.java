@@ -13,7 +13,7 @@ import java.util.Date;
 public class PreSaleFileEntity implements Serializable {
 
     private static final long serialVersionUID = 4390673348528177851L;
-    
+
     private Integer id;
 
     private String name;
@@ -24,8 +24,12 @@ public class PreSaleFileEntity implements Serializable {
 
     private Short type;
 
+    private Short releaseStatus;
+
     private Integer auditorId;
 
     private Integer preSaleId;
+
+    private PreSaleEntity preSaleEntity;
 
 }

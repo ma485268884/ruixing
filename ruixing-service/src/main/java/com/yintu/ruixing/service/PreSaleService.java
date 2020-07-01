@@ -5,12 +5,16 @@ import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.PreSaleEntity;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author:mlf
  * @date:2020/6/30 18:52
  */
 public interface PreSaleService extends BaseService<PreSaleEntity, Integer> {
+
+
+    List<PreSaleEntity> findAll();
 
     /**
      * 按照项目日期去重
@@ -23,9 +27,9 @@ public interface PreSaleService extends BaseService<PreSaleEntity, Integer> {
      * 根据年份查询项目名称
      *
      * @param year 年份
-     * @return 项目名
+     * @return 项目id  项目名称
      */
-    List<String> findByYear(Integer year);
+    List<Map<String, Object>> findByYear(Integer year);
 
     /**
      * 年份 项目名 文件类型三级树
@@ -33,5 +37,6 @@ public interface PreSaleService extends BaseService<PreSaleEntity, Integer> {
      * @return 树信息集合
      */
     List<TreeNodeUtil> findByTree();
+
 
 }
