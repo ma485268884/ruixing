@@ -3,7 +3,6 @@ package com.yintu.ruixing.dao;
 import com.yintu.ruixing.entity.PreSaleEntity;
 
 import java.util.List;
-import java.util.Map;
 
 public interface PreSaleDao {
     int deleteByPrimaryKey(Integer id);
@@ -16,11 +15,13 @@ public interface PreSaleDao {
 
     List<PreSaleEntity> selectAll();
 
+    List<PreSaleEntity> selectByYear(Integer year);
+
     int updateByPrimaryKeySelective(PreSaleEntity record);
 
     int updateByPrimaryKey(PreSaleEntity record);
 
     List<Integer> selectByDistinctProjectDate();
 
-    List<Map<String, Object>> selectByYear(Integer year);
+
 }

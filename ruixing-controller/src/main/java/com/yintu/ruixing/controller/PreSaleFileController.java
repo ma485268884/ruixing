@@ -6,7 +6,6 @@ import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.PreSaleEntity;
 import com.yintu.ruixing.entity.PreSaleFileEntity;
-import com.yintu.ruixing.entity.SolutionStatusEntity;
 import com.yintu.ruixing.service.PreSaleFileService;
 import com.yintu.ruixing.service.PreSaleService;
 import org.springframework.beans.factory.annotation.Autowired;

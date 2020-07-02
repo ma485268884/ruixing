@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,21 +52,22 @@ public class PreSaleServiceImpl implements PreSaleService {
     }
 
     @Override
+    public List<PreSaleEntity> findByYear(Integer year) {
+        return preSaleDao.selectByYear(year);
+    }
+
+    @Override
     public List<Integer> findByDistinctProjectDate() {
         return preSaleDao.selectByDistinctProjectDate();
     }
 
-    @Override
-    public List<Map<String, Object>> findByYear(Integer year) {
-        return preSaleDao.selectByYear(year);
-    }
 
     @Override
     public List<TreeNodeUtil> findByTree() {
         List<Integer> years = this.findByDistinctProjectDate();
         List<TreeNodeUtil> firstTreeNodeUtils = new ArrayList<>();
         for (Integer year : years) {
-            List<Map<String, Object>> maps = this.findByYear(year);
+            List<PreSaleEntity> preSaleEntities = this.findByYear(year);
             List<TreeNodeUtil> secondTreeNodeUtils = new ArrayList<>();
 
             TreeNodeUtil firstTreeNodeUtil = new TreeNodeUtil();
@@ -74,12 +76,19 @@ public class PreSaleServiceImpl implements PreSaleService {
             firstTreeNodeUtil.setChildren(secondTreeNodeUtils);
             firstTreeNodeUtils.add(firstTreeNodeUtil);
 
-            for (Map<String, Object> map : maps) {
+            for (PreSaleEntity preSaleEntity : preSaleEntities) {
                 List<TreeNodeUtil> thirdTreeNodeUtils = new ArrayList<>();
 
                 TreeNodeUtil secondTreeNodeUtil = new TreeNodeUtil();
                 secondTreeNodeUtil.setId(2L);
-                secondTreeNodeUtil.setLabel((String) map.get("projectName"));
+                secondTreeNodeUtil.setLabel(preSaleEntity.getProjectName());
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", preSaleEntity.getId());
+                map.put("projectDate", preSaleEntity.getProjectDate());
+                map.put("projectName", preSaleEntity.getProjectName());
+                map.put("projectStatus", preSaleEntity.getProjectStatus());
+                map.put("taskStatus", preSaleEntity.getTaskStatus());
+                map.put("taskFinishStatus", preSaleEntity.getTaskFinishDate());
                 secondTreeNodeUtil.setA_attr(map);
                 secondTreeNodeUtil.setChildren(thirdTreeNodeUtils);
                 secondTreeNodeUtils.add(secondTreeNodeUtil);

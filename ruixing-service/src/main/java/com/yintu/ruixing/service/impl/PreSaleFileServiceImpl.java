@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.parser.Entity;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
@@ -64,7 +63,7 @@ public class PreSaleFileServiceImpl implements PreSaleFileService {
         //excel标题
         String title = "售前技术支持列表";
         //excel表名
-        String[] headers = {"序号", "年份", "项目名称", "任务状态", "项目状态", "文件名称", "文件类型"};
+        String[] headers = {"序号", "年份", "项目名称", "项目状态", "任务状态", "文件名称", "文件类型"};
         //获取数据
         List<PreSaleFileEntity> preSaleFileEntities = preSaleFileDao.selectByCondition(null, null, ids, null);
         //excel元素
@@ -75,10 +74,10 @@ public class PreSaleFileServiceImpl implements PreSaleFileService {
             content[i][0] = preSaleFileEntity.getId().toString();
             content[i][1] = Integer.valueOf(preSaleEntity.getProjectDate().getYear()).toString();
             content[i][2] = preSaleEntity.getProjectName();
-            Short taskStatus = preSaleEntity.getTaskStatus();
-            content[i][3] = taskStatus.equals((short) 1) ? "正在进行" : taskStatus.equals((short) 2) ? "已完成" : "正在进行";
             Short projectStatus = preSaleEntity.getProjectStatus();
-            content[i][4] = projectStatus.equals((short) 1) ? "未知" : projectStatus.equals((short) 2) ? "后续招标" : projectStatus.equals((short) 3) ? "确定采用" : projectStatus.equals((short) 4) ? "关闭" : "未知";
+            content[i][3] = projectStatus.equals((short) 1) ? "未知" : projectStatus.equals((short) 2) ? "后续招标" : projectStatus.equals((short) 3) ? "确定采用" : projectStatus.equals((short) 4) ? "关闭" : "未知";
+            Short taskStatus = preSaleEntity.getTaskStatus();
+            content[i][4] = taskStatus.equals((short) 1) ? "正在进行" : taskStatus.equals((short) 2) ? "已完成" : "正在进行";
             content[i][5] = preSaleFileEntity.getName();
             Short type = preSaleFileEntity.getType();
             content[i][6] = type.equals((short) 1) ? "输入文件" : type.equals((short) 2) ? "输出文件" : "输入文件";
