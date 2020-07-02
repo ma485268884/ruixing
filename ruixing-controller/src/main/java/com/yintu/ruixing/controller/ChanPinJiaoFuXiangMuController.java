@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,25 +61,49 @@ public class ChanPinJiaoFuXiangMuController {
 
     //查询所有的数据
     @GetMapping("/findAll")
-    public Map<String, Object> findAll(Integer page,Integer size) {
-        JSONObject js=new JSONObject();
-        PageHelper.startPage(page,size);
-        List<ChanPinJiaoFuXiangMuEntity> chanPinJiaoFuXiangMuEntities = chanPinJiaoFuXiangMuService.findAll(page,size);
-        js.put("chanPinJiaoFuXiangMuEntities",chanPinJiaoFuXiangMuEntities);
-        PageInfo<ChanPinJiaoFuXiangMuEntity> pageInfo=new PageInfo<>(chanPinJiaoFuXiangMuEntities);
-        js.put("pageInfo",pageInfo);
+    public Map<String, Object> findAll(Integer page, Integer size) {
+        JSONObject js = new JSONObject();
+        PageHelper.startPage(page, size);
+        List<ChanPinJiaoFuXiangMuEntity> chanPinJiaoFuXiangMuEntities = chanPinJiaoFuXiangMuService.findAll(page, size);
+        js.put("chanPinJiaoFuXiangMuEntities", chanPinJiaoFuXiangMuEntities);
+        PageInfo<ChanPinJiaoFuXiangMuEntity> pageInfo = new PageInfo<>(chanPinJiaoFuXiangMuEntities);
+        js.put("pageInfo", pageInfo);
         return ResponseDataUtil.ok("查询所有数据成功", pageInfo);
     }
 
+    //根据项目编号 和项目名称  进行模糊查询
+    @GetMapping("/findXiangMuData")
+    public Map<String, Object> findXiangMuData(String xiangMuBianHao, String xiangMuName, Integer page, Integer size) {
+        JSONObject js = new JSONObject();
+        PageHelper.startPage(page, size);
+        List<ChanPinJiaoFuXiangMuEntity> chanPinJiaoFuXiangMuEntities = chanPinJiaoFuXiangMuService.findXiangMuData(xiangMuBianHao, xiangMuName, page, size);
+        js.put("chanPinJiaoFuXiangMuEntities", chanPinJiaoFuXiangMuEntities);
+        PageInfo<ChanPinJiaoFuXiangMuEntity> pageInfo = new PageInfo<>(chanPinJiaoFuXiangMuEntities);
+        js.put("pageInfo", pageInfo);
+        return ResponseDataUtil.ok("查询数据成功", js);
+    }
+
+    //根据树的id  查询对应的数据
+    @GetMapping("/findXiangMuByIds")
+    public Map<String, Object> findXiangMuByIds(Integer stateid, Integer id,Integer typeid, Integer page, Integer size) {
+        JSONObject js = new JSONObject();
+        PageHelper.startPage(page, size);
+        List<ChanPinJiaoFuXiangMuEntity> chanPinJiaoFuXiangMuEntities=chanPinJiaoFuXiangMuService.findXiangMuByIds(stateid,id,typeid,page,size);
+        js.put("chanPinJiaoFuXiangMuEntities", chanPinJiaoFuXiangMuEntities);
+        PageInfo<ChanPinJiaoFuXiangMuEntity> pageInfo = new PageInfo<>(chanPinJiaoFuXiangMuEntities);
+        js.put("pageInfo", pageInfo);
+        return ResponseDataUtil.ok("查询数据成功", js);
+    }
     //新增文件列表
     @PostMapping("/addXiangMuFile")
     public Map<String, Object> addXiangMuFile(ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity) {
         chanPinJiaoFuXiangMuService.addXiangMuFile(chanPinJiaoFuXiangMuFileEntity);
         return ResponseDataUtil.ok("新增文件列表成功");
     }
+
     //根据id  修改文件列表
     @PutMapping("/editXiangMuFileById/{id}")
-    public Map<String,Object>editXiangMuFileById(@PathVariable Integer id ,ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity){
+    public Map<String, Object> editXiangMuFileById(@PathVariable Integer id, ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity) {
         chanPinJiaoFuXiangMuService.editXiangMuFileById(chanPinJiaoFuXiangMuFileEntity);
         return ResponseDataUtil.ok("修改数据成功");
     }
@@ -114,16 +139,27 @@ public class ChanPinJiaoFuXiangMuController {
 
     //根据id  删除对应的文件
     @DeleteMapping("/deletXiangMuFileById/{id}")
-    public Map<String,Object>deletXiangMuFileById(@PathVariable Integer id){
+    public Map<String, Object> deletXiangMuFileById(@PathVariable Integer id) {
         chanPinJiaoFuXiangMuService.deletXiangMuFileById(id);
         return ResponseDataUtil.ok("删除文件成功");
     }
 
-    //根据id  批量删除文件
+    //根据id  单个或者批量删除文件
     @DeleteMapping("/deletXiangMuFileByIds/{ids}")
-    public Map<String,Object>deletXiangMuFileByIds(@PathVariable Integer[] ids){
+    public Map<String, Object> deletXiangMuFileByIds(@PathVariable Integer[] ids) {
         chanPinJiaoFuXiangMuService.deletXiangMuFileByIds(ids);
-        return ResponseDataUtil.ok("批量删除文件成功");
+        return ResponseDataUtil.ok("单个或者批量删除文件成功");
+    }
+
+
+    //交付情况统计
+
+    //统计各个状态的项目数量
+    @GetMapping("/findJiaoFuQingKuangNumberAll")
+    public Map<String,Object>findJiaoFuQingKuangNumberAll(){
+        Map<String,Object> map=new HashMap<>();
+        map=chanPinJiaoFuXiangMuService.findJiaoFuQingKuangNumberAll();
+        return ResponseDataUtil.ok("查询统计数量成功",map);
     }
 
 }

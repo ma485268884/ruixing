@@ -29,4 +29,6 @@ public class ChanPinJiaoFuXiangMuFileEntity {
 
     private Integer auditorId;//审核人id
 
+    private ChanPinJiaoFuXiangMuEntity chanPinJiaoFuXiangMuEntity;
+
 }

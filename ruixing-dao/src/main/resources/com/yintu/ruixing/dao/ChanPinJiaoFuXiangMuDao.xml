@@ -1,44 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yintu.ruixing.dao.ChanPinJiaoFuXiangMuDao">
-  <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="xiangmu_state" jdbcType="INTEGER" property="xiangmuState" />
-    <result column="xiangmu_bianhao" jdbcType="VARCHAR" property="xiangmuBianhao" />
-    <result column="xiangmu_name" jdbcType="VARCHAR" property="xiangmuName" />
-    <result column="xiaoshou_state" jdbcType="INTEGER" property="xiaoshouState" />
-    <result column="fahuo_state" jdbcType="INTEGER" property="fahuoState" />
-    <result column="qianshou_state" jdbcType="INTEGER" property="qianshouState" />
-    <result column="yangong_state" jdbcType="INTEGER" property="yangongState" />
-    <result column="xianchangfuwu" jdbcType="INTEGER" property="xianchangfuwu" />
-    <result column="fahuo_tixing_time" jdbcType="TIMESTAMP" property="fahuoTixingTime" />
-    <association property="chanPinJiaoFuXiangMuFileEntity" javaType="ChanPinJiaoFuXiangMuFileEntity">
-      <id column="id" property="id"></id>
-      <result column="xm_id" property="xmId"></result>
-      <result column="file_type" property="fileType"></result>
-      <result column="file_name" property="fileName"></result>
-    </association>
-  </resultMap>
-  <sql id="Base_Column_List">
+    <!--<resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="xiangmu_state" jdbcType="INTEGER" property="xiangmuState"/>
+        <result column="xiangmu_bianhao" jdbcType="VARCHAR" property="xiangmuBianhao"/>
+        <result column="xiangmu_name" jdbcType="VARCHAR" property="xiangmuName"/>
+        <result column="xiaoshou_state" jdbcType="INTEGER" property="xiaoshouState"/>
+        <result column="fahuo_state" jdbcType="INTEGER" property="fahuoState"/>
+        <result column="qianshou_state" jdbcType="INTEGER" property="qianshouState"/>
+        <result column="yangong_state" jdbcType="INTEGER" property="yangongState"/>
+        <result column="xianchangfuwu" jdbcType="INTEGER" property="xianchangfuwu"/>
+        <result column="fahuo_tixing_time" jdbcType="TIMESTAMP" property="fahuoTixingTime"/>
+        <association property="chanPinJiaoFuXiangMuFileEntity" javaType="ChanPinJiaoFuXiangMuFileEntity">
+            <id column="id" property="id"></id>
+            <result column="xm_id" property="xmId"></result>
+            <result column="file_type" property="fileType"></result>
+            <result column="file_name" property="fileName"></result>
+        </association>
+    </resultMap>-->
+    <sql id="Base_Column_List">
     id, xiangmu_state, xiangmu_bianhao, xiangmu_name, xiaoshou_state, fahuo_state, qianshou_state, 
     yangong_state, xianchangfuwu, fahuo_tixing_time
   </sql>
-
-  <!--根据文件多个id  批量删除对应的文件-->
-  <delete id="deletXiangMuFileByIds" parameterType="java.util.List">
-    delete from mro_chanpinjiaofu_file
-    where id
-    in
-    <foreach collection="array" item="id" open="(" separator="," close=")">
-      #{id}
-    </foreach>
-  </delete>
-  <!--根据文件id  删除对应的文件-->
-  <delete id="deletXiangMuFileById" parameterType="java.lang.Integer" >
+    <!--查询未完成发货项目的个数-->
+    <select id="findFaHuo" resultType="java.lang.Integer">
+        SELECT
+            COUNT( fahuo_state )
+        FROM
+            mro_chanpinjiaofu_xiangmu
+        WHERE
+            fahuo_state != 5
+    </select>
+    <!--查询未完成签收项目的个数-->
+    <select id="findQianShou" resultType="java.lang.Integer">
+        SELECT
+            COUNT( qianshou_state )
+        FROM
+            mro_chanpinjiaofu_xiangmu
+        WHERE
+            qianshou_state != 4
+    </select>
+    <!--查询正在执行项目的个数-->
+    <select id="findZhengZaiZhiXing" resultType="java.lang.Integer">
+        SELECT
+            COUNT( xiangmu_state )
+        FROM
+            mro_chanpinjiaofu_xiangmu
+        WHERE
+            xiangmu_state = 1
+    </select>
+    <!--=============================================================================-->
+    <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity">
+        <id column="id" property="id"></id>
+        <result column="xm_id" property="xmId"></result>
+        <result column="file_type" property="fileType"></result>
+        <result column="file_name" property="fileName"></result>
+        <association property="chanPinJiaoFuXiangMuEntity" javaType="ChanPinJiaoFuXiangMuEntity">
+            <id column="id" jdbcType="INTEGER" property="id"/>
+            <result column="xiangmu_state" jdbcType="INTEGER" property="xiangmuState"/>
+            <result column="xiangmu_bianhao" jdbcType="VARCHAR" property="xiangmuBianhao"/>
+            <result column="xiangmu_name" jdbcType="VARCHAR" property="xiangmuName"/>
+            <result column="xiaoshou_state" jdbcType="INTEGER" property="xiaoshouState"/>
+            <result column="fahuo_state" jdbcType="INTEGER" property="fahuoState"/>
+            <result column="qianshou_state" jdbcType="INTEGER" property="qianshouState"/>
+            <result column="yangong_state" jdbcType="INTEGER" property="yangongState"/>
+            <result column="xianchangfuwu" jdbcType="INTEGER" property="xianchangfuwu"/>
+            <result column="fahuo_tixing_time" jdbcType="TIMESTAMP" property="fahuoTixingTime"/>
+        </association>
+    </resultMap>
+    <!--项目交付状态管理-->
+    <!--根据项目名 和项目编号 进行模糊查询-->
+    <select id="findXiangMuData" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        cx.*,
+        cf.file_type,
+        cf.file_name,
+        cf.xm_id
+        FROM
+        mro_chanpinjiaofu_xiangmu cx,
+        mro_chanpinjiaofu_file cf
+        <where>
+            cx.id=cf.xm_id
+            <if test="xiangMuName !=null">
+                and cx.xiangmu_name like concat('%',#{xiangMuName},'%')
+            </if>
+            <if test="xiangMuBianHao !=null">
+                and cx.xiangmu_bianhao like concat('%',#{xiangMuBianHao},'%')
+            </if>
+        </where>
+    </select>
+    <!--根据文件多个id  批量删除对应的文件-->
+    <delete id="deletXiangMuFileByIds" parameterType="java.util.List">
+        delete from mro_chanpinjiaofu_file
+        where id
+        in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <!--根据文件id  删除对应的文件-->
+    <delete id="deletXiangMuFileById" parameterType="java.lang.Integer">
     delete from mro_chanpinjiaofu_file where id=#{id}
   </delete>
-  <!--根据文件id  查询对应的数据-->
-  <select id="findById" parameterType="java.lang.Integer" resultType="java.lang.String">
+    <!--根据文件id  查询对应的数据-->
+    <select id="findById" parameterType="java.lang.Integer" resultType="java.lang.String">
     SELECT
         *
     FROM
@@ -46,183 +112,224 @@
     WHERE
         id =#{id}
   </select>
-  <!--根据id  修改对应的数据-->
-  <update id="editXiangMuFileById" parameterType="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity">
-    update mro_chanpinjiaofu_file
-    <set>
-      <if test="xmId != null">
-        xm_id = #{xmId,jdbcType=INTEGER},
-      </if>
-      <if test="fileType != null">
-        file_type = #{fileType,jdbcType=INTEGER},
-      </if>
-      <if test="fabuType != null">
-        fabu_type = #{fabuType,jdbcType=INTEGER},
-      </if>
-      <if test="auditorId != null">
-        auditor_id = #{auditorId,jdbcType=INTEGER},
-      </if>
-      <if test="fileName != null">
-        file_name = #{fileName,jdbcType=VARCHAR},
-      </if>
-      <if test="filePath != null">
-        file_path = #{filePath,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id=#{id,jdbcType=INTEGER}
-  </update>
-  <!--添加项目文件列表-->
-  <select id="addXiangMuFile" parameterType="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity">
+    <!--根据id  修改对应的数据-->
+    <update id="editXiangMuFileById" parameterType="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity">
+        update mro_chanpinjiaofu_file
+        <set>
+            <if test="xmId != null">
+                xm_id = #{xmId,jdbcType=INTEGER},
+            </if>
+            <if test="fileType != null">
+                file_type = #{fileType,jdbcType=INTEGER},
+            </if>
+            <if test="fabuType != null">
+                fabu_type = #{fabuType,jdbcType=INTEGER},
+            </if>
+            <if test="auditorId != null">
+                auditor_id = #{auditorId,jdbcType=INTEGER},
+            </if>
+            <if test="fileName != null">
+                file_name = #{fileName,jdbcType=VARCHAR},
+            </if>
+            <if test="filePath != null">
+                file_path = #{filePath,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id=#{id,jdbcType=INTEGER}
+    </update>
+    <!--添加项目文件列表-->
+    <select id="addXiangMuFile" parameterType="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity">
     insert into mro_chanpinjiaofu_file (xm_id,file_type,file_name,file_path,fabu_type)
     values (#{xmId},#{fileType},#{fileName},#{filePath},#{fabuType})
   </select>
-  <!--查询所有的数据-->
-  <select id="findAll" resultMap="BaseResultMap">
-    SELECT
-    cx.*,
-    cf.file_type,
-    cf.file_name,
-    cf.xm_id
+    <!--查询所有的数据-->
+    <select id="findAll" resultMap="BaseResultMap">
+
+	SELECT
+    cf.id,
+	cx.xiangmu_state,
+	cx.xiangmu_name,
+	cx.xiaoshou_state,
+	cx.fahuo_state,
+	cx.qianshou_state,
+	cx.yangong_state,
+	cx.xianchangfuwu,
+	cx.fahuo_tixing_time,
+	cf.file_type,
+	cf.file_name,
+	cf.xm_id
     FROM
         mro_chanpinjiaofu_xiangmu cx,
         mro_chanpinjiaofu_file cf
     WHERE
         cx.id=cf.xm_id
   </select>
-  <!--查询树形所有的数据-->
-  <select id="findSanJiShu"  resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from mro_chanpinjiaofu_xiangmu
-    GROUP BY
-    xiangmu_state
-  </select>
-  <!--根据项目状态 查询对应的数据  作为树的第二级-->
-  <select id="findDiErJi"  resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select
-    <include refid="Base_Column_List" />
-    from mro_chanpinjiaofu_xiangmu
-    where
-    xiangmu_state=#{xiangmuState}
-  </select>
+    <!--根据树形的数据  查对应的数据-->
+    <select id="findXiangMuByIds" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        cx.*,
+        cf.file_type,
+        cf.file_name,
+        cf.xm_id
+        FROM
+        mro_chanpinjiaofu_xiangmu cx,
+        mro_chanpinjiaofu_file cf
+        <where>
+            cx.id = cf.xm_id
+            <if test="stateid !=null">
+                AND cx.xiangmu_state = #{stateid}
+            </if>
+            <if test="id !=null">
+                AND cx.id = #{id}
+            </if>
+            <if test="typeid !=null">
+                AND cf.file_type = #{typeid}
+            </if>
+        </where>
+    </select>
+    <!--查询树形所有的数据-->
+    <select id="findSanJiShu" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_chanpinjiaofu_xiangmu
+        GROUP BY
+        xiangmu_state
+    </select>
+    <!--根据第二级的id  查询对应的数据-->
+    <select id="findOneXiangMU" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        mro_chanpinjiaofu_xiangmu
+        WHERE
+        id = #{id}
+    </select>
+    <!--根据项目状态 查询对应的数据  作为树的第二级-->
+    <select id="findDiErJi" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_chanpinjiaofu_xiangmu
+        where
+        xiangmu_state=#{xiangmuState}
+    </select>
 
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from mro_chanpinjiaofu_xiangmu
-    where id = #{id,jdbcType=INTEGER}
-  </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_chanpinjiaofu_xiangmu
+        where id = #{id,jdbcType=INTEGER}
+    </select>
 
-  <!--根据id  删除数据-->
-  <delete id="deletXiagMuById" parameterType="java.lang.Integer">
+    <!--根据id  删除数据-->
+    <delete id="deletXiagMuById" parameterType="java.lang.Integer">
     delete from mro_chanpinjiaofu_xiangmu
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <!--添加项目-->
-  <insert id="addXiangMu" parameterType="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity">
-    insert into mro_chanpinjiaofu_xiangmu
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="xiangmuState != null">
-        xiangmu_state,
-      </if>
-      <if test="xiangmuBianhao != null">
-        xiangmu_bianhao,
-      </if>
-      <if test="xiangmuName != null">
-        xiangmu_name,
-      </if>
-      <if test="xiaoshouState != null">
-        xiaoshou_state,
-      </if>
-      <if test="fahuoState != null">
-        fahuo_state,
-      </if>
-      <if test="qianshouState != null">
-        qianshou_state,
-      </if>
-      <if test="yangongState != null">
-        yangong_state,
-      </if>
-      <if test="xianchangfuwu != null">
-        xianchangfuwu,
-      </if>
-      <if test="fahuoTixingTime != null">
-        fahuo_tixing_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="xiangmuState != null">
-        #{xiangmuState,jdbcType=INTEGER},
-      </if>
-      <if test="xiangmuBianhao != null">
-        #{xiangmuBianhao,jdbcType=VARCHAR},
-      </if>
-      <if test="xiangmuName != null">
-        #{xiangmuName,jdbcType=VARCHAR},
-      </if>
-      <if test="xiaoshouState != null">
-        #{xiaoshouState,jdbcType=INTEGER},
-      </if>
-      <if test="fahuoState != null">
-        #{fahuoState,jdbcType=INTEGER},
-      </if>
-      <if test="qianshouState != null">
-        #{qianshouState,jdbcType=INTEGER},
-      </if>
-      <if test="yangongState != null">
-        #{yangongState,jdbcType=INTEGER},
-      </if>
-      <if test="xianchangfuwu != null">
-        #{xianchangfuwu,jdbcType=INTEGER},
-      </if>
-      <if test="fahuoTixingTime != null">
-        #{fahuoTixingTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <!--根据id  修改项目数据-->
-  <update id="editXiangMuById" parameterType="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity">
-    update mro_chanpinjiaofu_xiangmu
-    <set>
-      <if test="xiangmuState != null">
-        xiangmu_state = #{xiangmuState,jdbcType=INTEGER},
-      </if>
-      <if test="xiangmuBianhao != null">
-        xiangmu_bianhao = #{xiangmuBianhao,jdbcType=VARCHAR},
-      </if>
-      <if test="xiangmuName != null">
-        xiangmu_name = #{xiangmuName,jdbcType=VARCHAR},
-      </if>
-      <if test="xiaoshouState != null">
-        xiaoshou_state = #{xiaoshouState,jdbcType=INTEGER},
-      </if>
-      <if test="fahuoState != null">
-        fahuo_state = #{fahuoState,jdbcType=INTEGER},
-      </if>
-      <if test="qianshouState != null">
-        qianshou_state = #{qianshouState,jdbcType=INTEGER},
-      </if>
-      <if test="yangongState != null">
-        yangong_state = #{yangongState,jdbcType=INTEGER},
-      </if>
-      <if test="xianchangfuwu != null">
-        xianchangfuwu = #{xianchangfuwu,jdbcType=INTEGER},
-      </if>
-      <if test="fahuoTixingTime != null">
-        fahuo_tixing_time = #{fahuoTixingTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+    <!--添加项目-->
+    <insert id="addXiangMu" parameterType="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity">
+        insert into mro_chanpinjiaofu_xiangmu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="xiangmuState != null">
+                xiangmu_state,
+            </if>
+            <if test="xiangmuBianhao != null">
+                xiangmu_bianhao,
+            </if>
+            <if test="xiangmuName != null">
+                xiangmu_name,
+            </if>
+            <if test="xiaoshouState != null">
+                xiaoshou_state,
+            </if>
+            <if test="fahuoState != null">
+                fahuo_state,
+            </if>
+            <if test="qianshouState != null">
+                qianshou_state,
+            </if>
+            <if test="yangongState != null">
+                yangong_state,
+            </if>
+            <if test="xianchangfuwu != null">
+                xianchangfuwu,
+            </if>
+            <if test="fahuoTixingTime != null">
+                fahuo_tixing_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="xiangmuState != null">
+                #{xiangmuState,jdbcType=INTEGER},
+            </if>
+            <if test="xiangmuBianhao != null">
+                #{xiangmuBianhao,jdbcType=VARCHAR},
+            </if>
+            <if test="xiangmuName != null">
+                #{xiangmuName,jdbcType=VARCHAR},
+            </if>
+            <if test="xiaoshouState != null">
+                #{xiaoshouState,jdbcType=INTEGER},
+            </if>
+            <if test="fahuoState != null">
+                #{fahuoState,jdbcType=INTEGER},
+            </if>
+            <if test="qianshouState != null">
+                #{qianshouState,jdbcType=INTEGER},
+            </if>
+            <if test="yangongState != null">
+                #{yangongState,jdbcType=INTEGER},
+            </if>
+            <if test="xianchangfuwu != null">
+                #{xianchangfuwu,jdbcType=INTEGER},
+            </if>
+            <if test="fahuoTixingTime != null">
+                #{fahuoTixingTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <!--根据id  修改项目数据-->
+    <update id="editXiangMuById" parameterType="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity">
+        update mro_chanpinjiaofu_xiangmu
+        <set>
+            <if test="xiangmuState != null">
+                xiangmu_state = #{xiangmuState,jdbcType=INTEGER},
+            </if>
+            <if test="xiangmuBianhao != null">
+                xiangmu_bianhao = #{xiangmuBianhao,jdbcType=VARCHAR},
+            </if>
+            <if test="xiangmuName != null">
+                xiangmu_name = #{xiangmuName,jdbcType=VARCHAR},
+            </if>
+            <if test="xiaoshouState != null">
+                xiaoshou_state = #{xiaoshouState,jdbcType=INTEGER},
+            </if>
+            <if test="fahuoState != null">
+                fahuo_state = #{fahuoState,jdbcType=INTEGER},
+            </if>
+            <if test="qianshouState != null">
+                qianshou_state = #{qianshouState,jdbcType=INTEGER},
+            </if>
+            <if test="yangongState != null">
+                yangong_state = #{yangongState,jdbcType=INTEGER},
+            </if>
+            <if test="xianchangfuwu != null">
+                xianchangfuwu = #{xianchangfuwu,jdbcType=INTEGER},
+            </if>
+            <if test="fahuoTixingTime != null">
+                fahuo_tixing_time = #{fahuoTixingTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
-  <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity">
+    <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity">
     update mro_chanpinjiaofu_xiangmu
     set xiangmu_state = #{xiangmuState,jdbcType=INTEGER},
       xiangmu_bianhao = #{xiangmuBianhao,jdbcType=VARCHAR},
@@ -236,7 +343,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <insert id="insert" parameterType="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity">
+    <insert id="insert" parameterType="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity">
     insert into mro_chanpinjiaofu_xiangmu (id, xiangmu_state, xiangmu_bianhao,
       xiangmu_name, xiaoshou_state, fahuo_state,
       qianshou_state, yangong_state, xianchangfuwu,
