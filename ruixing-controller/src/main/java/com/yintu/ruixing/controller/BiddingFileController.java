@@ -4,10 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.entity.PreSaleEntity;
-import com.yintu.ruixing.entity.PreSaleFileEntity;
-import com.yintu.ruixing.service.PreSaleFileService;
-import com.yintu.ruixing.service.PreSaleService;
+import com.yintu.ruixing.entity.BiddingEntity;
+import com.yintu.ruixing.entity.BiddingFileEntity;
+import com.yintu.ruixing.service.BiddingFileService;
+import com.yintu.ruixing.service.BiddingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,23 +19,22 @@ import java.util.Map;
 
 /**
  * @author:mlf
- * @date:2020/7/1 10:55
+ * @date:2020/7/2 14:56
  */
-
 @Controller
-@RequestMapping("/pre/sales/files")
-public class PreSaleFileController extends SessionController implements BaseController<PreSaleFileEntity, Integer> {
+@RequestMapping("/biddings/files")
+public class BiddingFileController extends SessionController implements BaseController<BiddingFileEntity, Integer> {
+    @Autowired
+    private BiddingService biddingService;
+    @Autowired
+    private BiddingFileService biddingFileService;
 
-    @Autowired
-    private PreSaleService preSaleService;
-    @Autowired
-    private PreSaleFileService preSaleFileService;
 
     @PostMapping
     @ResponseBody
-    public Map<String, Object> add(PreSaleFileEntity entity) {
-        preSaleFileService.add(entity);
-        return ResponseDataUtil.ok("添加售前技术支持文件信息成功");
+    public Map<String, Object> add(BiddingFileEntity entity) {
+        biddingFileService.add(entity);
+        return ResponseDataUtil.ok("添加招投标技术支持文件信息成功");
     }
 
     @Override
@@ -46,27 +45,27 @@ public class PreSaleFileController extends SessionController implements BaseCont
     @DeleteMapping("/{ids}")
     @ResponseBody
     public Map<String, Object> remove(@PathVariable Integer[] ids) {
-        preSaleFileService.remove(ids);
-        return ResponseDataUtil.ok("删除售前技术支持文件信息成功");
+        biddingFileService.remove(ids);
+        return ResponseDataUtil.ok("删除招投标技术支持文件信息成功");
     }
 
     @PutMapping("/{id}")
     @ResponseBody
-    public Map<String, Object> edit(Integer id, PreSaleFileEntity entity) {
-        preSaleFileService.edit(entity);
-        return ResponseDataUtil.ok("更新售前技术支持文件信息成功");
+    public Map<String, Object> edit(@PathVariable Integer id, BiddingFileEntity entity) {
+        biddingFileService.edit(entity);
+        return ResponseDataUtil.ok("修改招投标技术支持文件信息成功");
     }
 
     @GetMapping("/{id}")
     @ResponseBody
     public Map<String, Object> findById(@PathVariable Integer id) {
-        PreSaleFileEntity preSaleFileEntity = preSaleFileService.findById(id);
-        Integer preSaleId = preSaleFileEntity.getPreSaleId();
-        if (preSaleId != null) {
-            PreSaleEntity preSaleEntity = preSaleService.findById(preSaleId);
-            preSaleFileEntity.setPreSaleEntity(preSaleEntity);
+        BiddingFileEntity biddingFileEntity = biddingFileService.findById(id);
+        Integer biddingId = biddingFileEntity.getBiddingId();
+        if (biddingId != null) {
+            BiddingEntity biddingEntity = biddingService.findById(biddingId);
+            biddingFileEntity.setBiddingEntity(biddingEntity);
         }
-        return ResponseDataUtil.ok("查询售前技术支持文件信息成功", preSaleFileEntity);
+        return ResponseDataUtil.ok("查询招投标技术支持文件信息成功", biddingFileEntity);
     }
 
     @PostMapping("/upload")
@@ -77,15 +76,15 @@ public class PreSaleFileController extends SessionController implements BaseCont
         JSONObject jo = new JSONObject();
         jo.put("filePath", filePath);
         jo.put("fileName", fileName);
-        return ResponseDataUtil.ok("上传售前技术支持文件信息成功", jo);
+        return ResponseDataUtil.ok("上传招投标技术支持文件信息成功", jo);
     }
 
     @GetMapping("/download/{id}")
     public void downloadFile(@PathVariable Integer id, HttpServletResponse response) throws IOException {
-        PreSaleFileEntity preSaleFileEntity = preSaleFileService.findById(id);
-        if (preSaleFileEntity != null) {
-            String filePath = preSaleFileEntity.getPath();
-            String fileName = preSaleFileEntity.getName();
+        BiddingFileEntity biddingFileEntity = biddingFileService.findById(id);
+        if (biddingFileEntity != null) {
+            String filePath = biddingFileEntity.getPath();
+            String fileName = biddingFileEntity.getName();
             if (filePath != null && !"".equals(filePath) && fileName != null && !"".equals(fileName)) {
                 response.setContentType("application/octet-stream;charset=ISO8859-1");
                 response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
@@ -98,13 +97,11 @@ public class PreSaleFileController extends SessionController implements BaseCont
 
     @GetMapping("/export/{ids}")
     public void exportFile(@PathVariable Integer[] ids, HttpServletResponse response) throws IOException {
-        String fileName = "售前技术支持列表" + System.currentTimeMillis() + ".xlsx";
+        String fileName = "投招标技术支持列表" + System.currentTimeMillis() + ".xlsx";
         response.setContentType("application/octet-stream;charset=ISO8859-1");
         response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
         response.addHeader("Pargam", "no-cache");
         response.addHeader("Cache-Control", "no-cache");
-        preSaleFileService.exportFile(response.getOutputStream(), ids);
+        biddingFileService.exportFile(response.getOutputStream(), ids);
     }
-
-
 }

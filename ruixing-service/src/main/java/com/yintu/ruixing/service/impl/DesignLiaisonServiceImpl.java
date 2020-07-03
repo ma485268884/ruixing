@@ -1,9 +1,9 @@
 package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.common.util.TreeNodeUtil;
-import com.yintu.ruixing.dao.PreSaleDao;
-import com.yintu.ruixing.entity.PreSaleEntity;
-import com.yintu.ruixing.service.PreSaleService;
+import com.yintu.ruixing.dao.DesignLiaisonDao;
+import com.yintu.ruixing.entity.DesignLiaisonEntity;
+import com.yintu.ruixing.service.DesignLiaisonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,89 +12,84 @@ import java.util.*;
 
 /**
  * @author:mlf
- * @date:2020/6/30 18:53
+ * @date:2020/7/3 11:06
  */
 @Service
 @Transactional
-public class PreSaleServiceImpl implements PreSaleService {
-
+public class DesignLiaisonServiceImpl implements DesignLiaisonService {
     @Autowired
-    private PreSaleDao preSaleDao;
-
+    private DesignLiaisonDao designLiaisonDao;
 
     @Override
-    public void add(PreSaleEntity entity) {
-        preSaleDao.insertSelective(entity);
+    public void add(DesignLiaisonEntity entity) {
+        designLiaisonDao.insertSelective(entity);
     }
 
     @Override
     public void remove(Integer id) {
-        preSaleDao.deleteByPrimaryKey(id);
+        designLiaisonDao.deleteByPrimaryKey(id);
     }
 
     @Override
-    public void edit(PreSaleEntity entity) {
-        preSaleDao.updateByPrimaryKeySelective(entity);
-
+    public void edit(DesignLiaisonEntity entity) {
+        designLiaisonDao.updateByPrimaryKeySelective(entity);
     }
 
     @Override
-    public PreSaleEntity findById(Integer id) {
-        return preSaleDao.selectByPrimaryKey(id);
+    public DesignLiaisonEntity findById(Integer id) {
+        return designLiaisonDao.selectByPrimaryKey(id);
     }
 
     @Override
-    public List<PreSaleEntity> findAll() {
-        return preSaleDao.selectAll();
+    public List<DesignLiaisonEntity> findAll() {
+        return designLiaisonDao.selectAll();
     }
 
     @Override
-    public List<PreSaleEntity> findByYear(Integer year) {
-        return preSaleDao.selectByYear(year);
-    }
-
-    @Override
-    public List<Integer> countTaskStatusByGroupBy(Integer selectType, Date date) {
-        return preSaleDao.countTaskStatusByGroupBy(selectType, date);
+    public List<DesignLiaisonEntity> findByYear(Integer year) {
+        return designLiaisonDao.selectByYear(year);
     }
 
     @Override
     public List<Integer> findByDistinctProjectDate() {
-        return preSaleDao.selectByDistinctProjectDate();
+        return designLiaisonDao.selectByDistinctProjectDate();
     }
 
+    @Override
+    public List<Integer> countTaskStatusByGroupBy(Integer selectType, Date date) {
+        return designLiaisonDao.countTaskStatusByGroupBy(selectType, date);
+    }
 
     @Override
     public List<TreeNodeUtil> findByTree() {
         List<Integer> years = this.findByDistinctProjectDate();
         List<TreeNodeUtil> firstTreeNodeUtils = new ArrayList<>();
         for (Integer year : years) {
-            List<PreSaleEntity> preSaleEntities = this.findByYear(year);
+            List<DesignLiaisonEntity> designLiaisonEntities = this.findByYear(year);
             List<TreeNodeUtil> secondTreeNodeUtils = new ArrayList<>();
-
             TreeNodeUtil firstTreeNodeUtil = new TreeNodeUtil();
             firstTreeNodeUtil.setId(1L);
             firstTreeNodeUtil.setLabel(String.valueOf(year));
             firstTreeNodeUtil.setChildren(secondTreeNodeUtils);
             firstTreeNodeUtils.add(firstTreeNodeUtil);
-
-            for (PreSaleEntity preSaleEntity : preSaleEntities) {
+            for (DesignLiaisonEntity designLiaisonEntity : designLiaisonEntities) {
                 List<TreeNodeUtil> thirdTreeNodeUtils = new ArrayList<>();
-
                 TreeNodeUtil secondTreeNodeUtil = new TreeNodeUtil();
                 secondTreeNodeUtil.setId(2L);
-                secondTreeNodeUtil.setLabel(preSaleEntity.getProjectName());
+                secondTreeNodeUtil.setLabel(designLiaisonEntity.getProjectName());
                 Map<String, Object> map = new HashMap<>();
-                map.put("id", preSaleEntity.getId());
-                map.put("projectDate", preSaleEntity.getProjectDate());
-                map.put("projectName", preSaleEntity.getProjectName());
-                map.put("projectStatus", preSaleEntity.getProjectStatus());
-                map.put("taskStatus", preSaleEntity.getTaskStatus());
-                map.put("taskFinishStatus", preSaleEntity.getTaskFinishDate());
+                map.put("id", designLiaisonEntity.getId());
+                map.put("projectDate", designLiaisonEntity.getProjectDate());
+                map.put("projectName", designLiaisonEntity.getProjectName());
+                map.put("projectStatus", designLiaisonEntity.getProjectStatus());
+                map.put("taskStatus", designLiaisonEntity.getTaskStatus());
+                map.put("taskFinishStatus", designLiaisonEntity.getTaskFinishDate());
+                map.put("bidder", designLiaisonEntity.getBidder());
+                map.put("railwayAdministrationId", designLiaisonEntity.getRailwayAdministrationId());
+                map.put("biddingId", designLiaisonEntity.getBiddingId());
                 secondTreeNodeUtil.setA_attr(map);
                 secondTreeNodeUtil.setChildren(thirdTreeNodeUtils);
                 secondTreeNodeUtils.add(secondTreeNodeUtil);
-
                 TreeNodeUtil thirdTreeNodeUtil1 = new TreeNodeUtil();
                 thirdTreeNodeUtil1.setId(3L);
                 thirdTreeNodeUtil1.setLabel("输入文件");

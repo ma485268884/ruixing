@@ -1,53 +1,25 @@
 package com.yintu.ruixing.service;
 
-import com.yintu.ruixing.common.util.BaseService;
-import com.yintu.ruixing.common.util.TreeNodeUtil;
-import com.yintu.ruixing.entity.SolutionEntity;
-import com.yintu.ruixing.entity.SolutionStatusEntity;
-
-import java.util.List;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * @author:mlf
- * @date:2020/6/22 15:35
+ * @date:2020/7/3 18:03
  */
-public interface SolutionService extends BaseService<SolutionEntity, Integer> {
-
-
-    List<SolutionEntity> findByNameAndType(String name, Short type);
-
+public interface SolutionService {
 
     /**
-     * 按照父级id查询目录列表
+     * 统计工作完成进度
      *
-     * @param parentId 父级id
-     * @param type     解决方案模块标识
-     * @return 解决方案中目录集合
+     * @return
      */
-    List<SolutionEntity> findByParentIdAndType(Integer parentId, Short type);
-
     /**
-     * 按照父级id查询树结构
+     * 统计工作完成进度
      *
-     * @param parentId 父级id
-     * @param type     解决方案模块标识
-     * @return 树结构的解决方案中目录集合
+     * @param selectType 1.年  2.年-月  3.年-月-日
+     * @param date       日期
+     * @return 解决方案中每个模块工作完成情况
      */
-    List<TreeNodeUtil> findTreeByParentIdAndType(Integer parentId, Short type);
-
-    /**
-     * 移除指定id和模块标识的条目
-     *
-     * @param id   主键
-     * @param type 解决方案模块标识
-     */
-    void removeTreeByIdAndType(Integer id, Short type);
-
-    /**
-     * @param id       id
-     * @param nameType 名称类型
-     * @param type     解决方案模块标识
-     * @return 项目状态集合
-     */
-    List<SolutionStatusEntity> findStatusById(Integer id, Short nameType, Short type);
+    Map<String, Object> workCompletion(Integer selectType, Date date);
 }

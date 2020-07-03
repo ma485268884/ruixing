@@ -1,7 +1,7 @@
 package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.common.util.BaseService;
-import com.yintu.ruixing.entity.PreSaleFileEntity;
+import com.yintu.ruixing.entity.DesignLiaisonFileEntity;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -9,9 +9,9 @@ import java.util.List;
 
 /**
  * @author:mlf
- * @date:2020/6/30 18:58
+ * @date:2020/7/3 11:08
  */
-public interface PreSaleFileService extends BaseService<PreSaleFileEntity, Integer> {
+public interface DesignLiaisonFileService extends BaseService<DesignLiaisonFileEntity, Integer> {
     /**
      * 批量删除
      *
@@ -25,7 +25,7 @@ public interface PreSaleFileService extends BaseService<PreSaleFileEntity, Integ
      * @param type        文件类型
      * @return
      */
-    List<PreSaleFileEntity> findByYearAndProjectNameAndType(Integer year, String projectName, String type);
+    List<DesignLiaisonFileEntity> findByYearAndProjectNameAndType(Integer year, String projectName, String type);
 
     /**
      * @param outputStream 输出流

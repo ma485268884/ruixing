@@ -7,16 +7,15 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
 
+
 /**
- * 售前技术支持 项目实体类
+ * 投招标技术支持 项目实体类
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PreSaleEntity implements Serializable {
-
-    private static final long serialVersionUID = -2897918675790939966L;
-
+public class BiddingEntity implements Serializable {
+    private static final long serialVersionUID = 5743348273904345051L;
     private Integer id;
 
     private String projectName;
@@ -28,6 +27,12 @@ public class PreSaleEntity implements Serializable {
     private Short taskStatus;
 
     private Date taskFinishDate;
+
+    private String bidder;
+
+    private Integer railwayAdministrationId;
+
+    private Integer preSaleId;
 
 
 }

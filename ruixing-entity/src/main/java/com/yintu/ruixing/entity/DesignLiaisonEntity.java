@@ -8,14 +8,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 售前技术支持 项目实体类
+ * 设计联络以及后续技术交流 项目实体类
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PreSaleEntity implements Serializable {
+public class DesignLiaisonEntity implements Serializable {
 
-    private static final long serialVersionUID = -2897918675790939966L;
+    private static final long serialVersionUID = -8938583455153408890L;
 
     private Integer id;
 
@@ -29,5 +29,14 @@ public class PreSaleEntity implements Serializable {
 
     private Date taskFinishDate;
 
+    private Short meetingStatus;
+
+    private Short changeStatus;
+
+    private String bidder;
+
+    private Integer railwayAdministrationId;
+
+    private Integer biddingId;
 
 }

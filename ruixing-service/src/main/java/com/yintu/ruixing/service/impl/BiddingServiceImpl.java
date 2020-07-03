@@ -1,9 +1,10 @@
 package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.common.util.TreeNodeUtil;
-import com.yintu.ruixing.dao.PreSaleDao;
+import com.yintu.ruixing.dao.BiddingDao;
+import com.yintu.ruixing.entity.BiddingEntity;
 import com.yintu.ruixing.entity.PreSaleEntity;
-import com.yintu.ruixing.service.PreSaleService;
+import com.yintu.ruixing.service.BiddingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,64 +13,60 @@ import java.util.*;
 
 /**
  * @author:mlf
- * @date:2020/6/30 18:53
+ * @date:2020/7/2 11:13
  */
 @Service
 @Transactional
-public class PreSaleServiceImpl implements PreSaleService {
-
+public class BiddingServiceImpl implements BiddingService {
     @Autowired
-    private PreSaleDao preSaleDao;
-
+    private BiddingDao biddingDao;
 
     @Override
-    public void add(PreSaleEntity entity) {
-        preSaleDao.insertSelective(entity);
+    public void add(BiddingEntity entity) {
+        biddingDao.insertSelective(entity);
     }
 
     @Override
     public void remove(Integer id) {
-        preSaleDao.deleteByPrimaryKey(id);
+        biddingDao.deleteByPrimaryKey(id);
     }
 
     @Override
-    public void edit(PreSaleEntity entity) {
-        preSaleDao.updateByPrimaryKeySelective(entity);
-
+    public void edit(BiddingEntity entity) {
+        biddingDao.updateByPrimaryKeySelective(entity);
     }
 
     @Override
-    public PreSaleEntity findById(Integer id) {
-        return preSaleDao.selectByPrimaryKey(id);
+    public BiddingEntity findById(Integer id) {
+        return biddingDao.selectByPrimaryKey(id);
     }
 
     @Override
-    public List<PreSaleEntity> findAll() {
-        return preSaleDao.selectAll();
+    public List<BiddingEntity> findAll() {
+        return biddingDao.selectAll();
     }
 
     @Override
-    public List<PreSaleEntity> findByYear(Integer year) {
-        return preSaleDao.selectByYear(year);
+    public List<BiddingEntity> findByYear(Integer year) {
+        return biddingDao.selectByYear(year);
     }
 
     @Override
     public List<Integer> countTaskStatusByGroupBy(Integer selectType, Date date) {
-        return preSaleDao.countTaskStatusByGroupBy(selectType, date);
+        return biddingDao.countTaskStatusByGroupBy(selectType, date);
     }
 
     @Override
     public List<Integer> findByDistinctProjectDate() {
-        return preSaleDao.selectByDistinctProjectDate();
+        return biddingDao.selectByDistinctProjectDate();
     }
-
 
     @Override
     public List<TreeNodeUtil> findByTree() {
         List<Integer> years = this.findByDistinctProjectDate();
         List<TreeNodeUtil> firstTreeNodeUtils = new ArrayList<>();
         for (Integer year : years) {
-            List<PreSaleEntity> preSaleEntities = this.findByYear(year);
+            List<BiddingEntity> biddingEntities = this.findByYear(year);
             List<TreeNodeUtil> secondTreeNodeUtils = new ArrayList<>();
 
             TreeNodeUtil firstTreeNodeUtil = new TreeNodeUtil();
@@ -78,19 +75,21 @@ public class PreSaleServiceImpl implements PreSaleService {
             firstTreeNodeUtil.setChildren(secondTreeNodeUtils);
             firstTreeNodeUtils.add(firstTreeNodeUtil);
 
-            for (PreSaleEntity preSaleEntity : preSaleEntities) {
+            for (BiddingEntity biddingEntity : biddingEntities) {
                 List<TreeNodeUtil> thirdTreeNodeUtils = new ArrayList<>();
-
                 TreeNodeUtil secondTreeNodeUtil = new TreeNodeUtil();
                 secondTreeNodeUtil.setId(2L);
-                secondTreeNodeUtil.setLabel(preSaleEntity.getProjectName());
+                secondTreeNodeUtil.setLabel(biddingEntity.getProjectName());
                 Map<String, Object> map = new HashMap<>();
-                map.put("id", preSaleEntity.getId());
-                map.put("projectDate", preSaleEntity.getProjectDate());
-                map.put("projectName", preSaleEntity.getProjectName());
-                map.put("projectStatus", preSaleEntity.getProjectStatus());
-                map.put("taskStatus", preSaleEntity.getTaskStatus());
-                map.put("taskFinishStatus", preSaleEntity.getTaskFinishDate());
+                map.put("id", biddingEntity.getId());
+                map.put("projectDate", biddingEntity.getProjectDate());
+                map.put("projectName", biddingEntity.getProjectName());
+                map.put("projectStatus", biddingEntity.getProjectStatus());
+                map.put("taskStatus", biddingEntity.getTaskStatus());
+                map.put("taskFinishStatus", biddingEntity.getTaskFinishDate());
+                map.put("bidder", biddingEntity.getBidder());
+                map.put("railwayAdministrationId", biddingEntity.getRailwayAdministrationId());
+                map.put("preSaleId", biddingEntity.getPreSaleId());
                 secondTreeNodeUtil.setA_attr(map);
                 secondTreeNodeUtil.setChildren(thirdTreeNodeUtils);
                 secondTreeNodeUtils.add(secondTreeNodeUtil);

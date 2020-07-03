@@ -7,16 +7,15 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
 
+
 /**
- * 售前技术支持 项目文件实体类
+ * 投招标技术支持 项目文件实体类
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PreSaleFileEntity implements Serializable {
-
-    private static final long serialVersionUID = 4390673348528177851L;
-
+public class BiddingFileEntity implements Serializable {
+    private static final long serialVersionUID = -2896894795077610716L;
     private Integer id;
 
     private String name;
@@ -31,8 +30,9 @@ public class PreSaleFileEntity implements Serializable {
 
     private Integer auditorId;
 
-    private Integer preSaleId;
+    private Integer biddingId;
 
-    private PreSaleEntity preSaleEntity;
+    private BiddingEntity biddingEntity;
+
 
 }
