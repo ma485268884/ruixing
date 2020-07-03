@@ -5,6 +5,7 @@ import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity;
 import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author Mr.liu
@@ -32,4 +33,11 @@ public interface ChanPinJiaoFuXiangMuService {
     void deletXiangMuFileById(Integer id);
 
     void deletXiangMuFileByIds(Integer[] ids);
+
+    List<ChanPinJiaoFuXiangMuEntity> findXiangMuData(String xiangMuBianHao, String xiangMuName, Integer page, Integer size);
+
+    List<ChanPinJiaoFuXiangMuEntity> findXiangMuByIds(Integer stateid, Integer id, Integer typeid, Integer page, Integer size);
+
+    Map<String, Object> findJiaoFuQingKuangNumberAll();
+
 }

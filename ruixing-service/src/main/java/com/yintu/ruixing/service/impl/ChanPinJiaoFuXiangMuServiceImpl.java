@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author Mr.liu
@@ -23,6 +25,27 @@ import java.util.List;
 public class ChanPinJiaoFuXiangMuServiceImpl implements ChanPinJiaoFuXiangMuService {
     @Autowired
     private ChanPinJiaoFuXiangMuDao chanPinJiaoFuXiangMuDao;
+
+    @Override
+    public Map<String, Object> findJiaoFuQingKuangNumberAll() {
+        Map<String,Object> map=new HashMap<>();
+        Integer zhengZaiZhiXing =chanPinJiaoFuXiangMuDao.findZhengZaiZhiXing();
+        Integer faHuo=chanPinJiaoFuXiangMuDao.findFaHuo();
+        Integer qianShou=chanPinJiaoFuXiangMuDao.findQianShou();
+        map.put("zhengZaiZhiXing",zhengZaiZhiXing);
+        map.put("qianShou",qianShou);
+        return map;
+    }
+
+    @Override
+    public List<ChanPinJiaoFuXiangMuEntity> findXiangMuByIds(Integer stateid, Integer id, Integer typeid, Integer page, Integer size) {
+        return chanPinJiaoFuXiangMuDao.findXiangMuByIds(stateid,id,typeid);
+    }
+
+    @Override
+    public List<ChanPinJiaoFuXiangMuEntity> findXiangMuData(String xiangMuBianHao, String xiangMuName, Integer page, Integer size) {
+        return chanPinJiaoFuXiangMuDao.findXiangMuData(xiangMuBianHao,xiangMuName);
+    }
 
     @Override
     public void deletXiangMuFileByIds(Integer[] ids) {
@@ -85,18 +108,24 @@ public class ChanPinJiaoFuXiangMuServiceImpl implements ChanPinJiaoFuXiangMuServ
                 for (ChanPinJiaoFuXiangMuEntity pinJiaoFuXiangMuEntity : chanPinJiaoFuXiangMuEntities1) {
                     //第二级
                     TreeNodeUtil treeNodeUtil1 = new TreeNodeUtil();
+                    Map<String,Object> map=new HashMap();
                     treeNodeUtil1.setId((long) pinJiaoFuXiangMuEntity.getId());
                     treeNodeUtil1.setLabel(pinJiaoFuXiangMuEntity.getXiangmuBianhao());
+                    map.put("xiangmu",chanPinJiaoFuXiangMuDao.findOneXiangMU(pinJiaoFuXiangMuEntity.getId()));
+                    treeNodeUtil1.setLi_attr(map);
                     treeNodeUtilss.add(treeNodeUtil1);
                     treeNodeUtil.setChildren(treeNodeUtilss);
                     //第三级
                     List<TreeNodeUtil> treeNodeUtilss2 = new ArrayList<>();
+                    List<TreeNodeUtil> treeNodeUtilss3 = new ArrayList<>();
                     TreeNodeUtil treeNodeUtil2 = new TreeNodeUtil();
                     TreeNodeUtil treeNodeUtil3 = new TreeNodeUtil();
                     treeNodeUtil2.setId((long) 1);
                     treeNodeUtil2.setLabel("输入文件");
+                    treeNodeUtil2.setChildren(treeNodeUtilss3);
                     treeNodeUtil3.setId((long) 2);
                     treeNodeUtil3.setLabel("输出文件");
+                    treeNodeUtil3.setChildren(treeNodeUtilss3);
                     treeNodeUtilss2.add(treeNodeUtil2);
                     treeNodeUtilss2.add(treeNodeUtil3);
                     treeNodeUtil1.setChildren(treeNodeUtilss2);
