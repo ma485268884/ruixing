@@ -34,5 +34,11 @@ public class ChanPinJiaoFuXiangMuEntity {
 
     private Date fahuoTixingTime;//发货提醒日期
 
-    private ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity;
+    private Double xiangMuMoney;//项目钱
+
+    private Double sheBeiMoney;//设备钱
+
+    private String sbName;//设备名
+
+    //private ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity;
 }

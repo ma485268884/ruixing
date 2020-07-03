@@ -10,12 +10,12 @@ import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity;
 import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity;
 import com.yintu.ruixing.service.ChanPinJiaoFuXiangMuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +25,7 @@ import java.util.Map;
  * @Version 1.0
  * 需求:产品需求所有
  */
-@RestController
+@Controller
 @RequestMapping("/ChanPinJiaoFuXiangMuAll")
 public class ChanPinJiaoFuXiangMuController {
     @Autowired
@@ -33,12 +33,14 @@ public class ChanPinJiaoFuXiangMuController {
 
     //创建三级树
     @GetMapping
+    @ResponseBody
     public Map<String, Object> findSanJiShu() {
         List<TreeNodeUtil> treeNodeUtils = chanPinJiaoFuXiangMuService.findSanJiShu();
         return ResponseDataUtil.ok("查询成功", treeNodeUtils);
     }
 
     //新增项目
+    @ResponseBody
     @PostMapping("/addXiangMu")
     public Map<String, Object> addXiangMu(ChanPinJiaoFuXiangMuEntity chanPinJiaoFuXiangMuEntity) {
         chanPinJiaoFuXiangMuService.addXiangMu(chanPinJiaoFuXiangMuEntity);
@@ -46,6 +48,7 @@ public class ChanPinJiaoFuXiangMuController {
     }
 
     //根据选择的id  修改对应的项目内容
+    @ResponseBody
     @PutMapping("/editXiangMuById/{id}")
     public Map<String, Object> editXiangMuById(@PathVariable Integer id, ChanPinJiaoFuXiangMuEntity chanPinJiaoFuXiangMuEntity) {
         chanPinJiaoFuXiangMuService.editXiangMuById(chanPinJiaoFuXiangMuEntity);
@@ -53,6 +56,7 @@ public class ChanPinJiaoFuXiangMuController {
     }
 
     //根据id  删除对应的项目
+    @ResponseBody
     @DeleteMapping("/deletXiagMuById/{id}")
     public Map<String, Object> deletXiagMuById(@PathVariable Integer id) {
         chanPinJiaoFuXiangMuService.deletXiagMuById(id);
@@ -60,6 +64,7 @@ public class ChanPinJiaoFuXiangMuController {
     }
 
     //查询所有的数据
+    @ResponseBody
     @GetMapping("/findAll")
     public Map<String, Object> findAll(Integer page, Integer size) {
         JSONObject js = new JSONObject();
@@ -72,6 +77,7 @@ public class ChanPinJiaoFuXiangMuController {
     }
 
     //根据项目编号 和项目名称  进行模糊查询
+    @ResponseBody
     @GetMapping("/findXiangMuData")
     public Map<String, Object> findXiangMuData(String xiangMuBianHao, String xiangMuName, Integer page, Integer size) {
         JSONObject js = new JSONObject();
@@ -84,6 +90,7 @@ public class ChanPinJiaoFuXiangMuController {
     }
 
     //根据树的id  查询对应的数据
+    @ResponseBody
     @GetMapping("/findXiangMuByIds")
     public Map<String, Object> findXiangMuByIds(Integer stateid, Integer id,Integer typeid, Integer page, Integer size) {
         JSONObject js = new JSONObject();
@@ -95,6 +102,7 @@ public class ChanPinJiaoFuXiangMuController {
         return ResponseDataUtil.ok("查询数据成功", js);
     }
     //新增文件列表
+    @ResponseBody
     @PostMapping("/addXiangMuFile")
     public Map<String, Object> addXiangMuFile(ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity) {
         chanPinJiaoFuXiangMuService.addXiangMuFile(chanPinJiaoFuXiangMuFileEntity);
@@ -102,6 +110,7 @@ public class ChanPinJiaoFuXiangMuController {
     }
 
     //根据id  修改文件列表
+    @ResponseBody
     @PutMapping("/editXiangMuFileById/{id}")
     public Map<String, Object> editXiangMuFileById(@PathVariable Integer id, ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity) {
         chanPinJiaoFuXiangMuService.editXiangMuFileById(chanPinJiaoFuXiangMuFileEntity);
@@ -138,6 +147,7 @@ public class ChanPinJiaoFuXiangMuController {
     }
 
     //根据id  删除对应的文件
+    @ResponseBody
     @DeleteMapping("/deletXiangMuFileById/{id}")
     public Map<String, Object> deletXiangMuFileById(@PathVariable Integer id) {
         chanPinJiaoFuXiangMuService.deletXiangMuFileById(id);
@@ -145,6 +155,7 @@ public class ChanPinJiaoFuXiangMuController {
     }
 
     //根据id  单个或者批量删除文件
+    @ResponseBody
     @DeleteMapping("/deletXiangMuFileByIds/{ids}")
     public Map<String, Object> deletXiangMuFileByIds(@PathVariable Integer[] ids) {
         chanPinJiaoFuXiangMuService.deletXiangMuFileByIds(ids);
@@ -152,14 +163,31 @@ public class ChanPinJiaoFuXiangMuController {
     }
 
 
-    //交付情况统计
+    //////////////////////////////交付情况统计/////////////////////////////////////
 
     //统计各个状态的项目数量
+    @ResponseBody
     @GetMapping("/findJiaoFuQingKuangNumberAll")
     public Map<String,Object>findJiaoFuQingKuangNumberAll(){
-        Map<String,Object> map=new HashMap<>();
-        map=chanPinJiaoFuXiangMuService.findJiaoFuQingKuangNumberAll();
+       // Map<String,Object> map=new HashMap<>();
+        Map<String,Object> map=chanPinJiaoFuXiangMuService.findJiaoFuQingKuangNumberAll();
         return ResponseDataUtil.ok("查询统计数量成功",map);
     }
 
+    //查询各个状态的列表
+    @ResponseBody
+    @GetMapping("/findJiaoFuQingKuangList")
+    public Map<String,Object>findJiaoFuQingKuangList(String choiceTing ,Integer page,Integer size){
+        if (choiceTing.equals("daiQianShu") || choiceTing.equals("daiYanGong")){
+            PageHelper.startPage(page,size);
+            List<ChanPinJiaoFuXiangMuEntity> chanPinJiaoFuXiangMuEntities = chanPinJiaoFuXiangMuService.findJiaoFuQingKuangList(choiceTing, page, size);
+            PageInfo<ChanPinJiaoFuXiangMuEntity> pageInfo=new PageInfo<>(chanPinJiaoFuXiangMuEntities);
+            return ResponseDataUtil.ok("查询数据成功",pageInfo);
+        }else {
+            PageHelper.startPage(page,size);
+            List<ChanPinJiaoFuXiangMuEntity> chanPinJiaoFuXiangMuEntities = chanPinJiaoFuXiangMuService.findJiaoFuQingKuangLists(choiceTing, page, size);
+            PageInfo<ChanPinJiaoFuXiangMuEntity> pageInfo=new PageInfo<>(chanPinJiaoFuXiangMuEntities);
+            return ResponseDataUtil.ok("查询数据成功",pageInfo);
+        }
+    }
 }

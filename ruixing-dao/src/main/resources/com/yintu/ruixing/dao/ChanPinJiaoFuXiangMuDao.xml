@@ -19,43 +19,14 @@
             <result column="file_name" property="fileName"></result>
         </association>
     </resultMap>-->
-    <sql id="Base_Column_List">
-    id, xiangmu_state, xiangmu_bianhao, xiangmu_name, xiaoshou_state, fahuo_state, qianshou_state, 
-    yangong_state, xianchangfuwu, fahuo_tixing_time
-  </sql>
-    <!--查询未完成发货项目的个数-->
-    <select id="findFaHuo" resultType="java.lang.Integer">
-        SELECT
-            COUNT( fahuo_state )
-        FROM
-            mro_chanpinjiaofu_xiangmu
-        WHERE
-            fahuo_state != 5
-    </select>
-    <!--查询未完成签收项目的个数-->
-    <select id="findQianShou" resultType="java.lang.Integer">
-        SELECT
-            COUNT( qianshou_state )
-        FROM
-            mro_chanpinjiaofu_xiangmu
-        WHERE
-            qianshou_state != 4
-    </select>
-    <!--查询正在执行项目的个数-->
-    <select id="findZhengZaiZhiXing" resultType="java.lang.Integer">
-        SELECT
-            COUNT( xiangmu_state )
-        FROM
-            mro_chanpinjiaofu_xiangmu
-        WHERE
-            xiangmu_state = 1
-    </select>
-    <!--=============================================================================-->
     <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity">
         <id column="id" property="id"></id>
         <result column="xm_id" property="xmId"></result>
         <result column="file_type" property="fileType"></result>
         <result column="file_name" property="fileName"></result>
+        <result column="file_path" property="filePath"></result>
+        <result column="auditor_id" property="auditorId"></result>
+        <result column="fabu_type" property="fabuType"></result>
         <association property="chanPinJiaoFuXiangMuEntity" javaType="ChanPinJiaoFuXiangMuEntity">
             <id column="id" jdbcType="INTEGER" property="id"/>
             <result column="xiangmu_state" jdbcType="INTEGER" property="xiangmuState"/>
@@ -67,8 +38,221 @@
             <result column="yangong_state" jdbcType="INTEGER" property="yangongState"/>
             <result column="xianchangfuwu" jdbcType="INTEGER" property="xianchangfuwu"/>
             <result column="fahuo_tixing_time" jdbcType="TIMESTAMP" property="fahuoTixingTime"/>
+            <result column="xiangmu_money"  property="xiangMuMoney"/>
+            <result column="shebei_money"  property="sheBeiMoney"/>
         </association>
     </resultMap>
+    <sql id="Base_Column_List">
+    id, xiangmu_state, xiangmu_bianhao, xiangmu_name, xiaoshou_state, fahuo_state, qianshou_state, 
+    yangong_state, xianchangfuwu, fahuo_tixing_time, xiangmu_money, shebei_money
+  </sql>
+
+    <!--查询正在执行 尚未完成发货、签收、验工 停滞暂不发货、陆续发货中、工程结束不需发货   的列表；-->
+    <select id="findJiaoFuQingKuangLists" parameterType="java.lang.String" resultMap="xiangmu">
+        <if test="choiceTing=='zhengZaiZhiXing'">
+            SELECT
+           *
+            FROM
+            mro_chanpinjiaofu_xiangmu
+            WHERE
+            xiangmu_state = 1
+        </if>
+        <if test="choiceTing=='meiWanChengFaHuo'">
+            SELECT
+            *
+            FROM
+            mro_chanpinjiaofu_xiangmu
+            WHERE
+            fahuo_state not in (4,5)
+        </if>
+        <if test="choiceTing=='meiWanChengQianShou'">
+            SELECT
+            <include refid="Base_Column_List"/>
+            FROM
+            mro_chanpinjiaofu_xiangmu
+            WHERE
+            qianshou_state != 4
+        </if>
+        <if test="choiceTing=='meiWanChengYanGong'">
+            SELECT
+            <include refid="Base_Column_List"/>
+            FROM
+            mro_chanpinjiaofu_xiangmu
+            WHERE
+            yangong_state != 6
+        </if>
+        <if test="choiceTing=='zanBuFaHuo'">
+            SELECT
+            <include refid="Base_Column_List"/>
+            FROM
+            mro_chanpinjiaofu_xiangmu
+            WHERE
+            fahuo_state = 1
+        </if>
+        <if test="choiceTing=='luXuFaHuo'">
+            SELECT
+            <include refid="Base_Column_List"/>
+            FROM
+            mro_chanpinjiaofu_xiangmu
+            WHERE
+            fahuo_state = 3
+        </if>
+        <if test="choiceTing=='wuXuFaHuo'">
+            SELECT
+            <include refid="Base_Column_List"/>
+            FROM
+            mro_chanpinjiaofu_xiangmu
+            WHERE
+            fahuo_state = 4
+        </if>
+        <if test="choiceTing=='overQianShouMoney'">
+            SELECT
+            <include refid="Base_Column_List"/>
+            FROM
+            mro_chanpinjiaofu_xiangmu
+            WHERE
+            qianshou_state = 4
+        </if>
+        <if test="choiceTing=='overYanGongMoney'">
+            SELECT
+            <include refid="Base_Column_List"/>
+            FROM
+            mro_chanpinjiaofu_xiangmu
+            WHERE
+            yangong_state = 6
+        </if>
+    </select>
+    <!--查询 待签收 待验工 项目的个数和涉及设备的清单、金额-->
+    <select id="findJiaoFuQingKuangList" parameterType="java.lang.String" resultMap="xiangmu">
+        <if test="choiceTing=='daiQianShu'">
+            SELECT
+            cx.* ,
+            sb.sb_name
+            FROM
+            mro_chanpinjiaofu_xiangmu cx,
+            mro_shebei sb,
+            mro_shebei_xiangmu sx
+            WHERE
+            cx.id = sx.xm_id
+            AND sb.id = sx.sb_id
+            AND cx.id IN ( SELECT id FROM mro_chanpinjiaofu_xiangmu WHERE qianshou_state = 3 )
+        </if>
+        <if test="choiceTing=='daiYanGong'">
+            SELECT
+            cx.* ,
+            sb.sb_name
+            FROM
+            mro_chanpinjiaofu_xiangmu cx,
+            mro_shebei sb,
+            mro_shebei_xiangmu sx
+            WHERE
+            cx.id = sx.xm_id
+            AND sb.id = sx.sb_id
+            AND cx.id IN ( SELECT id FROM mro_chanpinjiaofu_xiangmu WHERE yangong_state = 3 )
+        </if>
+    </select>
+    <!--查询已完成签收项目的金额-->
+    <select id="overYanGongMoney" resultType="java.lang.String">
+        SELECT
+            SUM(xiangmu_money)
+        FROM
+            mro_chanpinjiaofu_xiangmu
+        WHERE
+            yangong_state = 6
+    </select>
+    <!--查询已完成签收项目的金额-->
+    <select id="overQianShouMoney" resultType="java.lang.String">
+        SELECT
+            SUM(xiangmu_money)
+        FROM
+            mro_chanpinjiaofu_xiangmu
+        WHERE
+            qianshou_state = 4
+    </select>
+    <!--查询待验工的项目的个数-->
+    <select id="daiYanGong" resultType="java.lang.String">
+        SELECT
+            COUNT( yangong_state )
+        FROM
+            mro_chanpinjiaofu_xiangmu
+        WHERE
+            yangong_state = 3
+    </select>
+    <!--查询待签收的项目的个数-->
+    <select id="daiQianShu" resultType="java.lang.String">
+        SELECT
+            COUNT( qianshou_state )
+        FROM
+            mro_chanpinjiaofu_xiangmu
+        WHERE
+            qianshou_state = 3
+    </select>
+    <!--查询工程结束不需要发货的项目的个数-->
+    <select id="wuXuFaHuo" resultType="java.lang.String">
+        SELECT
+            COUNT( fahuo_state )
+        FROM
+            mro_chanpinjiaofu_xiangmu
+        WHERE
+            fahuo_state = 4
+    </select>
+    <!--查询陆续发货项目的个数-->
+    <select id="luXuFaHuo" resultType="java.lang.String">
+        SELECT
+            COUNT( fahuo_state )
+        FROM
+            mro_chanpinjiaofu_xiangmu
+        WHERE
+            fahuo_state = 3
+    </select>
+    <!--查询项目停止暂不发货的项目的个数-->
+    <select id="zanBuFaHuo" resultType="java.lang.String">
+        SELECT
+            COUNT( fahuo_state )
+        FROM
+            mro_chanpinjiaofu_xiangmu
+        WHERE
+            fahuo_state = 1
+    </select>
+    <!--查询未完成验工项目的个数-->
+    <select id="meiWanChengYanGong" resultType="java.lang.String">
+        SELECT
+            COUNT( yangong_state )
+        FROM
+            mro_chanpinjiaofu_xiangmu
+        WHERE
+            yangong_state != 6
+    </select>
+    <!--查询未完成发货项目的个数-->
+    <select id="findFaHuo" resultType="java.lang.String">
+        SELECT
+            COUNT( fahuo_state )
+        FROM
+            mro_chanpinjiaofu_xiangmu
+        WHERE
+            fahuo_state not in (4,5)
+    </select>
+    <!--查询未完成签收项目的个数-->
+    <select id="findQianShou" resultType="java.lang.String">
+        SELECT
+            COUNT( qianshou_state )
+        FROM
+            mro_chanpinjiaofu_xiangmu
+        WHERE
+            qianshou_state != 4
+    </select>
+    <!--查询正在执行项目的个数-->
+    <select id="findZhengZaiZhiXing" resultType="java.lang.String">
+        SELECT
+            COUNT( xiangmu_state )
+        FROM
+            mro_chanpinjiaofu_xiangmu
+        WHERE
+            xiangmu_state = 1
+    </select>
+
+
+    <!--===============================项目交付状态管理==============================================-->
     <!--项目交付状态管理-->
     <!--根据项目名 和项目编号 进行模糊查询-->
     <select id="findXiangMuData" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -104,7 +288,7 @@
     delete from mro_chanpinjiaofu_file where id=#{id}
   </delete>
     <!--根据文件id  查询对应的数据-->
-    <select id="findById" parameterType="java.lang.Integer" resultType="java.lang.String">
+    <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     SELECT
         *
     FROM
@@ -144,25 +328,28 @@
   </select>
     <!--查询所有的数据-->
     <select id="findAll" resultMap="BaseResultMap">
-
-	SELECT
-    cf.id,
-	cx.xiangmu_state,
-	cx.xiangmu_name,
-	cx.xiaoshou_state,
-	cx.fahuo_state,
-	cx.qianshou_state,
-	cx.yangong_state,
-	cx.xianchangfuwu,
-	cx.fahuo_tixing_time,
-	cf.file_type,
-	cf.file_name,
-	cf.xm_id
-    FROM
-        mro_chanpinjiaofu_xiangmu cx,
-        mro_chanpinjiaofu_file cf
-    WHERE
-        cx.id=cf.xm_id
+        SELECT
+        cf.id,
+        cx.xiangmu_state,
+        cx.xiangmu_bianhao,
+        cx.xiangmu_name,
+        cx.xiaoshou_state,
+        cx.fahuo_state,
+        cx.qianshou_state,
+        cx.yangong_state,
+        cx.xianchangfuwu,
+        cx.fahuo_tixing_time,
+        cf.file_type,
+        cf.file_name,
+        cf.xm_id,
+        cf.fabu_type,
+        cf.auditor_id,
+        cf.file_path
+        FROM
+            mro_chanpinjiaofu_xiangmu cx,
+            mro_chanpinjiaofu_file cf
+        WHERE
+            cx.id=cf.xm_id
   </select>
     <!--根据树形的数据  查对应的数据-->
     <select id="findXiangMuByIds" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -187,8 +374,24 @@
             </if>
         </where>
     </select>
+
+    <resultMap id="xiangmu" type="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="xiangmu_state" jdbcType="INTEGER" property="xiangmuState"/>
+        <result column="xiangmu_bianhao" jdbcType="VARCHAR" property="xiangmuBianhao"/>
+        <result column="xiangmu_name" jdbcType="VARCHAR" property="xiangmuName"/>
+        <result column="xiaoshou_state" jdbcType="INTEGER" property="xiaoshouState"/>
+        <result column="fahuo_state" jdbcType="INTEGER" property="fahuoState"/>
+        <result column="qianshou_state" jdbcType="INTEGER" property="qianshouState"/>
+        <result column="yangong_state" jdbcType="INTEGER" property="yangongState"/>
+        <result column="xianchangfuwu" jdbcType="INTEGER" property="xianchangfuwu"/>
+        <result column="fahuo_tixing_time" jdbcType="TIMESTAMP" property="fahuoTixingTime"/>
+        <result column="xiangmu_money"  property="xiangMuMoney"/>
+        <result column="shebei_money"  property="sheBeiMoney"/>
+        <result column="sb_name" jdbcType="TIMESTAMP" property="sbName"/>
+    </resultMap>
     <!--查询树形所有的数据-->
-    <select id="findSanJiShu" resultMap="BaseResultMap">
+    <select id="findSanJiShu" resultMap="xiangmu">
         select
         <include refid="Base_Column_List"/>
         from mro_chanpinjiaofu_xiangmu
@@ -196,7 +399,7 @@
         xiangmu_state
     </select>
     <!--根据第二级的id  查询对应的数据-->
-    <select id="findOneXiangMU" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="findOneXiangMU" parameterType="java.lang.Integer" resultMap="xiangmu">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
@@ -205,7 +408,7 @@
         id = #{id}
     </select>
     <!--根据项目状态 查询对应的数据  作为树的第二级-->
-    <select id="findDiErJi" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="findDiErJi" resultMap="xiangmu" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from mro_chanpinjiaofu_xiangmu

@@ -40,4 +40,7 @@ public interface ChanPinJiaoFuXiangMuService {
 
     Map<String, Object> findJiaoFuQingKuangNumberAll();
 
+    List<ChanPinJiaoFuXiangMuEntity> findJiaoFuQingKuangList(String choiceTing, Integer page, Integer size);
+
+    List<ChanPinJiaoFuXiangMuEntity> findJiaoFuQingKuangLists(String choiceTing, Integer page, Integer size);
 }
