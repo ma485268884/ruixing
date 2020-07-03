@@ -1,53 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yintu.ruixing.dao.BiddingDao">
-    <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.BiddingEntity">
+<mapper namespace="com.yintu.ruixing.dao.DesignLiaisonDao">
+    <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.DesignLiaisonEntity">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
         <result column="project_status" jdbcType="SMALLINT" property="projectStatus"/>
         <result column="project_date" jdbcType="DATE" property="projectDate"/>
         <result column="task_status" jdbcType="SMALLINT" property="taskStatus"/>
         <result column="task_finish_date" jdbcType="TIMESTAMP" property="taskFinishDate"/>
+        <result column="meeting_status" jdbcType="SMALLINT" property="meetingStatus"/>
+        <result column="change_status" jdbcType="SMALLINT" property="changeStatus"/>
         <result column="bidder" jdbcType="VARCHAR" property="bidder"/>
         <result column="railway_administration_id" jdbcType="INTEGER" property="railwayAdministrationId"/>
-        <result column="pre_sale_id" jdbcType="INTEGER" property="preSaleId"/>
+        <result column="bidding_id" jdbcType="INTEGER" property="biddingId"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, project_name, project_status, project_date, task_status, task_finish_date, bidder,
-    railway_administration_id, pre_sale_id
+        id, project_name, project_status, project_date, task_status, task_finish_date, meeting_status,
+    change_status, bidder, railway_administration_id, bidding_id
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from mro_bidding
+        from mro_design_liaison
         where id = #{id,jdbcType=INTEGER}
     </select>
     <select id="selectAll" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from mro_bidding
+        from mro_design_liaison
     </select>
     <select id="selectByYear" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from mro_bidding
+        from mro_design_liaison
         where YEAR(project_date) = #{year,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
-        from mro_bidding
+        from mro_design_liaison
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.yintu.ruixing.entity.BiddingEntity">
-        insert into mro_bidding (id, project_name, project_status,
-                                 project_date, task_status, task_finish_date,
-                                 bidder, railway_administration_id, pre_sale_id)
+    <insert id="insert" parameterType="com.yintu.ruixing.entity.DesignLiaisonEntity">
+        insert into mro_design_liaison (id, project_name, project_status,
+                                        project_date, task_status, task_finish_date,
+                                        meeting_status, change_status, bidder,
+                                        railway_administration_id, bidding_id)
         values (#{id,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR}, #{projectStatus,jdbcType=SMALLINT},
                 #{projectDate,jdbcType=DATE}, #{taskStatus,jdbcType=SMALLINT}, #{taskFinishDate,jdbcType=TIMESTAMP},
-                #{bidder,jdbcType=VARCHAR}, #{railwayAdministrationId,jdbcType=INTEGER}, #{preSaleId,jdbcType=INTEGER})
+                #{meetingStatus,jdbcType=SMALLINT}, #{changeStatus,jdbcType=SMALLINT}, #{bidder,jdbcType=VARCHAR},
+                #{railwayAdministrationId,jdbcType=INTEGER}, #{biddingId,jdbcType=INTEGER})
     </insert>
-    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.BiddingEntity">
-        insert into mro_bidding
+    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.DesignLiaisonEntity">
+        insert into mro_design_liaison
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
@@ -67,14 +71,20 @@
             <if test="taskFinishDate != null">
                 task_finish_date,
             </if>
+            <if test="meetingStatus != null">
+                meeting_status,
+            </if>
+            <if test="changeStatus != null">
+                change_status,
+            </if>
             <if test="bidder != null">
                 bidder,
             </if>
             <if test="railwayAdministrationId != null">
                 railway_administration_id,
             </if>
-            <if test="preSaleId != null">
-                pre_sale_id,
+            <if test="biddingId != null">
+                bidding_id,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -96,19 +106,25 @@
             <if test="taskFinishDate != null">
                 #{taskFinishDate,jdbcType=TIMESTAMP},
             </if>
+            <if test="meetingStatus != null">
+                #{meetingStatus,jdbcType=SMALLINT},
+            </if>
+            <if test="changeStatus != null">
+                #{changeStatus,jdbcType=SMALLINT},
+            </if>
             <if test="bidder != null">
                 #{bidder,jdbcType=VARCHAR},
             </if>
             <if test="railwayAdministrationId != null">
                 #{railwayAdministrationId,jdbcType=INTEGER},
             </if>
-            <if test="preSaleId != null">
-                #{preSaleId,jdbcType=INTEGER},
+            <if test="biddingId != null">
+                #{biddingId,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.BiddingEntity">
-        update mro_bidding
+    <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.DesignLiaisonEntity">
+        update mro_design_liaison
         <set>
             <if test="projectName != null">
                 project_name = #{projectName,jdbcType=VARCHAR},
@@ -125,33 +141,40 @@
             <if test="taskFinishDate != null">
                 task_finish_date = #{taskFinishDate,jdbcType=TIMESTAMP},
             </if>
+            <if test="meetingStatus != null">
+                meeting_status = #{meetingStatus,jdbcType=SMALLINT},
+            </if>
+            <if test="changeStatus != null">
+                change_status = #{changeStatus,jdbcType=SMALLINT},
+            </if>
             <if test="bidder != null">
                 bidder = #{bidder,jdbcType=VARCHAR},
             </if>
             <if test="railwayAdministrationId != null">
                 railway_administration_id = #{railwayAdministrationId,jdbcType=INTEGER},
             </if>
-            <if test="preSaleId != null">
-                pre_sale_id = #{preSaleId,jdbcType=INTEGER},
+            <if test="biddingId != null">
+                bidding_id = #{biddingId,jdbcType=INTEGER},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.BiddingEntity">
-        update mro_bidding
+    <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.DesignLiaisonEntity">
+        update mro_design_liaison
         set project_name              = #{projectName,jdbcType=VARCHAR},
             project_status            = #{projectStatus,jdbcType=SMALLINT},
             project_date              = #{projectDate,jdbcType=DATE},
             task_status               = #{taskStatus,jdbcType=SMALLINT},
             task_finish_date          = #{taskFinishDate,jdbcType=TIMESTAMP},
+            meeting_status            = #{meetingStatus,jdbcType=SMALLINT},
+            change_status             = #{changeStatus,jdbcType=SMALLINT},
             bidder                    = #{bidder,jdbcType=VARCHAR},
             railway_administration_id = #{railwayAdministrationId,jdbcType=INTEGER},
-            pre_sale_id               = #{preSaleId,jdbcType=INTEGER}
+            bidding_id                = #{biddingId,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
     </update>
-
     <select id="selectByDistinctProjectDate" resultType="java.lang.Integer">
         select DISTINCT YEAR(project_date)
-        from mro_bidding
+        from mro_design_liaison
     </select>
 </mapper>

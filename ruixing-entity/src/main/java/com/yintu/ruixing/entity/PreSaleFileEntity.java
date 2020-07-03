@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 售前技术支持 项目文件实体类
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

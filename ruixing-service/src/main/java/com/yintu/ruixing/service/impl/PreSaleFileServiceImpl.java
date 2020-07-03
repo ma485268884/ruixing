@@ -5,6 +5,7 @@ import com.yintu.ruixing.dao.PreSaleFileDao;
 import com.yintu.ruixing.entity.PreSaleEntity;
 import com.yintu.ruixing.entity.PreSaleFileEntity;
 import com.yintu.ruixing.service.PreSaleFileService;
+import org.apache.commons.collections4.ComparatorUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,8 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author:mlf
@@ -66,6 +69,9 @@ public class PreSaleFileServiceImpl implements PreSaleFileService {
         String[] headers = {"序号", "年份", "项目名称", "项目状态", "任务状态", "文件类型", "文件名称",};
         //获取数据
         List<PreSaleFileEntity> preSaleFileEntities = preSaleFileDao.selectByCondition(null, null, ids, null);
+        preSaleFileEntities = preSaleFileEntities.stream()
+                .sorted(Comparator.comparing(PreSaleFileEntity::getId).reversed())
+                .collect(Collectors.toList());
         //excel元素
         String[][] content = new String[preSaleFileEntities.size()][headers.length];
         for (int i = 0; i < preSaleFileEntities.size(); i++) {

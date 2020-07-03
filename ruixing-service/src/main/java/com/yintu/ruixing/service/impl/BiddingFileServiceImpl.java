@@ -4,6 +4,7 @@ import com.yintu.ruixing.common.util.ExportExcelUtil;
 import com.yintu.ruixing.dao.BiddingFileDao;
 import com.yintu.ruixing.entity.BiddingEntity;
 import com.yintu.ruixing.entity.BiddingFileEntity;
+import com.yintu.ruixing.entity.PreSaleFileEntity;
 import com.yintu.ruixing.service.BiddingFileService;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author:mlf
@@ -65,6 +68,9 @@ public class BiddingFileServiceImpl implements BiddingFileService {
         String[] headers = {"序号", "年份", "项目名称", "招标人", "项目状态", "任务状态", "文件类型", "文件名称"};
         //获取数据
         List<BiddingFileEntity> biddingFileEntities = biddingFileDao.selectByCondition(null, null, ids, null);
+        biddingFileEntities = biddingFileEntities.stream()
+                .sorted(Comparator.comparing(BiddingFileEntity::getId).reversed())
+                .collect(Collectors.toList());
         //excel元素
         String[][] content = new String[biddingFileEntities.size()][headers.length];
         for (int i = 0; i < biddingFileEntities.size(); i++) {
