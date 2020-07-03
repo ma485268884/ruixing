@@ -2,17 +2,13 @@ package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.DesignLiaisonDao;
-import com.yintu.ruixing.entity.BiddingEntity;
 import com.yintu.ruixing.entity.DesignLiaisonEntity;
 import com.yintu.ruixing.service.DesignLiaisonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author:mlf
@@ -57,6 +53,11 @@ public class DesignLiaisonServiceImpl implements DesignLiaisonService {
     @Override
     public List<Integer> findByDistinctProjectDate() {
         return designLiaisonDao.selectByDistinctProjectDate();
+    }
+
+    @Override
+    public List<Integer> countTaskStatusByGroupBy(Integer selectType, Date date) {
+        return designLiaisonDao.countTaskStatusByGroupBy(selectType, date);
     }
 
     @Override

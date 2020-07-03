@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author:mlf
@@ -52,6 +49,11 @@ public class BiddingServiceImpl implements BiddingService {
     @Override
     public List<BiddingEntity> findByYear(Integer year) {
         return biddingDao.selectByYear(year);
+    }
+
+    @Override
+    public List<Integer> countTaskStatusByGroupBy(Integer selectType, Date date) {
+        return biddingDao.countTaskStatusByGroupBy(selectType, date);
     }
 
     @Override

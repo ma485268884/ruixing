@@ -4,6 +4,7 @@ import com.yintu.ruixing.common.util.BaseService;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.DesignLiaisonEntity;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,6 +29,15 @@ public interface DesignLiaisonService extends BaseService<DesignLiaisonEntity, I
      * @return 年份集合
      */
     List<Integer> findByDistinctProjectDate();
+
+    /**
+     * 统计任务完成情况
+     *
+     * @param selectType 1. 年 2.年-月 3.年-月-日
+     * @param date       日期
+     * @return 任务状态统计值
+     */
+    List<Integer> countTaskStatusByGroupBy(Integer selectType, Date date);
 
 
     /**

@@ -2,6 +2,7 @@ package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.DesignLiaisonEntity;
 
+import java.util.Date;
 import java.util.List;
 
 public interface DesignLiaisonDao {
@@ -22,4 +23,6 @@ public interface DesignLiaisonDao {
     int updateByPrimaryKey(DesignLiaisonEntity record);
 
     List<Integer> selectByDistinctProjectDate();
+
+    List<Integer> countTaskStatusByGroupBy(Integer selectType, Date date);
 }

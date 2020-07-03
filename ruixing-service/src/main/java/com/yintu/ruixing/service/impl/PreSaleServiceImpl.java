@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author:mlf
@@ -54,6 +51,11 @@ public class PreSaleServiceImpl implements PreSaleService {
     @Override
     public List<PreSaleEntity> findByYear(Integer year) {
         return preSaleDao.selectByYear(year);
+    }
+
+    @Override
+    public List<Integer> countTaskStatusByGroupBy(Integer selectType, Date date) {
+        return preSaleDao.countTaskStatusByGroupBy(selectType, date);
     }
 
     @Override

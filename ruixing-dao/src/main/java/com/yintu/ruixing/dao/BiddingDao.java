@@ -2,6 +2,7 @@ package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.BiddingEntity;
 
+import java.util.Date;
 import java.util.List;
 
 public interface BiddingDao {
@@ -22,4 +23,6 @@ public interface BiddingDao {
     int updateByPrimaryKey(BiddingEntity record);
 
     List<Integer> selectByDistinctProjectDate();
+
+    List<Integer> countTaskStatusByGroupBy(Integer selectType, Date date);
 }

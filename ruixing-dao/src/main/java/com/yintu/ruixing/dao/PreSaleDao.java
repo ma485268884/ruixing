@@ -2,6 +2,7 @@ package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.PreSaleEntity;
 
+import java.util.Date;
 import java.util.List;
 
 public interface PreSaleDao {
@@ -22,6 +23,8 @@ public interface PreSaleDao {
     int updateByPrimaryKey(PreSaleEntity record);
 
     List<Integer> selectByDistinctProjectDate();
+
+    List<Integer> countTaskStatusByGroupBy(Integer selectType, Date date);
 
 
 }
