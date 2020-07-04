@@ -69,8 +69,8 @@ public class UserController extends SessionController {
     @GetMapping
     public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber,
                                        @RequestParam("page_size") Integer pageSize,
-                                       @RequestParam(value = "search_text", required = false) String username,
                                        @RequestParam(value = "sortby", required = false) String sortby,
+                                       @RequestParam(value = "search_text", required = false) String username,
                                        @RequestParam(value = "order", required = false) String order) {
         JSONObject jo = new JSONObject();
         List<String> requestMethods = permissionService.findRequestMethodsByUserIdAndUrl(this.getLoginUserId(), "/users");

@@ -38,4 +38,9 @@ public class SolutionServiceImpl implements SolutionService {
         map.put("designLiaison", projectFinishCount.stream().skip(4).limit(2).collect(Collectors.toList()));
         return map;
     }
+
+    @Override
+    public List<Map<String, Object>> biddingProject(Date startDate, Date endDate, Short projectStatus) {
+        return solutionDao.selectByDateSectionAndProjectStatus(startDate, endDate, projectStatus);
+    }
 }

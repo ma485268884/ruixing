@@ -79,6 +79,8 @@ public class DesignLiaisonServiceImpl implements DesignLiaisonService {
                 map.put("projectStatus", designLiaisonEntity.getProjectStatus());
                 map.put("taskStatus", designLiaisonEntity.getTaskStatus());
                 map.put("taskFinishStatus", designLiaisonEntity.getTaskFinishDate());
+                map.put("meetingStatus", designLiaisonEntity.getMeetingStatus());
+                map.put("changeStatus", designLiaisonEntity.getChangeStatus());
                 map.put("bidder", designLiaisonEntity.getBidder());
                 map.put("railwayAdministrationId", designLiaisonEntity.getRailwayAdministrationId());
                 map.put("biddingId", designLiaisonEntity.getBiddingId());
