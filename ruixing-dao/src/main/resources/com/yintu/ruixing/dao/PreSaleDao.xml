@@ -120,24 +120,4 @@
         from mro_pre_sale
         ORDER BY YEAR(project_date) DESC
     </select>
-
-    <select id="countTaskStatusByGroupBy" resultType="java.lang.Integer">
-        SELECT COUNT(*)
-        FROM mro_pre_sale
-        <where>
-            <if test="selectType==1">
-                DATE_FORMAT(project_date,'%Y') = DATE_FORMAT(#{date,jdbcType=DATE},'%Y' )
-            </if>
-            <if test="selectType==2">
-                DATE_FORMAT(project_date,'%Y-%m') = DATE_FORMAT(#{date,jdbcType=DATE},'%Y-%m')
-            </if>
-            <if test="selectType==3">
-                DATE_FORMAT(project_date,'%Y-%m-%d') = DATE_FORMAT(#{date,jdbcType=DATE},'%Y-%m-%d' )
-            </if>
-        </where>
-        GROUP BY task_status
-        ORDER BY task_status DESC
-    </select>
-
-
 </mapper>

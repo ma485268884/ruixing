@@ -2,6 +2,7 @@ package com.yintu.ruixing.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
@@ -11,6 +12,7 @@ import com.yintu.ruixing.entity.DesignLiaisonFileEntity;
 import com.yintu.ruixing.service.DesignLiaisonFileService;
 import com.yintu.ruixing.service.DesignLiaisonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,7 +33,10 @@ public class DesignLiaisonController extends SessionController implements BaseCo
     private DesignLiaisonFileService designLiaisonFileService;
 
     @PostMapping
-    public Map<String, Object> add(DesignLiaisonEntity entity) {
+    public Map<String, Object> add(@Validated DesignLiaisonEntity entity) {
+        if (entity.getProjectDate() == null) {
+            throw new BaseRuntimeException("项目日期不能为空");
+        }
         designLiaisonService.add(entity);
         return ResponseDataUtil.ok("添加设计联络及后续技术交流信息成功");
     }
@@ -44,7 +49,10 @@ public class DesignLiaisonController extends SessionController implements BaseCo
     }
 
     @PutMapping("/{id}")
-    public Map<String, Object> edit(@PathVariable Integer id, DesignLiaisonEntity entity) {
+    public Map<String, Object> edit(@PathVariable Integer id, @Validated DesignLiaisonEntity entity) {
+        if (entity.getProjectDate() == null) {
+            throw new BaseRuntimeException("项目日期不能为空");
+        }
         designLiaisonService.edit(entity);
         return ResponseDataUtil.ok("修改设计联络及后续技术交流信息成功");
     }

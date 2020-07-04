@@ -1,6 +1,7 @@
 package com.yintu.ruixing.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;

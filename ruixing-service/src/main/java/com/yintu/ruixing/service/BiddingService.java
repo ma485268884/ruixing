@@ -32,16 +32,6 @@ public interface BiddingService extends BaseService<BiddingEntity, Integer> {
     List<Integer> findByDistinctProjectDate();
 
     /**
-     * 统计任务完成情况
-     *
-     * @param selectType 1. 年 2.年-月 3.年-月-日
-     * @param date       日期
-     * @return 任务状态统计值
-     */
-    List<Integer> countTaskStatusByGroupBy(Integer selectType, Date date);
-
-
-    /**
      * 年份 项目名 文件类型三级树
      *
      * @return 树信息集合

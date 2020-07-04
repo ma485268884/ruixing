@@ -54,11 +54,6 @@ public class PreSaleServiceImpl implements PreSaleService {
     }
 
     @Override
-    public List<Integer> countTaskStatusByGroupBy(Integer selectType, Date date) {
-        return preSaleDao.countTaskStatusByGroupBy(selectType, date);
-    }
-
-    @Override
     public List<Integer> findByDistinctProjectDate() {
         return preSaleDao.selectByDistinctProjectDate();
     }

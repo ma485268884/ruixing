@@ -52,11 +52,6 @@ public class BiddingServiceImpl implements BiddingService {
     }
 
     @Override
-    public List<Integer> countTaskStatusByGroupBy(Integer selectType, Date date) {
-        return biddingDao.countTaskStatusByGroupBy(selectType, date);
-    }
-
-    @Override
     public List<Integer> findByDistinctProjectDate() {
         return biddingDao.selectByDistinctProjectDate();
     }

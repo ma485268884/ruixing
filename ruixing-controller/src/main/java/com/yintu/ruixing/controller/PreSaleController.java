@@ -2,6 +2,7 @@ package com.yintu.ruixing.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
@@ -10,6 +11,7 @@ import com.yintu.ruixing.entity.PreSaleFileEntity;
 import com.yintu.ruixing.service.PreSaleFileService;
 import com.yintu.ruixing.service.PreSaleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,7 +32,7 @@ public class PreSaleController extends SessionController implements BaseControll
 
 
     @PostMapping
-    public Map<String, Object> add(PreSaleEntity entity) {
+    public Map<String, Object> add(@Validated PreSaleEntity entity) {
         preSaleService.add(entity);
         return ResponseDataUtil.ok("添加售前技术支持信息成功");
     }
@@ -42,7 +44,7 @@ public class PreSaleController extends SessionController implements BaseControll
     }
 
     @PutMapping("/{id}")
-    public Map<String, Object> edit(@PathVariable Integer id, PreSaleEntity entity) {
+    public Map<String, Object> edit(@PathVariable Integer id, @Validated PreSaleEntity entity) {
         preSaleService.edit(entity);
         return ResponseDataUtil.ok("修改售前技术支持信息成功");
     }

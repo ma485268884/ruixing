@@ -24,5 +24,4 @@ public interface DesignLiaisonDao {
 
     List<Integer> selectByDistinctProjectDate();
 
-    List<Integer> countTaskStatusByGroupBy(Integer selectType, Date date);
 }
