@@ -34,8 +34,6 @@ public class DesignLiaisonFileController extends SessionController implements Ba
     @PostMapping
     @ResponseBody
     public Map<String, Object> add(DesignLiaisonFileEntity entity) {
-        if (entity.getDesignLiaisonId() == null)
-            throw new BaseRuntimeException("设计联络及后续技术交流id不能为空");
         designLiaisonFileService.add(entity);
         return ResponseDataUtil.ok("添加设计联络及后续技术交流文件信息成功");
     }
@@ -55,8 +53,6 @@ public class DesignLiaisonFileController extends SessionController implements Ba
     @PutMapping("/{id}")
     @ResponseBody
     public Map<String, Object> edit(@PathVariable Integer id, DesignLiaisonFileEntity entity) {
-        if (entity.getDesignLiaisonId() == null)
-            throw new BaseRuntimeException("设计联络及后续技术交流id不能为空");
         designLiaisonFileService.edit(entity);
         return ResponseDataUtil.ok("修改设计联络及后续技术交流文件信息成功");
     }

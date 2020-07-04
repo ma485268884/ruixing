@@ -35,8 +35,6 @@ public class PreSaleFileController extends SessionController implements BaseCont
     @PostMapping
     @ResponseBody
     public Map<String, Object> add(PreSaleFileEntity entity) {
-        if (entity.getPreSaleId() == null)
-            throw new BaseRuntimeException("售前技术支持id不能为空");
         preSaleFileService.add(entity);
         return ResponseDataUtil.ok("添加售前技术支持文件信息成功");
     }
@@ -56,8 +54,6 @@ public class PreSaleFileController extends SessionController implements BaseCont
     @PutMapping("/{id}")
     @ResponseBody
     public Map<String, Object> edit(Integer id, PreSaleFileEntity entity) {
-        if (entity.getPreSaleId() == null)
-            throw new BaseRuntimeException("售前技术支持id不能为空");
         preSaleFileService.edit(entity);
         return ResponseDataUtil.ok("更新售前技术支持文件信息成功");
     }

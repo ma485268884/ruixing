@@ -33,7 +33,7 @@ public class GlobalExceptionController {
         for (FieldError fieldError : fieldErrors) {
             sb.append(fieldError.getField()).append("：").append(fieldError.getDefaultMessage()).append(" ");
         }
-        return ResponseDataUtil.error("参数异常", sb);
+        return ResponseDataUtil.error(sb.toString());
     }
 
     @ExceptionHandler(SQLException.class)

@@ -33,9 +33,6 @@ public class PreSaleController extends SessionController implements BaseControll
 
     @PostMapping
     public Map<String, Object> add(@Validated PreSaleEntity entity) {
-        if (entity.getProjectDate() == null) {
-            throw new BaseRuntimeException("项目日期不能为空");
-        }
         preSaleService.add(entity);
         return ResponseDataUtil.ok("添加售前技术支持信息成功");
     }
@@ -48,9 +45,6 @@ public class PreSaleController extends SessionController implements BaseControll
 
     @PutMapping("/{id}")
     public Map<String, Object> edit(@PathVariable Integer id, @Validated PreSaleEntity entity) {
-        if (entity.getProjectDate() == null) {
-            throw new BaseRuntimeException("项目日期不能为空");
-        }
         preSaleService.edit(entity);
         return ResponseDataUtil.ok("修改售前技术支持信息成功");
     }
