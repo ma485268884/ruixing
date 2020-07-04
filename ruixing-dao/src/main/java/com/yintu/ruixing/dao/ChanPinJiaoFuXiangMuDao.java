@@ -56,9 +56,29 @@ public interface ChanPinJiaoFuXiangMuDao {
 
     List<ChanPinJiaoFuXiangMuEntity> findXiangMuByIds(@Param("stateid") Integer stateid,@Param("id") Integer id,@Param("typeid") Integer typeid);
 
-    Integer findZhengZaiZhiXing();
+    List<String> findZhengZaiZhiXing();
 
-    Integer findQianShou();
+    List<String> findQianShou();
 
-    Integer findFaHuo();
+    List<String> findFaHuo();
+
+    List<String> meiWanChengYanGong();
+
+    List<String> zanBuFaHuo();
+
+    List<String> luXuFaHuo();
+
+    List<String> wuXuFaHuo();
+
+    List<String> daiQianShu();
+
+    List<String> daiYanGong();
+
+    List<String> overQianShouMoney();
+
+    List<String> overYanGongMoney();
+
+    List<ChanPinJiaoFuXiangMuEntity> findJiaoFuQingKuangList(String choiceTing);
+
+    List<ChanPinJiaoFuXiangMuEntity> findJiaoFuQingKuangLists(String choiceTing);
 }

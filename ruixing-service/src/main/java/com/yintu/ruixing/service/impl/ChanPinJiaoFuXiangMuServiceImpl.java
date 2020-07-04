@@ -27,16 +27,58 @@ public class ChanPinJiaoFuXiangMuServiceImpl implements ChanPinJiaoFuXiangMuServ
     private ChanPinJiaoFuXiangMuDao chanPinJiaoFuXiangMuDao;
 
     @Override
+    public List<ChanPinJiaoFuXiangMuEntity> findJiaoFuQingKuangList(String choiceTing, Integer page, Integer size) {
+        return chanPinJiaoFuXiangMuDao.findJiaoFuQingKuangList(choiceTing);
+    }
+
+    @Override
+    public List<ChanPinJiaoFuXiangMuEntity> findJiaoFuQingKuangLists(String choiceTing, Integer page, Integer size) {
+        return chanPinJiaoFuXiangMuDao.findJiaoFuQingKuangLists(choiceTing);
+    }
+
+    @Override
     public Map<String, Object> findJiaoFuQingKuangNumberAll() {
         Map<String,Object> map=new HashMap<>();
-        Integer zhengZaiZhiXing =chanPinJiaoFuXiangMuDao.findZhengZaiZhiXing();
-        Integer faHuo=chanPinJiaoFuXiangMuDao.findFaHuo();
-        Integer qianShou=chanPinJiaoFuXiangMuDao.findQianShou();
+        List<String> zhengZaiZhiXing =chanPinJiaoFuXiangMuDao.findZhengZaiZhiXing();
+        zhengZaiZhiXing.add("zhengZaiZhiXing");
+        List<String> meiWanChengFaHuo=chanPinJiaoFuXiangMuDao.findFaHuo();
+        meiWanChengFaHuo.add("meiWanChengFaHuo");
+        List<String> meiWanChengQianShou=chanPinJiaoFuXiangMuDao.findQianShou();
+        meiWanChengQianShou.add("meiWanChengQianShou");
+        List<String> meiWanChengYanGong=chanPinJiaoFuXiangMuDao.meiWanChengYanGong();
+        meiWanChengYanGong.add("meiWanChengYanGong");
+        List<String> zanBuFaHuo=chanPinJiaoFuXiangMuDao.zanBuFaHuo();
+        zanBuFaHuo.add("zanBuFaHuo");
+        List<String> luXuFaHuo=chanPinJiaoFuXiangMuDao.luXuFaHuo();
+        luXuFaHuo.add("luXuFaHuo");
+        List<String> wuXuFaHuo=chanPinJiaoFuXiangMuDao.wuXuFaHuo();
+        wuXuFaHuo.add("wuXuFaHuo");
+        List<String> daiQianShu=chanPinJiaoFuXiangMuDao.daiQianShu();
+        daiQianShu.add("daiQianShu");
+        List<String> daiYanGong=chanPinJiaoFuXiangMuDao.daiYanGong();
+        daiYanGong.add("daiYanGong");
+        List<String>overQianShouMoney=chanPinJiaoFuXiangMuDao.overQianShouMoney();
+        overQianShouMoney.add("overQianShouMoney");
+        List<String>overYanGongMoney=chanPinJiaoFuXiangMuDao.overYanGongMoney();
+        overYanGongMoney.add("overYanGongMoney");
+
         map.put("zhengZaiZhiXing",zhengZaiZhiXing);
-        map.put("qianShou",qianShou);
+        map.put("meiWanChengQianShou",meiWanChengQianShou);
+        map.put("meiWanChengFaHuo",meiWanChengFaHuo);
+        map.put("meiWanChengYanGong",meiWanChengYanGong);
+        map.put("zanBuFaHuo",zanBuFaHuo);
+        map.put("luXuFaHuo",luXuFaHuo);
+        map.put("wuXuFaHuo",wuXuFaHuo);
+        map.put("daiQianShu",daiQianShu);
+        map.put("daiYanGong",daiYanGong);
+        map.put("overQianShouMoney",overQianShouMoney);
+        map.put("overYanGongMoney",overYanGongMoney);
         return map;
     }
 
+
+
+    /////////////////////////项目交付状态小模块/////////////////////////////////////
     @Override
     public List<ChanPinJiaoFuXiangMuEntity> findXiangMuByIds(Integer stateid, Integer id, Integer typeid, Integer page, Integer size) {
         return chanPinJiaoFuXiangMuDao.findXiangMuByIds(stateid,id,typeid);
