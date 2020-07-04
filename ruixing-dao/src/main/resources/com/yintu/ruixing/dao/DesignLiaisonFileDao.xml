@@ -144,6 +144,8 @@
             <result column="project_date" jdbcType="DATE" property="projectDate"/>
             <result column="task_status" jdbcType="SMALLINT" property="taskStatus"/>
             <result column="task_finish_date" jdbcType="TIMESTAMP" property="taskFinishDate"/>
+            <result column="meeting_status" jdbcType="SMALLINT" property="meetingStatus"/>
+            <result column="change_status" jdbcType="SMALLINT" property="changeStatus"/>
             <result column="bidder" jdbcType="VARCHAR" property="bidder"/>
             <result column="railway_administration_id" jdbcType="INTEGER" property="railwayAdministrationId"/>
             <result column="bidding_id" jdbcType="INTEGER" property="biddingId"/>

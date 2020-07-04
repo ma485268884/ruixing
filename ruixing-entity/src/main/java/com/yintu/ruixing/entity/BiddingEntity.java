@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -17,17 +19,17 @@ import java.util.Date;
 public class BiddingEntity implements Serializable {
     private static final long serialVersionUID = 5743348273904345051L;
     private Integer id;
-
+    @NotEmpty
     private String projectName;
-
+    @NotNull
     private Short projectStatus;
-
+    @NotNull
     private Date projectDate;
-
+    @NotNull
     private Short taskStatus;
 
     private Date taskFinishDate;
-
+    @NotEmpty
     private String bidder;
 
     private Integer railwayAdministrationId;

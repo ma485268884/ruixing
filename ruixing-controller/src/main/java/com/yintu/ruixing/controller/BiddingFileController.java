@@ -1,6 +1,7 @@
 package com.yintu.ruixing.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
@@ -33,6 +34,8 @@ public class BiddingFileController extends SessionController implements BaseCont
     @PostMapping
     @ResponseBody
     public Map<String, Object> add(BiddingFileEntity entity) {
+        if (entity.getBiddingId() == null)
+            throw new BaseRuntimeException("投招标技术支持id不能为空");
         biddingFileService.add(entity);
         return ResponseDataUtil.ok("添加招投标技术支持文件信息成功");
     }
@@ -52,6 +55,8 @@ public class BiddingFileController extends SessionController implements BaseCont
     @PutMapping("/{id}")
     @ResponseBody
     public Map<String, Object> edit(@PathVariable Integer id, BiddingFileEntity entity) {
+        if (entity.getBiddingId() == null)
+            throw new BaseRuntimeException("投招标技术支持id不能为空");
         biddingFileService.edit(entity);
         return ResponseDataUtil.ok("修改招投标技术支持文件信息成功");
     }

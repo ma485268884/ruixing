@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,21 +20,21 @@ public class DesignLiaisonEntity implements Serializable {
     private static final long serialVersionUID = -8938583455153408890L;
 
     private Integer id;
-
+    @NotEmpty
     private String projectName;
-
+    @NotNull
     private Short projectStatus;
-
+    @NotNull
     private Date projectDate;
-
+    @NotNull
     private Short taskStatus;
 
     private Date taskFinishDate;
-
+    @NotNull
     private Short meetingStatus;
-
+    @NotNull
     private Short changeStatus;
-
+    @NotEmpty
     private String bidder;
 
     private Integer railwayAdministrationId;

@@ -2,6 +2,7 @@ package com.yintu.ruixing.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
@@ -10,6 +11,7 @@ import com.yintu.ruixing.entity.BiddingFileEntity;
 import com.yintu.ruixing.service.BiddingFileService;
 import com.yintu.ruixing.service.BiddingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +31,10 @@ public class BiddingController extends SessionController implements BaseControll
     private BiddingFileService biddingFileService;
 
     @PostMapping
-    public Map<String, Object> add(BiddingEntity entity) {
+    public Map<String, Object> add(@Validated BiddingEntity entity) {
+        if (entity.getProjectDate() == null) {
+            throw new BaseRuntimeException("项目日期不能为空");
+        }
         biddingService.add(entity);
         return ResponseDataUtil.ok("添加投招标技术支持信息成功");
     }
@@ -42,7 +47,10 @@ public class BiddingController extends SessionController implements BaseControll
     }
 
     @PutMapping("/{id}")
-    public Map<String, Object> edit(@PathVariable Integer id, BiddingEntity entity) {
+    public Map<String, Object> edit(@PathVariable Integer id, @Validated BiddingEntity entity) {
+        if (entity.getProjectDate() == null) {
+            throw new BaseRuntimeException("项目日期不能为空");
+        }
         biddingService.edit(entity);
         return ResponseDataUtil.ok("修改投招标技术支持信息成功");
     }
