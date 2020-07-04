@@ -9,6 +9,7 @@ import java.util.Map;
  */
 public interface SolutionService {
 
+
     /**
      * 统计工作完成进度
      *

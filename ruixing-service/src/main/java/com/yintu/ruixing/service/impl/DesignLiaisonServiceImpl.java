@@ -56,11 +56,6 @@ public class DesignLiaisonServiceImpl implements DesignLiaisonService {
     }
 
     @Override
-    public List<Integer> countTaskStatusByGroupBy(Integer selectType, Date date) {
-        return designLiaisonDao.countTaskStatusByGroupBy(selectType, date);
-    }
-
-    @Override
     public List<TreeNodeUtil> findByTree() {
         List<Integer> years = this.findByDistinctProjectDate();
         List<TreeNodeUtil> firstTreeNodeUtils = new ArrayList<>();

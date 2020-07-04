@@ -24,7 +24,5 @@ public interface PreSaleDao {
 
     List<Integer> selectByDistinctProjectDate();
 
-    List<Integer> countTaskStatusByGroupBy(Integer selectType, Date date);
-
 
 }

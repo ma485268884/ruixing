@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.SolutionDao">
+
+
+    <sql id="Date_condition_List">
+            <if test="selectType==1">
+                DATE_FORMAT(project_date,'%Y') = DATE_FORMAT(#{date,jdbcType=DATE},'%Y' )
+            </if>
+            <if test="selectType==2">
+                DATE_FORMAT(project_date,'%Y-%m') = DATE_FORMAT(#{date,jdbcType=DATE},'%Y-%m')
+            </if>
+            <if test="selectType==3">
+                DATE_FORMAT(project_date,'%Y-%m-%d') = DATE_FORMAT(#{date,jdbcType=DATE},'%Y-%m-%d' )
+            </if>
+    </sql>
+
+    <select id="countTaskStatusByGroupBy" resultType="java.lang.Integer">
+        SELECT *
+        FROM (
+                 SELECT count(*)
+                 FROM mro_pre_sale
+                 WHERE
+                    <include refid="Date_condition_List"/>
+                   AND task_status = 2
+                 UNION ALL
+                 SELECT count(*)
+                 FROM mro_pre_sale
+                 WHERE
+                     <include refid="Date_condition_List"/>
+                   AND task_status = 1
+             ) ps
+        UNION ALL
+        SELECT *
+        FROM (
+                 SELECT count(*)
+                 FROM mro_bidding
+                 WHERE
+                    <include refid="Date_condition_List"/>
+                   AND task_status = 2
+                 UNION ALL
+                 SELECT count(*)
+                 FROM mro_bidding
+                 WHERE
+                     <include refid="Date_condition_List"/>
+                   AND task_status = 1
+             ) b
+        UNION ALL
+        SELECT *
+        FROM (
+                 SELECT count(*)
+                 FROM mro_design_liaison
+                 WHERE
+                      <include refid="Date_condition_List"/>
+                   AND task_status = 2
+                 UNION ALL
+                 SELECT count(*)
+                 FROM mro_design_liaison
+                 WHERE
+                     <include refid="Date_condition_List"/>
+                   AND task_status = 1
+             ) dl
+
+    </select>
+
+</mapper>
