@@ -24,4 +24,8 @@ public interface ChanPinJiaoFuWenTiService {
     List<ChanPinJiaoFuWenTiEntity> findWenTiByName(String xiangMuName, Integer page, Integer size);
 
     void deletWenTiByIds(Integer[] ids);
+
+    List<ChanPinJiaoFuWenTiEntity> findXiangMuMing();
+
+    List<ChanPinJiaoFuWenTiEntity> downLoadByIds(Integer[] ids);
 }

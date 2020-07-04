@@ -17,6 +17,30 @@
     wenti_state
   </sql>
 
+    <!--根据id 进行批量或者单个查询-->
+    <select id="downLoadByIds" parameterType="java.util.List" resultMap="BaseResultMap">
+        select
+          <include refid="Base_Column_List"/>
+        from
+          mro_chanpinjiaofu_wenti
+        where id
+        in
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </select>
+    <!--查询符合条件的项目名-->
+    <select id="findXiangMuMing" resultType="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity">
+        SELECT
+            id ,
+            xiangmu_name as xiangmuName
+        FROM
+            mro_chanpinjiaofu_xiangmu
+        WHERE
+            fahuo_state = 3
+            OR qianshou_state = 3
+            OR yangong_state =3
+    </select>
     <!--根据id  进行批量或者单个删除-->
     <delete id="deletWenTiByIds" parameterType="java.util.List">
         delete from mro_chanpinjiaofu_wenti
@@ -29,15 +53,16 @@
     <!--根据项目名进行模糊查询-->
     <select id="findWenTiByName" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
-          <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List"/>
         from
-          mro_chanpinjiaofu_wenti
+        mro_chanpinjiaofu_wenti
         where
-        xiangmu_name like #{xiangMuName}
+        xiangmu_name like concat('%',#{xiangMuName},'%')
     </select>
     <!--查询所有的部门数据-->
     <select id="findAllDepartment" resultType="com.yintu.ruixing.entity.DepartmentEntity">
         SELECT
+            id,
             NAME
         FROM
             tb_department

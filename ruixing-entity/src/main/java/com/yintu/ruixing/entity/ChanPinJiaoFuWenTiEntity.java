@@ -10,21 +10,21 @@ import lombok.NoArgsConstructor;
 public class ChanPinJiaoFuWenTiEntity {
     private Integer id;
 
-    private String xiangmuName;
+    private String xiangmuName;//项目名
 
-    private String wentihuanjie;
+    private String wentihuanjie;//问题环节
 
-    private String cunzaiwenti;
+    private String cunzaiwenti;//存在问题
 
-    private String peihebumen;
+    private String peihebumen;//配合部门
 
-    private String waibudanwei;
+    private String waibudanwei;//需要配合的外部单位
 
-    private String jihua;
+    private String jihua;//工作计划
 
-    private Integer state;
+    private Integer state;//状态更新 1：已更新， 2：未更新',
 
-    private Integer wentiState;
+    private Integer wentiState;//问题状态 1：打开，2：关闭',
 
     public Integer getId() {
         return id;

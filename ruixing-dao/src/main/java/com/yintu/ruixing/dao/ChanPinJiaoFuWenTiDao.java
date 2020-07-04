@@ -31,4 +31,8 @@ public interface ChanPinJiaoFuWenTiDao {
     List<ChanPinJiaoFuWenTiEntity> findWenTiByName(String xiangMuName);
 
     void deletWenTiByIds(Integer[] ids);
+
+    List<ChanPinJiaoFuWenTiEntity> findXiangMuMing();
+
+    List<ChanPinJiaoFuWenTiEntity> downLoadByIds(Integer[] ids);
 }
