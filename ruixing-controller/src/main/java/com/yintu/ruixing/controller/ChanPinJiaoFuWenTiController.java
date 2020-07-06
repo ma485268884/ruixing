@@ -6,9 +6,12 @@ import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.ChanPinJiaoFuWenTiEntity;
 import com.yintu.ruixing.entity.DepartmentEntity;
 import com.yintu.ruixing.service.ChanPinJiaoFuWenTiService;
+import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +42,12 @@ public class ChanPinJiaoFuWenTiController {
         List<DepartmentEntity> departmentEntities=chanPinJiaoFuWenTiService.findAllDepartment();
         return ResponseDataUtil.ok("查询部门成功",departmentEntities);
     }
+    //查询符合条件的项目名
+    @GetMapping("/findXiangMuMing")
+    public Map<String,Object>findXiangMuMing(){
+        List<ChanPinJiaoFuWenTiEntity> chanPinJiaoFuWenTiEntities=chanPinJiaoFuWenTiService.findXiangMuMing();
+        return ResponseDataUtil.ok("查询项目名字成功",chanPinJiaoFuWenTiEntities);
+    }
     //新增问题
     @PostMapping("/addWenTi")
     public Map<String,Object>addWenTi(ChanPinJiaoFuWenTiEntity chanPinJiaoFuWenTiEntity){
@@ -49,7 +58,7 @@ public class ChanPinJiaoFuWenTiController {
     @PutMapping("/editWenTiById/{id}")
     public Map<String,Object>editWenTiById(@PathVariable Integer id,ChanPinJiaoFuWenTiEntity chanPinJiaoFuWenTiEntity){
         chanPinJiaoFuWenTiService.editWenTiById(chanPinJiaoFuWenTiEntity);
-        return ResponseDataUtil.ok("新增问题成功");
+        return ResponseDataUtil.ok("编辑问题成功");
     }
 
     //根据项目名称  进行模糊查询
@@ -66,5 +75,56 @@ public class ChanPinJiaoFuWenTiController {
     public Map<String,Object>deletWenTiByIds(@PathVariable Integer[] ids){
         chanPinJiaoFuWenTiService.deletWenTiByIds(ids);
         return ResponseDataUtil.ok("删除数据成功");
+    }
+
+    //根据id 进行单个或者批量下载到Excel
+    @GetMapping("/downLoadByIds/{ids}")
+    public void downLoadByIds(@PathVariable Integer[] ids, HttpServletResponse response) throws IOException{
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet("交付情况问题反馈");
+        List<ChanPinJiaoFuWenTiEntity> wenTiEntityList=chanPinJiaoFuWenTiService.downLoadByIds(ids);
+        String fileName = "WenTiBiao" + ".xls";//设置要导出的文件的名字
+        //新增数据行，并且设置单元格数据
+        int rowNum = 1;
+        String[] headers = {"序号", "项目名称", "问题环节", "存在问题", "配合部门", "需协调的外部单位", "工作计划", "状态更新","问题状态"};
+        //headers表示excel表中第一行的表头
+        HSSFRow row = sheet.createRow(0);
+        //在excel表中添加表头
+        for (int i = 0; i < headers.length; i++) {
+            HSSFCell cell = row.createCell(i);
+            HSSFRichTextString text = new HSSFRichTextString(headers[i]);
+            cell.setCellValue(text);
+            // cell.setCellStyle(style);
+        }
+        //在表中存放查询到的数据放入对应的列
+        int j = 0;
+        for (ChanPinJiaoFuWenTiEntity wenTiEntity : wenTiEntityList) {
+            HSSFRow row1 = sheet.createRow(rowNum);
+            j++;
+            row1.createCell(0).setCellValue(j);
+            row1.createCell(1).setCellValue(wenTiEntity.getXiangmuName());
+            row1.createCell(2).setCellValue(wenTiEntity.getWentihuanjie());
+            row1.createCell(3).setCellValue(wenTiEntity.getCunzaiwenti());
+            row1.createCell(4).setCellValue(wenTiEntity.getPeihebumen());
+            row1.createCell(5).setCellValue(wenTiEntity.getWaibudanwei());
+            row1.createCell(6).setCellValue(wenTiEntity.getJihua());
+            if (wenTiEntity.getState()==1){
+                row1.createCell(7).setCellValue("已更新");
+            }
+            if(wenTiEntity.getState()==2){
+                row1.createCell(7).setCellValue("未更新");
+            }
+            if (wenTiEntity.getWentiState()==1){
+                row1.createCell(8).setCellValue("打开");
+            }
+            if (wenTiEntity.getWentiState()==2){
+                row1.createCell(8).setCellValue("关闭");
+            }
+            rowNum++;
+        }
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName);
+        response.flushBuffer();
+        workbook.write(response.getOutputStream());
     }
 }

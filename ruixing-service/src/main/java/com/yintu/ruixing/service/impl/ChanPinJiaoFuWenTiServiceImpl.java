@@ -23,6 +23,16 @@ public class ChanPinJiaoFuWenTiServiceImpl implements ChanPinJiaoFuWenTiService 
     private ChanPinJiaoFuWenTiDao chanPinJiaoFuWenTiDao;
 
     @Override
+    public List<ChanPinJiaoFuWenTiEntity> downLoadByIds(Integer[] ids) {
+        return chanPinJiaoFuWenTiDao.downLoadByIds(ids);
+    }
+
+    @Override
+    public List<ChanPinJiaoFuWenTiEntity> findXiangMuMing() {
+        return chanPinJiaoFuWenTiDao.findXiangMuMing();
+    }
+
+    @Override
     public void deletWenTiByIds(Integer[] ids) {
         chanPinJiaoFuWenTiDao.deletWenTiByIds(ids);
     }
