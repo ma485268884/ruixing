@@ -50,4 +50,9 @@
         and
         tid=#{tid}
     </select>
+
+    <!--查询所有的铁路局-->
+    <select id="findAllTieLuJu" resultMap="tieluju">
+        select * from mro_tieluju
+    </select>
 </mapper>

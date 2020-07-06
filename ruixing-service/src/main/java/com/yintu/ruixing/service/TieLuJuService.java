@@ -19,4 +19,7 @@ public interface TieLuJuService {
     void delTieLuJu(Long tid);
 
     List<Integer> findId(Long tid);
+
+    //查询全部铁路局
+    List<TieLuJuEntity> findAllTieLuJu();
 }

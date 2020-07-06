@@ -45,4 +45,9 @@ public class TieLuJuServiceImpl implements TieLuJuService {
     public List<Integer> findId(Long tid) {
         return tieLuJuDao.findId(tid);
     }
+
+    @Override
+    public List<TieLuJuEntity> findAllTieLuJu() {
+        return tieLuJuDao.findAllTieLuJu();
+    }
 }

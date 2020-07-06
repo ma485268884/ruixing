@@ -11,6 +11,8 @@
     <result column="shuidian_money" jdbcType="DECIMAL" property="shuidianMoney" />
     <result column="yunza_money" jdbcType="DECIMAL" property="yunzaMoney" />
     <result column="jiance_money" jdbcType="DECIMAL" property="jianceMoney" />
+    <result column="zhizaocost" jdbcType="DECIMAL" property="zhizaocost" />
+    <result column="allcost" jdbcType="DECIMAL" property="allcost" />
   </resultMap>
   <sql id="Base_Column_List">
     id, xiangmu_name, cailiao_money, rengong_money, jijuzhejiu_money, dizhiyihao_money, 
@@ -29,7 +31,9 @@
   <!--根据项目名  进行模糊查询-->
   <select id="findZhiChuCostByName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List"/>
+    <include refid="Base_Column_List"/>,
+    SUM( cailiao_money + rengong_money + jijuzhejiu_money + dizhiyihao_money + shuidian_money ) zhizaocost,
+    SUM( cailiao_money + rengong_money + jijuzhejiu_money + dizhiyihao_money + shuidian_money + yunza_money + jiance_money ) allcost
     from
     mro_chanpinjiaofu_cost_zhichu
     where
@@ -39,6 +43,7 @@
   <!--查询项目名-->
   <select id="findXiangMu" resultType="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity">
         SELECT
+            id,
             xiangmu_name as xiangmuName
         FROM
             mro_chanpinjiaofu_xiangmu
@@ -46,9 +51,13 @@
 
   <!--查询所有的支出数据-->
   <select id="findAllZhiChuCost" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from mro_chanpinjiaofu_cost_zhichu
+    SELECT
+    <include refid="Base_Column_List" />,
+    SUM( cailiao_money + rengong_money + jijuzhejiu_money + dizhiyihao_money + shuidian_money ) zhizaocost,
+    SUM( cailiao_money + rengong_money + jijuzhejiu_money + dizhiyihao_money + shuidian_money + yunza_money + jiance_money ) allcost
+    FROM
+    mro_chanpinjiaofu_cost_zhichu
+    GROUP BY id
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
