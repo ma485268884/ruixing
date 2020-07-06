@@ -78,7 +78,7 @@ public class UserController extends SessionController {
         String orderBy = "id DESC";
         if (sortby != null && !"".equals(sortby) && order != null && !"".equals(order))
             orderBy = sortby + " " + order;
-        Page<UserEntity> page = PageHelper.startPage(pageNumber, pageSize, orderBy);
+        PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<UserEntity> userEntities = userService.findAllOrByUsername(username, (short) 0);
         PageInfo<UserEntity> pageInfo = new PageInfo<>(userEntities);
         jo.put("pageInfo", pageInfo);
