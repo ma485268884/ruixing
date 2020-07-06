@@ -28,7 +28,7 @@ public class DesignLiaisonFileEntity implements Serializable {
     private Date uploadDatetime;
     @NotNull
     private Short type;
-    @NotNull
+
     private Short releaseStatus;
 
     private Integer auditorId;

@@ -4,7 +4,10 @@ import com.yintu.ruixing.common.util.ExportExcelUtil;
 import com.yintu.ruixing.dao.PreSaleFileDao;
 import com.yintu.ruixing.entity.PreSaleEntity;
 import com.yintu.ruixing.entity.PreSaleFileEntity;
+import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.PreSaleFileService;
+import com.yintu.ruixing.service.PreSaleService;
+import com.yintu.ruixing.service.UserService;
 import org.apache.commons.collections4.ComparatorUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,12 @@ public class PreSaleFileServiceImpl implements PreSaleFileService {
     @Autowired
     private PreSaleFileDao preSaleFileDao;
 
+    @Autowired
+    private PreSaleService preSaleService;
+
+    @Autowired
+    private UserService userService;
+
     @Override
     public void add(PreSaleFileEntity entity) {
         entity.setUploadDatetime(new Date());
@@ -47,6 +56,17 @@ public class PreSaleFileServiceImpl implements PreSaleFileService {
     @Override
     public PreSaleFileEntity findById(Integer id) {
         return preSaleFileDao.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public PreSaleFileEntity findPreSaleById(Integer id) {
+        PreSaleFileEntity preSaleFileEntity = this.findById(id);
+        Integer preSaleId = preSaleFileEntity.getPreSaleId();
+        if (preSaleId != null) {
+            PreSaleEntity preSaleEntity = preSaleService.findById(preSaleId);
+            preSaleFileEntity.setPreSaleEntity(preSaleEntity);
+        }
+        return preSaleFileEntity;
     }
 
     @Override
@@ -94,5 +114,10 @@ public class PreSaleFileServiceImpl implements PreSaleFileService {
         wb.write(outputStream);
         outputStream.flush();
         outputStream.close();
+    }
+
+    @Override
+    public List<UserEntity> findUserEntities() {
+        return userService.findAll((short) 0);
     }
 }

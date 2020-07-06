@@ -8,8 +8,10 @@ import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.BiddingEntity;
 import com.yintu.ruixing.entity.BiddingFileEntity;
+import com.yintu.ruixing.entity.TieLuJuEntity;
 import com.yintu.ruixing.service.BiddingFileService;
 import com.yintu.ruixing.service.BiddingService;
+import com.yintu.ruixing.service.TieLuJuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +31,9 @@ public class BiddingController extends SessionController implements BaseControll
 
     @Autowired
     private BiddingFileService biddingFileService;
+
+    @Autowired
+    private TieLuJuService tieLuJuService;
 
     @PostMapping
     public Map<String, Object> add(@Validated BiddingEntity entity) {
@@ -86,6 +91,12 @@ public class BiddingController extends SessionController implements BaseControll
         List<BiddingFileEntity> biddingFileEntities = biddingFileService.findByYearAndProjectNameAndType(year, projectName, type);
         PageInfo<BiddingFileEntity> pageInfo = new PageInfo<>(biddingFileEntities);
         return ResponseDataUtil.ok("查询招投标技术支持以及文件信息列表成功", pageInfo);
+    }
+
+    @GetMapping("/tielujus")
+    public Map<String, Object> findTieLuJus() {
+        List<TieLuJuEntity> tieLuJuEntities = tieLuJuService.findAllTieLuJu();
+        return ResponseDataUtil.ok("查询铁路局列表信息成功", tieLuJuEntities);
     }
 
 }

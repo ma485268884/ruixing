@@ -1,14 +1,12 @@
 package com.yintu.ruixing.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.entity.DesignLiaisonEntity;
 import com.yintu.ruixing.entity.DesignLiaisonFileEntity;
+import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.DesignLiaisonFileService;
-import com.yintu.ruixing.service.DesignLiaisonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,8 +24,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/design/liaisons/files")
 public class DesignLiaisonFileController extends SessionController implements BaseController<DesignLiaisonFileEntity, Integer> {
-    @Autowired
-    private DesignLiaisonService designLiaisonService;
+
     @Autowired
     private DesignLiaisonFileService designLiaisonFileService;
 
@@ -60,12 +58,7 @@ public class DesignLiaisonFileController extends SessionController implements Ba
     @GetMapping("/{id}")
     @ResponseBody
     public Map<String, Object> findById(@PathVariable Integer id) {
-        DesignLiaisonFileEntity designLiaisonFileEntity = designLiaisonFileService.findById(id);
-        Integer designLiaisonId = designLiaisonFileEntity.getDesignLiaisonId();
-        if (designLiaisonId != null) {
-            DesignLiaisonEntity designLiaisonEntity = designLiaisonService.findById(designLiaisonId);
-            designLiaisonFileEntity.setDesignLiaisonEntity(designLiaisonEntity);
-        }
+        DesignLiaisonFileEntity designLiaisonFileEntity = designLiaisonFileService.findDesignLiaisonById(id);
         return ResponseDataUtil.ok("查询设计联络及后续技术交流文件信息成功", designLiaisonFileEntity);
     }
 
@@ -105,4 +98,12 @@ public class DesignLiaisonFileController extends SessionController implements Ba
         response.addHeader("Cache-Control", "no-cache");
         designLiaisonFileService.exportFile(response.getOutputStream(), ids);
     }
+
+    @GetMapping("/auditors")
+    public Map<String, Object> findUserEntities() {
+        List<UserEntity> userEntities = designLiaisonFileService.findUserEntities();
+        return ResponseDataUtil.ok("查询审核人列表信息成功", userEntities);
+    }
+
+
 }

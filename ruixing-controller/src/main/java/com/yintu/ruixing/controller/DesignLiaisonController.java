@@ -6,11 +6,12 @@ import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
-import com.yintu.ruixing.entity.BiddingFileEntity;
 import com.yintu.ruixing.entity.DesignLiaisonEntity;
 import com.yintu.ruixing.entity.DesignLiaisonFileEntity;
+import com.yintu.ruixing.entity.TieLuJuEntity;
 import com.yintu.ruixing.service.DesignLiaisonFileService;
 import com.yintu.ruixing.service.DesignLiaisonService;
+import com.yintu.ruixing.service.TieLuJuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,9 @@ public class DesignLiaisonController extends SessionController implements BaseCo
 
     @Autowired
     private DesignLiaisonFileService designLiaisonFileService;
+
+    @Autowired
+    private TieLuJuService tieLuJuService;
 
     @PostMapping
     public Map<String, Object> add(@Validated DesignLiaisonEntity entity) {
@@ -87,4 +91,12 @@ public class DesignLiaisonController extends SessionController implements BaseCo
         PageInfo<DesignLiaisonFileEntity> pageInfo = new PageInfo<>(designLiaisonEntities);
         return ResponseDataUtil.ok("查询设计联络及后续技术交流信息以及文件信息列表成功", pageInfo);
     }
+
+    @GetMapping("/tielujus")
+    public Map<String, Object> findTieLuJus() {
+        List<TieLuJuEntity> tieLuJuEntities = tieLuJuService.findAllTieLuJu();
+        return ResponseDataUtil.ok("查询铁路局列表信息成功", tieLuJuEntities);
+    }
+
+
 }
