@@ -2,6 +2,8 @@ package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.entity.ChanPinJiaoFuCostShouRuEntity;
 
+import javax.servlet.ServletOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -20,4 +22,6 @@ public interface ChanPinJiaoFuCostShouRuService {
     List<ChanPinJiaoFuCostShouRuEntity> findShouRuCostByName(Integer page, Integer size, String xiangMuName);
 
     void deletShouRuCostByIds(Integer[] ids);
+
+    void exportFile(ServletOutputStream outputStream, Integer[] ids) throws IOException;
 }

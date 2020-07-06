@@ -32,4 +32,5 @@ public interface ChanPinJiaoFuCostZhiChuDao {
 
     List<ChanPinJiaoFuCostZhiChuEntity> findAllZhiChuCost();
 
+    List<ChanPinJiaoFuCostZhiChuEntity> selectByCondition(Integer[] ids);
 }

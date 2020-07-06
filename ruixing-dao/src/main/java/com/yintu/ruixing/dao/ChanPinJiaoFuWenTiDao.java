@@ -35,4 +35,6 @@ public interface ChanPinJiaoFuWenTiDao {
     List<ChanPinJiaoFuWenTiEntity> findXiangMuMing();
 
     List<ChanPinJiaoFuWenTiEntity> downLoadByIds(Integer[] ids);
+
+    List<ChanPinJiaoFuWenTiEntity> selectByCondition(Integer[] ids);
 }

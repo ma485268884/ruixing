@@ -9,6 +9,8 @@ import com.yintu.ruixing.service.ChanPinJiaoFuCostZhiChuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -67,5 +69,16 @@ public class ChanPinJiaoFuCostZhiChuController {
     public Map<String,Object>deletZhiChuCostByIds(@PathVariable Integer[] ids){
         chanPinJiaoFuCostZhiChuService.deletZhiChuCostByIds(ids);
         return ResponseDataUtil.ok("删除成功");
+    }
+
+    //根据id  进行批量或者单个导出支出数据
+    @GetMapping("/exportExcel/{ids}")
+    public void exportFile(@PathVariable Integer[] ids, HttpServletResponse response) throws IOException {
+        String fileName = "交付费用之支出费用列表" + System.currentTimeMillis() + ".xlsx";
+        response.setContentType("application/octet-stream;charset=ISO8859-1");
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
+        response.addHeader("Pargam", "no-cache");
+        response.addHeader("Cache-Control", "no-cache");
+        chanPinJiaoFuCostZhiChuService.exportFile(response.getOutputStream(), ids);
     }
 }

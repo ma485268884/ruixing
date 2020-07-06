@@ -4,11 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.ChanPinJiaoFuCostShouRuEntity;
-import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity;
 import com.yintu.ruixing.service.ChanPinJiaoFuCostShouRuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -59,5 +60,15 @@ public class ChanPinJiaoFuCostShouRuController {
     public Map<String,Object>deletShouRuCostByIds(@PathVariable Integer[] ids){
         chanPinJiaoFuCostShouRuService.deletShouRuCostByIds(ids);
         return ResponseDataUtil.ok("删除成功");
+    }
+    //根据id  进行批量或者单个导出收入数据
+    @GetMapping("/exportExcel/{ids}")
+    public void exportFile(@PathVariable Integer[] ids, HttpServletResponse response) throws IOException {
+        String fileName = "交付费用之收入费用列表" + System.currentTimeMillis() + ".xlsx";
+        response.setContentType("application/octet-stream;charset=ISO8859-1");
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
+        response.addHeader("Pargam", "no-cache");
+        response.addHeader("Cache-Control", "no-cache");
+        chanPinJiaoFuCostShouRuService.exportFile(response.getOutputStream(), ids);
     }
 }
