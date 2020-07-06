@@ -29,7 +29,7 @@ public class ChanPinJiaoFuCostZhiChuController {
     @GetMapping("/findXiangMu")
     public Map<String,Object>findXiangMu(){
         List<ChanPinJiaoFuXiangMuEntity> xiangMuEntities=chanPinJiaoFuCostZhiChuService.findXiangMu();
-        return ResponseDataUtil.ok("查询项目名成功");
+        return ResponseDataUtil.ok("查询项目名成功",xiangMuEntities);
     }
 
     //新增支出费用

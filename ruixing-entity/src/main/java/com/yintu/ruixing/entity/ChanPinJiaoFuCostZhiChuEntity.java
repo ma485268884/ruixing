@@ -1,25 +1,35 @@
 package com.yintu.ruixing.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ChanPinJiaoFuCostZhiChuEntity {
     private Integer id;
 
     private String xiangmuName;
 
-    private BigDecimal cailiaoMoney;
+    private BigDecimal cailiaoMoney;//材料费
 
-    private BigDecimal rengongMoney;
+    private BigDecimal rengongMoney;//人工费
 
-    private BigDecimal jijuzhejiuMoney;
+    private BigDecimal jijuzhejiuMoney;//机具折旧维护
 
-    private BigDecimal dizhiyihaoMoney;
+    private BigDecimal dizhiyihaoMoney;//低值易耗品
 
-    private BigDecimal shuidianMoney;
+    private BigDecimal shuidianMoney;//水电费
 
-    private BigDecimal yunzaMoney;
+    private BigDecimal yunzaMoney;//运杂费
 
-    private BigDecimal jianceMoney;
+    private BigDecimal jianceMoney;//检测费
+
+    private BigDecimal zhizaocost;//直接制造费用总计
+    private BigDecimal allcost;//所有数据的总计
 
     public Integer getId() {
         return id;

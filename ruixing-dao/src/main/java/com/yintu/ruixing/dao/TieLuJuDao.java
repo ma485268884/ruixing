@@ -19,4 +19,7 @@ public interface TieLuJuDao {
     void delTieLuJu(Long tid);
 
     List<Integer> findId(Long tid);
+
+    List<TieLuJuEntity> findAllTieLuJu();
+
 }
