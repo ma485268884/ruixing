@@ -4,7 +4,10 @@ import com.yintu.ruixing.common.util.ExportExcelUtil;
 import com.yintu.ruixing.dao.DesignLiaisonFileDao;
 import com.yintu.ruixing.entity.DesignLiaisonEntity;
 import com.yintu.ruixing.entity.DesignLiaisonFileEntity;
+import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.DesignLiaisonFileService;
+import com.yintu.ruixing.service.DesignLiaisonService;
+import com.yintu.ruixing.service.UserService;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,8 +31,15 @@ public class DesignLiaisonFileServiceImpl implements DesignLiaisonFileService {
     @Autowired
     private DesignLiaisonFileDao designLiaisonFileDao;
 
+    @Autowired
+    private DesignLiaisonService designLiaisonService;
+
+    @Autowired
+    private UserService userService;
+
     @Override
     public void add(DesignLiaisonFileEntity entity) {
+        entity.setUploadDatetime(new Date());
         designLiaisonFileDao.insertSelective(entity);
     }
 
@@ -47,6 +58,17 @@ public class DesignLiaisonFileServiceImpl implements DesignLiaisonFileService {
         return designLiaisonFileDao.selectByPrimaryKey(id);
     }
 
+
+    @Override
+    public DesignLiaisonFileEntity findDesignLiaisonById(Integer id) {
+        DesignLiaisonFileEntity designLiaisonFileEntity = this.findById(id);
+        Integer designLiaisonId = designLiaisonFileEntity.getDesignLiaisonId();
+        if (designLiaisonId != null) {
+            DesignLiaisonEntity designLiaisonEntity = designLiaisonService.findById(designLiaisonId);
+            designLiaisonFileEntity.setDesignLiaisonEntity(designLiaisonEntity);
+        }
+        return designLiaisonFileEntity;
+    }
 
     @Override
     public void remove(Integer[] ids) {
@@ -97,5 +119,10 @@ public class DesignLiaisonFileServiceImpl implements DesignLiaisonFileService {
         wb.write(outputStream);
         outputStream.flush();
         outputStream.close();
+    }
+
+    @Override
+    public List<UserEntity> findUserEntities() {
+        return userService.findAll((short) 0);
     }
 }

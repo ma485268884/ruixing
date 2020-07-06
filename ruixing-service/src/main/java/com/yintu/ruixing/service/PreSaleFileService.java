@@ -2,6 +2,7 @@ package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.common.util.BaseService;
 import com.yintu.ruixing.entity.PreSaleFileEntity;
+import com.yintu.ruixing.entity.UserEntity;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -19,6 +20,9 @@ public interface PreSaleFileService extends BaseService<PreSaleFileEntity, Integ
      */
     void remove(Integer[] ids);
 
+
+    PreSaleFileEntity findPreSaleById(Integer id);
+
     /**
      * @param year        年份
      * @param projectName 项目名称
@@ -33,4 +37,11 @@ public interface PreSaleFileService extends BaseService<PreSaleFileEntity, Integ
      * @throws IOException io异常
      */
     void exportFile(OutputStream outputStream, Integer[] ids) throws IOException;
+
+    /**
+     * 审核人列表信息
+     *
+     * @return 审核人列表
+     */
+    List<UserEntity> findUserEntities();
 }

@@ -25,8 +25,8 @@ public class DruidConfiguration {
     //配置druid的监控
     //1.配置一个管理后台的Servlet
     @Bean
-    public ServletRegistrationBean servletRegistrationBean() {
-        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
+    public ServletRegistrationBean<StatViewServlet> servletRegistrationBean() {
+        ServletRegistrationBean<StatViewServlet> servletRegistrationBean = new ServletRegistrationBean<>(new StatViewServlet(), "/druid/*");
         Map<String, String> initParameters = new HashMap<>();
         initParameters.put("loginUsername", "druidAdmin");
         initParameters.put("loginPassword", "123456");
@@ -38,8 +38,8 @@ public class DruidConfiguration {
 
     //2.配置一个Web监控的filter
     @Bean
-    public FilterRegistrationBean filterRegistrationBean() {
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new WebStatFilter());
+    public FilterRegistrationBean<WebStatFilter> filterRegistrationBean() {
+        FilterRegistrationBean<WebStatFilter> filterRegistrationBean = new FilterRegistrationBean<>(new WebStatFilter());
         Map<String, String> initParameters = new HashMap<>();
         initParameters.put("exclusions", "*.html,*.css,*.js,/druid/*");
         filterRegistrationBean.setInitParameters(initParameters);

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -28,7 +29,7 @@ public class PreSaleFileEntity implements Serializable {
     private Date uploadDatetime;
     @NotNull
     private Short type;
-    @NotNull
+
     private Short releaseStatus;
 
     private Integer auditorId;

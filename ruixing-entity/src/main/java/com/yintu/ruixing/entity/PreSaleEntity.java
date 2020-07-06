@@ -3,13 +3,11 @@ package com.yintu.ruixing.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Date;
-
 /**
  * 售前技术支持 项目实体类
  */
@@ -26,6 +24,7 @@ public class PreSaleEntity implements Serializable {
     @NotNull
     private Short projectStatus;
     @NotNull
+    @Past
     private Date projectDate;
     @NotNull
     private Short taskStatus;

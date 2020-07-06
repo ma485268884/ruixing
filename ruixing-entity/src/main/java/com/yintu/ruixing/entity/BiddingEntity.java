@@ -6,10 +6,9 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.io.Serializable;
 import java.util.Date;
-
-
 /**
  * 投招标技术支持 项目实体类
  */
@@ -24,6 +23,7 @@ public class BiddingEntity implements Serializable {
     @NotNull
     private Short projectStatus;
     @NotNull
+    @Past
     private Date projectDate;
     @NotNull
     private Short taskStatus;
@@ -31,7 +31,7 @@ public class BiddingEntity implements Serializable {
     private Date taskFinishDate;
     @NotEmpty
     private String bidder;
-
+    @NotNull
     private Integer railwayAdministrationId;
 
     private Integer preSaleId;

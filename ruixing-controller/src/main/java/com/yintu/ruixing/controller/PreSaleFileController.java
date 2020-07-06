@@ -7,6 +7,7 @@ import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.PreSaleEntity;
 import com.yintu.ruixing.entity.PreSaleFileEntity;
+import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.PreSaleFileService;
 import com.yintu.ruixing.service.PreSaleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,8 +29,6 @@ import java.util.Map;
 @RequestMapping("/pre/sales/files")
 public class PreSaleFileController extends SessionController implements BaseController<PreSaleFileEntity, Integer> {
 
-    @Autowired
-    private PreSaleService preSaleService;
     @Autowired
     private PreSaleFileService preSaleFileService;
 
@@ -61,12 +61,7 @@ public class PreSaleFileController extends SessionController implements BaseCont
     @GetMapping("/{id}")
     @ResponseBody
     public Map<String, Object> findById(@PathVariable Integer id) {
-        PreSaleFileEntity preSaleFileEntity = preSaleFileService.findById(id);
-        Integer preSaleId = preSaleFileEntity.getPreSaleId();
-        if (preSaleId != null) {
-            PreSaleEntity preSaleEntity = preSaleService.findById(preSaleId);
-            preSaleFileEntity.setPreSaleEntity(preSaleEntity);
-        }
+        PreSaleFileEntity preSaleFileEntity = preSaleFileService.findPreSaleById(id);
         return ResponseDataUtil.ok("查询售前技术支持文件信息成功", preSaleFileEntity);
     }
 
@@ -105,6 +100,13 @@ public class PreSaleFileController extends SessionController implements BaseCont
         response.addHeader("Pargam", "no-cache");
         response.addHeader("Cache-Control", "no-cache");
         preSaleFileService.exportFile(response.getOutputStream(), ids);
+    }
+
+    @GetMapping("/auditors")
+    @ResponseBody
+    public Map<String, Object> findUserEntities() {
+        List<UserEntity> userEntities = preSaleFileService.findUserEntities();
+        return ResponseDataUtil.ok("查询审核人列表信息成功", userEntities);
     }
 
 

@@ -5,7 +5,10 @@ import com.yintu.ruixing.dao.BiddingFileDao;
 import com.yintu.ruixing.entity.BiddingEntity;
 import com.yintu.ruixing.entity.BiddingFileEntity;
 import com.yintu.ruixing.entity.PreSaleFileEntity;
+import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.BiddingFileService;
+import com.yintu.ruixing.service.BiddingService;
+import com.yintu.ruixing.service.UserService;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,9 +31,15 @@ public class BiddingFileServiceImpl implements BiddingFileService {
 
     @Autowired
     private BiddingFileDao biddingFileDao;
+    @Autowired
+    private BiddingService biddingService;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public void add(BiddingFileEntity entity) {
+        entity.setUploadDatetime(new Date());
         biddingFileDao.insertSelective(entity);
     }
 
@@ -46,6 +56,17 @@ public class BiddingFileServiceImpl implements BiddingFileService {
     @Override
     public BiddingFileEntity findById(Integer id) {
         return biddingFileDao.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public BiddingFileEntity findBiddingById(Integer id) {
+        BiddingFileEntity biddingFileEntity = this.findById(id);
+        Integer biddingId = biddingFileEntity.getBiddingId();
+        if (biddingId != null) {
+            BiddingEntity biddingEntity = biddingService.findById(biddingId);
+            biddingFileEntity.setBiddingEntity(biddingEntity);
+        }
+        return biddingFileEntity;
     }
 
     @Override
@@ -93,5 +114,10 @@ public class BiddingFileServiceImpl implements BiddingFileService {
         wb.write(outputStream);
         outputStream.flush();
         outputStream.close();
+    }
+
+    @Override
+    public List<UserEntity> findUserEntities() {
+        return userService.findAll((short) 0);
     }
 }

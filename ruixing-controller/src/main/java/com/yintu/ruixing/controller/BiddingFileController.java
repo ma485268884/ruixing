@@ -1,14 +1,12 @@
 package com.yintu.ruixing.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.entity.BiddingEntity;
 import com.yintu.ruixing.entity.BiddingFileEntity;
+import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.BiddingFileService;
-import com.yintu.ruixing.service.BiddingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,8 +24,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/biddings/files")
 public class BiddingFileController extends SessionController implements BaseController<BiddingFileEntity, Integer> {
-    @Autowired
-    private BiddingService biddingService;
+
     @Autowired
     private BiddingFileService biddingFileService;
 
@@ -60,12 +58,7 @@ public class BiddingFileController extends SessionController implements BaseCont
     @GetMapping("/{id}")
     @ResponseBody
     public Map<String, Object> findById(@PathVariable Integer id) {
-        BiddingFileEntity biddingFileEntity = biddingFileService.findById(id);
-        Integer biddingId = biddingFileEntity.getBiddingId();
-        if (biddingId != null) {
-            BiddingEntity biddingEntity = biddingService.findById(biddingId);
-            biddingFileEntity.setBiddingEntity(biddingEntity);
-        }
+        BiddingFileEntity biddingFileEntity = biddingFileService.findBiddingById(id);
         return ResponseDataUtil.ok("查询招投标技术支持文件信息成功", biddingFileEntity);
     }
 
@@ -105,4 +98,12 @@ public class BiddingFileController extends SessionController implements BaseCont
         response.addHeader("Cache-Control", "no-cache");
         biddingFileService.exportFile(response.getOutputStream(), ids);
     }
+
+    @GetMapping("/auditors")
+    @ResponseBody
+    public Map<String, Object> findUserEntities() {
+        List<UserEntity> userEntities = biddingFileService.findUserEntities();
+        return ResponseDataUtil.ok("查询审核人列表信息成功", userEntities);
+    }
+
 }

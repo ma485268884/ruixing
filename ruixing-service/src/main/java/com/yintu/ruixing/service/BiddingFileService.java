@@ -3,6 +3,7 @@ package com.yintu.ruixing.service;
 import com.yintu.ruixing.common.util.BaseService;
 import com.yintu.ruixing.entity.BiddingFileEntity;
 import com.yintu.ruixing.entity.PreSaleFileEntity;
+import com.yintu.ruixing.entity.UserEntity;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -13,6 +14,10 @@ import java.util.List;
  * @date:2020/7/2 14:26
  */
 public interface BiddingFileService extends BaseService<BiddingFileEntity, Integer> {
+
+
+    BiddingFileEntity findBiddingById(Integer id);
+
     /**
      * 批量删除
      *
@@ -34,4 +39,12 @@ public interface BiddingFileService extends BaseService<BiddingFileEntity, Integ
      * @throws IOException io异常
      */
     void exportFile(OutputStream outputStream, Integer[] ids) throws IOException;
+
+
+    /**
+     * 审核人列表信息
+     *
+     * @return 审核人列表
+     */
+    List<UserEntity> findUserEntities();
 }
