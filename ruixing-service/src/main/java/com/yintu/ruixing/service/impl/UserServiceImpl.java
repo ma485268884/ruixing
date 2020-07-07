@@ -25,10 +25,6 @@ public class UserServiceImpl implements UserService {
     private RoleService roleService;
     @Autowired
     private UserRoleService userRoleService;
-    @Autowired
-    private PermissionService permissionService;
-    @Autowired
-    private PermissionRoleService permissionRoleService;
 
     @Override
     public void add(UserEntity userEntity) {
@@ -92,6 +88,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserEntity> findByExample(UserEntityExample userEntityExample) {
         return userDao.selectByExample(userEntityExample);
+    }
+
+    @Override
+    public List<UserEntity> findByTruename(String truename) {
+        truename = truename == null ? "" : truename;
+        UserEntityExample userEntityExample = new UserEntityExample();
+        userEntityExample.createCriteria().andTrueNameLike("%" + truename + "%").andIsCustomerEqualTo((short) 0);
+        return this.findByExample(userEntityExample);
     }
 
     @Override
