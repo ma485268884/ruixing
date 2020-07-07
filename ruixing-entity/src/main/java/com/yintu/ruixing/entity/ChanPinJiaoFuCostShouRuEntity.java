@@ -14,9 +14,12 @@ public class ChanPinJiaoFuCostShouRuEntity {
 
     private String xiangmuName;
 
-    private BigDecimal shebeiXiaoshouHetongMoney;
+    private BigDecimal shebeiXiaoshouHetongMoney;//设备销售合同金额
 
-    private BigDecimal beipinXiaoshouHetongMoney;
+    private BigDecimal beipinXiaoshouHetongMoney;//备品销售合同金额
+
+    private BigDecimal allcost;//总计金额
+
 
     public Integer getId() {
         return id;

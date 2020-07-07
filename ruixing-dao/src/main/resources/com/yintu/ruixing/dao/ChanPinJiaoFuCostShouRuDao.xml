@@ -24,21 +24,39 @@
   <!--根据项目名  进行模糊查询-->
   <select id="findShouRuCostByName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List"/>
+    <include refid="Base_Column_List"/>,
+    SUM( shebei_xiaoshou_hetong_money + beipin_xiaoshou_hetong_money ) allcost
     from
     mro_chanpinjiaofu_cost_shouru
     where
     xiangmu_name like concat('%',#{xiangMuName},'%')
+    GROUP BY id DESC
   </select>
 
   <!--查询所有的收入数据-->
-  <select id="findAllShouRuCost" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from mro_chanpinjiaofu_cost_shouru
-    where id = #{id,jdbcType=INTEGER}
+  <select id="findAllShouRuCost"  resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />,
+    SUM( shebei_xiaoshou_hetong_money + beipin_xiaoshou_hetong_money ) allcost
+    FROM
+    mro_chanpinjiaofu_cost_shouru
+    GROUP BY id DESC
   </select>
 
+  <!--根据id  查询单个或者批量 的收入数据-->
+  <select id="selectByCondition" parameterType="java.util.List" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />,
+    SUM( shebei_xiaoshou_hetong_money + beipin_xiaoshou_hetong_money ) allcost
+    FROM
+    mro_chanpinjiaofu_cost_shouru
+    where id
+    in
+    <foreach collection="array" item="ids" open="(" separator="," close=")">
+      #{ids}
+    </foreach>
+    GROUP BY id
+  </select>
   <!--新增收入数据-->
   <insert id="addShouRuCost" parameterType="com.yintu.ruixing.entity.ChanPinJiaoFuCostShouRuEntity">
     insert into mro_chanpinjiaofu_cost_shouru

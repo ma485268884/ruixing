@@ -3,6 +3,8 @@ package com.yintu.ruixing.service;
 import com.yintu.ruixing.entity.ChanPinJiaoFuCostZhiChuEntity;
 import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity;
 
+import javax.servlet.ServletOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -23,4 +25,6 @@ public interface ChanPinJiaoFuCostZhiChuService {
     void deletZhiChuCostByIds(Integer[] ids);
 
     List<ChanPinJiaoFuCostZhiChuEntity> findAllZhiChuCost(Integer page, Integer size);
+
+    void exportFile(ServletOutputStream outputStream, Integer[] ids) throws IOException;
 }

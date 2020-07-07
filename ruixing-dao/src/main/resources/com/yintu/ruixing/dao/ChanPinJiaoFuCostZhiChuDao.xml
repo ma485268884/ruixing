@@ -38,6 +38,7 @@
     mro_chanpinjiaofu_cost_zhichu
     where
     xiangmu_name like concat('%',#{xiangMuName},'%')
+    GROUP BY id DESC
   </select>
 
   <!--查询项目名-->
@@ -57,6 +58,22 @@
     SUM( cailiao_money + rengong_money + jijuzhejiu_money + dizhiyihao_money + shuidian_money + yunza_money + jiance_money ) allcost
     FROM
     mro_chanpinjiaofu_cost_zhichu
+    GROUP BY id DESC
+  </select>
+
+  <!--根据id  进行批量或者单个导出收入数据-->
+  <select id="selectByCondition" parameterType="java.util.List" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />,
+    SUM( cailiao_money + rengong_money + jijuzhejiu_money + dizhiyihao_money + shuidian_money ) zhizaocost,
+    SUM( cailiao_money + rengong_money + jijuzhejiu_money + dizhiyihao_money + shuidian_money + yunza_money + jiance_money ) allcost
+    FROM
+    mro_chanpinjiaofu_cost_zhichu
+    where id
+    in
+    <foreach collection="array" item="ids" open="(" separator="," close=")">
+      #{ids}
+    </foreach>
     GROUP BY id
   </select>
 

@@ -30,4 +30,5 @@ public interface ChanPinJiaoFuCostShouRuDao {
     void addShouRuCost(ChanPinJiaoFuCostShouRuEntity chanPinJiaoFuCostShouRuEntity);
 
 
+    List<ChanPinJiaoFuCostShouRuEntity> selectByCondition( Integer[] ids);
 }

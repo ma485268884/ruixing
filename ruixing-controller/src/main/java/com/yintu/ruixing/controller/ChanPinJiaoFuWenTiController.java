@@ -6,7 +6,6 @@ import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.ChanPinJiaoFuWenTiEntity;
 import com.yintu.ruixing.entity.DepartmentEntity;
 import com.yintu.ruixing.service.ChanPinJiaoFuWenTiService;
-import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -79,6 +78,18 @@ public class ChanPinJiaoFuWenTiController {
 
     //根据id 进行单个或者批量下载到Excel
     @GetMapping("/downLoadByIds/{ids}")
+    public void exportFile(@PathVariable Integer[] ids, HttpServletResponse response) throws IOException {
+        String fileName = "交付情况问题反馈列表" + System.currentTimeMillis() + ".xlsx";
+        response.setContentType("application/octet-stream;charset=ISO8859-1");
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
+        response.addHeader("Pargam", "no-cache");
+        response.addHeader("Cache-Control", "no-cache");
+        chanPinJiaoFuWenTiService.exportFile(response.getOutputStream(), ids);
+    }
+
+    /*//根据id 进行单个或者批量下载到Excel
+
+    @GetMapping("/downLoadByIds/{ids}")
     public void downLoadByIds(@PathVariable Integer[] ids, HttpServletResponse response) throws IOException{
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("交付情况问题反馈");
@@ -126,5 +137,6 @@ public class ChanPinJiaoFuWenTiController {
         response.setHeader("Content-disposition", "attachment;filename=" + fileName);
         response.flushBuffer();
         workbook.write(response.getOutputStream());
-    }
+    }*/
+
 }
