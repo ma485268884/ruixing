@@ -9,6 +9,7 @@ import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.DesignLiaisonFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +24,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/design/liaisons/files")
-public class DesignLiaisonFileController extends SessionController implements BaseController<DesignLiaisonFileEntity, Integer> {
+public class DesignLiaisonFileController extends SessionController {
 
     @Autowired
     private DesignLiaisonFileService designLiaisonFileService;
@@ -31,15 +32,11 @@ public class DesignLiaisonFileController extends SessionController implements Ba
 
     @PostMapping
     @ResponseBody
-    public Map<String, Object> add(DesignLiaisonFileEntity entity) {
-        designLiaisonFileService.add(entity);
+    public Map<String, Object> add(@Validated DesignLiaisonFileEntity designLiaisonFileEntity, @RequestParam("auditorIds") Integer[] auditorIds) {
+        designLiaisonFileService.add(designLiaisonFileEntity, auditorIds);
         return ResponseDataUtil.ok("添加设计联络及后续技术交流文件信息成功");
     }
 
-    @Override
-    public Map<String, Object> remove(Integer id) {
-        return null;
-    }
 
     @DeleteMapping("/{ids}")
     @ResponseBody
@@ -50,8 +47,8 @@ public class DesignLiaisonFileController extends SessionController implements Ba
 
     @PutMapping("/{id}")
     @ResponseBody
-    public Map<String, Object> edit(@PathVariable Integer id, DesignLiaisonFileEntity entity) {
-        designLiaisonFileService.edit(entity);
+    public Map<String, Object> edit(@PathVariable Integer id, @Validated DesignLiaisonFileEntity entity, @RequestParam("auditorIds") Integer[] auditorIds) {
+        designLiaisonFileService.edit(entity, auditorIds);
         return ResponseDataUtil.ok("修改设计联络及后续技术交流文件信息成功");
     }
 

@@ -1,82 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yintu.ruixing.dao.BiddingFileAuditorDao">
-  <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.BiddingFileAuditorEntity">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="bidding_file_id" jdbcType="INTEGER" property="biddingFileId" />
-    <result column="auditor_id" jdbcType="INTEGER" property="auditorId" />
-    <result column="is_pass" jdbcType="SMALLINT" property="isPass" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, bidding_file_id, auditor_id, is_pass
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from mro_bidding_file__auditor
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from mro_bidding_file__auditor
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.yintu.ruixing.entity.BiddingFileAuditorEntity">
-    insert into mro_bidding_file__auditor (id, bidding_file_id, auditor_id, 
-      is_pass)
-    values (#{id,jdbcType=INTEGER}, #{biddingFileId,jdbcType=INTEGER}, #{auditorId,jdbcType=INTEGER}, 
-      #{isPass,jdbcType=SMALLINT})
-  </insert>
-  <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.BiddingFileAuditorEntity">
-    insert into mro_bidding_file__auditor
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="biddingFileId != null">
-        bidding_file_id,
-      </if>
-      <if test="auditorId != null">
-        auditor_id,
-      </if>
-      <if test="isPass != null">
-        is_pass,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="biddingFileId != null">
-        #{biddingFileId,jdbcType=INTEGER},
-      </if>
-      <if test="auditorId != null">
-        #{auditorId,jdbcType=INTEGER},
-      </if>
-      <if test="isPass != null">
-        #{isPass,jdbcType=SMALLINT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.BiddingFileAuditorEntity">
-    update mro_bidding_file__auditor
-    <set>
-      <if test="biddingFileId != null">
-        bidding_file_id = #{biddingFileId,jdbcType=INTEGER},
-      </if>
-      <if test="auditorId != null">
-        auditor_id = #{auditorId,jdbcType=INTEGER},
-      </if>
-      <if test="isPass != null">
-        is_pass = #{isPass,jdbcType=SMALLINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.BiddingFileAuditorEntity">
-    update mro_bidding_file__auditor
-    set bidding_file_id = #{biddingFileId,jdbcType=INTEGER},
-      auditor_id = #{auditorId,jdbcType=INTEGER},
-      is_pass = #{isPass,jdbcType=SMALLINT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+    <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.BiddingFileAuditorEntity">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="bidding_file_id" jdbcType="INTEGER" property="biddingFileId"/>
+        <result column="auditor_id" jdbcType="INTEGER" property="auditorId"/>
+        <result column="is_pass" jdbcType="SMALLINT" property="isPass"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, bidding_file_id, auditor_id, is_pass
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_bidding_file__auditor
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByBiddingFileId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_bidding_file__auditor
+        where bidding_file_id = #{biddingFileId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from mro_bidding_file__auditor
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByBiddingFileId" parameterType="java.lang.Integer">
+        delete
+        from mro_bidding_file__auditor
+        where bidding_file_id = #{biddingFileId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.yintu.ruixing.entity.BiddingFileAuditorEntity">
+        insert into mro_bidding_file__auditor (id, bidding_file_id, auditor_id,
+                                               is_pass)
+        values (#{id,jdbcType=INTEGER}, #{biddingFileId,jdbcType=INTEGER}, #{auditorId,jdbcType=INTEGER},
+                #{isPass,jdbcType=SMALLINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.BiddingFileAuditorEntity">
+        insert into mro_bidding_file__auditor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="biddingFileId != null">
+                bidding_file_id,
+            </if>
+            <if test="auditorId != null">
+                auditor_id,
+            </if>
+            <if test="isPass != null">
+                is_pass,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="biddingFileId != null">
+                #{biddingFileId,jdbcType=INTEGER},
+            </if>
+            <if test="auditorId != null">
+                #{auditorId,jdbcType=INTEGER},
+            </if>
+            <if test="isPass != null">
+                #{isPass,jdbcType=SMALLINT},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertMuch" parameterType="com.yintu.ruixing.entity.BiddingFileAuditorEntity">
+        insert into mro_bidding_file__auditor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            bidding_file_id,auditor_id, is_pass,
+        </trim>
+        values
+        <foreach collection="list" item="biddingFileAuditorEntity" index="index" separator=",">
+            <trim prefix=" (" suffix=")" suffixOverrides=",">
+                #{biddingFileAuditorEntity.biddingFileId,jdbcType=INTEGER},
+                #{biddingFileAuditorEntity.auditorId,jdbcType=INTEGER},
+                #{biddingFileAuditorEntity.isPass,jdbcType=SMALLINT},
+            </trim>
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.BiddingFileAuditorEntity">
+        update mro_bidding_file__auditor
+        <set>
+            <if test="biddingFileId != null">
+                bidding_file_id = #{biddingFileId,jdbcType=INTEGER},
+            </if>
+            <if test="auditorId != null">
+                auditor_id = #{auditorId,jdbcType=INTEGER},
+            </if>
+            <if test="isPass != null">
+                is_pass = #{isPass,jdbcType=SMALLINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.BiddingFileAuditorEntity">
+        update mro_bidding_file__auditor
+        set bidding_file_id = #{biddingFileId,jdbcType=INTEGER},
+            auditor_id      = #{auditorId,jdbcType=INTEGER},
+            is_pass         = #{isPass,jdbcType=SMALLINT}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

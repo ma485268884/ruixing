@@ -37,9 +37,6 @@ public class BiddingController extends SessionController implements BaseControll
 
     @PostMapping
     public Map<String, Object> add(@Validated BiddingEntity entity) {
-        if (entity.getProjectDate() == null) {
-            throw new BaseRuntimeException("项目日期不能为空");
-        }
         biddingService.add(entity);
         return ResponseDataUtil.ok("添加投招标技术支持信息成功");
     }
@@ -53,9 +50,6 @@ public class BiddingController extends SessionController implements BaseControll
 
     @PutMapping("/{id}")
     public Map<String, Object> edit(@PathVariable Integer id, @Validated BiddingEntity entity) {
-        if (entity.getProjectDate() == null) {
-            throw new BaseRuntimeException("项目日期不能为空");
-        }
         biddingService.edit(entity);
         return ResponseDataUtil.ok("修改投招标技术支持信息成功");
     }

@@ -108,7 +108,7 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
     }
 
     //异步更新数据
-    class QuDuanInfoRunnable implements Runnable {
+    public class QuDuanInfoRunnable implements Runnable {
 
         private final QuDuanDownloadService quDuanDownloadService;
         private final Integer id;

@@ -3,8 +3,10 @@ package com.yintu.ruixing.service.impl;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.BiddingDao;
 import com.yintu.ruixing.entity.BiddingEntity;
+import com.yintu.ruixing.entity.MessageEntity;
 import com.yintu.ruixing.entity.PreSaleEntity;
 import com.yintu.ruixing.service.BiddingService;
+import com.yintu.ruixing.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,10 +22,22 @@ import java.util.*;
 public class BiddingServiceImpl implements BiddingService {
     @Autowired
     private BiddingDao biddingDao;
+    @Autowired
+    private MessageService messageService;
 
     @Override
     public void add(BiddingEntity entity) {
         biddingDao.insertSelective(entity);
+        //投招标支持项目状态为3时发送消息
+        if (entity.getProjectStatus().equals((short) 3)) {
+            MessageEntity messageEntity = new MessageEntity();
+            messageEntity.setTitle("");
+            messageEntity.setContext("“" + entity.getProjectName() + "”项目已中标，请关注项目进展情况，及时进行设计联络！");
+            messageEntity.setType((short) 1);
+            messageEntity.setStatus((short) 1);
+            messageEntity.setCreatedDate(new Date());
+            messageService.sendMessage(messageEntity);
+        }
     }
 
     @Override

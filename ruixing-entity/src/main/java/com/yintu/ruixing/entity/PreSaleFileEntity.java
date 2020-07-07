@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 售前技术支持 项目文件实体类
@@ -25,17 +26,15 @@ public class PreSaleFileEntity implements Serializable {
     private String name;
     @NotEmpty
     private String path;
-
     private Date uploadDatetime;
     @NotNull
     private Short type;
-
     private Short releaseStatus;
-
-    private Integer auditorId;
     @NotNull
     private Integer preSaleId;
 
     private PreSaleEntity preSaleEntity;
+
+    private List<PreSaleFileAuditorEntity> preSaleFileAuditorEntities;
 
 }

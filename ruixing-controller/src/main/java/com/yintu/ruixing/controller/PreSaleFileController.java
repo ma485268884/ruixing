@@ -12,6 +12,7 @@ import com.yintu.ruixing.service.PreSaleFileService;
 import com.yintu.ruixing.service.PreSaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,22 +28,18 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/pre/sales/files")
-public class PreSaleFileController extends SessionController implements BaseController<PreSaleFileEntity, Integer> {
+public class PreSaleFileController extends SessionController {
 
     @Autowired
     private PreSaleFileService preSaleFileService;
 
     @PostMapping
     @ResponseBody
-    public Map<String, Object> add(PreSaleFileEntity entity) {
-        preSaleFileService.add(entity);
+    public Map<String, Object> add(@Validated PreSaleFileEntity preSaleFileEntity, @RequestParam("auditorIds") Integer[] auditorIds) {
+        preSaleFileService.add(preSaleFileEntity, auditorIds);
         return ResponseDataUtil.ok("添加售前技术支持文件信息成功");
     }
 
-    @Override
-    public Map<String, Object> remove(Integer id) {
-        return null;
-    }
 
     @DeleteMapping("/{ids}")
     @ResponseBody
@@ -53,8 +50,8 @@ public class PreSaleFileController extends SessionController implements BaseCont
 
     @PutMapping("/{id}")
     @ResponseBody
-    public Map<String, Object> edit(Integer id, PreSaleFileEntity entity) {
-        preSaleFileService.edit(entity);
+    public Map<String, Object> edit(Integer id, @Validated PreSaleFileEntity preSaleFileEntity, @RequestParam("auditorIds") Integer[] auditorIds) {
+        preSaleFileService.edit(preSaleFileEntity, auditorIds);
         return ResponseDataUtil.ok("更新售前技术支持文件信息成功");
     }
 

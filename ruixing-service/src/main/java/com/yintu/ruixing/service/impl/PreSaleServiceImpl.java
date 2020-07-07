@@ -2,7 +2,9 @@ package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.PreSaleDao;
+import com.yintu.ruixing.entity.MessageEntity;
 import com.yintu.ruixing.entity.PreSaleEntity;
+import com.yintu.ruixing.service.MessageService;
 import com.yintu.ruixing.service.PreSaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,11 +22,23 @@ public class PreSaleServiceImpl implements PreSaleService {
 
     @Autowired
     private PreSaleDao preSaleDao;
+    @Autowired
+    private MessageService messageService;
 
 
     @Override
     public void add(PreSaleEntity entity) {
         preSaleDao.insertSelective(entity);
+        //售后技术支持项目状态为3时发送消息
+        if (entity.getProjectStatus().equals((short) 3)) {
+            MessageEntity messageEntity = new MessageEntity();
+            messageEntity.setTitle("");
+            messageEntity.setContext("“" + entity.getProjectName() + "”项目已中标，请关注项目进展情况，及时进行设计联络！");
+            messageEntity.setType((short) 1);
+            messageEntity.setStatus((short) 1);
+            messageEntity.setCreatedDate(new Date());
+            messageService.sendMessage(messageEntity);
+        }
     }
 
     @Override

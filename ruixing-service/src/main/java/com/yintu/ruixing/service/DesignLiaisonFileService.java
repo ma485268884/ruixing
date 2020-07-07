@@ -14,8 +14,17 @@ import java.util.List;
  */
 public interface DesignLiaisonFileService extends BaseService<DesignLiaisonFileEntity, Integer> {
 
+    /**
+     * @param designLiaisonFileEntity 设计联络文件实体类
+     * @param auditorIds              审核人ids
+     */
+    void add(DesignLiaisonFileEntity designLiaisonFileEntity, Integer[] auditorIds);
 
-    DesignLiaisonFileEntity findDesignLiaisonById(Integer id);
+    /**
+     * @param designLiaisonFileEntity 设计联络文件实体类
+     * @param auditorIds              审核人ids
+     */
+    void edit(DesignLiaisonFileEntity designLiaisonFileEntity, Integer[] auditorIds);
 
     /**
      * 批量删除
@@ -23,6 +32,12 @@ public interface DesignLiaisonFileService extends BaseService<DesignLiaisonFileE
      * @param ids id集合
      */
     void remove(Integer[] ids);
+
+    /**
+     * @param id 设计联络id
+     * @return 设计联络文件
+     */
+    DesignLiaisonFileEntity findDesignLiaisonById(Integer id);
 
     /**
      * @param year        年份

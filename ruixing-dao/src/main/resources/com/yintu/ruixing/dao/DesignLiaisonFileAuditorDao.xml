@@ -16,9 +16,21 @@
     from mro_design_liaison_file_auditor
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByDesignLiaisonFileId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from mro_design_liaison_file_auditor
+    where design_liaison_file_id = #{designLiaisonFileId,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from mro_design_liaison_file_auditor
     where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByDesignLiaisonFileId" parameterType="java.lang.Integer">
+    delete
+    from mro_design_liaison_file_auditor
+    where design_liaison_file_id = #{designLiaisonFileId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.yintu.ruixing.entity.DesignLiaisonFileAuditorEntity">
     insert into mro_design_liaison_file_auditor (id, design_liaison_file_id, auditor_id, 
@@ -56,6 +68,20 @@
         #{isPass,jdbcType=SMALLINT},
       </if>
     </trim>
+  </insert>
+  <insert id="insertMuch" parameterType="com.yintu.ruixing.entity.DesignLiaisonFileAuditorEntity">
+    insert into mro_design_liaison_file_auditor
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      design_liaison_file_id,auditor_id, is_pass,
+    </trim>
+    values
+    <foreach collection="list" item="designLiaisonFileAuditorEntity" index="index" separator=",">
+      <trim prefix=" (" suffix=")" suffixOverrides=",">
+        #{designLiaisonFileAuditorEntity.designLiaisonFileId,jdbcType=INTEGER},
+        #{designLiaisonFileAuditorEntity.auditorId,jdbcType=INTEGER},
+        #{designLiaisonFileAuditorEntity.isPass,jdbcType=SMALLINT},
+      </trim>
+    </foreach>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.DesignLiaisonFileAuditorEntity">
     update mro_design_liaison_file_auditor

@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 设计联络以及后续技术交流 项目文件实体类
@@ -24,16 +25,15 @@ public class DesignLiaisonFileEntity implements Serializable {
     private String name;
     @NotEmpty
     private String path;
-
     private Date uploadDatetime;
     @NotNull
     private Short type;
-
     private Short releaseStatus;
 
-    private Integer auditorId;
     @NotNull
     private Integer designLiaisonId;
 
     private DesignLiaisonEntity designLiaisonEntity;
+
+    private List<DesignLiaisonFileAuditorEntity> designLiaisonFileAuditorEntities;
 }
