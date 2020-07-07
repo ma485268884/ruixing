@@ -10,7 +10,7 @@
         <result column="qdid" jdbcType="INTEGER" property="qdid"/>
         <result column="typeid" jdbcType="INTEGER" property="typeid"/>
         <result column="line" jdbcType="VARCHAR" property="line"/>
-        <result column="left_right" jdbcType="VARCHAR" property="letRight"/>
+        <result column="left_right" jdbcType="VARCHAR" property="leftRight"/>
         <result column="xingbie" jdbcType="INTEGER" property="xingBie"/>
         <result column="type" jdbcType="INTEGER" property="type"/>
         <result column="zongHe_id" jdbcType="VARCHAR" property="zongheId"/>
@@ -136,7 +136,7 @@
             qb.cid = cz.cid
             AND qb.xid = xd.xid
             AND line != '电码化'
-
+        GROUP BY id DESC
     </select>
     <!--查询电码化区段信息-->
     <select id="findAllDianMaHua" resultMap="BaseResultMap">
@@ -152,6 +152,7 @@
             qb.cid = cz.cid
             AND qb.xid = xd.xid
             AND line = '电码化'
+        GROUP BY id DESC
     </select>
 
     <!--根据车站cid  查询站外所有区段信息-->
@@ -357,7 +358,7 @@
                 #{line,jdbcType=VARCHAR},
             </if>
             <if test="leftRight != null">
-                #{letRight,jdbcType=VARCHAR},
+                #{leftRight,jdbcType=VARCHAR},
             </if>
             <if test="xingBie != null">
                 #{xingBie,jdbcType=INTEGER},

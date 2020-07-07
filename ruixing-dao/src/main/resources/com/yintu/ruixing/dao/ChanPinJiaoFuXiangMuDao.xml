@@ -47,6 +47,33 @@
     yangong_state, xianchangfuwu, fahuo_tixing_time, xiangmu_money, shebei_money
   </sql>
 
+    <!--根据文件id  查询审核人名-->
+    <select id="findAllAuditorNameById" parameterType="java.lang.Integer" resultType="com.yintu.ruixing.entity.ChanPinJiaoFuFileAuditorEntity">
+        SELECT
+            auditor_id
+        FROM
+            mro_chanpinjiaofu_file_auditor
+        WHERE
+            chanpinjiaofu_file_id =#{id}
+    </select>
+    <select id="findAllAuditorName" parameterType="java.lang.Integer" resultType="com.yintu.ruixing.entity.UserEntity">
+        SELECT
+            true_name
+        FROM
+            tb_user
+        WHERE
+            id = #{aid}
+    </select>
+    <!--根据id  删除中间表的审查人的id-->
+    <delete id="deletAuditor" parameterType="java.lang.Integer" >
+        delete from mro_chanpinjiaofu_file_auditor where chanpinjiaofu_file_id =#{id}
+    </delete>
+    <!--添加审核人-->
+    <insert id="addAuditorName" parameterType="com.yintu.ruixing.entity.ChanPinJiaoFuFileAuditorEntity">
+        insert into mro_chanpinjiaofu_file_auditor (chanpinjiaofu_file_id,auditor_id)
+        values
+        (#{chanPinJiaoFuFileId,jdbcType=INTEGER},#{auditorId,jdbcType=INTEGER})
+    </insert>
     <!--查询正在执行 尚未完成发货、签收、验工 停滞暂不发货、陆续发货中、工程结束不需发货   的列表；-->
     <select id="findJiaoFuQingKuangLists" parameterType="java.lang.String" resultMap="xiangmu">
         <if test="choiceTing=='zhengZaiZhiXing'">

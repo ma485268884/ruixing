@@ -8,7 +8,9 @@ import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity;
 import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity;
+import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.ChanPinJiaoFuXiangMuService;
+import com.yintu.ruixing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,9 @@ import java.util.Map;
 public class ChanPinJiaoFuXiangMuController {
     @Autowired
     private ChanPinJiaoFuXiangMuService chanPinJiaoFuXiangMuService;
+
+    @Autowired
+    private UserService userService;
 
     //创建三级树
     @GetMapping
@@ -92,28 +97,29 @@ public class ChanPinJiaoFuXiangMuController {
     //根据树的id  查询对应的数据
     @ResponseBody
     @GetMapping("/findXiangMuByIds")
-    public Map<String, Object> findXiangMuByIds(Integer stateid, Integer id,Integer typeid, Integer page, Integer size) {
+    public Map<String, Object> findXiangMuByIds(Integer stateid, Integer id, Integer typeid, Integer page, Integer size) {
         JSONObject js = new JSONObject();
         PageHelper.startPage(page, size);
-        List<ChanPinJiaoFuXiangMuEntity> chanPinJiaoFuXiangMuEntities=chanPinJiaoFuXiangMuService.findXiangMuByIds(stateid,id,typeid,page,size);
+        List<ChanPinJiaoFuXiangMuEntity> chanPinJiaoFuXiangMuEntities = chanPinJiaoFuXiangMuService.findXiangMuByIds(stateid, id, typeid, page, size);
         js.put("chanPinJiaoFuXiangMuEntities", chanPinJiaoFuXiangMuEntities);
         PageInfo<ChanPinJiaoFuXiangMuEntity> pageInfo = new PageInfo<>(chanPinJiaoFuXiangMuEntities);
         js.put("pageInfo", pageInfo);
         return ResponseDataUtil.ok("查询数据成功", js);
     }
+
     //新增文件列表
     @ResponseBody
     @PostMapping("/addXiangMuFile")
-    public Map<String, Object> addXiangMuFile(ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity) {
-        chanPinJiaoFuXiangMuService.addXiangMuFile(chanPinJiaoFuXiangMuFileEntity);
+    public Map<String, Object> addXiangMuFile(ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity,Integer[] uids) {
+        chanPinJiaoFuXiangMuService.addXiangMuFile(chanPinJiaoFuXiangMuFileEntity,uids);
         return ResponseDataUtil.ok("新增文件列表成功");
     }
 
     //根据id  修改文件列表
     @ResponseBody
     @PutMapping("/editXiangMuFileById/{id}")
-    public Map<String, Object> editXiangMuFileById(@PathVariable Integer id, ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity) {
-        chanPinJiaoFuXiangMuService.editXiangMuFileById(chanPinJiaoFuXiangMuFileEntity);
+    public Map<String, Object> editXiangMuFileById(@PathVariable Integer id,Integer[] uids, ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity) {
+        chanPinJiaoFuXiangMuService.editXiangMuFileById(chanPinJiaoFuXiangMuFileEntity,id,uids);
         return ResponseDataUtil.ok("修改数据成功");
     }
 
@@ -162,32 +168,47 @@ public class ChanPinJiaoFuXiangMuController {
         return ResponseDataUtil.ok("单个或者批量删除文件成功");
     }
 
+    //查询所有审核人姓名
+    @ResponseBody
+    @GetMapping("/findAllAuditorName")
+    public Map<String,Object>findAllAuditorNamre(String truename){
+        List<UserEntity> userEntities=userService.findByTruename(truename);
+        return ResponseDataUtil.ok("查询姓名成功",userEntities);
+    }
 
+    //根据文件id  查询对应的审核人名字
+    @ResponseBody
+    @GetMapping("/findAllAuditorNameById/{id}")
+    public Map<String,Object> findAllAuditorNameById(@PathVariable Integer id ){
+        List<UserEntity> userEntities=chanPinJiaoFuXiangMuService.findAllAuditorNameById(id);
+        return ResponseDataUtil.ok("查询审核人名成功",userEntities);
+
+    }
     //////////////////////////////交付情况统计/////////////////////////////////////
 
     //统计各个状态的项目数量
     @ResponseBody
     @GetMapping("/findJiaoFuQingKuangNumberAll")
-    public Map<String,Object>findJiaoFuQingKuangNumberAll(){
-       // Map<String,Object> map=new HashMap<>();
-        Map<String,Object> map=chanPinJiaoFuXiangMuService.findJiaoFuQingKuangNumberAll();
-        return ResponseDataUtil.ok("查询统计数量成功",map);
+    public Map<String, Object> findJiaoFuQingKuangNumberAll() {
+        // Map<String,Object> map=new HashMap<>();
+        Map<String, Object> map = chanPinJiaoFuXiangMuService.findJiaoFuQingKuangNumberAll();
+        return ResponseDataUtil.ok("查询统计数量成功", map);
     }
 
     //查询各个状态的列表
     @ResponseBody
     @GetMapping("/findJiaoFuQingKuangList")
-    public Map<String,Object>findJiaoFuQingKuangList(String choiceTing ,Integer page,Integer size){
-        if (choiceTing.equals("daiQianShu") || choiceTing.equals("daiYanGong")){
-            PageHelper.startPage(page,size);
+    public Map<String, Object> findJiaoFuQingKuangList(String choiceTing, Integer page, Integer size) {
+        if (choiceTing.equals("daiQianShu") || choiceTing.equals("daiYanGong")) {
+            PageHelper.startPage(page, size);
             List<ChanPinJiaoFuXiangMuEntity> chanPinJiaoFuXiangMuEntities = chanPinJiaoFuXiangMuService.findJiaoFuQingKuangList(choiceTing, page, size);
-            PageInfo<ChanPinJiaoFuXiangMuEntity> pageInfo=new PageInfo<>(chanPinJiaoFuXiangMuEntities);
-            return ResponseDataUtil.ok("查询数据成功",pageInfo);
-        }else {
-            PageHelper.startPage(page,size);
+            PageInfo<ChanPinJiaoFuXiangMuEntity> pageInfo = new PageInfo<>(chanPinJiaoFuXiangMuEntities);
+            return ResponseDataUtil.ok("查询数据成功", pageInfo);
+        } else {
+            PageHelper.startPage(page, size);
             List<ChanPinJiaoFuXiangMuEntity> chanPinJiaoFuXiangMuEntities = chanPinJiaoFuXiangMuService.findJiaoFuQingKuangLists(choiceTing, page, size);
-            PageInfo<ChanPinJiaoFuXiangMuEntity> pageInfo=new PageInfo<>(chanPinJiaoFuXiangMuEntities);
-            return ResponseDataUtil.ok("查询数据成功",pageInfo);
+            PageInfo<ChanPinJiaoFuXiangMuEntity> pageInfo = new PageInfo<>(chanPinJiaoFuXiangMuEntities);
+            return ResponseDataUtil.ok("查询数据成功", pageInfo);
         }
     }
 }

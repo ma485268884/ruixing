@@ -36,15 +36,21 @@
   </select>
     <!--查询所有的数据-->
     <select id="findGuZhangList" resultMap="BaseResultMap">
-    select * from mro_guzhang_study
+    select * from mro_guzhang_study GROUP BY id DESC
   </select>
-    <!--根据id下载单个数据到Excel-->
-    <select id="GuZhangListExcelDownloadsById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+
+    <!--根据id下载单个 或者批量 数据到Excel-->
+    <select id="selectByCondition" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from mro_guzhang_study
-        where id = #{id,jdbcType=INTEGER}
+        where id
+        in
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
     </select>
+
     <!--根据id查询单个信息-->
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select

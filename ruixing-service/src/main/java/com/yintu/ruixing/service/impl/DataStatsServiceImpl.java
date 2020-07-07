@@ -102,7 +102,14 @@ public class DataStatsServiceImpl implements DataStatsService {
 
     @Override
     public List<QuDuanBaseEntity> findAllQuDuan(Integer page,Integer size) {
-        return quDuanBaseDao.findAllQuDuan();
+        List<QuDuanBaseEntity> quDuanBaseEntityList=quDuanBaseDao.findAllQuDuan();
+        for (QuDuanBaseEntity quDuanBaseEntity : quDuanBaseEntityList) {
+            if (quDuanBaseEntity.getLine().equals("站内")){
+                quDuanBaseEntity.getXianDuanEntity().setXdName(null);
+
+            }
+        }
+        return quDuanBaseEntityList;
     }
 
     @Override
@@ -124,6 +131,11 @@ public class DataStatsServiceImpl implements DataStatsService {
     public void addQuDuan(QuDuanBaseEntity quDuanBaseEntity) {
         Integer i=quDuanBaseDao.lastParentid();//查询表中最后一列数据的id
         quDuanBaseEntity.setParentId(i);//得到新增数据的parentid
+        if (quDuanBaseEntity.getLine().equals("站内")){
+            quDuanBaseEntity.setType(0);
+            quDuanBaseEntity.setLeftRight(null);
+
+        }
        quDuanBaseDao.insertSelective(quDuanBaseEntity);
     }
  /*   @Override
