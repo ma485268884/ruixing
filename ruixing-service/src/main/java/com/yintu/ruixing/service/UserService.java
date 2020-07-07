@@ -56,6 +56,14 @@ public interface UserService extends UserDetailsService {
     List<UserEntity> findByExample(UserEntityExample userEntityExample);
 
     /**
+     * 通过真实姓名查询用户
+     *
+     * @param truename 真是姓名
+     * @return 用户信息集
+     */
+    List<UserEntity> findByTruename(String truename);
+
+    /**
      * 查询全部用户或者按照用户名查询
      *
      * @param username 用户名
@@ -87,14 +95,14 @@ public interface UserService extends UserDetailsService {
      * @param parentId 父级id
      * @return 权限树信息集
      */
-    List<TreeNodeUtil> findPermissionById(Long id, Long parentId,Short isMemu);
+    List<TreeNodeUtil> findPermissionById(Long id, Long parentId, Short isMemu);
 
     /**
      * 查询全部权限
      *
      * @return 权限树信息集
      */
-    List<TreeNodeUtil> findPermission(Long parentId,Short isMemu);
+    List<TreeNodeUtil> findPermission(Long parentId, Short isMemu);
 
 
 }
