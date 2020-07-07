@@ -9,6 +9,7 @@ import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.BiddingFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +24,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/biddings/files")
-public class BiddingFileController extends SessionController implements BaseController<BiddingFileEntity, Integer> {
+public class BiddingFileController extends SessionController {
 
     @Autowired
     private BiddingFileService biddingFileService;
@@ -31,15 +32,11 @@ public class BiddingFileController extends SessionController implements BaseCont
 
     @PostMapping
     @ResponseBody
-    public Map<String, Object> add(BiddingFileEntity entity) {
-        biddingFileService.add(entity);
+    public Map<String, Object> add(@Validated BiddingFileEntity entity, @RequestParam("auditorIds") Integer[] auditorIds) {
+        biddingFileService.add(entity, auditorIds);
         return ResponseDataUtil.ok("添加招投标技术支持文件信息成功");
     }
 
-    @Override
-    public Map<String, Object> remove(Integer id) {
-        return null;
-    }
 
     @DeleteMapping("/{ids}")
     @ResponseBody
@@ -50,8 +47,9 @@ public class BiddingFileController extends SessionController implements BaseCont
 
     @PutMapping("/{id}")
     @ResponseBody
-    public Map<String, Object> edit(@PathVariable Integer id, BiddingFileEntity entity) {
-        biddingFileService.edit(entity);
+    public Map<String, Object> edit(@PathVariable Integer id, @Validated BiddingFileEntity entity, @RequestParam("auditorIds") Integer[] auditorIds) {
+        System.out.println(auditorIds[0]);
+        biddingFileService.edit(entity,auditorIds);
         return ResponseDataUtil.ok("修改招投标技术支持文件信息成功");
     }
 

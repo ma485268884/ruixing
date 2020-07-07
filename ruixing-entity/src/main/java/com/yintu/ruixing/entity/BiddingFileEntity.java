@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -23,18 +24,16 @@ public class BiddingFileEntity implements Serializable {
     private String name;
     @NotEmpty
     private String path;
-
     private Date uploadDatetime;
     @NotNull
     private Short type;
-
     private Short releaseStatus;
-
-    private Integer auditorId;
     @NotNull
     private Integer biddingId;
 
     private BiddingEntity biddingEntity;
+
+    private List<BiddingFileAuditorEntity> biddingFileAuditorEntities;
 
 
 }

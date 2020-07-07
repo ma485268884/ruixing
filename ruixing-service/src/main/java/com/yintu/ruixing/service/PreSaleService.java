@@ -14,6 +14,7 @@ import java.util.List;
 public interface PreSaleService extends BaseService<PreSaleEntity, Integer> {
 
 
+
     List<PreSaleEntity> findAll();
 
     /**

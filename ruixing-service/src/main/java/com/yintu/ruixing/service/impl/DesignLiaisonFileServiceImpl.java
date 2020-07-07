@@ -2,9 +2,8 @@ package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.common.util.ExportExcelUtil;
 import com.yintu.ruixing.dao.DesignLiaisonFileDao;
-import com.yintu.ruixing.entity.DesignLiaisonEntity;
-import com.yintu.ruixing.entity.DesignLiaisonFileEntity;
-import com.yintu.ruixing.entity.UserEntity;
+import com.yintu.ruixing.entity.*;
+import com.yintu.ruixing.service.DesignLiaisonFileAuditorService;
 import com.yintu.ruixing.service.DesignLiaisonFileService;
 import com.yintu.ruixing.service.DesignLiaisonService;
 import com.yintu.ruixing.service.UserService;
@@ -15,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +33,8 @@ public class DesignLiaisonFileServiceImpl implements DesignLiaisonFileService {
 
     @Autowired
     private DesignLiaisonService designLiaisonService;
+    @Autowired
+    private DesignLiaisonFileAuditorService designLiaisonFileAuditorService;
 
     @Autowired
     private UserService userService;
@@ -43,9 +45,11 @@ public class DesignLiaisonFileServiceImpl implements DesignLiaisonFileService {
         designLiaisonFileDao.insertSelective(entity);
     }
 
+
     @Override
     public void remove(Integer id) {
         designLiaisonFileDao.deleteByPrimaryKey(id);
+        designLiaisonFileAuditorService.removeByDesignLiaisonFileId(id);
     }
 
     @Override
@@ -58,6 +62,36 @@ public class DesignLiaisonFileServiceImpl implements DesignLiaisonFileService {
         return designLiaisonFileDao.selectByPrimaryKey(id);
     }
 
+    @Override
+    public void add(DesignLiaisonFileEntity designLiaisonFileEntity, Integer[] auditorIds) {
+        this.add(designLiaisonFileEntity);
+        Integer id = designLiaisonFileEntity.getId();
+        List<DesignLiaisonFileAuditorEntity> designLiaisonFileAuditorEntities = new ArrayList<>(auditorIds.length);
+        for (Integer auditorId : auditorIds) {
+            DesignLiaisonFileAuditorEntity designLiaisonFileAuditorEntity = new DesignLiaisonFileAuditorEntity();
+            designLiaisonFileAuditorEntity.setDesignLiaisonFileId(id);
+            designLiaisonFileAuditorEntity.setAuditorId(auditorId);
+            designLiaisonFileAuditorEntity.setIsPass((short) 0);
+            designLiaisonFileAuditorEntities.add(designLiaisonFileAuditorEntity);
+        }
+        designLiaisonFileAuditorService.addMuch(designLiaisonFileAuditorEntities);
+    }
+
+    @Override
+    public void edit(DesignLiaisonFileEntity designLiaisonFileEntity, Integer[] auditorIds) {
+        this.edit(designLiaisonFileEntity);
+        Integer id = designLiaisonFileEntity.getId();
+        designLiaisonFileAuditorService.removeByDesignLiaisonFileId(id);
+        List<DesignLiaisonFileAuditorEntity> designLiaisonFileAuditorEntities = new ArrayList<>(auditorIds.length);
+        for (Integer auditorId : auditorIds) {
+            DesignLiaisonFileAuditorEntity designLiaisonFileAuditorEntity = new DesignLiaisonFileAuditorEntity();
+            designLiaisonFileAuditorEntity.setDesignLiaisonFileId(id);
+            designLiaisonFileAuditorEntity.setAuditorId(auditorId);
+            designLiaisonFileAuditorEntity.setIsPass((short) 0);
+            designLiaisonFileAuditorEntities.add(designLiaisonFileAuditorEntity);
+        }
+        designLiaisonFileAuditorService.addMuch(designLiaisonFileAuditorEntities);
+    }
 
     @Override
     public DesignLiaisonFileEntity findDesignLiaisonById(Integer id) {
@@ -67,8 +101,11 @@ public class DesignLiaisonFileServiceImpl implements DesignLiaisonFileService {
             DesignLiaisonEntity designLiaisonEntity = designLiaisonService.findById(designLiaisonId);
             designLiaisonFileEntity.setDesignLiaisonEntity(designLiaisonEntity);
         }
+        List<DesignLiaisonFileAuditorEntity> designLiaisonFileAuditorEntities = designLiaisonFileAuditorService.findByDesignLiaisonFileId(id);
+        designLiaisonFileEntity.setDesignLiaisonFileAuditorEntities(designLiaisonFileAuditorEntities);
         return designLiaisonFileEntity;
     }
+
 
     @Override
     public void remove(Integer[] ids) {

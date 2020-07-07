@@ -2,10 +2,8 @@ package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.common.util.ExportExcelUtil;
 import com.yintu.ruixing.dao.BiddingFileDao;
-import com.yintu.ruixing.entity.BiddingEntity;
-import com.yintu.ruixing.entity.BiddingFileEntity;
-import com.yintu.ruixing.entity.PreSaleFileEntity;
-import com.yintu.ruixing.entity.UserEntity;
+import com.yintu.ruixing.entity.*;
+import com.yintu.ruixing.service.BiddingFileAuditorService;
 import com.yintu.ruixing.service.BiddingFileService;
 import com.yintu.ruixing.service.BiddingService;
 import com.yintu.ruixing.service.UserService;
@@ -16,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +32,8 @@ public class BiddingFileServiceImpl implements BiddingFileService {
     private BiddingFileDao biddingFileDao;
     @Autowired
     private BiddingService biddingService;
-
+    @Autowired
+    private BiddingFileAuditorService biddingFileAuditorService;
     @Autowired
     private UserService userService;
 
@@ -46,6 +46,7 @@ public class BiddingFileServiceImpl implements BiddingFileService {
     @Override
     public void remove(Integer id) {
         biddingFileDao.deleteByPrimaryKey(id);
+        biddingFileAuditorService.removeByBiddingFileId(id);
     }
 
     @Override
@@ -59,6 +60,39 @@ public class BiddingFileServiceImpl implements BiddingFileService {
     }
 
     @Override
+    public void add(BiddingFileEntity biddingFileEntity, Integer[] auditorIds) {
+        this.add(biddingFileEntity);
+        Integer id = biddingFileEntity.getId();
+        List<BiddingFileAuditorEntity> biddingFileAuditorEntities = new ArrayList<>(auditorIds.length);
+        for (Integer auditorId : auditorIds) {
+            BiddingFileAuditorEntity biddingFileAuditorEntity = new BiddingFileAuditorEntity();
+            biddingFileAuditorEntity.setBiddingFileId(id);
+            biddingFileAuditorEntity.setAuditorId(auditorId);
+            biddingFileAuditorEntity.setIsPass((short) 0);
+            biddingFileAuditorEntities.add(biddingFileAuditorEntity);
+        }
+        biddingFileAuditorService.addMuch(biddingFileAuditorEntities);
+    }
+
+    @Override
+    public void edit(BiddingFileEntity biddingFileEntity, Integer[] auditorIds) {
+        this.edit(biddingFileEntity);
+        Integer id = biddingFileEntity.getId();
+        biddingFileAuditorService.removeByBiddingFileId(id); //删除
+        List<BiddingFileAuditorEntity> biddingFileAuditorEntities = new ArrayList<>(auditorIds.length);
+        for (Integer auditorId : auditorIds) {
+            BiddingFileAuditorEntity biddingFileAuditorEntity = new BiddingFileAuditorEntity();
+            biddingFileAuditorEntity.setBiddingFileId(id);
+            biddingFileAuditorEntity.setAuditorId(auditorId);
+            biddingFileAuditorEntity.setIsPass((short) 0);
+            biddingFileAuditorEntities.add(biddingFileAuditorEntity);
+        }
+        biddingFileAuditorService.addMuch(biddingFileAuditorEntities);
+
+    }
+
+
+    @Override
     public BiddingFileEntity findBiddingById(Integer id) {
         BiddingFileEntity biddingFileEntity = this.findById(id);
         Integer biddingId = biddingFileEntity.getBiddingId();
@@ -66,8 +100,11 @@ public class BiddingFileServiceImpl implements BiddingFileService {
             BiddingEntity biddingEntity = biddingService.findById(biddingId);
             biddingFileEntity.setBiddingEntity(biddingEntity);
         }
+        List<BiddingFileAuditorEntity> biddingFileAuditorEntities = biddingFileAuditorService.findByBiddingFileIdId(id);
+        biddingFileEntity.setBiddingFileAuditorEntities(biddingFileAuditorEntities);
         return biddingFileEntity;
     }
+
 
     @Override
     public void remove(Integer[] ids) {

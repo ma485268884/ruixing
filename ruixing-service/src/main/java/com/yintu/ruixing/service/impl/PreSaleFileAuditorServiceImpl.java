@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author:mlf
  * @date:2020/7/6 18:42
@@ -35,5 +37,20 @@ public class PreSaleFileAuditorServiceImpl implements PreSaleFileAuditorService 
     @Override
     public PreSaleFileAuditorEntity findById(Integer id) {
         return preSaleFileAuditorDao.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<PreSaleFileAuditorEntity> findByPreSaleFileId(Integer preSaleFileId) {
+        return preSaleFileAuditorDao.selectByPreSaleFileId(preSaleFileId);
+    }
+
+    @Override
+    public void removeByPreSaleFileId(Integer preSaleFileId) {
+        preSaleFileAuditorDao.deleteByPreSaleFileId(preSaleFileId);
+    }
+
+    @Override
+    public void addMuch(List<PreSaleFileAuditorEntity> preSaleFileAuditorEntities) {
+        preSaleFileAuditorDao.insertMuch(preSaleFileAuditorEntities);
     }
 }

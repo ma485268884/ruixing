@@ -14,9 +14,18 @@ import java.util.List;
  * @date:2020/7/2 14:26
  */
 public interface BiddingFileService extends BaseService<BiddingFileEntity, Integer> {
+    /**
+     *
+     * @param biddingFileEntity 投招标文件实体类
+     * @param auditorIds 审核人ids
+     */
+    void add(BiddingFileEntity biddingFileEntity, Integer[] auditorIds);
 
-
-    BiddingFileEntity findBiddingById(Integer id);
+    /**
+     * @param biddingFileEntity 投招标文件实体类
+     * @param auditorIds        审核人id
+     */
+    void edit(BiddingFileEntity biddingFileEntity, Integer[] auditorIds);
 
     /**
      * 批量删除
@@ -24,6 +33,9 @@ public interface BiddingFileService extends BaseService<BiddingFileEntity, Integ
      * @param ids id集合
      */
     void remove(Integer[] ids);
+
+
+    BiddingFileEntity findBiddingById(Integer id);
 
     /**
      * @param year        年份

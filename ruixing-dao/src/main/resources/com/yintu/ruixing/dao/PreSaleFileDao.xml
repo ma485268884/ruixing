@@ -8,11 +8,10 @@
         <result column="upload_datetime" jdbcType="TIMESTAMP" property="uploadDatetime"/>
         <result column="type" jdbcType="SMALLINT" property="type"/>
         <result column="release_status" jdbcType="SMALLINT" property="releaseStatus"/>
-        <result column="auditor_id" jdbcType="INTEGER" property="auditorId"/>
         <result column="pre_sale_id" jdbcType="INTEGER" property="preSaleId"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, name, path, upload_datetime, type, release_status, auditor_id, pre_sale_id
+        id, name, path, upload_datetime, type, release_status, pre_sale_id
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -28,10 +27,10 @@
     <insert id="insert" parameterType="com.yintu.ruixing.entity.PreSaleFileEntity">
         insert into mro_pre_sale_file (id, name, path,
                                        upload_datetime, type,
-                                       release_status, auditor_id,
+                                       release_status,
                                        pre_sale_id)
         values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR},
-                #{uploadDatetime,jdbcType=TIMESTAMP}, #{type,jdbcType=SMALLINT}, #{releaseStatus,jdbcType=SMALLINT}, #{auditorId,jdbcType=INTEGER},
+                #{uploadDatetime,jdbcType=TIMESTAMP}, #{type,jdbcType=SMALLINT}, #{releaseStatus,jdbcType=SMALLINT},
                 #{preSaleId,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.PreSaleFileEntity" useGeneratedKeys="true" keyProperty="id">
@@ -54,9 +53,6 @@
             </if>
             <if test="releaseStatus != null">
                 release_status,
-            </if>
-            <if test="auditorId != null">
-                auditor_id,
             </if>
             <if test="preSaleId != null">
                 pre_sale_id,
@@ -82,9 +78,6 @@
             <if test="releaseStatus != null">
                 #{releaseStatus,jdbcType=SMALLINT},
             </if>
-            <if test="auditorId != null">
-                #{auditorId,jdbcType=INTEGER},
-            </if>
             <if test="preSaleId != null">
                 #{preSaleId,jdbcType=INTEGER},
             </if>
@@ -108,9 +101,6 @@
             <if test="releaseStatus != null">
                 release_status = #{releaseStatus,jdbcType=SMALLINT},
             </if>
-            <if test="auditorId != null">
-                auditor_id = #{auditorId,jdbcType=INTEGER},
-            </if>
             <if test="preSaleId != null">
                 pre_sale_id = #{preSaleId,jdbcType=INTEGER},
             </if>
@@ -124,7 +114,6 @@
             upload_datetime = #{uploadDatetime,jdbcType=TIMESTAMP},
             type            = #{type,jdbcType=SMALLINT},
             release_status  = #{releaseStatus,jdbcType=SMALLINT},
-            auditor_id      = #{auditorId,jdbcType=INTEGER},
             pre_sale_id     = #{preSaleId,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -136,7 +125,6 @@
         <result column="upload_datetime" jdbcType="TIMESTAMP" property="uploadDatetime"/>
         <result column="type" jdbcType="SMALLINT" property="type"/>
         <result column="release_status" jdbcType="SMALLINT" property="releaseStatus"/>
-        <result column="auditor_id" jdbcType="INTEGER" property="auditorId"/>
         <result column="pre_sale_id" jdbcType="INTEGER" property="preSaleId"/>
         <association column="pre_sale_id" property="preSaleEntity">
             <id column="ps_id" jdbcType="INTEGER" property="id"/>
@@ -146,10 +134,17 @@
             <result column="task_status" jdbcType="SMALLINT" property="taskStatus"/>
             <result column="task_finish_date" jdbcType="TIMESTAMP" property="taskFinishDate"/>
         </association>
+        <collection property="preSaleFileAuditorEntities" ofType="com.yintu.ruixing.entity.PreSaleFileAuditorEntity">
+            <id column="psfa_id" jdbcType="INTEGER" property="id"/>
+            <result column="pre_sale_file_id" jdbcType="INTEGER" property="preSaleFileId"/>
+            <result column="auditor_id" jdbcType="INTEGER" property="auditorId"/>
+            <result column="is_pass" jdbcType="SMALLINT" property="isPass"/>
+        </collection>
     </resultMap>
     <sql id="Connect_Column_List">
-        psf.id as psf_id, psf.name, psf.path, psf.upload_datetime, psf.type,psf.release_status, psf.auditor_id, psf.pre_sale_id,
-        ps.id as ps_id , ps.project_name, ps.project_status, ps.project_date, ps.task_status, ps.task_finish_date
+        psf.id as psf_id, psf.name, psf.path, psf.upload_datetime, psf.type,psf.release_status, psf.pre_sale_id,
+        ps.id as ps_id , ps.project_name, ps.project_status, ps.project_date, ps.task_status, ps.task_finish_date,
+        psfa.id as psfa_id, psfa.pre_sale_file_id, psfa.auditor_id, psfa.is_pass
     </sql>
     <sql id="Connect_condition_List">
         <where>
@@ -174,6 +169,7 @@
         select
         <include refid="Connect_Column_List"/>
         from mro_pre_sale_file psf inner join mro_pre_sale ps on psf.pre_sale_id=ps.id
+        left outer join mro_pre_sale_file_auditor psfa on psf.id=psfa.pre_sale_file_id
         <include refid="Connect_condition_List"/>
     </select>
 </mapper>

@@ -3,12 +3,13 @@ package com.yintu.ruixing.service.impl;
 import com.yintu.ruixing.common.util.ExportExcelUtil;
 import com.yintu.ruixing.dao.PreSaleFileDao;
 import com.yintu.ruixing.entity.PreSaleEntity;
+import com.yintu.ruixing.entity.PreSaleFileAuditorEntity;
 import com.yintu.ruixing.entity.PreSaleFileEntity;
 import com.yintu.ruixing.entity.UserEntity;
+import com.yintu.ruixing.service.PreSaleFileAuditorService;
 import com.yintu.ruixing.service.PreSaleFileService;
 import com.yintu.ruixing.service.PreSaleService;
 import com.yintu.ruixing.service.UserService;
-import org.apache.commons.collections4.ComparatorUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -35,7 +37,11 @@ public class PreSaleFileServiceImpl implements PreSaleFileService {
     private PreSaleService preSaleService;
 
     @Autowired
+    private PreSaleFileAuditorService preSaleFileAuditorService;
+
+    @Autowired
     private UserService userService;
+
 
     @Override
     public void add(PreSaleFileEntity entity) {
@@ -43,10 +49,6 @@ public class PreSaleFileServiceImpl implements PreSaleFileService {
         preSaleFileDao.insertSelective(entity);
     }
 
-    @Override
-    public void remove(Integer id) {
-        preSaleFileDao.deleteByPrimaryKey(id);
-    }
 
     @Override
     public void edit(PreSaleFileEntity entity) {
@@ -54,9 +56,48 @@ public class PreSaleFileServiceImpl implements PreSaleFileService {
     }
 
     @Override
+    public void remove(Integer id) {
+        preSaleFileDao.deleteByPrimaryKey(id);
+        preSaleFileAuditorService.removeByPreSaleFileId(id);
+    }
+
+    @Override
     public PreSaleFileEntity findById(Integer id) {
         return preSaleFileDao.selectByPrimaryKey(id);
     }
+
+    @Override
+    public void add(PreSaleFileEntity preSaleFileEntity, Integer[] auditorIds) {
+        this.add(preSaleFileEntity);
+        Integer id = preSaleFileEntity.getId();
+        List<PreSaleFileAuditorEntity> preSaleFileAuditorEntities = new ArrayList<>(auditorIds.length);
+        for (Integer auditorId : auditorIds) {
+            PreSaleFileAuditorEntity preSaleFileAuditorEntity = new PreSaleFileAuditorEntity();
+            preSaleFileAuditorEntity.setPreSaleFileId(id);
+            preSaleFileAuditorEntity.setAuditorId(auditorId);
+            preSaleFileAuditorEntity.setIsPass((short) 0);
+            preSaleFileAuditorEntities.add(preSaleFileAuditorEntity);
+        }
+        preSaleFileAuditorService.addMuch(preSaleFileAuditorEntities);
+
+    }
+
+    @Override
+    public void edit(PreSaleFileEntity preSaleFileEntity, Integer[] auditorIds) {
+        this.edit(preSaleFileEntity);
+        Integer id = preSaleFileEntity.getId();
+        preSaleFileAuditorService.removeByPreSaleFileId(id); //删除
+        List<PreSaleFileAuditorEntity> preSaleFileAuditorEntities = new ArrayList<>(auditorIds.length);
+        for (Integer auditorId : auditorIds) {
+            PreSaleFileAuditorEntity preSaleFileAuditorEntity = new PreSaleFileAuditorEntity();
+            preSaleFileAuditorEntity.setPreSaleFileId(id);
+            preSaleFileAuditorEntity.setAuditorId(auditorId);
+            preSaleFileAuditorEntity.setIsPass((short) 0);
+            preSaleFileAuditorEntities.add(preSaleFileAuditorEntity);
+        }
+        preSaleFileAuditorService.addMuch(preSaleFileAuditorEntities);//添加
+    }
+
 
     @Override
     public PreSaleFileEntity findPreSaleById(Integer id) {
@@ -66,6 +107,8 @@ public class PreSaleFileServiceImpl implements PreSaleFileService {
             PreSaleEntity preSaleEntity = preSaleService.findById(preSaleId);
             preSaleFileEntity.setPreSaleEntity(preSaleEntity);
         }
+        List<PreSaleFileAuditorEntity> preSaleFileAuditorEntities = preSaleFileAuditorService.findByPreSaleFileId(id);
+        preSaleFileEntity.setPreSaleFileAuditorEntities(preSaleFileAuditorEntities);
         return preSaleFileEntity;
     }
 
