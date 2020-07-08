@@ -97,8 +97,9 @@ public class DesignLiaisonFileController extends SessionController {
     }
 
     @GetMapping("/auditors")
-    public Map<String, Object> findUserEntities() {
-        List<UserEntity> userEntities = designLiaisonFileService.findUserEntities();
+    @ResponseBody
+    public Map<String, Object> findUserEntities(@RequestParam(value = "true_name", required = false, defaultValue = "") String truename) {
+        List<UserEntity> userEntities = designLiaisonFileService.findUserEntitiesBytTruename(truename);
         return ResponseDataUtil.ok("查询审核人列表信息成功", userEntities);
     }
 

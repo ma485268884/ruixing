@@ -101,8 +101,8 @@ public class PreSaleFileController extends SessionController {
 
     @GetMapping("/auditors")
     @ResponseBody
-    public Map<String, Object> findUserEntities() {
-        List<UserEntity> userEntities = preSaleFileService.findUserEntities();
+    public Map<String, Object> findUserEntities(@RequestParam(value = "true_name", required = false, defaultValue = "") String truename) {
+        List<UserEntity> userEntities = preSaleFileService.findUserEntitiesByTruename(truename);
         return ResponseDataUtil.ok("查询审核人列表信息成功", userEntities);
     }
 

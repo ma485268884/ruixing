@@ -15,9 +15,8 @@ import java.util.List;
  */
 public interface BiddingFileService extends BaseService<BiddingFileEntity, Integer> {
     /**
-     *
      * @param biddingFileEntity 投招标文件实体类
-     * @param auditorIds 审核人ids
+     * @param auditorIds        审核人ids
      */
     void add(BiddingFileEntity biddingFileEntity, Integer[] auditorIds);
 
@@ -58,5 +57,5 @@ public interface BiddingFileService extends BaseService<BiddingFileEntity, Integ
      *
      * @return 审核人列表
      */
-    List<UserEntity> findUserEntities();
+    List<UserEntity> findUserEntitiesBytTruename(String truename);
 }

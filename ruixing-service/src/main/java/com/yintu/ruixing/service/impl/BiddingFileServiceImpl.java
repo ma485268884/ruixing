@@ -154,7 +154,7 @@ public class BiddingFileServiceImpl implements BiddingFileService {
     }
 
     @Override
-    public List<UserEntity> findUserEntities() {
-        return userService.findAll((short) 0);
+    public List<UserEntity> findUserEntitiesBytTruename(String truename) {
+        return userService.findByTruename(truename);
     }
 }
