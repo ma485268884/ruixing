@@ -159,7 +159,7 @@ public class DesignLiaisonFileServiceImpl implements DesignLiaisonFileService {
     }
 
     @Override
-    public List<UserEntity> findUserEntities() {
-        return userService.findAll((short) 0);
+    public List<UserEntity> findUserEntitiesBytTruename(String truename) {
+        return userService.findByTruename(truename);
     }
 }

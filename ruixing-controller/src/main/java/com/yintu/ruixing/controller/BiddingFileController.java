@@ -49,7 +49,7 @@ public class BiddingFileController extends SessionController {
     @ResponseBody
     public Map<String, Object> edit(@PathVariable Integer id, @Validated BiddingFileEntity entity, @RequestParam("auditorIds") Integer[] auditorIds) {
         System.out.println(auditorIds[0]);
-        biddingFileService.edit(entity,auditorIds);
+        biddingFileService.edit(entity, auditorIds);
         return ResponseDataUtil.ok("修改招投标技术支持文件信息成功");
     }
 
@@ -99,8 +99,8 @@ public class BiddingFileController extends SessionController {
 
     @GetMapping("/auditors")
     @ResponseBody
-    public Map<String, Object> findUserEntities() {
-        List<UserEntity> userEntities = biddingFileService.findUserEntities();
+    public Map<String, Object> findUserEntities(@RequestParam(value = "true_name", required = false, defaultValue = "") String truename) {
+        List<UserEntity> userEntities = biddingFileService.findUserEntitiesBytTruename(truename);
         return ResponseDataUtil.ok("查询审核人列表信息成功", userEntities);
     }
 

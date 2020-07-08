@@ -160,7 +160,7 @@ public class PreSaleFileServiceImpl implements PreSaleFileService {
     }
 
     @Override
-    public List<UserEntity> findUserEntities() {
-        return userService.findAll((short) 0);
+    public List<UserEntity> findUserEntitiesByTruename(String truename) {
+        return userService.findByTruename(truename);
     }
 }

@@ -59,5 +59,5 @@ public interface DesignLiaisonFileService extends BaseService<DesignLiaisonFileE
      *
      * @return 审核人列表
      */
-    List<UserEntity> findUserEntities();
+    List<UserEntity> findUserEntitiesBytTruename(String truename);
 }

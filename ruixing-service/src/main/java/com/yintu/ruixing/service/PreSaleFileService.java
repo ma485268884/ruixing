@@ -59,5 +59,5 @@ public interface PreSaleFileService extends BaseService<PreSaleFileEntity, Integ
      *
      * @return 审核人列表
      */
-    List<UserEntity> findUserEntities();
+    List<UserEntity> findUserEntitiesByTruename(String trueName);
 }
