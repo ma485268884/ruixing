@@ -3,7 +3,7 @@ package com.yintu.ruixing.dao;
 import com.yintu.ruixing.entity.ChanPinJiaoFuFileAuditorEntity;
 import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity;
 import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity;
-import com.yintu.ruixing.entity.UserEntity;
+import com.yintu.ruixing.entity.MessageEntity;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -88,7 +88,8 @@ public interface ChanPinJiaoFuXiangMuDao {
 
     void deletAuditor(Integer id);
 
-    List<ChanPinJiaoFuFileAuditorEntity> findAllAuditorNameById(Integer id);
+    Integer[] findAllAuditorNameById(Integer id);
 
-    UserEntity findAllAuditorName(Integer aid);
+
+    void addXiaoXi(MessageEntity messageEntity);
 }

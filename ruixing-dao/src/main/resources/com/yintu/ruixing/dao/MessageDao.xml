@@ -38,6 +38,7 @@
                 #{senderId,jdbcType=INTEGER}, #{receiverId,jdbcType=INTEGER}, #{status,jdbcType=SMALLINT},
                 #{createdDate,jdbcType=TIMESTAMP}, #{context,jdbcType=LONGVARCHAR})
     </insert>
+
     <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.MessageEntity">
         insert into mro_message
         <trim prefix="(" suffix=")" suffixOverrides=",">

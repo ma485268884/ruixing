@@ -2,19 +2,18 @@ package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.ChanPinJiaoFuXiangMuDao;
-import com.yintu.ruixing.entity.ChanPinJiaoFuFileAuditorEntity;
-import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity;
-import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity;
-import com.yintu.ruixing.entity.UserEntity;
+import com.yintu.ruixing.dao.MessageDao;
+import com.yintu.ruixing.dao.UserDao;
+import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.ChanPinJiaoFuXiangMuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 /**
  * @Author Mr.liu
@@ -28,6 +27,12 @@ public class ChanPinJiaoFuXiangMuServiceImpl implements ChanPinJiaoFuXiangMuServ
     @Autowired
     private ChanPinJiaoFuXiangMuDao chanPinJiaoFuXiangMuDao;
 
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private MessageDao messageDao;
+
     @Override
     public List<ChanPinJiaoFuXiangMuEntity> findJiaoFuQingKuangList(String choiceTing, Integer page, Integer size) {
         return chanPinJiaoFuXiangMuDao.findJiaoFuQingKuangList(choiceTing);
@@ -35,12 +40,21 @@ public class ChanPinJiaoFuXiangMuServiceImpl implements ChanPinJiaoFuXiangMuServ
 
 
     @Override
-    public List<UserEntity> findAllAuditorNameById(Integer id) {
-        List<ChanPinJiaoFuFileAuditorEntity>chanPinJiaoFuFileAuditorEntities=chanPinJiaoFuXiangMuDao.findAllAuditorNameById(id);
-        List<UserEntity> userEntity=null;
-        for (ChanPinJiaoFuFileAuditorEntity chanPinJiaoFuFileAuditorEntity : chanPinJiaoFuFileAuditorEntities) {
-            Integer aid=chanPinJiaoFuFileAuditorEntity.getAuditorId();
-            UserEntity userEntities=chanPinJiaoFuXiangMuDao.findAllAuditorName(aid);
+    public void addXiaoXi(MessageEntity messageEntity) {
+        messageEntity.setContext("项目待发货，请及时联系顾客确认供货计划！");
+        messageEntity.setType((short)2);
+        messageEntity.setStatus((short)1);
+        messageEntity.setCreatedDate(new Date());
+        messageDao.insertSelective(messageEntity);
+    }
+
+    @Override
+    public List<UserEntity > findAllAuditorNameById(Integer id) {
+       Integer[] ids=chanPinJiaoFuXiangMuDao.findAllAuditorNameById(id);
+        List<UserEntity > userEntity=new ArrayList<>();
+        for (int i = 0; i < ids.length; i++) {
+            UserEntity  userEntities=userDao.selectByPrimaryKey((long)ids[i]);
+            System.out.println(userEntities);
             userEntity.add(userEntities);
         }
         return userEntity;
@@ -121,7 +135,6 @@ public class ChanPinJiaoFuXiangMuServiceImpl implements ChanPinJiaoFuXiangMuServ
 
     @Override
     public void editXiangMuFileById(ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity,Integer id,Integer[] uids ) {
-        if (uids.length>0){
             //删除中间表的审查人id
             chanPinJiaoFuXiangMuDao.deletAuditor(id);
             //添加审查人
@@ -131,7 +144,6 @@ public class ChanPinJiaoFuXiangMuServiceImpl implements ChanPinJiaoFuXiangMuServ
                 chanPinJiaoFuFileAuditorEntity.setAuditorId(uid);
                 chanPinJiaoFuXiangMuDao.addAuditorName(chanPinJiaoFuFileAuditorEntity);
             }
-        }
         chanPinJiaoFuXiangMuDao.editXiangMuFileById(chanPinJiaoFuXiangMuFileEntity);
     }
 

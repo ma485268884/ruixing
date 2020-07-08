@@ -8,10 +8,14 @@ import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity;
 import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity;
+import com.yintu.ruixing.entity.MessageEntity;
 import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.ChanPinJiaoFuXiangMuService;
 import com.yintu.ruixing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +31,8 @@ import java.util.Map;
  * @Version 1.0
  * 需求:产品需求所有
  */
+@Configuration      //1.主要用于标记配置类，兼备Component的效果。
+@EnableScheduling   // 2.开启定时任务
 @Controller
 @RequestMapping("/ChanPinJiaoFuXiangMuAll")
 public class ChanPinJiaoFuXiangMuController {
@@ -52,6 +58,24 @@ public class ChanPinJiaoFuXiangMuController {
         return ResponseDataUtil.ok("添加项目成功");
     }
 
+    //新增消息提醒
+    @ResponseBody
+    @PostMapping("/addXiaoXi")
+    public Map<String,Object>addXiaoXi(MessageEntity messageEntity){
+        chanPinJiaoFuXiangMuService.addXiaoXi(messageEntity);
+        return ResponseDataUtil.ok("添加消息成功");
+    }
+
+    //推送消息提醒
+    //3.添加定时任务
+    @Scheduled(cron = "0 0 08 * * ?")
+    @ResponseBody
+    @GetMapping ("/findXiaoXi")
+    public Map<String,Object>findXiaoXi(){
+        //获取 项目的发货提醒日期
+
+        return null;
+    }
     //根据选择的id  修改对应的项目内容
     @ResponseBody
     @PutMapping("/editXiangMuById/{id}")
@@ -180,7 +204,7 @@ public class ChanPinJiaoFuXiangMuController {
     @ResponseBody
     @GetMapping("/findAllAuditorNameById/{id}")
     public Map<String,Object> findAllAuditorNameById(@PathVariable Integer id ){
-        List<UserEntity> userEntities=chanPinJiaoFuXiangMuService.findAllAuditorNameById(id);
+        List<UserEntity > userEntities=chanPinJiaoFuXiangMuService.findAllAuditorNameById(id);
         return ResponseDataUtil.ok("查询审核人名成功",userEntities);
 
     }

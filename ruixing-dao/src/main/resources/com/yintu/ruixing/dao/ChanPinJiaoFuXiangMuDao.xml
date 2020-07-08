@@ -48,7 +48,7 @@
   </sql>
 
     <!--根据文件id  查询审核人名-->
-    <select id="findAllAuditorNameById" parameterType="java.lang.Integer" resultType="com.yintu.ruixing.entity.ChanPinJiaoFuFileAuditorEntity">
+    <select id="findAllAuditorNameById" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         SELECT
             auditor_id
         FROM
@@ -56,14 +56,7 @@
         WHERE
             chanpinjiaofu_file_id =#{id}
     </select>
-    <select id="findAllAuditorName" parameterType="java.lang.Integer" resultType="com.yintu.ruixing.entity.UserEntity">
-        SELECT
-            true_name
-        FROM
-            tb_user
-        WHERE
-            id = #{aid}
-    </select>
+
     <!--根据id  删除中间表的审查人的id-->
     <delete id="deletAuditor" parameterType="java.lang.Integer" >
         delete from mro_chanpinjiaofu_file_auditor where chanpinjiaofu_file_id =#{id}
@@ -349,10 +342,10 @@
         where id=#{id,jdbcType=INTEGER}
     </update>
     <!--添加项目文件列表-->
-    <select id="addXiangMuFile" parameterType="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity">
+    <insert id="addXiangMuFile" parameterType="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity" useGeneratedKeys="true" keyProperty="id">
     insert into mro_chanpinjiaofu_file (xm_id,file_type,file_name,file_path,fabu_type)
     values (#{xmId},#{fileType},#{fileName},#{filePath},#{fabuType})
-  </select>
+  </insert>
     <!--查询所有的数据-->
     <select id="findAll" resultMap="BaseResultMap">
         SELECT
@@ -377,14 +370,27 @@
             mro_chanpinjiaofu_file cf
         WHERE
             cx.id=cf.xm_id
+        GROUP BY id DESC
   </select>
     <!--根据树形的数据  查对应的数据-->
     <select id="findXiangMuByIds" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         SELECT
-        cx.*,
+        cf.id,
+        cx.xiangmu_state,
+        cx.xiangmu_bianhao,
+        cx.xiangmu_name,
+        cx.xiaoshou_state,
+        cx.fahuo_state,
+        cx.qianshou_state,
+        cx.yangong_state,
+        cx.xianchangfuwu,
+        cx.fahuo_tixing_time,
         cf.file_type,
         cf.file_name,
-        cf.xm_id
+        cf.xm_id,
+        cf.fabu_type,
+        cf.auditor_id,
+        cf.file_path
         FROM
         mro_chanpinjiaofu_xiangmu cx,
         mro_chanpinjiaofu_file cf
@@ -400,6 +406,7 @@
                 AND cf.file_type = #{typeid}
             </if>
         </where>
+
     </select>
 
     <resultMap id="xiangmu" type="com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity">

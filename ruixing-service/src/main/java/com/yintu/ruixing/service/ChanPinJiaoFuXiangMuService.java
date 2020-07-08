@@ -3,6 +3,7 @@ package com.yintu.ruixing.service;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity;
 import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity;
+import com.yintu.ruixing.entity.MessageEntity;
 import com.yintu.ruixing.entity.UserEntity;
 
 import java.util.List;
@@ -46,4 +47,7 @@ public interface ChanPinJiaoFuXiangMuService {
     List<ChanPinJiaoFuXiangMuEntity> findJiaoFuQingKuangLists(String choiceTing, Integer page, Integer size);
 
     List<UserEntity> findAllAuditorNameById(Integer id);
+
+    void addXiaoXi(MessageEntity messageEntity);
+
 }
