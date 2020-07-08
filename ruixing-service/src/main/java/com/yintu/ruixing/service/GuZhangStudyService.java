@@ -1,10 +1,10 @@
 package com.yintu.ruixing.service;
 
-import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.entity.*;
 
+import javax.servlet.ServletOutputStream;
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author:lcy
@@ -44,13 +44,5 @@ public interface GuZhangStudyService {
     List<QuDuanBaseEntity> findLastId(Integer id);
 
 
-
-
-
-
-
-
-
-
-
+    void exportFile(ServletOutputStream outputStream, Integer[] ids)throws IOException;
 }

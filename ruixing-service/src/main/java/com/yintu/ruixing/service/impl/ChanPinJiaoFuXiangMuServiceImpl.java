@@ -2,8 +2,10 @@ package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.ChanPinJiaoFuXiangMuDao;
+import com.yintu.ruixing.entity.ChanPinJiaoFuFileAuditorEntity;
 import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity;
 import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity;
+import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.ChanPinJiaoFuXiangMuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,19 @@ public class ChanPinJiaoFuXiangMuServiceImpl implements ChanPinJiaoFuXiangMuServ
     @Override
     public List<ChanPinJiaoFuXiangMuEntity> findJiaoFuQingKuangList(String choiceTing, Integer page, Integer size) {
         return chanPinJiaoFuXiangMuDao.findJiaoFuQingKuangList(choiceTing);
+    }
+
+
+    @Override
+    public List<UserEntity> findAllAuditorNameById(Integer id) {
+        List<ChanPinJiaoFuFileAuditorEntity>chanPinJiaoFuFileAuditorEntities=chanPinJiaoFuXiangMuDao.findAllAuditorNameById(id);
+        List<UserEntity> userEntity=null;
+        for (ChanPinJiaoFuFileAuditorEntity chanPinJiaoFuFileAuditorEntity : chanPinJiaoFuFileAuditorEntities) {
+            Integer aid=chanPinJiaoFuFileAuditorEntity.getAuditorId();
+            UserEntity userEntities=chanPinJiaoFuXiangMuDao.findAllAuditorName(aid);
+            userEntity.add(userEntities);
+        }
+        return userEntity;
     }
 
     @Override
@@ -105,13 +120,31 @@ public class ChanPinJiaoFuXiangMuServiceImpl implements ChanPinJiaoFuXiangMuServ
     }
 
     @Override
-    public void editXiangMuFileById(ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity) {
+    public void editXiangMuFileById(ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity,Integer id,Integer[] uids ) {
+        if (uids.length>0){
+            //删除中间表的审查人id
+            chanPinJiaoFuXiangMuDao.deletAuditor(id);
+            //添加审查人
+            for (Integer uid : uids) {
+                ChanPinJiaoFuFileAuditorEntity chanPinJiaoFuFileAuditorEntity=new ChanPinJiaoFuFileAuditorEntity();
+                chanPinJiaoFuFileAuditorEntity.setChanPinJiaoFuFileId(id);
+                chanPinJiaoFuFileAuditorEntity.setAuditorId(uid);
+                chanPinJiaoFuXiangMuDao.addAuditorName(chanPinJiaoFuFileAuditorEntity);
+            }
+        }
         chanPinJiaoFuXiangMuDao.editXiangMuFileById(chanPinJiaoFuXiangMuFileEntity);
     }
 
     @Override
-    public void addXiangMuFile(ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity) {
+    public void addXiangMuFile(ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity,Integer[] uids) {
         chanPinJiaoFuXiangMuDao.addXiangMuFile(chanPinJiaoFuXiangMuFileEntity);
+        Integer xid=chanPinJiaoFuXiangMuFileEntity.getId();
+        for (Integer uid : uids) {
+            ChanPinJiaoFuFileAuditorEntity chanPinJiaoFuFileAuditorEntity=new ChanPinJiaoFuFileAuditorEntity();
+            chanPinJiaoFuFileAuditorEntity.setChanPinJiaoFuFileId(xid);
+            chanPinJiaoFuFileAuditorEntity.setAuditorId(uid);
+            chanPinJiaoFuXiangMuDao.addAuditorName(chanPinJiaoFuFileAuditorEntity);
+        }
     }
 
     @Override

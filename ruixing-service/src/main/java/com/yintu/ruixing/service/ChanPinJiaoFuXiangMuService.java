@@ -3,6 +3,7 @@ package com.yintu.ruixing.service;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity;
 import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity;
+import com.yintu.ruixing.entity.UserEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -24,9 +25,9 @@ public interface ChanPinJiaoFuXiangMuService {
 
     List<ChanPinJiaoFuXiangMuEntity> findAll(Integer page,Integer size);
 
-    void addXiangMuFile(ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity);
+    void addXiangMuFile(ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity,Integer[] uids);
 
-    void editXiangMuFileById(ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity);
+    void editXiangMuFileById(ChanPinJiaoFuXiangMuFileEntity chanPinJiaoFuXiangMuFileEntity,Integer id,Integer[] uids);
 
     ChanPinJiaoFuXiangMuFileEntity findById(Integer id);
 
@@ -43,4 +44,6 @@ public interface ChanPinJiaoFuXiangMuService {
     List<ChanPinJiaoFuXiangMuEntity> findJiaoFuQingKuangList(String choiceTing, Integer page, Integer size);
 
     List<ChanPinJiaoFuXiangMuEntity> findJiaoFuQingKuangLists(String choiceTing, Integer page, Integer size);
+
+    List<UserEntity> findAllAuditorNameById(Integer id);
 }

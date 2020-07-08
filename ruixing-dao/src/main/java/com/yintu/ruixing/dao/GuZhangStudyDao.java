@@ -1,9 +1,11 @@
 package com.yintu.ruixing.dao;
 
-import com.yintu.ruixing.entity.*;
+import com.yintu.ruixing.entity.CheZhanEntity;
+import com.yintu.ruixing.entity.GuZhangStudyEntity;
+import com.yintu.ruixing.entity.QuDuanBaseEntity;
+import com.yintu.ruixing.entity.XianDuanEntity;
 
 import java.util.List;
-import java.util.Map;
 
 public interface GuZhangStudyDao {
 
@@ -50,4 +52,7 @@ public interface GuZhangStudyDao {
     List<QuDuanBaseEntity> findFristId(Integer id);
 
     List<QuDuanBaseEntity> findLastId(Integer id);
+
+    List<GuZhangStudyEntity> selectByCondition(Integer[] ids);
+
 }
