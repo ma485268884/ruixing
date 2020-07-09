@@ -47,6 +47,16 @@
     yangong_state, xianchangfuwu, fahuo_tixing_time, xiangmu_money, shebei_money
   </sql>
 
+    <!--查询消息列表的内容-->
+    <select id="findXiaoXi" resultType="java.lang.String">
+        SELECT
+            context
+        FROM
+            mro_message
+        WHERE
+            type = 2
+            AND STATUS =1
+    </select>
     <!--根据文件id  查询审核人名-->
     <select id="findAllAuditorNameById" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         SELECT
@@ -424,6 +434,15 @@
         <result column="shebei_money"  property="sheBeiMoney"/>
         <result column="sb_name" jdbcType="TIMESTAMP" property="sbName"/>
     </resultMap>
+    <!--查询所有的项目数据-->
+    <select id="findAllXiangMu" resultMap="xiangmu">
+        SELECT
+            id,
+            xiangmu_name,
+            fahuo_tixing_time
+        FROM
+            mro_chanpinjiaofu_xiangmu
+    </select>
     <!--查询树形所有的数据-->
     <select id="findSanJiShu" resultMap="xiangmu">
         select

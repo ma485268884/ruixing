@@ -40,11 +40,27 @@ public class ChanPinJiaoFuXiangMuServiceImpl implements ChanPinJiaoFuXiangMuServ
 
 
     @Override
+    public void editXiaoXiById(MessageEntity messageEntity) {
+        messageEntity.setStatus((short)2);
+        messageDao.updateByPrimaryKeySelective(messageEntity);
+    }
+
+    @Override
+    public List<MessageEntity> findXiaoXi() {
+        return messageDao.findXiaoXi();
+    }
+
+    @Override
+    public List<ChanPinJiaoFuXiangMuEntity> findAllXiangMu() {
+        return chanPinJiaoFuXiangMuDao.findAllXiangMu();
+    }
+
+    @Override
     public void addXiaoXi(MessageEntity messageEntity) {
-        messageEntity.setContext("项目待发货，请及时联系顾客确认供货计划！");
+        /*messageEntity.setContext("项目待发货，请及时联系顾客确认供货计划！");
         messageEntity.setType((short)2);
         messageEntity.setStatus((short)1);
-        messageEntity.setCreatedDate(new Date());
+        messageEntity.setCreatedDate(new Date());*/
         messageDao.insertSelective(messageEntity);
     }
 

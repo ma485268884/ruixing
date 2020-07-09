@@ -19,6 +19,16 @@
     <sql id="Blob_Column_List">
         context
     </sql>
+    <!--查询产品交付里所有的消息内容-->
+    <select id="findXiaoXi"  resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from mro_message
+        where type = 2
+        AND STATUS =1
+    </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
         select
         <include refid="Base_Column_List"/>
@@ -94,6 +104,7 @@
             </if>
         </trim>
     </insert>
+    <!--根据id  修改消息状态-->
     <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.MessageEntity">
         update mro_message
         <set>
