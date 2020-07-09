@@ -40,7 +40,7 @@ public interface MaintenancePlanService extends BaseService<MaintenancePlanEntit
     /**
      * 批量添加
      *
-     * @param maintenancePlanEntities
+     * @param maintenancePlanEntities 维护计划实体类集
      */
     void add(List<MaintenancePlanEntity> maintenancePlanEntities);
 
@@ -49,7 +49,7 @@ public interface MaintenancePlanService extends BaseService<MaintenancePlanEntit
      *
      * @param inputStream 输入流
      */
-    void importFile(InputStream inputStream) throws IOException;
+    void importFile(InputStream inputStream, String FileName) throws IOException;
 
     /**
      * 批量导出excel数据

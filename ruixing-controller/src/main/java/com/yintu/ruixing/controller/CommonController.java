@@ -9,10 +9,7 @@ import com.yintu.ruixing.entity.MessageEntity;
 import com.yintu.ruixing.service.MessageService;
 import com.yintu.ruixing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -45,6 +42,18 @@ public class CommonController extends SessionController {
     }
 
     /**
+     * 未读消息改为已读消息
+     *
+     * @param id 消息id
+     * @return
+     */
+    @PutMapping("/message/{id}")
+    public Map<String, Object> changeStatus(@PathVariable Integer id) {
+        messageService.changeStatus(id);
+        return ResponseDataUtil.ok("修改消息信息成功");
+    }
+
+    /**
      * 获取公共消息列表
      *
      * @param pageNumber 页码
@@ -63,7 +72,7 @@ public class CommonController extends SessionController {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<MessageEntity> messageEntities = messageService.findByTypeAndStatus(type, status);
         PageInfo<MessageEntity> pageInfo = new PageInfo<>(messageEntities);
-        return ResponseDataUtil.ok("查询消息列表成功", pageInfo);
+        return ResponseDataUtil.ok("查询消息信息列表成功", pageInfo);
     }
 
 

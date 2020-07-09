@@ -1,12 +1,12 @@
 package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.common.util.ExportExcelUtil;
+import com.yintu.ruixing.common.util.FileUtils;
 import com.yintu.ruixing.common.util.ImportExcelUtil;
 import com.yintu.ruixing.dao.MaintenancePlanDao;
 import com.yintu.ruixing.entity.MaintenancePlanEntity;
-import com.yintu.ruixing.entity.PreSaleEntity;
-import com.yintu.ruixing.entity.PreSaleFileEntity;
 import com.yintu.ruixing.service.MaintenancePlanService;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,15 +76,17 @@ public class MaintenancePlanServiceImpl implements MaintenancePlanService {
     }
 
     @Override
-    public void importFile(InputStream inputStream) throws IOException {
+    public void importFile(InputStream inputStream, String fileName) throws IOException {
         //excel标题
         String title = "维护计划列表";
-        XSSFWorkbook xssfWorkbook = new XSSFWorkbook(inputStream);
-        String[][] content = ImportExcelUtil.getXSSFData(title, xssfWorkbook);
+        String[][] content = "xls".equals(FileUtils.getExtensionName(fileName)) ?
+                ImportExcelUtil.getHSSFData(title, new HSSFWorkbook(inputStream)) :
+                ImportExcelUtil.getXSSFData(title, new XSSFWorkbook(inputStream));
         List<MaintenancePlanEntity> maintenancePlanEntities = new ArrayList<>();
-        for (String[] headers : content) {
+        for (String[] rows : content) {
             MaintenancePlanEntity maintenancePlanEntity = new MaintenancePlanEntity();
-            maintenancePlanEntity.setName(headers[1]);
+            maintenancePlanEntity.setName(rows[1]);
+            maintenancePlanEntity.setCreatedDate(new Date());
             maintenancePlanEntities.add(maintenancePlanEntity);
         }
         this.add(maintenancePlanEntities);

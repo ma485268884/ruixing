@@ -49,6 +49,16 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public void changeStatus(Integer id) {
+        MessageEntity messageEntity = this.findById(id);
+        if (messageEntity != null && messageEntity.getStatus().equals((short) 1)) {
+            messageEntity.setStatus((short) 2);
+            this.edit(messageEntity);
+        }
+
+    }
+
+    @Override
     public void sendMessage(MessageEntity messageEntity) {
         executorService.submit(new MessageRunnable(this, messageEntity));
     }

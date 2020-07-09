@@ -1,12 +1,13 @@
 package com.yintu.ruixing.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.BaseController;
-import com.yintu.ruixing.common.util.FileUploadUtil;
+import com.yintu.ruixing.common.util.FileUtils;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.MaintenancePlanEntity;
+import com.yintu.ruixing.entity.MaintenancePlanInfoEntity;
+import com.yintu.ruixing.service.MaintenancePlanInfoService;
 import com.yintu.ruixing.service.MaintenancePlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,9 @@ public class MaintenancePlanController extends SessionController implements Base
     @Autowired
     private MaintenancePlanService maintenancePlanService;
 
+    @Autowired
+    private MaintenancePlanInfoService maintenancePlanInfoService;
+
     @PostMapping
     @ResponseBody
     public Map<String, Object> add(@Validated MaintenancePlanEntity entity) {
@@ -37,10 +41,10 @@ public class MaintenancePlanController extends SessionController implements Base
     }
 
     @Override
-    public Map<String, Object> remove(@PathVariable Integer id) {
-        maintenancePlanService.remove(id);
-        return ResponseDataUtil.ok("删除维护计划信息成功");
+    public Map<String, Object> remove(Integer id) {
+        return null;
     }
+
 
     @DeleteMapping("/{ids}")
     @ResponseBody
@@ -63,6 +67,13 @@ public class MaintenancePlanController extends SessionController implements Base
         return ResponseDataUtil.ok("查询维护计划信息成功", maintenancePlanEntity);
     }
 
+    @GetMapping("/{id}/maintenance/plan/infos")
+    @ResponseBody
+    public Map<String, Object> findMaintenancePlanInfoById(@PathVariable Integer id) {
+        List<MaintenancePlanInfoEntity> maintenancePlanInfoEntities = maintenancePlanInfoService.findByMaintenancePlanId(id);
+        return ResponseDataUtil.ok("查询维护计划详情列表信息成功", maintenancePlanInfoEntities);
+    }
+
     @GetMapping
     @ResponseBody
     public Map<String, Object> findByAll(@RequestParam("page_number") Integer pageNumber,
@@ -78,7 +89,7 @@ public class MaintenancePlanController extends SessionController implements Base
     @GetMapping("/import")
     @ResponseBody
     public Map<String, Object> importFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        maintenancePlanService.importFile(multipartFile.getInputStream());
+        maintenancePlanService.importFile(multipartFile.getInputStream(), FileUtils.getExtensionName(multipartFile.getOriginalFilename()));
         return ResponseDataUtil.ok("导入维护计划信息成功");
     }
 

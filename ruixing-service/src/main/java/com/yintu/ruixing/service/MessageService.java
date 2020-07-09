@@ -21,6 +21,13 @@ public interface MessageService extends BaseService<MessageEntity, Integer> {
     List<MessageEntity> findByTypeAndStatus(Short type, Short Status);
 
     /**
+     * 从未读消息改为已读消息
+     *
+     * @param id 主键
+     */
+    void changeStatus(Integer id);
+
+    /**
      * @param messageEntity 消息实体类
      */
     void sendMessage(MessageEntity messageEntity);

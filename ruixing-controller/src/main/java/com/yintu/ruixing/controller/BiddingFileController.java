@@ -32,7 +32,7 @@ public class BiddingFileController extends SessionController {
 
     @PostMapping
     @ResponseBody
-    public Map<String, Object> add(@Validated BiddingFileEntity entity, @RequestParam("auditorIds") Integer[] auditorIds) {
+    public Map<String, Object> add(@Validated BiddingFileEntity entity, @RequestParam(value = "auditorIds", required = false) Integer[] auditorIds) {
         biddingFileService.add(entity, auditorIds);
         return ResponseDataUtil.ok("添加招投标技术支持文件信息成功");
     }
@@ -47,7 +47,7 @@ public class BiddingFileController extends SessionController {
 
     @PutMapping("/{id}")
     @ResponseBody
-    public Map<String, Object> edit(@PathVariable Integer id, @Validated BiddingFileEntity entity, @RequestParam("auditorIds") Integer[] auditorIds) {
+    public Map<String, Object> edit(@PathVariable Integer id, @Validated BiddingFileEntity entity, @RequestParam(value = "auditorIds", required = false) Integer[] auditorIds) {
         System.out.println(auditorIds[0]);
         biddingFileService.edit(entity, auditorIds);
         return ResponseDataUtil.ok("修改招投标技术支持文件信息成功");

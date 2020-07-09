@@ -32,7 +32,7 @@ public class DesignLiaisonFileController extends SessionController {
 
     @PostMapping
     @ResponseBody
-    public Map<String, Object> add(@Validated DesignLiaisonFileEntity designLiaisonFileEntity, @RequestParam("auditorIds") Integer[] auditorIds) {
+    public Map<String, Object> add(@Validated DesignLiaisonFileEntity designLiaisonFileEntity, @RequestParam(value = "auditorIds", required = false) Integer[] auditorIds) {
         designLiaisonFileService.add(designLiaisonFileEntity, auditorIds);
         return ResponseDataUtil.ok("添加设计联络及后续技术交流文件信息成功");
     }
@@ -47,7 +47,7 @@ public class DesignLiaisonFileController extends SessionController {
 
     @PutMapping("/{id}")
     @ResponseBody
-    public Map<String, Object> edit(@PathVariable Integer id, @Validated DesignLiaisonFileEntity entity, @RequestParam("auditorIds") Integer[] auditorIds) {
+    public Map<String, Object> edit(@PathVariable Integer id, @Validated DesignLiaisonFileEntity entity, @RequestParam(value = "auditorIds", required = false) Integer[] auditorIds) {
         designLiaisonFileService.edit(entity, auditorIds);
         return ResponseDataUtil.ok("修改设计联络及后续技术交流文件信息成功");
     }

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.MaintenancePlanInfoDao">
+  <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.MaintenancePlanInfoEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="work" jdbcType="VARCHAR" property="work" />
+    <result column="period" jdbcType="VARCHAR" property="period" />
+    <result column="result" jdbcType="VARCHAR" property="result" />
+    <result column="maintenance_plan_id" jdbcType="INTEGER" property="maintenancePlanId" />
+    <result column="created_data" jdbcType="TIMESTAMP" property="createdData" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, work, period, result, maintenance_plan_id, created_data
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mro_maintenance_plan_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByMaintenancePlanId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mro_maintenance_plan_info
+    where maintenance_plan_id = #{maintenancePlanId,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mro_maintenance_plan_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yintu.ruixing.entity.MaintenancePlanInfoEntity">
+    insert into mro_maintenance_plan_info (id, work, period, 
+      result, maintenance_plan_id, created_data
+      )
+    values (#{id,jdbcType=INTEGER}, #{work,jdbcType=VARCHAR}, #{period,jdbcType=VARCHAR}, 
+      #{result,jdbcType=VARCHAR}, #{maintenancePlanId,jdbcType=INTEGER}, #{createdData,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.MaintenancePlanInfoEntity">
+    insert into mro_maintenance_plan_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="work != null">
+        work,
+      </if>
+      <if test="period != null">
+        period,
+      </if>
+      <if test="result != null">
+        result,
+      </if>
+      <if test="maintenancePlanId != null">
+        maintenance_plan_id,
+      </if>
+      <if test="createdData != null">
+        created_data,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="work != null">
+        #{work,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null">
+        #{period,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null">
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="maintenancePlanId != null">
+        #{maintenancePlanId,jdbcType=INTEGER},
+      </if>
+      <if test="createdData != null">
+        #{createdData,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.MaintenancePlanInfoEntity">
+    update mro_maintenance_plan_info
+    <set>
+      <if test="work != null">
+        work = #{work,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null">
+        period = #{period,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null">
+        result = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="maintenancePlanId != null">
+        maintenance_plan_id = #{maintenancePlanId,jdbcType=INTEGER},
+      </if>
+      <if test="createdData != null">
+        created_data = #{createdData,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.MaintenancePlanInfoEntity">
+    update mro_maintenance_plan_info
+    set work = #{work,jdbcType=VARCHAR},
+      period = #{period,jdbcType=VARCHAR},
+      result = #{result,jdbcType=VARCHAR},
+      maintenance_plan_id = #{maintenancePlanId,jdbcType=INTEGER},
+      created_data = #{createdData,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

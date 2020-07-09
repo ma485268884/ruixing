@@ -70,15 +70,19 @@ public class PreSaleFileServiceImpl implements PreSaleFileService {
     public void add(PreSaleFileEntity preSaleFileEntity, Integer[] auditorIds) {
         this.add(preSaleFileEntity);
         Integer id = preSaleFileEntity.getId();
-        List<PreSaleFileAuditorEntity> preSaleFileAuditorEntities = new ArrayList<>(auditorIds.length);
-        for (Integer auditorId : auditorIds) {
-            PreSaleFileAuditorEntity preSaleFileAuditorEntity = new PreSaleFileAuditorEntity();
-            preSaleFileAuditorEntity.setPreSaleFileId(id);
-            preSaleFileAuditorEntity.setAuditorId(auditorId);
-            preSaleFileAuditorEntity.setIsPass((short) 0);
-            preSaleFileAuditorEntities.add(preSaleFileAuditorEntity);
+        if (auditorIds != null) {
+            List<PreSaleFileAuditorEntity> preSaleFileAuditorEntities = new ArrayList<>(auditorIds.length);
+            for (Integer auditorId : auditorIds) {
+                if (auditorId != null) {
+                    PreSaleFileAuditorEntity preSaleFileAuditorEntity = new PreSaleFileAuditorEntity();
+                    preSaleFileAuditorEntity.setPreSaleFileId(id);
+                    preSaleFileAuditorEntity.setAuditorId(auditorId);
+                    preSaleFileAuditorEntity.setIsPass((short) 0);
+                    preSaleFileAuditorEntities.add(preSaleFileAuditorEntity);
+                }
+            }
+            preSaleFileAuditorService.addMuch(preSaleFileAuditorEntities);
         }
-        preSaleFileAuditorService.addMuch(preSaleFileAuditorEntities);
 
     }
 
@@ -87,15 +91,19 @@ public class PreSaleFileServiceImpl implements PreSaleFileService {
         this.edit(preSaleFileEntity);
         Integer id = preSaleFileEntity.getId();
         preSaleFileAuditorService.removeByPreSaleFileId(id); //删除
-        List<PreSaleFileAuditorEntity> preSaleFileAuditorEntities = new ArrayList<>(auditorIds.length);
-        for (Integer auditorId : auditorIds) {
-            PreSaleFileAuditorEntity preSaleFileAuditorEntity = new PreSaleFileAuditorEntity();
-            preSaleFileAuditorEntity.setPreSaleFileId(id);
-            preSaleFileAuditorEntity.setAuditorId(auditorId);
-            preSaleFileAuditorEntity.setIsPass((short) 0);
-            preSaleFileAuditorEntities.add(preSaleFileAuditorEntity);
+        if (auditorIds != null) {
+            List<PreSaleFileAuditorEntity> preSaleFileAuditorEntities = new ArrayList<>(auditorIds.length);
+            for (Integer auditorId : auditorIds) {
+                if (auditorId != null) {
+                    PreSaleFileAuditorEntity preSaleFileAuditorEntity = new PreSaleFileAuditorEntity();
+                    preSaleFileAuditorEntity.setPreSaleFileId(id);
+                    preSaleFileAuditorEntity.setAuditorId(auditorId);
+                    preSaleFileAuditorEntity.setIsPass((short) 0);
+                    preSaleFileAuditorEntities.add(preSaleFileAuditorEntity);
+                }
+            }
+            preSaleFileAuditorService.addMuch(preSaleFileAuditorEntities);//添加
         }
-        preSaleFileAuditorService.addMuch(preSaleFileAuditorEntities);//添加
     }
 
 

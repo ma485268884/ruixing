@@ -2,6 +2,7 @@ package com.yintu.ruixing.common.util;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -20,16 +21,16 @@ public class ImportExcelUtil {
      */
     public static String[][] getHSSFData(String title, HSSFWorkbook hssfWorkbook) {
         HSSFSheet hssfSheet = hssfWorkbook.getSheet(title);
-        int index = 2;
-        int rowNum = hssfSheet.getLastRowNum();
-        int cellNum = hssfSheet.getRow(index).getLastCellNum();
-        String[][] values = new String[rowNum][cellNum];
-        for (int i = index; i < rowNum; i++) {
-            for (int j = 0; j < cellNum; j++) {
-                values[i][j] = hssfSheet.getRow(i).getCell(j).getStringCellValue();
+        int index = 2;//内容开始行下标
+        int rowNum = hssfSheet.getLastRowNum() + 1;//内容总行数
+        int columnNum = hssfSheet.getRow(1).getLastCellNum();//标题总列数
+        String[][] context = new String[rowNum - index][columnNum];//定义内容行跟列二维数组
+        for (int i = 0; i < context.length; i++) {
+            for (int j = 0; j < context[i].length; j++) {
+                context[i][j] = hssfSheet.getRow(index + i).getCell(j).toString();
             }
         }
-        return values;
+        return context;
     }
 
     /**
@@ -41,16 +42,16 @@ public class ImportExcelUtil {
      */
     public static String[][] getXSSFData(String title, XSSFWorkbook xssfWorkbook) {
         XSSFSheet xssfSheet = xssfWorkbook.getSheet(title);
-        int index = 2;
-        int rowNum = xssfSheet.getLastRowNum();
-        int cellNum = xssfSheet.getRow(index).getLastCellNum();
-        String[][] values = new String[rowNum][cellNum];
-        for (int i = index; i < rowNum; i++) {
-            for (int j = 0; j < cellNum; j++) {
-                values[i][j] = xssfSheet.getRow(i).getCell(j).getStringCellValue();
+        int index = 2;//内容开始行下标
+        int rowNum = xssfSheet.getLastRowNum() + 1;//内容总行数
+        int columnNum = xssfSheet.getRow(1).getLastCellNum();//标题总列数
+        String[][] context = new String[rowNum - index][columnNum];//定义内容行跟列二维数组
+        for (int i = 0; i < context.length; i++) {
+            for (int j = 0; j < context[i].length; j++) {
+                context[i][j] = xssfSheet.getRow(index + i).getCell(j).toString();
             }
         }
-        return values;
+        return context;
     }
 
 }

@@ -66,15 +66,19 @@ public class DesignLiaisonFileServiceImpl implements DesignLiaisonFileService {
     public void add(DesignLiaisonFileEntity designLiaisonFileEntity, Integer[] auditorIds) {
         this.add(designLiaisonFileEntity);
         Integer id = designLiaisonFileEntity.getId();
-        List<DesignLiaisonFileAuditorEntity> designLiaisonFileAuditorEntities = new ArrayList<>(auditorIds.length);
-        for (Integer auditorId : auditorIds) {
-            DesignLiaisonFileAuditorEntity designLiaisonFileAuditorEntity = new DesignLiaisonFileAuditorEntity();
-            designLiaisonFileAuditorEntity.setDesignLiaisonFileId(id);
-            designLiaisonFileAuditorEntity.setAuditorId(auditorId);
-            designLiaisonFileAuditorEntity.setIsPass((short) 0);
-            designLiaisonFileAuditorEntities.add(designLiaisonFileAuditorEntity);
+        if (auditorIds != null) {
+            List<DesignLiaisonFileAuditorEntity> designLiaisonFileAuditorEntities = new ArrayList<>(auditorIds.length);
+            for (Integer auditorId : auditorIds) {
+                if (auditorId != null) {
+                    DesignLiaisonFileAuditorEntity designLiaisonFileAuditorEntity = new DesignLiaisonFileAuditorEntity();
+                    designLiaisonFileAuditorEntity.setDesignLiaisonFileId(id);
+                    designLiaisonFileAuditorEntity.setAuditorId(auditorId);
+                    designLiaisonFileAuditorEntity.setIsPass((short) 0);
+                    designLiaisonFileAuditorEntities.add(designLiaisonFileAuditorEntity);
+                }
+            }
+            designLiaisonFileAuditorService.addMuch(designLiaisonFileAuditorEntities);
         }
-        designLiaisonFileAuditorService.addMuch(designLiaisonFileAuditorEntities);
     }
 
     @Override
@@ -82,15 +86,19 @@ public class DesignLiaisonFileServiceImpl implements DesignLiaisonFileService {
         this.edit(designLiaisonFileEntity);
         Integer id = designLiaisonFileEntity.getId();
         designLiaisonFileAuditorService.removeByDesignLiaisonFileId(id);
-        List<DesignLiaisonFileAuditorEntity> designLiaisonFileAuditorEntities = new ArrayList<>(auditorIds.length);
-        for (Integer auditorId : auditorIds) {
-            DesignLiaisonFileAuditorEntity designLiaisonFileAuditorEntity = new DesignLiaisonFileAuditorEntity();
-            designLiaisonFileAuditorEntity.setDesignLiaisonFileId(id);
-            designLiaisonFileAuditorEntity.setAuditorId(auditorId);
-            designLiaisonFileAuditorEntity.setIsPass((short) 0);
-            designLiaisonFileAuditorEntities.add(designLiaisonFileAuditorEntity);
+        if (auditorIds != null) {
+            List<DesignLiaisonFileAuditorEntity> designLiaisonFileAuditorEntities = new ArrayList<>(auditorIds.length);
+            for (Integer auditorId : auditorIds) {
+                if (auditorId != null) {
+                    DesignLiaisonFileAuditorEntity designLiaisonFileAuditorEntity = new DesignLiaisonFileAuditorEntity();
+                    designLiaisonFileAuditorEntity.setDesignLiaisonFileId(id);
+                    designLiaisonFileAuditorEntity.setAuditorId(auditorId);
+                    designLiaisonFileAuditorEntity.setIsPass((short) 0);
+                    designLiaisonFileAuditorEntities.add(designLiaisonFileAuditorEntity);
+                }
+            }
+            designLiaisonFileAuditorService.addMuch(designLiaisonFileAuditorEntities);
         }
-        designLiaisonFileAuditorService.addMuch(designLiaisonFileAuditorEntities);
     }
 
     @Override

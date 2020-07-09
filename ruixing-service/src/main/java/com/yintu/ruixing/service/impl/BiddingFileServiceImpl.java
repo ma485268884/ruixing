@@ -63,15 +63,19 @@ public class BiddingFileServiceImpl implements BiddingFileService {
     public void add(BiddingFileEntity biddingFileEntity, Integer[] auditorIds) {
         this.add(biddingFileEntity);
         Integer id = biddingFileEntity.getId();
-        List<BiddingFileAuditorEntity> biddingFileAuditorEntities = new ArrayList<>(auditorIds.length);
-        for (Integer auditorId : auditorIds) {
-            BiddingFileAuditorEntity biddingFileAuditorEntity = new BiddingFileAuditorEntity();
-            biddingFileAuditorEntity.setBiddingFileId(id);
-            biddingFileAuditorEntity.setAuditorId(auditorId);
-            biddingFileAuditorEntity.setIsPass((short) 0);
-            biddingFileAuditorEntities.add(biddingFileAuditorEntity);
+        if (auditorIds != null) {
+            List<BiddingFileAuditorEntity> biddingFileAuditorEntities = new ArrayList<>(auditorIds.length);
+            for (Integer auditorId : auditorIds) {
+                if (auditorId != null) {
+                    BiddingFileAuditorEntity biddingFileAuditorEntity = new BiddingFileAuditorEntity();
+                    biddingFileAuditorEntity.setBiddingFileId(id);
+                    biddingFileAuditorEntity.setAuditorId(auditorId);
+                    biddingFileAuditorEntity.setIsPass((short) 0);
+                    biddingFileAuditorEntities.add(biddingFileAuditorEntity);
+                }
+            }
+            biddingFileAuditorService.addMuch(biddingFileAuditorEntities);
         }
-        biddingFileAuditorService.addMuch(biddingFileAuditorEntities);
     }
 
     @Override
@@ -79,18 +83,20 @@ public class BiddingFileServiceImpl implements BiddingFileService {
         this.edit(biddingFileEntity);
         Integer id = biddingFileEntity.getId();
         biddingFileAuditorService.removeByBiddingFileId(id); //删除
-        List<BiddingFileAuditorEntity> biddingFileAuditorEntities = new ArrayList<>(auditorIds.length);
-        for (Integer auditorId : auditorIds) {
-            BiddingFileAuditorEntity biddingFileAuditorEntity = new BiddingFileAuditorEntity();
-            biddingFileAuditorEntity.setBiddingFileId(id);
-            biddingFileAuditorEntity.setAuditorId(auditorId);
-            biddingFileAuditorEntity.setIsPass((short) 0);
-            biddingFileAuditorEntities.add(biddingFileAuditorEntity);
+        if (auditorIds != null) {
+            List<BiddingFileAuditorEntity> biddingFileAuditorEntities = new ArrayList<>(auditorIds.length);
+            for (Integer auditorId : auditorIds) {
+                if (auditorId != null) {
+                    BiddingFileAuditorEntity biddingFileAuditorEntity = new BiddingFileAuditorEntity();
+                    biddingFileAuditorEntity.setBiddingFileId(id);
+                    biddingFileAuditorEntity.setAuditorId(auditorId);
+                    biddingFileAuditorEntity.setIsPass((short) 0);
+                    biddingFileAuditorEntities.add(biddingFileAuditorEntity);
+                }
+            }
+            biddingFileAuditorService.addMuch(biddingFileAuditorEntities);
         }
-        biddingFileAuditorService.addMuch(biddingFileAuditorEntities);
-
     }
-
 
     @Override
     public BiddingFileEntity findBiddingById(Integer id) {
