@@ -22,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -58,23 +60,52 @@ public class ChanPinJiaoFuXiangMuController {
         return ResponseDataUtil.ok("添加项目成功");
     }
 
-    //新增消息提醒
+    //查询消息提醒
     @ResponseBody
-    @PostMapping("/addXiaoXi")
-    public Map<String,Object>addXiaoXi(MessageEntity messageEntity){
-        chanPinJiaoFuXiangMuService.addXiaoXi(messageEntity);
-        return ResponseDataUtil.ok("添加消息成功");
+    @GetMapping("/findXiaoXi")
+    public Map<String,Object>findXiaoXi(){
+        List<MessageEntity> contextlist=chanPinJiaoFuXiangMuService.findXiaoXi();
+        return ResponseDataUtil.ok("添加消息成功",contextlist);
     }
 
-    //推送消息提醒
-    //3.添加定时任务
-    @Scheduled(cron = "0 0 08 * * ?")
+    //根据消息id   更改信息状态
     @ResponseBody
-    @GetMapping ("/findXiaoXi")
-    public Map<String,Object>findXiaoXi(){
+    @PutMapping("/editXiaoXiById/{id}")
+    public Map<String,Object>editXiaoXiById(@PathVariable Integer id,MessageEntity messageEntity){
+        chanPinJiaoFuXiangMuService.editXiaoXiById(messageEntity);
+        return ResponseDataUtil.ok("更改信息状态成功");
+    }
+    //添加新消息提醒
+    //添加定时任务
+    @Scheduled(cron = "0 0 06 * * ?")
+    @ResponseBody
+    @GetMapping ("/addXiaoXi")
+    public void addXiaoXi()throws Exception{
+        //获取当前的时间
+        SimpleDateFormat dateFormat = new SimpleDateFormat(" yyyy-MM-dd ");
+        String currentDate = dateFormat.format( new Date() );
+        Date date1 = dateFormat.parse(currentDate);
+        //System.out.println("12313"+currentDate);
         //获取 项目的发货提醒日期
-
-        return null;
+        List<ChanPinJiaoFuXiangMuEntity> xiangMuEntityList=chanPinJiaoFuXiangMuService.findAllXiangMu();
+        for (ChanPinJiaoFuXiangMuEntity chanPinJiaoFuXiangMuEntity : xiangMuEntityList) {
+            Integer id = chanPinJiaoFuXiangMuEntity.getId();
+            String xiangmuName = chanPinJiaoFuXiangMuEntity.getXiangmuName();
+            Date fahuoTixingTime = chanPinJiaoFuXiangMuEntity.getFahuoTixingTime();
+            String currentDate1 = dateFormat.format( fahuoTixingTime);
+            //System.out.println("fahuoTixingTime"+currentDate1);
+            Date date2 = dateFormat.parse(currentDate1);
+            int compareTo = date1.compareTo(date2);
+            if (compareTo==0){
+                MessageEntity messageEntity =new MessageEntity();
+                //添加一条消息到消息表
+                messageEntity.setContext(xiangmuName+"项目待发货，请及时联系顾客确认供货计划！");
+                messageEntity.setType((short)2);
+                messageEntity.setStatus((short)1);
+                messageEntity.setCreatedDate(new Date());
+                chanPinJiaoFuXiangMuService.addXiaoXi(messageEntity);
+            }
+        }
     }
     //根据选择的id  修改对应的项目内容
     @ResponseBody

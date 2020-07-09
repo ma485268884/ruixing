@@ -20,4 +20,8 @@ public interface MessageDao {
     int updateByPrimaryKey(MessageEntity record);
 
     List<MessageEntity> selectByTypeAndStatus(Short type, Short status);
+
+    List<MessageEntity> findXiaoXi();
+
+
 }

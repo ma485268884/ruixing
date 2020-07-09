@@ -92,4 +92,8 @@ public interface ChanPinJiaoFuXiangMuDao {
 
 
     void addXiaoXi(MessageEntity messageEntity);
+
+    List<ChanPinJiaoFuXiangMuEntity> findAllXiangMu();
+
+    List<String> findXiaoXi();
 }

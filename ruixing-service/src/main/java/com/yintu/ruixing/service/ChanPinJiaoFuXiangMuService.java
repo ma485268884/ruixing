@@ -50,4 +50,9 @@ public interface ChanPinJiaoFuXiangMuService {
 
     void addXiaoXi(MessageEntity messageEntity);
 
+    List<ChanPinJiaoFuXiangMuEntity> findAllXiangMu();
+
+    List<MessageEntity> findXiaoXi();
+
+    void editXiaoXiById(MessageEntity messageEntity);
 }
