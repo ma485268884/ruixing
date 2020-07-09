@@ -69,8 +69,12 @@ public class MaintenancePlanController extends SessionController implements Base
 
     @GetMapping("/{id}/maintenance/plan/infos")
     @ResponseBody
-    public Map<String, Object> findMaintenancePlanInfoById(@PathVariable Integer id) {
-        List<MaintenancePlanInfoEntity> maintenancePlanInfoEntities = maintenancePlanInfoService.findByMaintenancePlanId(id);
+    public Map<String, Object> findMaintenancePlanInfoById(@PathVariable Integer id,
+                                                           @RequestParam("page_number") Integer pageNumber,
+                                                           @RequestParam("page_size") Integer pageSize,
+                                                           @RequestParam(value = "order_by", required = false, defaultValue = "id DESC") String orderBy,
+                                                           @RequestParam(value = "work", required = false) String work) {
+        List<MaintenancePlanInfoEntity> maintenancePlanInfoEntities = maintenancePlanInfoService.findByMaintenancePlanIdAndWork(id, work);
         return ResponseDataUtil.ok("查询维护计划详情列表信息成功", maintenancePlanInfoEntities);
     }
 

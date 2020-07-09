@@ -17,5 +17,6 @@ public interface MaintenancePlanInfoDao {
 
     int updateByPrimaryKey(MaintenancePlanInfoEntity record);
 
-    List<MaintenancePlanInfoEntity> selectByMaintenancePlanId(Integer maintenancePlanId);
+    List<MaintenancePlanInfoEntity> selectByMaintenancePlanIdAndWork(Integer maintenancePlanId, String work);
+
 }

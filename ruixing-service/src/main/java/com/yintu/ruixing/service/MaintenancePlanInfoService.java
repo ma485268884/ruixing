@@ -12,5 +12,7 @@ import java.util.List;
 public interface MaintenancePlanInfoService extends BaseService<MaintenancePlanInfoEntity, Integer> {
 
 
-    List<MaintenancePlanInfoEntity> findByMaintenancePlanId(Integer maintenancePlanId);
+    void remove(Integer[] ids);
+
+    List<MaintenancePlanInfoEntity> findByMaintenancePlanIdAndWork(Integer maintenancePlanId,String work);
 }

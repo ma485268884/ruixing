@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,6 +23,7 @@ public class MaintenancePlanInfoServiceImpl implements MaintenancePlanInfoServic
 
     @Override
     public void add(MaintenancePlanInfoEntity entity) {
+        entity.setCreatedData(new Date());
         maintenancePlanInfoDao.insertSelective(entity);
     }
 
@@ -41,10 +43,16 @@ public class MaintenancePlanInfoServiceImpl implements MaintenancePlanInfoServic
     }
 
 
-
+    @Override
+    public void remove(Integer[] ids) {
+        for (Integer id : ids) {
+            this.remove(id);
+        }
+    }
 
     @Override
-    public List<MaintenancePlanInfoEntity> findByMaintenancePlanId(Integer maintenancePlanId) {
-        return maintenancePlanInfoDao.selectByMaintenancePlanId(maintenancePlanId);
+    public List<MaintenancePlanInfoEntity> findByMaintenancePlanIdAndWork(Integer maintenancePlanId, String work) {
+        return maintenancePlanInfoDao.selectByMaintenancePlanIdAndWork(maintenancePlanId, work);
     }
+
 }
