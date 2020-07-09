@@ -71,18 +71,20 @@
         </trim>
     </insert>
     <insert id="insertMuch" parameterType="com.yintu.ruixing.entity.PreSaleFileAuditorEntity">
-        insert into mro_pre_sale_file_auditor
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            pre_sale_file_id,auditor_id, is_pass,
-        </trim>
-        values
-        <foreach collection="list" item="preSaleFileAuditorEntity" index="index" separator=",">
-            <trim prefix=" (" suffix=")" suffixOverrides=",">
-                #{preSaleFileAuditorEntity.preSaleFileId,jdbcType=INTEGER},
-                #{preSaleFileAuditorEntity.auditorId,jdbcType=INTEGER},
-                #{preSaleFileAuditorEntity.isPass,jdbcType=SMALLINT},
+        <if test="preSaleFileAuditorEntities.size() > 0">
+            insert into mro_pre_sale_file_auditor
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                pre_sale_file_id,auditor_id, is_pass,
             </trim>
-        </foreach>
+            values
+            <foreach collection="list" item="preSaleFileAuditorEntity" index="index" separator=",">
+                <trim prefix=" (" suffix=")" suffixOverrides=",">
+                    #{preSaleFileAuditorEntity.preSaleFileId,jdbcType=INTEGER},
+                    #{preSaleFileAuditorEntity.auditorId,jdbcType=INTEGER},
+                    #{preSaleFileAuditorEntity.isPass,jdbcType=SMALLINT},
+                </trim>
+            </foreach>
+        </if>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.PreSaleFileAuditorEntity">
         update mro_pre_sale_file_auditor

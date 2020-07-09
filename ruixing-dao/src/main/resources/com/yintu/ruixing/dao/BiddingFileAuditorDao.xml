@@ -71,18 +71,20 @@
     </insert>
 
     <insert id="insertMuch" parameterType="com.yintu.ruixing.entity.BiddingFileAuditorEntity">
-        insert into mro_bidding_file__auditor
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            bidding_file_id,auditor_id, is_pass,
-        </trim>
-        values
-        <foreach collection="list" item="biddingFileAuditorEntity" index="index" separator=",">
-            <trim prefix=" (" suffix=")" suffixOverrides=",">
-                #{biddingFileAuditorEntity.biddingFileId,jdbcType=INTEGER},
-                #{biddingFileAuditorEntity.auditorId,jdbcType=INTEGER},
-                #{biddingFileAuditorEntity.isPass,jdbcType=SMALLINT},
+        <if test="biddingFileAuditorEntities.size() > 0">
+            insert into mro_bidding_file__auditor
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                bidding_file_id,auditor_id, is_pass,
             </trim>
-        </foreach>
+            values
+            <foreach collection="list" item="biddingFileAuditorEntity" index="index" separator=",">
+                <trim prefix=" (" suffix=")" suffixOverrides=",">
+                    #{biddingFileAuditorEntity.biddingFileId,jdbcType=INTEGER},
+                    #{biddingFileAuditorEntity.auditorId,jdbcType=INTEGER},
+                    #{biddingFileAuditorEntity.isPass,jdbcType=SMALLINT},
+                </trim>
+            </foreach>
+        </if>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.BiddingFileAuditorEntity">
         update mro_bidding_file__auditor
