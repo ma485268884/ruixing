@@ -81,7 +81,8 @@ public class PreSaleFileServiceImpl implements PreSaleFileService {
                     preSaleFileAuditorEntities.add(preSaleFileAuditorEntity);
                 }
             }
-            preSaleFileAuditorService.addMuch(preSaleFileAuditorEntities);
+            if (preSaleFileAuditorEntities.size() > 0)
+                preSaleFileAuditorService.addMuch(preSaleFileAuditorEntities);
         }
 
     }
@@ -102,7 +103,8 @@ public class PreSaleFileServiceImpl implements PreSaleFileService {
                     preSaleFileAuditorEntities.add(preSaleFileAuditorEntity);
                 }
             }
-            preSaleFileAuditorService.addMuch(preSaleFileAuditorEntities);//添加
+            if (preSaleFileAuditorEntities.size() > 0)
+                preSaleFileAuditorService.addMuch(preSaleFileAuditorEntities);//添加
         }
     }
 

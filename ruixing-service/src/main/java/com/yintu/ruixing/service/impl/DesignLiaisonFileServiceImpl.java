@@ -77,7 +77,8 @@ public class DesignLiaisonFileServiceImpl implements DesignLiaisonFileService {
                     designLiaisonFileAuditorEntities.add(designLiaisonFileAuditorEntity);
                 }
             }
-            designLiaisonFileAuditorService.addMuch(designLiaisonFileAuditorEntities);
+            if (designLiaisonFileAuditorEntities.size() > 0)
+                designLiaisonFileAuditorService.addMuch(designLiaisonFileAuditorEntities);
         }
     }
 
@@ -97,7 +98,8 @@ public class DesignLiaisonFileServiceImpl implements DesignLiaisonFileService {
                     designLiaisonFileAuditorEntities.add(designLiaisonFileAuditorEntity);
                 }
             }
-            designLiaisonFileAuditorService.addMuch(designLiaisonFileAuditorEntities);
+            if (designLiaisonFileAuditorEntities.size() > 0)
+                designLiaisonFileAuditorService.addMuch(designLiaisonFileAuditorEntities);
         }
     }
 

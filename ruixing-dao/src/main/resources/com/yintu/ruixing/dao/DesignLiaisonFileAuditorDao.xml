@@ -71,20 +71,18 @@
         </trim>
     </insert>
     <insert id="insertMuch" parameterType="com.yintu.ruixing.entity.DesignLiaisonFileAuditorEntity">
-        <if test="designLiaisonFileAuditorEntities.size()>0">
-            insert into mro_design_liaison_file_auditor
-            <trim prefix="(" suffix=")" suffixOverrides=",">
-                design_liaison_file_id,auditor_id, is_pass,
+        insert into mro_design_liaison_file_auditor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            design_liaison_file_id,auditor_id, is_pass,
+        </trim>
+        values
+        <foreach collection="list" item="designLiaisonFileAuditorEntity" index="index" separator=",">
+            <trim prefix=" (" suffix=")" suffixOverrides=",">
+                #{designLiaisonFileAuditorEntity.designLiaisonFileId,jdbcType=INTEGER},
+                #{designLiaisonFileAuditorEntity.auditorId,jdbcType=INTEGER},
+                #{designLiaisonFileAuditorEntity.isPass,jdbcType=SMALLINT},
             </trim>
-            values
-            <foreach collection="list" item="designLiaisonFileAuditorEntity" index="index" separator=",">
-                <trim prefix=" (" suffix=")" suffixOverrides=",">
-                    #{designLiaisonFileAuditorEntity.designLiaisonFileId,jdbcType=INTEGER},
-                    #{designLiaisonFileAuditorEntity.auditorId,jdbcType=INTEGER},
-                    #{designLiaisonFileAuditorEntity.isPass,jdbcType=SMALLINT},
-                </trim>
-            </foreach>
-        </if>
+        </foreach>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.DesignLiaisonFileAuditorEntity">
         update mro_design_liaison_file_auditor

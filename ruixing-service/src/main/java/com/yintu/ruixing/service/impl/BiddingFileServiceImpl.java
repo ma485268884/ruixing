@@ -74,7 +74,8 @@ public class BiddingFileServiceImpl implements BiddingFileService {
                     biddingFileAuditorEntities.add(biddingFileAuditorEntity);
                 }
             }
-            biddingFileAuditorService.addMuch(biddingFileAuditorEntities);
+            if (biddingFileAuditorEntities.size() > 0)
+                biddingFileAuditorService.addMuch(biddingFileAuditorEntities);
         }
     }
 
@@ -94,7 +95,8 @@ public class BiddingFileServiceImpl implements BiddingFileService {
                     biddingFileAuditorEntities.add(biddingFileAuditorEntity);
                 }
             }
-            biddingFileAuditorService.addMuch(biddingFileAuditorEntities);
+            if (biddingFileAuditorEntities.size() > 0)
+                biddingFileAuditorService.addMuch(biddingFileAuditorEntities);
         }
     }
 
