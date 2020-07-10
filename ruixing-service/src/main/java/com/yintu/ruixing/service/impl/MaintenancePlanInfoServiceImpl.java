@@ -1,14 +1,27 @@
 package com.yintu.ruixing.service.impl;
 
+import com.yintu.ruixing.common.util.ExportExcelUtil;
+import com.yintu.ruixing.common.util.FileUtils;
+import com.yintu.ruixing.common.util.ImportExcelUtil;
 import com.yintu.ruixing.dao.MaintenancePlanInfoDao;
+import com.yintu.ruixing.entity.MaintenancePlanEntity;
 import com.yintu.ruixing.entity.MaintenancePlanInfoEntity;
 import com.yintu.ruixing.service.MaintenancePlanInfoService;
+import com.yintu.ruixing.service.MaintenancePlanService;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author:mlf
@@ -20,10 +33,12 @@ public class MaintenancePlanInfoServiceImpl implements MaintenancePlanInfoServic
 
     @Autowired
     private MaintenancePlanInfoDao maintenancePlanInfoDao;
+    @Autowired
+    private MaintenancePlanService maintenancePlanService;
 
     @Override
     public void add(MaintenancePlanInfoEntity entity) {
-        entity.setCreatedData(new Date());
+        entity.setCreatedDate(new Date());
         maintenancePlanInfoDao.insertSelective(entity);
     }
 
@@ -51,8 +66,66 @@ public class MaintenancePlanInfoServiceImpl implements MaintenancePlanInfoServic
     }
 
     @Override
-    public List<MaintenancePlanInfoEntity> findByMaintenancePlanIdAndWork(Integer maintenancePlanId, String work) {
-        return maintenancePlanInfoDao.selectByMaintenancePlanIdAndWork(maintenancePlanId, work);
+    public List<MaintenancePlanInfoEntity> findByCondition(Integer[] ids, Integer maintenancePlanId, String work) {
+        return maintenancePlanInfoDao.selectByCondition(ids, maintenancePlanId, work);
+    }
+
+    @Override
+    public void add(List<MaintenancePlanInfoEntity> maintenancePlanInfoEntities) {
+        maintenancePlanInfoDao.insertMuch(maintenancePlanInfoEntities);
+    }
+
+    @Override
+    public void importFile(InputStream inputStream, String fileName, Integer maintenancePlanId) throws IOException {
+        MaintenancePlanEntity maintenancePlanEntity = maintenancePlanService.findById(maintenancePlanId);
+        String name = maintenancePlanEntity.getName();
+        //excel标题
+        String title = "维护计划详情列表";
+        String[][] content = "xls".equals(FileUtils.getExtensionName(fileName)) ?
+                ImportExcelUtil.getHSSFData(title, new HSSFWorkbook(inputStream)) :
+                ImportExcelUtil.getXSSFData(title, new XSSFWorkbook(inputStream));
+        List<MaintenancePlanInfoEntity> maintenancePlanInfoEntities = new ArrayList<>();
+        for (String[] rows : content) {
+            if (name.contains(rows[1])) {
+                MaintenancePlanInfoEntity maintenancePlanInfoEntity = new MaintenancePlanInfoEntity();
+                maintenancePlanInfoEntity.setWork(rows[2]);
+                maintenancePlanInfoEntity.setPeriod(rows[3]);
+                maintenancePlanInfoEntity.setResult(rows[3]);
+                maintenancePlanInfoEntity.setMaintenancePlanId(maintenancePlanId);
+                maintenancePlanEntity.setCreatedDate(new Date());
+                maintenancePlanInfoEntities.add(maintenancePlanInfoEntity);
+            }
+        }
+        if (maintenancePlanInfoEntities.size() > 0)
+            this.add(maintenancePlanInfoEntities);
+    }
+
+    @Override
+    public void exportFile(OutputStream outputStream, Integer[] ids) throws IOException {
+        //excel标题
+        String title = "维护计划详情列表";
+        //excel表名
+        String[] headers = {"序号", "维护计划", "维护工作", "维护周期", "维护结果"};
+        //获取数据
+        List<MaintenancePlanInfoEntity> maintenancePlanInfoEntities = this.findByCondition(ids, null, null);
+        maintenancePlanInfoEntities = maintenancePlanInfoEntities.stream()
+                .sorted(Comparator.comparing(MaintenancePlanInfoEntity::getId).reversed())
+                .collect(Collectors.toList());
+        //excel元素
+        String[][] content = new String[maintenancePlanInfoEntities.size()][headers.length];
+        for (int i = 0; i < maintenancePlanInfoEntities.size(); i++) {
+            MaintenancePlanInfoEntity maintenancePlanInfoEntity = maintenancePlanInfoEntities.get(i);
+            content[i][0] = maintenancePlanInfoEntity.getId().toString();
+            content[i][1] = maintenancePlanInfoEntity.getMaintenancePlanEntity().getName();
+            content[i][2] = maintenancePlanInfoEntity.getWork();
+            content[i][3] = maintenancePlanInfoEntity.getPeriod();
+            content[i][4] = maintenancePlanInfoEntity.getResult();
+        }
+        //创建HSSFWorkbook
+        XSSFWorkbook wb = ExportExcelUtil.getXSSFWorkbook(title, headers, content);
+        wb.write(outputStream);
+        outputStream.flush();
+        outputStream.close();
     }
 
 }

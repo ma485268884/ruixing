@@ -24,7 +24,7 @@ public class MaintenancePlanInfoEntity implements Serializable {
     @NotNull
     private Integer maintenancePlanId;
 
-    private Date createdData;
+    private Date createdDate;
 
     private MaintenancePlanEntity maintenancePlanEntity;
 

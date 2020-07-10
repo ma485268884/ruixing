@@ -76,10 +76,10 @@
             name, created_date,
         </trim>
         values
-        <foreach collection="list" item="preSaleFileAuditorEntity" index="index" separator=",">
+        <foreach collection="list" item="maintenancePlanEntity" index="index" separator=",">
             <trim prefix=" (" suffix=")" suffixOverrides=",">
-                #{preSaleFileAuditorEntity.name,jdbcType=VARCHAR},
-                #{preSaleFileAuditorEntity.createdDate,jdbcType=TIMESTAMP},
+                #{maintenancePlanEntity.name,jdbcType=VARCHAR},
+                #{maintenancePlanEntity.createdDate,jdbcType=TIMESTAMP},
             </trim>
         </foreach>
     </insert>
