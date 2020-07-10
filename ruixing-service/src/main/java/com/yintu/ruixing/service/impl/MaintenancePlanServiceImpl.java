@@ -89,7 +89,8 @@ public class MaintenancePlanServiceImpl implements MaintenancePlanService {
             maintenancePlanEntity.setCreatedDate(new Date());
             maintenancePlanEntities.add(maintenancePlanEntity);
         }
-        this.add(maintenancePlanEntities);
+        if (!maintenancePlanEntities.isEmpty())
+            this.add(maintenancePlanEntities);
     }
 
     @Override

@@ -31,8 +31,8 @@
         from mro_maintenance_plan
         <where>
             id in
-            <foreach collection="list" item="id" index="index" separator=",">
-                #{id,jdbcType=INTEGER},
+            <foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
+                #{id,jdbcType=INTEGER}
             </foreach>
         </where>
     </select>

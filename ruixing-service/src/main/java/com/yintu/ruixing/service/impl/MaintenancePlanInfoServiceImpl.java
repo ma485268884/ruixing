@@ -107,7 +107,7 @@ public class MaintenancePlanInfoServiceImpl implements MaintenancePlanInfoServic
                 maintenancePlanInfoEntities.add(maintenancePlanInfoEntity);
             }
         }
-        if (maintenancePlanInfoEntities.size() > 0)
+        if (!maintenancePlanInfoEntities.isEmpty())
             this.add(maintenancePlanInfoEntities);
     }
 
