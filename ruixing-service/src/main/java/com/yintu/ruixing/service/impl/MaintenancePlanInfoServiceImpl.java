@@ -59,6 +59,17 @@ public class MaintenancePlanInfoServiceImpl implements MaintenancePlanInfoServic
 
 
     @Override
+    public MaintenancePlanInfoEntity findMaintenancePlanById(Integer id) {
+        MaintenancePlanInfoEntity maintenancePlanInfoEntity = this.findById(id);
+        if (maintenancePlanInfoEntity != null) {
+            Integer maintenancePlanId = maintenancePlanInfoEntity.getMaintenancePlanId();
+            MaintenancePlanEntity maintenancePlanEntity = maintenancePlanService.findById(maintenancePlanId);
+            maintenancePlanInfoEntity.setMaintenancePlanEntity(maintenancePlanEntity);
+        }
+        return maintenancePlanInfoEntity;
+    }
+
+    @Override
     public void remove(Integer[] ids) {
         for (Integer id : ids) {
             this.remove(id);
@@ -92,7 +103,7 @@ public class MaintenancePlanInfoServiceImpl implements MaintenancePlanInfoServic
                 maintenancePlanInfoEntity.setPeriod(rows[3]);
                 maintenancePlanInfoEntity.setResult(rows[3]);
                 maintenancePlanInfoEntity.setMaintenancePlanId(maintenancePlanId);
-                maintenancePlanEntity.setCreatedDate(new Date());
+                maintenancePlanInfoEntity.setCreatedDate(new Date());
                 maintenancePlanInfoEntities.add(maintenancePlanInfoEntity);
             }
         }
@@ -101,7 +112,7 @@ public class MaintenancePlanInfoServiceImpl implements MaintenancePlanInfoServic
     }
 
     @Override
-    public void exportFile(OutputStream outputStream, Integer[] ids) throws IOException {
+    public void exportFile(OutputStream outputStream, Integer[] ids, Integer maintenancePlanId) throws IOException {
         //excel标题
         String title = "维护计划详情列表";
         //excel表名

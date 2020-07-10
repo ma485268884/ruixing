@@ -126,7 +126,7 @@ public class MaintenancePlanController extends SessionController implements Base
         response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
         response.addHeader("Pargam", "no-cache");
         response.addHeader("Cache-Control", "no-cache");
-        maintenancePlanInfoService.exportFile(response.getOutputStream(), maintenancePlanInfoIds);
+        maintenancePlanInfoService.exportFile(response.getOutputStream(), maintenancePlanInfoIds, id);
     }
 
 }

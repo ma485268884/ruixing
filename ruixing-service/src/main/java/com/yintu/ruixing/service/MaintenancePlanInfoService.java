@@ -1,6 +1,7 @@
 package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.common.util.BaseService;
+import com.yintu.ruixing.entity.MaintenancePlanEntity;
 import com.yintu.ruixing.entity.MaintenancePlanInfoEntity;
 
 import java.io.IOException;
@@ -13,6 +14,12 @@ import java.util.List;
  * @date:2020/7/9 16:40
  */
 public interface MaintenancePlanInfoService extends BaseService<MaintenancePlanInfoEntity, Integer> {
+
+    /**
+     * @param id 维护计划详情id
+     * @return
+     */
+    MaintenancePlanInfoEntity findMaintenancePlanById(Integer id);
 
 
     void remove(Integer[] ids);
@@ -46,7 +53,7 @@ public interface MaintenancePlanInfoService extends BaseService<MaintenancePlanI
      * @param ids          维护计划详情id集
      * @throws IOException io异常
      */
-    void exportFile(OutputStream outputStream, Integer[] ids) throws IOException;
+    void exportFile(OutputStream outputStream, Integer[] ids, Integer maintenancePlanId) throws IOException;
 
 
 }

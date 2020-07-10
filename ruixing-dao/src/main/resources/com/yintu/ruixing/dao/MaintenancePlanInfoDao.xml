@@ -137,12 +137,7 @@
         mpi.id as mpi_id , mpi.work, mpi.period, mpi.result, mpi.maintenance_plan_id, mpi.created_date as mpi_created_date,
          mp.id as mp_id, mp.name, mp.created_date as mp_created_date
     </sql>
-
-    <select id="selectByCondition" parameterType="java.lang.String" resultMap="MuchResultMap">
-        select
-        <include refid="Much_Column_List"/>
-        from mro_maintenance_plan_info mpi
-        inner join mro_maintenance_plan mp on mpi.maintenance_plan_id=mp.id
+    <sql id="Much_Condition">
         <where>
             <if test="ids!=null and ids.length > 0">
                 mpi.id in
@@ -157,5 +152,13 @@
                 and work like concat('%',#{work,jdbcType=VARCHAR},'%')
             </if>
         </where>
+    </sql>
+
+    <select id="selectByCondition" parameterType="java.lang.String" resultMap="MuchResultMap">
+        select
+        <include refid="Much_Column_List"/>
+        from mro_maintenance_plan_info mpi
+        inner join mro_maintenance_plan mp on mpi.maintenance_plan_id=mp.id
+        <include refid="Much_Condition"/>
     </select>
 </mapper>

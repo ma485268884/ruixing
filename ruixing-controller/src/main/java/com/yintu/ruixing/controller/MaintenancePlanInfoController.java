@@ -4,6 +4,7 @@ import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.MaintenancePlanInfoEntity;
 import com.yintu.ruixing.service.MaintenancePlanInfoService;
+import com.yintu.ruixing.service.MaintenancePlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,8 @@ public class MaintenancePlanInfoController extends SessionController implements 
 
     @Autowired
     private MaintenancePlanInfoService maintenancePlanInfoService;
+    @Autowired
+    private MaintenancePlanService maintenancePlanService;
 
     @PostMapping
     public Map<String, Object> add(@Validated MaintenancePlanInfoEntity entity) {
@@ -46,7 +49,7 @@ public class MaintenancePlanInfoController extends SessionController implements 
 
     @GetMapping("/{id}")
     public Map<String, Object> findById(@PathVariable Integer id) {
-        MaintenancePlanInfoEntity maintenancePlanInfoEntity = maintenancePlanInfoService.findById(id);
+        MaintenancePlanInfoEntity maintenancePlanInfoEntity = maintenancePlanInfoService.findMaintenancePlanById(id);
         return ResponseDataUtil.ok("查询维护计划详情息成功", maintenancePlanInfoEntity);
     }
 
