@@ -96,4 +96,6 @@ public interface ChanPinJiaoFuXiangMuDao {
     List<ChanPinJiaoFuXiangMuEntity> findAllXiangMu();
 
     List<String> findXiaoXi();
+
+    List<ChanPinJiaoFuXiangMuFileEntity> findXiangMuAndBianHao();
 }

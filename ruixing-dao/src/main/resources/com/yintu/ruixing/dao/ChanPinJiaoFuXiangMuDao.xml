@@ -434,6 +434,12 @@
         <result column="shebei_money"  property="sheBeiMoney"/>
         <result column="sb_name" jdbcType="TIMESTAMP" property="sbName"/>
     </resultMap>
+    <!--查询所有的项目中的项目名和项目编号数据-->
+    <select id="findXiangMuAndBianHao" resultMap="xiangmu">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_chanpinjiaofu_xiangmu
+    </select>
     <!--查询所有的项目数据-->
     <select id="findAllXiangMu" resultMap="xiangmu">
         SELECT
