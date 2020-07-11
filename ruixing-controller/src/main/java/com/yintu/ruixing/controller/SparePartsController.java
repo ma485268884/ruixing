@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -81,8 +82,8 @@ public class SparePartsController extends SessionController implements BaseContr
     @GetMapping("/export/{ids}")
     public void exportFile(@PathVariable Integer[] ids, HttpServletResponse response) throws IOException {
         String fileName = "备品实验列表" + System.currentTimeMillis() + ".xlsx";
-        response.setContentType("application/octet-stream;charset=ISO8859-1");
-        response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
+        response.setContentType("application/octet-stream;charset=ISO-8859-1");
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), StandardCharsets.ISO_8859_1));
         response.addHeader("Pargam", "no-cache");
         response.addHeader("Cache-Control", "no-cache");
         sparePartsService.exportFile(response.getOutputStream(), ids);
