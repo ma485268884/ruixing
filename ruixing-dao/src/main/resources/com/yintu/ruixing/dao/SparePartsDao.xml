@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.SparePartsDao">
+    <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.SparePartsEntity">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="equipment_name" jdbcType="VARCHAR" property="equipmentName"/>
+        <result column="storage_time" jdbcType="VARCHAR" property="storageTime"/>
+        <result column="examination_period" jdbcType="VARCHAR" property="examinationPeriod"/>
+        <result column="examination_status" jdbcType="SMALLINT" property="examinationStatus"/>
+        <result column="functional_status" jdbcType="SMALLINT" property="functionalStatus"/>
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, equipment_name, storage_time, examination_period, examination_status, functional_status,
+    created_date
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_spare_parts
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByCondition" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_spare_parts
+        <where>
+            <if test="ids!=null and ids.length>0">
+                id in
+                <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+                    #{id,jdbcType=INTEGER}
+                </foreach>
+            </if>
+            <if test="equipmentName!=null">
+                and equipment_name like concat('%', #{equipmentName,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from mro_spare_parts
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteMuch" parameterType="java.lang.Integer">
+        delete
+        from mro_spare_parts
+        where id in
+        <foreach collection="array" open="(" close=")" index="index" item="id" separator=",">
+            #{id,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+    <insert id="insert" parameterType="com.yintu.ruixing.entity.SparePartsEntity">
+        insert into mro_spare_parts (id, equipment_name, storage_time,
+                                     examination_period, examination_status,
+                                     functional_status, created_date)
+        values (#{id,jdbcType=INTEGER}, #{equipmentName,jdbcType=VARCHAR}, #{storageTime,jdbcType=VARCHAR},
+                #{examinationPeriod,jdbcType=VARCHAR}, #{examinationStatus,jdbcType=SMALLINT},
+                #{functionalStatus,jdbcType=SMALLINT}, #{createdDate,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.SparePartsEntity">
+        insert into mro_spare_parts
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="equipmentName != null">
+                equipment_name,
+            </if>
+            <if test="storageTime != null">
+                storage_time,
+            </if>
+            <if test="examinationPeriod != null">
+                examination_period,
+            </if>
+            <if test="examinationStatus != null">
+                examination_status,
+            </if>
+            <if test="functionalStatus != null">
+                functional_status,
+            </if>
+            <if test="createdDate != null">
+                created_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="equipmentName != null">
+                #{equipmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="storageTime != null">
+                #{storageTime,jdbcType=VARCHAR},
+            </if>
+            <if test="examinationPeriod != null">
+                #{examinationPeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="examinationStatus != null">
+                #{examinationStatus,jdbcType=SMALLINT},
+            </if>
+            <if test="functionalStatus != null">
+                #{functionalStatus,jdbcType=SMALLINT},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertMuch" parameterType="com.yintu.ruixing.entity.SparePartsEntity">
+        insert into mro_spare_parts
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            equipment_name, storage_time, examination_period, examination_status, functional_status, created_date
+        </trim>
+        values
+        <foreach collection="list" item="sparePartsEntity" index="index" separator=",">
+            <trim prefix=" (" suffix=")" suffixOverrides=",">
+                #{sparePartsEntity.equipmentName,jdbcType=VARCHAR},
+                #{sparePartsEntity.storageTime,jdbcType=VARCHAR},
+                #{sparePartsEntity.examinationPeriod,jdbcType=VARCHAR},
+                #{sparePartsEntity.examinationStatus,jdbcType=SMALLINT},
+                #{sparePartsEntity.functionalStatus,jdbcType=SMALLINT},
+                #{sparePartsEntity.createdDate,jdbcType=TIMESTAMP},
+            </trim>
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.SparePartsEntity">
+        update mro_spare_parts
+        <set>
+            <if test="equipmentName != null">
+                equipment_name = #{equipmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="storageTime != null">
+                storage_time = #{storageTime,jdbcType=VARCHAR},
+            </if>
+            <if test="examinationPeriod != null">
+                examination_period = #{examinationPeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="examinationStatus != null">
+                examination_status = #{examinationStatus,jdbcType=SMALLINT},
+            </if>
+            <if test="functionalStatus != null">
+                functional_status = #{functionalStatus,jdbcType=SMALLINT},
+            </if>
+            <if test="createdDate != null">
+                created_date = #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.SparePartsEntity">
+        update mro_spare_parts
+        set equipment_name     = #{equipmentName,jdbcType=VARCHAR},
+            storage_time       = #{storageTime,jdbcType=VARCHAR},
+            examination_period = #{examinationPeriod,jdbcType=VARCHAR},
+            examination_status = #{examinationStatus,jdbcType=SMALLINT},
+            functional_status  = #{functionalStatus,jdbcType=SMALLINT},
+            created_date       = #{createdDate,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
