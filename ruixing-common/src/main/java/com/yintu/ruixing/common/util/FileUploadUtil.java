@@ -18,10 +18,7 @@ public class FileUploadUtil {
     public static String defaultBaseFilePath = WINDOW_BASE_FILE_PATH;
 
     static {
-        Properties props = System.getProperties(); //系统属性
-        String osName = props.getProperty("os.name");
-        String os = osName.split(" ")[0];
-        defaultBaseFilePath = "Windows".equals(os) ? WINDOW_BASE_FILE_PATH : LINUX_BASE_FILE_PATH;
+        defaultBaseFilePath = OSInfoUtil.isWindows() ? WINDOW_BASE_FILE_PATH : OSInfoUtil.isLinux() ? LINUX_BASE_FILE_PATH : WINDOW_BASE_FILE_PATH;
         File file = new File(defaultBaseFilePath);
         if (!file.exists())
             if (!file.mkdirs())

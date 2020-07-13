@@ -51,7 +51,7 @@ public class FileUtil {
      * @param file 文件类
      * @return
      */
-    private boolean isImage(File file) {
+    public static boolean isImage(File file) {
         if (!file.exists()) {
             return false;
         }
