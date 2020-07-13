@@ -53,7 +53,7 @@ public interface MaintenancePlanInfoService extends BaseService<MaintenancePlanI
      * @param ids          维护计划详情id集
      * @throws IOException io异常
      */
-    void exportFile(OutputStream outputStream, Integer[] ids, Integer maintenancePlanId) throws IOException;
+    void exportFile(OutputStream outputStream, Integer[] ids) throws IOException;
 
 
 }

@@ -118,7 +118,7 @@ public class MaintenancePlanInfoServiceImpl implements MaintenancePlanInfoServic
     }
 
     @Override
-    public void exportFile(OutputStream outputStream, Integer[] ids, Integer maintenancePlanId) throws IOException {
+    public void exportFile(OutputStream outputStream, Integer[] ids) throws IOException {
         //excel标题
         String title = "维护计划详情列表";
         //excel表名
