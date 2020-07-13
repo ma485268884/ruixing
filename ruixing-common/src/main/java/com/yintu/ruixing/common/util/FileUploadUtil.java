@@ -39,14 +39,14 @@ public class FileUploadUtil {
         try {
             if (fis == null)
                 throw new RuntimeException("输入流有误");
-            uuidValue = "\\" + UUID.randomUUID().toString();
+            uuidValue = File.separator + UUID.randomUUID().toString();
             File filePath = new File(defaultBaseFilePath + uuidValue);
             if (!filePath.exists())
                 if (!filePath.mkdirs())
                     throw new RuntimeException("创建文件夹失败");
 
 
-            String filePathName = filePath.getPath() + "\\" + fileName;
+            String filePathName = filePath.getPath() + File.separator + fileName;
             File file = new File(filePathName);
             if (file.exists())
                 throw new BaseRuntimeException("文件存在");

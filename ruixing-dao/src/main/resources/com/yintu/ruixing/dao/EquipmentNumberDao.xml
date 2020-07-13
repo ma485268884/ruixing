@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.EquipmentNumberDao">
+    <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.EquipmentNumberEntity">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="rack_number" jdbcType="VARCHAR" property="rackNumber"/>
+        <result column="equipment_number" jdbcType="VARCHAR" property="equipmentNumber"/>
+        <result column="hierarchy" jdbcType="VARCHAR" property="hierarchy"/>
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+        <result column="operator" jdbcType="VARCHAR" property="operator"/>
+        <result column="photo_path" jdbcType="VARCHAR" property="photoPath"/>
+        <result column="photo_name" jdbcType="VARCHAR" property="photoName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, rack_number, equipment_number, hierarchy, created_date, operator, photo_path,
+    photo_name
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_equipment_number
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByEquipmentNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_equipment_number
+        <where>
+            <if test="equipmentNumber !=null">
+                equipment_number like concat('%',#{equipmentNumber,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from mro_equipment_number
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.yintu.ruixing.entity.EquipmentNumberEntity">
+        insert into mro_equipment_number (id, rack_number, equipment_number,
+                                          hierarchy, created_date, operator,
+                                          photo_path, photo_name)
+        values (#{id,jdbcType=INTEGER}, #{rackNumber,jdbcType=VARCHAR}, #{equipmentNumber,jdbcType=VARCHAR},
+                #{hierarchy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{operator,jdbcType=VARCHAR},
+                #{photoPath,jdbcType=VARCHAR}, #{photoName,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.EquipmentNumberEntity">
+        insert into mro_equipment_number
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="rackNumber != null">
+                rack_number,
+            </if>
+            <if test="equipmentNumber != null">
+                equipment_number,
+            </if>
+            <if test="hierarchy != null">
+                hierarchy,
+            </if>
+            <if test="createdDate != null">
+                created_date,
+            </if>
+            <if test="operator != null">
+                operator,
+            </if>
+            <if test="photoPath != null">
+                photo_path,
+            </if>
+            <if test="photoName != null">
+                photo_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="rackNumber != null">
+                #{rackNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="equipmentNumber != null">
+                #{equipmentNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="hierarchy != null">
+                #{hierarchy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="operator != null">
+                #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="photoPath != null">
+                #{photoPath,jdbcType=VARCHAR},
+            </if>
+            <if test="photoName != null">
+                #{photoName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.EquipmentNumberEntity">
+        update mro_equipment_number
+        <set>
+            <if test="rackNumber != null">
+                rack_number = #{rackNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="equipmentNumber != null">
+                equipment_number = #{equipmentNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="hierarchy != null">
+                hierarchy = #{hierarchy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdDate != null">
+                created_date = #{createdDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="operator != null">
+                operator = #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="photoPath != null">
+                photo_path = #{photoPath,jdbcType=VARCHAR},
+            </if>
+            <if test="photoName != null">
+                photo_name = #{photoName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.EquipmentNumberEntity">
+        update mro_equipment_number
+        set rack_number      = #{rackNumber,jdbcType=VARCHAR},
+            equipment_number = #{equipmentNumber,jdbcType=VARCHAR},
+            hierarchy        = #{hierarchy,jdbcType=VARCHAR},
+            created_date     = #{createdDate,jdbcType=TIMESTAMP},
+            operator         = #{operator,jdbcType=VARCHAR},
+            photo_path       = #{photoPath,jdbcType=VARCHAR},
+            photo_name       = #{photoName,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

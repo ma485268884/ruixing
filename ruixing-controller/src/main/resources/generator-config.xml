@@ -47,7 +47,7 @@
         <!--               enableCountByExample="false" enableUpdateByExample="false"-->
         <!--               enableDeleteByExample="false" enableSelectByExample="false"-->
         <!--               selectByExampleQueryId="false"/>-->
-        <table tableName="mro_spare_parts" domainObjectName="SparePartsEntity" mapperName="SparePartsDao"
+        <table tableName="mro_equipment_number" domainObjectName="EquipmentNumberEntity" mapperName="EquipmentNumberDao"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"/>
 
