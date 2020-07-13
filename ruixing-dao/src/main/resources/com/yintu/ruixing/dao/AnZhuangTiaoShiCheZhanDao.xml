@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.AnZhuangTiaoShiCheZhanDao">
+  <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="xid" jdbcType="INTEGER" property="xid" />
+    <result column="cz_time" jdbcType="TIMESTAMP" property="czTime" />
+    <result column="tlj_name" jdbcType="VARCHAR" property="tljName" />
+    <result column="dwd_name" jdbcType="VARCHAR" property="dwdName" />
+    <result column="xd_name" jdbcType="VARCHAR" property="xdName" />
+    <result column="cz_name" jdbcType="VARCHAR" property="czName" />
+    <result column="guanlianxiangmu" jdbcType="VARCHAR" property="guanlianxiangmu" />
+    <result column="cz_type" jdbcType="VARCHAR" property="czType" />
+    <result column="jigui" jdbcType="INTEGER" property="jigui" />
+    <result column="indoorkaban" jdbcType="INTEGER" property="indoorkaban" />
+    <result column="outdoorshebei" jdbcType="INTEGER" property="outdoorshebei" />
+    <result column="wanchengpeixian_plan_time" jdbcType="TIMESTAMP" property="wanchengpeixianPlanTime" />
+    <result column="wanchengpeixian_actual_time" jdbcType="TIMESTAMP" property="wanchengpeixianActualTime" />
+    <result column="wanchengpeixian_is_no" jdbcType="INTEGER" property="wanchengpeixianIsNo" />
+    <result column="shangdiantiaojian_plan_time" jdbcType="TIMESTAMP" property="shangdiantiaojianPlanTime" />
+    <result column="shangdiantiaojian_actual_time" jdbcType="TIMESTAMP" property="shangdiantiaojianActualTime" />
+    <result column="shangdiantiaojian_is_no" jdbcType="INTEGER" property="shangdiantiaojianIsNo" />
+    <result column="jingtaiyanshou_plan_time" jdbcType="TIMESTAMP" property="jingtaiyanshouPlanTime" />
+    <result column="jingtaiyanshou_actual_time" jdbcType="TIMESTAMP" property="jingtaiyanshouActualTime" />
+    <result column="jingtaiyanshou_is_no" jdbcType="INTEGER" property="jingtaiyanshouIsNo" />
+    <result column="dongtaiyanshou_plan_time" jdbcType="TIMESTAMP" property="dongtaiyanshouPlanTime" />
+    <result column="dongtaiyanshou_actual_time" jdbcType="TIMESTAMP" property="dongtaiyanshouActualTime" />
+    <result column="dongtaiyanshou_is_no" jdbcType="INTEGER" property="dongtaiyanshouIsNo" />
+    <result column="liantiaolianshi_plan_time" jdbcType="TIMESTAMP" property="liantiaolianshiPlanTime" />
+    <result column="liantiaolianshi_actual_time" jdbcType="TIMESTAMP" property="liantiaolianshiActualTime" />
+    <result column="liantiaolianshi_is_no" jdbcType="INTEGER" property="liantiaolianshiIsNo" />
+    <result column="shiyunxing_plan_time" jdbcType="TIMESTAMP" property="shiyunxingPlanTime" />
+    <result column="shiyunxing_actual_time" jdbcType="TIMESTAMP" property="shiyunxingActualTime" />
+    <result column="shiyunxing_is_no" jdbcType="INTEGER" property="shiyunxingIsNo" />
+    <result column="kaitong_plan_time" jdbcType="TIMESTAMP" property="kaitongPlanTime" />
+    <result column="kaitong_actual_time" jdbcType="TIMESTAMP" property="kaitongActualTime" />
+    <result column="kaitong_is_no" jdbcType="INTEGER" property="kaitongIsNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, xid, cz_time, tlj_name, dwd_name, xd_name, cz_name, guanlianxiangmu, cz_type, 
+    jigui, indoorkaban, outdoorshebei, wanchengpeixian_plan_time, wanchengpeixian_actual_time, 
+    wanchengpeixian_is_no, shangdiantiaojian_plan_time, shangdiantiaojian_actual_time, 
+    shangdiantiaojian_is_no, jingtaiyanshou_plan_time, jingtaiyanshou_actual_time, jingtaiyanshou_is_no, 
+    dongtaiyanshou_plan_time, dongtaiyanshou_actual_time, dongtaiyanshou_is_no, liantiaolianshi_plan_time, 
+    liantiaolianshi_actual_time, liantiaolianshi_is_no, shiyunxing_plan_time, shiyunxing_actual_time, 
+    shiyunxing_is_no, kaitong_plan_time, kaitong_actual_time, kaitong_is_no
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mro_anzhuangtiaoshi_chezhan
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mro_anzhuangtiaoshi_chezhan
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <!--添加车站信息-->
+  <insert id="addCheZhan" parameterType="com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanEntity">
+    insert into mro_anzhuangtiaoshi_chezhan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="xid != null">
+        xid,
+      </if>
+      <if test="czTime != null">
+        cz_time,
+      </if>
+      <if test="tljName != null">
+        tlj_name,
+      </if>
+      <if test="dwdName != null">
+        dwd_name,
+      </if>
+      <if test="xdName != null">
+        xd_name,
+      </if>
+      <if test="czName != null">
+        cz_name,
+      </if>
+      <if test="guanlianxiangmu != null">
+        guanlianxiangmu,
+      </if>
+      <if test="czType != null">
+        cz_type,
+      </if>
+      <if test="jigui != null">
+        jigui,
+      </if>
+      <if test="indoorkaban != null">
+        indoorkaban,
+      </if>
+      <if test="outdoorshebei != null">
+        outdoorshebei,
+      </if>
+      <if test="wanchengpeixianPlanTime != null">
+        wanchengpeixian_plan_time,
+      </if>
+      <if test="wanchengpeixianActualTime != null">
+        wanchengpeixian_actual_time,
+      </if>
+      <if test="wanchengpeixianIsNo != null">
+        wanchengpeixian_is_no,
+      </if>
+      <if test="shangdiantiaojianPlanTime != null">
+        shangdiantiaojian_plan_time,
+      </if>
+      <if test="shangdiantiaojianActualTime != null">
+        shangdiantiaojian_actual_time,
+      </if>
+      <if test="shangdiantiaojianIsNo != null">
+        shangdiantiaojian_is_no,
+      </if>
+      <if test="jingtaiyanshouPlanTime != null">
+        jingtaiyanshou_plan_time,
+      </if>
+      <if test="jingtaiyanshouActualTime != null">
+        jingtaiyanshou_actual_time,
+      </if>
+      <if test="jingtaiyanshouIsNo != null">
+        jingtaiyanshou_is_no,
+      </if>
+      <if test="dongtaiyanshouPlanTime != null">
+        dongtaiyanshou_plan_time,
+      </if>
+      <if test="dongtaiyanshouActualTime != null">
+        dongtaiyanshou_actual_time,
+      </if>
+      <if test="dongtaiyanshouIsNo != null">
+        dongtaiyanshou_is_no,
+      </if>
+      <if test="liantiaolianshiPlanTime != null">
+        liantiaolianshi_plan_time,
+      </if>
+      <if test="liantiaolianshiActualTime != null">
+        liantiaolianshi_actual_time,
+      </if>
+      <if test="liantiaolianshiIsNo != null">
+        liantiaolianshi_is_no,
+      </if>
+      <if test="shiyunxingPlanTime != null">
+        shiyunxing_plan_time,
+      </if>
+      <if test="shiyunxingActualTime != null">
+        shiyunxing_actual_time,
+      </if>
+      <if test="shiyunxingIsNo != null">
+        shiyunxing_is_no,
+      </if>
+      <if test="kaitongPlanTime != null">
+        kaitong_plan_time,
+      </if>
+      <if test="kaitongActualTime != null">
+        kaitong_actual_time,
+      </if>
+      <if test="kaitongIsNo != null">
+        kaitong_is_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="xid != null">
+        #{xid,jdbcType=INTEGER},
+      </if>
+      <if test="czTime != null">
+        #{czTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tljName != null">
+        #{tljName,jdbcType=VARCHAR},
+      </if>
+      <if test="dwdName != null">
+        #{dwdName,jdbcType=VARCHAR},
+      </if>
+      <if test="xdName != null">
+        #{xdName,jdbcType=VARCHAR},
+      </if>
+      <if test="czName != null">
+        #{czName,jdbcType=VARCHAR},
+      </if>
+      <if test="guanlianxiangmu != null">
+        #{guanlianxiangmu,jdbcType=VARCHAR},
+      </if>
+      <if test="czType != null">
+        #{czType,jdbcType=VARCHAR},
+      </if>
+      <if test="jigui != null">
+        #{jigui,jdbcType=INTEGER},
+      </if>
+      <if test="indoorkaban != null">
+        #{indoorkaban,jdbcType=INTEGER},
+      </if>
+      <if test="outdoorshebei != null">
+        #{outdoorshebei,jdbcType=INTEGER},
+      </if>
+      <if test="wanchengpeixianPlanTime != null">
+        #{wanchengpeixianPlanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wanchengpeixianActualTime != null">
+        #{wanchengpeixianActualTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wanchengpeixianIsNo != null">
+        #{wanchengpeixianIsNo,jdbcType=INTEGER},
+      </if>
+      <if test="shangdiantiaojianPlanTime != null">
+        #{shangdiantiaojianPlanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shangdiantiaojianActualTime != null">
+        #{shangdiantiaojianActualTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shangdiantiaojianIsNo != null">
+        #{shangdiantiaojianIsNo,jdbcType=INTEGER},
+      </if>
+      <if test="jingtaiyanshouPlanTime != null">
+        #{jingtaiyanshouPlanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jingtaiyanshouActualTime != null">
+        #{jingtaiyanshouActualTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jingtaiyanshouIsNo != null">
+        #{jingtaiyanshouIsNo,jdbcType=INTEGER},
+      </if>
+      <if test="dongtaiyanshouPlanTime != null">
+        #{dongtaiyanshouPlanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dongtaiyanshouActualTime != null">
+        #{dongtaiyanshouActualTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dongtaiyanshouIsNo != null">
+        #{dongtaiyanshouIsNo,jdbcType=INTEGER},
+      </if>
+      <if test="liantiaolianshiPlanTime != null">
+        #{liantiaolianshiPlanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="liantiaolianshiActualTime != null">
+        #{liantiaolianshiActualTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="liantiaolianshiIsNo != null">
+        #{liantiaolianshiIsNo,jdbcType=INTEGER},
+      </if>
+      <if test="shiyunxingPlanTime != null">
+        #{shiyunxingPlanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shiyunxingActualTime != null">
+        #{shiyunxingActualTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shiyunxingIsNo != null">
+        #{shiyunxingIsNo,jdbcType=INTEGER},
+      </if>
+      <if test="kaitongPlanTime != null">
+        #{kaitongPlanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="kaitongActualTime != null">
+        #{kaitongActualTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="kaitongIsNo != null">
+        #{kaitongIsNo,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanEntity">
+    update mro_anzhuangtiaoshi_chezhan
+    <set>
+      <if test="xid != null">
+        xid = #{xid,jdbcType=INTEGER},
+      </if>
+      <if test="czTime != null">
+        cz_time = #{czTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tljName != null">
+        tlj_name = #{tljName,jdbcType=VARCHAR},
+      </if>
+      <if test="dwdName != null">
+        dwd_name = #{dwdName,jdbcType=VARCHAR},
+      </if>
+      <if test="xdName != null">
+        xd_name = #{xdName,jdbcType=VARCHAR},
+      </if>
+      <if test="czName != null">
+        cz_name = #{czName,jdbcType=VARCHAR},
+      </if>
+      <if test="guanlianxiangmu != null">
+        guanlianxiangmu = #{guanlianxiangmu,jdbcType=VARCHAR},
+      </if>
+      <if test="czType != null">
+        cz_type = #{czType,jdbcType=VARCHAR},
+      </if>
+      <if test="jigui != null">
+        jigui = #{jigui,jdbcType=INTEGER},
+      </if>
+      <if test="indoorkaban != null">
+        indoorkaban = #{indoorkaban,jdbcType=INTEGER},
+      </if>
+      <if test="outdoorshebei != null">
+        outdoorshebei = #{outdoorshebei,jdbcType=INTEGER},
+      </if>
+      <if test="wanchengpeixianPlanTime != null">
+        wanchengpeixian_plan_time = #{wanchengpeixianPlanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wanchengpeixianActualTime != null">
+        wanchengpeixian_actual_time = #{wanchengpeixianActualTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wanchengpeixianIsNo != null">
+        wanchengpeixian_is_no = #{wanchengpeixianIsNo,jdbcType=INTEGER},
+      </if>
+      <if test="shangdiantiaojianPlanTime != null">
+        shangdiantiaojian_plan_time = #{shangdiantiaojianPlanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shangdiantiaojianActualTime != null">
+        shangdiantiaojian_actual_time = #{shangdiantiaojianActualTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shangdiantiaojianIsNo != null">
+        shangdiantiaojian_is_no = #{shangdiantiaojianIsNo,jdbcType=INTEGER},
+      </if>
+      <if test="jingtaiyanshouPlanTime != null">
+        jingtaiyanshou_plan_time = #{jingtaiyanshouPlanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jingtaiyanshouActualTime != null">
+        jingtaiyanshou_actual_time = #{jingtaiyanshouActualTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jingtaiyanshouIsNo != null">
+        jingtaiyanshou_is_no = #{jingtaiyanshouIsNo,jdbcType=INTEGER},
+      </if>
+      <if test="dongtaiyanshouPlanTime != null">
+        dongtaiyanshou_plan_time = #{dongtaiyanshouPlanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dongtaiyanshouActualTime != null">
+        dongtaiyanshou_actual_time = #{dongtaiyanshouActualTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dongtaiyanshouIsNo != null">
+        dongtaiyanshou_is_no = #{dongtaiyanshouIsNo,jdbcType=INTEGER},
+      </if>
+      <if test="liantiaolianshiPlanTime != null">
+        liantiaolianshi_plan_time = #{liantiaolianshiPlanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="liantiaolianshiActualTime != null">
+        liantiaolianshi_actual_time = #{liantiaolianshiActualTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="liantiaolianshiIsNo != null">
+        liantiaolianshi_is_no = #{liantiaolianshiIsNo,jdbcType=INTEGER},
+      </if>
+      <if test="shiyunxingPlanTime != null">
+        shiyunxing_plan_time = #{shiyunxingPlanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shiyunxingActualTime != null">
+        shiyunxing_actual_time = #{shiyunxingActualTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shiyunxingIsNo != null">
+        shiyunxing_is_no = #{shiyunxingIsNo,jdbcType=INTEGER},
+      </if>
+      <if test="kaitongPlanTime != null">
+        kaitong_plan_time = #{kaitongPlanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="kaitongActualTime != null">
+        kaitong_actual_time = #{kaitongActualTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="kaitongIsNo != null">
+        kaitong_is_no = #{kaitongIsNo,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanEntity">
+    update mro_anzhuangtiaoshi_chezhan
+    set xid = #{xid,jdbcType=INTEGER},
+      cz_time = #{czTime,jdbcType=TIMESTAMP},
+      tlj_name = #{tljName,jdbcType=VARCHAR},
+      dwd_name = #{dwdName,jdbcType=VARCHAR},
+      xd_name = #{xdName,jdbcType=VARCHAR},
+      cz_name = #{czName,jdbcType=VARCHAR},
+      guanlianxiangmu = #{guanlianxiangmu,jdbcType=VARCHAR},
+      cz_type = #{czType,jdbcType=VARCHAR},
+      jigui = #{jigui,jdbcType=INTEGER},
+      indoorkaban = #{indoorkaban,jdbcType=INTEGER},
+      outdoorshebei = #{outdoorshebei,jdbcType=INTEGER},
+      wanchengpeixian_plan_time = #{wanchengpeixianPlanTime,jdbcType=TIMESTAMP},
+      wanchengpeixian_actual_time = #{wanchengpeixianActualTime,jdbcType=TIMESTAMP},
+      wanchengpeixian_is_no = #{wanchengpeixianIsNo,jdbcType=INTEGER},
+      shangdiantiaojian_plan_time = #{shangdiantiaojianPlanTime,jdbcType=TIMESTAMP},
+      shangdiantiaojian_actual_time = #{shangdiantiaojianActualTime,jdbcType=TIMESTAMP},
+      shangdiantiaojian_is_no = #{shangdiantiaojianIsNo,jdbcType=INTEGER},
+      jingtaiyanshou_plan_time = #{jingtaiyanshouPlanTime,jdbcType=TIMESTAMP},
+      jingtaiyanshou_actual_time = #{jingtaiyanshouActualTime,jdbcType=TIMESTAMP},
+      jingtaiyanshou_is_no = #{jingtaiyanshouIsNo,jdbcType=INTEGER},
+      dongtaiyanshou_plan_time = #{dongtaiyanshouPlanTime,jdbcType=TIMESTAMP},
+      dongtaiyanshou_actual_time = #{dongtaiyanshouActualTime,jdbcType=TIMESTAMP},
+      dongtaiyanshou_is_no = #{dongtaiyanshouIsNo,jdbcType=INTEGER},
+      liantiaolianshi_plan_time = #{liantiaolianshiPlanTime,jdbcType=TIMESTAMP},
+      liantiaolianshi_actual_time = #{liantiaolianshiActualTime,jdbcType=TIMESTAMP},
+      liantiaolianshi_is_no = #{liantiaolianshiIsNo,jdbcType=INTEGER},
+      shiyunxing_plan_time = #{shiyunxingPlanTime,jdbcType=TIMESTAMP},
+      shiyunxing_actual_time = #{shiyunxingActualTime,jdbcType=TIMESTAMP},
+      shiyunxing_is_no = #{shiyunxingIsNo,jdbcType=INTEGER},
+      kaitong_plan_time = #{kaitongPlanTime,jdbcType=TIMESTAMP},
+      kaitong_actual_time = #{kaitongActualTime,jdbcType=TIMESTAMP},
+      kaitong_is_no = #{kaitongIsNo,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insert" parameterType="com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanEntity">
+    insert into mro_anzhuangtiaoshi_chezhan (id, xid, cz_time,
+      tlj_name, dwd_name, xd_name,
+      cz_name, guanlianxiangmu, cz_type,
+      jigui, indoorkaban, outdoorshebei,
+      wanchengpeixian_plan_time, wanchengpeixian_actual_time,
+      wanchengpeixian_is_no, shangdiantiaojian_plan_time,
+      shangdiantiaojian_actual_time, shangdiantiaojian_is_no,
+      jingtaiyanshou_plan_time, jingtaiyanshou_actual_time,
+      jingtaiyanshou_is_no, dongtaiyanshou_plan_time,
+      dongtaiyanshou_actual_time, dongtaiyanshou_is_no,
+      liantiaolianshi_plan_time, liantiaolianshi_actual_time,
+      liantiaolianshi_is_no, shiyunxing_plan_time,
+      shiyunxing_actual_time, shiyunxing_is_no,
+      kaitong_plan_time, kaitong_actual_time,
+      kaitong_is_no)
+    values (#{id,jdbcType=INTEGER}, #{xid,jdbcType=INTEGER}, #{czTime,jdbcType=TIMESTAMP},
+      #{tljName,jdbcType=VARCHAR}, #{dwdName,jdbcType=VARCHAR}, #{xdName,jdbcType=VARCHAR},
+      #{czName,jdbcType=VARCHAR}, #{guanlianxiangmu,jdbcType=VARCHAR}, #{czType,jdbcType=VARCHAR},
+      #{jigui,jdbcType=INTEGER}, #{indoorkaban,jdbcType=INTEGER}, #{outdoorshebei,jdbcType=INTEGER},
+      #{wanchengpeixianPlanTime,jdbcType=TIMESTAMP}, #{wanchengpeixianActualTime,jdbcType=TIMESTAMP},
+      #{wanchengpeixianIsNo,jdbcType=INTEGER}, #{shangdiantiaojianPlanTime,jdbcType=TIMESTAMP},
+      #{shangdiantiaojianActualTime,jdbcType=TIMESTAMP}, #{shangdiantiaojianIsNo,jdbcType=INTEGER},
+      #{jingtaiyanshouPlanTime,jdbcType=TIMESTAMP}, #{jingtaiyanshouActualTime,jdbcType=TIMESTAMP},
+      #{jingtaiyanshouIsNo,jdbcType=INTEGER}, #{dongtaiyanshouPlanTime,jdbcType=TIMESTAMP},
+      #{dongtaiyanshouActualTime,jdbcType=TIMESTAMP}, #{dongtaiyanshouIsNo,jdbcType=INTEGER},
+      #{liantiaolianshiPlanTime,jdbcType=TIMESTAMP}, #{liantiaolianshiActualTime,jdbcType=TIMESTAMP},
+      #{liantiaolianshiIsNo,jdbcType=INTEGER}, #{shiyunxingPlanTime,jdbcType=TIMESTAMP},
+      #{shiyunxingActualTime,jdbcType=TIMESTAMP}, #{shiyunxingIsNo,jdbcType=INTEGER},
+      #{kaitongPlanTime,jdbcType=TIMESTAMP}, #{kaitongActualTime,jdbcType=TIMESTAMP},
+      #{kaitongIsNo,jdbcType=INTEGER})
+  </insert>
+</mapper>
