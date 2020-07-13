@@ -2,7 +2,7 @@ package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.ExportExcelUtil;
-import com.yintu.ruixing.common.util.FileUtils;
+import com.yintu.ruixing.common.util.FileUtil;
 import com.yintu.ruixing.common.util.ImportExcelUtil;
 import com.yintu.ruixing.dao.MaintenancePlanDao;
 import com.yintu.ruixing.entity.MaintenancePlanEntity;
@@ -81,9 +81,9 @@ public class MaintenancePlanServiceImpl implements MaintenancePlanService {
         //excel标题
         String title = "维护计划列表";
         String[][] content;
-        if ("xls".equals(FileUtils.getExtensionName(fileName))) {
+        if ("xls".equals(FileUtil.getExtensionName(fileName))) {
             content = ImportExcelUtil.getHSSFData(title, new HSSFWorkbook(inputStream));
-        } else if ("xlsx".equals(FileUtils.getExtensionName(fileName))) {
+        } else if ("xlsx".equals(FileUtil.getExtensionName(fileName))) {
             content = ImportExcelUtil.getXSSFData(title, new XSSFWorkbook(inputStream));
         } else {
             throw new BaseRuntimeException("文件格式有误");

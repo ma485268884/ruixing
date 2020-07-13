@@ -3,7 +3,7 @@ package com.yintu.ruixing.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.BaseController;
-import com.yintu.ruixing.common.util.FileUtils;
+import com.yintu.ruixing.common.util.FileUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.MaintenancePlanEntity;
 import com.yintu.ruixing.entity.MaintenancePlanInfoEntity;
@@ -84,7 +84,7 @@ public class MaintenancePlanController extends SessionController implements Base
     @PostMapping("/import")
     @ResponseBody
     public Map<String, Object> importFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        maintenancePlanService.importFile(multipartFile.getInputStream(), FileUtils.getExtensionName(multipartFile.getOriginalFilename()));
+        maintenancePlanService.importFile(multipartFile.getInputStream(), FileUtil.getExtensionName(multipartFile.getOriginalFilename()));
         return ResponseDataUtil.ok("导入维护计划信息成功");
     }
 
@@ -115,7 +115,7 @@ public class MaintenancePlanController extends SessionController implements Base
     @PostMapping("/{id}/maintenance/plan/infos/import")
     @ResponseBody
     public Map<String, Object> importInfoFile(@PathVariable Integer id, @RequestParam("file") MultipartFile multipartFile) throws IOException {
-        maintenancePlanInfoService.importFile(multipartFile.getInputStream(), FileUtils.getExtensionName(multipartFile.getOriginalFilename()), id);
+        maintenancePlanInfoService.importFile(multipartFile.getInputStream(), FileUtil.getExtensionName(multipartFile.getOriginalFilename()), id);
         return ResponseDataUtil.ok("导入维护计划详情信息成功");
     }
 

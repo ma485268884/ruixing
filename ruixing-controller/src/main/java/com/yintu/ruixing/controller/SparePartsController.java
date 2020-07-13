@@ -3,9 +3,8 @@ package com.yintu.ruixing.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.BaseController;
-import com.yintu.ruixing.common.util.FileUtils;
+import com.yintu.ruixing.common.util.FileUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.dao.SparePartsDao;
 import com.yintu.ruixing.entity.SparePartsEntity;
 import com.yintu.ruixing.service.SparePartsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +74,7 @@ public class SparePartsController extends SessionController implements BaseContr
     @PostMapping("/import")
     @ResponseBody
     public Map<String, Object> importFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        sparePartsService.importFile(multipartFile.getInputStream(), FileUtils.getExtensionName(multipartFile.getOriginalFilename()));
+        sparePartsService.importFile(multipartFile.getInputStream(), FileUtil.getExtensionName(multipartFile.getOriginalFilename()));
         return ResponseDataUtil.ok("导入备品实验信息成功");
     }
 

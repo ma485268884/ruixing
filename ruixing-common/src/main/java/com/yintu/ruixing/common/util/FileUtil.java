@@ -1,10 +1,14 @@
 package com.yintu.ruixing.common.util;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
 /**
  * @author:mlf
  * @date:2020/7/9 11:32
  */
-public class FileUtils {
+public class FileUtil {
 
     /**
      * 获取文件扩展名
@@ -38,6 +42,27 @@ public class FileUtils {
             }
         }
         return filename;
+    }
+
+
+    /**
+     * 判断文件是否是图片
+     *
+     * @param file 文件类
+     * @return
+     */
+    private boolean isImage(File file) {
+        if (!file.exists()) {
+            return false;
+        }
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(file);
+            return image != null && image.getWidth() > 0 && image.getHeight() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

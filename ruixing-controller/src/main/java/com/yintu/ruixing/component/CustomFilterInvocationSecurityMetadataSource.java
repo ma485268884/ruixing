@@ -1,6 +1,6 @@
 package com.yintu.ruixing.component;
 
-import com.yintu.ruixing.common.util.StringUtils;
+import com.yintu.ruixing.common.util.StringUtil;
 import com.yintu.ruixing.entity.PermissionEntity;
 import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.service.PermissionService;
@@ -41,7 +41,7 @@ public class CustomFilterInvocationSecurityMetadataSource implements FilterInvoc
         String[] strArray = requestUrl.split("/");
         StringBuilder newRequestUrl = new StringBuilder();
         for (String s : strArray) {
-            if (!StringUtils.isNumber(s)) {
+            if (!StringUtil.isNumber(s)) {
                 newRequestUrl.append("/").append(s);
             }
         }

@@ -4,7 +4,7 @@ package com.yintu.ruixing.common.util;
  * @author:mlf
  * @date:2020/5/22 15:09
  */
-public class StringUtils {
+public class StringUtil {
 
     /**
      * @param s 字符串
