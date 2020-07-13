@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 器材编号管理
+ *
  * @author:mlf
  * @date:2020/7/13 11:13
  */

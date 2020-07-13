@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 维护计划
+ *
  * @author:mlf
  * @date:2020/7/8 15:53
  */
@@ -101,8 +103,7 @@ public class MaintenancePlanController extends SessionController implements Base
 
     @GetMapping("/{id}/maintenance/plan/infos")
     @ResponseBody
-    public Map<String, Object> findMaintenancePlanInfoById(@PathVariable Integer id,
-                                                           @RequestParam("page_number") Integer pageNumber,
+    public Map<String, Object> findMaintenancePlanInfoById(@PathVariable Integer id, @RequestParam("page_number") Integer pageNumber,
                                                            @RequestParam("page_size") Integer pageSize,
                                                            @RequestParam(value = "order_by", required = false, defaultValue = "mpi.id DESC") String orderBy,
                                                            @RequestParam(value = "work", required = false) String work) {
@@ -110,23 +111,6 @@ public class MaintenancePlanController extends SessionController implements Base
         List<MaintenancePlanInfoEntity> maintenancePlanInfoEntities = maintenancePlanInfoService.findByCondition(null, id, work);
         PageInfo<MaintenancePlanInfoEntity> pageInfo = new PageInfo<>(maintenancePlanInfoEntities);
         return ResponseDataUtil.ok("查询维护计划详情列表信息成功", pageInfo);
-    }
-
-    @PostMapping("/{id}/maintenance/plan/infos/import")
-    @ResponseBody
-    public Map<String, Object> importInfoFile(@PathVariable Integer id, @RequestParam("file") MultipartFile multipartFile) throws IOException {
-        maintenancePlanInfoService.importFile(multipartFile.getInputStream(), FileUtil.getExtensionName(multipartFile.getOriginalFilename()), id);
-        return ResponseDataUtil.ok("导入维护计划详情信息成功");
-    }
-
-    @GetMapping("/{id}/maintenance/plan/infos/export/{maintenancePlanInfoIds}")
-    public void exportInfoFile(@PathVariable Integer id, @PathVariable Integer[] maintenancePlanInfoIds, HttpServletResponse response) throws IOException {
-        String fileName = "维护计划详情列表" + System.currentTimeMillis() + ".xlsx";
-        response.setContentType("application/octet-stream;charset=ISO8859-1");
-        response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
-        response.addHeader("Pargam", "no-cache");
-        response.addHeader("Cache-Control", "no-cache");
-        maintenancePlanInfoService.exportFile(response.getOutputStream(), maintenancePlanInfoIds, id);
     }
 
 }
