@@ -13,33 +13,33 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from mro_bidding_file__auditor
+        from mro_bidding_file_auditor
         where id = #{id,jdbcType=INTEGER}
     </select>
     <select id="selectByBiddingFileId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from mro_bidding_file__auditor
+        from mro_bidding_file_auditor
         where bidding_file_id = #{biddingFileId,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
-        from mro_bidding_file__auditor
+        from mro_bidding_file_auditor
         where id = #{id,jdbcType=INTEGER}
     </delete>
     <delete id="deleteByBiddingFileId" parameterType="java.lang.Integer">
         delete
-        from mro_bidding_file__auditor
+        from mro_bidding_file_auditor
         where bidding_file_id = #{biddingFileId,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.yintu.ruixing.entity.BiddingFileAuditorEntity">
-        insert into mro_bidding_file__auditor (id, bidding_file_id, auditor_id,
+        insert into mro_bidding_file_auditor (id, bidding_file_id, auditor_id,
                                                is_pass)
         values (#{id,jdbcType=INTEGER}, #{biddingFileId,jdbcType=INTEGER}, #{auditorId,jdbcType=INTEGER},
                 #{isPass,jdbcType=SMALLINT})
     </insert>
     <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.BiddingFileAuditorEntity">
-        insert into mro_bidding_file__auditor
+        insert into mro_bidding_file_auditor
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
@@ -71,7 +71,7 @@
     </insert>
 
     <insert id="insertMuch" parameterType="com.yintu.ruixing.entity.BiddingFileAuditorEntity">
-        insert into mro_bidding_file__auditor
+        insert into mro_bidding_file_auditor
         <trim prefix="(" suffix=")" suffixOverrides=",">
             bidding_file_id,auditor_id, is_pass,
         </trim>
@@ -85,7 +85,7 @@
         </foreach>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.BiddingFileAuditorEntity">
-        update mro_bidding_file__auditor
+        update mro_bidding_file_auditor
         <set>
             <if test="biddingFileId != null">
                 bidding_file_id = #{biddingFileId,jdbcType=INTEGER},
@@ -100,7 +100,7 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.BiddingFileAuditorEntity">
-        update mro_bidding_file__auditor
+        update mro_bidding_file_auditor
         set bidding_file_id = #{biddingFileId,jdbcType=INTEGER},
             auditor_id      = #{auditorId,jdbcType=INTEGER},
             is_pass         = #{isPass,jdbcType=SMALLINT}
