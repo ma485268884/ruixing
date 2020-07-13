@@ -14,46 +14,82 @@
     <result column="jigui" jdbcType="INTEGER" property="jigui" />
     <result column="indoorkaban" jdbcType="INTEGER" property="indoorkaban" />
     <result column="outdoorshebei" jdbcType="INTEGER" property="outdoorshebei" />
-    <result column="wanchengpeixian_plan_time" jdbcType="TIMESTAMP" property="wanchengpeixianPlanTime" />
-    <result column="wanchengpeixian_actual_time" jdbcType="TIMESTAMP" property="wanchengpeixianActualTime" />
+    <result column="wanchengpeixian_plan_start_time" jdbcType="TIMESTAMP" property="wanchengpeixianPlanStartTime" />
+    <result column="wanchengpeixian_plan_end_time" jdbcType="TIMESTAMP" property="wanchengpeixianPlanEndTime" />
+    <result column="wanchengpeixian_actual_start_time" jdbcType="TIMESTAMP" property="wanchengpeixianActualStartTime" />
+    <result column="wanchengpeixian_actual_end_time" jdbcType="TIMESTAMP" property="wanchengpeixianActualEndTime" />
     <result column="wanchengpeixian_is_no" jdbcType="INTEGER" property="wanchengpeixianIsNo" />
-    <result column="shangdiantiaojian_plan_time" jdbcType="TIMESTAMP" property="shangdiantiaojianPlanTime" />
-    <result column="shangdiantiaojian_actual_time" jdbcType="TIMESTAMP" property="shangdiantiaojianActualTime" />
+    <result column="shangdiantiaojian_plan_start_time" jdbcType="TIMESTAMP" property="shangdiantiaojianPlanStartTime" />
+    <result column="shangdiantiaojian_plan_end_time" jdbcType="TIMESTAMP" property="shangdiantiaojianPlanEndTime" />
+    <result column="shangdiantiaojian_actual_start_time" jdbcType="TIMESTAMP" property="shangdiantiaojianActualStartTime" />
+    <result column="shangdiantiaojian_actual_end_time" jdbcType="TIMESTAMP" property="shangdiantiaojianActualEndTime" />
     <result column="shangdiantiaojian_is_no" jdbcType="INTEGER" property="shangdiantiaojianIsNo" />
-    <result column="jingtaiyanshou_plan_time" jdbcType="TIMESTAMP" property="jingtaiyanshouPlanTime" />
-    <result column="jingtaiyanshou_actual_time" jdbcType="TIMESTAMP" property="jingtaiyanshouActualTime" />
+    <result column="jingtaiyanshou_plan_start_time" jdbcType="TIMESTAMP" property="jingtaiyanshouPlanStartTime" />
+    <result column="jingtaiyanshou_plan_end_time" jdbcType="TIMESTAMP" property="jingtaiyanshouPlanEndTime" />
+    <result column="jingtaiyanshou_actual_start_time" jdbcType="TIMESTAMP" property="jingtaiyanshouActualStartTime" />
+    <result column="jingtaiyanshou_actual_end_time" jdbcType="TIMESTAMP" property="jingtaiyanshouActualEndTime" />
     <result column="jingtaiyanshou_is_no" jdbcType="INTEGER" property="jingtaiyanshouIsNo" />
-    <result column="dongtaiyanshou_plan_time" jdbcType="TIMESTAMP" property="dongtaiyanshouPlanTime" />
-    <result column="dongtaiyanshou_actual_time" jdbcType="TIMESTAMP" property="dongtaiyanshouActualTime" />
+    <result column="dongtaiyanshou_plan_start_time" jdbcType="TIMESTAMP" property="dongtaiyanshouPlanStartTime" />
+    <result column="dongtaiyanshou_plan_end_time" jdbcType="TIMESTAMP" property="dongtaiyanshouPlanEndTime" />
+    <result column="dongtaiyanshou_actual_start_time" jdbcType="TIMESTAMP" property="dongtaiyanshouActualStartTime" />
+    <result column="dongtaiyanshou_actual_end_time" jdbcType="TIMESTAMP" property="dongtaiyanshouActualEndTime" />
     <result column="dongtaiyanshou_is_no" jdbcType="INTEGER" property="dongtaiyanshouIsNo" />
-    <result column="liantiaolianshi_plan_time" jdbcType="TIMESTAMP" property="liantiaolianshiPlanTime" />
-    <result column="liantiaolianshi_actual_time" jdbcType="TIMESTAMP" property="liantiaolianshiActualTime" />
+    <result column="liantiaolianshi_plan_start_time" jdbcType="TIMESTAMP" property="liantiaolianshiPlanStartTime" />
+    <result column="liantiaolianshi_plan_end_time" jdbcType="TIMESTAMP" property="liantiaolianshiPlanEndTime" />
+    <result column="liantiaolianshi_actual_start_time" jdbcType="TIMESTAMP" property="liantiaolianshiActualStartTime" />
+    <result column="liantiaolianshi_actual_end_time" jdbcType="TIMESTAMP" property="liantiaolianshiActualEndTime" />
     <result column="liantiaolianshi_is_no" jdbcType="INTEGER" property="liantiaolianshiIsNo" />
-    <result column="shiyunxing_plan_time" jdbcType="TIMESTAMP" property="shiyunxingPlanTime" />
-    <result column="shiyunxing_actual_time" jdbcType="TIMESTAMP" property="shiyunxingActualTime" />
+    <result column="shiyunxing_plan_start_time" jdbcType="TIMESTAMP" property="shiyunxingPlanStartTime" />
+    <result column="shiyunxing_plan_end_time" jdbcType="TIMESTAMP" property="shiyunxingPlanEndTime" />
+    <result column="shiyunxing_actual_start_time" jdbcType="TIMESTAMP" property="shiyunxingActualStartTime" />
+    <result column="shiyunxing_actual_end_time" jdbcType="TIMESTAMP" property="shiyunxingActualEndTime" />
     <result column="shiyunxing_is_no" jdbcType="INTEGER" property="shiyunxingIsNo" />
-    <result column="kaitong_plan_time" jdbcType="TIMESTAMP" property="kaitongPlanTime" />
-    <result column="kaitong_actual_time" jdbcType="TIMESTAMP" property="kaitongActualTime" />
+    <result column="kaitong_plan_start_time" jdbcType="TIMESTAMP" property="kaitongPlanStartTime" />
+    <result column="kaitong_plan_end_time" jdbcType="TIMESTAMP" property="kaitongPlanEndTime" />
+    <result column="kaitong_actual_start_time" jdbcType="TIMESTAMP" property="kaitongActualStartTime" />
+    <result column="kaitong_actual_end_time" jdbcType="TIMESTAMP" property="kaitongActualEndTime" />
     <result column="kaitong_is_no" jdbcType="INTEGER" property="kaitongIsNo" />
   </resultMap>
   <sql id="Base_Column_List">
     id, xid, cz_time, tlj_name, dwd_name, xd_name, cz_name, guanlianxiangmu, cz_type, 
-    jigui, indoorkaban, outdoorshebei, wanchengpeixian_plan_time, wanchengpeixian_actual_time, 
-    wanchengpeixian_is_no, shangdiantiaojian_plan_time, shangdiantiaojian_actual_time, 
-    shangdiantiaojian_is_no, jingtaiyanshou_plan_time, jingtaiyanshou_actual_time, jingtaiyanshou_is_no, 
-    dongtaiyanshou_plan_time, dongtaiyanshou_actual_time, dongtaiyanshou_is_no, liantiaolianshi_plan_time, 
-    liantiaolianshi_actual_time, liantiaolianshi_is_no, shiyunxing_plan_time, shiyunxing_actual_time, 
-    shiyunxing_is_no, kaitong_plan_time, kaitong_actual_time, kaitong_is_no
+    jigui, indoorkaban, outdoorshebei, wanchengpeixian_plan_start_time, wanchengpeixian_plan_end_time, 
+    wanchengpeixian_actual_start_time, wanchengpeixian_actual_end_time, wanchengpeixian_is_no, 
+    shangdiantiaojian_plan_start_time, shangdiantiaojian_plan_end_time, shangdiantiaojian_actual_start_time, 
+    shangdiantiaojian_actual_end_time, shangdiantiaojian_is_no, jingtaiyanshou_plan_start_time, 
+    jingtaiyanshou_plan_end_time, jingtaiyanshou_actual_start_time, jingtaiyanshou_actual_end_time, 
+    jingtaiyanshou_is_no, dongtaiyanshou_plan_start_time, dongtaiyanshou_plan_end_time, 
+    dongtaiyanshou_actual_start_time, dongtaiyanshou_actual_end_time, dongtaiyanshou_is_no, 
+    liantiaolianshi_plan_start_time, liantiaolianshi_plan_end_time, liantiaolianshi_actual_start_time, 
+    liantiaolianshi_actual_end_time, liantiaolianshi_is_no, shiyunxing_plan_start_time, 
+    shiyunxing_plan_end_time, shiyunxing_actual_start_time, shiyunxing_actual_end_time, 
+    shiyunxing_is_no, kaitong_plan_start_time, kaitong_plan_end_time, kaitong_actual_start_time, 
+    kaitong_actual_end_time, kaitong_is_no
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+  <!--根据车站名  模糊查询对应的车站信息-->
+  <select id="findCheZhanByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mro_anzhuangtiaoshi_chezhan
+    where cz_name like concat('%',#{czname},'%')
+  </select>
+
+  <!--根据线段id  查询对应的车站信息-->
+  <select id="findCheZhanById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from mro_anzhuangtiaoshi_chezhan
-    where id = #{id,jdbcType=INTEGER}
+    where xid = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+
+  <!--根据车站id  删除单个  或者批量删除数据-->
+  <delete id="deleteCheZhanByIds" parameterType="java.lang.Integer">
     delete from mro_anzhuangtiaoshi_chezhan
-    where id = #{id,jdbcType=INTEGER}
+    where id
+     in
+     <foreach collection="array" item="ids" open="(" separator="," close=")">
+        #{ids,jdbcType=INTEGER}
+     </foreach>
   </delete>
 
   <!--添加车站信息-->
@@ -96,65 +132,107 @@
       <if test="outdoorshebei != null">
         outdoorshebei,
       </if>
-      <if test="wanchengpeixianPlanTime != null">
-        wanchengpeixian_plan_time,
+      <if test="wanchengpeixianPlanStartTime != null">
+        wanchengpeixian_plan_start_time,
       </if>
-      <if test="wanchengpeixianActualTime != null">
-        wanchengpeixian_actual_time,
+      <if test="wanchengpeixianPlanEndTime != null">
+        wanchengpeixian_plan_end_time,
+      </if>
+      <if test="wanchengpeixianActualStartTime != null">
+        wanchengpeixian_actual_start_time,
+      </if>
+      <if test="wanchengpeixianActualEndTime != null">
+        wanchengpeixian_actual_end_time,
       </if>
       <if test="wanchengpeixianIsNo != null">
         wanchengpeixian_is_no,
       </if>
-      <if test="shangdiantiaojianPlanTime != null">
-        shangdiantiaojian_plan_time,
+      <if test="shangdiantiaojianPlanStartTime != null">
+        shangdiantiaojian_plan_start_time,
       </if>
-      <if test="shangdiantiaojianActualTime != null">
-        shangdiantiaojian_actual_time,
+      <if test="shangdiantiaojianPlanEndTime != null">
+        shangdiantiaojian_plan_end_time,
+      </if>
+      <if test="shangdiantiaojianActualStartTime != null">
+        shangdiantiaojian_actual_start_time,
+      </if>
+      <if test="shangdiantiaojianActualEndTime != null">
+        shangdiantiaojian_actual_end_time,
       </if>
       <if test="shangdiantiaojianIsNo != null">
         shangdiantiaojian_is_no,
       </if>
-      <if test="jingtaiyanshouPlanTime != null">
-        jingtaiyanshou_plan_time,
+      <if test="jingtaiyanshouPlanStartTime != null">
+        jingtaiyanshou_plan_start_time,
       </if>
-      <if test="jingtaiyanshouActualTime != null">
-        jingtaiyanshou_actual_time,
+      <if test="jingtaiyanshouPlanEndTime != null">
+        jingtaiyanshou_plan_end_time,
+      </if>
+      <if test="jingtaiyanshouActualStartTime != null">
+        jingtaiyanshou_actual_start_time,
+      </if>
+      <if test="jingtaiyanshouActualEndTime != null">
+        jingtaiyanshou_actual_end_time,
       </if>
       <if test="jingtaiyanshouIsNo != null">
         jingtaiyanshou_is_no,
       </if>
-      <if test="dongtaiyanshouPlanTime != null">
-        dongtaiyanshou_plan_time,
+      <if test="dongtaiyanshouPlanStartTime != null">
+        dongtaiyanshou_plan_start_time,
       </if>
-      <if test="dongtaiyanshouActualTime != null">
-        dongtaiyanshou_actual_time,
+      <if test="dongtaiyanshouPlanEndTime != null">
+        dongtaiyanshou_plan_end_time,
+      </if>
+      <if test="dongtaiyanshouActualStartTime != null">
+        dongtaiyanshou_actual_start_time,
+      </if>
+      <if test="dongtaiyanshouActualEndTime != null">
+        dongtaiyanshou_actual_end_time,
       </if>
       <if test="dongtaiyanshouIsNo != null">
         dongtaiyanshou_is_no,
       </if>
-      <if test="liantiaolianshiPlanTime != null">
-        liantiaolianshi_plan_time,
+      <if test="liantiaolianshiPlanStartTime != null">
+        liantiaolianshi_plan_start_time,
       </if>
-      <if test="liantiaolianshiActualTime != null">
-        liantiaolianshi_actual_time,
+      <if test="liantiaolianshiPlanEndTime != null">
+        liantiaolianshi_plan_end_time,
+      </if>
+      <if test="liantiaolianshiActualStartTime != null">
+        liantiaolianshi_actual_start_time,
+      </if>
+      <if test="liantiaolianshiActualEndTime != null">
+        liantiaolianshi_actual_end_time,
       </if>
       <if test="liantiaolianshiIsNo != null">
         liantiaolianshi_is_no,
       </if>
-      <if test="shiyunxingPlanTime != null">
-        shiyunxing_plan_time,
+      <if test="shiyunxingPlanStartTime != null">
+        shiyunxing_plan_start_time,
       </if>
-      <if test="shiyunxingActualTime != null">
-        shiyunxing_actual_time,
+      <if test="shiyunxingPlanEndTime != null">
+        shiyunxing_plan_end_time,
+      </if>
+      <if test="shiyunxingActualStartTime != null">
+        shiyunxing_actual_start_time,
+      </if>
+      <if test="shiyunxingActualEndTime != null">
+        shiyunxing_actual_end_time,
       </if>
       <if test="shiyunxingIsNo != null">
         shiyunxing_is_no,
       </if>
-      <if test="kaitongPlanTime != null">
-        kaitong_plan_time,
+      <if test="kaitongPlanStartTime != null">
+        kaitong_plan_start_time,
       </if>
-      <if test="kaitongActualTime != null">
-        kaitong_actual_time,
+      <if test="kaitongPlanEndTime != null">
+        kaitong_plan_end_time,
+      </if>
+      <if test="kaitongActualStartTime != null">
+        kaitong_actual_start_time,
+      </if>
+      <if test="kaitongActualEndTime != null">
+        kaitong_actual_end_time,
       </if>
       <if test="kaitongIsNo != null">
         kaitong_is_no,
@@ -197,72 +275,116 @@
       <if test="outdoorshebei != null">
         #{outdoorshebei,jdbcType=INTEGER},
       </if>
-      <if test="wanchengpeixianPlanTime != null">
-        #{wanchengpeixianPlanTime,jdbcType=TIMESTAMP},
+      <if test="wanchengpeixianPlanStartTime != null">
+        #{wanchengpeixianPlanStartTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="wanchengpeixianActualTime != null">
-        #{wanchengpeixianActualTime,jdbcType=TIMESTAMP},
+      <if test="wanchengpeixianPlanEndTime != null">
+        #{wanchengpeixianPlanEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wanchengpeixianActualStartTime != null">
+        #{wanchengpeixianActualStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wanchengpeixianActualEndTime != null">
+        #{wanchengpeixianActualEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="wanchengpeixianIsNo != null">
         #{wanchengpeixianIsNo,jdbcType=INTEGER},
       </if>
-      <if test="shangdiantiaojianPlanTime != null">
-        #{shangdiantiaojianPlanTime,jdbcType=TIMESTAMP},
+      <if test="shangdiantiaojianPlanStartTime != null">
+        #{shangdiantiaojianPlanStartTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="shangdiantiaojianActualTime != null">
-        #{shangdiantiaojianActualTime,jdbcType=TIMESTAMP},
+      <if test="shangdiantiaojianPlanEndTime != null">
+        #{shangdiantiaojianPlanEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shangdiantiaojianActualStartTime != null">
+        #{shangdiantiaojianActualStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shangdiantiaojianActualEndTime != null">
+        #{shangdiantiaojianActualEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="shangdiantiaojianIsNo != null">
         #{shangdiantiaojianIsNo,jdbcType=INTEGER},
       </if>
-      <if test="jingtaiyanshouPlanTime != null">
-        #{jingtaiyanshouPlanTime,jdbcType=TIMESTAMP},
+      <if test="jingtaiyanshouPlanStartTime != null">
+        #{jingtaiyanshouPlanStartTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="jingtaiyanshouActualTime != null">
-        #{jingtaiyanshouActualTime,jdbcType=TIMESTAMP},
+      <if test="jingtaiyanshouPlanEndTime != null">
+        #{jingtaiyanshouPlanEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jingtaiyanshouActualStartTime != null">
+        #{jingtaiyanshouActualStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jingtaiyanshouActualEndTime != null">
+        #{jingtaiyanshouActualEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="jingtaiyanshouIsNo != null">
         #{jingtaiyanshouIsNo,jdbcType=INTEGER},
       </if>
-      <if test="dongtaiyanshouPlanTime != null">
-        #{dongtaiyanshouPlanTime,jdbcType=TIMESTAMP},
+      <if test="dongtaiyanshouPlanStartTime != null">
+        #{dongtaiyanshouPlanStartTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="dongtaiyanshouActualTime != null">
-        #{dongtaiyanshouActualTime,jdbcType=TIMESTAMP},
+      <if test="dongtaiyanshouPlanEndTime != null">
+        #{dongtaiyanshouPlanEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dongtaiyanshouActualStartTime != null">
+        #{dongtaiyanshouActualStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dongtaiyanshouActualEndTime != null">
+        #{dongtaiyanshouActualEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="dongtaiyanshouIsNo != null">
         #{dongtaiyanshouIsNo,jdbcType=INTEGER},
       </if>
-      <if test="liantiaolianshiPlanTime != null">
-        #{liantiaolianshiPlanTime,jdbcType=TIMESTAMP},
+      <if test="liantiaolianshiPlanStartTime != null">
+        #{liantiaolianshiPlanStartTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="liantiaolianshiActualTime != null">
-        #{liantiaolianshiActualTime,jdbcType=TIMESTAMP},
+      <if test="liantiaolianshiPlanEndTime != null">
+        #{liantiaolianshiPlanEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="liantiaolianshiActualStartTime != null">
+        #{liantiaolianshiActualStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="liantiaolianshiActualEndTime != null">
+        #{liantiaolianshiActualEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="liantiaolianshiIsNo != null">
         #{liantiaolianshiIsNo,jdbcType=INTEGER},
       </if>
-      <if test="shiyunxingPlanTime != null">
-        #{shiyunxingPlanTime,jdbcType=TIMESTAMP},
+      <if test="shiyunxingPlanStartTime != null">
+        #{shiyunxingPlanStartTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="shiyunxingActualTime != null">
-        #{shiyunxingActualTime,jdbcType=TIMESTAMP},
+      <if test="shiyunxingPlanEndTime != null">
+        #{shiyunxingPlanEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shiyunxingActualStartTime != null">
+        #{shiyunxingActualStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shiyunxingActualEndTime != null">
+        #{shiyunxingActualEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="shiyunxingIsNo != null">
         #{shiyunxingIsNo,jdbcType=INTEGER},
       </if>
-      <if test="kaitongPlanTime != null">
-        #{kaitongPlanTime,jdbcType=TIMESTAMP},
+      <if test="kaitongPlanStartTime != null">
+        #{kaitongPlanStartTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="kaitongActualTime != null">
-        #{kaitongActualTime,jdbcType=TIMESTAMP},
+      <if test="kaitongPlanEndTime != null">
+        #{kaitongPlanEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="kaitongActualStartTime != null">
+        #{kaitongActualStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="kaitongActualEndTime != null">
+        #{kaitongActualEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="kaitongIsNo != null">
         #{kaitongIsNo,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanEntity">
+
+  <!--根据车站id  编辑对应的信息-->
+  <update id="editCheZhanById" parameterType="com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanEntity">
     update mro_anzhuangtiaoshi_chezhan
     <set>
       <if test="xid != null">
@@ -298,65 +420,107 @@
       <if test="outdoorshebei != null">
         outdoorshebei = #{outdoorshebei,jdbcType=INTEGER},
       </if>
-      <if test="wanchengpeixianPlanTime != null">
-        wanchengpeixian_plan_time = #{wanchengpeixianPlanTime,jdbcType=TIMESTAMP},
+      <if test="wanchengpeixianPlanStartTime != null">
+        wanchengpeixian_plan_start_time = #{wanchengpeixianPlanStartTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="wanchengpeixianActualTime != null">
-        wanchengpeixian_actual_time = #{wanchengpeixianActualTime,jdbcType=TIMESTAMP},
+      <if test="wanchengpeixianPlanEndTime != null">
+        wanchengpeixian_plan_end_time = #{wanchengpeixianPlanEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wanchengpeixianActualStartTime != null">
+        wanchengpeixian_actual_start_time = #{wanchengpeixianActualStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wanchengpeixianActualEndTime != null">
+        wanchengpeixian_actual_end_time = #{wanchengpeixianActualEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="wanchengpeixianIsNo != null">
         wanchengpeixian_is_no = #{wanchengpeixianIsNo,jdbcType=INTEGER},
       </if>
-      <if test="shangdiantiaojianPlanTime != null">
-        shangdiantiaojian_plan_time = #{shangdiantiaojianPlanTime,jdbcType=TIMESTAMP},
+      <if test="shangdiantiaojianPlanStartTime != null">
+        shangdiantiaojian_plan_start_time = #{shangdiantiaojianPlanStartTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="shangdiantiaojianActualTime != null">
-        shangdiantiaojian_actual_time = #{shangdiantiaojianActualTime,jdbcType=TIMESTAMP},
+      <if test="shangdiantiaojianPlanEndTime != null">
+        shangdiantiaojian_plan_end_time = #{shangdiantiaojianPlanEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shangdiantiaojianActualStartTime != null">
+        shangdiantiaojian_actual_start_time = #{shangdiantiaojianActualStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shangdiantiaojianActualEndTime != null">
+        shangdiantiaojian_actual_end_time = #{shangdiantiaojianActualEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="shangdiantiaojianIsNo != null">
         shangdiantiaojian_is_no = #{shangdiantiaojianIsNo,jdbcType=INTEGER},
       </if>
-      <if test="jingtaiyanshouPlanTime != null">
-        jingtaiyanshou_plan_time = #{jingtaiyanshouPlanTime,jdbcType=TIMESTAMP},
+      <if test="jingtaiyanshouPlanStartTime != null">
+        jingtaiyanshou_plan_start_time = #{jingtaiyanshouPlanStartTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="jingtaiyanshouActualTime != null">
-        jingtaiyanshou_actual_time = #{jingtaiyanshouActualTime,jdbcType=TIMESTAMP},
+      <if test="jingtaiyanshouPlanEndTime != null">
+        jingtaiyanshou_plan_end_time = #{jingtaiyanshouPlanEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jingtaiyanshouActualStartTime != null">
+        jingtaiyanshou_actual_start_time = #{jingtaiyanshouActualStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jingtaiyanshouActualEndTime != null">
+        jingtaiyanshou_actual_end_time = #{jingtaiyanshouActualEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="jingtaiyanshouIsNo != null">
         jingtaiyanshou_is_no = #{jingtaiyanshouIsNo,jdbcType=INTEGER},
       </if>
-      <if test="dongtaiyanshouPlanTime != null">
-        dongtaiyanshou_plan_time = #{dongtaiyanshouPlanTime,jdbcType=TIMESTAMP},
+      <if test="dongtaiyanshouPlanStartTime != null">
+        dongtaiyanshou_plan_start_time = #{dongtaiyanshouPlanStartTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="dongtaiyanshouActualTime != null">
-        dongtaiyanshou_actual_time = #{dongtaiyanshouActualTime,jdbcType=TIMESTAMP},
+      <if test="dongtaiyanshouPlanEndTime != null">
+        dongtaiyanshou_plan_end_time = #{dongtaiyanshouPlanEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dongtaiyanshouActualStartTime != null">
+        dongtaiyanshou_actual_start_time = #{dongtaiyanshouActualStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dongtaiyanshouActualEndTime != null">
+        dongtaiyanshou_actual_end_time = #{dongtaiyanshouActualEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="dongtaiyanshouIsNo != null">
         dongtaiyanshou_is_no = #{dongtaiyanshouIsNo,jdbcType=INTEGER},
       </if>
-      <if test="liantiaolianshiPlanTime != null">
-        liantiaolianshi_plan_time = #{liantiaolianshiPlanTime,jdbcType=TIMESTAMP},
+      <if test="liantiaolianshiPlanStartTime != null">
+        liantiaolianshi_plan_start_time = #{liantiaolianshiPlanStartTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="liantiaolianshiActualTime != null">
-        liantiaolianshi_actual_time = #{liantiaolianshiActualTime,jdbcType=TIMESTAMP},
+      <if test="liantiaolianshiPlanEndTime != null">
+        liantiaolianshi_plan_end_time = #{liantiaolianshiPlanEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="liantiaolianshiActualStartTime != null">
+        liantiaolianshi_actual_start_time = #{liantiaolianshiActualStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="liantiaolianshiActualEndTime != null">
+        liantiaolianshi_actual_end_time = #{liantiaolianshiActualEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="liantiaolianshiIsNo != null">
         liantiaolianshi_is_no = #{liantiaolianshiIsNo,jdbcType=INTEGER},
       </if>
-      <if test="shiyunxingPlanTime != null">
-        shiyunxing_plan_time = #{shiyunxingPlanTime,jdbcType=TIMESTAMP},
+      <if test="shiyunxingPlanStartTime != null">
+        shiyunxing_plan_start_time = #{shiyunxingPlanStartTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="shiyunxingActualTime != null">
-        shiyunxing_actual_time = #{shiyunxingActualTime,jdbcType=TIMESTAMP},
+      <if test="shiyunxingPlanEndTime != null">
+        shiyunxing_plan_end_time = #{shiyunxingPlanEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shiyunxingActualStartTime != null">
+        shiyunxing_actual_start_time = #{shiyunxingActualStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shiyunxingActualEndTime != null">
+        shiyunxing_actual_end_time = #{shiyunxingActualEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="shiyunxingIsNo != null">
         shiyunxing_is_no = #{shiyunxingIsNo,jdbcType=INTEGER},
       </if>
-      <if test="kaitongPlanTime != null">
-        kaitong_plan_time = #{kaitongPlanTime,jdbcType=TIMESTAMP},
+      <if test="kaitongPlanStartTime != null">
+        kaitong_plan_start_time = #{kaitongPlanStartTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="kaitongActualTime != null">
-        kaitong_actual_time = #{kaitongActualTime,jdbcType=TIMESTAMP},
+      <if test="kaitongPlanEndTime != null">
+        kaitong_plan_end_time = #{kaitongPlanEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="kaitongActualStartTime != null">
+        kaitong_actual_start_time = #{kaitongActualStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="kaitongActualEndTime != null">
+        kaitong_actual_end_time = #{kaitongActualEndTime,jdbcType=TIMESTAMP},
       </if>
       <if test="kaitongIsNo != null">
         kaitong_is_no = #{kaitongIsNo,jdbcType=INTEGER},
@@ -377,26 +541,40 @@
       jigui = #{jigui,jdbcType=INTEGER},
       indoorkaban = #{indoorkaban,jdbcType=INTEGER},
       outdoorshebei = #{outdoorshebei,jdbcType=INTEGER},
-      wanchengpeixian_plan_time = #{wanchengpeixianPlanTime,jdbcType=TIMESTAMP},
-      wanchengpeixian_actual_time = #{wanchengpeixianActualTime,jdbcType=TIMESTAMP},
+      wanchengpeixian_plan_start_time = #{wanchengpeixianPlanStartTime,jdbcType=TIMESTAMP},
+      wanchengpeixian_plan_end_time = #{wanchengpeixianPlanEndTime,jdbcType=TIMESTAMP},
+      wanchengpeixian_actual_start_time = #{wanchengpeixianActualStartTime,jdbcType=TIMESTAMP},
+      wanchengpeixian_actual_end_time = #{wanchengpeixianActualEndTime,jdbcType=TIMESTAMP},
       wanchengpeixian_is_no = #{wanchengpeixianIsNo,jdbcType=INTEGER},
-      shangdiantiaojian_plan_time = #{shangdiantiaojianPlanTime,jdbcType=TIMESTAMP},
-      shangdiantiaojian_actual_time = #{shangdiantiaojianActualTime,jdbcType=TIMESTAMP},
+      shangdiantiaojian_plan_start_time = #{shangdiantiaojianPlanStartTime,jdbcType=TIMESTAMP},
+      shangdiantiaojian_plan_end_time = #{shangdiantiaojianPlanEndTime,jdbcType=TIMESTAMP},
+      shangdiantiaojian_actual_start_time = #{shangdiantiaojianActualStartTime,jdbcType=TIMESTAMP},
+      shangdiantiaojian_actual_end_time = #{shangdiantiaojianActualEndTime,jdbcType=TIMESTAMP},
       shangdiantiaojian_is_no = #{shangdiantiaojianIsNo,jdbcType=INTEGER},
-      jingtaiyanshou_plan_time = #{jingtaiyanshouPlanTime,jdbcType=TIMESTAMP},
-      jingtaiyanshou_actual_time = #{jingtaiyanshouActualTime,jdbcType=TIMESTAMP},
+      jingtaiyanshou_plan_start_time = #{jingtaiyanshouPlanStartTime,jdbcType=TIMESTAMP},
+      jingtaiyanshou_plan_end_time = #{jingtaiyanshouPlanEndTime,jdbcType=TIMESTAMP},
+      jingtaiyanshou_actual_start_time = #{jingtaiyanshouActualStartTime,jdbcType=TIMESTAMP},
+      jingtaiyanshou_actual_end_time = #{jingtaiyanshouActualEndTime,jdbcType=TIMESTAMP},
       jingtaiyanshou_is_no = #{jingtaiyanshouIsNo,jdbcType=INTEGER},
-      dongtaiyanshou_plan_time = #{dongtaiyanshouPlanTime,jdbcType=TIMESTAMP},
-      dongtaiyanshou_actual_time = #{dongtaiyanshouActualTime,jdbcType=TIMESTAMP},
+      dongtaiyanshou_plan_start_time = #{dongtaiyanshouPlanStartTime,jdbcType=TIMESTAMP},
+      dongtaiyanshou_plan_end_time = #{dongtaiyanshouPlanEndTime,jdbcType=TIMESTAMP},
+      dongtaiyanshou_actual_start_time = #{dongtaiyanshouActualStartTime,jdbcType=TIMESTAMP},
+      dongtaiyanshou_actual_end_time = #{dongtaiyanshouActualEndTime,jdbcType=TIMESTAMP},
       dongtaiyanshou_is_no = #{dongtaiyanshouIsNo,jdbcType=INTEGER},
-      liantiaolianshi_plan_time = #{liantiaolianshiPlanTime,jdbcType=TIMESTAMP},
-      liantiaolianshi_actual_time = #{liantiaolianshiActualTime,jdbcType=TIMESTAMP},
+      liantiaolianshi_plan_start_time = #{liantiaolianshiPlanStartTime,jdbcType=TIMESTAMP},
+      liantiaolianshi_plan_end_time = #{liantiaolianshiPlanEndTime,jdbcType=TIMESTAMP},
+      liantiaolianshi_actual_start_time = #{liantiaolianshiActualStartTime,jdbcType=TIMESTAMP},
+      liantiaolianshi_actual_end_time = #{liantiaolianshiActualEndTime,jdbcType=TIMESTAMP},
       liantiaolianshi_is_no = #{liantiaolianshiIsNo,jdbcType=INTEGER},
-      shiyunxing_plan_time = #{shiyunxingPlanTime,jdbcType=TIMESTAMP},
-      shiyunxing_actual_time = #{shiyunxingActualTime,jdbcType=TIMESTAMP},
+      shiyunxing_plan_start_time = #{shiyunxingPlanStartTime,jdbcType=TIMESTAMP},
+      shiyunxing_plan_end_time = #{shiyunxingPlanEndTime,jdbcType=TIMESTAMP},
+      shiyunxing_actual_start_time = #{shiyunxingActualStartTime,jdbcType=TIMESTAMP},
+      shiyunxing_actual_end_time = #{shiyunxingActualEndTime,jdbcType=TIMESTAMP},
       shiyunxing_is_no = #{shiyunxingIsNo,jdbcType=INTEGER},
-      kaitong_plan_time = #{kaitongPlanTime,jdbcType=TIMESTAMP},
-      kaitong_actual_time = #{kaitongActualTime,jdbcType=TIMESTAMP},
+      kaitong_plan_start_time = #{kaitongPlanStartTime,jdbcType=TIMESTAMP},
+      kaitong_plan_end_time = #{kaitongPlanEndTime,jdbcType=TIMESTAMP},
+      kaitong_actual_start_time = #{kaitongActualStartTime,jdbcType=TIMESTAMP},
+      kaitong_actual_end_time = #{kaitongActualEndTime,jdbcType=TIMESTAMP},
       kaitong_is_no = #{kaitongIsNo,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -405,31 +583,46 @@
       tlj_name, dwd_name, xd_name,
       cz_name, guanlianxiangmu, cz_type,
       jigui, indoorkaban, outdoorshebei,
-      wanchengpeixian_plan_time, wanchengpeixian_actual_time,
-      wanchengpeixian_is_no, shangdiantiaojian_plan_time,
-      shangdiantiaojian_actual_time, shangdiantiaojian_is_no,
-      jingtaiyanshou_plan_time, jingtaiyanshou_actual_time,
-      jingtaiyanshou_is_no, dongtaiyanshou_plan_time,
-      dongtaiyanshou_actual_time, dongtaiyanshou_is_no,
-      liantiaolianshi_plan_time, liantiaolianshi_actual_time,
-      liantiaolianshi_is_no, shiyunxing_plan_time,
-      shiyunxing_actual_time, shiyunxing_is_no,
-      kaitong_plan_time, kaitong_actual_time,
+      wanchengpeixian_plan_start_time, wanchengpeixian_plan_end_time,
+      wanchengpeixian_actual_start_time, wanchengpeixian_actual_end_time,
+      wanchengpeixian_is_no, shangdiantiaojian_plan_start_time,
+      shangdiantiaojian_plan_end_time, shangdiantiaojian_actual_start_time,
+      shangdiantiaojian_actual_end_time, shangdiantiaojian_is_no,
+      jingtaiyanshou_plan_start_time, jingtaiyanshou_plan_end_time,
+      jingtaiyanshou_actual_start_time, jingtaiyanshou_actual_end_time,
+      jingtaiyanshou_is_no, dongtaiyanshou_plan_start_time,
+      dongtaiyanshou_plan_end_time, dongtaiyanshou_actual_start_time,
+      dongtaiyanshou_actual_end_time, dongtaiyanshou_is_no,
+      liantiaolianshi_plan_start_time, liantiaolianshi_plan_end_time,
+      liantiaolianshi_actual_start_time, liantiaolianshi_actual_end_time,
+      liantiaolianshi_is_no, shiyunxing_plan_start_time,
+      shiyunxing_plan_end_time, shiyunxing_actual_start_time,
+      shiyunxing_actual_end_time, shiyunxing_is_no,
+      kaitong_plan_start_time, kaitong_plan_end_time,
+      kaitong_actual_start_time, kaitong_actual_end_time,
       kaitong_is_no)
     values (#{id,jdbcType=INTEGER}, #{xid,jdbcType=INTEGER}, #{czTime,jdbcType=TIMESTAMP},
       #{tljName,jdbcType=VARCHAR}, #{dwdName,jdbcType=VARCHAR}, #{xdName,jdbcType=VARCHAR},
       #{czName,jdbcType=VARCHAR}, #{guanlianxiangmu,jdbcType=VARCHAR}, #{czType,jdbcType=VARCHAR},
       #{jigui,jdbcType=INTEGER}, #{indoorkaban,jdbcType=INTEGER}, #{outdoorshebei,jdbcType=INTEGER},
-      #{wanchengpeixianPlanTime,jdbcType=TIMESTAMP}, #{wanchengpeixianActualTime,jdbcType=TIMESTAMP},
-      #{wanchengpeixianIsNo,jdbcType=INTEGER}, #{shangdiantiaojianPlanTime,jdbcType=TIMESTAMP},
-      #{shangdiantiaojianActualTime,jdbcType=TIMESTAMP}, #{shangdiantiaojianIsNo,jdbcType=INTEGER},
-      #{jingtaiyanshouPlanTime,jdbcType=TIMESTAMP}, #{jingtaiyanshouActualTime,jdbcType=TIMESTAMP},
-      #{jingtaiyanshouIsNo,jdbcType=INTEGER}, #{dongtaiyanshouPlanTime,jdbcType=TIMESTAMP},
-      #{dongtaiyanshouActualTime,jdbcType=TIMESTAMP}, #{dongtaiyanshouIsNo,jdbcType=INTEGER},
-      #{liantiaolianshiPlanTime,jdbcType=TIMESTAMP}, #{liantiaolianshiActualTime,jdbcType=TIMESTAMP},
-      #{liantiaolianshiIsNo,jdbcType=INTEGER}, #{shiyunxingPlanTime,jdbcType=TIMESTAMP},
-      #{shiyunxingActualTime,jdbcType=TIMESTAMP}, #{shiyunxingIsNo,jdbcType=INTEGER},
-      #{kaitongPlanTime,jdbcType=TIMESTAMP}, #{kaitongActualTime,jdbcType=TIMESTAMP},
+      #{wanchengpeixianPlanStartTime,jdbcType=TIMESTAMP}, #{wanchengpeixianPlanEndTime,jdbcType=TIMESTAMP},
+      #{wanchengpeixianActualStartTime,jdbcType=TIMESTAMP}, #{wanchengpeixianActualEndTime,jdbcType=TIMESTAMP},
+      #{wanchengpeixianIsNo,jdbcType=INTEGER}, #{shangdiantiaojianPlanStartTime,jdbcType=TIMESTAMP},
+      #{shangdiantiaojianPlanEndTime,jdbcType=TIMESTAMP}, #{shangdiantiaojianActualStartTime,jdbcType=TIMESTAMP},
+      #{shangdiantiaojianActualEndTime,jdbcType=TIMESTAMP}, #{shangdiantiaojianIsNo,jdbcType=INTEGER},
+      #{jingtaiyanshouPlanStartTime,jdbcType=TIMESTAMP}, #{jingtaiyanshouPlanEndTime,jdbcType=TIMESTAMP},
+      #{jingtaiyanshouActualStartTime,jdbcType=TIMESTAMP}, #{jingtaiyanshouActualEndTime,jdbcType=TIMESTAMP},
+      #{jingtaiyanshouIsNo,jdbcType=INTEGER}, #{dongtaiyanshouPlanStartTime,jdbcType=TIMESTAMP},
+      #{dongtaiyanshouPlanEndTime,jdbcType=TIMESTAMP}, #{dongtaiyanshouActualStartTime,jdbcType=TIMESTAMP},
+      #{dongtaiyanshouActualEndTime,jdbcType=TIMESTAMP}, #{dongtaiyanshouIsNo,jdbcType=INTEGER},
+      #{liantiaolianshiPlanStartTime,jdbcType=TIMESTAMP}, #{liantiaolianshiPlanEndTime,jdbcType=TIMESTAMP},
+      #{liantiaolianshiActualStartTime,jdbcType=TIMESTAMP}, #{liantiaolianshiActualEndTime,jdbcType=TIMESTAMP},
+      #{liantiaolianshiIsNo,jdbcType=INTEGER}, #{shiyunxingPlanStartTime,jdbcType=TIMESTAMP},
+      #{shiyunxingPlanEndTime,jdbcType=TIMESTAMP}, #{shiyunxingActualStartTime,jdbcType=TIMESTAMP},
+      #{shiyunxingActualEndTime,jdbcType=TIMESTAMP}, #{shiyunxingIsNo,jdbcType=INTEGER},
+      #{kaitongPlanStartTime,jdbcType=TIMESTAMP}, #{kaitongPlanEndTime,jdbcType=TIMESTAMP},
+      #{kaitongActualStartTime,jdbcType=TIMESTAMP}, #{kaitongActualEndTime,jdbcType=TIMESTAMP},
       #{kaitongIsNo,jdbcType=INTEGER})
   </insert>
+
 </mapper>

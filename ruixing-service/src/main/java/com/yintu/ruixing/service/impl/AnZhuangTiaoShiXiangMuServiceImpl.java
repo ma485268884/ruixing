@@ -2,12 +2,10 @@ package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.AnZhuangTiaoShiCheZhanXiangMuTypeDao;
+import com.yintu.ruixing.dao.AnZhuangTiaoShiFileDao;
 import com.yintu.ruixing.dao.AnZhuangTiaoShiXiangMuDao;
 import com.yintu.ruixing.dao.ChanPinJiaoFuXiangMuDao;
-import com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanXiangMuTypeEntity;
-import com.yintu.ruixing.entity.AnZhuangTiaoShiXiangMuEntity;
-import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuEntity;
-import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity;
+import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.AnZhuangTiaoShiXiangMuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +25,8 @@ import java.util.Map;
 @Service
 @Transactional
 public class AnZhuangTiaoShiXiangMuServiceImpl implements AnZhuangTiaoShiXiangMuService {
+
+
     @Autowired
     private AnZhuangTiaoShiXiangMuDao anZhuangTiaoShiXiangMuDao;
 
@@ -35,6 +35,14 @@ public class AnZhuangTiaoShiXiangMuServiceImpl implements AnZhuangTiaoShiXiangMu
 
     @Autowired
     private ChanPinJiaoFuXiangMuDao chanPinJiaoFuXiangMuDao;
+
+    @Autowired
+    private AnZhuangTiaoShiFileDao anZhuangTiaoShiFileDao;
+
+    @Override
+    public AnZhuangTiaoShiFileEntity findById(Integer id) {
+        return anZhuangTiaoShiFileDao.selectByPrimaryKey(id);
+    }
 
     @Override
     public List<TreeNodeUtil> findSanJiShu() {

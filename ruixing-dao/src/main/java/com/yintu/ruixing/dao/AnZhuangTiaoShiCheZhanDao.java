@@ -2,6 +2,8 @@ package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanEntity;
 
+import java.util.List;
+
 public interface AnZhuangTiaoShiCheZhanDao {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,7 +16,17 @@ public interface AnZhuangTiaoShiCheZhanDao {
     int updateByPrimaryKeySelective(AnZhuangTiaoShiCheZhanEntity record);
 
     int updateByPrimaryKey(AnZhuangTiaoShiCheZhanEntity record);
-    ////////////////////////////////////////////////////////
+
+
+    ///////////////////////////////////////////////////
 
     void addCheZhan(AnZhuangTiaoShiCheZhanEntity anZhuangTiaoShiCheZhanEntity);
+
+    List<AnZhuangTiaoShiCheZhanEntity> findCheZhanById(Integer id);
+
+    void editCheZhanById(AnZhuangTiaoShiCheZhanEntity anZhuangTiaoShiCheZhanEntity);
+
+    void deleteCheZhanByIds(Integer[] ids);
+
+    List<AnZhuangTiaoShiCheZhanEntity> findCheZhanByName(String czname);
 }

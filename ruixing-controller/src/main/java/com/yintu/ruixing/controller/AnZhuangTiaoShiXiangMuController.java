@@ -1,14 +1,20 @@
 package com.yintu.ruixing.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanXiangMuTypeEntity;
+import com.yintu.ruixing.entity.AnZhuangTiaoShiFileEntity;
 import com.yintu.ruixing.entity.AnZhuangTiaoShiXiangMuEntity;
 import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity;
 import com.yintu.ruixing.service.AnZhuangTiaoShiXiangMuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -62,4 +68,35 @@ public class AnZhuangTiaoShiXiangMuController {
         List<ChanPinJiaoFuXiangMuFileEntity> chanPinJiaoFuXiangMuFileEntities=anZhuangTiaoShiXiangMuService.findXiangMuAndBianHao();
         return ResponseDataUtil.ok("查询关联项目及其编号成功",chanPinJiaoFuXiangMuFileEntities);
     }
+
+    //上传文件
+    @PostMapping("/uploads")
+    @ResponseBody
+    public Map<String, Object> uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+        String fileName = multipartFile.getOriginalFilename();
+        String filePath = FileUploadUtil.save(multipartFile.getInputStream(), fileName);
+        JSONObject jo = new JSONObject();
+        jo.put("filePath", filePath);
+        jo.put("fileName", fileName);
+        return ResponseDataUtil.ok("上传文件成功", jo);
+    }
+
+    //根据id 下载文件
+    @GetMapping("/downloads/{id}")
+    public void downloadFile(@PathVariable Integer id, HttpServletResponse response) throws IOException {
+        AnZhuangTiaoShiFileEntity anZhuangTiaoShiFileEntity=anZhuangTiaoShiXiangMuService.findById(id);
+        if (anZhuangTiaoShiFileEntity != null) {
+            String filePath = anZhuangTiaoShiFileEntity.getFilePath();
+            String fileName = anZhuangTiaoShiFileEntity.getFileName();
+            if (filePath != null && !"".equals(filePath) && fileName != null && !"".equals(fileName)) {
+                response.setContentType("application/octet-stream;charset=ISO8859-1");
+                response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
+                response.addHeader("Pargam", "no-cache");
+                response.addHeader("Cache-Control", "no-cache");
+                FileUploadUtil.get(response.getOutputStream(), filePath + "\\" + fileName);
+            }
+        }
+    }
+
+    //
 }

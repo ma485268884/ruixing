@@ -2,6 +2,7 @@ package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanXiangMuTypeEntity;
+import com.yintu.ruixing.entity.AnZhuangTiaoShiFileEntity;
 import com.yintu.ruixing.entity.AnZhuangTiaoShiXiangMuEntity;
 import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity;
 
@@ -26,4 +27,5 @@ public interface AnZhuangTiaoShiXiangMuService {
 
     List<ChanPinJiaoFuXiangMuFileEntity> findXiangMuAndBianHao();
 
+    AnZhuangTiaoShiFileEntity findById(Integer id);
 }

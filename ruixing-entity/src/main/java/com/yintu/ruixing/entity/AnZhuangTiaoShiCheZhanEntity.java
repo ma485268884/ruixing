@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,48 +33,105 @@ public class AnZhuangTiaoShiCheZhanEntity {
 
     private Integer outdoorshebei;
 
-    private Date wanchengpeixianPlanTime;
+    private Date wanchengpeixianPlanStartTime;
 
-    private Date wanchengpeixianActualTime;
+    private Date wanchengpeixianPlanEndTime;
+
+    private Date wanchengpeixianActualStartTime;
+
+    private Date wanchengpeixianActualEndTime;
 
     private Integer wanchengpeixianIsNo;
 
-    private Date shangdiantiaojianPlanTime;
+    private Date shangdiantiaojianPlanStartTime;
 
-    private Date shangdiantiaojianActualTime;
+    private Date shangdiantiaojianPlanEndTime;
+
+    private Date shangdiantiaojianActualStartTime;
+
+    private Date shangdiantiaojianActualEndTime;
 
     private Integer shangdiantiaojianIsNo;
 
-    private Date jingtaiyanshouPlanTime;
+    private Date jingtaiyanshouPlanStartTime;
 
-    private Date jingtaiyanshouActualTime;
+    private Date jingtaiyanshouPlanEndTime;
+
+    private Date jingtaiyanshouActualStartTime;
+
+    private Date jingtaiyanshouActualEndTime;
 
     private Integer jingtaiyanshouIsNo;
 
-    private Date dongtaiyanshouPlanTime;
+    private Date dongtaiyanshouPlanStartTime;
 
-    private Date dongtaiyanshouActualTime;
+    private Date dongtaiyanshouPlanEndTime;
+
+    private Date dongtaiyanshouActualStartTime;
+
+    private Date dongtaiyanshouActualEndTime;
 
     private Integer dongtaiyanshouIsNo;
 
-    private Date liantiaolianshiPlanTime;
+    private Date liantiaolianshiPlanStartTime;
 
-    private Date liantiaolianshiActualTime;
+    private Date liantiaolianshiPlanEndTime;
+
+    private Date liantiaolianshiActualStartTime;
+
+    private Date liantiaolianshiActualEndTime;
 
     private Integer liantiaolianshiIsNo;
 
-    private Date shiyunxingPlanTime;
+    private Date shiyunxingPlanStartTime;
 
-    private Date shiyunxingActualTime;
+    private Date shiyunxingPlanEndTime;
+
+    private Date shiyunxingActualStartTime;
+
+    private Date shiyunxingActualEndTime;
 
     private Integer shiyunxingIsNo;
 
-    private Date kaitongPlanTime;
+    private Date kaitongPlanStartTime;
 
-    private Date kaitongActualTime;
+    private Date kaitongPlanEndTime;
+
+    private Date kaitongActualStartTime;
+
+    private Date kaitongActualEndTime;
 
     private Integer kaitongIsNo;
 
+    private Integer wanchengpeixianPlanToalTime;
+    private Integer wanchengpeixianPlanOneTime;
+
+    private Integer shangdiantiaojianPlanToalTime;
+    private Integer shangdiantiaojianPlanOneTime;
+
+    private Integer jingtaiyanshouPlanToalTime;
+    private Integer jingtaiyanshouPlanOneTime;
+
+    private Integer dongtaiyanshouPlanToalTime;
+    private Integer dongtaiyanshouPlanOneTime;
+
+    private Integer liantiaolianshiPlanToalTime;
+    private Integer liantiaolianshiPlanOneTime;
+
+    private Integer shiyunxingPlanToalTime;
+    private Integer shiyunxingPlanOneTime;
+
+    private Integer kaitongPlanToalTime;
+    private Integer kaitongPlanOneTime;
+
+
+
+
+
+
+
+
+/*
     public Integer getId() {
         return id;
     }
@@ -172,20 +228,36 @@ public class AnZhuangTiaoShiCheZhanEntity {
         this.outdoorshebei = outdoorshebei;
     }
 
-    public Date getWanchengpeixianPlanTime() {
-        return wanchengpeixianPlanTime;
+    public Date getWanchengpeixianPlanStartTime() {
+        return wanchengpeixianPlanStartTime;
     }
 
-    public void setWanchengpeixianPlanTime(Date wanchengpeixianPlanTime) {
-        this.wanchengpeixianPlanTime = wanchengpeixianPlanTime;
+    public void setWanchengpeixianPlanStartTime(Date wanchengpeixianPlanStartTime) {
+        this.wanchengpeixianPlanStartTime = wanchengpeixianPlanStartTime;
     }
 
-    public Date getWanchengpeixianActualTime() {
-        return wanchengpeixianActualTime;
+    public Date getWanchengpeixianPlanEndTime() {
+        return wanchengpeixianPlanEndTime;
     }
 
-    public void setWanchengpeixianActualTime(Date wanchengpeixianActualTime) {
-        this.wanchengpeixianActualTime = wanchengpeixianActualTime;
+    public void setWanchengpeixianPlanEndTime(Date wanchengpeixianPlanEndTime) {
+        this.wanchengpeixianPlanEndTime = wanchengpeixianPlanEndTime;
+    }
+
+    public Date getWanchengpeixianActualStartTime() {
+        return wanchengpeixianActualStartTime;
+    }
+
+    public void setWanchengpeixianActualStartTime(Date wanchengpeixianActualStartTime) {
+        this.wanchengpeixianActualStartTime = wanchengpeixianActualStartTime;
+    }
+
+    public Date getWanchengpeixianActualEndTime() {
+        return wanchengpeixianActualEndTime;
+    }
+
+    public void setWanchengpeixianActualEndTime(Date wanchengpeixianActualEndTime) {
+        this.wanchengpeixianActualEndTime = wanchengpeixianActualEndTime;
     }
 
     public Integer getWanchengpeixianIsNo() {
@@ -196,20 +268,36 @@ public class AnZhuangTiaoShiCheZhanEntity {
         this.wanchengpeixianIsNo = wanchengpeixianIsNo;
     }
 
-    public Date getShangdiantiaojianPlanTime() {
-        return shangdiantiaojianPlanTime;
+    public Date getShangdiantiaojianPlanStartTime() {
+        return shangdiantiaojianPlanStartTime;
     }
 
-    public void setShangdiantiaojianPlanTime(Date shangdiantiaojianPlanTime) {
-        this.shangdiantiaojianPlanTime = shangdiantiaojianPlanTime;
+    public void setShangdiantiaojianPlanStartTime(Date shangdiantiaojianPlanStartTime) {
+        this.shangdiantiaojianPlanStartTime = shangdiantiaojianPlanStartTime;
     }
 
-    public Date getShangdiantiaojianActualTime() {
-        return shangdiantiaojianActualTime;
+    public Date getShangdiantiaojianPlanEndTime() {
+        return shangdiantiaojianPlanEndTime;
     }
 
-    public void setShangdiantiaojianActualTime(Date shangdiantiaojianActualTime) {
-        this.shangdiantiaojianActualTime = shangdiantiaojianActualTime;
+    public void setShangdiantiaojianPlanEndTime(Date shangdiantiaojianPlanEndTime) {
+        this.shangdiantiaojianPlanEndTime = shangdiantiaojianPlanEndTime;
+    }
+
+    public Date getShangdiantiaojianActualStartTime() {
+        return shangdiantiaojianActualStartTime;
+    }
+
+    public void setShangdiantiaojianActualStartTime(Date shangdiantiaojianActualStartTime) {
+        this.shangdiantiaojianActualStartTime = shangdiantiaojianActualStartTime;
+    }
+
+    public Date getShangdiantiaojianActualEndTime() {
+        return shangdiantiaojianActualEndTime;
+    }
+
+    public void setShangdiantiaojianActualEndTime(Date shangdiantiaojianActualEndTime) {
+        this.shangdiantiaojianActualEndTime = shangdiantiaojianActualEndTime;
     }
 
     public Integer getShangdiantiaojianIsNo() {
@@ -220,20 +308,36 @@ public class AnZhuangTiaoShiCheZhanEntity {
         this.shangdiantiaojianIsNo = shangdiantiaojianIsNo;
     }
 
-    public Date getJingtaiyanshouPlanTime() {
-        return jingtaiyanshouPlanTime;
+    public Date getJingtaiyanshouPlanStartTime() {
+        return jingtaiyanshouPlanStartTime;
     }
 
-    public void setJingtaiyanshouPlanTime(Date jingtaiyanshouPlanTime) {
-        this.jingtaiyanshouPlanTime = jingtaiyanshouPlanTime;
+    public void setJingtaiyanshouPlanStartTime(Date jingtaiyanshouPlanStartTime) {
+        this.jingtaiyanshouPlanStartTime = jingtaiyanshouPlanStartTime;
     }
 
-    public Date getJingtaiyanshouActualTime() {
-        return jingtaiyanshouActualTime;
+    public Date getJingtaiyanshouPlanEndTime() {
+        return jingtaiyanshouPlanEndTime;
     }
 
-    public void setJingtaiyanshouActualTime(Date jingtaiyanshouActualTime) {
-        this.jingtaiyanshouActualTime = jingtaiyanshouActualTime;
+    public void setJingtaiyanshouPlanEndTime(Date jingtaiyanshouPlanEndTime) {
+        this.jingtaiyanshouPlanEndTime = jingtaiyanshouPlanEndTime;
+    }
+
+    public Date getJingtaiyanshouActualStartTime() {
+        return jingtaiyanshouActualStartTime;
+    }
+
+    public void setJingtaiyanshouActualStartTime(Date jingtaiyanshouActualStartTime) {
+        this.jingtaiyanshouActualStartTime = jingtaiyanshouActualStartTime;
+    }
+
+    public Date getJingtaiyanshouActualEndTime() {
+        return jingtaiyanshouActualEndTime;
+    }
+
+    public void setJingtaiyanshouActualEndTime(Date jingtaiyanshouActualEndTime) {
+        this.jingtaiyanshouActualEndTime = jingtaiyanshouActualEndTime;
     }
 
     public Integer getJingtaiyanshouIsNo() {
@@ -244,20 +348,36 @@ public class AnZhuangTiaoShiCheZhanEntity {
         this.jingtaiyanshouIsNo = jingtaiyanshouIsNo;
     }
 
-    public Date getDongtaiyanshouPlanTime() {
-        return dongtaiyanshouPlanTime;
+    public Date getDongtaiyanshouPlanStartTime() {
+        return dongtaiyanshouPlanStartTime;
     }
 
-    public void setDongtaiyanshouPlanTime(Date dongtaiyanshouPlanTime) {
-        this.dongtaiyanshouPlanTime = dongtaiyanshouPlanTime;
+    public void setDongtaiyanshouPlanStartTime(Date dongtaiyanshouPlanStartTime) {
+        this.dongtaiyanshouPlanStartTime = dongtaiyanshouPlanStartTime;
     }
 
-    public Date getDongtaiyanshouActualTime() {
-        return dongtaiyanshouActualTime;
+    public Date getDongtaiyanshouPlanEndTime() {
+        return dongtaiyanshouPlanEndTime;
     }
 
-    public void setDongtaiyanshouActualTime(Date dongtaiyanshouActualTime) {
-        this.dongtaiyanshouActualTime = dongtaiyanshouActualTime;
+    public void setDongtaiyanshouPlanEndTime(Date dongtaiyanshouPlanEndTime) {
+        this.dongtaiyanshouPlanEndTime = dongtaiyanshouPlanEndTime;
+    }
+
+    public Date getDongtaiyanshouActualStartTime() {
+        return dongtaiyanshouActualStartTime;
+    }
+
+    public void setDongtaiyanshouActualStartTime(Date dongtaiyanshouActualStartTime) {
+        this.dongtaiyanshouActualStartTime = dongtaiyanshouActualStartTime;
+    }
+
+    public Date getDongtaiyanshouActualEndTime() {
+        return dongtaiyanshouActualEndTime;
+    }
+
+    public void setDongtaiyanshouActualEndTime(Date dongtaiyanshouActualEndTime) {
+        this.dongtaiyanshouActualEndTime = dongtaiyanshouActualEndTime;
     }
 
     public Integer getDongtaiyanshouIsNo() {
@@ -268,20 +388,36 @@ public class AnZhuangTiaoShiCheZhanEntity {
         this.dongtaiyanshouIsNo = dongtaiyanshouIsNo;
     }
 
-    public Date getLiantiaolianshiPlanTime() {
-        return liantiaolianshiPlanTime;
+    public Date getLiantiaolianshiPlanStartTime() {
+        return liantiaolianshiPlanStartTime;
     }
 
-    public void setLiantiaolianshiPlanTime(Date liantiaolianshiPlanTime) {
-        this.liantiaolianshiPlanTime = liantiaolianshiPlanTime;
+    public void setLiantiaolianshiPlanStartTime(Date liantiaolianshiPlanStartTime) {
+        this.liantiaolianshiPlanStartTime = liantiaolianshiPlanStartTime;
     }
 
-    public Date getLiantiaolianshiActualTime() {
-        return liantiaolianshiActualTime;
+    public Date getLiantiaolianshiPlanEndTime() {
+        return liantiaolianshiPlanEndTime;
     }
 
-    public void setLiantiaolianshiActualTime(Date liantiaolianshiActualTime) {
-        this.liantiaolianshiActualTime = liantiaolianshiActualTime;
+    public void setLiantiaolianshiPlanEndTime(Date liantiaolianshiPlanEndTime) {
+        this.liantiaolianshiPlanEndTime = liantiaolianshiPlanEndTime;
+    }
+
+    public Date getLiantiaolianshiActualStartTime() {
+        return liantiaolianshiActualStartTime;
+    }
+
+    public void setLiantiaolianshiActualStartTime(Date liantiaolianshiActualStartTime) {
+        this.liantiaolianshiActualStartTime = liantiaolianshiActualStartTime;
+    }
+
+    public Date getLiantiaolianshiActualEndTime() {
+        return liantiaolianshiActualEndTime;
+    }
+
+    public void setLiantiaolianshiActualEndTime(Date liantiaolianshiActualEndTime) {
+        this.liantiaolianshiActualEndTime = liantiaolianshiActualEndTime;
     }
 
     public Integer getLiantiaolianshiIsNo() {
@@ -292,20 +428,36 @@ public class AnZhuangTiaoShiCheZhanEntity {
         this.liantiaolianshiIsNo = liantiaolianshiIsNo;
     }
 
-    public Date getShiyunxingPlanTime() {
-        return shiyunxingPlanTime;
+    public Date getShiyunxingPlanStartTime() {
+        return shiyunxingPlanStartTime;
     }
 
-    public void setShiyunxingPlanTime(Date shiyunxingPlanTime) {
-        this.shiyunxingPlanTime = shiyunxingPlanTime;
+    public void setShiyunxingPlanStartTime(Date shiyunxingPlanStartTime) {
+        this.shiyunxingPlanStartTime = shiyunxingPlanStartTime;
     }
 
-    public Date getShiyunxingActualTime() {
-        return shiyunxingActualTime;
+    public Date getShiyunxingPlanEndTime() {
+        return shiyunxingPlanEndTime;
     }
 
-    public void setShiyunxingActualTime(Date shiyunxingActualTime) {
-        this.shiyunxingActualTime = shiyunxingActualTime;
+    public void setShiyunxingPlanEndTime(Date shiyunxingPlanEndTime) {
+        this.shiyunxingPlanEndTime = shiyunxingPlanEndTime;
+    }
+
+    public Date getShiyunxingActualStartTime() {
+        return shiyunxingActualStartTime;
+    }
+
+    public void setShiyunxingActualStartTime(Date shiyunxingActualStartTime) {
+        this.shiyunxingActualStartTime = shiyunxingActualStartTime;
+    }
+
+    public Date getShiyunxingActualEndTime() {
+        return shiyunxingActualEndTime;
+    }
+
+    public void setShiyunxingActualEndTime(Date shiyunxingActualEndTime) {
+        this.shiyunxingActualEndTime = shiyunxingActualEndTime;
     }
 
     public Integer getShiyunxingIsNo() {
@@ -316,20 +468,36 @@ public class AnZhuangTiaoShiCheZhanEntity {
         this.shiyunxingIsNo = shiyunxingIsNo;
     }
 
-    public Date getKaitongPlanTime() {
-        return kaitongPlanTime;
+    public Date getKaitongPlanStartTime() {
+        return kaitongPlanStartTime;
     }
 
-    public void setKaitongPlanTime(Date kaitongPlanTime) {
-        this.kaitongPlanTime = kaitongPlanTime;
+    public void setKaitongPlanStartTime(Date kaitongPlanStartTime) {
+        this.kaitongPlanStartTime = kaitongPlanStartTime;
     }
 
-    public Date getKaitongActualTime() {
-        return kaitongActualTime;
+    public Date getKaitongPlanEndTime() {
+        return kaitongPlanEndTime;
     }
 
-    public void setKaitongActualTime(Date kaitongActualTime) {
-        this.kaitongActualTime = kaitongActualTime;
+    public void setKaitongPlanEndTime(Date kaitongPlanEndTime) {
+        this.kaitongPlanEndTime = kaitongPlanEndTime;
+    }
+
+    public Date getKaitongActualStartTime() {
+        return kaitongActualStartTime;
+    }
+
+    public void setKaitongActualStartTime(Date kaitongActualStartTime) {
+        this.kaitongActualStartTime = kaitongActualStartTime;
+    }
+
+    public Date getKaitongActualEndTime() {
+        return kaitongActualEndTime;
+    }
+
+    public void setKaitongActualEndTime(Date kaitongActualEndTime) {
+        this.kaitongActualEndTime = kaitongActualEndTime;
     }
 
     public Integer getKaitongIsNo() {
@@ -338,5 +506,5 @@ public class AnZhuangTiaoShiCheZhanEntity {
 
     public void setKaitongIsNo(Integer kaitongIsNo) {
         this.kaitongIsNo = kaitongIsNo;
-    }
+    }*/
 }
