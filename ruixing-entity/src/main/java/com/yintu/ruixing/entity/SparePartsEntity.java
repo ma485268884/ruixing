@@ -12,21 +12,21 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MaintenancePlanInfoEntity implements Serializable {
-    private static final long serialVersionUID = 4786248300945836138L;
+public class SparePartsEntity implements Serializable {
+    private static final long serialVersionUID = 2278639226184850872L;
     private Integer id;
     @NotEmpty
-    private String work;
+    private String equipmentName;
     @NotEmpty
-    private String period;
+    private String storageTime;
     @NotEmpty
-    private String result;
+    private String examinationPeriod;
     @NotNull
-    private Integer maintenancePlanId;
+    private Short examinationStatus;
+    @NotNull
+    private Short functionalStatus;
 
     private Date createdDate;
-
-    private MaintenancePlanEntity maintenancePlanEntity;
 
 
 }

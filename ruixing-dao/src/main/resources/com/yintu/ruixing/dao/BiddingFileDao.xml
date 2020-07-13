@@ -154,7 +154,7 @@
             <if test="projectName!=null">
                 and b.project_name like concat('%',#{projectName},'%')
             </if>
-            <if test="ids!=null">
+            <if test="ids!=null and ids.length>0">
                 and bf.id in
                 <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
                     #{id}
