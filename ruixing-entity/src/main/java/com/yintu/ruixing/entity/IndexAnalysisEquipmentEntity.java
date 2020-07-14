@@ -16,8 +16,6 @@ import java.util.Date;
 public class IndexAnalysisEquipmentEntity implements Serializable {
     private static final long serialVersionUID = 2993558940084234082L;
     private Integer id;
-    @NotNull
-    private Integer equipmentNumberId;
     @Past
     @NotNull
     private Date onlineTime;
@@ -38,5 +36,9 @@ public class IndexAnalysisEquipmentEntity implements Serializable {
     private String equipmentMttf;
     @NotEmpty
     private String typeMttf;
+    @NotNull
+    private Integer equipmentNumberId;
+
+    private EquipmentNumberEntity equipmentNumberEntity;
 
 }

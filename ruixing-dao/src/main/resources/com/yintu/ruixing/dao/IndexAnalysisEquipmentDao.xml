@@ -162,4 +162,43 @@
             type_MTTF           = #{typeMttf,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
+
+    <resultMap id="ConnectResultMap" type="com.yintu.ruixing.entity.IndexAnalysisEquipmentEntity">
+        <id column="iae_id" jdbcType="INTEGER" property="id"/>
+        <result column="equipment_number_id" jdbcType="INTEGER" property="equipmentNumberId"/>
+        <result column="online_time" jdbcType="TIMESTAMP" property="onlineTime"/>
+        <result column="logout_time" jdbcType="TIMESTAMP" property="logoutTime"/>
+        <result column="using_history" jdbcType="VARCHAR" property="usingHistory"/>
+        <result column="using_local" jdbcType="VARCHAR" property="usingLocal"/>
+        <result column="using_time" jdbcType="VARCHAR" property="usingTime"/>
+        <result column="fault_section" jdbcType="VARCHAR" property="faultSection"/>
+        <result column="fault_type" jdbcType="SMALLINT" property="faultType"/>
+        <result column="equipment_MTTF" jdbcType="VARCHAR" property="equipmentMttf"/>
+        <result column="type_MTTF" jdbcType="VARCHAR" property="typeMttf"/>
+        <association column="equipment_number_id" property="equipmentNumberEntity">
+            <id column="en_id" jdbcType="INTEGER" property="id"/>
+            <result column="rack_number" jdbcType="VARCHAR" property="rackNumber"/>
+            <result column="equipment_number" jdbcType="VARCHAR" property="equipmentNumber"/>
+            <result column="hierarchy" jdbcType="VARCHAR" property="hierarchy"/>
+            <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+            <result column="operator" jdbcType="VARCHAR" property="operator"/>
+            <result column="photo_path" jdbcType="VARCHAR" property="photoPath"/>
+            <result column="photo_name" jdbcType="VARCHAR" property="photoName"/>
+        </association>
+    </resultMap>
+    <sql id="Connect_Column_List">
+        iae.id as iae_id, iae.equipment_number_id, iae.online_time, iae.logout_time, iae.using_history, iae.using_local, iae.using_time,iae.fault_section, iae.fault_type, iae.equipment_MTTF, iae.type_MTTF,
+        en.id as en_id, en.rack_number, en.equipment_number, en.hierarchy, en.created_date, en.operator, en.photo_path,en.photo_name
+    </sql>
+    <select id="selectByCondition" resultMap="ConnectResultMap">
+        select
+        <include refid="Connect_Column_List"/>
+        from mro_index_analysis_equipment iae inner join mro_equipment_number en
+        on iae.equipment_number_id = en.id
+        <where>
+            <if test="equipmentNumber!=null">
+                en.equipment_number like concat('%',#{equipmentNumber},'%')
+            </if>
+        </where>
+    </select>
 </mapper>
