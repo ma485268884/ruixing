@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,6 +12,10 @@ public class AnZhuangTiaoShiFileEntity {
     private Integer id;
 
     private Integer xdid;
+
+    private String xdName;
+
+    private Date createtime;
 
     private Integer fileType;
 
@@ -21,15 +26,6 @@ public class AnZhuangTiaoShiFileEntity {
     private Integer fabuType;
 
     private String yuliu;
-
-    private AnZhuangTiaoShiXiangMuEntity anZhuangTiaoShiXiangMuEntity;
-
-
-
-
-
-
-
 
     public Integer getId() {
         return id;
@@ -45,6 +41,22 @@ public class AnZhuangTiaoShiFileEntity {
 
     public void setXdid(Integer xdid) {
         this.xdid = xdid;
+    }
+
+    public String getXdName() {
+        return xdName;
+    }
+
+    public void setXdName(String xdName) {
+        this.xdName = xdName == null ? null : xdName.trim();
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 
     public Integer getFileType() {

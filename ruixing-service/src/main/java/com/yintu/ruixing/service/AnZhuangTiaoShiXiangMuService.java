@@ -6,6 +6,8 @@ import com.yintu.ruixing.entity.AnZhuangTiaoShiFileEntity;
 import com.yintu.ruixing.entity.AnZhuangTiaoShiXiangMuEntity;
 import com.yintu.ruixing.entity.ChanPinJiaoFuXiangMuFileEntity;
 
+import javax.servlet.ServletOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -17,7 +19,7 @@ import java.util.List;
 public interface AnZhuangTiaoShiXiangMuService {
     List<TreeNodeUtil> findSanJiShu();
 
-    void addSanJiShuXiangMu(AnZhuangTiaoShiXiangMuEntity anZhuangTiaoShiXiangMuEntity);
+    void addSanJiShuXiangMu(AnZhuangTiaoShiXiangMuEntity anZhuangTiaoShiXiangMuEntity)throws Exception ;
 
     void editSanJiShu(AnZhuangTiaoShiXiangMuEntity anZhuangTiaoShiXiangMuEntity);
 
@@ -28,4 +30,14 @@ public interface AnZhuangTiaoShiXiangMuService {
     List<ChanPinJiaoFuXiangMuFileEntity> findXiangMuAndBianHao();
 
     AnZhuangTiaoShiFileEntity findById(Integer id);
+
+    List<AnZhuangTiaoShiXiangMuEntity> findXianDuanDataByLeiXing(Integer leiXingId,Integer page,Integer size);
+
+    List<AnZhuangTiaoShiXiangMuEntity> findXianDuanNameAndYear();
+
+    List<AnZhuangTiaoShiXiangMuEntity> findXianDuanBySomedata(Integer page, Integer size, String xdname, String year, String xdtype, Integer xdleixing);
+
+    Integer findCheZhanTotal(Integer id);
+
+    void exportFile(ServletOutputStream outputStream, Integer[] ids)throws IOException;
 }

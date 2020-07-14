@@ -2,6 +2,7 @@ package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanXiangMuTypeEntity;
 
+
 import java.util.List;
 
 public interface AnZhuangTiaoShiCheZhanXiangMuTypeDao {
@@ -22,4 +23,6 @@ public interface AnZhuangTiaoShiCheZhanXiangMuTypeDao {
     void addXiangMuType(AnZhuangTiaoShiCheZhanXiangMuTypeEntity anZhuangTiaoShiCheZhanXiangMuTypeEntity);
 
     List<AnZhuangTiaoShiCheZhanXiangMuTypeEntity> findAllXiangMuType();
+
+
 }
