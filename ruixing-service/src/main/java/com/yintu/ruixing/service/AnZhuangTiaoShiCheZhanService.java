@@ -2,6 +2,8 @@ package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanEntity;
 
+import java.util.List;
+
 /**
  * @Author Mr.liu
  * @Date 2020/7/11 16:48
@@ -10,4 +12,13 @@ import com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanEntity;
  */
 public interface AnZhuangTiaoShiCheZhanService {
     void addCheZhan(AnZhuangTiaoShiCheZhanEntity anZhuangTiaoShiCheZhanEntity);
+
+    List<AnZhuangTiaoShiCheZhanEntity> findCheZhanById(Integer id, Integer page, Integer size);
+
+
+    void editCheZhanById(AnZhuangTiaoShiCheZhanEntity anZhuangTiaoShiCheZhanEntity);
+
+    void deleteCheZhanByIds(Integer[] ids);
+
+    List<AnZhuangTiaoShiCheZhanEntity> findCheZhanByName(String czname, Integer page, Integer size);
 }

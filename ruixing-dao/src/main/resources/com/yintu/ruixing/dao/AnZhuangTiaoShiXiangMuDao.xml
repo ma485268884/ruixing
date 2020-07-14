@@ -19,6 +19,8 @@
     select
     <include refid="Base_Column_List" />
     from mro_anzhuangtiaoshi_xiangmu
+    GROUP BY
+    xd_fenlei
   </select>
 
   <!--根据项目状态 查询对应的数据  作为树的第二级-->
