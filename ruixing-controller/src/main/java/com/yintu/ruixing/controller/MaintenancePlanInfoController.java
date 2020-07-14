@@ -1,5 +1,7 @@
 package com.yintu.ruixing.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.FileUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
@@ -12,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -54,6 +57,19 @@ public class MaintenancePlanInfoController extends SessionController implements 
     public Map<String, Object> findById(@PathVariable Integer id) {
         MaintenancePlanInfoEntity maintenancePlanInfoEntity = maintenancePlanInfoService.findMaintenancePlanById(id);
         return ResponseDataUtil.ok("查询维护计划详情息成功", maintenancePlanInfoEntity);
+    }
+
+    @GetMapping
+    @ResponseBody
+    public Map<String, Object> findByAll(@RequestParam("page_number") Integer pageNumber,
+                                         @RequestParam("page_size") Integer pageSize,
+                                         @RequestParam(value = "order_by", required = false, defaultValue = "mpi.id DESC") String orderBy,
+                                         @RequestParam(value = "work", required = false) String work,
+                                         @RequestParam(value = "maintenancePlanId") Integer maintenancePlanId) {
+        PageHelper.startPage(pageNumber, pageSize, orderBy);
+        List<MaintenancePlanInfoEntity> maintenancePlanInfoEntities = maintenancePlanInfoService.findByCondition(null, maintenancePlanId, work);
+        PageInfo<MaintenancePlanInfoEntity> pageInfo = new PageInfo<>(maintenancePlanInfoEntities);
+        return ResponseDataUtil.ok("查询维护计划详情列表信息成功", pageInfo);
     }
 
     @PostMapping("/import")
