@@ -48,15 +48,15 @@ public class AnZhuangTiaoShiXiangMuServiceImpl implements AnZhuangTiaoShiXiangMu
         String title = "安装调试线段列表";
         //excel表名
         String[] headers = {"序号", "线段名称", "项目年份", "车站数量", "项目类型", "机柜到货的数量", "室内卡板到货的数量",
-                "室外设备到货的数量", "完成配线的数量","具备上电条件的数量", "完成静态验收的数量", "完成动态验收的数量",
+                "室外设备到货的数量", "完成配线的数量", "具备上电条件的数量", "完成静态验收的数量", "完成动态验收的数量",
                 "完成联调联试的数量", "完成试运行的数量", "开通的数量"};
         //获取数据
-        List<AnZhuangTiaoShiXiangMuEntity> xiangMuEntities=anZhuangTiaoShiXiangMuDao.findXiangMuData(ids);
+        List<AnZhuangTiaoShiXiangMuEntity> xiangMuEntities = anZhuangTiaoShiXiangMuDao.findXiangMuData(ids);
         xiangMuEntities = xiangMuEntities.stream()
                 .sorted(Comparator.comparing(AnZhuangTiaoShiXiangMuEntity::getId).reversed())
                 .collect(Collectors.toList());
         //excel元素
-        SimpleDateFormat format=new SimpleDateFormat("yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy");
         Integer j = 0;
         String[][] content = new String[xiangMuEntities.size()][headers.length];
         for (int i = 0; i < xiangMuEntities.size(); i++) {
@@ -66,28 +66,28 @@ public class AnZhuangTiaoShiXiangMuServiceImpl implements AnZhuangTiaoShiXiangMu
             content[i][0] = j.toString();
             content[i][1] = anZhuangTiaoShiXiangMuEntity.getXdName();
             content[i][2] = format.format(anZhuangTiaoShiXiangMuEntity.getXianduantime().toString());
-            Integer chezhantotal=anZhuangTiaoShiCheZhanDao.findCheZhanTotal(id);
+            Integer chezhantotal = anZhuangTiaoShiCheZhanDao.findCheZhanTotal(id);
             content[i][3] = chezhantotal.toString();
             content[i][4] = anZhuangTiaoShiXiangMuEntity.getXdType();
-            Integer jiGuitotal=anZhuangTiaoShiCheZhanDao.findJiGuiTotal(id);
+            Integer jiGuitotal = anZhuangTiaoShiCheZhanDao.findJiGuiTotal(id);
             content[i][5] = jiGuitotal.toString();
-            Integer indoorKaBantotal=anZhuangTiaoShiCheZhanDao.findIndoorKaBantotal(id);
+            Integer indoorKaBantotal = anZhuangTiaoShiCheZhanDao.findIndoorKaBantotal(id);
             content[i][6] = indoorKaBantotal.toString();
-            Integer outdoorSheBeitotal=anZhuangTiaoShiCheZhanDao.findOutdoorSheBeiTotal(id);
+            Integer outdoorSheBeitotal = anZhuangTiaoShiCheZhanDao.findOutdoorSheBeiTotal(id);
             content[i][7] = outdoorSheBeitotal.toString();
-            Integer peiXiantotal=anZhuangTiaoShiCheZhanDao.findPeiXianTotal(id);
+            Integer peiXiantotal = anZhuangTiaoShiCheZhanDao.findPeiXianTotal(id);
             content[i][8] = peiXiantotal.toString();
-            Integer shangDiantotal=anZhuangTiaoShiCheZhanDao.findShangDianTotal(id);
+            Integer shangDiantotal = anZhuangTiaoShiCheZhanDao.findShangDianTotal(id);
             content[i][9] = shangDiantotal.toString();
-            Integer jingTaiYanShoutotal=anZhuangTiaoShiCheZhanDao.findJingTaiYanShouTotal(id);
+            Integer jingTaiYanShoutotal = anZhuangTiaoShiCheZhanDao.findJingTaiYanShouTotal(id);
             content[i][10] = jingTaiYanShoutotal.toString();
-            Integer dongTaiYanShoutotal=anZhuangTiaoShiCheZhanDao.findDongTaiYanShouTotal(id);
+            Integer dongTaiYanShoutotal = anZhuangTiaoShiCheZhanDao.findDongTaiYanShouTotal(id);
             content[i][11] = dongTaiYanShoutotal.toString();
-            Integer liantiaolianshitotal=anZhuangTiaoShiCheZhanDao.findLianTiaoLianShiTotal(id);
+            Integer liantiaolianshitotal = anZhuangTiaoShiCheZhanDao.findLianTiaoLianShiTotal(id);
             content[i][12] = liantiaolianshitotal.toString();
-            Integer shiyunxingtotal=anZhuangTiaoShiCheZhanDao.findShiYunXingTotal(id);
+            Integer shiyunxingtotal = anZhuangTiaoShiCheZhanDao.findShiYunXingTotal(id);
             content[i][13] = shiyunxingtotal.toString();
-            Integer kaitongtotal=anZhuangTiaoShiCheZhanDao.findKaiTongTotal(id);
+            Integer kaitongtotal = anZhuangTiaoShiCheZhanDao.findKaiTongTotal(id);
             content[i][14] = kaitongtotal.toString();
         }
         //创建HSSFWorkbook
@@ -104,34 +104,36 @@ public class AnZhuangTiaoShiXiangMuServiceImpl implements AnZhuangTiaoShiXiangMu
 
     @Override
     public List<AnZhuangTiaoShiXiangMuEntity> findXianDuanBySomedata(Integer page, Integer size, String xdname, String year, String xdtype, Integer xdleixing) {
-        List<AnZhuangTiaoShiXiangMuEntity> xiangMuEntities= anZhuangTiaoShiXiangMuDao.findXianDuanBySomedata(xdname,year,xdtype,xdleixing);
+        List<AnZhuangTiaoShiXiangMuEntity> xiangMuEntities = anZhuangTiaoShiXiangMuDao.findXianDuanBySomedata(xdname, year, xdtype, xdleixing);
         for (AnZhuangTiaoShiXiangMuEntity xiangMuEntity : xiangMuEntities) {
             Integer id = xiangMuEntity.getId();
-            Integer chezhantotal=anZhuangTiaoShiCheZhanDao.findCheZhanTotal(id);
+            Integer chezhantotal = anZhuangTiaoShiCheZhanDao.findCheZhanTotal(id);
             xiangMuEntity.setCheZhanTotal(chezhantotal);
-            Integer jiGuitotal=anZhuangTiaoShiCheZhanDao.findJiGuiTotal(id);
+            Integer jiGuitotal = anZhuangTiaoShiCheZhanDao.findJiGuiTotal(id);
             xiangMuEntity.setJiGuiTotal(jiGuitotal);
-            Integer indoorKaBantotal=anZhuangTiaoShiCheZhanDao.findIndoorKaBantotal(id);
+            Integer indoorKaBantotal = anZhuangTiaoShiCheZhanDao.findIndoorKaBantotal(id);
             xiangMuEntity.setIndoorKaBanTotal(indoorKaBantotal);
-            Integer outdoorSheBeitotal=anZhuangTiaoShiCheZhanDao.findOutdoorSheBeiTotal(id);
+            Integer outdoorSheBeitotal = anZhuangTiaoShiCheZhanDao.findOutdoorSheBeiTotal(id);
             xiangMuEntity.setOutdoorSheBeiTotal(outdoorSheBeitotal);
-            Integer peiXiantotal=anZhuangTiaoShiCheZhanDao.findPeiXianTotal(id);
+            Integer peiXiantotal = anZhuangTiaoShiCheZhanDao.findPeiXianTotal(id);
             xiangMuEntity.setPeiXianTotal(peiXiantotal);
-            Integer shangDiantotal=anZhuangTiaoShiCheZhanDao.findShangDianTotal(id);
+            Integer shangDiantotal = anZhuangTiaoShiCheZhanDao.findShangDianTotal(id);
             xiangMuEntity.setShangDianTotal(shangDiantotal);
-            Integer jingTaiYanShoutotal=anZhuangTiaoShiCheZhanDao.findJingTaiYanShouTotal(id);
+            Integer jingTaiYanShoutotal = anZhuangTiaoShiCheZhanDao.findJingTaiYanShouTotal(id);
             xiangMuEntity.setJingTaiYanShouTotal(jingTaiYanShoutotal);
-            Integer dongTaiYanShoutotal=anZhuangTiaoShiCheZhanDao.findDongTaiYanShouTotal(id);
+            Integer dongTaiYanShoutotal = anZhuangTiaoShiCheZhanDao.findDongTaiYanShouTotal(id);
             xiangMuEntity.setDongTaiYanShouTotal(dongTaiYanShoutotal);
-            Integer liantiaolianshitotal=anZhuangTiaoShiCheZhanDao.findLianTiaoLianShiTotal(id);
+            Integer liantiaolianshitotal = anZhuangTiaoShiCheZhanDao.findLianTiaoLianShiTotal(id);
             xiangMuEntity.setLianTiaoLianShiTotal(liantiaolianshitotal);
-            Integer shiyunxingtotal=anZhuangTiaoShiCheZhanDao.findShiYunXingTotal(id);
+            Integer shiyunxingtotal = anZhuangTiaoShiCheZhanDao.findShiYunXingTotal(id);
             xiangMuEntity.setShiYunXingTotal(shiyunxingtotal);
-            Integer kaitongtotal=anZhuangTiaoShiCheZhanDao.findKaiTongTotal(id);
+            Integer kaitongtotal = anZhuangTiaoShiCheZhanDao.findKaiTongTotal(id);
             xiangMuEntity.setKaiTongTotal(kaitongtotal);
         }
-        return xiangMuEntities ;
+        return xiangMuEntities;
+
     }
+
 
     @Override
     public List<AnZhuangTiaoShiXiangMuEntity> findXianDuanNameAndYear() {
@@ -139,34 +141,34 @@ public class AnZhuangTiaoShiXiangMuServiceImpl implements AnZhuangTiaoShiXiangMu
     }
 
     @Override
-    public List<AnZhuangTiaoShiXiangMuEntity> findXianDuanDataByLeiXing(Integer leiXingId,Integer page,Integer size) {
-        List<AnZhuangTiaoShiXiangMuEntity> xiangMuEntities=anZhuangTiaoShiXiangMuDao.findXianDuanDataByLeiXing(leiXingId);
+    public List<AnZhuangTiaoShiXiangMuEntity> findXianDuanDataByLeiXing(Integer leiXingId, Integer page, Integer size) {
+        List<AnZhuangTiaoShiXiangMuEntity> xiangMuEntities = anZhuangTiaoShiXiangMuDao.findXianDuanDataByLeiXing(leiXingId);
         for (AnZhuangTiaoShiXiangMuEntity xiangMuEntity : xiangMuEntities) {
             Integer id = xiangMuEntity.getId();
-            Integer chezhantotal=anZhuangTiaoShiCheZhanDao.findCheZhanTotal(id);
+            Integer chezhantotal = anZhuangTiaoShiCheZhanDao.findCheZhanTotal(id);
             xiangMuEntity.setCheZhanTotal(chezhantotal);
-            Integer jiGuitotal=anZhuangTiaoShiCheZhanDao.findJiGuiTotal(id);
+            Integer jiGuitotal = anZhuangTiaoShiCheZhanDao.findJiGuiTotal(id);
             xiangMuEntity.setJiGuiTotal(jiGuitotal);
-            Integer indoorKaBantotal=anZhuangTiaoShiCheZhanDao.findIndoorKaBantotal(id);
+            Integer indoorKaBantotal = anZhuangTiaoShiCheZhanDao.findIndoorKaBantotal(id);
             xiangMuEntity.setIndoorKaBanTotal(indoorKaBantotal);
-            Integer outdoorSheBeitotal=anZhuangTiaoShiCheZhanDao.findOutdoorSheBeiTotal(id);
+            Integer outdoorSheBeitotal = anZhuangTiaoShiCheZhanDao.findOutdoorSheBeiTotal(id);
             xiangMuEntity.setOutdoorSheBeiTotal(outdoorSheBeitotal);
-            Integer peiXiantotal=anZhuangTiaoShiCheZhanDao.findPeiXianTotal(id);
+            Integer peiXiantotal = anZhuangTiaoShiCheZhanDao.findPeiXianTotal(id);
             xiangMuEntity.setPeiXianTotal(peiXiantotal);
-            Integer shangDiantotal=anZhuangTiaoShiCheZhanDao.findShangDianTotal(id);
+            Integer shangDiantotal = anZhuangTiaoShiCheZhanDao.findShangDianTotal(id);
             xiangMuEntity.setShangDianTotal(shangDiantotal);
-            Integer jingTaiYanShoutotal=anZhuangTiaoShiCheZhanDao.findJingTaiYanShouTotal(id);
+            Integer jingTaiYanShoutotal = anZhuangTiaoShiCheZhanDao.findJingTaiYanShouTotal(id);
             xiangMuEntity.setJingTaiYanShouTotal(jingTaiYanShoutotal);
-            Integer dongTaiYanShoutotal=anZhuangTiaoShiCheZhanDao.findDongTaiYanShouTotal(id);
+            Integer dongTaiYanShoutotal = anZhuangTiaoShiCheZhanDao.findDongTaiYanShouTotal(id);
             xiangMuEntity.setDongTaiYanShouTotal(dongTaiYanShoutotal);
-            Integer liantiaolianshitotal=anZhuangTiaoShiCheZhanDao.findLianTiaoLianShiTotal(id);
+            Integer liantiaolianshitotal = anZhuangTiaoShiCheZhanDao.findLianTiaoLianShiTotal(id);
             xiangMuEntity.setLianTiaoLianShiTotal(liantiaolianshitotal);
-            Integer shiyunxingtotal=anZhuangTiaoShiCheZhanDao.findShiYunXingTotal(id);
+            Integer shiyunxingtotal = anZhuangTiaoShiCheZhanDao.findShiYunXingTotal(id);
             xiangMuEntity.setShiYunXingTotal(shiyunxingtotal);
-            Integer kaitongtotal=anZhuangTiaoShiCheZhanDao.findKaiTongTotal(id);
+            Integer kaitongtotal = anZhuangTiaoShiCheZhanDao.findKaiTongTotal(id);
             xiangMuEntity.setKaiTongTotal(kaitongtotal);
         }
-        return xiangMuEntities ;
+        return xiangMuEntities;
     }
 
     @Override
@@ -217,7 +219,7 @@ public class AnZhuangTiaoShiXiangMuServiceImpl implements AnZhuangTiaoShiXiangMu
 
     @Override
     public void addSanJiShuXiangMu(AnZhuangTiaoShiXiangMuEntity anZhuangTiaoShiXiangMuEntity) throws Exception {
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date xianduantime = anZhuangTiaoShiXiangMuEntity.getXianduantime();
         String format = simpleDateFormat.format(xianduantime);
         Date parse = simpleDateFormat.parse(format);

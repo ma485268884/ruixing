@@ -66,6 +66,18 @@
     kaitong_actual_end_time, kaitong_is_no
   </sql>
 
+
+  <!--根据车站id数组  查找对应的数据-->
+  <select id="findCheZhanData" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mro_anzhuangtiaoshi_chezhan
+    where id in
+    <foreach collection="array" item="ids" open="(" separator="," close=")">
+      #{ids}
+    </foreach>
+  </select>
+
   <!--根据线段id  查询对应的完成开通数量-->
   <select id="findKaiTongTotal" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     SELECT

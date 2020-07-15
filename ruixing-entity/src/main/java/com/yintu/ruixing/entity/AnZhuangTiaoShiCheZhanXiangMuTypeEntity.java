@@ -16,6 +16,14 @@ public class AnZhuangTiaoShiCheZhanXiangMuTypeEntity {
 
     private String yuliu2;
 
+
+
+
+
+
+
+
+
     public Integer getId() {
         return id;
     }

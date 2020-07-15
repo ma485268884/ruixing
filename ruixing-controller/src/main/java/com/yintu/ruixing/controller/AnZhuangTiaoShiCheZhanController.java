@@ -8,6 +8,8 @@ import com.yintu.ruixing.service.AnZhuangTiaoShiCheZhanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -62,5 +64,15 @@ public class AnZhuangTiaoShiCheZhanController {
         return ResponseDataUtil.ok("查询车站成功",cheZhanEntityPageInfo);
     }
 
-    //根据车站id  单个或者批量导出Excel
+    //根据id 进行单个或者批量下载到Excel
+    @GetMapping("/downLoadByIds/{ids}")
+    public void exportFile(@PathVariable Integer[] ids, HttpServletResponse response) throws IOException {
+        String fileName = "安装调试车站信息列表" + System.currentTimeMillis() + ".xlsx";
+        response.setContentType("application/octet-stream;charset=ISO8859-1");
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
+        response.addHeader("Pargam", "no-cache");
+        response.addHeader("Cache-Control", "no-cache");
+        anZhuangTiaoShiCheZhanService.exportFile(response.getOutputStream(), ids);
+    }
+
 }

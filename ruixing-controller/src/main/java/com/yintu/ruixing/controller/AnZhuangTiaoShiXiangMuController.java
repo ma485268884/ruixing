@@ -100,6 +100,13 @@ public class AnZhuangTiaoShiXiangMuController {
     public Map<String,Object>findXianDuanBySomedata(Integer page,Integer size,
                                                     String xdname,String year,
                                                     String xdtype,Integer xdleixing){
+        if (year.equals("NaN")) {
+            year = null;
+        }if (xdtype.equals("")){
+            xdtype=null;
+        }if (xdname.equals("")){
+            xdname=null;
+        }
         PageHelper.startPage(page,size);
         List<AnZhuangTiaoShiXiangMuEntity> xiangMuEntities=anZhuangTiaoShiXiangMuService.findXianDuanBySomedata(page,size,xdname,year,xdtype,xdleixing);
         PageInfo<AnZhuangTiaoShiXiangMuEntity> xiangMuEntityPageInfo=new PageInfo<>(xiangMuEntities);

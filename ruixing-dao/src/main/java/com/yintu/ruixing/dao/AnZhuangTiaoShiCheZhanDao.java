@@ -51,4 +51,6 @@ public interface AnZhuangTiaoShiCheZhanDao {
     Integer findShiYunXingTotal(Integer id);
 
     Integer findKaiTongTotal(Integer id);
+
+    List<AnZhuangTiaoShiCheZhanEntity> findCheZhanData(Integer[] ids);
 }

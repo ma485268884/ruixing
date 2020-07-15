@@ -2,6 +2,8 @@ package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanEntity;
 
+import javax.servlet.ServletOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -21,4 +23,6 @@ public interface AnZhuangTiaoShiCheZhanService {
     void deleteCheZhanByIds(Integer[] ids);
 
     List<AnZhuangTiaoShiCheZhanEntity> findCheZhanByName(String czname, Integer page, Integer size);
+
+    void exportFile(ServletOutputStream outputStream, Integer[] ids)throws IOException;
 }

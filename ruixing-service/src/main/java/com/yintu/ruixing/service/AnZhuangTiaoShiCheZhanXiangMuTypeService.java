@@ -2,6 +2,8 @@ package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanXiangMuTypeEntity;
 
+import java.util.List;
+
 /**
  * @Author Mr.liu
  * @Date 2020/7/11 17:39
@@ -10,4 +12,13 @@ import com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanXiangMuTypeEntity;
  */
 public interface AnZhuangTiaoShiCheZhanXiangMuTypeService {
     void addXiangMuType(AnZhuangTiaoShiCheZhanXiangMuTypeEntity anZhuangTiaoShiCheZhanXiangMuTypeEntity);
+
+    List<AnZhuangTiaoShiCheZhanXiangMuTypeEntity> findAllXiangMuType(Integer page,Integer size);
+
+    void editXiangMuTypeById(AnZhuangTiaoShiCheZhanXiangMuTypeEntity anZhuangTiaoShiCheZhanXiangMuTypeEntity);
+
+    void deletXiangMuTypeByIds(Integer[] ids);
+
+    List<AnZhuangTiaoShiCheZhanXiangMuTypeEntity> findXiangMuTypeByName(String xmname, Integer page, Integer size);
+
 }

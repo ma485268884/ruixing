@@ -1,6 +1,7 @@
 package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanXiangMuTypeEntity;
+import org.apache.ibatis.annotations.Param;
 
 
 import java.util.List;
@@ -24,5 +25,9 @@ public interface AnZhuangTiaoShiCheZhanXiangMuTypeDao {
 
     List<AnZhuangTiaoShiCheZhanXiangMuTypeEntity> findAllXiangMuType();
 
+    void editXiangMuTypeById(AnZhuangTiaoShiCheZhanXiangMuTypeEntity anZhuangTiaoShiCheZhanXiangMuTypeEntity);
 
+    void deletXiangMuTypeByIds(Integer[] ids);
+
+    List<AnZhuangTiaoShiCheZhanXiangMuTypeEntity> findXiangMuTypeByName(@Param("xmname") String xmname);
 }

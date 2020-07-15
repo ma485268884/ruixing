@@ -41,7 +41,7 @@
       </if>
       <if test="year!=null">
         and
-        xianduantime=#{year}
+        xianduantime like concat('%',#{year},'%')
       </if>
       <if test="xdtype!=null">
         and
