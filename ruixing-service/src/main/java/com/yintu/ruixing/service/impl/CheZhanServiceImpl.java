@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * TODO
  *
@@ -40,6 +42,16 @@ public class CheZhanServiceImpl implements CheZhanService {
     @Override
     public void delCheZhan(Long cid) {
         cheZhanDao.delCheZhan(cid);
+    }
+
+    @Override
+    public List<CheZhanEntity> findAll() {
+        return cheZhanDao.selectAll();
+    }
+
+    @Override
+    public List<CheZhanEntity> findByCzName(String czName) {
+        return cheZhanDao.selectByCzName(czName);
     }
 
 }

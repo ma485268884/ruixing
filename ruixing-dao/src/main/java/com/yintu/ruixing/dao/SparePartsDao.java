@@ -13,11 +13,11 @@ public interface SparePartsDao {
 
     SparePartsEntity selectByPrimaryKey(Integer id);
 
-    List<SparePartsEntity> selectByCondition(Integer[] ids, String equipmentName);
-
     int updateByPrimaryKeySelective(SparePartsEntity record);
 
     int updateByPrimaryKey(SparePartsEntity record);
+
+    List<SparePartsEntity> selectByCondition(Integer[] ids,String equipmentName);
 
     void insertMuch(List<SparePartsEntity> sparePartsEntities);
 

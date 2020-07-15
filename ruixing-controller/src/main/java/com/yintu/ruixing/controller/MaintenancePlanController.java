@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 维护计划
+ * 维护计划类别
  *
  * @author:mlf
  * @date:2020/7/8 15:53
@@ -105,10 +105,9 @@ public class MaintenancePlanController extends SessionController implements Base
     @ResponseBody
     public Map<String, Object> findMaintenancePlanInfoById(@PathVariable Integer id, @RequestParam("page_number") Integer pageNumber,
                                                            @RequestParam("page_size") Integer pageSize,
-                                                           @RequestParam(value = "order_by", required = false, defaultValue = "mpi.id DESC") String orderBy,
-                                                           @RequestParam(value = "work", required = false) String work) {
+                                                           @RequestParam(value = "order_by", required = false, defaultValue = "mpi.id DESC") String orderBy) {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
-        List<MaintenancePlanInfoEntity> maintenancePlanInfoEntities = maintenancePlanInfoService.findByCondition(null, id, work);
+        List<MaintenancePlanInfoEntity> maintenancePlanInfoEntities = maintenancePlanInfoService.findByCondition(null, id, null);
         PageInfo<MaintenancePlanInfoEntity> pageInfo = new PageInfo<>(maintenancePlanInfoEntities);
         return ResponseDataUtil.ok("查询维护计划详情列表信息成功", pageInfo);
     }

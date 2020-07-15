@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping(value = "/users")
-public class UserController extends SessionController {
+public class  UserController extends SessionController {
 
     @Autowired
     private UserService userService;

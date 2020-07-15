@@ -13,20 +13,26 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MaintenancePlanInfoEntity implements Serializable {
-    private static final long serialVersionUID = 4786248300945836138L;
+    private static final long serialVersionUID = 5855998045982124844L;
     private Integer id;
-    @NotEmpty
-    private String work;
-    @NotEmpty
-    private String period;
-    @NotEmpty
-    private String result;
+    @NotNull
+    private Date startDate;
+    @NotNull
+    private Date endDate;
     @NotNull
     private Integer maintenancePlanId;
+    @NotNull
+    private Integer cheZhanId;
+    @NotNull
+    private Integer equipmentId;
 
     private Date createdDate;
 
     private MaintenancePlanEntity maintenancePlanEntity;
+
+    private CheZhanEntity cheZhanEntity;
+
+    private EquipmentEntity equipmentEntity;
 
 
 }

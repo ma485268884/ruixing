@@ -5,7 +5,11 @@ import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.FileUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.entity.CheZhanEntity;
+import com.yintu.ruixing.entity.EquipmentEntity;
 import com.yintu.ruixing.entity.SparePartsEntity;
+import com.yintu.ruixing.service.CheZhanService;
+import com.yintu.ruixing.service.EquipmentService;
 import com.yintu.ruixing.service.SparePartsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -30,6 +34,10 @@ public class SparePartsController extends SessionController implements BaseContr
 
     @Autowired
     private SparePartsService sparePartsService;
+    @Autowired
+    private CheZhanService cheZhanService;
+    @Autowired
+    private EquipmentService equipmentService;
 
     @PostMapping
     public Map<String, Object> add(@Validated SparePartsEntity entity) {
@@ -65,7 +73,7 @@ public class SparePartsController extends SessionController implements BaseContr
     @GetMapping
     public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber,
                                        @RequestParam("page_size") Integer pageSize,
-                                       @RequestParam(value = "order_by", required = false, defaultValue = "id DESC") String orderBy,
+                                       @RequestParam(value = "order_by", required = false, defaultValue = "sp.id DESC") String orderBy,
                                        @RequestParam(value = "equipment_name", required = false) String equipmentName) {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<SparePartsEntity> sparePartsEntities = sparePartsService.findByCondition(null, equipmentName);
@@ -88,5 +96,30 @@ public class SparePartsController extends SessionController implements BaseContr
         response.addHeader("Pargam", "no-cache");
         response.addHeader("Cache-Control", "no-cache");
         sparePartsService.exportFile(response.getOutputStream(), ids);
+    }
+
+    /**
+     * 查询全部车站信息
+     *
+     * @return
+     */
+    @GetMapping("/chezhans")
+    @ResponseBody
+    public Map<String, Object> findCheZhanAll() {
+        List<CheZhanEntity> cheZhanEntities = cheZhanService.findAll();
+        return ResponseDataUtil.ok("查询车站信息列表成功", cheZhanEntities);
+    }
+
+
+    /**
+     * 查询设备全部信息
+     *
+     * @return
+     */
+    @GetMapping("/equipments")
+    @ResponseBody
+    public Map<String, Object> findEquipmentAll() {
+        List<EquipmentEntity> equipmentEntities = equipmentService.findAll();
+        return ResponseDataUtil.ok("查询设备信息列表成功", equipmentEntities);
     }
 }

@@ -47,9 +47,13 @@
         <!--               enableCountByExample="false" enableUpdateByExample="false"-->
         <!--               enableDeleteByExample="false" enableSelectByExample="false"-->
         <!--               selectByExampleQueryId="false"/>-->
-        <table tableName="mro_equipment_number" domainObjectName="EquipmentNumberEntity" mapperName="EquipmentNumberDao"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"/>
+        <table tableName="mro_maintenance_plan_info"
+               domainObjectName="MaintenancePlanInfoEntity1"
+               mapperName="MaintenancePlanInfoDao1"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableUpdateByExample="false"
+               enableSelectByExample="false"/>
 
     </context>
 </generatorConfiguration>

@@ -3,14 +3,15 @@
 <mapper namespace="com.yintu.ruixing.dao.MaintenancePlanInfoDao">
     <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.MaintenancePlanInfoEntity">
         <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="work" jdbcType="VARCHAR" property="work"/>
-        <result column="period" jdbcType="VARCHAR" property="period"/>
-        <result column="result" jdbcType="VARCHAR" property="result"/>
+        <result column="start_date" jdbcType="DATE" property="startDate"/>
+        <result column="end_date" jdbcType="DATE" property="endDate"/>
         <result column="maintenance_plan_id" jdbcType="INTEGER" property="maintenancePlanId"/>
+        <result column="che_zhan_id" jdbcType="INTEGER" property="cheZhanId"/>
+        <result column="equipment_id" jdbcType="INTEGER" property="equipmentId"/>
         <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, work, period, result, maintenance_plan_id, created_date
+        id, start_date, end_date, maintenance_plan_id, che_zhan_id, equipment_id, created_date
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -18,17 +19,18 @@
         from mro_maintenance_plan_info
         where id = #{id,jdbcType=INTEGER}
     </select>
-
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from mro_maintenance_plan_info
         where id = #{id,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.yintu.ruixing.entity.MaintenancePlanInfoEntity">
-        insert into mro_maintenance_plan_info (id, work, period,
-                                               result, maintenance_plan_id, created_date)
-        values (#{id,jdbcType=INTEGER}, #{work,jdbcType=VARCHAR}, #{period,jdbcType=VARCHAR},
-                #{result,jdbcType=VARCHAR}, #{maintenancePlanId,jdbcType=INTEGER}, #{createdDate,jdbcType=TIMESTAMP})
+        insert into mro_maintenance_plan_info (id, start_date, end_date,
+                                               maintenance_plan_id, che_zhan_id, equipment_id,
+                                               created_date)
+        values (#{id,jdbcType=INTEGER}, #{startDate,jdbcType=DATE}, #{endDate,jdbcType=DATE},
+                #{maintenancePlanId,jdbcType=INTEGER}, #{cheZhanId,jdbcType=INTEGER}, #{equipmentId,jdbcType=INTEGER},
+                #{createdDate,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.MaintenancePlanInfoEntity">
         insert into mro_maintenance_plan_info
@@ -36,17 +38,20 @@
             <if test="id != null">
                 id,
             </if>
-            <if test="work != null">
-                work,
+            <if test="startDate != null">
+                start_date,
             </if>
-            <if test="period != null">
-                period,
-            </if>
-            <if test="result != null">
-                result,
+            <if test="endDate != null">
+                end_date,
             </if>
             <if test="maintenancePlanId != null">
                 maintenance_plan_id,
+            </if>
+            <if test="cheZhanId != null">
+                che_zhan_id,
+            </if>
+            <if test="equipmentId != null">
+                equipment_id,
             </if>
             <if test="createdDate != null">
                 created_date,
@@ -56,17 +61,20 @@
             <if test="id != null">
                 #{id,jdbcType=INTEGER},
             </if>
-            <if test="work != null">
-                #{work,jdbcType=VARCHAR},
+            <if test="startDate != null">
+                #{startDate,jdbcType=DATE},
             </if>
-            <if test="period != null">
-                #{period,jdbcType=VARCHAR},
-            </if>
-            <if test="result != null">
-                #{result,jdbcType=VARCHAR},
+            <if test="endDate != null">
+                #{endDate,jdbcType=DATE},
             </if>
             <if test="maintenancePlanId != null">
                 #{maintenancePlanId,jdbcType=INTEGER},
+            </if>
+            <if test="cheZhanId != null">
+                #{cheZhanId,jdbcType=INTEGER},
+            </if>
+            <if test="equipmentId != null">
+                #{equipmentId,jdbcType=INTEGER},
             </if>
             <if test="createdDate != null">
                 #{createdDate,jdbcType=TIMESTAMP},
@@ -76,15 +84,16 @@
     <insert id="insertMuch" parameterType="com.yintu.ruixing.entity.MaintenancePlanInfoEntity">
         insert into mro_maintenance_plan_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            work, period, result, maintenance_plan_id, created_date
+            maintenance_plan_id, che_zhan_id, equipment_id, start_date, end_date, created_date
         </trim>
         values
         <foreach collection="list" item="maintenancePlanInfoEntity" index="index" separator=",">
             <trim prefix=" (" suffix=")" suffixOverrides=",">
-                #{maintenancePlanInfoEntity.work,jdbcType=VARCHAR},
-                #{maintenancePlanInfoEntity.period,jdbcType=VARCHAR},
-                #{maintenancePlanInfoEntity.result,jdbcType=VARCHAR},
                 #{maintenancePlanInfoEntity.maintenancePlanId,jdbcType=INTEGER},
+                #{maintenancePlanInfoEntity.cheZhanId,jdbcType=BIGINT},
+                #{maintenancePlanInfoEntity.equipmentId,jdbcType=INTEGER},
+                #{maintenancePlanInfoEntity.startDate,jdbcType=DATE},
+                #{maintenancePlanInfoEntity.endDate,jdbcType=DATE},
                 #{maintenancePlanInfoEntity.createdDate,jdbcType=TIMESTAMP},
             </trim>
         </foreach>
@@ -92,17 +101,20 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.MaintenancePlanInfoEntity">
         update mro_maintenance_plan_info
         <set>
-            <if test="work != null">
-                work = #{work,jdbcType=VARCHAR},
+            <if test="startDate != null">
+                start_date = #{startDate,jdbcType=DATE},
             </if>
-            <if test="period != null">
-                period = #{period,jdbcType=VARCHAR},
-            </if>
-            <if test="result != null">
-                result = #{result,jdbcType=VARCHAR},
+            <if test="endDate != null">
+                end_date = #{endDate,jdbcType=DATE},
             </if>
             <if test="maintenancePlanId != null">
                 maintenance_plan_id = #{maintenancePlanId,jdbcType=INTEGER},
+            </if>
+            <if test="cheZhanId != null">
+                che_zhan_id = #{cheZhanId,jdbcType=INTEGER},
+            </if>
+            <if test="equipmentId != null">
+                equipment_id = #{equipmentId,jdbcType=INTEGER},
             </if>
             <if test="createdDate != null">
                 created_date = #{createdDate,jdbcType=TIMESTAMP},
@@ -112,30 +124,43 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.MaintenancePlanInfoEntity">
         update mro_maintenance_plan_info
-        set work                = #{work,jdbcType=VARCHAR},
-            period              = #{period,jdbcType=VARCHAR},
-            result              = #{result,jdbcType=VARCHAR},
+        set start_date          = #{startDate,jdbcType=DATE},
+            end_date            = #{endDate,jdbcType=DATE},
             maintenance_plan_id = #{maintenancePlanId,jdbcType=INTEGER},
+            che_zhan_id         = #{cheZhanId,jdbcType=INTEGER},
+            equipment_id        = #{equipmentId,jdbcType=INTEGER},
             created_date        = #{createdDate,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
 
     <resultMap id="MuchResultMap" type="com.yintu.ruixing.entity.MaintenancePlanInfoEntity">
         <id column="mpi_id" jdbcType="INTEGER" property="id"/>
-        <result column="work" jdbcType="VARCHAR" property="work"/>
-        <result column="period" jdbcType="VARCHAR" property="period"/>
-        <result column="result" jdbcType="VARCHAR" property="result"/>
+        <result column="start_date" jdbcType="DATE" property="startDate"/>
+        <result column="end_date" jdbcType="DATE" property="endDate"/>
         <result column="maintenance_plan_id" jdbcType="INTEGER" property="maintenancePlanId"/>
+        <result column="che_zhan_id" jdbcType="INTEGER" property="cheZhanId"/>
+        <result column="equipment_id" jdbcType="INTEGER" property="equipmentId"/>
         <result column="mpi_created_date" jdbcType="TIMESTAMP" property="createdDate"/>
         <association column="maintenance_plan_id" property="maintenancePlanEntity">
             <id column="mp_id" jdbcType="INTEGER" property="id"/>
-            <result column="name" jdbcType="VARCHAR" property="name"/>
+            <result column="mp_name" jdbcType="VARCHAR" property="name"/>
             <result column="mp_created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+        </association>
+        <association column="che_zhan_id" property="cheZhanEntity">
+            <result column="c_id" property="cid"/>
+            <result column="c_name" property="czName"/>
+        </association>
+        <association column="equipment_id" property="equipmentEntity">
+            <id column="e_id" jdbcType="INTEGER" property="id"/>
+            <result column="e_name" jdbcType="VARCHAR" property="name"/>
+            <result column="e_created_date" jdbcType="TIMESTAMP" property="createdTime"/>
         </association>
     </resultMap>
     <sql id="Much_Column_List">
-        mpi.id as mpi_id , mpi.work, mpi.period, mpi.result, mpi.maintenance_plan_id, mpi.created_date as mpi_created_date,
-         mp.id as mp_id, mp.name, mp.created_date as mp_created_date
+        mpi.id as mpi_id , mpi.start_date,mpi.end_date,mpi.maintenance_plan_id,mpi.che_zhan_id,mpi.equipment_id,mpi.created_date as mpi_created_date,
+          mp.id as mp_id, mp.name as mp_name, mp.created_date as mp_created_date,
+          c.cid as c_id,c.cz_name as c_name,
+          e.id as e_id, e.name as e_name, e.created_time as e_created_date
     </sql>
     <sql id="Much_Condition">
         <where>
@@ -146,10 +171,10 @@
                 </foreach>
             </if>
             <if test="maintenancePlanId != null">
-                and maintenance_plan_id = #{maintenancePlanId,jdbcType=INTEGER}
+                and mpi.maintenance_plan_id = #{maintenancePlanId,jdbcType=INTEGER}
             </if>
-            <if test="work != null">
-                and work like concat('%',#{work,jdbcType=VARCHAR},'%')
+            <if test="equipmentName != null">
+                and e.name like concat('%',#{equipmentName,jdbcType=VARCHAR},'%')
             </if>
         </where>
     </sql>
@@ -158,7 +183,9 @@
         select
         <include refid="Much_Column_List"/>
         from mro_maintenance_plan_info mpi
-        inner join mro_maintenance_plan mp on mpi.maintenance_plan_id=mp.id
+        inner join mro_maintenance_plan mp on mpi.maintenance_plan_id = mp.id
+        inner join mro_chezhan c on mpi.che_zhan_id = c.cid
+        inner join mro_equipment e on mpi.equipment_id = e.id
         <include refid="Much_Condition"/>
     </select>
 </mapper>

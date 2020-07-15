@@ -15,11 +15,6 @@ import java.util.List;
  */
 public interface MaintenancePlanInfoService extends BaseService<MaintenancePlanInfoEntity, Integer> {
 
-    /**
-     * @param id 维护计划详情id
-     * @return
-     */
-    MaintenancePlanInfoEntity findMaintenancePlanById(Integer id);
 
 
     void remove(Integer[] ids);
@@ -27,10 +22,10 @@ public interface MaintenancePlanInfoService extends BaseService<MaintenancePlanI
     /**
      * @param ids               维护计划详情id
      * @param maintenancePlanId 维护计划id
-     * @param work              维护工作
+     * @param equipmentName      设备名字
      * @return
      */
-    List<MaintenancePlanInfoEntity> findByCondition(Integer[] ids, Integer maintenancePlanId, String work);
+    List<MaintenancePlanInfoEntity> findByCondition(Integer[] ids, Integer maintenancePlanId, String equipmentName);
 
     /**
      * 批量添加
