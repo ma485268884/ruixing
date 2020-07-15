@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 维护计划
+ * 维护计划类别
  *
  * @author:mlf
  * @date:2020/7/8 15:53

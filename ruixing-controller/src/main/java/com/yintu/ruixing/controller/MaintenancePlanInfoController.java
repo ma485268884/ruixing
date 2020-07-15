@@ -5,9 +5,14 @@ import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.FileUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.entity.CheZhanEntity;
+import com.yintu.ruixing.entity.EquipmentEntity;
 import com.yintu.ruixing.entity.MaintenancePlanInfoEntity;
+import com.yintu.ruixing.service.CheZhanService;
+import com.yintu.ruixing.service.EquipmentService;
 import com.yintu.ruixing.service.MaintenancePlanInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,14 +28,22 @@ import java.util.Map;
  * @author:mlf
  * @date:2020/7/9 17:17
  */
-@RestController
+@Controller
 @RequestMapping("/maintenance/plan/infos")
 public class MaintenancePlanInfoController extends SessionController implements BaseController<MaintenancePlanInfoEntity, Integer> {
 
     @Autowired
     private MaintenancePlanInfoService maintenancePlanInfoService;
 
+    @Autowired
+    private CheZhanService cheZhanService;
+
+    @Autowired
+    private EquipmentService equipmentService;
+
+
     @PostMapping
+    @ResponseBody
     public Map<String, Object> add(@Validated MaintenancePlanInfoEntity entity) {
         maintenancePlanInfoService.add(entity);
         return ResponseDataUtil.ok("添加维护计划详情息成功");
@@ -42,20 +55,23 @@ public class MaintenancePlanInfoController extends SessionController implements 
     }
 
     @DeleteMapping("/{ids}")
+    @ResponseBody
     public Map<String, Object> remove(@PathVariable Integer[] ids) {
         maintenancePlanInfoService.remove(ids);
         return ResponseDataUtil.ok("删除维护计划详情息成功");
     }
 
     @PutMapping("/{id}")
+    @ResponseBody
     public Map<String, Object> edit(@PathVariable Integer id, @Validated MaintenancePlanInfoEntity entity) {
         maintenancePlanInfoService.edit(entity);
         return ResponseDataUtil.ok("修改维护计划详情息成功");
     }
 
     @GetMapping("/{id}")
+    @ResponseBody
     public Map<String, Object> findById(@PathVariable Integer id) {
-        MaintenancePlanInfoEntity maintenancePlanInfoEntity = maintenancePlanInfoService.findMaintenancePlanById(id);
+        MaintenancePlanInfoEntity maintenancePlanInfoEntity = maintenancePlanInfoService.findById(id);
         return ResponseDataUtil.ok("查询维护计划详情息成功", maintenancePlanInfoEntity);
     }
 
@@ -64,10 +80,10 @@ public class MaintenancePlanInfoController extends SessionController implements 
     public Map<String, Object> findByAll(@RequestParam("page_number") Integer pageNumber,
                                          @RequestParam("page_size") Integer pageSize,
                                          @RequestParam(value = "order_by", required = false, defaultValue = "mpi.id DESC") String orderBy,
-                                         @RequestParam(value = "work", required = false) String work,
-                                         @RequestParam(value = "maintenancePlanId") Integer maintenancePlanId) {
+                                         @RequestParam(value = "maintenance_plan_id") Integer maintenancePlanId,
+                                         @RequestParam(value = "equipment_name", required = false) String equipmentName) {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
-        List<MaintenancePlanInfoEntity> maintenancePlanInfoEntities = maintenancePlanInfoService.findByCondition(null, maintenancePlanId, work);
+        List<MaintenancePlanInfoEntity> maintenancePlanInfoEntities = maintenancePlanInfoService.findByCondition(null, maintenancePlanId, equipmentName);
         PageInfo<MaintenancePlanInfoEntity> pageInfo = new PageInfo<>(maintenancePlanInfoEntities);
         return ResponseDataUtil.ok("查询维护计划详情列表信息成功", pageInfo);
     }
@@ -87,6 +103,31 @@ public class MaintenancePlanInfoController extends SessionController implements 
         response.addHeader("Pargam", "no-cache");
         response.addHeader("Cache-Control", "no-cache");
         maintenancePlanInfoService.exportFile(response.getOutputStream(), ids);
+    }
+
+    /**
+     * 查询全部车站信息
+     *
+     * @return
+     */
+    @GetMapping("/chezhans")
+    @ResponseBody
+    public Map<String, Object> findCheZhanAll() {
+        List<CheZhanEntity> cheZhanEntities = cheZhanService.findAll();
+        return ResponseDataUtil.ok("查询车站信息列表成功", cheZhanEntities);
+    }
+
+
+    /**
+     * 查询设备全部信息
+     *
+     * @return
+     */
+    @GetMapping("/equipments")
+    @ResponseBody
+    public Map<String, Object> findEquipmentAll() {
+        List<EquipmentEntity> equipmentEntities = equipmentService.findAll();
+        return ResponseDataUtil.ok("查询设备信息列表成功", equipmentEntities);
     }
 
 }

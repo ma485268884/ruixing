@@ -1,8 +1,10 @@
 package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.entity.CheZhanEntity;
+
+import java.util.List;
+
 /**
- *
  * @author Qiao
  * @date 2020/5/25 17:03
  * @return
@@ -10,28 +12,37 @@ import com.yintu.ruixing.entity.CheZhanEntity;
 public interface CheZhanService {
     /**
      * @param cheZhanEntity
+     * @return 添加车站信息
      * @author Qiao
      * @date 2020/5/25 17:04
-     * @return 添加车站信息
      */
     void add(CheZhanEntity cheZhanEntity);
+
     /**
+     * @return 根据id修改车站信息
      * @author Qiao
      * @date 2020/5/25 17:04
-     * @return 根据id修改车站信息
      */
     void update(CheZhanEntity cheZhanEntity);
 
     /**
+     * @return 根据id查询车站信息
      * @author Qiao
      * @date 2020/5/25 17:05
-     * @return 根据id查询车站信息
      */
     CheZhanEntity findByCheZhanId(Long cid);
 
     /**
      * 根据id删除车站
+     *
      * @param cid
      */
     void delCheZhan(Long cid);
+
+    /**
+     * 查询全部车站信息
+     *
+     * @return 车站信息集合
+     */
+    List<CheZhanEntity> findAll();
 }

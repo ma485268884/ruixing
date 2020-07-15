@@ -56,4 +56,8 @@
     <delete id="delCheZhan" parameterType="java.lang.Long">
         delete from mro_chezhan where cid=#{cid}
     </delete>
+
+    <select id="selectAll" resultMap="chezhan">
+        select * from mro_chezhan
+    </select>
 </mapper>
