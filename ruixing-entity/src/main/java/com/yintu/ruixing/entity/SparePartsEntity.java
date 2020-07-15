@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -13,20 +14,27 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SparePartsEntity implements Serializable {
-    private static final long serialVersionUID = 2278639226184850872L;
+    private static final long serialVersionUID = 1549917467396112105L;
     private Integer id;
-    @NotEmpty
-    private String equipmentName;
-    @NotEmpty
-    private String storageTime;
-    @NotEmpty
-    private String examinationPeriod;
     @NotNull
-    private Short examinationStatus;
+    private Integer cheZhanId;
     @NotNull
-    private Short functionalStatus;
+    private Integer equipmentId;
+    @NotEmpty
+    private String equipmentNumber;
+    @NotNull
+    private Short equipmentStatus;
+    @NotNull
+    private Short isReplace;
+    @NotNull
+    private Date createDate;
+    @NotNull
+    private Short storageTime;
 
-    private Date createdDate;
+    private Date endDate;
 
+    private CheZhanEntity cheZhanEntity;
+
+    private EquipmentEntity equipmentEntity;
 
 }

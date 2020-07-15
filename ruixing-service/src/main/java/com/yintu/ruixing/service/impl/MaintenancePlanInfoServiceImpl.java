@@ -117,7 +117,7 @@ public class MaintenancePlanInfoServiceImpl implements MaintenancePlanInfoServic
         //excel标题
         String title = "维护计划详情列表";
         //excel表名
-        String[] headers = {"序号", "维护计划", "车站名称", "设备类型", "开始日期", "结束日期"};
+        String[] headers = {"序号", "维护计划", "车站名称", "设备名称", "开始日期", "结束日期"};
         //获取数据
         List<MaintenancePlanInfoEntity> maintenancePlanInfoEntities = this.findByCondition(ids, null, null);
         maintenancePlanInfoEntities = maintenancePlanInfoEntities.stream()

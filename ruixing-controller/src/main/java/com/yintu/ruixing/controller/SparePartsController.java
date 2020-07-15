@@ -65,7 +65,7 @@ public class SparePartsController extends SessionController implements BaseContr
     @GetMapping
     public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber,
                                        @RequestParam("page_size") Integer pageSize,
-                                       @RequestParam(value = "order_by", required = false, defaultValue = "id DESC") String orderBy,
+                                       @RequestParam(value = "order_by", required = false, defaultValue = "sp.id DESC") String orderBy,
                                        @RequestParam(value = "equipment_name", required = false) String equipmentName) {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<SparePartsEntity> sparePartsEntities = sparePartsService.findByCondition(null, equipmentName);
