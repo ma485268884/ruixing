@@ -107,16 +107,14 @@
     <insert id="insertMuch" parameterType="com.yintu.ruixing.entity.SparePartsEntity">
         insert into mro_spare_parts
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            equipment_name, storage_time, examination_period, examination_status, functional_status, created_date
+          che_zhan_id, equipment_id, equipment_number, equipment_status, is_replace, create_date,storage_time, end_date
         </trim>
         values
         <foreach collection="list" item="sparePartsEntity" index="index" separator=",">
             <trim prefix=" (" suffix=")" suffixOverrides=",">
-                #{sparePartsEntity.cheZhanId,jdbcType=INTEGER},
+                #{sparePartsEntity.cheZhanId,jdbcType=BIGINT},
                 #{sparePartsEntity.equipmentId,jdbcType=INTEGER},
                 #{sparePartsEntity.equipmentNumber,jdbcType=VARCHAR},
-                #{sparePartsEntity.equipmentStatus,jdbcType=SMALLINT},
-                #{sparePartsEntity.isReplace,jdbcType=SMALLINT},
                 #{sparePartsEntity.equipmentStatus,jdbcType=SMALLINT},
                 #{sparePartsEntity.isReplace,jdbcType=SMALLINT},
                 #{sparePartsEntity.createDate,jdbcType=DATE},

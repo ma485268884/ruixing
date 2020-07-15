@@ -84,17 +84,17 @@
     <insert id="insertMuch" parameterType="com.yintu.ruixing.entity.MaintenancePlanInfoEntity">
         insert into mro_maintenance_plan_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            start_date, end_date, maintenance_plan_id, che_zhan_id, equipment_id, created_date
+            maintenance_plan_id, che_zhan_id, equipment_id, start_date, end_date, created_date
         </trim>
         values
         <foreach collection="list" item="maintenancePlanInfoEntity" index="index" separator=",">
             <trim prefix=" (" suffix=")" suffixOverrides=",">
-                #{maintenancePlanInfoEntity.startDate,jdbcType=TIMESTAMP},
-                #{maintenancePlanInfoEntity.endDate,jdbcType=TIMESTAMP},
                 #{maintenancePlanInfoEntity.maintenancePlanId,jdbcType=INTEGER},
-                #{maintenancePlanInfoEntity,cheZhanId,jdbcType=INTEGER},
+                #{maintenancePlanInfoEntity.cheZhanId,jdbcType=BIGINT},
                 #{maintenancePlanInfoEntity.equipmentId,jdbcType=INTEGER},
-                #{maintenancePlanInfoEntity,createdDate,jdbcType=VARCHAR},
+                #{maintenancePlanInfoEntity.startDate,jdbcType=DATE},
+                #{maintenancePlanInfoEntity.endDate,jdbcType=DATE},
+                #{maintenancePlanInfoEntity.createdDate,jdbcType=TIMESTAMP},
             </trim>
         </foreach>
     </insert>

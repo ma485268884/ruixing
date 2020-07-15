@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -40,7 +41,9 @@ public class MaintenancePlanInfoServiceImpl implements MaintenancePlanInfoServic
     @Autowired
     private MaintenancePlanInfoDao maintenancePlanInfoDao;
     @Autowired
-    private MaintenancePlanService maintenancePlanService;
+    private CheZhanService cheZhanService;
+    @Autowired
+    private EquipmentService equipmentService;
 
     @Override
     public void add(MaintenancePlanInfoEntity entity) {
@@ -87,8 +90,6 @@ public class MaintenancePlanInfoServiceImpl implements MaintenancePlanInfoServic
 
     @Override
     public void importFile(InputStream inputStream, String fileName, Integer maintenancePlanId) throws IOException {
-        MaintenancePlanEntity maintenancePlanEntity = maintenancePlanService.findById(maintenancePlanId);
-        String name = maintenancePlanEntity.getName();
         //excel标题
         String title = "维护计划详情列表";
         String[][] content;
@@ -101,12 +102,31 @@ public class MaintenancePlanInfoServiceImpl implements MaintenancePlanInfoServic
         }
         List<MaintenancePlanInfoEntity> maintenancePlanInfoEntities = new ArrayList<>();
         for (String[] rows : content) {
-            if (name.contains(rows[1])) {
-                MaintenancePlanInfoEntity maintenancePlanInfoEntity = new MaintenancePlanInfoEntity();
-                maintenancePlanInfoEntity.setMaintenancePlanId(maintenancePlanId);
-                maintenancePlanInfoEntity.setCreatedDate(new Date());
-                maintenancePlanInfoEntities.add(maintenancePlanInfoEntity);
+            MaintenancePlanInfoEntity maintenancePlanInfoEntity = new MaintenancePlanInfoEntity();
+            maintenancePlanInfoEntity.setMaintenancePlanId(maintenancePlanId);
+
+            String cheZhanName = rows[1];
+            List<CheZhanEntity> cheZhanEntities = cheZhanService.findByCzName(cheZhanName);
+            if (!cheZhanEntities.isEmpty())
+                maintenancePlanInfoEntity.setCheZhanId((int) cheZhanEntities.get(0).getCid());
+
+            String equipmentName = rows[2];
+            List<EquipmentEntity> equipmentEntities = equipmentService.findByName(equipmentName);
+            if (!equipmentEntities.isEmpty())
+                maintenancePlanInfoEntity.setEquipmentId(equipmentEntities.get(0).getId());
+
+            try {
+                Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(rows[3]);
+                Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(rows[4]);
+                if (endDate.after(startDate) || endDate.getTime() == startDate.getTime()) {
+                    maintenancePlanInfoEntity.setStartDate(startDate);
+                    maintenancePlanInfoEntity.setEndDate(endDate);
+                }
+            } catch (ParseException e) {
+                throw new BaseRuntimeException("日期转换有误");
             }
+            maintenancePlanInfoEntity.setCreatedDate(new Date());
+            maintenancePlanInfoEntities.add(maintenancePlanInfoEntity);
         }
         if (!maintenancePlanInfoEntities.isEmpty())
             this.add(maintenancePlanInfoEntities);
@@ -117,7 +137,7 @@ public class MaintenancePlanInfoServiceImpl implements MaintenancePlanInfoServic
         //excel标题
         String title = "维护计划详情列表";
         //excel表名
-        String[] headers = {"序号", "维护计划", "车站名称", "设备名称", "开始日期", "结束日期"};
+        String[] headers = {"序号", "车站名称", "设备名称", "开始日期", "结束日期"};
         //获取数据
         List<MaintenancePlanInfoEntity> maintenancePlanInfoEntities = this.findByCondition(ids, null, null);
         maintenancePlanInfoEntities = maintenancePlanInfoEntities.stream()
@@ -128,11 +148,10 @@ public class MaintenancePlanInfoServiceImpl implements MaintenancePlanInfoServic
         for (int i = 0; i < maintenancePlanInfoEntities.size(); i++) {
             MaintenancePlanInfoEntity maintenancePlanInfoEntity = maintenancePlanInfoEntities.get(i);
             content[i][0] = maintenancePlanInfoEntity.getId().toString();
-            content[i][1] = maintenancePlanInfoEntity.getMaintenancePlanEntity().getName();
-            content[i][2] = maintenancePlanInfoEntity.getCheZhanEntity().getCzName();
-            content[i][3] = maintenancePlanInfoEntity.getEquipmentEntity().getName();
-            content[i][4] = new SimpleDateFormat("yyyy-MM-dd").format(maintenancePlanInfoEntity.getStartDate());
-            content[i][5] = new SimpleDateFormat("yyyy-MM-dd").format(maintenancePlanInfoEntity.getEndDate());
+            content[i][1] = maintenancePlanInfoEntity.getCheZhanEntity().getCzName();
+            content[i][2] = maintenancePlanInfoEntity.getEquipmentEntity().getName();
+            content[i][3] = new SimpleDateFormat("yyyy-MM-dd").format(maintenancePlanInfoEntity.getStartDate());
+            content[i][4] = new SimpleDateFormat("yyyy-MM-dd").format(maintenancePlanInfoEntity.getEndDate());
 
         }
         //创建HSSFWorkbook

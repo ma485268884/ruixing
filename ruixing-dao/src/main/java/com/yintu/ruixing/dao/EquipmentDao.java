@@ -18,4 +18,6 @@ public interface EquipmentDao {
     int updateByPrimaryKeySelective(EquipmentEntity record);
 
     int updateByPrimaryKey(EquipmentEntity record);
+
+    List<EquipmentEntity> selectByName(String name);
 }

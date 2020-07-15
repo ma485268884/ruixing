@@ -24,12 +24,12 @@
     </resultMap>
 
     <!--添加车站-->
-    <insert id="insertChezhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity" >
-        insert into mro_chezhan(cz_name,cz_id,xd_id,cz_miaoshu,xd_cz_id,cz_state)
-          values(#{czName,jdbcType=VARCHAR},#{czId,jdbcType=BIGINT},#{xdId,jdbcType=BIGINT},#{czMiaoShu,jdbcType=VARCHAR},#{xid,jdbcType=BIGINT},#{czState,jdbcType=BIGINT})
+    <insert id="insertChezhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity">
+        insert into mro_chezhan(cz_name, cz_id, xd_id, cz_miaoshu, xd_cz_id, cz_state)
+        values (#{czName,jdbcType=VARCHAR}, #{czId,jdbcType=BIGINT}, #{xdId,jdbcType=BIGINT}, #{czMiaoShu,jdbcType=VARCHAR}, #{xid,jdbcType=BIGINT}, #{czState,jdbcType=BIGINT})
     </insert>
     <!--更新车站-->
-    <update id="updateCheZhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity" >
+    <update id="updateCheZhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity">
         update mro_chezhan
         <set>
             <if test="czName !=null">
@@ -49,15 +49,26 @@
     </update>
     <!--查询全部车站-->
     <select id="selectByCheZhan" parameterType="java.lang.Long" resultMap="chezhan">
-        select * from mro_chezhan where cid =  #{cid,jdbcType=BIGINT}
+        select *
+        from mro_chezhan
+        where cid = #{cid,jdbcType=BIGINT}
     </select>
 
     <!--删除车站-->
     <delete id="delCheZhan" parameterType="java.lang.Long">
-        delete from mro_chezhan where cid=#{cid}
+        delete
+        from mro_chezhan
+        where cid = #{cid}
     </delete>
-
+    <!--查询全部车站-->
     <select id="selectAll" resultMap="chezhan">
-        select * from mro_chezhan
+        select *
+        from mro_chezhan
+    </select>
+    <!--查询全部车站-->
+    <select id="selectByCzName" parameterType="java.lang.String" resultMap="chezhan">
+        select *
+        from mro_chezhan
+        where cz_name like concat('%', #{czName,jdbcType=VARCHAR}, '%')
     </select>
 </mapper>

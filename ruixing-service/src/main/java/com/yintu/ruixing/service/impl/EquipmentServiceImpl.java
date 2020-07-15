@@ -44,4 +44,9 @@ public class EquipmentServiceImpl implements EquipmentService {
     public List<EquipmentEntity> findAll() {
         return equipmentDao.selectAll();
     }
+
+    @Override
+    public List<EquipmentEntity> findByName(String name) {
+        return equipmentDao.selectByName(name);
+    }
 }

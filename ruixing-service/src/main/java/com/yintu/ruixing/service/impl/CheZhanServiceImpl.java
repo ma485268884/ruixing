@@ -49,4 +49,9 @@ public class CheZhanServiceImpl implements CheZhanService {
         return cheZhanDao.selectAll();
     }
 
+    @Override
+    public List<CheZhanEntity> findByCzName(String czName) {
+        return cheZhanDao.selectByCzName(czName);
+    }
+
 }

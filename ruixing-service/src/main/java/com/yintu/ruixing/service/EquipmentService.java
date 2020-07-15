@@ -14,4 +14,6 @@ public interface EquipmentService extends BaseService<EquipmentEntity, Integer> 
 
     List<EquipmentEntity> findAll();
 
+    List<EquipmentEntity> findByName(String name);
+
 }

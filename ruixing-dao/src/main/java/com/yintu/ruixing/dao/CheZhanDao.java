@@ -46,4 +46,12 @@ public interface CheZhanDao {
      * @return 车站信息集合
      */
     List<CheZhanEntity> selectAll();
+
+    /**
+     * 按照车站名查询
+     *
+     * @param czName 车站名名称
+     * @return
+     */
+    List<CheZhanEntity> selectByCzName(String czName);
 }
