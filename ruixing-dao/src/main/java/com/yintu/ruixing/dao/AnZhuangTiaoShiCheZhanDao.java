@@ -29,4 +29,26 @@ public interface AnZhuangTiaoShiCheZhanDao {
     void deleteCheZhanByIds(Integer[] ids);
 
     List<AnZhuangTiaoShiCheZhanEntity> findCheZhanByName(String czname);
+
+    Integer findCheZhanTotal(Integer id);
+
+    Integer findJiGuiTotal(Integer id);
+
+    Integer findIndoorKaBantotal(Integer id);
+
+    Integer findOutdoorSheBeiTotal(Integer id);
+
+    Integer findPeiXianTotal(Integer id);
+
+    Integer findShangDianTotal(Integer id);
+
+    Integer findJingTaiYanShouTotal(Integer id);
+
+    Integer findDongTaiYanShouTotal(Integer id);
+
+    Integer findLianTiaoLianShiTotal(Integer id);
+
+    Integer findShiYunXingTotal(Integer id);
+
+    Integer findKaiTongTotal(Integer id);
 }

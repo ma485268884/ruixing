@@ -27,6 +27,35 @@ public class AnZhuangTiaoShiXiangMuEntity {
 
     private String guanlianxiangmu;//关联项目名和编号
 
+    private  Integer cheZhanTotal;//车站总数
+    private  Integer jiGuiTotal;//机柜总数
+    private  Integer indoorKaBanTotal;//室内卡板总数
+    private  Integer outdoorSheBeiTotal;//室外设备总数
+    private  Integer peiXianTotal;//完成配线总数
+    private  Integer shangDianTotal;//具备上电总数
+    private  Integer jingTaiYanShouTotal;//完成静态验收总数
+    private  Integer dongTaiYanShouTotal;//完成动态验收总数
+    private  Integer lianTiaoLianShiTotal;//完成联调联试总数
+    private  Integer shiYunXingTotal;//完成试运行总数
+    private  Integer kaiTongTotal;//完成开通总数
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public Integer getId() {
         return id;
     }

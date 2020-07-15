@@ -1,6 +1,8 @@
 package com.yintu.ruixing.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
@@ -39,7 +41,7 @@ public class AnZhuangTiaoShiXiangMuController {
 
     //新增三级树中的项目
     @PostMapping("/addSanJiShuXiangMu")
-    public Map<String,Object>addSanJiShuXiangMu(AnZhuangTiaoShiXiangMuEntity anZhuangTiaoShiXiangMuEntity){
+    public Map<String,Object>addSanJiShuXiangMu(AnZhuangTiaoShiXiangMuEntity anZhuangTiaoShiXiangMuEntity)throws Exception{
         anZhuangTiaoShiXiangMuService.addSanJiShuXiangMu(anZhuangTiaoShiXiangMuEntity);
         return ResponseDataUtil.ok("新增项目成功");
     }
@@ -53,15 +55,22 @@ public class AnZhuangTiaoShiXiangMuController {
     //根据id   删除三级树的项目
     @DeleteMapping("/deletSanJiShuById/{id}")
     public Map<String,Object>deletSanJiShuById(@PathVariable Integer id){
-        anZhuangTiaoShiXiangMuService.deletSanJiShuById(id);
-        return ResponseDataUtil.ok("删除项目成功");
+        Integer chezhantotal=anZhuangTiaoShiXiangMuService.findCheZhanTotal(id);
+        if (chezhantotal==0){
+            anZhuangTiaoShiXiangMuService.deletSanJiShuById(id);
+            return ResponseDataUtil.ok("删除项目成功");
+        }else {
+            return ResponseDataUtil.error("不能删除带有车站的线段");
+        }
     }
+
     //查询所有的项目类型
     @GetMapping("/findAllXiangMuType")
     public Map<String,Object>findAllXiangMuType(){
         List<AnZhuangTiaoShiCheZhanXiangMuTypeEntity> xiangMuTypeEntities=anZhuangTiaoShiXiangMuService.findAllXiangMuType();
         return ResponseDataUtil.ok("查询项目类型成功",xiangMuTypeEntities);
     }
+
     //查询关联项目及其编号
     @GetMapping("/findXiangMuAndBianHao")
     public Map<String,Object>findXiangMuAndBianHao(){
@@ -69,34 +78,42 @@ public class AnZhuangTiaoShiXiangMuController {
         return ResponseDataUtil.ok("查询关联项目及其编号成功",chanPinJiaoFuXiangMuFileEntities);
     }
 
-    //上传文件
-    @PostMapping("/uploads")
-    @ResponseBody
-    public Map<String, Object> uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        String fileName = multipartFile.getOriginalFilename();
-        String filePath = FileUploadUtil.save(multipartFile.getInputStream(), fileName);
-        JSONObject jo = new JSONObject();
-        jo.put("filePath", filePath);
-        jo.put("fileName", fileName);
-        return ResponseDataUtil.ok("上传文件成功", jo);
+
+    //根据三级树的类型  查询类型下的数据
+    @GetMapping("/findXianDuanDataByLeiXing")
+    public Map<String,Object>findXianDuanDataByLeiXing(Integer leiXingId ,Integer page,Integer size){
+        PageHelper.startPage(page,size);
+        List<AnZhuangTiaoShiXiangMuEntity>xiangMuEntities=anZhuangTiaoShiXiangMuService.findXianDuanDataByLeiXing(leiXingId,page,size);
+        PageInfo<AnZhuangTiaoShiXiangMuEntity>xiangMuEntityPageInfo=new PageInfo<>(xiangMuEntities);
+        return ResponseDataUtil.ok("查询数据成功",xiangMuEntityPageInfo);
     }
 
-    //根据id 下载文件
-    @GetMapping("/downloads/{id}")
-    public void downloadFile(@PathVariable Integer id, HttpServletResponse response) throws IOException {
-        AnZhuangTiaoShiFileEntity anZhuangTiaoShiFileEntity=anZhuangTiaoShiXiangMuService.findById(id);
-        if (anZhuangTiaoShiFileEntity != null) {
-            String filePath = anZhuangTiaoShiFileEntity.getFilePath();
-            String fileName = anZhuangTiaoShiFileEntity.getFileName();
-            if (filePath != null && !"".equals(filePath) && fileName != null && !"".equals(fileName)) {
-                response.setContentType("application/octet-stream;charset=ISO8859-1");
-                response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
-                response.addHeader("Pargam", "no-cache");
-                response.addHeader("Cache-Control", "no-cache");
-                FileUploadUtil.get(response.getOutputStream(), filePath + "\\" + fileName);
-            }
-        }
+    //查询所有的项目 和 年份
+    @GetMapping("/findXianDuanNameAndYear")
+    public Map<String,Object>findXianDuanNameAndYear(){
+        List<AnZhuangTiaoShiXiangMuEntity> xiangMuEntities=anZhuangTiaoShiXiangMuService.findXianDuanNameAndYear();
+        return ResponseDataUtil.ok("查询线段名和年份成功",xiangMuEntities);
     }
 
-    //
+    //根据项目名 或年份 或项目类型 或项目状态查询数据
+    @GetMapping("/findXianDuanBySomedata")
+    public Map<String,Object>findXianDuanBySomedata(Integer page,Integer size,
+                                                    String xdname,String year,
+                                                    String xdtype,Integer xdleixing){
+        PageHelper.startPage(page,size);
+        List<AnZhuangTiaoShiXiangMuEntity> xiangMuEntities=anZhuangTiaoShiXiangMuService.findXianDuanBySomedata(page,size,xdname,year,xdtype,xdleixing);
+        PageInfo<AnZhuangTiaoShiXiangMuEntity> xiangMuEntityPageInfo=new PageInfo<>(xiangMuEntities);
+        return ResponseDataUtil.ok("查询数据成功",xiangMuEntityPageInfo);
+    }
+
+    //根据id 进行单个或者批量下载到Excel
+    @GetMapping("/downLoadByIds/{ids}")
+    public void exportFile(@PathVariable Integer[] ids, HttpServletResponse response) throws IOException {
+        String fileName = "安装调试线段列表" + System.currentTimeMillis() + ".xlsx";
+        response.setContentType("application/octet-stream;charset=ISO8859-1");
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
+        response.addHeader("Pargam", "no-cache");
+        response.addHeader("Cache-Control", "no-cache");
+        anZhuangTiaoShiXiangMuService.exportFile(response.getOutputStream(), ids);
+    }
 }

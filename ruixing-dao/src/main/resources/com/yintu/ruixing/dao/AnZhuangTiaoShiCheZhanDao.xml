@@ -66,6 +66,126 @@
     kaitong_actual_end_time, kaitong_is_no
   </sql>
 
+  <!--根据线段id  查询对应的完成开通数量-->
+  <select id="findKaiTongTotal" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT
+        COUNT( kaitong_is_no )
+    FROM
+        mro_anzhuangtiaoshi_chezhan
+    WHERE
+        xid =#{id}
+    AND kaitong_is_no =1
+  </select>
+
+  <!--根据线段id  查询对应的完成试运行数量-->
+  <select id="findShiYunXingTotal" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT
+        COUNT( shiyunxing_is_no )
+    FROM
+        mro_anzhuangtiaoshi_chezhan
+    WHERE
+        xid =#{id}
+    AND shiyunxing_is_no =1
+  </select>
+
+  <!--根据线段id  查询对应的完成联调联试数量-->
+  <select id="findLianTiaoLianShiTotal" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT
+        COUNT( liantiaolianshi_is_no )
+    FROM
+        mro_anzhuangtiaoshi_chezhan
+    WHERE
+        xid =#{id}
+    AND liantiaolianshi_is_no =1
+  </select>
+
+  <!--根据线段id  查询对应的完成动态验收数量-->
+  <select id="findDongTaiYanShouTotal" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT
+        COUNT( dongtaiyanshou_is_no )
+    FROM
+        mro_anzhuangtiaoshi_chezhan
+    WHERE
+        xid =#{id}
+    AND dongtaiyanshou_is_no =1
+  </select>
+
+  <!--根据线段id  查询对应的完成静态验收数量-->
+  <select id="findJingTaiYanShouTotal" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT
+        COUNT( jingtaiyanshou_is_no )
+    FROM
+        mro_anzhuangtiaoshi_chezhan
+    WHERE
+        xid =#{id}
+    AND jingtaiyanshou_is_no =1
+  </select>
+
+  <!--根据线段id  查询对应的完成上电条件数量-->
+  <select id="findShangDianTotal" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT
+        COUNT( shangdiantiaojian_is_no )
+    FROM
+        mro_anzhuangtiaoshi_chezhan
+    WHERE
+        xid =#{id}
+    AND shangdiantiaojian_is_no =1
+  </select>
+
+  <!--根据线段id  查询对应的完成配线数量-->
+  <select id="findPeiXianTotal" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT
+        COUNT( wanchengpeixian_is_no )
+    FROM
+        mro_anzhuangtiaoshi_chezhan
+    WHERE
+        xid =#{id}
+    AND wanchengpeixian_is_no =1
+  </select>
+
+  <!--根据线段id  查询对应的完成室外设备数量-->
+  <select id="findOutdoorSheBeiTotal" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT
+        COUNT( outdoorshebei )
+    FROM
+        mro_anzhuangtiaoshi_chezhan
+    WHERE
+        xid =#{id}
+    AND outdoorshebei =1
+  </select>
+
+  <!--根据线段id  查询对应的完成室内卡板数量-->
+  <select id="findIndoorKaBantotal" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT
+        COUNT( indoorkaban )
+    FROM
+        mro_anzhuangtiaoshi_chezhan
+    WHERE
+        xid =#{id}
+    AND indoorkaban =1
+  </select>
+
+  <!--根据线段id  查询对应的机柜数量-->
+  <select id="findJiGuiTotal" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT
+        COUNT( jigui )
+    FROM
+        mro_anzhuangtiaoshi_chezhan
+    WHERE
+        xid =#{id}
+    AND jigui =1
+  </select>
+
+  <!--根据线段id  查询对应的车站数量-->
+  <select id="findCheZhanTotal" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT
+        COUNT( xid )
+    FROM
+        mro_anzhuangtiaoshi_chezhan
+    WHERE
+        xid =#{id}
+  </select>
+
   <!--根据车站名  模糊查询对应的车站信息-->
   <select id="findCheZhanByName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select

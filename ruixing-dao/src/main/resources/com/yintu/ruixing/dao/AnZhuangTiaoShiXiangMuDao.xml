@@ -14,6 +14,67 @@
   <sql id="Base_Column_List">
     id, xianduantime, tlj_name, dwd_name, xd_name, xd_type, xd_fenlei, guanlianxiangmu
   </sql>
+
+  <!--根据项目id  查询对应的数据-->
+  <select id="findXiangMuData" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List"/>
+    FROM
+    mro_anzhuangtiaoshi_xiangmu
+    WHERE id
+    in
+    <foreach collection="array" item="ids" open="(" separator="," close=")">
+      #{ids}
+    </foreach>
+  </select>
+
+  <!-- 根据项目名 或年份 或项目类型 或项目状态查询数据-->
+  <select id="findXianDuanBySomedata" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List"/>
+    FROM
+    mro_anzhuangtiaoshi_xiangmu
+    <where>
+      <if test="xdname!=null">
+        and
+        xd_name=#{xdname}
+      </if>
+      <if test="year!=null">
+        and
+        xianduantime=#{year}
+      </if>
+      <if test="xdtype!=null">
+        and
+        xd_type=#{xdtype}
+      </if>
+      <if test="xdleixing!=null">
+        and
+        xd_fenlei=#{xdleixing}
+      </if>
+    </where>
+  </select>
+
+
+  <!-- 查询所有的线段名和年份-->
+  <select id="findXianDuanNameAndYear" resultMap="BaseResultMap" >
+    select
+    id,
+	xd_name,
+	xianduantime
+    FROM
+    mro_anzhuangtiaoshi_xiangmu
+  </select>
+
+  <!--根据项目类型  查询对应的数据-->
+  <select id="findXianDuanDataByLeiXing" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List"/>
+    FROM
+    mro_anzhuangtiaoshi_xiangmu
+    WHERE
+    xd_fenlei =#{leiXingId}
+  </select>
+
   <!--查询所有的三级树数据-->
   <select id="findSanJiShu"  resultMap="BaseResultMap">
     select
