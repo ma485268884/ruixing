@@ -1,12 +1,7 @@
 package com.yintu.ruixing.websocket;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.websocket.Session;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author:mlf

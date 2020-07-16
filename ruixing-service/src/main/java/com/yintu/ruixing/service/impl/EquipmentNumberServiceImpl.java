@@ -37,11 +37,12 @@ public class EquipmentNumberServiceImpl implements EquipmentNumberService {
 
     @Override
     public EquipmentNumberEntity findById(Integer id) {
-        return equipmentNumberDao.selectByPrimaryKey(id);
+        List<EquipmentNumberEntity> equipmentNumberEntities = equipmentNumberDao.selectByCondition(new Integer[]{id}, null);
+        return equipmentNumberEntities.isEmpty() ? null : equipmentNumberEntities.get(0);
     }
-    
+
     @Override
-    public List<EquipmentNumberEntity> findByEquipmentNumber(String equipmentNumber) {
-        return equipmentNumberDao.selectByEquipmentNumber(equipmentNumber);
+    public List<EquipmentNumberEntity> findByCondition(Integer[] ids, String equipmentNumber) {
+        return equipmentNumberDao.selectByCondition(ids, equipmentNumber);
     }
 }
