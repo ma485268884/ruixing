@@ -53,6 +53,7 @@ public class AnZhuangTiaoShiCheZhanServiceImpl implements AnZhuangTiaoShiCheZhan
                 .sorted(Comparator.comparing(AnZhuangTiaoShiCheZhanEntity::getId).reversed())
                 .collect(Collectors.toList());
         //excel元素
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Integer j = 0;
         String[][] content = new String[cheZhanEntities.size()][headers.length];
         for (int i = 0; i < cheZhanEntities.size(); i++) {
@@ -79,95 +80,95 @@ public class AnZhuangTiaoShiCheZhanServiceImpl implements AnZhuangTiaoShiCheZhan
             if (cheZhanEntity.getOutdoorshebei()==0){
                 content[i][6] = "暂未到货";
             }
-            content[i][7] = cheZhanEntity.getWanchengpeixianPlanStartTime().toString();
-            content[i][8] = cheZhanEntity.getWanchengpeixianPlanEndTime().toString();
-            if (cheZhanEntity.getWanchengpeixianActualStartTime()==null){
+            content[i][7] = format.format(cheZhanEntity.getWanchengpeixianPlanStartTime());
+            content[i][8] = format.format(cheZhanEntity.getWanchengpeixianPlanEndTime());
+            if (cheZhanEntity.getWanchengpeixianActualStartTime()==null ||cheZhanEntity.getWanchengpeixianActualStartTime().toString().equals("")){
                 content[i][9] = "实际开始时间待编辑";
             }else {
-                content[i][9] = cheZhanEntity.getWanchengpeixianActualStartTime().toString();
+                content[i][9] = format.format(cheZhanEntity.getWanchengpeixianActualStartTime());
             }
             if (cheZhanEntity.getWanchengpeixianActualEndTime()==null){
                 content[i][10] = "实际结束时间待编辑";
             }else {
-                content[i][10] = cheZhanEntity.getWanchengpeixianActualEndTime().toString();
+                content[i][10] = format.format(cheZhanEntity.getWanchengpeixianActualEndTime());
             }
-            content[i][11] = cheZhanEntity.getShangdiantiaojianPlanStartTime().toString();
-            content[i][12] = cheZhanEntity.getShangdiantiaojianPlanEndTime().toString();
+            content[i][11] =format.format(cheZhanEntity.getShangdiantiaojianPlanStartTime());
+            content[i][12] = format.format(cheZhanEntity.getShangdiantiaojianPlanEndTime());
 
             if (cheZhanEntity.getShangdiantiaojianActualStartTime()==null){
                 content[i][13] = "实际开始时间待编辑";
             }else {
-                content[i][13] = cheZhanEntity.getShangdiantiaojianActualStartTime().toString();
+                content[i][13] = format.format(cheZhanEntity.getShangdiantiaojianActualStartTime());
             }
             if (cheZhanEntity.getShangdiantiaojianActualEndTime()==null){
                 content[i][14] = "实际结束时间待编辑";
             }else {
-                content[i][14] = cheZhanEntity.getShangdiantiaojianActualEndTime().toString();
+                content[i][14] = format.format(cheZhanEntity.getShangdiantiaojianActualEndTime());
             }
 
-            content[i][15] = cheZhanEntity.getJingtaiyanshouPlanStartTime().toString();
-            content[i][16] = cheZhanEntity.getJingtaiyanshouPlanEndTime().toString();
+            content[i][15] = format.format(cheZhanEntity.getJingtaiyanshouPlanStartTime());
+            content[i][16] = format.format(cheZhanEntity.getJingtaiyanshouPlanEndTime());
             if (cheZhanEntity.getJingtaiyanshouActualStartTime()==null){
                 content[i][17] = "实际开始时间待编辑";
             }else {
-                content[i][17] = cheZhanEntity.getJingtaiyanshouActualStartTime().toString();
+                content[i][17] = format.format(cheZhanEntity.getJingtaiyanshouActualStartTime());
             }
             if (cheZhanEntity.getJingtaiyanshouActualEndTime()==null){
                 content[i][18] = "实际结束时间待编辑";
             }else {
-                content[i][18] = cheZhanEntity.getJingtaiyanshouActualEndTime().toString();
+                content[i][18] = format.format(cheZhanEntity.getJingtaiyanshouActualEndTime());
             }
 
-            content[i][19] = cheZhanEntity.getDongtaiyanshouPlanStartTime().toString();
-            content[i][20] = cheZhanEntity.getDongtaiyanshouPlanEndTime().toString();
+            content[i][19] = format.format(cheZhanEntity.getDongtaiyanshouPlanStartTime());
+            content[i][20] = format.format(cheZhanEntity.getDongtaiyanshouPlanEndTime());
             if (cheZhanEntity.getDongtaiyanshouActualStartTime()==null){
                 content[i][21] = "实际开始时间待编辑";
             }else {
-                content[i][21] = cheZhanEntity.getDongtaiyanshouActualStartTime().toString();
+                content[i][21] = format.format(cheZhanEntity.getDongtaiyanshouActualStartTime());
             }
             if (cheZhanEntity.getDongtaiyanshouActualEndTime()==null){
                 content[i][22] = "实际结束时间待编辑";
             }else {
-                content[i][22] = cheZhanEntity.getDongtaiyanshouActualEndTime().toString();
+                content[i][22] = format.format(cheZhanEntity.getDongtaiyanshouActualEndTime());
             }
 
-            content[i][23] = cheZhanEntity.getLiantiaolianshiPlanStartTime().toString();
-            content[i][24] = cheZhanEntity.getLiantiaolianshiPlanEndTime().toString();
+            content[i][23] = format.format(cheZhanEntity.getLiantiaolianshiPlanStartTime());
+            content[i][24] = format.format(cheZhanEntity.getLiantiaolianshiPlanEndTime());
             if (cheZhanEntity.getLiantiaolianshiActualStartTime()==null){
                 content[i][25] = "实际开始时间待编辑";
             }else {
-                content[i][25] = cheZhanEntity.getLiantiaolianshiActualStartTime().toString();
+                content[i][25] = format.format(cheZhanEntity.getLiantiaolianshiActualStartTime());
             }
             if (cheZhanEntity.getLiantiaolianshiActualEndTime()==null){
                 content[i][26] = "实际结束时间待编辑";
             }else {
-                content[i][26] = cheZhanEntity.getLiantiaolianshiActualEndTime().toString();
+                content[i][26] = format.format(cheZhanEntity.getLiantiaolianshiActualEndTime());
             }
 
-            content[i][27] = cheZhanEntity.getShiyunxingPlanStartTime().toString();
-            content[i][28] = cheZhanEntity.getShiyunxingPlanEndTime().toString();
+            content[i][27] = format.format(cheZhanEntity.getShiyunxingPlanStartTime());
+            content[i][28] = format.format(cheZhanEntity.getShiyunxingPlanEndTime());
             if (cheZhanEntity.getShiyunxingActualStartTime()==null){
                 content[i][29] = "实际开始时间待编辑";
             }else {
-                content[i][29] = cheZhanEntity.getShiyunxingActualStartTime().toString();
+                content[i][29] = format.format(cheZhanEntity.getShiyunxingActualStartTime());
             }
             if (cheZhanEntity.getShiyunxingActualEndTime()==null){
                 content[i][30] = "实际结束时间待编辑";
             }else {
-                content[i][30] = cheZhanEntity.getShiyunxingActualEndTime().toString();
+                content[i][30] = format.format(cheZhanEntity.getShiyunxingActualEndTime());
             }
 
-            content[i][31] = cheZhanEntity.getKaitongPlanStartTime().toString();
-            content[i][32] = cheZhanEntity.getKaitongPlanEndTime().toString();
+            content[i][31] = format.format(cheZhanEntity.getKaitongPlanStartTime());
+            content[i][32] = format.format(cheZhanEntity.getKaitongPlanEndTime());
             if (cheZhanEntity.getKaitongActualStartTime()==null){
                 content[i][33] = "实际开始时间待编辑";
             }else {
-                content[i][33] = cheZhanEntity.getKaitongActualStartTime().toString();
+                content[i][33] = format.format(cheZhanEntity.getKaitongActualStartTime());
             }
             if (cheZhanEntity.getKaitongActualEndTime()==null){
                 content[i][34] = "实际结束时间待编辑";
             }else {
-                content[i][34] = cheZhanEntity.getKaitongActualEndTime().toString();
+                content[i][34] = format.format(cheZhanEntity.getKaitongActualEndTime());
             }
         }
         //创建HSSFWorkbook
@@ -189,6 +190,7 @@ public class AnZhuangTiaoShiCheZhanServiceImpl implements AnZhuangTiaoShiCheZhan
 
     @Override
     public void editCheZhanById(AnZhuangTiaoShiCheZhanEntity anZhuangTiaoShiCheZhanEntity) {
+
         anZhuangTiaoShiCheZhanDao.editCheZhanById(anZhuangTiaoShiCheZhanEntity);
     }
 
@@ -269,6 +271,7 @@ public class AnZhuangTiaoShiCheZhanServiceImpl implements AnZhuangTiaoShiCheZhan
         anZhuangTiaoShiCheZhanEntity.setLiantiaolianshiIsNo(0);
         anZhuangTiaoShiCheZhanEntity.setShangdiantiaojianIsNo(0);
         anZhuangTiaoShiCheZhanEntity.setWanchengpeixianIsNo(0);
+
         /*anZhuangTiaoShiCheZhanEntity.setDongtaiyanshouActualEndTime(new Date());
         anZhuangTiaoShiCheZhanEntity.setDongtaiyanshouActualStartTime(new Date());
         anZhuangTiaoShiCheZhanEntity.setJingtaiyanshouActualEndTime(new Date());

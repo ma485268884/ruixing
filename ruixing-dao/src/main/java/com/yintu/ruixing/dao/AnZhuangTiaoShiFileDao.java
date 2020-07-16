@@ -1,6 +1,7 @@
 package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.AnZhuangTiaoShiFileEntity;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -28,4 +29,6 @@ public interface AnZhuangTiaoShiFileDao {
     void deletFileByIds(Integer[] ids);
 
     AnZhuangTiaoShiFileEntity selectByPrimaryKey(Integer id);
+
+    List<AnZhuangTiaoShiFileEntity> findFileByNmae(@Param("xdid") Integer xdid,@Param("filetype") Integer filetype,@Param("filename") String filename);
 }

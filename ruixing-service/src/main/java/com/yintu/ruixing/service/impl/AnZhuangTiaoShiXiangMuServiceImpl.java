@@ -56,7 +56,7 @@ public class AnZhuangTiaoShiXiangMuServiceImpl implements AnZhuangTiaoShiXiangMu
                 .sorted(Comparator.comparing(AnZhuangTiaoShiXiangMuEntity::getId).reversed())
                 .collect(Collectors.toList());
         //excel元素
-        SimpleDateFormat format = new SimpleDateFormat("yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Integer j = 0;
         String[][] content = new String[xiangMuEntities.size()][headers.length];
         for (int i = 0; i < xiangMuEntities.size(); i++) {
@@ -65,7 +65,7 @@ public class AnZhuangTiaoShiXiangMuServiceImpl implements AnZhuangTiaoShiXiangMu
             Integer id = anZhuangTiaoShiXiangMuEntity.getId();
             content[i][0] = j.toString();
             content[i][1] = anZhuangTiaoShiXiangMuEntity.getXdName();
-            content[i][2] = format.format(anZhuangTiaoShiXiangMuEntity.getXianduantime().toString());
+            content[i][2] = format.format(anZhuangTiaoShiXiangMuEntity.getXianduantime());
             Integer chezhantotal = anZhuangTiaoShiCheZhanDao.findCheZhanTotal(id);
             content[i][3] = chezhantotal.toString();
             content[i][4] = anZhuangTiaoShiXiangMuEntity.getXdType();

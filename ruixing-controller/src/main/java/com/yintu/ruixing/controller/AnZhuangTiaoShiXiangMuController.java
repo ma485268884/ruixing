@@ -60,7 +60,7 @@ public class AnZhuangTiaoShiXiangMuController {
             anZhuangTiaoShiXiangMuService.deletSanJiShuById(id);
             return ResponseDataUtil.ok("删除项目成功");
         }else {
-            return ResponseDataUtil.error("不能删除带有车站的线段");
+            return ResponseDataUtil.error("此线段下有车站,不能删除");
         }
     }
 

@@ -22,4 +22,7 @@ public interface AnZhuangTiaoShiFileService {
     void deletFileByIds(Integer[] ids);
 
     AnZhuangTiaoShiFileEntity findById(Integer id);
+
+    List<AnZhuangTiaoShiFileEntity> findFileByNmae(Integer page, Integer size, Integer xdid, Integer filetype, String filename);
+
 }
