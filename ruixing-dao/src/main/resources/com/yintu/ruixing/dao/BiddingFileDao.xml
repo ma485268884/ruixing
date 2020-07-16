@@ -170,7 +170,7 @@
         <include refid="Connect_Column_List"/>
         from mro_bidding_file bf
         inner join mro_bidding b on bf.bidding_id=b.id
-        left outer join mro_bidding_file__auditor bfa on bf.id=bfa.bidding_file_id
+        left outer join mro_bidding_file_auditor bfa on bf.id=bfa.bidding_file_id
         <include refid="Connect_condition_List"/>
     </select>
 </mapper>

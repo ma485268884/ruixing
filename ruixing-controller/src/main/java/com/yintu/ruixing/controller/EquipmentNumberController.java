@@ -5,8 +5,10 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.*;
+import com.yintu.ruixing.entity.EquipmentEntity;
 import com.yintu.ruixing.entity.EquipmentNumberEntity;
 import com.yintu.ruixing.service.EquipmentNumberService;
+import com.yintu.ruixing.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -30,6 +32,8 @@ import java.util.Map;
 public class EquipmentNumberController implements BaseController<EquipmentNumberEntity, Integer> {
     @Autowired
     private EquipmentNumberService equipmentNumberService;
+    @Autowired
+    private EquipmentService equipmentService;
 
     @PostMapping
     @ResponseBody
@@ -64,10 +68,10 @@ public class EquipmentNumberController implements BaseController<EquipmentNumber
     @ResponseBody
     public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber,
                                        @RequestParam("page_size") Integer pageSize,
-                                       @RequestParam(value = "order_by", required = false, defaultValue = "id DESC") String orderBy,
+                                       @RequestParam(value = "order_by", required = false, defaultValue = "en.id DESC") String orderBy,
                                        @RequestParam(value = "equipment_number", required = false) String equipmentNumber) {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
-        List<EquipmentNumberEntity> equipmentNumberEntities = equipmentNumberService.findByEquipmentNumber(equipmentNumber);
+        List<EquipmentNumberEntity> equipmentNumberEntities = equipmentNumberService.findByCondition(null, equipmentNumber);
         PageInfo<EquipmentNumberEntity> pageInfo = new PageInfo<>(equipmentNumberEntities);
         return ResponseDataUtil.ok("查询器材编号列表信息成功", pageInfo);
 
@@ -99,9 +103,20 @@ public class EquipmentNumberController implements BaseController<EquipmentNumber
                 response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
                 response.addHeader("Pargam", "no-cache");
                 response.addHeader("Cache-Control", "no-cache");
-                FileUploadUtil.get(response.getOutputStream(), filePath + "\\" + fileName);
+                FileUploadUtil.get(response.getOutputStream(), filePath + File.separator + fileName);
             }
         }
     }
 
+    /**
+     * 查询设备全部信息
+     *
+     * @return
+     */
+    @GetMapping("/equipments")
+    @ResponseBody
+    public Map<String, Object> findEquipmentAll() {
+        List<EquipmentEntity> equipmentEntities = equipmentService.findAll();
+        return ResponseDataUtil.ok("查询设备信息列表成功", equipmentEntities);
+    }
 }

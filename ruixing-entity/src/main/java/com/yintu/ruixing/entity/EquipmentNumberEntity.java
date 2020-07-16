@@ -4,32 +4,36 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import java.io.Serializable;
 import java.util.Date;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class EquipmentNumberEntity implements Serializable {
-    private static final long serialVersionUID = -1720478108378724026L;
+
+    private static final long serialVersionUID = -7048045003432143566L;
+
     private Integer id;
-    @NotEmpty
+    @NotBlank
     private String rackNumber;
-    @NotEmpty
+    @NotBlank
     private String equipmentNumber;
-    @NotEmpty
+    @NotBlank
     private String hierarchy;
     @NotNull
-    @Past
     private Date createdDate;
-    @NotEmpty
+    @NotBlank
     private String operator;
-    @NotEmpty
+    @NotBlank
     private String photoPath;
-    @NotEmpty
+    @NotBlank
     private String photoName;
+    @NotNull
+    private Integer equipmentId;
 
+    private EquipmentEntity equipmentEntity;
 }

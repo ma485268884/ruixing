@@ -12,6 +12,6 @@ import java.util.List;
 public interface EquipmentNumberService extends BaseService<EquipmentNumberEntity, Integer> {
 
 
-    List<EquipmentNumberEntity> findByEquipmentNumber(String equipmentNumber);
+    List<EquipmentNumberEntity> findByCondition(Integer[] ids, String equipmentNumber);
 
 }

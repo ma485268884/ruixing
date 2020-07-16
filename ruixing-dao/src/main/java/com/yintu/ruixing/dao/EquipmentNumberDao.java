@@ -17,5 +17,7 @@ public interface EquipmentNumberDao {
 
     int updateByPrimaryKey(EquipmentNumberEntity record);
 
-    List<EquipmentNumberEntity> selectByEquipmentNumber(String equipmentNumber);
+    List<EquipmentNumberEntity> selectByCondition(Integer[] ids, String equipmentNumber);
+
+
 }
