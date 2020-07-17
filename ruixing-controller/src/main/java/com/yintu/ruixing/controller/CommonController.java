@@ -1,16 +1,22 @@
 package com.yintu.ruixing.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.enumobject.EnumAuthType;
-import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.common.util.TreeNodeUtil;
+import com.yintu.ruixing.common.exception.BaseRuntimeException;
+import com.yintu.ruixing.common.util.*;
 import com.yintu.ruixing.entity.MessageEntity;
 import com.yintu.ruixing.service.MessageService;
 import com.yintu.ruixing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -75,5 +81,41 @@ public class CommonController extends SessionController {
         return ResponseDataUtil.ok("查询消息信息列表成功", pageInfo);
     }
 
+    @PostMapping("/upload/file")
+    public Map<String, Object> uploadFile(@RequestParam("file") MultipartFile[] multipartFiles, HttpServletRequest request) throws IOException {
+        String prefix = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/files" + "/";
+        JSONArray ja = new JSONArray();
+        for (MultipartFile multipartFile : multipartFiles) {
+            if (multipartFile.getSize() > 0) {
+                String fileName = multipartFile.getOriginalFilename();
+                String filePath = FileUploadUtil.save(multipartFile.getInputStream(), fileName);
+                JSONObject jo = new JSONObject();
+                jo.put("filePath", prefix + filePath.substring(1) + "/" + fileName);
+                jo.put("fileName", fileName);
+                ja.add(jo);
+            }
+        }
+        return ResponseDataUtil.ok("上传文件成功", ja);
+    }
+
+    @PostMapping("/upload/photo")
+    public Map<String, Object> uploadPhotoFile(@RequestParam("photo") MultipartFile[] multipartFiles, HttpServletRequest request) throws IOException { ;
+        String prefix = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/files" + "/";
+        JSONArray ja = new JSONArray();
+        for (MultipartFile multipartFile : multipartFiles) {
+            if (multipartFile.getSize() > 0) {
+                String photoName = multipartFile.getOriginalFilename();
+                String photoPath = FileUploadUtil.save(multipartFile.getInputStream(), photoName);
+                String defaultBaseFilePath = OSInfoUtil.isWindows() ? FileUploadUtil.WINDOW_BASE_FILE_PATH : OSInfoUtil.isLinux() ? FileUploadUtil.LINUX_BASE_FILE_PATH : FileUploadUtil.WINDOW_BASE_FILE_PATH;
+                if (!FileUtil.isImage(new File(defaultBaseFilePath + photoPath + File.separator + photoName)))//判断是否为图片文件
+                    throw new BaseRuntimeException("此文件不是图片文件");
+                JSONObject jo = new JSONObject();
+                jo.put("photoPath", prefix + photoPath.substring(1) + "/" + photoName);
+                jo.put("photoName", photoName);
+                ja.add(jo);
+            }
+        }
+        return ResponseDataUtil.ok("上传图片成功", ja);
+    }
 
 }
