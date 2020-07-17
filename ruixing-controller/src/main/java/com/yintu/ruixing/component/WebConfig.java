@@ -16,9 +16,9 @@ public class WebConfig implements WebMvcConfigurer {
 
     public final String VIRTUAL_PATH = "/files/**";
 
-    public final String WINDOW_PATH = "C:\\data\\files\\ruixing\\";
+    public final String WINDOW_PATH = "C:\\data\\ruixing\\files\\";
 
-    public final String LINUX_PATH = "/data/files/ruixing/";
+    public final String LINUX_PATH = "/data/ruixing/files/";
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
