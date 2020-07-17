@@ -1,0 +1,37 @@
+package com.yintu.ruixing.component;
+
+import com.yintu.ruixing.common.util.OSInfoUtil;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+/**
+ * @author:mlf
+ * @date:2020/6/19 17:23
+ */
+@Component
+public class WebConfig implements WebMvcConfigurer {
+
+    public final String VIRTUAL_PATH = "/files/**";
+
+    public final String WINDOW_PATH = "C:\\data\\files\\ruixing\\";
+
+    public final String LINUX_PATH = "/data/files/ruixing/";
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowCredentials(true)
+                .allowedMethods("GET", "POST", "DELETE", "PUT")
+                .maxAge(3600);
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler(VIRTUAL_PATH).addResourceLocations("file:" + (OSInfoUtil.isWindows() ? WINDOW_PATH : LINUX_PATH));
+    }
+}
+
