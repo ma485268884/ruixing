@@ -4,7 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.entity.EquipmentEntity;
+import com.yintu.ruixing.entity.EquipmentNumberEntity;
 import com.yintu.ruixing.entity.IndexAnalysisEquipmentEntity;
+import com.yintu.ruixing.service.EquipmentNumberService;
+import com.yintu.ruixing.service.EquipmentService;
 import com.yintu.ruixing.service.IndexAnalysisEquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -24,6 +28,8 @@ import java.util.Map;
 public class IndexAnalysisEquipmentController implements BaseController<IndexAnalysisEquipmentEntity, Integer> {
     @Autowired
     private IndexAnalysisEquipmentService indexAnalysisEquipmentService;
+    @Autowired
+    private EquipmentNumberService equipmentNumberService;
 
     @PostMapping
     public Map<String, Object> add(@Validated IndexAnalysisEquipmentEntity entity) {
@@ -58,6 +64,12 @@ public class IndexAnalysisEquipmentController implements BaseController<IndexAna
         List<IndexAnalysisEquipmentEntity> indexAnalysisEquipmentEntities = indexAnalysisEquipmentService.findByCondition(equipmentNumber);
         PageInfo<IndexAnalysisEquipmentEntity> pageInfo = new PageInfo<>(indexAnalysisEquipmentEntities);
         return ResponseDataUtil.ok("查询器材信息列表成功", pageInfo);
+    }
+
+    @GetMapping("/equipment/numbers")
+    public Map<String, Object> findEquipmentNumberAll() {
+        List<EquipmentNumberEntity> equipmentNumberEntities = equipmentNumberService.findByCondition(null, null);
+        return ResponseDataUtil.ok("查询器材编号列表成功", equipmentNumberEntities);
     }
 
 }
