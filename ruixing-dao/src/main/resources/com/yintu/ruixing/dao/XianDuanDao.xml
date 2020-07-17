@@ -15,6 +15,10 @@
         <result property="xdJson" column="xd_json"/>
     </resultMap>
 
+    <!--查询所有的线段-->
+    <select id="findAllXianDuan" resultMap="xianduan">
+        select * from mro_xianduan
+    </select>
     <!--新增线段-->
     <insert id="addXianDuan" parameterType="com.yintu.ruixing.entity.XianDuanEntity" >
 		insert into mro_xianduan(xd_name,xd_id,dwd_id,xd_miaoshu,dwd_xd_id,xd_state)

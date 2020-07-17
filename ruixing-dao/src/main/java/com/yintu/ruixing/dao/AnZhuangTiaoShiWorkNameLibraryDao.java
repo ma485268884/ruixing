@@ -24,4 +24,7 @@ public interface AnZhuangTiaoShiWorkNameLibraryDao {
     int updateByPrimaryKeySelective(AnZhuangTiaoShiWorkNameLibraryEntity record);
 
     void deleteWorkNameByIds(Integer[] ids);
+
+    List<AnZhuangTiaoShiWorkNameLibraryEntity> findAllWorkName();
+
 }

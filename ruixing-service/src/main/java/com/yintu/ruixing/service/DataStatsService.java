@@ -48,7 +48,7 @@ public interface DataStatsService {
     void editStateByXid(XianDuanEntity xianDuanEntity);
     void editStateByCid(CheZhanEntity cheZhanEntity);
 
-    List<TieLuJuEntity> findAllTieLuJu(TieLuJuEntity tieLuJuEntity);
+    List<TieLuJuEntity> findAllTieLuJu();
 
     List<DianWuDuanEntity> findDianWuDuanByTid(Integer tid);
 
@@ -75,4 +75,18 @@ public interface DataStatsService {
     void qingChuaByXid(XianDuanEntity xianDuanEntity);
 
     void qingChuaByCid(CheZhanEntity cheZhanEntity);
+
+    void addTieLuJU(TieLuJuEntity stringList);
+
+    List<DianWuDuanEntity> findDianWuDuan();
+
+    Long findTLJid(long parseLong);
+
+    void addDianWuDuan(DianWuDuanEntity duanEntity);
+
+    List<XianDuanEntity> findAllXianDuan();
+
+    Long findDWDid(long parseLong);
+
+    void addXianDuan(XianDuanEntity xianDuanEntity1);
 }

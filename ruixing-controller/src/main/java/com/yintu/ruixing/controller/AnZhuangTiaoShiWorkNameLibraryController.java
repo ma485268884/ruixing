@@ -49,4 +49,11 @@ public class AnZhuangTiaoShiWorkNameLibraryController {
         anZhuangTiaoShiWorkNameLibraryService.deleteWorkNameByIds(ids);
         return ResponseDataUtil.ok("删除作业项名称成功");
     }
+
+    //查询所有的作业项
+    @GetMapping("/findAllWorkName")
+    public Map<String,Object>findAllWorkName(){
+        List<AnZhuangTiaoShiWorkNameLibraryEntity>workNameLibraryEntities=anZhuangTiaoShiWorkNameLibraryService.findAllWorkName();
+        return ResponseDataUtil.ok("查询所有作业项成功",workNameLibraryEntities);
+    }
 }

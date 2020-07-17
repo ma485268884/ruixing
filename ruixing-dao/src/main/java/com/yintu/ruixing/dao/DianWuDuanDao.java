@@ -19,4 +19,8 @@ public interface DianWuDuanDao {
     void delDianWuDuan(Long did);
 
     List<Integer> findId(Long did);
+
+    List<DianWuDuanEntity> findDianWuDuan();
+
+    Long dwdid(long parseLong);
 }

@@ -12,5 +12,4 @@ public class RuixingApplication {
         SpringApplication.run(RuixingApplication.class, args);
     }
 
-
 }

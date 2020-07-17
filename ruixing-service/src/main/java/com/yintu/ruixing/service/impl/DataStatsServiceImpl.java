@@ -3,8 +3,7 @@ package com.yintu.ruixing.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.dao.DataStatsDao;
-import com.yintu.ruixing.dao.QuDuanBaseDao;
+import com.yintu.ruixing.dao.*;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.DataStatsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,53 @@ public class DataStatsServiceImpl implements DataStatsService {
 
     @Autowired
     private QuDuanBaseDao quDuanBaseDao;
+
+    @Autowired
+    private TieLuJuDao tieLuJuDao;
+
+    @Autowired
+    private DianWuDuanDao dianWuDuanDao;
+
+    @Autowired
+    private XianDuanDao xianDuanDao;
+
+    @Override
+    public void addXianDuan(XianDuanEntity xianDuanEntity1) {
+        xianDuanDao.addXianDuan(xianDuanEntity1);
+    }
+
+    @Override
+    public Long findDWDid(long parseLong) {
+        return dianWuDuanDao.dwdid(parseLong);
+    }
+
+    @Override
+    public List<XianDuanEntity> findAllXianDuan() {
+        return xianDuanDao.findAllXianDuan();
+    }
+
+    @Override
+    public void addDianWuDuan(DianWuDuanEntity duanEntity) {
+        dianWuDuanDao.addDianWuDuan(duanEntity);
+    }
+
+    @Override
+    public Long findTLJid(long parseLong) {
+        return tieLuJuDao.findTLJid(parseLong);
+    }
+
+    @Override
+    public List<DianWuDuanEntity> findDianWuDuan() {
+        return dianWuDuanDao.findDianWuDuan();
+    }
+
+    @Override
+    public void addTieLuJU(TieLuJuEntity stringList) {
+
+            tieLuJuDao.addTieLuJU(stringList);
+
+    }
+
     //查询所有数据
     @Override
     public List<DataStatsEntity> findAll() {
@@ -81,8 +127,8 @@ public class DataStatsServiceImpl implements DataStatsService {
 
 
     @Override
-    public List<TieLuJuEntity> findAllTieLuJu(TieLuJuEntity tieLuJuEntity) {
-        return dataStatsDao.findAllTieLuJu(tieLuJuEntity);
+    public List<TieLuJuEntity> findAllTieLuJu() {
+        return dataStatsDao.findAllTieLuJu();
     }
 
     @Override

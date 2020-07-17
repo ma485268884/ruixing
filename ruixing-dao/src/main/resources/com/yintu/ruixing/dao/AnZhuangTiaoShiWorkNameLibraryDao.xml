@@ -11,6 +11,13 @@
     id, workname, yuliu1, yuliu2
   </sql>
 
+  <!--查询所有的作业项-->
+  <select id="findAllWorkName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mro_anzhuangtiaoshi_worknamelibrary
+  </select>
+
   <!--根据作业项名 模糊查询  或者查询全部-->
   <select id="findWorkName"  resultMap="BaseResultMap">
     select 

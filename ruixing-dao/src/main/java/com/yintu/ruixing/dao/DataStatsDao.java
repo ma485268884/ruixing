@@ -47,7 +47,7 @@ public interface DataStatsDao {
 
 
 
-    List<TieLuJuEntity> findAllTieLuJu(TieLuJuEntity tieLuJuEntity);
+    List<TieLuJuEntity> findAllTieLuJu();
 
     List<DianWuDuanEntity> findDianWuDuanByTid(Integer tid);
 

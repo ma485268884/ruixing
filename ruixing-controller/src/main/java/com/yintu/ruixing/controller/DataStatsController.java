@@ -5,12 +5,16 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.result.Result;
+import com.yintu.ruixing.common.util.POIUtils;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.DataStatsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.IIOException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +29,70 @@ import java.util.Map;
 public class DataStatsController {
     @Autowired
     private DataStatsService dataStatsService;
+
+    //模板下载
+
+    //导入Excel模板数据
+    @PostMapping("/uploads")
+    @ResponseBody
+    public Map<String,Object>uploads(@RequestParam("excelFile") MultipartFile excelFile){
+        try {
+            List<String[]> list = POIUtils.readExcel(excelFile);
+            List<TieLuJuEntity> tieLuJuEntities=new ArrayList<>();
+            List<DianWuDuanEntity> dianWuDuanEntities=new ArrayList<>();
+            List<XianDuanEntity> xianDuanEntities=new ArrayList<>();
+            List<CheZhanEntity> cheZhanEntities=new ArrayList<>();
+            for (String[] strings : list) {
+               String tljId =strings[0];
+               String tljName=strings[1];
+               List<TieLuJuEntity> tljname=dataStatsService.findAllTieLuJu();
+                for (TieLuJuEntity tieLuJuEntity : tljname) {
+                    if (!tieLuJuEntity.toString().equals(tljName)){
+                        TieLuJuEntity luJuEntity =new TieLuJuEntity();
+                        luJuEntity.setTljId(Long.parseLong(tljId));
+                        luJuEntity.setDwdName(tljName);
+                        //tieLuJuEntities.add(luJuEntity);
+                        dataStatsService.addTieLuJU(luJuEntity);
+                    }
+                }
+                String dwdid=strings[3];
+                String dwdname=strings[4];
+                List<DianWuDuanEntity> dianWuDuanEntityList=dataStatsService.findDianWuDuan();
+                for (DianWuDuanEntity dianWuDuanEntity : dianWuDuanEntityList) {
+                    if (!dianWuDuanEntity.toString().equals(dwdname)){
+                        Long tljid=dataStatsService.findTLJid(Long.parseLong(strings[0]));
+                        DianWuDuanEntity duanEntity=new DianWuDuanEntity();
+                        duanEntity.setTljDwdId(tljid);
+                        duanEntity.setDwdName(dwdname);
+                        duanEntity.setDwdId(Long.parseLong(dwdid));
+                        duanEntity.setTljId(Long.parseLong(tljId));
+                        dataStatsService.addDianWuDuan(duanEntity);
+                    }
+                }
+                String xdid=strings[5];
+                String xdname=strings[6];
+                String xdzgname=strings[7];
+                List<XianDuanEntity>xianDuanEntityList=dataStatsService.findAllXianDuan();
+                for (XianDuanEntity xianDuanEntity : xianDuanEntityList) {
+                    if (!xianDuanEntity.toString().equals(xdname)){
+                        Long dwdid1=dataStatsService.findDWDid(Long.parseLong(strings[3]));
+                        XianDuanEntity xianDuanEntity1=new XianDuanEntity();
+                        xianDuanEntity1.setDwdXdId(dwdid1);
+                        xianDuanEntity1.setXdName(xdname);
+                        xianDuanEntity1.setXdId(Long.parseLong(xdid));
+                        xianDuanEntity1.setDwdId(Long.parseLong(dwdid));
+                        xianDuanEntity1.setXdZgName(xdzgname);
+                        dataStatsService.addXianDuan(xianDuanEntity1);
+                    }
+                }
+
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+            return ResponseDataUtil.error("文件解析失败");
+        }
+        return ResponseDataUtil.ok("文件解析成功");
+    }
 
     //查询所有车站信息
     @GetMapping("/findAll")
@@ -152,8 +220,8 @@ public class DataStatsController {
 
     //查询所有的铁路局的名字  和 id
     @GetMapping("/findAllTieLuJu")
-    public Map<String, Object> findAllTieLuJu(TieLuJuEntity tieLuJuEntity) {
-        List<TieLuJuEntity> tieLuJuEntities = dataStatsService.findAllTieLuJu(tieLuJuEntity);
+    public Map<String, Object> findAllTieLuJu() {
+        List<TieLuJuEntity> tieLuJuEntities = dataStatsService.findAllTieLuJu();
         return ResponseDataUtil.ok("查询铁路局成功", tieLuJuEntities);
     }
 

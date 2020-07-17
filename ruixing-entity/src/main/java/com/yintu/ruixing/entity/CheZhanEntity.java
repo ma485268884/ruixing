@@ -1,3 +1,5 @@
+
+
 package com.yintu.ruixing.entity;
 
 import lombok.AllArgsConstructor;
@@ -7,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * 车站   
+ * 车站
  */
 @Data
 @NoArgsConstructor

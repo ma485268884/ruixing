@@ -11,6 +11,15 @@
         <result property="dwdMiaoShu" column="dwd_miaoshu"/>
     </resultMap>
 
+    <!--根据电务段专用id  查询id-->
+    <select id="dwdid" resultType="java.lang.Long">
+        select id from mro_dianwuduan where did =  #{parseLong}
+    </select>
+    <!--查询所有的电务段-->
+    <select id="findDianWuDuan" resultMap="dianwuduan" >
+        select * from mro_dianwuduan
+    </select>
+
     <!--查询电务段-->
     <select id="findDianWuDuanById" resultMap="dianwuduan" parameterType="java.lang.Long">
         select * from mro_dianwuduan where did =  #{did}

@@ -15,8 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class
-DataStatsEntity {
+public class DataStatsEntity {
 
     private long tid;
     private long did;

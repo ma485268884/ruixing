@@ -19,4 +19,6 @@ public interface XianDuanDao {
     XianDuanEntity findXianDuanById(Long xid);
 
     List<Integer> findId(Long xid);
+
+    List<XianDuanEntity> findAllXianDuan();
 }

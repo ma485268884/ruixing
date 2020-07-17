@@ -18,4 +18,7 @@ public interface AnZhuangTiaoShiWorkNameLibraryService {
     void editWorkNameById(AnZhuangTiaoShiWorkNameLibraryEntity anZhuangTiaoShiWorkNameLibraryEntity);
 
     void deleteWorkNameByIds(Integer[] ids);
+
+    List<AnZhuangTiaoShiWorkNameLibraryEntity> findAllWorkName();
+
 }

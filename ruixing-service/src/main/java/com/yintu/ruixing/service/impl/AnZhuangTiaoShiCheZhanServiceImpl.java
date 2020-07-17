@@ -272,6 +272,7 @@ public class AnZhuangTiaoShiCheZhanServiceImpl implements AnZhuangTiaoShiCheZhan
         anZhuangTiaoShiCheZhanEntity.setShangdiantiaojianIsNo(0);
         anZhuangTiaoShiCheZhanEntity.setWanchengpeixianIsNo(0);
 
+
         /*anZhuangTiaoShiCheZhanEntity.setDongtaiyanshouActualEndTime(new Date());
         anZhuangTiaoShiCheZhanEntity.setDongtaiyanshouActualStartTime(new Date());
         anZhuangTiaoShiCheZhanEntity.setJingtaiyanshouActualEndTime(new Date());
@@ -286,6 +287,9 @@ public class AnZhuangTiaoShiCheZhanServiceImpl implements AnZhuangTiaoShiCheZhan
         anZhuangTiaoShiCheZhanEntity.setShiyunxingActualStartTime(new Date());
         anZhuangTiaoShiCheZhanEntity.setWanchengpeixianActualEndTime(new Date());
         anZhuangTiaoShiCheZhanEntity.setWanchengpeixianActualStartTime(new Date());*/
+
+
+
         anZhuangTiaoShiCheZhanDao.addCheZhan(anZhuangTiaoShiCheZhanEntity);
     }
 }
