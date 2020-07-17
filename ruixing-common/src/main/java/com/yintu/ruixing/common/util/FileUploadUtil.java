@@ -1,7 +1,6 @@
 package com.yintu.ruixing.common.util;
 
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
-import sun.awt.OSInfo;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -14,7 +13,7 @@ import java.util.UUID;
  */
 public class FileUploadUtil {
 
-    public static final String WINDOW_BASE_FILE_PATH = "C:\\data\\ruixing";
+    public static final String WINDOW_BASE_FILE_PATH = "c:\\data\\ruixing";
     public static final String LINUX_BASE_FILE_PATH = "/data/ruixing";
     public static final String FILE_FOLDER_NAME = "files";
     public static final String TEMPLATE_FOLDER_NAME = "templates";
@@ -25,9 +24,10 @@ public class FileUploadUtil {
         if (OSInfoUtil.isWindows()) {
             FilePath = WINDOW_BASE_FILE_PATH + "\\" + FILE_FOLDER_NAME;
             TemplatePath = WINDOW_BASE_FILE_PATH + "\\" + TEMPLATE_FOLDER_NAME;
+        } else {
+            FilePath = LINUX_BASE_FILE_PATH + "/" + FILE_FOLDER_NAME;
+            TemplatePath = LINUX_BASE_FILE_PATH + "/" + TEMPLATE_FOLDER_NAME;
         }
-        FilePath = LINUX_BASE_FILE_PATH + "/" + FILE_FOLDER_NAME;
-        TemplatePath = LINUX_BASE_FILE_PATH + "/" + TEMPLATE_FOLDER_NAME;
         File file1 = new File(FilePath);
         if (!file1.exists())
             if (!file1.mkdirs())
