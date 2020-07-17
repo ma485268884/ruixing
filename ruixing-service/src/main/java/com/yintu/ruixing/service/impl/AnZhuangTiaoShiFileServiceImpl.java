@@ -22,6 +22,11 @@ public class AnZhuangTiaoShiFileServiceImpl implements AnZhuangTiaoShiFileServic
     private AnZhuangTiaoShiFileDao anZhuangTiaoShiFileDao;
 
     @Override
+    public List<AnZhuangTiaoShiFileEntity> findFileByNmae(Integer page, Integer size, Integer xdid, Integer filetype, String filename) {
+        return anZhuangTiaoShiFileDao.findFileByNmae(xdid,filetype,filename);
+    }
+
+    @Override
     public AnZhuangTiaoShiFileEntity findById(Integer id) {
         return anZhuangTiaoShiFileDao.selectByPrimaryKey(id);
     }

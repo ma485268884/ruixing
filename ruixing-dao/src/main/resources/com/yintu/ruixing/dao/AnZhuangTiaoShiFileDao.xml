@@ -16,6 +16,24 @@
     id, xdid, xd_name, createtime, file_type, file_name, file_path, fabu_type, yuliu
   </sql>
 
+  <!--根据文件名 查询对应的文件-->
+  <select id="findFileByNmae" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mro_anzhuangtiaoshi_file
+    <where>
+      xdid=#{xdid}
+      <if test="filetype !=null">
+        and
+        file_type=#{filetype}
+      </if>
+      <if test="filename !=null">
+        and
+        file_name like concat ('%',#{filename},'%')
+      </if>
+    </where>
+  </select>
+
   <!--根据文件id  查询对应的文件-->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select

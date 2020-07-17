@@ -78,6 +78,14 @@ public class AnZhuangTiaoShiFileController {
         return ResponseDataUtil.ok("删除文件成功");
     }
 
+    //根据文件名 查询对应的文件
+    @GetMapping("/findFileByNmae")
+    public Map<String,Object>findFileByNmae(Integer page,Integer size,Integer xdid,Integer filetype,String filename){
+        PageHelper.startPage(page,size);
+        List<AnZhuangTiaoShiFileEntity>fileEntities=anZhuangTiaoShiFileService.findFileByNmae(page,size,xdid,filetype,filename);
+        PageInfo<AnZhuangTiaoShiFileEntity>fileEntityPageInfo=new PageInfo<>(fileEntities);
+        return ResponseDataUtil.ok("查询成功",fileEntityPageInfo);
+    }
     //根据id 下载文件
     @GetMapping("/downloads/{id}")
     public void downloadFile(@PathVariable Integer id, HttpServletResponse response) throws IOException {
