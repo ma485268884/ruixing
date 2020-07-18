@@ -45,4 +45,9 @@ public class EquipmentNumberServiceImpl implements EquipmentNumberService {
     public List<EquipmentNumberEntity> findByCondition(Integer[] ids, String equipmentNumber) {
         return equipmentNumberDao.selectByCondition(ids, equipmentNumber);
     }
+
+    @Override
+    public void removeMuch(Integer[] ids) {
+        equipmentNumberDao.deleteMuch(ids);
+    }
 }

@@ -27,6 +27,14 @@
         from mro_equipment_number
         where id = #{id,jdbcType=INTEGER}
     </delete>
+    <delete id="deleteMuch" parameterType="java.lang.Integer">
+        delete
+        from mro_equipment_number
+        where id in
+        <foreach collection="array" open="(" close=")" index="index" item="id" separator=",">
+            #{id,jdbcType=INTEGER}
+        </foreach>
+    </delete>
     <insert id="insert" parameterType="com.yintu.ruixing.entity.EquipmentNumberEntity">
         insert into mro_equipment_number (id, rack_number, equipment_number,
                                           hierarchy, created_date, operator,
