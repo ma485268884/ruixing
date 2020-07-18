@@ -89,4 +89,18 @@ public interface DataStatsService {
     Long findDWDid(long parseLong);
 
     void addXianDuan(XianDuanEntity xianDuanEntity1);
+
+    List<CheZhanEntity> findallChezhan();
+
+    Long findXDid(long parseLong);
+
+    void addCheZhan(CheZhanEntity cheZhan);
+
+    List<TieLuJuEntity> findAllTieLuJuByName(String tljName);
+
+    List<DianWuDuanEntity> findDianWuDuanByName(String dwdname);
+
+    List<XianDuanEntity> findAllXianDuanByName(String xdname);
+
+    List<CheZhanEntity> findallChezhanByName(String czname);
 }

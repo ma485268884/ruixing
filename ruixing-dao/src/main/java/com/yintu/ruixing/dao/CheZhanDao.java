@@ -54,4 +54,6 @@ public interface CheZhanDao {
      * @return
      */
     List<CheZhanEntity> selectByCzName(String czName);
+
+    List<CheZhanEntity> findallChezhanByName(String czname);
 }

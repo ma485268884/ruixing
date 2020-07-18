@@ -36,6 +36,8 @@ public class QuDuanBaseEntity implements Serializable {
 
     private String zongheId;
 
+    private String ofXianDuan;
+
     private String quduanshejiName;
 
     private String quduanyunyingName;

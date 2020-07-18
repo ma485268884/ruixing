@@ -35,15 +35,18 @@ public class POIUtils {
             for(int sheetNum = 0;sheetNum < workbook.getNumberOfSheets();sheetNum++){
                 //获得当前sheet工作表
                 Sheet sheet = workbook.getSheetAt(sheetNum);
+                System.out.println("1211212"+sheet.getSheetName());
                 if(sheet == null){
                     continue;
                 }
                 //获得当前sheet的开始行
                 int firstRowNum  = sheet.getFirstRowNum();
+                System.out.println("firsttttttttttttttt"+firstRowNum);
                 //获得当前sheet的结束行
                 int lastRowNum = sheet.getLastRowNum();
-                //循环除了第一行的所有行
-                for(int rowNum = firstRowNum+1;rowNum <= lastRowNum;rowNum++){
+                System.out.println("lasttttttttttttttttttttttttt"+lastRowNum);
+                //循环除了第二行的所有行
+                for(int rowNum = firstRowNum+2;rowNum <= lastRowNum;rowNum++){
                     //获得当前行
                     Row row = sheet.getRow(rowNum);
                     if(row == null){

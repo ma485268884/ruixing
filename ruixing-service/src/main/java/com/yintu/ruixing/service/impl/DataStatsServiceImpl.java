@@ -38,6 +38,44 @@ public class DataStatsServiceImpl implements DataStatsService {
     @Autowired
     private XianDuanDao xianDuanDao;
 
+    @Autowired
+    private CheZhanDao cheZhanDao;
+
+    @Override
+    public List<CheZhanEntity> findallChezhanByName(String czname) {
+        return cheZhanDao.findallChezhanByName(czname);
+    }
+
+    @Override
+    public List<XianDuanEntity> findAllXianDuanByName(String xdname) {
+        return xianDuanDao.findAllXianDuanByName(xdname);
+    }
+
+    @Override
+    public List<DianWuDuanEntity> findDianWuDuanByName(String dwdname) {
+        return dianWuDuanDao.findDianWuDuanByName(dwdname);
+    }
+
+    @Override
+    public List<TieLuJuEntity> findAllTieLuJuByName(String tljName) {
+        return tieLuJuDao.findAllTieLuJuByName(tljName);
+    }
+
+    @Override
+    public void addCheZhan(CheZhanEntity cheZhan) {
+        cheZhanDao.insertChezhan(cheZhan);
+    }
+
+    @Override
+    public Long findXDid(long parseLong) {
+        return xianDuanDao.findid(parseLong);
+    }
+
+    @Override
+    public List<CheZhanEntity> findallChezhan() {
+        return cheZhanDao.selectAll();
+    }
+
     @Override
     public void addXianDuan(XianDuanEntity xianDuanEntity1) {
         xianDuanDao.addXianDuan(xianDuanEntity1);

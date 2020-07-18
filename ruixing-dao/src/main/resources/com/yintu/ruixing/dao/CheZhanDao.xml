@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yintu.ruixing.dao.CheZhanDao">
-    <resultMap type="com.yintu.ruixing.entity.CheZhanEntity" id="chezhan">
+    <!--<resultMap type="com.yintu.ruixing.entity.CheZhanEntity" id="chezhan">
         <result property="cid" column="cid"/>
         <result property="czName" column="cz_name"/>
         <result property="czId" column="cz_id"/>
@@ -21,14 +21,103 @@
         <result property="czRSheBei" column="cz_r_shebei"/>
         <result property="czZhongJiZhan" column="cz_zhongjizhan"/>
         <result property="czState" column="cz_state"/>
-    </resultMap>
+    </resultMap>-->
 
-    <!--添加车站-->
+
+    <resultMap id="chezhan" type="com.yintu.ruixing.entity.CheZhanEntity">
+        <id column="cid" jdbcType="INTEGER" property="cid"/>
+        <result column="cz_id"  property="czId"/>
+        <result column="xd_id"  property="xdId"/>
+        <result column="xd_cz_id"  property="xdCzId"/>
+        <result column="cz_name" jdbcType="VARCHAR" property="czName"/>
+        <result column="cz_name_jiancheng" jdbcType="VARCHAR" property="czNameJianCheng"/>
+        <result column="cz_ip" jdbcType="VARCHAR" property="czIp"/>
+        <result column="cz_type" jdbcType="VARCHAR" property="czType"/>
+        <result column="cz_stutrs"  property="czStutrs"/>
+        <result column="cz_open_stutrs"  property="czOpenStutrs"/>
+        <result column="cz_caozuo" jdbcType="INTEGER" property="czCaoZuo"/>
+        <result column="cz_lasttime" jdbcType="TIMESTAMP" property="czLastTime"/>
+        <result column="cz_duantou" jdbcType="INTEGER" property="czDuanTou"/>
+        <result column="cz_miaoshu" jdbcType="VARCHAR" property="czMiaoShu"/>
+        <result column="cz_state" jdbcType="INTEGER" property="czState"/>
+        <result column="cz_r_shebei" jdbcType="INTEGER" property="czRSheBei"/>
+        <result column="cz_zhongjizhan" jdbcType="INTEGER" property="czZhongJiZhan"/>
+        <result column="yuliushebei1" jdbcType="VARCHAR" property="yuliushebei1"/>
+        <result column="yuliushebei2" jdbcType="VARCHAR" property="yuliushebei2"/>
+        <result column="yuliushebei3" jdbcType="VARCHAR" property="yuliushebei3"/>
+        <result column="tongXinBianMaGuiDaoNumber" jdbcType="INTEGER" property="tongxinbianmaguidaonumber"/>
+        <result column="tongXinBianMaZhanNeiOneGuiDaoNumber" jdbcType="INTEGER"
+                property="tongxinbianmazhanneioneguidaonumber"/>
+        <result column="jiDianOneToOneGuiDaoNumber" jdbcType="INTEGER" property="jidianonetooneguidaonumber"/>
+        <result column="jiDianNToOneGuiDaoNumber" jdbcType="INTEGER" property="jidianntooneguidaonumber"/>
+        <result column="jiDianNToOneSheBeiNumber" jdbcType="INTEGER" property="jidianntooneshebeinumber"/>
+        <result column="tongXinBianMaDianMaHuaSheBeiNumber" jdbcType="INTEGER"
+                property="tongxinbianmadianmahuashebeinumber"/>
+        <result column="jiDianNToOneDianMaHuaSheBeiNumber" jdbcType="INTEGER"
+                property="jidianntoonedianmahuashebeinumber"/>
+        <result column="jiDianJiaShiGuiDaoNumber" jdbcType="INTEGER" property="jidianjiashiguidaonumber"/>
+        <result column="jiDianJiaShiDianMaHuaSheBeiNumber" jdbcType="INTEGER"
+                property="jidianjiashidianmahuashebeinumber"/>
+        <result column="quJianBiSaiType" jdbcType="VARCHAR" property="qujianbisaitype"/>
+        <result column="linzhan1ID" jdbcType="INTEGER" property="linzhan1id"/>
+        <result column="linzhan1Name" jdbcType="VARCHAR" property="linzhan1name"/>
+        <result column="linzhan1LineType" jdbcType="VARCHAR" property="linzhan1linetype"/>
+        <result column="linzhan1OfXianDuan" jdbcType="VARCHAR" property="linzhan1ofxianduan"/>
+        <result column="linzhan1IsNoBenDWD" jdbcType="VARCHAR" property="linzhan1isnobendwd"/>
+        <result column="linzhan2ID" jdbcType="INTEGER" property="linzhan2id"/>
+        <result column="linzhan2Name" jdbcType="VARCHAR" property="linzhan2name"/>
+        <result column="linzhan2LineType" jdbcType="VARCHAR" property="linzhan2linetype"/>
+        <result column="linzhan2OfXianDuan" jdbcType="VARCHAR" property="linzhan2ofxianduan"/>
+        <result column="linzhan2IsNoBenDWD" jdbcType="VARCHAR" property="linzhan2isnobendwd"/>
+        <result column="linzhan3ID" jdbcType="INTEGER" property="linzhan3id"/>
+        <result column="linzhan3Name" jdbcType="VARCHAR" property="linzhan3name"/>
+        <result column="linzhan3LineType" jdbcType="VARCHAR" property="linzhan3linetype"/>
+        <result column="linzhan3OfXianDuan" jdbcType="VARCHAR" property="linzhan3ofxianduan"/>
+        <result column="linzhan3IsNoBenDWD" jdbcType="VARCHAR" property="linzhan3isnobendwd"/>
+        <result column="linzhan4ID" jdbcType="INTEGER" property="linzhan4id"/>
+        <result column="linzhan4Name" jdbcType="VARCHAR" property="linzhan4name"/>
+        <result column="linzhan4LineType" jdbcType="VARCHAR" property="linzhan4linetype"/>
+        <result column="linzhan4OfXianDuan" jdbcType="VARCHAR" property="linzhan4ofxianduan"/>
+        <result column="linzhan4IsNoBenDWD" jdbcType="VARCHAR" property="linzhan4isnobendwd"/>
+        <result column="linzhan5ID" jdbcType="INTEGER" property="linzhan5id"/>
+        <result column="linzhan5Name" jdbcType="VARCHAR" property="linzhan5name"/>
+        <result column="linzhan5LineType" jdbcType="VARCHAR" property="linzhan5linetype"/>
+        <result column="linzhan5OfXianDuan" jdbcType="VARCHAR" property="linzhan5ofxianduan"/>
+        <result column="linzhan5IsNoBenDWD" jdbcType="VARCHAR" property="linzhan5isnobendwd"/>
+        <result column="linzhan6ID" jdbcType="INTEGER" property="linzhan6id"/>
+        <result column="linzhan6Name" jdbcType="VARCHAR" property="linzhan6name"/>
+        <result column="linzhan6LineType" jdbcType="VARCHAR" property="linzhan6linetype"/>
+        <result column="linzhan6OfXianDuan" jdbcType="VARCHAR" property="linzhan6ofxianduan"/>
+        <result column="linzhan6IsNoBenDWD" jdbcType="VARCHAR" property="linzhan6isnobendwd"/>
+    </resultMap>
+    <resultMap extends="chezhan" id="ResultMapWithBLOBs" type="com.yintu.ruixing.entity.CheZhanEntity">
+        <result column="cz_json" jdbcType="LONGVARCHAR" property="czJson" />
+    </resultMap>
+    <sql id="Base_Column_List">
+    cid, cz_id, xd_id, xd_cz_id, cz_name, cz_name_jiancheng, cz_ip, cz_type, cz_stutrs,
+    cz_open_stutrs, cz_caozuo, cz_lasttime, cz_duantou, cz_miaoshu, cz_state, cz_r_shebei,
+    cz_zhongjizhan, yuliushebei1, yuliushebei2,yuliushebei3, tongXinBianMaGuiDaoNumber, tongXinBianMaZhanNeiOneGuiDaoNumber,
+    jiDianOneToOneGuiDaoNumber, jiDianNToOneGuiDaoNumber, jiDianNToOneSheBeiNumber, tongXinBianMaDianMaHuaSheBeiNumber,
+    jiDianNToOneDianMaHuaSheBeiNumber, jiDianJiaShiGuiDaoNumber, jiDianJiaShiDianMaHuaSheBeiNumber,
+    quJianBiSaiType, linzhan1ID, linzhan1Name, linzhan1LineType, linzhan1OfXianDuan,
+    linzhan1IsNoBenDWD, linzhan2ID, linzhan2Name, linzhan2LineType, linzhan2OfXianDuan,
+    linzhan2IsNoBenDWD, linzhan3ID, linzhan3Name, linzhan3LineType, linzhan3OfXianDuan,
+    linzhan3IsNoBenDWD, linzhan4ID, linzhan4Name, linzhan4LineType, linzhan4OfXianDuan,
+    linzhan4IsNoBenDWD, linzhan5ID, linzhan5Name, linzhan5LineType, linzhan5OfXianDuan,
+    linzhan5IsNoBenDWD, linzhan6ID, linzhan6Name, linzhan6LineType, linzhan6OfXianDuan,
+    linzhan6IsNoBenDWD
+  </sql>
+    <sql id="Blob_Column_List">
+    cz_json
+  </sql>
+
+    <!--&lt;!&ndash;添加车站&ndash;&gt;
     <insert id="insertChezhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity">
         insert into mro_chezhan(cz_name, cz_id, xd_id, cz_miaoshu, xd_cz_id, cz_state)
         values (#{czName,jdbcType=VARCHAR}, #{czId,jdbcType=BIGINT}, #{xdId,jdbcType=BIGINT}, #{czMiaoShu,jdbcType=VARCHAR}, #{xid,jdbcType=BIGINT}, #{czState,jdbcType=BIGINT})
-    </insert>
-    <!--更新车站-->
+    </insert>-->
+
+   <!-- &lt;!&ndash;更新车站&ndash;&gt;
     <update id="updateCheZhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity">
         update mro_chezhan
         <set>
@@ -47,9 +136,585 @@
         </set>
         where cid = #{cid}
     </update>
+-->
+
+    <!--根据车站名字 查询对应的数据-->
+    <select id="findallChezhanByName" resultMap="chezhan">
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from mro_chezhan where cz_name=#{czname}
+    </select>
+    <!--添加车站-->
+    <insert id="insertChezhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity">
+        insert into mro_chezhan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cid != null">
+                cid,
+            </if>
+            <if test="czId != null">
+                cz_id,
+            </if>
+            <if test="xdId != null">
+                xd_id,
+            </if>
+            <if test="xdCzId != null">
+                xd_cz_id,
+            </if>
+            <if test="czName != null">
+                cz_name,
+            </if>
+            <if test="czNameJianCheng != null">
+                cz_name_jiancheng,
+            </if>
+            <if test="czIp != null">
+                cz_ip,
+            </if>
+            <if test="czType != null">
+                cz_type,
+            </if>
+            <if test="czStutrs != null">
+                cz_stutrs,
+            </if>
+            <if test="czOpenStutrs != null">
+                cz_open_stutrs,
+            </if>
+            <if test="czCaoZuo != null">
+                cz_caozuo,
+            </if>
+            <if test="czLastTime != null">
+                cz_lasttime,
+            </if>
+            <if test="czDuanTou != null">
+                cz_duantou,
+            </if>
+            <if test="czMiaoShu != null">
+                cz_miaoshu,
+            </if>
+            <if test="czState != null">
+                cz_state,
+            </if>
+            <if test="czRSheBei != null">
+                cz_r_shebei,
+            </if>
+            <if test="czZhongJiZhan != null">
+                cz_zhongjizhan,
+            </if>
+            <if test="yuliushebei1 != null">
+                yuliushebei1,
+            </if>
+            <if test="yuliushebei2 != null">
+                yuliushebei2,
+            </if>
+            <if test="yuliushebei3 != null">
+                yuliushebei3,
+            </if>
+            <if test="tongxinbianmaguidaonumber != null">
+                tongXinBianMaGuiDaoNumber,
+            </if>
+            <if test="tongxinbianmazhanneioneguidaonumber != null">
+                tongXinBianMaZhanNeiOneGuiDaoNumber,
+            </if>
+            <if test="jidianonetooneguidaonumber != null">
+                jiDianOneToOneGuiDaoNumber,
+            </if>
+            <if test="jidianntooneguidaonumber != null">
+                jiDianNToOneGuiDaoNumber,
+            </if>
+            <if test="jidianntooneshebeinumber != null">
+                jiDianNToOneSheBeiNumber,
+            </if>
+            <if test="tongxinbianmadianmahuashebeinumber != null">
+                tongXinBianMaDianMaHuaSheBeiNumber,
+            </if>
+            <if test="jidianntoonedianmahuashebeinumber != null">
+                jiDianNToOneDianMaHuaSheBeiNumber,
+            </if>
+            <if test="jidianjiashiguidaonumber != null">
+                jiDianJiaShiGuiDaoNumber,
+            </if>
+            <if test="jidianjiashidianmahuashebeinumber != null">
+                jiDianJiaShiDianMaHuaSheBeiNumber,
+            </if>
+            <if test="qujianbisaitype != null">
+                quJianBiSaiType,
+            </if>
+            <if test="linzhan1id != null">
+                linzhan1ID,
+            </if>
+            <if test="linzhan1name != null">
+                linzhan1Name,
+            </if>
+            <if test="linzhan1linetype != null">
+                linzhan1LineType,
+            </if>
+            <if test="linzhan1ofxianduan != null">
+                linzhan1OfXianDuan,
+            </if>
+            <if test="linzhan1isnobendwd != null">
+                linzhan1IsNoBenDWD,
+            </if>
+            <if test="linzhan2id != null">
+                linzhan2ID,
+            </if>
+            <if test="linzhan2name != null">
+                linzhan2Name,
+            </if>
+            <if test="linzhan2linetype != null">
+                linzhan2LineType,
+            </if>
+            <if test="linzhan2ofxianduan != null">
+                linzhan2OfXianDuan,
+            </if>
+            <if test="linzhan2isnobendwd != null">
+                linzhan2IsNoBenDWD,
+            </if>
+            <if test="linzhan3id != null">
+                linzhan3ID,
+            </if>
+            <if test="linzhan3name != null">
+                linzhan3Name,
+            </if>
+            <if test="linzhan3linetype != null">
+                linzhan3LineType,
+            </if>
+            <if test="linzhan3ofxianduan != null">
+                linzhan3OfXianDuan,
+            </if>
+            <if test="linzhan3isnobendwd != null">
+                linzhan3IsNoBenDWD,
+            </if>
+            <if test="linzhan4id != null">
+                linzhan4ID,
+            </if>
+            <if test="linzhan4name != null">
+                linzhan4Name,
+            </if>
+            <if test="linzhan4linetype != null">
+                linzhan4LineType,
+            </if>
+            <if test="linzhan4ofxianduan != null">
+                linzhan4OfXianDuan,
+            </if>
+            <if test="linzhan4isnobendwd != null">
+                linzhan4IsNoBenDWD,
+            </if>
+            <if test="linzhan5id != null">
+                linzhan5ID,
+            </if>
+            <if test="linzhan5name != null">
+                linzhan5Name,
+            </if>
+            <if test="linzhan5linetype != null">
+                linzhan5LineType,
+            </if>
+            <if test="linzhan5ofxianduan != null">
+                linzhan5OfXianDuan,
+            </if>
+            <if test="linzhan5isnobendwd != null">
+                linzhan5IsNoBenDWD,
+            </if>
+            <if test="linzhan6id != null">
+                linzhan6ID,
+            </if>
+            <if test="linzhan6name != null">
+                linzhan6Name,
+            </if>
+            <if test="linzhan6linetype != null">
+                linzhan6LineType,
+            </if>
+            <if test="linzhan6ofxianduan != null">
+                linzhan6OfXianDuan,
+            </if>
+            <if test="linzhan6isnobendwd != null">
+                linzhan6IsNoBenDWD,
+            </if>
+            <if test="czJson != null">
+                cz_json,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cid != null">
+                #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="czId != null">
+                #{czId},
+            </if>
+            <if test="xdId != null">
+                #{xdId},
+            </if>
+            <if test="xdCzId != null">
+                #{xdCzId},
+            </if>
+            <if test="czName != null">
+                #{czName,jdbcType=VARCHAR},
+            </if>
+            <if test="czNameJianCheng != null">
+                #{czNameJianCheng,jdbcType=VARCHAR},
+            </if>
+            <if test="czIp != null">
+                #{czIp,jdbcType=VARCHAR},
+            </if>
+            <if test="czType != null">
+                #{czType,jdbcType=VARCHAR},
+            </if>
+            <if test="czStutrs != null">
+                #{czStutrs},
+            </if>
+            <if test="czOpenStutrs != null">
+                #{czOpenStutrs},
+            </if>
+            <if test="czCaoZuo != null">
+                #{czCaoZuo,jdbcType=INTEGER},
+            </if>
+            <if test="czLastTime != null">
+                #{czLastTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="czDuanTou != null">
+                #{czDuanTou,jdbcType=INTEGER},
+            </if>
+            <if test="czMiaoShu != null">
+                #{czMiaoShu,jdbcType=VARCHAR},
+            </if>
+            <if test="czState != null">
+                #{czState,jdbcType=INTEGER},
+            </if>
+            <if test="czRSheBei != null">
+                #{czRSheBei,jdbcType=INTEGER},
+            </if>
+            <if test="czZhongJiZhan != null">
+                #{czZhongJiZhan,jdbcType=INTEGER},
+            </if>
+            <if test="yuliushebei1 != null">
+                #{yuliushebei1,jdbcType=VARCHAR},
+            </if>
+            <if test="yuliushebei2 != null">
+                #{yuliushebei2,jdbcType=VARCHAR},
+            </if>
+            <if test="yuliushebei3 != null">
+                #{yuliushebei3,jdbcType=VARCHAR},
+            </if>
+            <if test="tongxinbianmaguidaonumber != null">
+                #{tongxinbianmaguidaonumber,jdbcType=INTEGER},
+            </if>
+            <if test="tongxinbianmazhanneioneguidaonumber != null">
+                #{tongxinbianmazhanneioneguidaonumber,jdbcType=INTEGER},
+            </if>
+            <if test="jidianonetooneguidaonumber != null">
+                #{jidianonetooneguidaonumber,jdbcType=INTEGER},
+            </if>
+            <if test="jidianntooneguidaonumber != null">
+                #{jidianntooneguidaonumber,jdbcType=INTEGER},
+            </if>
+            <if test="jidianntooneshebeinumber != null">
+                #{jidianntooneshebeinumber,jdbcType=INTEGER},
+            </if>
+            <if test="tongxinbianmadianmahuashebeinumber != null">
+                #{tongxinbianmadianmahuashebeinumber,jdbcType=INTEGER},
+            </if>
+            <if test="jidianntoonedianmahuashebeinumber != null">
+                #{jidianntoonedianmahuashebeinumber,jdbcType=INTEGER},
+            </if>
+            <if test="jidianjiashiguidaonumber != null">
+                #{jidianjiashiguidaonumber,jdbcType=INTEGER},
+            </if>
+            <if test="jidianjiashidianmahuashebeinumber != null">
+                #{jidianjiashidianmahuashebeinumber,jdbcType=INTEGER},
+            </if>
+            <if test="qujianbisaitype != null">
+                #{qujianbisaitype,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan1id != null">
+                #{linzhan1id,jdbcType=INTEGER},
+            </if>
+            <if test="linzhan1name != null">
+                #{linzhan1name,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan1linetype != null">
+                #{linzhan1linetype,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan1ofxianduan != null">
+                #{linzhan1ofxianduan,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan1isnobendwd != null">
+                #{linzhan1isnobendwd,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan2id != null">
+                #{linzhan2id,jdbcType=INTEGER},
+            </if>
+            <if test="linzhan2name != null">
+                #{linzhan2name,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan2linetype != null">
+                #{linzhan2linetype,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan2ofxianduan != null">
+                #{linzhan2ofxianduan,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan2isnobendwd != null">
+                #{linzhan2isnobendwd,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan3id != null">
+                #{linzhan3id,jdbcType=INTEGER},
+            </if>
+            <if test="linzhan3name != null">
+                #{linzhan3name,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan3linetype != null">
+                #{linzhan3linetype,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan3ofxianduan != null">
+                #{linzhan3ofxianduan,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan3isnobendwd != null">
+                #{linzhan3isnobendwd,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan4id != null">
+                #{linzhan4id,jdbcType=INTEGER},
+            </if>
+            <if test="linzhan4name != null">
+                #{linzhan4name,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan4linetype != null">
+                #{linzhan4linetype,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan4ofxianduan != null">
+                #{linzhan4ofxianduan,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan4isnobendwd != null">
+                #{linzhan4isnobendwd,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan5id != null">
+                #{linzhan5id,jdbcType=INTEGER},
+            </if>
+            <if test="linzhan5name != null">
+                #{linzhan5name,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan5linetype != null">
+                #{linzhan5linetype,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan5ofxianduan != null">
+                #{linzhan5ofxianduan,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan5isnobendwd != null">
+                #{linzhan5isnobendwd,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan6id != null">
+                #{linzhan6id,jdbcType=INTEGER},
+            </if>
+            <if test="linzhan6name != null">
+                #{linzhan6name,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan6linetype != null">
+                #{linzhan6linetype,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan6ofxianduan != null">
+                #{linzhan6ofxianduan,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan6isnobendwd != null">
+                #{linzhan6isnobendwd,jdbcType=VARCHAR},
+            </if>
+            <if test="czJson != null">
+                #{czJson,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--更新车站-->
+    <update id="updateCheZhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity">
+        update mro_chezhan
+        <set>
+            <if test="czId != null">
+                cz_id = #{czId},
+            </if>
+            <if test="xdId != null">
+                xd_id = #{xdId},
+            </if>
+            <if test="xdCzId != null">
+                xd_cz_id = #{xdCzId},
+            </if>
+            <if test="czName != null">
+                cz_name = #{czName,jdbcType=VARCHAR},
+            </if>
+            <if test="czNameJianCheng != null">
+                cz_name_jiancheng = #{czNameJianCheng,jdbcType=VARCHAR},
+            </if>
+            <if test="czIp != null">
+                cz_ip = #{czIp,jdbcType=VARCHAR},
+            </if>
+            <if test="czType != null">
+                cz_type = #{czType,jdbcType=VARCHAR},
+            </if>
+            <if test="czStutrs != null">
+                cz_stutrs = #{czStutrs},
+            </if>
+            <if test="czOpenStutrs != null">
+                cz_open_stutrs = #{czOpenStutrs},
+            </if>
+            <if test="czCaoZuo != null">
+                cz_caozuo = #{czCaoZuo,jdbcType=INTEGER},
+            </if>
+            <if test="czLastTime != null">
+                cz_lasttime = #{czLastTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="czDuanTou != null">
+                cz_duantou = #{czDuanTou,jdbcType=INTEGER},
+            </if>
+            <if test="czMiaoShu != null">
+                cz_miaoshu = #{czMiaoShu,jdbcType=VARCHAR},
+            </if>
+            <if test="czState != null">
+                cz_state = #{czState,jdbcType=INTEGER},
+            </if>
+            <if test="czRSheBei != null">
+                cz_r_shebei = #{czRSheBei,jdbcType=INTEGER},
+            </if>
+            <if test="czZhongJiZhan != null">
+                cz_zhongjizhan = #{czZhongJiZhan,jdbcType=INTEGER},
+            </if>
+            <if test="yuliushebei1 != null">
+                yuliushebei1 = #{yuliushebei1,jdbcType=VARCHAR},
+            </if>
+            <if test="yuliushebei2 != null">
+                yuliushebei2 = #{yuliushebei2,jdbcType=VARCHAR},
+            </if>
+            <if test="yuliushebei3 != null">
+                yuliushebei3 = #{yuliushebei3,jdbcType=VARCHAR},
+            </if>
+            <if test="tongxinbianmaguidaonumber != null">
+                tongXinBianMaGuiDaoNumber = #{tongxinbianmaguidaonumber,jdbcType=INTEGER},
+            </if>
+            <if test="tongxinbianmazhanneioneguidaonumber != null">
+                tongXinBianMaZhanNeiOneGuiDaoNumber = #{tongxinbianmazhanneioneguidaonumber,jdbcType=INTEGER},
+            </if>
+            <if test="jidianonetooneguidaonumber != null">
+                jiDianOneToOneGuiDaoNumber = #{jidianonetooneguidaonumber,jdbcType=INTEGER},
+            </if>
+            <if test="jidianntooneguidaonumber != null">
+                jiDianNToOneGuiDaoNumber = #{jidianntooneguidaonumber,jdbcType=INTEGER},
+            </if>
+            <if test="jidianntooneshebeinumber != null">
+                jiDianNToOneSheBeiNumber = #{jidianntooneshebeinumber,jdbcType=INTEGER},
+            </if>
+            <if test="tongxinbianmadianmahuashebeinumber != null">
+                tongXinBianMaDianMaHuaSheBeiNumber = #{tongxinbianmadianmahuashebeinumber,jdbcType=INTEGER},
+            </if>
+            <if test="jidianntoonedianmahuashebeinumber != null">
+                jiDianNToOneDianMaHuaSheBeiNumber = #{jidianntoonedianmahuashebeinumber,jdbcType=INTEGER},
+            </if>
+            <if test="jidianjiashiguidaonumber != null">
+                jiDianJiaShiGuiDaoNumber = #{jidianjiashiguidaonumber,jdbcType=INTEGER},
+            </if>
+            <if test="jidianjiashidianmahuashebeinumber != null">
+                jiDianJiaShiDianMaHuaSheBeiNumber = #{jidianjiashidianmahuashebeinumber,jdbcType=INTEGER},
+            </if>
+            <if test="qujianbisaitype != null">
+                quJianBiSaiType = #{qujianbisaitype,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan1id != null">
+                linzhan1ID = #{linzhan1id,jdbcType=INTEGER},
+            </if>
+            <if test="linzhan1name != null">
+                linzhan1Name = #{linzhan1name,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan1linetype != null">
+                linzhan1LineType = #{linzhan1linetype,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan1ofxianduan != null">
+                linzhan1OfXianDuan = #{linzhan1ofxianduan,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan1isnobendwd != null">
+                linzhan1IsNoBenDWD = #{linzhan1isnobendwd,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan2id != null">
+                linzhan2ID = #{linzhan2id,jdbcType=INTEGER},
+            </if>
+            <if test="linzhan2name != null">
+                linzhan2Name = #{linzhan2name,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan2linetype != null">
+                linzhan2LineType = #{linzhan2linetype,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan2ofxianduan != null">
+                linzhan2OfXianDuan = #{linzhan2ofxianduan,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan2isnobendwd != null">
+                linzhan2IsNoBenDWD = #{linzhan2isnobendwd,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan3id != null">
+                linzhan3ID = #{linzhan3id,jdbcType=INTEGER},
+            </if>
+            <if test="linzhan3name != null">
+                linzhan3Name = #{linzhan3name,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan3linetype != null">
+                linzhan3LineType = #{linzhan3linetype,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan3ofxianduan != null">
+                linzhan3OfXianDuan = #{linzhan3ofxianduan,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan3isnobendwd != null">
+                linzhan3IsNoBenDWD = #{linzhan3isnobendwd,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan4id != null">
+                linzhan4ID = #{linzhan4id,jdbcType=INTEGER},
+            </if>
+            <if test="linzhan4name != null">
+                linzhan4Name = #{linzhan4name,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan4linetype != null">
+                linzhan4LineType = #{linzhan4linetype,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan4ofxianduan != null">
+                linzhan4OfXianDuan = #{linzhan4ofxianduan,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan4isnobendwd != null">
+                linzhan4IsNoBenDWD = #{linzhan4isnobendwd,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan5id != null">
+                linzhan5ID = #{linzhan5id,jdbcType=INTEGER},
+            </if>
+            <if test="linzhan5name != null">
+                linzhan5Name = #{linzhan5name,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan5linetype != null">
+                linzhan5LineType = #{linzhan5linetype,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan5ofxianduan != null">
+                linzhan5OfXianDuan = #{linzhan5ofxianduan,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan5isnobendwd != null">
+                linzhan5IsNoBenDWD = #{linzhan5isnobendwd,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan6id != null">
+                linzhan6ID = #{linzhan6id,jdbcType=INTEGER},
+            </if>
+            <if test="linzhan6name != null">
+                linzhan6Name = #{linzhan6name,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan6linetype != null">
+                linzhan6LineType = #{linzhan6linetype,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan6ofxianduan != null">
+                linzhan6OfXianDuan = #{linzhan6ofxianduan,jdbcType=VARCHAR},
+            </if>
+            <if test="linzhan6isnobendwd != null">
+                linzhan6IsNoBenDWD = #{linzhan6isnobendwd,jdbcType=VARCHAR},
+            </if>
+            <if test="czJson != null">
+                cz_json = #{czJson,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where cid = #{cid,jdbcType=INTEGER}
+    </update>
+
     <!--查询全部车站-->
     <select id="selectByCheZhan" parameterType="java.lang.Long" resultMap="chezhan">
-        select *
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
         from mro_chezhan
         where cid = #{cid,jdbcType=BIGINT}
     </select>
@@ -62,12 +727,18 @@
     </delete>
     <!--查询全部车站-->
     <select id="selectAll" resultMap="chezhan">
-        select *
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
         from mro_chezhan
     </select>
     <!--查询全部车站-->
     <select id="selectByCzName" parameterType="java.lang.String" resultMap="chezhan">
-        select *
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
         from mro_chezhan
         where cz_name like concat('%', #{czName,jdbcType=VARCHAR}, '%')
     </select>

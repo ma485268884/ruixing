@@ -18,6 +18,7 @@
         <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
         <result column="quDuan_length" jdbcType="INTEGER" property="quduanLength"/>
         <result column="carrier" jdbcType="VARCHAR" property="carrier"/>
+        <result column="ofXianDuan" jdbcType="VARCHAR" property="ofXianDuan"/>
         <result column="diDuan_type" jdbcType="VARCHAR" property="diduanType"/>
         <result column="xianLuQingKuang" jdbcType="VARCHAR" property="xianluqingkuang"/>
         <result column="bianJie" jdbcType="INTEGER" property="bianjie"/>
@@ -47,7 +48,7 @@
         </association>
     </resultMap>
     <sql id="Base_Column_List">
-        id, parent_id, cid, xid, sid,qdid, typeid, line,left_right,xingbie, zongHe_id,type,quDuanSheJi_name, quDuanYunYing_name,
+        id, parent_id, cid, xid, sid,qdid, ofXianDuan,typeid, line,left_right,xingbie, zongHe_id,type,quDuanSheJi_name, quDuanYunYing_name,
     quDuan_length, carrier, diDuan_type, xianLuQingKuang, bianJie, fenJieDian_where,
     zhanQuFenJie, jinZhanXinHaoJi_name, xinHaoJiOrBiaoZhiMing, xinHaoBiaoZhiPai_where,
     xinHaoJi_where, zuoCeJueYuan_type, youCeJueYuan_type, zhengXianHouFangQuDuan_ID,
@@ -247,6 +248,9 @@
             <if test="qdid != null">
                 qdid,
             </if>
+            <if test="ofXianDuan != null">
+                ofXianDuan,
+            </if>
             <if test="typeid != null">
                 typeid,
             </if>
@@ -350,6 +354,9 @@
             </if>
             <if test="qdid != null">
                 #{qdid,jdbcType=INTEGER},
+            </if>
+            <if test="ofXianDuan != null">
+                #{ofXianDuan,jdbcType=VARCHAR},
             </if>
             <if test="typeid != null">
                 #{typeid,jdbcType=INTEGER},
@@ -455,6 +462,9 @@
             </if>
             <if test="qdid != null">
                 qdid = #{qdid,jdbcType=INTEGER},
+            </if>
+            <if test="ofXianDuan != null">
+                line = #{ofXianDuan,jdbcType=VARCHAR},
             </if>
             <if test="typeid != null">
                 typeid = #{typeid,jdbcType=INTEGER},
