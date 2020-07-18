@@ -42,10 +42,15 @@ public class EquipmentNumberController implements BaseController<EquipmentNumber
         return ResponseDataUtil.ok("添加器材编号信息成功");
     }
 
-    @DeleteMapping("/{id}")
+    @Override
+    public Map<String, Object> remove(Integer id) {
+        return null;
+    }
+
+    @DeleteMapping("/{ids}")
     @ResponseBody
-    public Map<String, Object> remove(@PathVariable Integer id) {
-        equipmentNumberService.remove(id);
+    public Map<String, Object> remove(@PathVariable Integer[] ids) {
+        equipmentNumberService.removeMuch(ids);
         return ResponseDataUtil.ok("删除器材编号信息成功");
 
     }
@@ -82,9 +87,7 @@ public class EquipmentNumberController implements BaseController<EquipmentNumber
     public Map<String, Object> uploadFile(@RequestParam("photo") MultipartFile multipartFile) throws IOException {
         String photoName = multipartFile.getOriginalFilename();
         String photoPath = FileUploadUtil.save(multipartFile.getInputStream(), photoName);
-
-        String defaultBaseFilePath = OSInfoUtil.isWindows() ? FileUploadUtil.WINDOW_BASE_FILE_PATH : OSInfoUtil.isLinux() ? FileUploadUtil.LINUX_BASE_FILE_PATH : FileUploadUtil.WINDOW_BASE_FILE_PATH;
-        if (!FileUtil.isImage(new File(defaultBaseFilePath + photoPath + File.separator + photoName)))//判断是否为图片文件
+        if (!FileUtil.isImage(new File(FileUploadUtil.FilePath + photoPath + File.separator + photoName)))//判断是否为图片文件
             throw new BaseRuntimeException("此文件不是图片文件");
         JSONObject jo = new JSONObject();
         jo.put("photoPath", photoPath);

@@ -14,4 +14,6 @@ public interface EquipmentNumberService extends BaseService<EquipmentNumberEntit
 
     List<EquipmentNumberEntity> findByCondition(Integer[] ids, String equipmentNumber);
 
+    void removeMuch(Integer[] ids);
+
 }

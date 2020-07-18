@@ -19,5 +19,7 @@ public interface EquipmentNumberDao {
 
     List<EquipmentNumberEntity> selectByCondition(Integer[] ids, String equipmentNumber);
 
+    void deleteMuch(Integer[] ids);
+
 
 }
