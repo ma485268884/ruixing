@@ -1,9 +1,7 @@
 package com.yintu.ruixing.websocket;
 
-import cn.hutool.core.date.DateUtil;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.yintu.ruixing.common.util.SpringContextUtil;
-import com.yintu.ruixing.service.QuDuanDownloadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Component;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -79,33 +76,39 @@ public class WebSocketServer {
      */
     @OnMessage
     public void onMessage(Session session, String message) {
+        logger.info("onMessage.............." + message);
         String sessionId = session.getId();
         SessionInfo sessionInfo = webSocketSession.get(sessionId);
-
         JSONObject jo = JSONObject.parseObject(message);
-        Integer stationId = jo.getInteger("stationId");
+        JSONArray ja = jo.getJSONArray("stationIds");
         if (sessionInfo != null) {
-            sessionInfo.setCid(stationId);
+            sessionInfo.setCid(ja.toJavaObject(Integer[].class));
         }
 
     }
 
     /**
-     * @param sessionInfo 标识信息
-     * @param taskId      任务id
+     *
+     * @param cheZhanId  车站id
+     * @param taskId  任务id
      */
-    public void sendMessage(SessionInfo sessionInfo, Integer taskId) {
+    public void sendMessage(Integer cheZhanId, Integer taskId) {
         for (String sessionId : webSocketSession.keySet()) {
             SessionInfo s = webSocketSession.get(sessionId);
-            if (s != null && s.getCid() != null && s.getCid().equals(sessionInfo.getCid())) {
-                Session session = s.getSession();
-                if (session != null && session.isOpen()) {
-                    try {
-                        JSONObject jo = new JSONObject();
-                        jo.put("taskId", taskId);
-                        session.getBasicRemote().sendText(jo.toJSONString());
-                    } catch (IOException e) {
-                        logger.error(e.getMessage());
+            if (s != null && s.getCid() != null) {
+                for (Integer cid : s.getCid()) {
+                    if (cid != null && cid.equals(cheZhanId)) {
+                        Session session = s.getSession();
+                        if (session != null && session.isOpen()) {
+                            try {
+                                JSONObject jo = new JSONObject();
+                                jo.put("taskId", taskId);
+                                session.getBasicRemote().sendText(jo.toJSONString());
+                                logger.info("sendMessage.............." + jo);
+                            } catch (IOException e) {
+                                logger.error(e.getMessage());
+                            }
+                        }
                     }
                 }
 

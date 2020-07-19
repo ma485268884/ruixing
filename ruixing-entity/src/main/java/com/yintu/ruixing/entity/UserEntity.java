@@ -40,7 +40,6 @@ public class UserEntity implements UserDetails {
 
     private String salt;
 
-    @JSONField(format = "yyyy-MM-dd hh:mm:ss")
     private Date createTime;
 
     private Short isCustomer;

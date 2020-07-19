@@ -9,58 +9,17 @@ import java.io.Serializable;
  */
 public class SessionInfo implements Serializable {
     private static final long serialVersionUID = 6835109452509281566L;
-
-    private Integer tid;
-
-    private Integer did;
-
-    private Integer xid;
-
-    private Integer cid;
-
-    private Integer sid;
+    
+    private Integer[] cid;
 
     private Session session;
 
-
-    public Integer getTid() {
-        return tid;
-    }
-
-    public void setTid(Integer tid) {
-        this.tid = tid;
-    }
-
-    public Integer getDid() {
-        return did;
-    }
-
-    public void setDid(Integer did) {
-        this.did = did;
-    }
-
-    public Integer getXid() {
-        return xid;
-    }
-
-    public void setXid(Integer xid) {
-        this.xid = xid;
-    }
-
-    public Integer getCid() {
+    public Integer[] getCid() {
         return cid;
     }
 
-    public void setCid(Integer cid) {
+    public void setCid(Integer[] cid) {
         this.cid = cid;
-    }
-
-    public Integer getSid() {
-        return sid;
-    }
-
-    public void setSid(Integer sid) {
-        this.sid = sid;
     }
 
     public Session getSession() {

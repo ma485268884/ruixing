@@ -1,5 +1,6 @@
 package com.yintu.ruixing.service;
 
+import com.yintu.ruixing.common.util.BaseService;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.PermissionEntity;
 import com.yintu.ruixing.entity.RoleEntity;
@@ -11,34 +12,7 @@ import java.util.List;
  * @author:mlf
  * @date:2020/5/19 9:43
  */
-public interface RoleService {
-    /**
-     * 添加角色
-     *
-     * @param roleEntity 角色信息
-     */
-    void add(RoleEntity roleEntity);
-
-    /**
-     * 删除角色
-     *
-     * @param roleEntity 角色信息
-     */
-    void edit(RoleEntity roleEntity);
-
-    /**
-     * 删除角色
-     *
-     * @param id id
-     */
-    void remove(Long id);
-
-    /**
-     * id查询角色
-     *
-     * @return 角色信息
-     */
-    RoleEntity findById(Long id);
+public interface RoleService extends BaseService<RoleEntity, Long> {
 
     /**
      * @return 角色信息

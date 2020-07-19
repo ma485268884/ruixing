@@ -1,5 +1,6 @@
 package com.yintu.ruixing.service;
 
+import com.yintu.ruixing.common.util.BaseService;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.entity.UserEntity;
@@ -8,44 +9,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UserService extends UserDetailsService {
-
-    /**
-     * T
-     * 添加用户
-     *
-     * @param userEntity 用户信息
-     */
-    void add(UserEntity userEntity);
-
-    /**
-     * 修改用户
-     *
-     * @param userEntity 用户信息
-     */
-    void edit(UserEntity userEntity);
-
-    /**
-     * 删除用户
-     *
-     * @param id
-     */
-    void remove(Long id);
-
-    /**
-     * 按照id查询用户
-     *
-     * @param id 用户id
-     * @return 用户信息
-     */
-    UserEntity findById(Long id);
+public interface UserService extends UserDetailsService, BaseService<UserEntity, Long> {
 
     /**
      * 查询所有用户
      *
      * @return 用户信息
      */
-    List<UserEntity> findAll(Short isCustermer);
+    List<UserEntity> findAll(Short isCustomer);
 
     /**
      * 通过条件查询用户
@@ -88,6 +59,10 @@ public interface UserService extends UserDetailsService {
      */
     void addRolesByIdAndRoleIds(Long Id, Long[] roleIds);
 
+
+//    void addRolesAndUser(UserEntity userEntity, Long[] roleIds);
+
+
     /**
      * 通过用户id查询权限(用户菜单栏)
      *
@@ -95,7 +70,7 @@ public interface UserService extends UserDetailsService {
      * @param parentId 父级id
      * @return 权限树信息集
      */
-    List<TreeNodeUtil> findPermissionById(Long id, Long parentId, Short isMemu);
+    List<TreeNodeUtil> findPermissionById(Long id, Long parentId, Short isMenu);
 
     /**
      * 查询全部权限
