@@ -7,6 +7,8 @@ import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntity;
 import com.yintu.ruixing.service.QuDuanBaseService;
 import com.yintu.ruixing.service.QuDuanInfoService;
+import com.yintu.ruixing.websocket.SessionInfo;
+import com.yintu.ruixing.websocket.WebSocketServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,9 +25,16 @@ import java.util.Map;
 public class QuDuanInfoController extends SessionController {
     @Autowired
     private QuDuanInfoService quDuanInfoService;
-
     @Autowired
     private QuDuanBaseService quDuanBaseService;
+    @Autowired
+    private WebSocketServer webSocketServer;
+
+    @GetMapping("/info")
+    public Map<String, Object> findByCid(@RequestParam("cid") Integer cid) {
+        return ResponseDataUtil.ok("查询区段基础信息列表", null);
+    }
+
 
     /**
      * 查询区段基础信息列表

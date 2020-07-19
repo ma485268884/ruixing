@@ -85,16 +85,11 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
     }
 
     @Override
-    public Integer add(Integer tid, Integer did, Integer xid, Integer cid, Integer sid, Short type, Date startDateTime, Date endDateTime) {
+    public Integer add(Integer cid, Short type, Date startDateTime, Date endDateTime) {
         QuDuanDownloadEntity quDuanDownloadEntity = new QuDuanDownloadEntity();
-        quDuanDownloadEntity.setTid(tid);
-        quDuanDownloadEntity.setDid(did);
-        quDuanDownloadEntity.setXid(xid);
         quDuanDownloadEntity.setCid(cid);
-        quDuanDownloadEntity.setSid(sid);
         quDuanDownloadEntity.setStartTime(startDateTime);
         quDuanDownloadEntity.setEndTime(endDateTime);
-
         quDuanDownloadEntity.setStatus((short) 0);
         quDuanDownloadEntity.setType(type);
         this.add(quDuanDownloadEntity);

@@ -31,11 +31,7 @@ public class QuDuanDownloadController extends SessionController {
 
     @PostMapping
     public Map<String, Object> add(
-            @RequestParam("tid") Integer tid,
-            @RequestParam("did") Integer did,
-            @RequestParam("xid") Integer xid,
             @RequestParam("cid") Integer cid,
-            @RequestParam("sid") Integer sid,
             @RequestParam("type") Short type,
             @RequestParam("startDateTime") Date startDateTime,
             @RequestParam("minute") Integer minute) {
@@ -43,13 +39,9 @@ public class QuDuanDownloadController extends SessionController {
         time.setTime(startDateTime);
         time.add(Calendar.MINUTE, minute);
         Date endDateTime = time.getTime();
-        Integer id = quDuanDownloadService.add(tid, did, xid, cid, sid, type, startDateTime, endDateTime);
+        Integer id = quDuanDownloadService.add(cid, type, startDateTime, endDateTime);
         SessionInfo sessionInfo = new SessionInfo();
-        sessionInfo.setTid(tid);
-        sessionInfo.setDid(did);
-        sessionInfo.setXid(xid);
         sessionInfo.setCid(cid);
-        sessionInfo.setSid(sid);
         webSocketServer.sendMessage(sessionInfo, id);
         return ResponseDataUtil.ok("添加下载记录成功");
     }

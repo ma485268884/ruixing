@@ -1,5 +1,6 @@
 package com.yintu.ruixing.websocket;
 
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.common.util.SpringContextUtil;
 import com.yintu.ruixing.service.QuDuanDownloadService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -79,23 +81,12 @@ public class WebSocketServer {
     public void onMessage(Session session, String message) {
         String sessionId = session.getId();
         SessionInfo sessionInfo = webSocketSession.get(sessionId);
-        JSONObject jo = JSONObject.parseObject(message);
-        //messageType:消息类型  taskId:任务id
-        Integer messageType = jo.getInteger("messageType");//0.标识消息 1.通知消息
-        if (messageType.equals(0)) {
-            logger.info("第一次发送标识消息");
-            sessionInfo.setTid(jo.getInteger("tid"));
-            sessionInfo.setDid(jo.getInteger("did"));
-            sessionInfo.setXid(jo.getInteger("xid"));
-            sessionInfo.setCid(jo.getInteger("cid"));
-            sessionInfo.setSid(jo.getInteger("sid"));
-        } else if (messageType.equals(1)) {
-            logger.info("第二次发送通知消息");
-            Integer taskId = jo.getInteger("taskId");
-            QuDuanDownloadService quDuanDownloadService = SpringContextUtil.getBean(QuDuanDownloadService.class);
-            quDuanDownloadService.callbackEdit(taskId);
-        }
 
+        JSONObject jo = JSONObject.parseObject(message);
+        Integer stationId = jo.getInteger("stationId");
+        if (sessionInfo != null) {
+            sessionInfo.setCid(stationId);
+        }
 
     }
 
@@ -106,28 +97,21 @@ public class WebSocketServer {
     public void sendMessage(SessionInfo sessionInfo, Integer taskId) {
         for (String sessionId : webSocketSession.keySet()) {
             SessionInfo s = webSocketSession.get(sessionId);
-            if (s.getTid().equals(sessionInfo.getTid())) {
-                if (s.getDid().equals(sessionInfo.getDid())) {
-                    if (s.getXid().equals(sessionInfo.getXid())) {
-                        if (s.getCid().equals(sessionInfo.getCid())) {
-                            if (s.getSid().equals(sessionInfo.getSid())) {
-                                Session session = s.getSession();
-                                if (session != null && session.isOpen()) {
-                                    try {
-                                        JSONObject jo = new JSONObject();
-                                        jo.put("taskId", taskId);
-                                        session.getBasicRemote().sendText(jo.toJSONString());
-                                    } catch (IOException e) {
-                                        logger.error(e.getMessage());
-                                    }
-                                }
-                            }
-                        }
+            if (s != null && s.getCid() != null && s.getCid().equals(sessionInfo.getCid())) {
+                Session session = s.getSession();
+                if (session != null && session.isOpen()) {
+                    try {
+                        JSONObject jo = new JSONObject();
+                        jo.put("taskId", taskId);
+                        session.getBasicRemote().sendText(jo.toJSONString());
+                    } catch (IOException e) {
+                        logger.error(e.getMessage());
                     }
                 }
+
             }
         }
-
     }
+
 
 }
