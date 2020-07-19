@@ -35,7 +35,7 @@
 
 		insert into mro_dianwuduan(dwd_name,dwd_id,tlj_id,dwd_miaoshu,tlj_dwd_id)
 		values
-		(#{dwdName},#{dwdId},#{tljId},#{dwdMiaoShu},#{tid})
+		(#{dwdName},#{dwdId},#{tljId},#{dwdMiaoShu},#{tljDwdId})
 	</insert>
     <!--修改电务段信息-->
     <update id="editDianWuDuan" parameterType="com.yintu.ruixing.entity.DianWuDuanEntity">

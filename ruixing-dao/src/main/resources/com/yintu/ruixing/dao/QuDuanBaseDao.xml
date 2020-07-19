@@ -55,6 +55,14 @@
     zhengXianQianFangQuDuan_ID, daoChaGuanLianQuDuan1_ID, daoChaGuanLianQuDuan2_ID, dianMaHuaGuiHao,
     guiNeiDiZhi, yuliu
     </sql>
+
+    <!--根据车站cid  查询对应的区段数据-->
+    <select id="findQuDuanByCid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_quduan_base
+        where cid = #{cid}
+    </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

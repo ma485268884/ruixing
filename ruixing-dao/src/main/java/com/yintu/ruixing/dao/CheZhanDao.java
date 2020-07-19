@@ -56,4 +56,8 @@ public interface CheZhanDao {
     List<CheZhanEntity> selectByCzName(String czName);
 
     List<CheZhanEntity> findallChezhanByName(String czname);
+
+    Long findchezhanid(long parseLong);
+
+    Integer findxianduanid(long parseLong);
 }
