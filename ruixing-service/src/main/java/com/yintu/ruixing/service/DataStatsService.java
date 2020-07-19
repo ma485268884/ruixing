@@ -103,4 +103,12 @@ public interface DataStatsService {
     List<XianDuanEntity> findAllXianDuanByName(String xdname);
 
     List<CheZhanEntity> findallChezhanByName(String czname);
+
+    Long findchezhanid(long parseLong);
+
+    List<QuDuanBaseEntity> findQuDuanByCid(Long cid);
+
+    Integer findLastParentid();
+
+    Integer findxianduanid(long parseLong);
 }

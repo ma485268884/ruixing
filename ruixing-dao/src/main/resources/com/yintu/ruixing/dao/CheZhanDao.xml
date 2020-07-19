@@ -138,6 +138,16 @@
     </update>
 -->
 
+    <!--根据车站专用id 查询线段id  也就是线段和车站的外键xd_cz_id-->
+    <select id="findxianduanid" resultType="java.lang.Integer">
+        select xd_cz_id from mro_chezhan where cz_id=#{parseLong}
+    </select>
+
+    <!--根据车站专用id  查询对应的id-->
+    <select id="findchezhanid" resultType="java.lang.Long">
+        select cid from mro_chezhan where cz_id=#{parseLong}
+    </select>
+
     <!--根据车站名字 查询对应的数据-->
     <select id="findallChezhanByName" resultMap="chezhan">
         select

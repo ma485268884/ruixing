@@ -42,6 +42,26 @@ public class DataStatsServiceImpl implements DataStatsService {
     private CheZhanDao cheZhanDao;
 
     @Override
+    public Integer findxianduanid(long parseLong) {
+        return cheZhanDao.findxianduanid(parseLong);
+    }
+
+    @Override
+    public Integer findLastParentid() {
+        return quDuanBaseDao.lastParentid() ;
+    }
+
+    @Override
+    public List<QuDuanBaseEntity> findQuDuanByCid(Long cid) {
+        return quDuanBaseDao.findQuDuanByCid(cid);
+    }
+
+    @Override
+    public Long findchezhanid(long parseLong) {
+        return cheZhanDao.findchezhanid(parseLong);
+    }
+
+    @Override
     public List<CheZhanEntity> findallChezhanByName(String czname) {
         return cheZhanDao.findallChezhanByName(czname);
     }
@@ -108,9 +128,7 @@ public class DataStatsServiceImpl implements DataStatsService {
 
     @Override
     public void addTieLuJU(TieLuJuEntity stringList) {
-
             tieLuJuDao.addTieLuJU(stringList);
-
     }
 
     //查询所有数据

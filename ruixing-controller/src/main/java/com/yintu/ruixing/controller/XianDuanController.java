@@ -23,8 +23,8 @@ public class XianDuanController {
 
     //新增线段
     @PostMapping("/addXianDuan")
-    public Map<String, Object> addXianDuan(XianDuanEntity xianDuanEntity) {
-        xianDuanService.addXianDuan(xianDuanEntity);
+    public Map<String, Object> addXianDuan(XianDuanEntity xianDuanEntity,Long[] dwdids,Long[] dids) {
+        xianDuanService.addXianDuan(xianDuanEntity,dwdids,dids);
         return ResponseDataUtil.ok("新增线段成功");
     }
 

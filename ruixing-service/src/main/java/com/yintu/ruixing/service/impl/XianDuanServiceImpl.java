@@ -22,9 +22,15 @@ public class XianDuanServiceImpl implements XianDuanService {
     private XianDuanDao xianDuanDao;
 
     @Override
-    public void addXianDuan(XianDuanEntity xianDuanEntity) {
-        xianDuanEntity.setXdState(0);
-        xianDuanDao.addXianDuan(xianDuanEntity);
+    public void addXianDuan(XianDuanEntity xianDuanEntity,Long[] dwdids,Long[] dids) {
+        for (int i = 0; i < dids.length; i++) {
+            for (int i1 = 0; i1 < dids.length; i1++) {
+                xianDuanEntity.setXdState(0);
+                xianDuanEntity.setDwdId(dwdids[i]);
+                xianDuanEntity.setDwdXdId(dids[i1]);
+                xianDuanDao.addXianDuan(xianDuanEntity);
+            }
+        }
     }
 
     @Override

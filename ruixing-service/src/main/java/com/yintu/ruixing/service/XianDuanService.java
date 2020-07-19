@@ -10,7 +10,7 @@ import java.util.List;
  * 线段
  */
 public interface XianDuanService {
-    void addXianDuan(XianDuanEntity xianDuanEntity);
+    void addXianDuan(XianDuanEntity xianDuanEntity,Long[] dwdids,Long[] dids);
 
     void delXianDuan(Long xid);
 
