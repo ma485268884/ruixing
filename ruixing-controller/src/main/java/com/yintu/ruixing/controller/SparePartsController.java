@@ -1,5 +1,6 @@
 package com.yintu.ruixing.controller;
 
+import cn.hutool.core.date.DateUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.BaseController;
@@ -84,13 +85,23 @@ public class SparePartsController extends SessionController implements BaseContr
     @PostMapping("/import")
     @ResponseBody
     public Map<String, Object> importFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        sparePartsService.importFile(multipartFile.getInputStream(), FileUtil.getExtensionName(multipartFile.getOriginalFilename()));
+        sparePartsService.importFile(multipartFile.getInputStream(),multipartFile.getOriginalFilename());
         return ResponseDataUtil.ok("导入备品实验信息成功");
+    }
+
+    @GetMapping("/template")
+    public void templateFile(HttpServletResponse response) throws IOException {
+        String fileName = "备品实验列表-模板" + DateUtil.now() + ".xlsx";
+        response.setContentType("application/octet-stream;charset=ISO-8859-1");
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), StandardCharsets.ISO_8859_1));
+        response.addHeader("Pargam", "no-cache");
+        response.addHeader("Cache-Control", "no-cache");
+        sparePartsService.templateFile(response.getOutputStream());
     }
 
     @GetMapping("/export/{ids}")
     public void exportFile(@PathVariable Integer[] ids, HttpServletResponse response) throws IOException {
-        String fileName = "备品实验列表" + System.currentTimeMillis() + ".xlsx";
+        String fileName = "备品实验列表-导出" + DateUtil.now() + ".xlsx";
         response.setContentType("application/octet-stream;charset=ISO-8859-1");
         response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), StandardCharsets.ISO_8859_1));
         response.addHeader("Pargam", "no-cache");

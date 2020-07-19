@@ -115,6 +115,9 @@ public class MaintenancePlanInfoServiceImpl implements MaintenancePlanInfoServic
             if (!equipmentEntities.isEmpty())
                 maintenancePlanInfoEntity.setEquipmentId(equipmentEntities.get(0).getId());
 
+            if (rows[3] == null || rows[4] == null) {
+                throw new BaseRuntimeException("开始日期或者结束日期不能为空");
+            }
             try {
                 Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(rows[3]);
                 Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(rows[4]);
@@ -130,6 +133,19 @@ public class MaintenancePlanInfoServiceImpl implements MaintenancePlanInfoServic
         }
         if (!maintenancePlanInfoEntities.isEmpty())
             this.add(maintenancePlanInfoEntities);
+    }
+
+    @Override
+    public void templateFile(OutputStream outputStream) throws IOException {
+        //excel标题
+        String title = "维护计划详情列表";
+        //excel表名
+        String[] headers = {"序号", "车站名称", "设备名称", "开始日期", "结束日期"};
+        //创建HSSFWorkbook
+        XSSFWorkbook wb = ExportExcelUtil.getXSSFWorkbook(title, headers, new String[0][0]);
+        wb.write(outputStream);
+        outputStream.flush();
+        outputStream.close();
     }
 
     @Override

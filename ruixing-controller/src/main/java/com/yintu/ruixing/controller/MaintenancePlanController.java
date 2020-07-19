@@ -1,5 +1,6 @@
 package com.yintu.ruixing.controller;
 
+import cn.hutool.core.date.DateUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.BaseController;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +31,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/maintenance/plans")
 public class MaintenancePlanController extends SessionController implements BaseController<MaintenancePlanEntity, Integer> {
+
     @Autowired
     private MaintenancePlanService maintenancePlanService;
 
@@ -86,13 +89,23 @@ public class MaintenancePlanController extends SessionController implements Base
     @PostMapping("/import")
     @ResponseBody
     public Map<String, Object> importFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        maintenancePlanService.importFile(multipartFile.getInputStream(), FileUtil.getExtensionName(multipartFile.getOriginalFilename()));
+        maintenancePlanService.importFile(multipartFile.getInputStream(), multipartFile.getOriginalFilename());
         return ResponseDataUtil.ok("导入维护计划信息成功");
+    }
+
+    @GetMapping("/template")
+    public void templateFile(HttpServletResponse response) throws IOException {
+        String fileName = "维护计划列表-模板" + DateUtil.now() + ".xlsx";
+        response.setContentType("application/octet-stream;charset=ISO8859-1");
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
+        response.addHeader("Pargam", "no-cache");
+        response.addHeader("Cache-Control", "no-cache");
+        maintenancePlanService.templateFile(response.getOutputStream());
     }
 
     @GetMapping("/export/{ids}")
     public void exportFile(@PathVariable Integer[] ids, HttpServletResponse response) throws IOException {
-        String fileName = "维护计划列表" + System.currentTimeMillis() + ".xlsx";
+        String fileName = "维护计划列表-导出" + DateUtil.now() + ".xlsx";
         response.setContentType("application/octet-stream;charset=ISO8859-1");
         response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
         response.addHeader("Pargam", "no-cache");

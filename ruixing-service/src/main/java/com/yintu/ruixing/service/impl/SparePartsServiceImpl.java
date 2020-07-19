@@ -142,6 +142,9 @@ public class SparePartsServiceImpl implements SparePartsService {
             String equipmentStatus = rows[4];
             sparePartsEntity.setEquipmentStatus("良好".equals(equipmentStatus) ? (short) 1 : "一般".equals(equipmentStatus) ? (short) 2 :
                     "不可用".equals(equipmentStatus) ? (short) 3 : 1);
+            if (rows[5] == null) {
+                throw new BaseRuntimeException("开始日期或者结束日期不能为空");
+            }
             Date createDate = null;
             try {
                 createDate = new SimpleDateFormat("yyyy-MM-dd").parse(rows[5]);
@@ -179,6 +182,19 @@ public class SparePartsServiceImpl implements SparePartsService {
         }
         if (!sparePartsEntities.isEmpty())
             this.add(sparePartsEntities);
+    }
+
+    @Override
+    public void templateFile(OutputStream outputStream) throws IOException {
+        //excel标题
+        String title = "备品实验列表";
+        //excel表名
+        String[] headers = {"序号", "车站名称", "设备名称", "设备编号", "设备状态", "创建日期", "存储时间", "是否倒换"};
+        //创建HSSFWorkbook
+        XSSFWorkbook wb = ExportExcelUtil.getXSSFWorkbook(title, headers, new String[0][0]);
+        wb.write(outputStream);
+        outputStream.flush();
+        outputStream.close();
     }
 
     @Override

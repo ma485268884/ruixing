@@ -23,7 +23,6 @@ public class BiddingEntity implements Serializable {
     @NotNull
     private Short projectStatus;
     @NotNull
-    @Past
     private Date projectDate;
     @NotNull
     private Short taskStatus;

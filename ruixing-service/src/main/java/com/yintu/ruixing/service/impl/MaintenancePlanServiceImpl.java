@@ -100,6 +100,19 @@ public class MaintenancePlanServiceImpl implements MaintenancePlanService {
     }
 
     @Override
+    public void templateFile(OutputStream outputStream) throws IOException {
+        //excel标题
+        String title = "维护计划列表";
+        //excel表名
+        String[] headers = {"序号", "名称"};
+        //创建HSSFWorkbook
+        XSSFWorkbook wb = ExportExcelUtil.getXSSFWorkbook(title, headers, new String[0][0]);
+        wb.write(outputStream);
+        outputStream.flush();
+        outputStream.close();
+    }
+
+    @Override
     public void exportFile(OutputStream outputStream, Integer[] ids) throws IOException {
         //excel标题
         String title = "维护计划列表";

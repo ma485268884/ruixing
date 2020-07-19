@@ -1,5 +1,6 @@
 package com.yintu.ruixing.controller;
 
+import cn.hutool.core.date.DateUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.BaseController;
@@ -91,13 +92,24 @@ public class MaintenancePlanInfoController extends SessionController implements 
     @PostMapping("/import")
     @ResponseBody
     public Map<String, Object> importInfoFile(@RequestParam("maintenancePlanId") Integer maintenancePlanId, @RequestParam("file") MultipartFile multipartFile) throws IOException {
-        maintenancePlanInfoService.importFile(multipartFile.getInputStream(), FileUtil.getExtensionName(multipartFile.getOriginalFilename()), maintenancePlanId);
+        maintenancePlanInfoService.importFile(multipartFile.getInputStream(), multipartFile.getOriginalFilename(), maintenancePlanId);
         return ResponseDataUtil.ok("导入维护计划详情信息成功");
     }
 
+    @GetMapping("/template")
+    public void templateFile(HttpServletResponse response) throws IOException {
+        String fileName = "维护计划详情列表-模板" + DateUtil.now() + ".xlsx";
+        response.setContentType("application/octet-stream;charset=ISO8859-1");
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
+        response.addHeader("Pargam", "no-cache");
+        response.addHeader("Cache-Control", "no-cache");
+        maintenancePlanInfoService.templateFile(response.getOutputStream());
+    }
+
+
     @GetMapping("/export/{ids}")
     public void exportInfoFile(@PathVariable Integer[] ids, HttpServletResponse response) throws IOException {
-        String fileName = "维护计划详情列表" + System.currentTimeMillis() + ".xlsx";
+        String fileName = "维护计划详情列表-导入" + DateUtil.now() + ".xlsx";
         response.setContentType("application/octet-stream;charset=ISO8859-1");
         response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
         response.addHeader("Pargam", "no-cache");

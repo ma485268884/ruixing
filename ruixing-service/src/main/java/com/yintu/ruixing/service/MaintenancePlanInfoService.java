@@ -16,13 +16,12 @@ import java.util.List;
 public interface MaintenancePlanInfoService extends BaseService<MaintenancePlanInfoEntity, Integer> {
 
 
-
     void remove(Integer[] ids);
 
     /**
      * @param ids               维护计划详情id
      * @param maintenancePlanId 维护计划id
-     * @param equipmentName      设备名字
+     * @param equipmentName     设备名字
      * @return
      */
     List<MaintenancePlanInfoEntity> findByCondition(Integer[] ids, Integer maintenancePlanId, String equipmentName);
@@ -40,6 +39,14 @@ public interface MaintenancePlanInfoService extends BaseService<MaintenancePlanI
      * @param inputStream 输入流
      */
     void importFile(InputStream inputStream, String fileName, Integer maintenancePlanId) throws IOException;
+
+    /**
+     * 下载excel数据模板
+     *
+     * @param outputStream 输出流
+     * @throws IOException io异常
+     */
+    void templateFile(OutputStream outputStream) throws IOException;
 
     /**
      * 批量导出excel数据

@@ -46,6 +46,14 @@ public interface SparePartsService extends BaseService<SparePartsEntity, Integer
 
 
     /**
+     * 下载excel数据模板
+     *
+     * @param outputStream 输出流
+     * @throws IOException io异常
+     */
+    void templateFile(OutputStream outputStream) throws IOException;
+
+    /**
      * 批量导出excel数据
      *
      * @param outputStream 输出流

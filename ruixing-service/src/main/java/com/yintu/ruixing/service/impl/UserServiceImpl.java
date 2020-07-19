@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
-@Transactional
+//@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -46,7 +46,6 @@ public class UserServiceImpl implements UserService {
             userEntity.setPassword(passwordEncoder.encode(password));
         }
         userDao.insertSelective(userEntity);
-
     }
 
     @Override
