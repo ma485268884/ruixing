@@ -111,4 +111,6 @@ public interface DataStatsService {
     Integer findLastParentid();
 
     Integer findxianduanid(long parseLong);
+
+	List<XianDuanEntity> findAllXianDuanByDwdid(long parseLong);
 }

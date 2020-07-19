@@ -25,4 +25,6 @@ public interface XianDuanDao {
     Long findid(long parseLong);
 
     List<XianDuanEntity> findAllXianDuanByName(String xdname);
+
+	List<XianDuanEntity> findAllXianDuanByDwdid(long parseLong);
 }
