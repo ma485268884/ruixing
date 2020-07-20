@@ -12,8 +12,8 @@
     </resultMap>
 
     <!--根据电务段名  查询对应的数据-->
-    <select id="findDianWuDuanByName" resultMap="dianwuduan" >
-        select * from mro_dianwuduan where dwd_name=#{dwdname}
+    <select id="findDianWuDuanBydid" resultMap="dianwuduan" >
+        select * from mro_dianwuduan where dwd_id=#{parseLong}
     </select>
 
     <!--根据电务段专用id  查询id-->

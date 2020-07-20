@@ -48,13 +48,22 @@
         </association>
     </resultMap>
     <sql id="Base_Column_List">
-        id, parent_id, cid, xid, sid,qdid, ofXianDuan,typeid, line,left_right,xingbie, zongHe_id,type,quDuanSheJi_name, quDuanYunYing_name,
+        id, parent_id, cid, xid, sid,qdid, ofXianDuan,typeid, line,left_right,xingbie,
+         zongHe_id,type,quDuanSheJi_name, quDuanYunYing_name,
     quDuan_length, carrier, diDuan_type, xianLuQingKuang, bianJie, fenJieDian_where,
     zhanQuFenJie, jinZhanXinHaoJi_name, xinHaoJiOrBiaoZhiMing, xinHaoBiaoZhiPai_where,
     xinHaoJi_where, zuoCeJueYuan_type, youCeJueYuan_type, zhengXianHouFangQuDuan_ID,
     zhengXianQianFangQuDuan_ID, daoChaGuanLianQuDuan1_ID, daoChaGuanLianQuDuan2_ID, dianMaHuaGuiHao,
     guiNeiDiZhi, yuliu
     </sql>
+
+    <!--根据区段运营名称  查询对应的区段数据-->
+    <select id="findQuDuanByQuDuanYunYingName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_quduan_base
+        where quDuanYunYing_name = #{qudunyunyingname}
+    </select>
 
     <!--根据车站cid  查询对应的区段数据-->
     <select id="findQuDuanByCid" resultMap="BaseResultMap">
@@ -63,6 +72,7 @@
         from mro_quduan_base
         where cid = #{cid}
     </select>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

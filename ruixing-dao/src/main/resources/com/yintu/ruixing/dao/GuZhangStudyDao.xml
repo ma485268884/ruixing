@@ -127,7 +127,7 @@
         from
             mro_quduan_base qd
         where
-            qd.cz_qudun_id=#{cid}
+            qd.cid=#{cid}
     </select>
 
 
@@ -279,6 +279,12 @@
             </if>
             <if test="guzhangXianduan != null">
                 #{guzhangXianduan,jdbcType=VARCHAR},
+            </if>
+            <if test="qid != null">
+                #{qid,jdbcType=INTEGER},
+            </if>
+            <if test="guzhangQuduan != null">
+                #{guzhangQuduan,jdbcType=VARCHAR},
             </if>
             <if test="guzhangStartTime != null">
                 #{guzhangStartTime,jdbcType=TIMESTAMP},

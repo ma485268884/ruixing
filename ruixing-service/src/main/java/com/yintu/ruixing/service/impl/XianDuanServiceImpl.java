@@ -27,8 +27,10 @@ public class XianDuanServiceImpl implements XianDuanService {
             for (int i1 = 0; i1 < dids.length; i1++) {
                 xianDuanEntity.setXdState(0);
                 xianDuanEntity.setDwdId(dwdids[i]);
-                xianDuanEntity.setDwdXdId(dids[i1]);
-                xianDuanDao.addXianDuan(xianDuanEntity);
+                xianDuanEntity.setDwdXdId(dids[i]);
+                if (i1==i){
+                    xianDuanDao.addXianDuan(xianDuanEntity);
+                }
             }
         }
     }

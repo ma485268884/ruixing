@@ -3,27 +3,17 @@ package com.yintu.ruixing.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.yintu.ruixing.common.util.ColumnTitleMap;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.GuZhangStudyService;
-import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.crypto.Data;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.lang.StringUtils;
+
 /**
  * @author:lcy
  * @date:2020-06-04 16
@@ -40,7 +30,7 @@ public class GuZhangStudyController {
     public Map<String, Object> findGuZhangList(@RequestParam Integer page, @RequestParam Integer size) {
         JSONObject js = new JSONObject();
         List<GuZhangStudyEntity> guZhangStudyEntity = guZhangStudyService.findGuZhangList(page, size);
-        System.out.println("88888"+guZhangStudyEntity);
+        //System.out.println("88888" + guZhangStudyEntity);
         js.put("guZhangStudyEntity", guZhangStudyEntity);
         PageHelper.startPage(page, size);
         List<GuZhangStudyEntity> guZhangList = guZhangStudyService.findGuZhangList(page, size);
@@ -65,7 +55,7 @@ public class GuZhangStudyController {
 
     //根据id修改数据
     @PutMapping("/editGuZhang/{id}")
-    public Map<String, Object> editGuZhang(@PathVariable Long id,GuZhangStudyEntity guZhangStudyEntity) {
+    public Map<String, Object> editGuZhang(@PathVariable Long id, GuZhangStudyEntity guZhangStudyEntity) {
         guZhangStudyService.editGuZhang(guZhangStudyEntity);
         return ResponseDataUtil.ok("修改数据成功");
     }
@@ -105,12 +95,69 @@ public class GuZhangStudyController {
         return ResponseDataUtil.ok("查询对应区段信息成功", quDuanBaseEntities);
     }
 
+    //根据id  进行批量或者单个导出故障信息数据
+    @GetMapping("/exportExcel/{ids}")
+    public void exportFile(@PathVariable Integer[] ids, HttpServletResponse response) throws IOException {
+        String fileName = "故障信息列表" + System.currentTimeMillis() + ".xlsx";
+        response.setContentType("application/octet-stream;charset=ISO8859-1");
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
+        response.addHeader("Pargam", "no-cache");
+        response.addHeader("Cache-Control", "no-cache");
+        guZhangStudyService.exportFile(response.getOutputStream(), ids);
+    }
+    //故障库查看
+    @GetMapping("/findGuZhangKuData/{id}")
+    public Map<String, Object> findGuZhangKuDataById(@PathVariable Integer id, Integer page, Integer size) {
 
+        JSONObject js = new JSONObject();
+        //Map<String, List<QuDuanInfoEntity>> map = new HashMap<>();
+        //List<QuDuanInfoEntity> quDuanInfoEntities = new ArrayList<>();
+        List<QuDuanBaseEntity> quDuanBaseEntities1 = guZhangStudyService.findFristId(id);
+        if (quDuanBaseEntities1.size() > 0) {
+            Integer fristId = quDuanBaseEntities1.get(0).getId();
+            List<QuDuanInfoEntity> quDuanInfoEntityList1 = guZhangStudyService.findGuZhangKuData(fristId, page, size);
+            js.put("Frist", quDuanInfoEntityList1);
+            //quDuanInfoEntities.addAll(quDuanInfoEntityList1);
+        }
+        List<QuDuanBaseEntity> quDuanBaseEntities2 = guZhangStudyService.findLastId(id);
+        if (quDuanBaseEntities2.size() > 0) {
+            Integer lastId = quDuanBaseEntities2.get(0).getId();
+            List<QuDuanInfoEntity> quDuanInfoEntityList2 = guZhangStudyService.findGuZhangKuData(lastId, page, size);
+            js.put("Last", quDuanInfoEntityList2);
+            //quDuanInfoEntities.addAll(quDuanInfoEntityList2);
+        }
+        List<QuDuanInfoEntity> quDuanInfoEntityList = guZhangStudyService.findGuZhangKuData(id, page, size);
+        js.put("Mysel", quDuanInfoEntityList);
+        //quDuanInfoEntities.addAll(quDuanInfoEntityList);
+        //System.out.println(quDuanInfoEntities);
+        //分页处理
+
+        /*List<QuDuanInfoEntity> list=new ArrayList<>();
+        System.out.println("hahahaahah" + quDuanInfoEntities);
+        for (QuDuanInfoEntity quDuanInfoEntity : quDuanInfoEntities) {
+            System.out.println("lllllll" + quDuanInfoEntity);
+            String s = JSONArray.toJSONString(quDuanInfoEntity);
+            list.add(s);
+            String s1 = JSONObject.toJSONString(quDuanInfoEntity);
+            System.out.println("json"+JSONArray.toJSONString(quDuanInfoEntity));
+        }
+        System.out.println("ssss"+list);
+        System.out.println("js" + js);
+*/
+        //分页处理
+        /*PageHelper.startPage(page, size);
+        PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<QuDuanInfoEntity>(quDuanInfoEntities);
+        js.put("pageInfo", pageInfo);*/
+        return ResponseDataUtil.ok("查询数据成功",js);
+
+    }
+/*
     //根据id批量下载数据到Excel中
     @GetMapping("/GuZhangListExcelDownloads/{ids}")
     public void GuZhangListExcelDownloads(@PathVariable Long[] ids, HttpServletResponse response) throws IOException {
         HSSFWorkbook workbook = new HSSFWorkbook();
-       /* // 设置字体
+       */
+/* // 设置字体
         HSSFFont font = workbook.createFont();
         // 设置字体大小
          font.setFontHeightInPoints((short)10);
@@ -144,8 +191,7 @@ public class GuZhangStudyController {
         // 设置水平对齐的样式为居中对齐;
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
         // 设置垂直对齐的样式为居中对齐;
-        style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);*/
-
+        style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);*//*
         HSSFSheet sheet = workbook.createSheet("故障库学习表");
         List<GuZhangStudyEntity> guzhangList = guZhangStudyService.GuZhangListExcelDownloads(ids);
         String fileName = "guzhang" + ".xls";//设置要导出的文件的名字
@@ -186,7 +232,6 @@ public class GuZhangStudyController {
         response.flushBuffer();
         workbook.write(response.getOutputStream());
     }
-
     //根据id下载对应数据到Excel中
     @GetMapping("/GuZhangListExcelDownloadsById/{id}")
     public void GuZhangListExcelDownloadsById(@PathVariable Long id, HttpServletResponse response) throws IOException {
@@ -231,46 +276,7 @@ public class GuZhangStudyController {
         response.flushBuffer();
         workbook.write(response.getOutputStream());
     }
-
-    //故障库查看
-    @GetMapping("/findGuZhangKuData/{id}")
-    public Map<String, Object> findGuZhangKuData(@PathVariable Integer id, Integer page, Integer size) {
-        JSONObject js = new JSONObject();
-        List<QuDuanInfoEntity> quDuanInfoEntities = new ArrayList<>();
-        List<QuDuanBaseEntity> quDuanBaseEntities1 = guZhangStudyService.findFristId(id);
-        if (quDuanBaseEntities1.size() > 0 ) {
-            Integer fristId = quDuanBaseEntities1.get(0).getId();
-            List<QuDuanInfoEntity> quDuanInfoEntityList1 = guZhangStudyService.findGuZhangKuData(fristId, page, size);
-            System.out.println("88888"+StringUtils.join(quDuanInfoEntityList1, ","));
-            js.put("Frist", quDuanInfoEntityList1);
-            quDuanInfoEntities.addAll(quDuanInfoEntityList1);
-
-
-        }
-        List<QuDuanBaseEntity> quDuanBaseEntities2 = guZhangStudyService.findLastId(id);
-        if (quDuanBaseEntities2.size() > 0) {
-            Integer lastId = quDuanBaseEntities2.get(0).getId();
-            List<QuDuanInfoEntity> quDuanInfoEntityList2 = guZhangStudyService.findGuZhangKuData(lastId, page, size);
-            js.put("Last", quDuanInfoEntityList2);
-            quDuanInfoEntities.addAll(quDuanInfoEntityList2);
-        }
-        List<QuDuanInfoEntity> quDuanInfoEntityList = guZhangStudyService.findGuZhangKuData(id, page, size);
-        js.put("Mysel", quDuanInfoEntityList);
-        quDuanInfoEntities.addAll(quDuanInfoEntityList);
-        System.out.println("all"+quDuanInfoEntities);
-        List<QuDuanInfoEntity> list=new ArrayList<>();
-        for (QuDuanInfoEntity quDuanInfoEntity : quDuanInfoEntities) {
-            list.add(quDuanInfoEntity);
-        }
-        System.out.println("list"+list);
-        //分页处理
-        PageHelper.startPage(page, size);
-        PageInfo<QuDuanInfoEntity> pageInfo = new PageInfo<QuDuanInfoEntity>(quDuanInfoEntities);
-        js.put("pageInfo", pageInfo);
-
-        System.out.println("54544554"+js);
-        return ResponseDataUtil.ok("查询数据成功", js);
-    }
+*/
 
 
 }

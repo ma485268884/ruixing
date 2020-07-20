@@ -113,4 +113,8 @@ public interface DataStatsService {
     Integer findxianduanid(long parseLong);
 
 	List<XianDuanEntity> findAllXianDuanByDwdid(long parseLong);
+
+    List<DianWuDuanEntity> findDianWuDuanBydid(long parseLong);
+
+    List<QuDuanBaseEntity> findQuDuanByQuDuanYunYingName(String qudunyunyingname);
 }

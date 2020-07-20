@@ -60,6 +60,7 @@ public class DataStatsController {
                         String ofxianduan = strings[4];
                         String xingbie = strings[5];
                         String type = strings[6];
+                        //System.out.println("11111111111");
                         String qdid = strings[7];
                         String zongheid = strings[8];
                         String quduanshejiname = strings[9];
@@ -68,6 +69,7 @@ public class DataStatsController {
                         String carrier = strings[12];
                         String diduantype = strings[13];
                         String xianluqingkuang = strings[14];
+                        //System.out.println("2222222222222");
                         String bianjie = strings[15];
                         String fenjiedianwhere = strings[16];
                         String zhanqufenjie = strings[17];
@@ -77,23 +79,28 @@ public class DataStatsController {
                         String xinhaojiewhere = strings[21];
                         String zuocejueyuantype = strings[22];
                         String youcejueyuantype = strings[23];
+                        //System.out.println("33333333333333333");
                         String zhengxianhoufangquduanid = strings[24];
                         String zhengxianqianfangquduanid = strings[25];
                         String daochaguanlianquduan1id = strings[26];
                         String daochaguanlianquduan2id = strings[27];
                         String dianmahuaguidao = strings[28];
                         String guineidizhi = strings[29];
-                        Long cid = dataStatsService.findchezhanid(Long.parseLong(czid));
-                        List<QuDuanBaseEntity> quDuanBaseEntityList = dataStatsService.findQuDuanByCid(cid);
+                        //System.out.println("44444444444444444");
+                        Long cid = dataStatsService.findchezhanid(Long.parseLong(czid));//根据车站专用czid  查询对应的id
+                        List<QuDuanBaseEntity> quDuanBaseEntityList = dataStatsService.findQuDuanByQuDuanYunYingName(qudunyunyingname);//根据车站cid  查询对应的区段数据
                         if (quDuanBaseEntityList.size() == 0) {
+                            //System.out.println("55555555555555555");
                             Integer lastParentid = dataStatsService.findLastParentid();
                             QuDuanBaseEntity quDuanBaseEntity = new QuDuanBaseEntity();
                             quDuanBaseEntity.setParentId(lastParentid);
+                            //System.out.println("666666666666666666");
                             Integer xdid = dataStatsService.findxianduanid(Long.parseLong(czid));
                             quDuanBaseEntity.setXid(xdid);
                             quDuanBaseEntity.setCid(Integer.parseInt(cid.toString()));
                             quDuanBaseEntity.setQdid(Integer.parseInt(qdid));
                             quDuanBaseEntity.setLine(line);
+                            //System.out.println("77777777777777777");
                             quDuanBaseEntity.setOfXianDuan(ofxianduan);
                             quDuanBaseEntity.setLeftRight(leftright);
                             if (xingbie.equals("上行")) {
@@ -120,6 +127,7 @@ public class DataStatsController {
                             }else {
                                 quDuanBaseEntity.setQuduanLength(Integer.parseInt(quduanlength));
                             }
+                            //System.out.println("888888888888888888");
                             quDuanBaseEntity.setCarrier(carrier);
                             quDuanBaseEntity.setDiduanType(diduantype);
                             quDuanBaseEntity.setXianluqingkuang(xianluqingkuang);
@@ -129,6 +137,7 @@ public class DataStatsController {
                                 quDuanBaseEntity.setBianjie(1);
                             }
                             quDuanBaseEntity.setFenjiedianWhere(fenjiedianwhere);
+                           // System.out.println("99999999999999999");
                             if (zhanqufenjie.equals("")||zhanqufenjie.equals("否")){
                                 quDuanBaseEntity.setZhanqufenjie(0);
                             }else {
@@ -140,16 +149,20 @@ public class DataStatsController {
                             quDuanBaseEntity.setXinhaojiWhere(xinhaojiewhere);
                             quDuanBaseEntity.setZuocejueyuanType(zuocejueyuantype);
                             quDuanBaseEntity.setYoucejueyuanType(youcejueyuantype);
+                            //System.out.println("111111112222222222222");
                             quDuanBaseEntity.setZhengxianhoufangquduanId(zhengxianhoufangquduanid);
                             quDuanBaseEntity.setZhengxianqianfangquduanId(zhengxianqianfangquduanid);
+                            //System.out.println("123");
                             quDuanBaseEntity.setDaochaguanlianquduan1Id(daochaguanlianquduan1id);
                             quDuanBaseEntity.setDaochaguanlianquduan2Id(daochaguanlianquduan2id);
+                            //System.out.println("456");
                             quDuanBaseEntity.setDianmahuaguihao(dianmahuaguidao);
                             if (guineidizhi.equals("")){
                                 quDuanBaseEntity.setGuineidizhi(null);
                             }else {
                                 quDuanBaseEntity.setGuineidizhi(Integer.parseInt(guineidizhi));
                             }
+
                             dataStatsService.addQuDuan(quDuanBaseEntity);
                         }
                     }
@@ -194,7 +207,7 @@ public class DataStatsController {
                         }
                         String dwdid = strings[2];
                         String dwdname = strings[3];
-                        List<DianWuDuanEntity> dianWuDuanEntityList = dataStatsService.findDianWuDuanByName(dwdid);//查询电务段表中是否有此电务段
+                        List<DianWuDuanEntity> dianWuDuanEntityList = dataStatsService.findDianWuDuanBydid(Long.parseLong(dwdid));//查询电务段表中是否有此电务段
                         System.out.println("电务段个数"+dianWuDuanEntityList.size());
                         if (dianWuDuanEntityList.size() == 0) {//没有此电务段
                             Long tljid = dataStatsService.findTLJid(Long.parseLong(tljId));//获取上个铁路局的id
@@ -271,7 +284,7 @@ public class DataStatsController {
                         List<CheZhanEntity> cheZhanEntityList = dataStatsService.findallChezhanByName(czname);
                         System.out.println("车站个数"+cheZhanEntityList.size());
                         if (cheZhanEntityList.size() == 0) {
-                            Long xianduanid = dataStatsService.findXDid(Long.parseLong(xdid));
+                            Long xianduanid = dataStatsService.findXDid(Long.parseLong(dwdid));
                             CheZhanEntity cheZhan = new CheZhanEntity();
                             cheZhan.setXdCzId(xianduanid);
                             cheZhan.setCzName(czname);

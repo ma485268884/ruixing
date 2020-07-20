@@ -26,7 +26,7 @@
     </select>
     <!--根据线段专用id  查询对应的id-->
     <select id="findid" resultType="java.lang.Long">
-        select xid from mro_xianduan where xd_id=#{parseLong}
+        select xid from mro_xianduan where dwd_id=#{parseLong}
     </select>
 
     <!--查询所有的线段-->

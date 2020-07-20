@@ -42,6 +42,16 @@ public class DataStatsServiceImpl implements DataStatsService {
     private CheZhanDao cheZhanDao;
 
     @Override
+    public List<QuDuanBaseEntity> findQuDuanByQuDuanYunYingName(String qudunyunyingname) {
+        return quDuanBaseDao.findQuDuanByQuDuanYunYingName(qudunyunyingname);
+    }
+
+    @Override
+    public List<DianWuDuanEntity> findDianWuDuanBydid(long parseLong) {
+        return dianWuDuanDao.findDianWuDuanBydid(parseLong);
+    }
+
+    @Override
     public List<XianDuanEntity> findAllXianDuanByDwdid(long parseLong) {
         return xianDuanDao.findAllXianDuanByDwdid(parseLong);
     }
@@ -88,6 +98,7 @@ public class DataStatsServiceImpl implements DataStatsService {
 
     @Override
     public void addCheZhan(CheZhanEntity cheZhan) {
+        cheZhan.setCzState(0);
         cheZhanDao.insertChezhan(cheZhan);
     }
 
@@ -103,6 +114,7 @@ public class DataStatsServiceImpl implements DataStatsService {
 
     @Override
     public void addXianDuan(XianDuanEntity xianDuanEntity1) {
+        xianDuanEntity1.setXdState(0);
         xianDuanDao.addXianDuan(xianDuanEntity1);
     }
 

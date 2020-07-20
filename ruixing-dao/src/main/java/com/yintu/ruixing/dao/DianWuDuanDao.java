@@ -25,4 +25,6 @@ public interface DianWuDuanDao {
     Long dwdid(long parseLong);
 
     List<DianWuDuanEntity> findDianWuDuanByName(String dwdname);
+
+    List<DianWuDuanEntity> findDianWuDuanBydid(long parseLong);
 }

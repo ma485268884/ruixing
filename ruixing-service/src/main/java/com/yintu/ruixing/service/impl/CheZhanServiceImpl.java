@@ -25,7 +25,9 @@ public class CheZhanServiceImpl implements CheZhanService {
 
     @Override
     public void add(CheZhanEntity cheZhanEntity) {
+        long xid = cheZhanEntity.getXid();
         cheZhanEntity.setCzState(0);
+        cheZhanEntity.setXdCzId(xid);
         cheZhanDao.insertChezhan(cheZhanEntity);
     }
 
