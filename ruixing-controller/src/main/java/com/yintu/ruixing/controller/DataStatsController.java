@@ -208,7 +208,7 @@ public class DataStatsController {
                         String xdid = strings[4];
                         String xdname = strings[5];
                         String xdzgname = strings[6];
-                        List<XianDuanEntity> xianDuanEntityList = dataStatsService.findAllXianDuanByName(xdname);
+                        List<XianDuanEntity> xianDuanEntityList = dataStatsService.findAllXianDuanByDwdid(Long.parseLong(dwdid));
                         System.out.println("线段个数"+xianDuanEntityList.size());
                         if (xianDuanEntityList.size() == 0) {
                             Long dwdid1 = dataStatsService.findDWDid(Long.parseLong(dwdid));

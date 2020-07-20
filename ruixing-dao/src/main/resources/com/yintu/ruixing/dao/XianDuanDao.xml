@@ -15,6 +15,11 @@
         <result property="xdJson" column="xd_json"/>
     </resultMap>
 
+    <!--根据线段中的 电务段专用id  查询对应的线段数据-->
+    <select id="findAllXianDuanByDwdid" resultMap="xianduan">
+        select * from mro_xianduan where dwd_id=#{parseLong}
+    </select>
+
     <!--根据线段名  查询对应的数据-->
     <select id="findAllXianDuanByName" resultMap="xianduan">
         select * from mro_xianduan where xd_name=#{xdname}

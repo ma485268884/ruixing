@@ -42,6 +42,11 @@ public class DataStatsServiceImpl implements DataStatsService {
     private CheZhanDao cheZhanDao;
 
     @Override
+    public List<XianDuanEntity> findAllXianDuanByDwdid(long parseLong) {
+        return xianDuanDao.findAllXianDuanByDwdid(parseLong);
+    }
+
+    @Override
     public Integer findxianduanid(long parseLong) {
         return cheZhanDao.findxianduanid(parseLong);
     }
