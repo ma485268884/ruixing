@@ -24,21 +24,6 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
 
 
     @Override
-    public void add(QuDuanInfoEntity quDuanInfoEntity) {
-        quDuanInfoDao.insertSelective(quDuanInfoEntity);
-    }
-
-    @Override
-    public void remove(Integer id) {
-        quDuanInfoDao.deleteByPrimaryKey(id);
-    }
-
-    @Override
-    public void edit(QuDuanInfoEntity quDuanInfoEntity) {
-        quDuanInfoDao.updateByPrimaryKeySelective(quDuanInfoEntity);
-    }
-
-    @Override
     public QuDuanInfoEntity findById(Integer id) {
         return quDuanInfoDao.selectByPrimaryKey(id);
     }

@@ -11,33 +11,8 @@ import java.util.Map;
  * @date:2020/6/3 11:52
  */
 public interface QuDuanInfoService {
-    /**
-     * 添加区段详情信息
-     *
-     * @param quDuanInfoEntity 区段详情
-     */
-    void add(QuDuanInfoEntity quDuanInfoEntity);
 
-    /**
-     * 删除区段详情信息
-     *
-     * @param id 区段详情id
-     */
-    void remove(Integer id);
 
-    /**
-     * 修改区段详情
-     *
-     * @param quDuanInfoEntity 区段详情
-     */
-    void edit(QuDuanInfoEntity quDuanInfoEntity);
-
-    /**
-     * 按照id查询区段详情
-     *
-     * @param id 区段详情id
-     * @return 区段详情
-     */
     QuDuanInfoEntity findById(Integer id);
 
     /**
@@ -48,11 +23,10 @@ public interface QuDuanInfoService {
     List<QuDuanInfoEntity> findQidAndTime(Integer qid, Date time);
 
     /**
-     *
-     * @param xid 线段id
-     * @param cid  车站id
+     * @param xid       线段id
+     * @param cid       车站id
      * @param startTime 开始时间
-     * @param endTime 结束时间
+     * @param endTime   结束时间
      * @return
      */
     List<Integer> findByXidAndCidAndBetweenAndTime(Integer xid, Integer cid, Date startTime, Date endTime);

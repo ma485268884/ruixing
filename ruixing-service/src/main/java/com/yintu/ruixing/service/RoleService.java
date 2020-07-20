@@ -5,6 +5,7 @@ import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.PermissionEntity;
 import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.entity.RoleEntityExample;
+import com.yintu.ruixing.entity.UserEntity;
 
 import java.util.List;
 
@@ -26,6 +27,23 @@ public interface RoleService extends BaseService<RoleEntity, Long> {
      * @return 角色信息集
      */
     List<RoleEntity> findByExample(RoleEntityExample roleEntityExample);
+
+    /**
+     * 添加角色并且分配权限
+     *
+     * @param roleEntity    用户信息
+     * @param permissionIds 权限id集
+     */
+    void addRoleAndPermissions(RoleEntity roleEntity, Long[] permissionIds);
+
+    /**
+     * 修改角色并且重新分配权限
+     *
+     * @param roleEntity    用户信息
+     * @param permissionIds 角色id集
+     */
+
+    void editRoleAndPermissions(RoleEntity roleEntity, Long[] permissionIds);
 
     /**
      * 按照id集查询角色集
