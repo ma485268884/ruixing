@@ -73,10 +73,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity findById(Long id) {
-        UserEntity userEntity = userDao.selectByPrimaryKey(id);
-        List<RoleEntity> roleEntities = roleService.findByUserId(id);
-        userEntity.setRoleEntities(roleEntities);
-        return userEntity;
+        return userDao.selectByPrimaryKey(id);
     }
 
     @Override
@@ -90,6 +87,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserEntity> findByExample(UserEntityExample userEntityExample) {
         return userDao.selectByExample(userEntityExample);
+    }
+
+    @Override
+    public void addUserAndRoles(UserEntity userEntity, Long[] roleIds) {
+        this.add(userEntity);
+        this.addRolesByIdAndRoleIds(userEntity.getId(), roleIds);
+    }
+
+    @Override
+    public void editUserAndRoles(UserEntity userEntity, Long[] roleIds) {
+        this.edit(userEntity);
+        this.addRolesByIdAndRoleIds(userEntity.getId(), roleIds);
+
     }
 
     @Override
@@ -138,7 +148,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
     @Override
     public List<RoleEntity> findRolesById(Long id) {
         return roleService.findByUserId(id);
@@ -169,12 +178,14 @@ public class UserServiceImpl implements UserService {
 
             //添加当前用户新分配分配的角色
             for (Long roleId : set) {
-                RoleEntity roleEntity = roleService.findById(roleId);
-                if (roleEntity != null) {
-                    UserRoleEntity userRoleEntity = new UserRoleEntity();
-                    userRoleEntity.setUserId(id);
-                    userRoleEntity.setRoleId(roleId);
-                    userRoleService.add(userRoleEntity);
+                if (roleId != null) {
+                    RoleEntity roleEntity = roleService.findById(roleId);
+                    if (roleEntity != null) {
+                        UserRoleEntity userRoleEntity = new UserRoleEntity();
+                        userRoleEntity.setUserId(id);
+                        userRoleEntity.setRoleId(roleId);
+                        userRoleService.add(userRoleEntity);
+                    }
                 }
             }
         }
@@ -206,15 +217,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<TreeNodeUtil> findPermission(Long parentId, Short isMemu) {
-        List<PermissionEntity> permissionEntities = userDao.selectPermission(parentId, isMemu);
+    public List<TreeNodeUtil> findPermission(Long parentId, Short isMenu) {
+        List<PermissionEntity> permissionEntities = userDao.selectPermission(parentId, isMenu);
         List<TreeNodeUtil> treeNodeUtils = new ArrayList<>();
         for (PermissionEntity permissionEntity : permissionEntities) {
             TreeNodeUtil treeNodeUtil = new TreeNodeUtil();
             treeNodeUtil.setId(permissionEntity.getId());
             treeNodeUtil.setLabel(permissionEntity.getName());
             treeNodeUtil.setIcon(permissionEntity.getIconCls());
-            treeNodeUtil.setChildren(this.findPermission(permissionEntity.getId(), isMemu));
+            treeNodeUtil.setChildren(this.findPermission(permissionEntity.getId(), isMenu));
             Map<String, Object> map = new HashMap<>();
             map.put("parentId", permissionEntity.getParentId());
             map.put("url", permissionEntity.getUrl());

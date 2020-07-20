@@ -21,8 +21,8 @@ import java.util.Map;
  * @date:2020/5/19 17:20
  */
 @RestController
-@RequestMapping(value = "/users")
-public class  UserController extends SessionController {
+@RequestMapping("/users")
+public class UserController extends SessionController {
 
     @Autowired
     private UserService userService;
@@ -31,14 +31,14 @@ public class  UserController extends SessionController {
 
 
     @PostMapping
-    public Map<String, Object> add(UserEntity userEntity) {
+    public Map<String, Object> add(UserEntity userEntity, @RequestParam Long[] roleIds) {
         Assert.notNull(userEntity.getUsername(), "用户名不能为空");
         Assert.notNull(userEntity.getPassword(), "密码不能为空");
         Assert.notNull(userEntity.getAuthType(), "类型不能为空");
         Assert.notNull(userEntity.getEnableds(), "状态不能为空");
         Assert.notNull(userEntity.getDepartmentId(), "部门id不能为空");
         userEntity.setIsCustomer((short) 0);
-        userService.add(userEntity);
+        userService.addUserAndRoles(userEntity, roleIds);
         return ResponseDataUtil.ok("添加用户成功");
     }
 
@@ -49,14 +49,14 @@ public class  UserController extends SessionController {
     }
 
     @PutMapping("/{id}")
-    public Map<String, Object> edit(@PathVariable Long id, UserEntity userEntity) {
+    public Map<String, Object> edit(@PathVariable Long id, UserEntity userEntity, @RequestParam Long[] roleIds) {
         Assert.notNull(userEntity.getUsername(), "用户名不能为空");
         Assert.notNull(userEntity.getPassword(), "密码不能为空");
         Assert.notNull(userEntity.getAuthType(), "类型不能为空");
         Assert.notNull(userEntity.getEnableds(), "状态不能为空");
         Assert.notNull(userEntity.getDepartmentId(), "部门id不能为空");
         userEntity.setIsCustomer((short) 0);
-        userService.edit(userEntity);
+        userService.editUserAndRoles(userEntity, roleIds);
         return ResponseDataUtil.ok("修改用户成功");
     }
 
@@ -69,15 +69,11 @@ public class  UserController extends SessionController {
     @GetMapping
     public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber,
                                        @RequestParam("page_size") Integer pageSize,
-                                       @RequestParam(value = "sortby", required = false) String sortby,
-                                       @RequestParam(value = "search_text", required = false) String username,
-                                       @RequestParam(value = "order", required = false) String order) {
+                                       @RequestParam(value = "order_by", required = false, defaultValue = "id DESC") String orderBy,
+                                       @RequestParam(value = "search_text", required = false) String username) {
         JSONObject jo = new JSONObject();
         List<String> requestMethods = permissionService.findRequestMethodsByUserIdAndUrl(this.getLoginUserId(), "/users");
         jo.put("requestMethods", requestMethods);
-        String orderBy = "id DESC";
-        if (sortby != null && !"".equals(sortby) && order != null && !"".equals(order))
-            orderBy = sortby + " " + order;
         PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<UserEntity> userEntities = userService.findAllOrByUsername(username, (short) 0);
         PageInfo<UserEntity> pageInfo = new PageInfo<>(userEntities);
@@ -89,12 +85,6 @@ public class  UserController extends SessionController {
     public Map<String, Object> findRolesById(@PathVariable Long id) {
         List<RoleEntity> roleEntities = userService.findRolesById(id);
         return ResponseDataUtil.ok("查询用户角色成功", roleEntities);
-    }
-
-    @PostMapping("/{id}/roles")
-    public Map<String, Object> addRolesByIdAndRoleIds(@PathVariable Long id, @RequestParam Long[] roleIds) {
-        userService.addRolesByIdAndRoleIds(id, roleIds);
-        return ResponseDataUtil.ok("分配用户角色成功");
     }
 
 }

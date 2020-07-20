@@ -77,6 +77,18 @@ public class RoleServiceImpl implements RoleService {
         return roleDao.selectByExample(roleEntityExample);
     }
 
+    @Override
+    public void addRoleAndPermissions(RoleEntity roleEntity, Long[] permissionIds) {
+        this.add(roleEntity);
+        this.addPermissionsByIdAndPermissionIds(roleEntity.getId(), permissionIds);
+    }
+
+    @Override
+    public void editRoleAndPermissions(RoleEntity roleEntity, Long[] permissionIds) {
+        this.edit(roleEntity);
+        this.addPermissionsByIdAndPermissionIds(roleEntity.getId(), permissionIds);
+    }
+
 
     @Override
     public List<RoleEntity> findAllOrByName(String name) {
@@ -209,12 +221,14 @@ public class RoleServiceImpl implements RoleService {
 
             //添加当前角色新分配的权限
             for (Long permissionId : set) {
-                PermissionEntity permissionEntity = permissionService.findById(permissionId);
-                if (permissionEntity != null) {
-                    PermissionRoleEntity permissionRoleEntity = new PermissionRoleEntity();
-                    permissionRoleEntity.setRoleId(id);
-                    permissionRoleEntity.setPermissionId(permissionId);
-                    permissionRoleService.add(permissionRoleEntity);
+                if (permissionId != null) {
+                    PermissionEntity permissionEntity = permissionService.findById(permissionId);
+                    if (permissionEntity != null) {
+                        PermissionRoleEntity permissionRoleEntity = new PermissionRoleEntity();
+                        permissionRoleEntity.setRoleId(id);
+                        permissionRoleEntity.setPermissionId(permissionId);
+                        permissionRoleService.add(permissionRoleEntity);
+                    }
                 }
             }
         }

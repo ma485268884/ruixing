@@ -18,6 +18,7 @@ public interface UserService extends UserDetailsService, BaseService<UserEntity,
      */
     List<UserEntity> findAll(Short isCustomer);
 
+
     /**
      * 通过条件查询用户
      *
@@ -25,6 +26,24 @@ public interface UserService extends UserDetailsService, BaseService<UserEntity,
      * @return 用户信息集
      */
     List<UserEntity> findByExample(UserEntityExample userEntityExample);
+
+
+    /**
+     * 添加用户并且分配角色
+     *
+     * @param userEntity 用户信息
+     * @param roleIds    角色id集
+     */
+    void addUserAndRoles(UserEntity userEntity, Long[] roleIds);
+
+    /**
+     * 修改用户并且重新分配角色
+     *
+     * @param userEntity 用户信息
+     * @param roleIds    角色id集
+     */
+
+    void editUserAndRoles(UserEntity userEntity, Long[] roleIds);
 
     /**
      * 通过真实姓名查询用户
@@ -40,7 +59,7 @@ public interface UserService extends UserDetailsService, BaseService<UserEntity,
      * @param username 用户名
      * @return 用户列表信息
      */
-    List<UserEntity> findAllOrByUsername(String username, Short isCustermer);
+    List<UserEntity> findAllOrByUsername(String username, Short isCustomer);
 
     /**
      * 通过用户id查询角色
@@ -60,9 +79,6 @@ public interface UserService extends UserDetailsService, BaseService<UserEntity,
     void addRolesByIdAndRoleIds(Long Id, Long[] roleIds);
 
 
-//    void addRolesAndUser(UserEntity userEntity, Long[] roleIds);
-
-
     /**
      * 通过用户id查询权限(用户菜单栏)
      *
@@ -77,7 +93,7 @@ public interface UserService extends UserDetailsService, BaseService<UserEntity,
      *
      * @return 权限树信息集
      */
-    List<TreeNodeUtil> findPermission(Long parentId, Short isMemu);
+    List<TreeNodeUtil> findPermission(Long parentId, Short isMenu);
 
 
 }

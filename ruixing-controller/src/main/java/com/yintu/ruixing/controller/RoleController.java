@@ -29,9 +29,9 @@ public class RoleController extends SessionController {
     private PermissionService permissionService;
 
     @PostMapping
-    public Map<String, Object> add(RoleEntity roleEntity) {
+    public Map<String, Object> add(RoleEntity roleEntity, @RequestParam Long[] permissionIds) {
         Assert.notNull(roleEntity.getName(), "角色名不能为空");
-        roleService.add(roleEntity);
+        roleService.addRoleAndPermissions(roleEntity, permissionIds);
         return ResponseDataUtil.ok("添加角色成功");
     }
 
@@ -42,9 +42,9 @@ public class RoleController extends SessionController {
     }
 
     @PutMapping("/{id}")
-    public Map<String, Object> edit(@PathVariable Long id, RoleEntity roleEntity) {
+    public Map<String, Object> edit(@PathVariable Long id, RoleEntity roleEntity, @RequestParam Long[] permissionIds) {
         Assert.notNull(roleEntity.getName(), "角色名不能为空");
-        roleService.edit(roleEntity);
+        roleService.editRoleAndPermissions(roleEntity, permissionIds);
         return ResponseDataUtil.ok("修改角色成功");
     }
 
@@ -57,15 +57,11 @@ public class RoleController extends SessionController {
     @GetMapping
     public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber,
                                        @RequestParam("page_size") Integer pageSize,
-                                       @RequestParam(value = "search_text", required = false) String name,
-                                       @RequestParam(value = "sortby", required = false) String sortby,
-                                       @RequestParam(value = "order", required = false) String order) {
+                                       @RequestParam(value = "order_by", required = false, defaultValue = "id DESC") String orderBy,
+                                       @RequestParam(value = "search_text", required = false) String name) {
         JSONObject jo = new JSONObject();
         List<String> requestMethods = permissionService.findRequestMethodsByUserIdAndUrl(this.getLoginUserId(), "/users");
         jo.put("requestMethods", requestMethods);
-        String orderBy = "id DESC";
-        if (sortby != null && !"".equals(sortby) && order != null && !"".equals(order))
-            orderBy = sortby + " " + order;
         PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<RoleEntity> roleEntities = roleService.findAllOrByName(name);
         PageInfo<RoleEntity> pageInfo = new PageInfo<>(roleEntities);
@@ -73,12 +69,6 @@ public class RoleController extends SessionController {
         return ResponseDataUtil.ok("查询角色列表成功", jo);
     }
 
-//    @GetMapping("/{id}/permissions")
-//    public Map<String, Object> findRolesById(@PathVariable Long id) {
-//        List<TreeNodeUtil> treeNodeUtils = roleService.findPermissionsTreeById(id, -1L);
-//        return ResponseDataUtil.ok("查询角色权限成功", treeNodeUtils);
-//
-//    }
 
     @GetMapping("/{id}/permissions")
     public Map<String, Object> findRolesById(@PathVariable Long id) {
@@ -86,11 +76,4 @@ public class RoleController extends SessionController {
         roleService.findPermissionsById(id, -1L, treeNodeUtils);
         return ResponseDataUtil.ok("查询角色权限成功", treeNodeUtils);
     }
-
-    @PostMapping("/{id}/permissions")
-    public Map<String, Object> addRolesByIdAndRoleIds(@PathVariable Long id, @RequestParam Long[] permissionIds) {
-        roleService.addPermissionsByIdAndPermissionIds(id, permissionIds);
-        return ResponseDataUtil.ok("分配角色权限成功");
-    }
-
 }

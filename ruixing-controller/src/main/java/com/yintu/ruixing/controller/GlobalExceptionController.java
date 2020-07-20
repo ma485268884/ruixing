@@ -57,5 +57,11 @@ public class GlobalExceptionController {
         return ResponseDataUtil.error(e.getMessage());
     }
 
+    @ExceptionHandler(Exception.class)
+    public Map<String, Object> exception(Exception e) {
+        logger.error(e.getMessage());
+        return ResponseDataUtil.error(e.getMessage());
+    }
+
 
 }
