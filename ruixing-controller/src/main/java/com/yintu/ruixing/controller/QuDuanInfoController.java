@@ -27,12 +27,6 @@ public class QuDuanInfoController extends SessionController {
     private QuDuanBaseService quDuanBaseService;
 
 
-    @GetMapping("/info")
-    public Map<String, Object> findByCid(@RequestParam("cid") Integer cid) {
-        return ResponseDataUtil.ok("查询区段基础信息列表", null);
-    }
-
-
     /**
      * 查询区段基础信息列表
      *
@@ -47,6 +41,11 @@ public class QuDuanInfoController extends SessionController {
         return ResponseDataUtil.ok("查询区段基础信息列表", quDuanBaseEntities);
     }
 
+
+    @GetMapping("/info")
+    public Map<String, Object> findByCid(@RequestParam("cid") Integer cid) {
+        return ResponseDataUtil.ok("查询区段基础信息列表", null);
+    }
 
     /**
      * 数据分析
