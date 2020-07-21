@@ -3,9 +3,8 @@ package com.yintu.ruixing.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.dao.QuDuanDownloadDao;
-import com.yintu.ruixing.entity.QuDuanBaseEntity;
-import com.yintu.ruixing.entity.QuDuanDownloadEntity;
-import com.yintu.ruixing.entity.QuDuanInfoEntity;
+import com.yintu.ruixing.entity.*;
+import com.yintu.ruixing.service.CheZhanService;
 import com.yintu.ruixing.service.QuDuanBaseService;
 import com.yintu.ruixing.service.QuDuanDownloadService;
 import com.yintu.ruixing.service.QuDuanInfoService;
@@ -14,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -32,7 +28,7 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
     @Autowired
     private QuDuanDownloadDao quDuanDownloadDao;
     @Autowired
-    private QuDuanBaseService quDuanBaseService;
+    private CheZhanService cheZhanService;
     @Autowired
     private QuDuanInfoService quDuanInfoService;
 
@@ -68,26 +64,11 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
         return quDuanDownloadDao.selectByDateTime(startDateTime, endDateTime);
     }
 
-    @Override
-    public List<QuDuanBaseEntity> findDataById(Integer id) {
-        QuDuanDownloadEntity quDuanDownloadEntity = this.findById(id);
-        List<QuDuanBaseEntity> quDuanBaseEntities = new ArrayList<>();
-        if (quDuanDownloadEntity != null) {
-            String data = quDuanDownloadEntity.getData();
-            List<Integer> quDuanIds = JSONArray.parseArray(data, Integer.class);
-            for (Integer quDuanId : quDuanIds) {
-                QuDuanBaseEntity quDuanBaseEntity = quDuanBaseService.findById(quDuanId);
-                quDuanBaseEntities.add(quDuanBaseEntity);
-            }
-
-        }
-        return quDuanBaseEntities;
-    }
 
     @Override
-    public Integer add(Integer cid, Short type, Date startDateTime, Date endDateTime) {
+    public Integer add(Integer czId, Short type, Date startDateTime, Date endDateTime) {
         QuDuanDownloadEntity quDuanDownloadEntity = new QuDuanDownloadEntity();
-        quDuanDownloadEntity.setCid(cid);
+        quDuanDownloadEntity.setCid(czId);
         quDuanDownloadEntity.setStartTime(startDateTime);
         quDuanDownloadEntity.setEndTime(endDateTime);
         quDuanDownloadEntity.setStatus((short) 0);
@@ -96,14 +77,22 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
         return quDuanDownloadEntity.getId();
     }
 
-
     @Override
-    public void callbackEdit(Integer id) {
-        executorService.submit(new QuDuanInfoRunnable(this, id));
+    public Map<String, Object> findPlayBackDataById(Integer id) {
+        QuDuanDownloadEntity quDuanDownloadEntity = this.findById(id);
+        Integer czId = quDuanDownloadEntity.getCid();
+        CheZhanEntity cheZhanEntity = cheZhanService.findByCzId(czId);
+        String quDuanBaseJsonData = cheZhanEntity.getCzJson();
+        List<QuDuanInfoEntityV2> quDuanInfoEntityV2s = quDuanInfoService.findByCzIdAndTime(czId, quDuanDownloadEntity.getStartTime(), quDuanDownloadEntity.getEndTime());
+        Map<String, Object> map = new HashMap<>();
+        map.put("quDuanBaseJsonData", quDuanBaseJsonData);
+        map.put("quDuanInfoEntityV2s", quDuanInfoEntityV2s);
+        return map;
     }
 
+
     //异步更新数据
-    public class QuDuanInfoRunnable implements Runnable {
+    public static class QuDuanInfoRunnable implements Runnable {
 
         private final QuDuanDownloadService quDuanDownloadService;
         private final Integer id;
@@ -117,16 +106,12 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
         public void run() {
             QuDuanDownloadEntity quDuanDownloadEntity = quDuanDownloadService.findById(id);
             if (quDuanDownloadEntity != null) {
-                Integer tid = quDuanDownloadEntity.getTid();
-                Integer did = quDuanDownloadEntity.getDid();
-                Integer xid = quDuanDownloadEntity.getXid();
                 Integer cid = quDuanDownloadEntity.getCid();
                 Date startDateTime = quDuanDownloadEntity.getStartTime();
                 Date endDateTime = quDuanDownloadEntity.getEndTime();
                 List<Integer> quDuanInfoIds = null;
                 JSONArray ja = (JSONArray) JSONArray.toJSON(quDuanInfoIds);
                 quDuanDownloadEntity.setStatus((short) 1);
-                quDuanDownloadEntity.setData(ja.toJSONString());
                 quDuanDownloadService.edit(quDuanDownloadEntity);
             }
         }

@@ -15,10 +15,12 @@ public interface QuDuanInfoDaoV2 {
     QuDuanInfoEntityV2 selectLastByCzId(Integer czId);
 
 
+    List<QuDuanInfoEntityV2> selectByCzIdAndTime(Integer czId, Date startTime, Date endTime);
+
 
     QuDuanInfoEntityV2 selectLastByQid(Integer qid);
 
-    List<QuDuanInfoEntityV2> selectByCzIdAndQid( Integer czId, Date time);
+    List<QuDuanInfoEntityV2> selectByCzIdAndQid(Integer czId, Date time);
 
     List<Map<String, Object>> selectStatisticsByCzIdAndTime(Integer czId, Date time);
 

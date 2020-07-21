@@ -299,7 +299,22 @@
         </where>
         order by qi.createtime DESC limit 1
     </select>
-
+    <!--查询车站以及时间区间查询详情-->
+    <select id="selectByCzIdAndTime" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from data_applydata qi right outer join mro_quduan_base qb on
+        qi.v1 = qb.qdid and qi.station_id = qb.cz_id
+        <where>
+            <if test="czId!=null">
+                qb.cz_id=#{czId,jdbcType=INTEGER}
+            </if>
+            <if test="startTime!=null and endTime!=null">
+                FROM_UNIXTIME(qi.createtime) between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+        order by qb.id ASC
+    </select>
     <!--按照区段id查询一条详情(数据分析)-->
     <select id="selectLastByQid" resultMap="BaseResultMap">
         select
@@ -366,9 +381,7 @@
         <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quDuanYunYingName"/>
     </resultMap>
     <sql id="Statistics__Column_List">
-        MAX
-            (qi.v3)
-            AS max_V_out_zhu,
+        MAX(qi.v3) AS max_V_out_zhu,
         MIN(qi.v3) AS min_V_out_zhu,
         MAX(qi.v4) AS max_mA_out_zhu,
         MIN(qi.v4) AS min_mA_out_zhu,

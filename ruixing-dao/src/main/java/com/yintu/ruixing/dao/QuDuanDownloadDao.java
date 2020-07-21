@@ -20,7 +20,5 @@ public interface QuDuanDownloadDao {
 
     int updateByPrimaryKeySelective(QuDuanDownloadEntity record);
 
-    int updateByPrimaryKeyWithBLOBs(QuDuanDownloadEntity record);
-
     int updateByPrimaryKey(QuDuanDownloadEntity record);
 }

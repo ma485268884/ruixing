@@ -53,4 +53,12 @@ public interface CheZhanService {
      * @return
      */
     List<CheZhanEntity> findByCzName(String czName);
+
+    /**
+     * 按照车站专用id名查询
+     *
+     * @param czId 车站专用id
+     * @return
+     */
+    CheZhanEntity findByCzId(Integer czId);
 }

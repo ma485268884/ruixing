@@ -743,7 +743,7 @@
         <include refid="Blob_Column_List" />
         from mro_chezhan
     </select>
-    <!--查询全部车站-->
+    <!--按照车站名查询车站-->
     <select id="selectByCzName" parameterType="java.lang.String" resultMap="chezhan">
         select
         <include refid="Base_Column_List" />
@@ -751,5 +751,13 @@
         <include refid="Blob_Column_List" />
         from mro_chezhan
         where cz_name like concat('%', #{czName,jdbcType=VARCHAR}, '%')
+    </select>
+    <select id="selectByCzId" parameterType="java.lang.Integer" resultMap="chezhan">
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from mro_chezhan
+        where cz_id=#{czId,jdbcType=INTEGER}
     </select>
 </mapper>
