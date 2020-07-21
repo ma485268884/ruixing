@@ -275,63 +275,56 @@
     </select>
 
 
-    <!--自定义查询-->
+    <!--按照id查询-->
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from data_applydata qi inner join mro_quduan_base qb on
-        qi.v1 = qb.qdid and qi.station_id = qb.cid
+        from data_applydata qi right outer join mro_quduan_base qb on
+        qi.v1 = qb.qdid and qi.station_id = qb.cz_id
         where qi.id = #{id,jdbcType=INTEGER}
     </select>
 
     <!--按照车站查询一条详情-->
-    <select id="selectLastByCid" resultMap="BaseResultMap">
+    <select id="selectLastByCzId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from data_applydata qi inner join mro_quduan_base qb on
-        qi.v1 = qb.qdid and qi.station_id = qb.cid
+        from data_applydata qi right outer join mro_quduan_base qb on
+        qi.v1 = qb.qdid and qi.station_id = qb.cz_id
         <where>
-            <if test="cid!=null">
-                and qi.station_id=#{cid,jdbcType=INTEGER}
+            <if test="czId!=null">
+                and qi.station_id=#{czId,jdbcType=INTEGER}
             </if>
         </where>
-        order by qi.id desc limit 1
+        order by qi.id DESC limit 1
     </select>
 
-    <!--按照车站和区段id，时间查询一条区段详情-->
-    <select id="selectByCidAndQdIdAndTime" resultMap="BaseResultMap">
+    <!--按照区段id查询一条详情-->
+    <select id="selectLastByQid" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from data_applydata qi inner join mro_quduan_base qb on
-        qi.v1 = qb.qdid and qi.station_id = qb.cid
+        from data_applydata qi right outer join mro_quduan_base qb on
+        qi.v1 = qb.qdid and qi.station_id = qb.cz_id
         <where>
-            <if test="cid!=null">
-                and qi.station_id=#{cid,jdbcType=INTEGER}
+            <if test="qid!=null">
+                qi.id=#{qid,jdbcType=INTEGER}
             </if>
-            <if test="qdId!=null">
-                and qi.v1=#{qdId,jdbcType=INTEGER}
-            </if>
-            <if test="time!=null">
-                and qi.createtime=UNIX_TIMESTAMP(#{time,jdbcType=TIMESTAMP})
+        </where>
+        order by qi.id DESC limit 1
+    </select>
+
+    <!--按照车站和区段id查询-->
+    <select id="selectByQid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from data_applydata qi right outer join mro_quduan_base qb on
+        qi.v1 = qb.qdid and qi.station_id =qb.cz_id
+        <where>
+            <if test="qid!=null">
+                qi.id=#{qid,jdbcType=INTEGER}
             </if>
         </where>
     </select>
 
-    <!--数据下载-->
-    <select id="selectByXidAndCidAndBetweenAndTime" resultType="Integer">
-        select
-        qi.id
-        from data_applydata qi inner join mro_quduan_base qb on
-        qi.v1 = qb.qdid and qi.station_id = qb.cid
-        <where>
-            <if test="cid!=null">
-                and qb.cid=#{cid,jdbcType=INTEGER}
-            </if>
-            <if test="startTime!=null and endTime!=null">
-                and qi.createtime between UNIX_TIMESTAMP(#{startTime,jdbcType=TIMESTAMP}) and UNIX_TIMESTAMP(#{endTime,jdbcType=TIMESTAMP})
-            </if>
-        </where>
-    </select>
 
     <!--实时报表-->
     <sql id="all_Column_List">
@@ -431,59 +424,24 @@
         <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
     </resultMap>
 
-    <select id="selectByXidAndCidAndTime" resultMap="AllResultMap">
+    <select id="selectByCzIdAndQid" resultMap="AllResultMap">
         select
         <include refid="all_Column_List"/>
-        from mro_quduan_info qi inner join mro_quduan_base qb on qi.qid = qb.id
+        FROM data_applydata qi right outer join mro_quduan_base qb on
+        qi.v1 = qb.qdid and qi.station_id = qb.cid
         <where>
-            <if test="xid!=null">
-                and qb.xid=#{xid,jdbcType=INTEGER}
-            </if>
-            <if test="cid!=null">
-                and qb.cid=#{cid,jdbcType=INTEGER}
+            <if test="czId!=null">
+                and qb.cz_id=#{czId,jdbcType=INTEGER}
             </if>
             <if test="time!=null">
-                and DATE(qi.time) = DATE(#{time,jdbcType=TIMESTAMP})
+                and DATE(FROM_UNIXTIME(qi.createtime)) = DATE(#{time,jdbcType=TIMESTAMP})
             </if>
         </where>
     </select>
 
-    <!--日报表-->
-    <sql id="Statistics__Column_List">
-        MIN
-            (qi.V_out_zhu)
-            AS min_V_out_zhu,
-        MAX(qi.mA_out_zhu) AS max_mA_out_zhu,
-        MIN(qi.mA_out_zhu) AS min_mA_out_zhu,
-        MAX(qi.V_out_bei) AS max_V_out_bei,
-        MIN(qi.V_out_bei) AS min_V_out_bei,
-        MAX(qi.mA_out_bei) AS max_mA_out_bei,
-        MIN(qi.mA_out_bei) AS min_mA_out_bei,
-
-       MAX( qi.V_songduan_Cable ) AS max_V_songduan_Cable,
-	   MIN( qi.V_songduan_Cable ) AS min_V_songduan_Cable,
-	   MAX( qi.mA_songduan_Cable ) AS max_mA_songduan_Cable,
-	   MIN( qi.mA_songduan_Cable ) AS min_mA_songduan_Cable,
-
-       MAX( qi.V_shouduan_Cable_host ) AS max_V_shouduan_Cable_host,
-	   MIN( qi.V_shouduan_Cable_host ) AS min_shouduan_Cable_host,
-	   MAX( qi.V_shouduan_Cable_spare ) AS max_V_shouduan_Cable_spare,
-	   MIN( qi.V_shouduan_Cable_spare ) AS min_V_shouduan_Cable_spare,
-	   MAX( qi.mA_shouduan_Cable ) AS max_mA_shouduan_Cable,
-	   MIN( qi.mA_shouduan_Cable ) AS min_mA_shouduan_Cable,
-
-       MAX( qi.V_in_all ) AS max_V_in_all,
-	   MIN( qi.V_in_all ) AS min_V_in_all,
-	   MAX( qi.mV_in_zhu ) AS max_mV_in_zhu,
-	   MIN( qi.mV_in_zhu ) AS min_mV_in_zhu,
-	   MAX( qi.mV_in_diao_zhu ) AS max_mV_in_diao_zhu,
-	   MIN( qi.mV_in_diao_zhu ) AS min_mV_in_diao_zhu,
-
-       qb.quDuanYunYing_name
-    </sql>
 
     <resultMap id="StatisticsResultMap" type="Map">
-        <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quDuanYunYingName"/>
+
         <result column="max_V_out_zhu" jdbcType="INTEGER" property="maxVOutZhu"/>
         <result column="min_V_out_zhu" jdbcType="INTEGER" property="minVOutZhu"/>
         <result column="max_mA_out_zhu" jdbcType="INTEGER" property="maxMAOutZhu"/>
@@ -512,26 +470,57 @@
         <result column="min_mV_in_zhu" jdbcType="INTEGER" property="minMVInZhu"/>
         <result column="max_mV_in_diao_zhu" jdbcType="INTEGER" property="maxMVInDiaoZhu"/>
         <result column="min_mV_in_diao_zhu" jdbcType="INTEGER" property="minMVInDiaoZhu"/>
-    </resultMap>
 
-    <select id="selectStatisticsByDate" parameterType="Date" resultMap="StatisticsResultMap">
+        <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quDuanYunYingName"/>
+    </resultMap>
+    <sql id="Statistics__Column_List">
+        MAX
+            (qi.v3)
+            AS max_V_out_zhu,
+        MIN(qi.v3) AS min_V_out_zhu,
+        MAX(qi.v4) AS max_mA_out_zhu,
+        MIN(qi.v4) AS min_mA_out_zhu,
+        MAX(qi.v9) AS max_V_out_bei,
+        MIN(qi.v9) AS min_V_out_bei,
+        MAX(qi.v10) AS max_mA_out_bei,
+        MIN(qi.v10) AS min_mA_out_bei,
+
+       MAX( qi.v15 ) AS max_V_songduan_Cable,
+	   MIN( qi.v15 ) AS min_V_songduan_Cable,
+	   MAX( qi.v16 ) AS max_mA_songduan_Cable,
+	   MIN( qi.v16 ) AS min_mA_songduan_Cable,
+
+       MAX( qi.v17 ) AS max_V_shouduan_Cable_host,
+	   MIN( qi.v17 ) AS min_shouduan_Cable_host,
+	   MAX( qi.v18 ) AS max_V_shouduan_Cable_spare,
+	   MIN( qi.v18 ) AS min_V_shouduan_Cable_spare,
+	   MAX( qi.v19 ) AS max_mA_shouduan_Cable,
+	   MIN( qi.v19 ) AS min_mA_shouduan_Cable,
+
+       MAX( qi.v20 ) AS max_V_in_all,
+	   MIN( qi.v20 ) AS min_V_in_all,
+
+	   MAX( qi.v21 ) AS max_mV_in_zhu,
+	   MIN( qi.v21 ) AS min_mV_in_zhu,
+	   MAX( qi.v22 ) AS max_mV_in_diao_zhu,
+	   MIN( qi.v22 ) AS min_mV_in_diao_zhu,
+       qb.quDuanYunYing_name
+    </sql>
+    <!--日报表-->
+    <select id="selectStatisticsByCzIdAndTime" resultMap="StatisticsResultMap">
         SELECT
         <include refid="Statistics__Column_List"/>
-        FROM
-        mro_quduan_info qi
-        INNER JOIN mro_quduan_base qb ON qi.qid = qb.id
+        FROM data_applydata qi right outer join mro_quduan_base qb on
+        qi.v1 = qb.qdid and qi.station_id = qb.cid
         <where>
-            <if test="xid!=null">
-                and qb.xid=#{xid,jdbcType=INTEGER}
+            <if test="cid != null">
+                and qb.cz_id=#{czId,jdbcType=INTEGER}
             </if>
-            <if test="cid!=null">
-                and qb.cid=#{cid,jdbcType=INTEGER}
-            </if>
-            <if test="time!=null">
-                and DATE(qi.time) = DATE(#{time,jdbcType=TIMESTAMP})
+            <if test="time !=null ">
+                DATE(FROM_UNIXTIME(qi.createtime))=DATE(#{time,jdbcType=TIMESTAMP})
             </if>
         </where>
         GROUP BY
-        qi.qid
+        qi.v1,qi.station_id
     </select>
 </mapper>

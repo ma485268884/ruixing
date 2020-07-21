@@ -3,7 +3,6 @@ package com.yintu.ruixing.dao;
 import com.yintu.ruixing.entity.QuDuanInfoEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntityV2;
 import org.apache.ibatis.annotations.Param;
-import org.omg.CORBA.INTERNAL;
 
 import java.util.Date;
 import java.util.List;
@@ -13,16 +12,18 @@ public interface QuDuanInfoDaoV2 {
 
     QuDuanInfoEntityV2 selectByPrimaryKey(Integer id);
 
-    QuDuanInfoEntity selectLastByCid(Integer cid);
-
-    List<QuDuanInfoEntity> selectByCidAndQdIdAndTime(Integer cid, Integer qdId, Date time);
-
-    List<Integer> selectByXidAndCidAndBetweenAndTime(Integer xid, Integer cid, Date startTime, Date endTime);
+    QuDuanInfoEntityV2 selectLastByCzId(Integer czId);
 
 
-    List<QuDuanInfoEntity> selectByXidAndCidAndTime(Integer xid, Integer cid, Date time);
 
-    List<Map<String, Object>> selectStatisticsByDate(Integer xid, Integer cid, Date time);
+    QuDuanInfoEntityV2 selectLastByQid(Integer qid);
+
+    List<QuDuanInfoEntityV2> selectByQid(Integer qid);
+
+
+    List<QuDuanInfoEntityV2> selectByCzIdAndQid( Integer czId, Date time);
+
+    List<Map<String, Object>> selectStatisticsByCzIdAndTime(Integer czId, Date time);
 
     //根据区段id  查询相关的数据
 

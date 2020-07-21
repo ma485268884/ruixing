@@ -1,11 +1,10 @@
 package com.yintu.ruixing.service.impl;
 
-import com.yintu.ruixing.dao.QuDuanInfoDao;
-import com.yintu.ruixing.entity.QuDuanInfoEntity;
+import com.yintu.ruixing.dao.QuDuanInfoDaoV2;
+import com.yintu.ruixing.entity.QuDuanInfoEntityV2;
 import com.yintu.ruixing.service.QuDuanInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -16,38 +15,43 @@ import java.util.Map;
  * @date:2020/6/3 11:53
  */
 @Service
-@Transactional
 public class QuDuanInfoServiceimpl implements QuDuanInfoService {
 
     @Autowired
-    private QuDuanInfoDao quDuanInfoDao;
+    private QuDuanInfoDaoV2 quDuanInfoDaoV2;
 
 
     @Override
-    public QuDuanInfoEntity findById(Integer id) {
-        return quDuanInfoDao.selectByPrimaryKey(id);
-    }
-
-    @Override
-    public List<QuDuanInfoEntity> findQidAndTime(Integer qid, Date time) {
-        return quDuanInfoDao.selectByQidAndTime(qid, time);
-    }
-
-    @Override
-    public List<Integer> findByXidAndCidAndBetweenAndTime(Integer xid, Integer cid, Date startTime, Date endTime) {
-        return quDuanInfoDao.selectByXidAndCidAndBetweenAndTime(xid, cid, startTime, endTime);
+    public QuDuanInfoEntityV2 findById(Integer id) {
+        return quDuanInfoDaoV2.selectByPrimaryKey(id);
     }
 
 
     @Override
-    public List<QuDuanInfoEntity> findByXidAndCidAndTime(Integer xid, Integer cid, Date time) {
-        return quDuanInfoDao.selectByXidAndCidAndTime(xid, cid, time);
+    public QuDuanInfoEntityV2 findLastBycZId(Integer czId) {
+        return quDuanInfoDaoV2.selectLastByCzId(czId);
     }
 
 
     @Override
-    public List<Map<String, Object>> findStatisticsByDate(Integer xid, Integer cid, Date time) {
-        return quDuanInfoDao.selectStatisticsByDate(xid, cid, time);
+    public QuDuanInfoEntityV2 findLastByQid(Integer qid) {
+        return quDuanInfoDaoV2.selectLastByQid(qid);
+    }
+
+
+    @Override
+    public List<QuDuanInfoEntityV2> findByQid(Integer qid) {
+        return quDuanInfoDaoV2.selectByQid(qid);
+    }
+
+    @Override
+    public List<QuDuanInfoEntityV2> findByCzIdAndTime(Integer czId, Date time) {
+        return quDuanInfoDaoV2.selectByCzIdAndQid(czId, time);
+    }
+
+    @Override
+    public List<Map<String, Object>> findStatisticsByCzIdAndTime(Integer czId, Date time) {
+        return quDuanInfoDaoV2.selectStatisticsByCzIdAndTime(czId, time);
     }
 
 
