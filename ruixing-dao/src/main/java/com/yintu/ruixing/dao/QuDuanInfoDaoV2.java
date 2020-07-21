@@ -18,9 +18,6 @@ public interface QuDuanInfoDaoV2 {
 
     QuDuanInfoEntityV2 selectLastByQid(Integer qid);
 
-    List<QuDuanInfoEntityV2> selectByQid(Integer qid);
-
-
     List<QuDuanInfoEntityV2> selectByCzIdAndQid( Integer czId, Date time);
 
     List<Map<String, Object>> selectStatisticsByCzIdAndTime(Integer czId, Date time);

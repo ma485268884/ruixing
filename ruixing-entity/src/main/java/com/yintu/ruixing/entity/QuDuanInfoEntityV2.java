@@ -23,6 +23,8 @@ public class QuDuanInfoEntityV2 implements Serializable {
 
     private Integer time;
 
+    private Integer type;
+
     private Integer dataZhengchang;
 
     private String designCarrier;

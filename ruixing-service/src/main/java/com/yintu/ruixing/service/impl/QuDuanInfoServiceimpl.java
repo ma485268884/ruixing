@@ -39,10 +39,6 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
     }
 
 
-    @Override
-    public List<QuDuanInfoEntityV2> findByQid(Integer qid) {
-        return quDuanInfoDaoV2.selectByQid(qid);
-    }
 
     @Override
     public List<QuDuanInfoEntityV2> findByCzIdAndTime(Integer czId, Date time) {

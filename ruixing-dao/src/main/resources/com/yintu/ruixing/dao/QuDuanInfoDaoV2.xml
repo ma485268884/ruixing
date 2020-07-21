@@ -6,6 +6,7 @@
         <result column="cid" jdbcType="INTEGER" property="cid"/>
         <result column="qid" jdbcType="INTEGER" property="qid"/>
         <result column="time" jdbcType="INTEGER" property="time"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
         <result column="data_zhengChang" jdbcType="INTEGER" property="dataZhengchang"/>
         <result column="Design_carrier" jdbcType="VARCHAR" property="designCarrier"/>
         <result column="direction" jdbcType="VARCHAR" property="direction"/>
@@ -85,11 +86,10 @@
         <association column="qid" jdbcType="INTEGER" property="quDuanBaseEntity">
             <id column="qbId" jdbcType="INTEGER" property="id"/>
             <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
-            <result column="typeid" jdbcType="VARCHAR" property="typeid"/>
         </association>
     </resultMap>
     <sql id="Base_Column_List">
-        qi.id as qiId, msg_id, send_num, createtime as time, station_id as cid, qi.type as typeid,v1 as qbId, v2 as data_zhengChang,
+        qi.id as qiId, msg_id, send_num, createtime as time, station_id as cid, qi.type,v1 as qbId, v2 as data_zhengChang,
 
     v3 as V_out_zhu , v4 as mA_out_zhu,  v5 as Hz_up_zhu,  v6 as Hz_down_zhu,  v7 as Hz_low_zhu,  v8 as FBJ_drive_zhu,
     v9 as V_out_bei, v10 as mA_out_bei, v11 as Hz_up_bei, v12 as Hz_down_bei, v13 as Hz_low_bei, v14 as FBJ_drive_bei,
@@ -284,7 +284,7 @@
         where qi.id = #{id,jdbcType=INTEGER}
     </select>
 
-    <!--按照车站查询一条详情-->
+    <!--按照车站查询一条区段详情-->
     <select id="selectLastByCzId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -292,13 +292,13 @@
         qi.v1 = qb.qdid and qi.station_id = qb.cz_id
         <where>
             <if test="czId!=null">
-                and qi.station_id=#{czId,jdbcType=INTEGER}
+                qi.station_id=#{czId,jdbcType=INTEGER}
             </if>
         </where>
         order by qi.id DESC limit 1
     </select>
 
-    <!--按照区段id查询一条详情-->
+    <!--按照区段id查询一条详情(数据分析)-->
     <select id="selectLastByQid" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -310,19 +310,6 @@
             </if>
         </where>
         order by qi.id DESC limit 1
-    </select>
-
-    <!--按照车站和区段id查询-->
-    <select id="selectByQid" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from data_applydata qi right outer join mro_quduan_base qb on
-        qi.v1 = qb.qdid and qi.station_id =qb.cz_id
-        <where>
-            <if test="qid!=null">
-                qi.id=#{qid,jdbcType=INTEGER}
-            </if>
-        </where>
     </select>
 
 
@@ -428,10 +415,10 @@
         select
         <include refid="all_Column_List"/>
         FROM data_applydata qi right outer join mro_quduan_base qb on
-        qi.v1 = qb.qdid and qi.station_id = qb.cid
+        qi.v1 = qb.qdid and qi.station_id = qb.cz_id
         <where>
             <if test="czId!=null">
-                and qb.cz_id=#{czId,jdbcType=INTEGER}
+                qb.cz_id=#{czId,jdbcType=INTEGER}
             </if>
             <if test="time!=null">
                 and DATE(FROM_UNIXTIME(qi.createtime)) = DATE(#{time,jdbcType=TIMESTAMP})
@@ -474,9 +461,7 @@
         <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quDuanYunYingName"/>
     </resultMap>
     <sql id="Statistics__Column_List">
-        MAX
-            (qi.v3)
-            AS max_V_out_zhu,
+        MAX(qi.v3) AS max_V_out_zhu,
         MIN(qi.v3) AS min_V_out_zhu,
         MAX(qi.v4) AS max_mA_out_zhu,
         MIN(qi.v4) AS min_mA_out_zhu,
@@ -511,13 +496,13 @@
         SELECT
         <include refid="Statistics__Column_List"/>
         FROM data_applydata qi right outer join mro_quduan_base qb on
-        qi.v1 = qb.qdid and qi.station_id = qb.cid
+        qi.v1 = qb.qdid and qi.station_id = qb.cz_id
         <where>
-            <if test="cid != null">
-                and qb.cz_id=#{czId,jdbcType=INTEGER}
+            <if test="czId != null">
+                qi.station_id=#{czId,jdbcType=INTEGER}
             </if>
             <if test="time !=null ">
-                DATE(FROM_UNIXTIME(qi.createtime))=DATE(#{time,jdbcType=TIMESTAMP})
+                and DATE(FROM_UNIXTIME(qi.createtime))=DATE(#{time,jdbcType=TIMESTAMP})
             </if>
         </where>
         GROUP BY

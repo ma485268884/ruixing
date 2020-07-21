@@ -31,12 +31,6 @@ public interface QuDuanInfoService {
      */
     QuDuanInfoEntityV2 findLastByQid(Integer qid);
 
-    /**
-     * @param qid 区段id
-     * @return 区段详情 多条
-     */
-    List<QuDuanInfoEntityV2> findByQid(Integer qid);
-
 
     /**
      * 实时报表

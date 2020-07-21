@@ -22,7 +22,7 @@ import java.util.Map;
  * @date:2020/6/3 12:00
  */
 @RestController
-@RequestMapping("/quduanInfos")
+@RequestMapping("/quduan/infos")
 public class QuDuanInfoController extends SessionController {
     @Autowired
     private QuDuanInfoService quDuanInfoService;
@@ -37,17 +37,23 @@ public class QuDuanInfoController extends SessionController {
      * @return 区段基本信息列表
      */
     @GetMapping("/base")
-    public Map<String, Object> findByCid(@RequestParam(value = "cid") Long cid) {
+    public Map<String, Object> findByCid(@RequestParam("cid") Long cid) {
         CheZhanEntity cheZhanEntity = cheZhanService.findByCheZhanId(cid);
         return ResponseDataUtil.ok("查询区段基础信息列表", cheZhanEntity);
     }
 
-
-    @GetMapping("/info")
-    public Map<String, Object> findLastByCid(@RequestParam("czId") Integer czId) {
-        quDuanInfoService.findLastBycZId(czId);
-        return ResponseDataUtil.ok("查询区段基础信息列表", czId);
+    /**
+     * 按照车站随机取出一条区段性情
+     *
+     * @param czId 区段id
+     * @return
+     */
+    @GetMapping("/chezhan")
+    public Map<String, Object> findLastBycZId(@RequestParam("czId") Integer czId) {
+        QuDuanInfoEntityV2 quDuanInfoEntity = quDuanInfoService.findLastBycZId(czId);
+        return ResponseDataUtil.ok("查询区段详情", quDuanInfoEntity);
     }
+
 
     /**
      * 数据分析
@@ -57,9 +63,10 @@ public class QuDuanInfoController extends SessionController {
      */
     @GetMapping("/dataanalysis")
     public Map<String, Object> findQidAndTime(@RequestParam("qid") Integer qid) {
-        List<QuDuanInfoEntityV2> quDuanInfoEntities = quDuanInfoService.findByQid(qid);
-        return ResponseDataUtil.ok("查询区段详情", quDuanInfoEntities);
+        QuDuanInfoEntityV2 quDuanInfoEntity = quDuanInfoService.findLastByQid(qid);
+        return ResponseDataUtil.ok("查询区段详情", quDuanInfoEntity);
     }
+
 
     /**
      * 实时报表
@@ -71,8 +78,8 @@ public class QuDuanInfoController extends SessionController {
     @GetMapping("/realreport")
     public Map<String, Object> findByXidAndCidAndTime(@RequestParam(value = "page_number") Integer pageNumber,
                                                       @RequestParam(value = "page_size") Integer pageSize,
-                                                      @RequestParam(value = "orderBy", defaultValue = "qi.id DESC") String orderBy,
-                                                      @RequestParam(value = "cZid") Integer cZid) {
+                                                      @RequestParam(value = "order_by", defaultValue = "qi.id DESC") String orderBy,
+                                                      @RequestParam(value = "cz_id") Integer cZid) {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<QuDuanInfoEntityV2> quDuanInfoEntities = quDuanInfoService.findByCzIdAndTime(cZid, new Date());
         PageInfo<QuDuanInfoEntityV2> pageInfo = new PageInfo<>(quDuanInfoEntities);
@@ -87,11 +94,12 @@ public class QuDuanInfoController extends SessionController {
      * @param time       日期
      */
     @GetMapping("/dailypaper")
-    public Map<String, Object> findStatisticsByDate(@RequestParam(value = "page_number") Integer pageNumber,
-                                                    @RequestParam(value = "page_size") Integer pageSize,
-                                                    @RequestParam(value = "cZid") Integer cZid,
+    public Map<String, Object> findStatisticsByDate(@RequestParam("page_number") Integer pageNumber,
+                                                    @RequestParam("page_size") Integer pageSize,
+                                                    @RequestParam(value = "order_by", required = false, defaultValue = "qi.id DESC") String orderBy,
+                                                    @RequestParam("cz_id") Integer cZid,
                                                     @RequestParam("time") Date time) {
-        PageHelper.startPage(pageNumber, pageSize);
+        PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<Map<String, Object>> maps = quDuanInfoService.findStatisticsByCzIdAndTime(cZid, time);
         PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(maps);
         return ResponseDataUtil.ok("查询日报表成功", pageInfo);
