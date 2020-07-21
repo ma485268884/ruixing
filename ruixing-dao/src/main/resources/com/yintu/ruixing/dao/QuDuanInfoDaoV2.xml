@@ -310,7 +310,7 @@
                 qb.cz_id=#{czId,jdbcType=INTEGER}
             </if>
             <if test="startTime!=null and endTime!=null">
-                FROM_UNIXTIME(qi.createtime) between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+                and FROM_UNIXTIME(qi.createtime) between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
             </if>
         </where>
         order by qb.id ASC
