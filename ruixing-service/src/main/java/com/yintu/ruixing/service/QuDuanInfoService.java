@@ -1,6 +1,6 @@
 package com.yintu.ruixing.service;
 
-import com.yintu.ruixing.entity.QuDuanInfoEntity;
+import com.yintu.ruixing.entity.QuDuanInfoEntityV2;
 
 import java.util.Date;
 import java.util.List;
@@ -13,32 +13,39 @@ import java.util.Map;
 public interface QuDuanInfoService {
 
 
-    QuDuanInfoEntity findById(Integer id);
+    QuDuanInfoEntityV2 findById(Integer id);
 
     /**
-     * @param qid  区段信息id
-     * @param time 时间
-     * @return 区段详情集合
+     * 按照车站查询区段详情
+     *
+     * @param czId 车站id
+     * @return 区段详情
      */
-    List<QuDuanInfoEntity> findQidAndTime(Integer qid, Date time);
+    QuDuanInfoEntityV2 findLastBycZId(Integer czId);
 
     /**
-     * @param xid       线段id
-     * @param cid       车站id
-     * @param startTime 开始时间
-     * @param endTime   结束时间
+     * 按照车站查询区段详情
+     *
+     * @param qid 区段id
+     * @return 区段详情 多条
+     */
+    QuDuanInfoEntityV2 findLastByQid(Integer qid);
+
+    /**
+     * @param qid 区段id
+     * @return 区段详情 多条
+     */
+    List<QuDuanInfoEntityV2> findByQid(Integer qid);
+
+
+    /**
+     * 实时报表
+     *
+     * @param czId 车站id
+     * @param time 时间
      * @return
      */
-    List<Integer> findByXidAndCidAndBetweenAndTime(Integer xid, Integer cid, Date startTime, Date endTime);
-
-
-    /**
-     * @param xid  线段id
-     * @param cid  车站id
-     * @param time 时间
-     * @return
-     */
-    List<QuDuanInfoEntity> findByXidAndCidAndTime(Integer xid, Integer cid, Date time);
+    List<QuDuanInfoEntityV2> findByCzIdAndTime(Integer czId, Date time);
 
     /**
      * 日报表
@@ -46,7 +53,7 @@ public interface QuDuanInfoService {
      * @param time 日期
      * @return 统计
      */
-    List<Map<String, Object>> findStatisticsByDate(Integer xid, Integer cid, Date time);
+    List<Map<String, Object>> findStatisticsByCzIdAndTime(Integer czId, Date time);
 
 
 }

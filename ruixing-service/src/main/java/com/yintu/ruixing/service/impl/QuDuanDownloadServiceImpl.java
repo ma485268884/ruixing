@@ -123,7 +123,7 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
                 Integer cid = quDuanDownloadEntity.getCid();
                 Date startDateTime = quDuanDownloadEntity.getStartTime();
                 Date endDateTime = quDuanDownloadEntity.getEndTime();
-                List<Integer> quDuanInfoIds = quDuanInfoService.findByXidAndCidAndBetweenAndTime(xid, cid, startDateTime, endDateTime);
+                List<Integer> quDuanInfoIds = null;
                 JSONArray ja = (JSONArray) JSONArray.toJSON(quDuanInfoIds);
                 quDuanDownloadEntity.setStatus((short) 1);
                 quDuanDownloadEntity.setData(ja.toJSONString());

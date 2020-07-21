@@ -32,7 +32,7 @@ public class MenXianServiceImpl implements MenXianService {
     @Override
     public void add(MenXianEntity menXianEntity) {
         Integer quDuanId = menXianEntity.getQuduanId();
-        List<QuDuanInfoEntity> quDuanInfoEntities = quDuanInfoService.findQidAndTime(quDuanId, null);
+        List<QuDuanInfoEntity> quDuanInfoEntities = null;
         if (quDuanInfoEntities.size() > 0) {
             QuDuanInfoEntity quDuanInfoEntity = quDuanInfoEntities.get(0);
             if (quDuanInfoEntity != null) {
@@ -199,7 +199,7 @@ public class MenXianServiceImpl implements MenXianService {
     @Override
     public void edit(MenXianEntity menXianEntity) {
         Integer quDuanId = menXianEntity.getQuduanId();
-        QuDuanInfoEntity quDuanInfoEntity = quDuanInfoService.findById(quDuanId);
+        QuDuanInfoEntity quDuanInfoEntity = null;
         if (quDuanInfoEntity != null) {
             Integer propertyId = menXianEntity.getPropertyId();
             MenXianPropertyEntity menXianPropertyEntity = menXianPropertyService.findById(propertyId);
