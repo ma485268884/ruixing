@@ -6,6 +6,7 @@
         <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
         <result column="cid" jdbcType="INTEGER" property="cid"/>
         <result column="xid" jdbcType="INTEGER" property="xid"/>
+        <result column="cz_id" jdbcType="INTEGER" property="czid"/>
         <result column="sid" jdbcType="INTEGER" property="sid"/>
         <result column="qdid" jdbcType="INTEGER" property="qdid"/>
         <result column="typeid" jdbcType="INTEGER" property="typeid"/>
@@ -48,7 +49,7 @@
         </association>
     </resultMap>
     <sql id="Base_Column_List">
-        id, parent_id, cid, xid, sid,qdid, ofXianDuan,typeid, line,left_right,xingbie,
+        id, parent_id, cid,cz_id, xid, sid,qdid, ofXianDuan,typeid, line,left_right,xingbie,
          zongHe_id,type,quDuanSheJi_name, quDuanYunYing_name,
     quDuan_length, carrier, diDuan_type, xianLuQingKuang, bianJie, fenJieDian_where,
     zhanQuFenJie, jinZhanXinHaoJi_name, xinHaoJiOrBiaoZhiMing, xinHaoBiaoZhiPai_where,
@@ -257,6 +258,9 @@
             <if test="cid != null">
                 cid,
             </if>
+            <if test="czid != null">
+                cz_id,
+            </if>
             <if test="xid != null">
                 xid,
             </if>
@@ -363,6 +367,9 @@
             </if>
             <if test="cid != null">
                 #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="czid != null">
+                #{czid,jdbcType=INTEGER},
             </if>
             <if test="xid != null">
                 #{xid,jdbcType=INTEGER},
@@ -471,6 +478,9 @@
             </if>
             <if test="cid != null">
                 cid = #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="czid != null">
+                cz_id = #{czid,jdbcType=INTEGER},
             </if>
             <if test="xid != null">
                 xid = #{xid,jdbcType=INTEGER},

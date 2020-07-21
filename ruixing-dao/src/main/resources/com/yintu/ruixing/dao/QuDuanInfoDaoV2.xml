@@ -134,8 +134,9 @@
         WHERE qi.qid = qb.id
           AND qi.id = #{id,jdbcType=INTEGER}
     </select>
+<!--
 
-    <!--根据日期  查询对应的数据--><!--错误-->
+    &lt;!&ndash;根据日期  查询对应的数据&ndash;&gt;&lt;!&ndash;错误&ndash;&gt;
     <select id="findQuDuanDataByTime" resultMap="BaseResultMap">
         SELECT qi.*
         FROM mro_quduan_info qi,
@@ -144,7 +145,7 @@
           AND DATE(qi.time) = DATE(#{time,jdbcType=TIMESTAMP})
 
     </select>
-    <!--根据查询日期的24个时间  查询对应的数据   --> <!--错误-->
+    &lt;!&ndash;根据查询日期的24个时间  查询对应的数据   &ndash;&gt; &lt;!&ndash;错误&ndash;&gt;
     <select id="findQuDuanDataByTime2" resultType="java.lang.Integer" statementType="STATEMENT">
         SELECT ${name}
         FROM mro_quduan_info qi,
@@ -153,13 +154,14 @@
           AND DATE_FORMAT(qi.time, "%Y/%m/%d %H:%i:%S") = DATE_FORMAT("${format}", "%Y/%m/%d %H:%i:%S")
 
     </select>
+-->
 
     <!--根据传来的时间段和区段名和属性名 按秒来 查询对应的数据   -->
     <select id="findQuDuanData" resultType="java.lang.Integer" statementType="STATEMENT">
         select ${shuxingname}
-        from mro_quduan_info qi,
+        from data_applydata qi,
              mro_quduan_base qb
-        where qi.qid = qb.id
+        where qi.v1 = qb.qdid
           and qb.quDuanYunYing_name = "${quduanname}"
           and DATE_FORMAT(qi.time, "%Y/%m/%d %H:%i:%S")
             BETWEEN
@@ -168,7 +170,7 @@
             DATE_FORMAT("${endtime}", "%Y/%m/%d %H:%i:%S")
     </select>
 
-    <resultMap id="quduanBaseResultMap" type="com.yintu.ruixing.entity.QuDuanInfoEntity">
+    <resultMap id="quduanBaseResultMap" type="com.yintu.ruixing.entity.QuDuanInfoEntityV2">
         <id column="qiId" jdbcType="INTEGER" property="id"/>
         <result column="xid" jdbcType="INTEGER" property="xid"/>
         <result column="qid" jdbcType="INTEGER" property="qid"/>
@@ -248,29 +250,29 @@
         </association>
     </resultMap>
     <select id="findDianMaHuaDatabById" resultMap="quduanBaseResultMap" parameterType="java.lang.Integer">
-        SELECT qb.typeid,
+        SELECT qb. typeid ,
                qi.Design_carrier,
-               qi.V_out_zhu,
-               qi.V_out_bei,
-               qi.mA_out_zhu,
-               qi.mA_out_bei,
-               qi.Hz_up_zhu,
-               qi.Hz_up_bei,
-               qi.Hz_down_zhu,
-               qi.Hz_down_bei,
-               qi.Hz_low_zhu,
-               qi.Hz_low_bei,
-               qi.FBJ_drive_zhu,
-               qi.FBJ_drive_bei,
+               qi.v3 V_out_zhu,
+               qi.v9 V_out_bei,
+               qi.v4 mA_out_zhu,
+               qi.v10 mA_out_bei,
+               qi.v5 Hz_up_zhu,
+               qi.v11 Hz_up_bei,
+               qi.v6 Hz_down_zhu,
+               qi.v12 Hz_down_bei,
+               qi.v7 Hz_low_zhu,
+               qi.v13 Hz_low_bei,
+               qi.v8 FBJ_drive_zhu,
+               qi.v14 FBJ_drive_bei,
                qi.FBJ_collection_zhu,
                qi.FBJ_collection_bei,
                sb.sb_name
-        FROM mro_quduan_info qi,
+        FROM data_applydata qi,
              mro_shebei sb,
              mro_quduan_base qb
         WHERE sb.id = qb.sid
-          AND qi.qid = qb.id
-          AND qi.qid = #{id}
+          AND qi.v1 = qb.qdid
+          AND qi.v1 = #{id}
         GROUP BY sb.sb_name
     </select>
 
