@@ -93,6 +93,7 @@ public class DataStatsController {
                             //System.out.println("55555555555555555");
                             Integer lastParentid = dataStatsService.findLastParentid();
                             QuDuanBaseEntity quDuanBaseEntity = new QuDuanBaseEntity();
+                            quDuanBaseEntity.setCzid(Integer.parseInt(czid));
                             quDuanBaseEntity.setParentId(lastParentid);
                             //System.out.println("666666666666666666");
                             Integer xdid = dataStatsService.findxianduanid(Long.parseLong(czid));
@@ -155,7 +156,7 @@ public class DataStatsController {
                             //System.out.println("123");
                             quDuanBaseEntity.setDaochaguanlianquduan1Id(daochaguanlianquduan1id);
                             quDuanBaseEntity.setDaochaguanlianquduan2Id(daochaguanlianquduan2id);
-                            //System.out.println("456");
+                            System.out.println("456");
                             quDuanBaseEntity.setDianmahuaguihao(dianmahuaguidao);
                             if (guineidizhi.equals("")){
                                 quDuanBaseEntity.setGuineidizhi(null);

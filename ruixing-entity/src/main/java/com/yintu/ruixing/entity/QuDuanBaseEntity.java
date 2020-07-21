@@ -20,6 +20,8 @@ public class QuDuanBaseEntity implements Serializable {
 
     private Integer cid;//车站id
 
+    private Integer czid;//车站专用id
+
     private Integer sid; //设备id
 
     private Integer typeid;//类型id

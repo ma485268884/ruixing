@@ -27,6 +27,8 @@ public class DianWuDuanServiceImpl implements DianWuDuanService {
 
     @Override
     public void addDianWuDuan(DianWuDuanEntity dianWuDuanEntity) {
+        long tid = dianWuDuanEntity.getTid();
+        dianWuDuanEntity.setTljDwdId(tid);
         dianWuDuanDao.addDianWuDuan(dianWuDuanEntity);
     }
 
