@@ -134,27 +134,27 @@
         WHERE qi.qid = qb.id
           AND qi.id = #{id,jdbcType=INTEGER}
     </select>
-<!--
+    <!--
 
-    &lt;!&ndash;根据日期  查询对应的数据&ndash;&gt;&lt;!&ndash;错误&ndash;&gt;
-    <select id="findQuDuanDataByTime" resultMap="BaseResultMap">
-        SELECT qi.*
-        FROM mro_quduan_info qi,
-             mro_quduan_base qd
-        WHERE qi.qid = qd.id
-          AND DATE(qi.time) = DATE(#{time,jdbcType=TIMESTAMP})
+        &lt;!&ndash;根据日期  查询对应的数据&ndash;&gt;&lt;!&ndash;错误&ndash;&gt;
+        <select id="findQuDuanDataByTime" resultMap="BaseResultMap">
+            SELECT qi.*
+            FROM mro_quduan_info qi,
+                 mro_quduan_base qd
+            WHERE qi.qid = qd.id
+              AND DATE(qi.time) = DATE(#{time,jdbcType=TIMESTAMP})
 
-    </select>
-    &lt;!&ndash;根据查询日期的24个时间  查询对应的数据   &ndash;&gt; &lt;!&ndash;错误&ndash;&gt;
-    <select id="findQuDuanDataByTime2" resultType="java.lang.Integer" statementType="STATEMENT">
-        SELECT ${name}
-        FROM mro_quduan_info qi,
-             mro_quduan_base qd
-        WHERE qi.qid = qd.id
-          AND DATE_FORMAT(qi.time, "%Y/%m/%d %H:%i:%S") = DATE_FORMAT("${format}", "%Y/%m/%d %H:%i:%S")
+        </select>
+        &lt;!&ndash;根据查询日期的24个时间  查询对应的数据   &ndash;&gt; &lt;!&ndash;错误&ndash;&gt;
+        <select id="findQuDuanDataByTime2" resultType="java.lang.Integer" statementType="STATEMENT">
+            SELECT ${name}
+            FROM mro_quduan_info qi,
+                 mro_quduan_base qd
+            WHERE qi.qid = qd.id
+              AND DATE_FORMAT(qi.time, "%Y/%m/%d %H:%i:%S") = DATE_FORMAT("${format}", "%Y/%m/%d %H:%i:%S")
 
-    </select>
--->
+        </select>
+    -->
 
     <!--根据传来的时间段和区段名和属性名 按秒来 查询对应的数据   -->
     <select id="findQuDuanData" resultType="java.lang.Integer" statementType="STATEMENT">
@@ -250,19 +250,19 @@
         </association>
     </resultMap>
     <select id="findDianMaHuaDatabById" resultMap="quduanBaseResultMap" parameterType="java.lang.Integer">
-        SELECT qb. typeid ,
+        SELECT qb.typeid,
                qi.Design_carrier,
-               qi.v3 V_out_zhu,
-               qi.v9 V_out_bei,
-               qi.v4 mA_out_zhu,
+               qi.v3  V_out_zhu,
+               qi.v9  V_out_bei,
+               qi.v4  mA_out_zhu,
                qi.v10 mA_out_bei,
-               qi.v5 Hz_up_zhu,
+               qi.v5  Hz_up_zhu,
                qi.v11 Hz_up_bei,
-               qi.v6 Hz_down_zhu,
+               qi.v6  Hz_down_zhu,
                qi.v12 Hz_down_bei,
-               qi.v7 Hz_low_zhu,
+               qi.v7  Hz_low_zhu,
                qi.v13 Hz_low_bei,
-               qi.v8 FBJ_drive_zhu,
+               qi.v8  FBJ_drive_zhu,
                qi.v14 FBJ_drive_bei,
                qi.FBJ_collection_zhu,
                qi.FBJ_collection_bei,
@@ -294,10 +294,10 @@
         qi.v1 = qb.qdid and qi.station_id = qb.cz_id
         <where>
             <if test="czId!=null">
-                qi.station_id=#{czId,jdbcType=INTEGER}
+                qb.cz_id=#{czId,jdbcType=INTEGER}
             </if>
         </where>
-        order by qi.id DESC limit 1
+        order by qi.createtime DESC limit 1
     </select>
 
     <!--按照区段id查询一条详情(数据分析)-->
@@ -308,119 +308,22 @@
         qi.v1 = qb.qdid and qi.station_id = qb.cz_id
         <where>
             <if test="qid!=null">
-                qi.id=#{qid,jdbcType=INTEGER}
+                qb.id=#{qid,jdbcType=INTEGER}
             </if>
         </where>
-        order by qi.id DESC limit 1
+        order by qi.createtime DESC limit 1
     </select>
 
 
     <!--实时报表-->
-    <sql id="all_Column_List">
-        qi.id,V_out_zhu, V_out_bei, mA_out_zhu, mA_out_bei, Hz_up_zhu, Hz_up_bei,Hz_down_zhu, Hz_down_bei, Hz_low_zhu, Hz_low_bei, FBJ_drive_zhu, FBJ_drive_bei, FBJ_collection_zhu,FBJ_collection_bei,
-
-    V_songduan_Cable, mA_songduan_Cable,
-
-    V_shouduan_Cable_host, V_shouduan_Cable_spare,mA_shouduan_Cable,
-
-    direction, GJcollection ,V_in_all,mV_in_zhu, mV_in_bing, mV_in_diao_zhu, mV_in_diao_bing, Hz_in_low_zhu, Hz_in_low_bing,GJ_drive_zhu, GJ_drive_bing, GJ_rear_collection_zhu, GJ_rear_collection_bing, baojing_zhu,baojing_bing,
-
-
-    mA_Cable_FBP, A_longIn_FBP, A_longOut_FBP, A_shortIn_FBP, A_shortOut_FBP, T_FBP,
-
-    A_longIn_FBA_zhu, A_longIn_FBA_diao, A_longOut_FBA_zhu, A_longOut_FBA_diao,A_shortIn_FBA_zhu, A_shortIn_FBA_diao, A_shortOut_FBA_zhu, A_shortOut_FBA_diao,
-
-    A_longIn_JBA_zhu,A_longIn_JBA_diao, A_longOut_JBA_zhu, A_longOut_JBA_diao,A_shortIn_JBA_zhu, A_shortIn_JBA_diao,A_shortOut_JBA_zhu, A_shortOut_JBA_diao,
-
-    mA_Cable_JBP, A_longIn_JBP, A_longOut_JBP, A_shortIn_JBP, A_shortOut_JBP,T_JBP,
-
-    qb.quDuanYunYing_name
-
-    </sql>
-    <resultMap id="AllResultMap" type="Map">
-        <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="V_out_zhu" jdbcType="INTEGER" property="vOutZhu"/>
-        <result column="V_out_bei" jdbcType="INTEGER" property="vOutBei"/>
-        <result column="mA_out_zhu" jdbcType="INTEGER" property="maOutZhu"/>
-        <result column="mA_out_bei" jdbcType="INTEGER" property="maOutBei"/>
-        <result column="Hz_up_zhu" jdbcType="INTEGER" property="hzUpZhu"/>
-        <result column="Hz_up_bei" jdbcType="INTEGER" property="hzUpBei"/>
-        <result column="Hz_down_zhu" jdbcType="INTEGER" property="hzDownZhu"/>
-        <result column="Hz_down_bei" jdbcType="INTEGER" property="hzDownBei"/>
-        <result column="Hz_low_zhu" jdbcType="INTEGER" property="hzLowZhu"/>
-        <result column="Hz_low_bei" jdbcType="INTEGER" property="hzLowBei"/>
-        <result column="FBJ_drive_zhu" jdbcType="VARCHAR" property="fbjDriveZhu"/>
-        <result column="FBJ_drive_bei" jdbcType="VARCHAR" property="fbjDriveBei"/>
-        <result column="FBJ_collection_zhu" jdbcType="VARCHAR" property="fbjCollectionZhu"/>
-        <result column="FBJ_collection_bei" jdbcType="VARCHAR" property="fbjCollectionBei"/>
-
-        <result column="V_songduan_Cable" jdbcType="INTEGER" property="vSongduanCable"/>
-        <result column="mA_songduan_Cable" jdbcType="INTEGER" property="maSongduanCable"/>
-
-        <result column="V_shouduan_Cable_host" jdbcType="INTEGER" property="vShouduanCableHost"/>
-        <result column="V_shouduan_Cable_spare" jdbcType="INTEGER" property="vShouduanCableSpare"/>
-        <result column="mA_shouduan_Cable" jdbcType="INTEGER" property="maShouduanCable"/>
-
-        <result column="direction" jdbcType="VARCHAR" property="direction"/>
-        <result column="GJcollection" jdbcType="VARCHAR" property="gJcollection"/>
-        <result column="V_in_all" jdbcType="INTEGER" property="vInAll"/>
-        <result column="mV_in_zhu" jdbcType="INTEGER" property="mvInZhu"/>
-        <result column="mV_in_bing" jdbcType="INTEGER" property="mvInBing"/>
-        <result column="mV_in_diao_zhu" jdbcType="INTEGER" property="mvInDiaoZhu"/>
-        <result column="mV_in_diao_bing" jdbcType="INTEGER" property="mvInDiaoBing"/>
-        <result column="Hz_in_low_zhu" jdbcType="INTEGER" property="hzInLowZhu"/>
-        <result column="Hz_in_low_bing" jdbcType="INTEGER" property="hzInLowBing"/>
-        <result column="GJ_drive_zhu" jdbcType="VARCHAR" property="gjDriveZhu"/>
-        <result column="GJ_drive_bing" jdbcType="VARCHAR" property="gjDriveBing"/>
-        <result column="GJ_rear_collection_zhu" jdbcType="VARCHAR" property="gjRearCollectionZhu"/>
-        <result column="GJ_rear_collection_bing" jdbcType="VARCHAR" property="gjRearCollectionBing"/>
-        <result column="baojing_zhu" jdbcType="VARCHAR" property="baojingZhu"/>
-        <result column="baojing_bing" jdbcType="VARCHAR" property="baojingBing"/>
-
-
-        <result column="mA_Cable_FBP" jdbcType="INTEGER" property="maCableFbp"/>
-        <result column="A_longIn_FBP" jdbcType="INTEGER" property="aLonginFbp"/>
-        <result column="A_longOut_FBP" jdbcType="INTEGER" property="aLongoutFbp"/>
-        <result column="A_shortIn_FBP" jdbcType="INTEGER" property="aShortinFbp"/>
-        <result column="A_shortOut_FBP" jdbcType="INTEGER" property="aShortoutFbp"/>
-        <result column="T_FBP" jdbcType="INTEGER" property="tFbp"/>
-
-        <result column="A_longIn_FBA_zhu" jdbcType="INTEGER" property="aLonginFbaZhu"/>
-        <result column="A_longIn_FBA_diao" jdbcType="INTEGER" property="aLonginFbaDiao"/>
-        <result column="A_longOut_FBA_zhu" jdbcType="INTEGER" property="aLongoutFbaZhu"/>
-        <result column="A_longOut_FBA_diao" jdbcType="INTEGER" property="aLongoutFbaDiao"/>
-        <result column="A_shortIn_FBA_zhu" jdbcType="INTEGER" property="aShortinFbaZhu"/>
-        <result column="A_shortIn_FBA_diao" jdbcType="INTEGER" property="aShortinFbaDiao"/>
-        <result column="A_shortOut_FBA_zhu" jdbcType="INTEGER" property="aShortoutFbaZhu"/>
-        <result column="A_shortOut_FBA_diao" jdbcType="INTEGER" property="aShortoutFbaDiao"/>
-
-        <result column="A_longIn_JBA_zhu" jdbcType="INTEGER" property="aLonginJbaZhu"/>
-        <result column="A_longIn_JBA_diao" jdbcType="INTEGER" property="aLonginJbaDiao"/>
-        <result column="A_longOut_JBA_zhu" jdbcType="INTEGER" property="aLongoutJbaZhu"/>
-        <result column="A_longOut_JBA_diao" jdbcType="INTEGER" property="aLongoutJbaDiao"/>
-        <result column="A_shortIn_JBA_zhu" jdbcType="INTEGER" property="aShortinJbaZhu"/>
-        <result column="A_shortIn_JBA_diao" jdbcType="INTEGER" property="aShortinJbaDiao"/>
-        <result column="A_shortOut_JBA_zhu" jdbcType="INTEGER" property="aShortoutJbaZhu"/>
-        <result column="A_shortOut_JBA_diao" jdbcType="INTEGER" property="aShortoutJbaDiao"/>
-
-        <result column="mA_Cable_JBP" jdbcType="INTEGER" property="maCableJbp"/>
-        <result column="A_longIn_JBP" jdbcType="INTEGER" property="aLonginJbp"/>
-        <result column="A_longOut_JBP" jdbcType="INTEGER" property="aLongoutJbp"/>
-        <result column="A_shortIn_JBP" jdbcType="INTEGER" property="aShortinJbp"/>
-        <result column="A_shortOut_JBP" jdbcType="INTEGER" property="aShortoutJbp"/>
-        <result column="T_JBP" jdbcType="INTEGER" property="tJbp"/>
-
-        <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
-    </resultMap>
-
-    <select id="selectByCzIdAndQid" resultMap="AllResultMap">
+    <select id="selectByCzIdAndQid" resultMap="BaseResultMap">
         select
-        <include refid="all_Column_List"/>
-        FROM data_applydata qi right outer join mro_quduan_base qb on
+        <include refid="Base_Column_List"/>
+        FROM data_applydata qi inner join mro_quduan_base qb on
         qi.v1 = qb.qdid and qi.station_id = qb.cz_id
         <where>
             <if test="czId!=null">
-                qb.cz_id=#{czId,jdbcType=INTEGER}
+                qi.station_id=#{czId,jdbcType=INTEGER}
             </if>
             <if test="time!=null">
                 and DATE(FROM_UNIXTIME(qi.createtime)) = DATE(#{time,jdbcType=TIMESTAMP})
@@ -463,7 +366,9 @@
         <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quDuanYunYingName"/>
     </resultMap>
     <sql id="Statistics__Column_List">
-        MAX(qi.v3) AS max_V_out_zhu,
+        MAX
+            (qi.v3)
+            AS max_V_out_zhu,
         MIN(qi.v3) AS min_V_out_zhu,
         MAX(qi.v4) AS max_mA_out_zhu,
         MIN(qi.v4) AS min_mA_out_zhu,
@@ -497,7 +402,7 @@
     <select id="selectStatisticsByCzIdAndTime" resultMap="StatisticsResultMap">
         SELECT
         <include refid="Statistics__Column_List"/>
-        FROM data_applydata qi right outer join mro_quduan_base qb on
+        FROM data_applydata qi inner join mro_quduan_base qb on
         qi.v1 = qb.qdid and qi.station_id = qb.cz_id
         <where>
             <if test="czId != null">
@@ -508,6 +413,6 @@
             </if>
         </where>
         GROUP BY
-        qi.v1,qi.station_id
+        qi.station_id,qi.v1
     </select>
 </mapper>

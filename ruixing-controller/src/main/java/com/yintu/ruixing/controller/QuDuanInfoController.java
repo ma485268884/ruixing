@@ -1,5 +1,6 @@
 package com.yintu.ruixing.controller;
 
+import cn.hutool.core.date.DateUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +39,7 @@ public class QuDuanInfoController extends SessionController {
      * @return 区段基本信息列表
      */
     @GetMapping("/base")
-    public Map<String, Object> findByCid(@RequestParam("cid") Long cid) {
+    public Map<String, Object> findJsonConfigByCid(@RequestParam("cid") Long cid) {
         CheZhanEntity cheZhanEntity = cheZhanService.findByCheZhanId(cid);
         return ResponseDataUtil.ok("查询区段基础信息列表", cheZhanEntity);
     }
@@ -62,7 +64,7 @@ public class QuDuanInfoController extends SessionController {
      * @return 实时的数据
      */
     @GetMapping("/dataanalysis")
-    public Map<String, Object> findQidAndTime(@RequestParam("qid") Integer qid) {
+    public Map<String, Object> findLastByQid(@RequestParam("qid") Integer qid) {
         QuDuanInfoEntityV2 quDuanInfoEntity = quDuanInfoService.findLastByQid(qid);
         return ResponseDataUtil.ok("查询区段详情", quDuanInfoEntity);
     }
@@ -76,10 +78,10 @@ public class QuDuanInfoController extends SessionController {
      * @return
      */
     @GetMapping("/realreport")
-    public Map<String, Object> findByXidAndCidAndTime(@RequestParam(value = "page_number") Integer pageNumber,
-                                                      @RequestParam(value = "page_size") Integer pageSize,
-                                                      @RequestParam(value = "order_by", defaultValue = "qi.id DESC") String orderBy,
-                                                      @RequestParam(value = "cz_id") Integer cZid) {
+    public Map<String, Object> findByCzId(@RequestParam("page_number") Integer pageNumber,
+                                          @RequestParam("page_size") Integer pageSize,
+                                          @RequestParam(value = "order_by", required = false, defaultValue = "qi.id ASC") String orderBy,
+                                          @RequestParam("cz_id") Integer cZid) {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<QuDuanInfoEntityV2> quDuanInfoEntities = quDuanInfoService.findByCzIdAndTime(cZid, new Date());
         PageInfo<QuDuanInfoEntityV2> pageInfo = new PageInfo<>(quDuanInfoEntities);
@@ -96,7 +98,7 @@ public class QuDuanInfoController extends SessionController {
     @GetMapping("/dailypaper")
     public Map<String, Object> findStatisticsByDate(@RequestParam("page_number") Integer pageNumber,
                                                     @RequestParam("page_size") Integer pageSize,
-                                                    @RequestParam(value = "order_by", required = false, defaultValue = "qi.id DESC") String orderBy,
+                                                    @RequestParam(value = "order_by", required = false, defaultValue = "qi.id ASC") String orderBy,
                                                     @RequestParam("cz_id") Integer cZid,
                                                     @RequestParam("time") Date time) {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
