@@ -41,7 +41,7 @@ public class QuDuanBaseServiceImpl implements QuDuanBaseService {
     }
 
     @Override
-    public List<QuDuanBaseEntity> findByXidAndCid(Integer xid, Integer cid) {
-        return quDuanBaseDao.selectByXidAndCid(xid, cid);
+    public List<QuDuanBaseEntity> findByCzId(Integer czId) {
+        return quDuanBaseDao.selectByCzId(czId);
     }
 }

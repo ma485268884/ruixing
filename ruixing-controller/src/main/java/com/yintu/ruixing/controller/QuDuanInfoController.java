@@ -4,8 +4,10 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.CheZhanEntity;
+import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntityV2;
 import com.yintu.ruixing.service.CheZhanService;
+import com.yintu.ruixing.service.QuDuanBaseService;
 import com.yintu.ruixing.service.QuDuanInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,8 @@ public class QuDuanInfoController extends SessionController {
     @Autowired
     private QuDuanInfoService quDuanInfoService;
     @Autowired
+    private QuDuanBaseService quDuanBaseService;
+    @Autowired
     private CheZhanService cheZhanService;
 
 
@@ -34,12 +38,25 @@ public class QuDuanInfoController extends SessionController {
      * 查询区段基础信息列表
      *
      * @param czId 车站id
-     * @return 区段基本信息列表
+     * @return 区段基本信息集
      */
     @GetMapping("/base")
+    public Map<String, Object> findQuDuanBaseByCid(@RequestParam("czId") Integer czId) {
+        List<QuDuanBaseEntity> quDuanBaseEntities = quDuanBaseService.findByCzId(czId);
+        return ResponseDataUtil.ok("查询区段基础信息列表", quDuanBaseEntities);
+    }
+
+
+    /**
+     * 查询区段基础信息列表
+     *
+     * @param czId 车站id
+     * @return 区段基本封装的json串
+     */
+    @GetMapping("/json")
     public Map<String, Object> findJsonConfigByCid(@RequestParam("czId") Integer czId) {
         CheZhanEntity cheZhanEntity = cheZhanService.findByCzId(czId);
-        return ResponseDataUtil.ok("查询区段基础信息列表", cheZhanEntity.getCzJson());
+        return ResponseDataUtil.ok("查询区段详情信息列表", cheZhanEntity.getCzJson());
     }
 
     /**
@@ -48,10 +65,10 @@ public class QuDuanInfoController extends SessionController {
      * @param czId 区段id
      * @return
      */
-    @GetMapping("/chezhan")
+    @GetMapping("/random")
     public Map<String, Object> findLastBycZId(@RequestParam("czId") Integer czId) {
         QuDuanInfoEntityV2 quDuanInfoEntity = quDuanInfoService.findLastBycZId(czId);
-        return ResponseDataUtil.ok("查询区段详情", quDuanInfoEntity);
+        return ResponseDataUtil.ok("查询区段详情成功", quDuanInfoEntity);
     }
 
 
