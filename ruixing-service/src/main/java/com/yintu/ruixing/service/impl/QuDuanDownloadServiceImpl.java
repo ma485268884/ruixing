@@ -1,21 +1,20 @@
 package com.yintu.ruixing.service.impl;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.dao.QuDuanDownloadDao;
-import com.yintu.ruixing.entity.*;
+import com.yintu.ruixing.entity.CheZhanEntity;
+import com.yintu.ruixing.entity.QuDuanDownloadEntity;
+import com.yintu.ruixing.entity.QuDuanInfoEntityV2;
 import com.yintu.ruixing.service.CheZhanService;
-import com.yintu.ruixing.service.QuDuanBaseService;
 import com.yintu.ruixing.service.QuDuanDownloadService;
 import com.yintu.ruixing.service.QuDuanInfoService;
-import org.apache.tomcat.util.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author:mlf
