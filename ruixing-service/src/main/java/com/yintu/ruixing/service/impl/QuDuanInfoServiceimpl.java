@@ -32,12 +32,16 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         return quDuanInfoDaoV2.selectLastByCzId(czId);
     }
 
+    @Override
+    public List<QuDuanInfoEntityV2> findByCzIdAndTime(Integer czId, Date startTime, Date endTime) {
+        return quDuanInfoDaoV2.selectByCzIdAndTime(czId, startTime, endTime);
+    }
+
 
     @Override
     public QuDuanInfoEntityV2 findLastByQid(Integer qid) {
         return quDuanInfoDaoV2.selectLastByQid(qid);
     }
-
 
 
     @Override

@@ -6,7 +6,9 @@ import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.entity.QuDuanDownloadEntity;
+import com.yintu.ruixing.service.CheZhanService;
 import com.yintu.ruixing.service.QuDuanDownloadService;
+import com.yintu.ruixing.service.QuDuanInfoService;
 import com.yintu.ruixing.websocket.SessionInfo;
 import com.yintu.ruixing.websocket.WebSocketServer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +24,17 @@ import java.util.Map;
  * @date:2020/6/8 15:36
  */
 @RestController
-@RequestMapping("/downloads")
+@RequestMapping("/quduan/info/downloads")
 public class QuDuanDownloadController extends SessionController {
     @Autowired
     private QuDuanDownloadService quDuanDownloadService;
+
     @Autowired
     private WebSocketServer webSocketServer;
 
     @PostMapping
     public Map<String, Object> add(
-            @RequestParam("cid") Integer cid,
+            @RequestParam("czId") Integer czId,
             @RequestParam("type") Short type,
             @RequestParam("startDateTime") Date startDateTime,
             @RequestParam("minute") Integer minute) {
@@ -39,8 +42,8 @@ public class QuDuanDownloadController extends SessionController {
         time.setTime(startDateTime);
         time.add(Calendar.MINUTE, minute);
         Date endDateTime = time.getTime();
-        Integer id = quDuanDownloadService.add(cid, type, startDateTime, endDateTime);
-        webSocketServer.sendMessage(cid, id);
+        Integer id = quDuanDownloadService.add(czId, type, startDateTime, endDateTime);
+        webSocketServer.sendMessage(czId, id);
         return ResponseDataUtil.ok("添加下载记录成功");
     }
 
@@ -51,10 +54,16 @@ public class QuDuanDownloadController extends SessionController {
 
     }
 
-    @GetMapping("/{id}")
-    public Map<String, Object> findById(@PathVariable Integer id) {
-        List<QuDuanBaseEntity> quDuanBaseEntities = quDuanDownloadService.findDataById(id);
-        return ResponseDataUtil.ok("查询下载记录成功", quDuanBaseEntities);
+    /**
+     * 回放接口
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/backdata")
+    public Map<String, Object> findPlayBackDataById(@RequestParam("id") Integer id) {
+        Map<String, Object> map = quDuanDownloadService.findPlayBackDataById(id);
+        return ResponseDataUtil.ok("查询下载记录成功", map);
     }
 
     @GetMapping

@@ -55,7 +55,16 @@ public interface CheZhanDao {
      */
     List<CheZhanEntity> selectByCzName(String czName);
 
+    /**
+     * 按照车站专用id名查询
+     *
+     * @param czId 车站专用id
+     * @return
+     */
+    CheZhanEntity selectByCzId(Integer czId);
+
     List<CheZhanEntity> findallChezhanByName(String czname);
+
 
     Long findchezhanid(long parseLong);
 

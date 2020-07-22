@@ -56,4 +56,12 @@ public interface CheZhanService {
     List<CheZhanEntity> findByCzName(String czName);
 
     List<QuDuanBaseEntity> findQuDuanByCid(Long cid);
+
+    /**
+     * 按照车站专用id名查询
+     *
+     * @param czId 车站专用id
+     * @return
+     */
+    CheZhanEntity findByCzId(Integer czId);
 }
