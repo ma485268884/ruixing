@@ -105,7 +105,7 @@ public class GuZhangStudyController {
         response.addHeader("Cache-Control", "no-cache");
         guZhangStudyService.exportFile(response.getOutputStream(), ids);
     }
-    //故障库查看
+    //根据区段id查看故障库 并分页
     @GetMapping("/findGuZhangKuData/{id}")
     public Map<String, Object> findGuZhangKuDataById(@PathVariable Integer id, Integer page, Integer size) {
 
