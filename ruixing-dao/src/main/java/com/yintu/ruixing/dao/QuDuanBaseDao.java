@@ -52,4 +52,6 @@ public interface QuDuanBaseDao {
     List<QuDuanBaseEntity> findQuDuanByCid(Long cid);
 
     List<QuDuanBaseEntity> findQuDuanByQuDuanYunYingName(String qudunyunyingname);
+
+    Integer findQDid(String quduanname);
 }

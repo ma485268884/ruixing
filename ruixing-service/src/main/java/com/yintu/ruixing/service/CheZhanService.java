@@ -1,6 +1,7 @@
 package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.entity.CheZhanEntity;
+import com.yintu.ruixing.entity.QuDuanBaseEntity;
 
 import java.util.List;
 
@@ -53,4 +54,6 @@ public interface CheZhanService {
      * @return
      */
     List<CheZhanEntity> findByCzName(String czName);
+
+    List<QuDuanBaseEntity> findQuDuanByCid(Long cid);
 }

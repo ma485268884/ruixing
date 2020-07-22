@@ -1,5 +1,6 @@
 package com.yintu.ruixing.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
@@ -40,6 +41,21 @@ public class DataStatsServiceImpl implements DataStatsService {
 
     @Autowired
     private CheZhanDao cheZhanDao;
+
+    @Override
+    public String findQDJsonByCid(Integer cid) {
+        return cheZhanDao.findQDJsonByCid(cid);
+    }
+
+    @Override
+    public String findXDJsonByXid(Integer xid) {
+        return xianDuanDao.findXDJsonByXid(xid);
+    }
+
+    @Override
+    public List<CheZhanEntity> findSomeCheZhanByXid(Integer xid) {
+        return cheZhanDao.findSomeCheZhanByXid(xid);
+    }
 
     @Override
     public List<QuDuanBaseEntity> findQuDuanByQuDuanYunYingName(String qudunyunyingname) {

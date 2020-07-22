@@ -1,6 +1,8 @@
 package com.yintu.ruixing.service.impl;
 
+import com.yintu.ruixing.dao.QuDuanBaseDao;
 import com.yintu.ruixing.dao.QuDuanInfoDao;
+import com.yintu.ruixing.dao.QuDuanInfoDaoV2;
 import com.yintu.ruixing.dao.QuXianDao;
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntity;
@@ -26,6 +28,10 @@ public class QuXianServiceImpl implements QuXianService {
     private QuXianDao quXianDao;
     @Autowired
     private QuDuanInfoDao quDuanInfoDao;
+    @Autowired
+    private QuDuanInfoDaoV2 quDuanInfoDaoV2;
+    @Autowired
+    private QuDuanBaseDao quDuanBaseDao;
 
    /* @Override
     public List<SheBeiEntity> findSheBeiByCid(Integer id) {
@@ -55,8 +61,8 @@ public class QuXianServiceImpl implements QuXianService {
 
 
     @Override
-    public  List<Integer> findQuDuanData(String starttime, String endtime,  String shuxingname, String quduanname) {
-        return quDuanInfoDao.findQuDuanData(starttime,endtime,shuxingname,quduanname);
+    public  List<Integer> findQuDuanData(Long starttime, Long endtime,  String shuxingname, String quduanname,Integer qdid) {
+        return quDuanInfoDaoV2.findQuDuanData(starttime,endtime,shuxingname,quduanname,qdid);
     }
 
     @Override
@@ -67,6 +73,11 @@ public class QuXianServiceImpl implements QuXianService {
     @Override
     public List<String> findShuXingName(Integer[] shuxingId) {
         return quXianDao.findShuXingName(shuxingId);
+    }
+
+    @Override
+    public Integer findQDid(String quduanname) {
+        return quDuanBaseDao.findQDid(quduanname);
     }
 
     @Override

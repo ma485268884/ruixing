@@ -2,10 +2,12 @@ package com.yintu.ruixing.controller;
 
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.CheZhanEntity;
+import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.service.CheZhanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,7 +43,12 @@ public class CheZhanController {
     //删除车站
     @DeleteMapping("/delCheZhan/{cid}")
     public Map<String,Object>delCheZhan(@PathVariable Long cid){
-        cheZhanService.delCheZhan(cid);
-        return ResponseDataUtil.ok("删除车站成功");
+        List<QuDuanBaseEntity>quDuanBaseEntityList=cheZhanService.findQuDuanByCid(cid);
+        if (quDuanBaseEntityList.size()==0){
+            cheZhanService.delCheZhan(cid);
+            return ResponseDataUtil.ok("删除车站成功");
+        }else {
+            return ResponseDataUtil.error("此车站不能删除");
+        }
     }
 }

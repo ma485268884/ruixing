@@ -1,6 +1,7 @@
 package com.yintu.ruixing.service;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.entity.*;
 
@@ -117,4 +118,10 @@ public interface DataStatsService {
     List<DianWuDuanEntity> findDianWuDuanBydid(long parseLong);
 
     List<QuDuanBaseEntity> findQuDuanByQuDuanYunYingName(String qudunyunyingname);
+
+    List<CheZhanEntity> findSomeCheZhanByXid(Integer xid);
+
+    String findXDJsonByXid(Integer xid);
+
+    String findQDJsonByCid(Integer cid);
 }

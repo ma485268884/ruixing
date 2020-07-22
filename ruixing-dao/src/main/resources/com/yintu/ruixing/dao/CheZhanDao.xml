@@ -138,6 +138,56 @@
     </update>
 -->
 
+    <!---->
+    <select id="findQDJsonByCid" resultType="java.lang.String">
+        select cz_json from mro_chezhan where cid=#{cid}
+    </select>
+    <!--新增线段配置 根据线段xid 查询此线段下的所有车站数据-->
+    <select id="findSomeCheZhanByXid" parameterType="java.lang.Integer" resultMap="chezhan">
+       SELECT
+            cid,
+            cz_id,
+            cz_name,
+            cz_name_jiancheng,
+            cz_type,
+            cz_duantou,
+            linzhan1ID,
+            linzhan1Name,
+            linzhan1LineType,
+            linzhan1OfXianDuan,
+            linzhan1IsNoBenDWD,
+            linzhan2ID,
+            linzhan2Name,
+            linzhan2LineType,
+            linzhan2OfXianDuan,
+            linzhan2IsNoBenDWD,
+            linzhan3ID,
+            linzhan3Name,
+            linzhan3LineType,
+            linzhan3OfXianDuan,
+            linzhan3IsNoBenDWD,
+            linzhan4ID,
+            linzhan4Name,
+            linzhan4LineType,
+            linzhan4OfXianDuan,
+            linzhan4IsNoBenDWD,
+            linzhan5ID,
+            linzhan5Name,
+            linzhan5LineType,
+            linzhan5OfXianDuan,
+            linzhan5IsNoBenDWD,
+            linzhan6ID,
+            linzhan6Name,
+            linzhan6LineType,
+            linzhan6OfXianDuan,
+            linzhan6IsNoBenDWD
+        FROM
+            mro_chezhan
+        WHERE
+            xd_cz_id = 164
+        ORDER BY
+            cid
+    </select>
     <!--根据车站专用id 查询线段id  也就是线段和车站的外键xd_cz_id-->
     <select id="findxianduanid" resultType="java.lang.Integer">
         select xd_cz_id from mro_chezhan where cz_id=#{parseLong}
