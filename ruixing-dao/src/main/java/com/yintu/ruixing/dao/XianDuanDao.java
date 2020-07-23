@@ -1,5 +1,6 @@
 package com.yintu.ruixing.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.entity.XianDuanEntity;
 
 import java.util.List;
@@ -27,4 +28,6 @@ public interface XianDuanDao {
     List<XianDuanEntity> findAllXianDuanByName(String xdname);
 
 	List<XianDuanEntity> findAllXianDuanByDwdid(long parseLong);
+
+    String findXDJsonByXid(Integer xid);
 }

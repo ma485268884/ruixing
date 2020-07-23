@@ -1,7 +1,9 @@
 package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.dao.CheZhanDao;
+import com.yintu.ruixing.dao.QuDuanBaseDao;
 import com.yintu.ruixing.entity.CheZhanEntity;
+import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.service.CheZhanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class CheZhanServiceImpl implements CheZhanService {
 
     @Autowired
     private CheZhanDao cheZhanDao;
+
+    @Autowired
+    private QuDuanBaseDao quDuanBaseDao;
 
     @Override
     public void add(CheZhanEntity cheZhanEntity) {
@@ -49,6 +54,11 @@ public class CheZhanServiceImpl implements CheZhanService {
     @Override
     public List<CheZhanEntity> findAll() {
         return cheZhanDao.selectAll();
+    }
+
+    @Override
+    public List<QuDuanBaseEntity> findQuDuanByCid(Long cid) {
+        return quDuanBaseDao.findQuDuanByCid(cid);
     }
 
     @Override

@@ -105,8 +105,12 @@ public class QuXianController {
         }
         map.put("shijian", list);
         js.put("shijian", list);
-        String starttime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(startTime);//把开始时间转换格式
-        String endtime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(endTime);//把结束时间转换格式
+        //String starttime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(startTime);//把开始时间转换格式
+        long starttime = startTime.getTime()/1000;
+        //System.out.println("starttime"+starttime);
+        //String endtime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(endTime);//把结束时间转换格式
+        long endtime = endTime.getTime()/1000;
+        //System.out.println("endtime"+endtime);
         List<String> sqlname = quXianService.findShuXingName(shuxingId);//获取区段属性的英文名
         List<String>name=quXianService.findShuXingHanZiName(shuxingId);//获取区段属性的中文名
         System.out.println("11111" + sqlname);
@@ -118,7 +122,8 @@ public class QuXianController {
             String shuxingname = sqlname.get(i);
             System.out.println("123=" + quduanName[i]);//获得每一个区段名
             String quduanname = quduanName[i];
-            List<Integer> date = quXianService.findQuDuanData(starttime, endtime, shuxingname, quduanname);
+            Integer qdid=quXianService.findQDid(quduanname);
+            List<Integer> date = quXianService.findQuDuanData(starttime, endtime, shuxingname, quduanname,qdid);
             map.put("shuju" + k.toString(), date);
             js.put("shuju" + k.toString(), date);
             js.put("mingzi" + k.toString(), name.get(i));
@@ -126,5 +131,15 @@ public class QuXianController {
         return ResponseDataUtil.ok("查询数据成功", js);
     }
 
+    public static void main(String[] args) {
+            long value=     1595304033*1000L;//1595303879  2020-07-21 11:57:59     1595304033  2020-07-21 12:00:33
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
+            String time = format.format(new Date(value)) ;
+            System.out.println(time);
 
+            Date date=new Date();
+        long time1 = date.getTime();
+        System.out.println(time1);
+
+    }
 }

@@ -69,4 +69,8 @@ public interface CheZhanDao {
     Long findchezhanid(long parseLong);
 
     Integer findxianduanid(long parseLong);
+
+    List<CheZhanEntity> findSomeCheZhanByXid(Integer xid);
+
+    String findQDJsonByCid(Integer cid);
 }

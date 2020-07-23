@@ -507,6 +507,38 @@ public class DataStatsController {
         return ResponseDataUtil.ok("清除车站成功");
     }
 
+    //新增线段配置 根据线段xid 查询此线段下的所有车站数据
+    @GetMapping("/findSomeCheZhanByXid/{xid}")
+    public Map<String,Object>findSomeCheZhanByXid(@PathVariable Integer xid){
+        JSONObject js=new JSONObject();
+        List<CheZhanEntity>cheZhanEntities=dataStatsService.findSomeCheZhanByXid(xid);
+        js.put("chezhan",cheZhanEntities);
+        return ResponseDataUtil.ok("查询对应车站数据成功",js);
+    }
+
+    //新增车站配置  根据车站cid  查询此车站下的所有区段数据
+    @GetMapping("/findSomeQuDuanByCid/{cid}")
+    public Map<String,Object>findSomeQuDuanByCid(@PathVariable Long cid){
+        JSONObject js=new JSONObject();
+        List<QuDuanBaseEntity> quDuanBaseEntityList=dataStatsService.findQuDuanByCid(cid);
+        js.put("quDuan",quDuanBaseEntityList);
+        return ResponseDataUtil.ok("查询对应的区段数据成功",js);
+    }
+
+    //根据线段xid 查询此线段下的线段配置json数据
+    @GetMapping("/findXDJsonByXid/{xid}")
+    public Map<String,Object>findXDJsonByXid(@PathVariable Integer xid){
+        String xdJson=dataStatsService.findXDJsonByXid(xid);
+        //js.put("xdJson",xdJson);
+        return ResponseDataUtil.ok("查询线段的json数据成功",xdJson);
+    }
+
+    //根据车站cid 查询此车站下的区段配置json数据
+    @GetMapping("/findQDJsonByCid/{cid}")
+    public Map<String,Object>findQDJsonByCid(@PathVariable Integer cid){
+        String qdJson=dataStatsService.findQDJsonByCid(cid);
+        return ResponseDataUtil.ok("查询区段的json数据成功",qdJson);
+    }
     //查询所有的铁路局的名字  和 id
     @GetMapping("/findAllTieLuJu")
     public Map<String, Object> findAllTieLuJu() {

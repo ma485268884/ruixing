@@ -30,6 +30,7 @@
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="parent_id" jdbcType="INTEGER" property="parentId" />
         <result column="line_id" jdbcType="INTEGER" property="lineId" />
+        <result column="qdid" jdbcType="INTEGER" property="qdid" />
         <result column="zongHe_id" jdbcType="VARCHAR" property="zongheId" />
         <result column="quDuanSheJi_name" jdbcType="VARCHAR" property="quduanshejiName" />
         <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName" />
@@ -59,7 +60,8 @@
     <select id="findQuDuanById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
           SELECT
             qb.quDuanYunYing_name,
-            qb.id
+            qb.id,
+            qb.qdid
           FROM
             mro_quduan_base qb
           WHERE

@@ -1,6 +1,7 @@
 package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.dao.QuDuanInfoDao;
+import com.yintu.ruixing.dao.QuDuanInfoDaoV2;
 import com.yintu.ruixing.dao.ZhanNeiDao;
 import com.yintu.ruixing.entity.CheZhanEntity;
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
@@ -26,6 +27,9 @@ public class ZhanNeiServiceImpl implements ZhanNeiService {
     @Autowired
     private QuDuanInfoDao quDuanInfoDao;
 
+    @Autowired
+    private QuDuanInfoDaoV2 quDuanInfoDaoV2;
+
     @Override
     public List<QuDuanBaseEntity> findAllDianMaHua(Long id) {
         return zhanNeiDao.findAllDianMaHua(id);
@@ -43,7 +47,7 @@ public class ZhanNeiServiceImpl implements ZhanNeiService {
 
     @Override
     public List<QuDuanInfoEntity> findDianMaHuaDatabById(Integer id) {
-        return quDuanInfoDao.findDianMaHuaDatabById(id);
+        return quDuanInfoDaoV2.findDianMaHuaDatabById(id);
     }
 
     @Override
