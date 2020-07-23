@@ -39,11 +39,11 @@ public class QuDuanInfoController extends SessionController {
     @GetMapping("/base")
     public Map<String, Object> findJsonConfigByCid(@RequestParam("czId") Integer czId) {
         CheZhanEntity cheZhanEntity = cheZhanService.findByCzId(czId);
-        return ResponseDataUtil.ok("查询区段基础信息列表", cheZhanEntity);
+        return ResponseDataUtil.ok("查询区段基础信息列表", cheZhanEntity.getCzJson());
     }
 
     /**
-     * 按照车站随机取出一条区段性情
+     * 按照车站随机取出一条区段详情
      *
      * @param czId 区段id
      * @return
