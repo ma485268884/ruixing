@@ -14,8 +14,6 @@ public interface QuDuanDownloadDao {
 
     QuDuanDownloadEntity selectByPrimaryKey(Integer id);
 
-    List<QuDuanDownloadEntity> selectAll();
-
     List<QuDuanDownloadEntity> selectByDateTime(Date startDateTime, Date endDateTime);
 
     int updateByPrimaryKeySelective(QuDuanDownloadEntity record);

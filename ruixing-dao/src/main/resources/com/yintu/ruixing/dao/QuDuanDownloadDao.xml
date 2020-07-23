@@ -18,23 +18,7 @@
         from mro_quduan_download
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <select id="selectAll" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from mro_quduan_download qd inner join mro_chezhan cz on qd.cid=cz.cid
-    </select>
 
-    <select id="selectByDateTime" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from mro_quduan_download qd inner join mro_chezhan cz on qd.cid=cz.cid
-        <where>
-            <if test="startDateTime!=null and endDateTime!=null">
-                qd.start_time &gt;= #{startDateTime,jdbcType=TIMESTAMP} and qd.end_time &lt;=
-                #{endDateTime,jdbcType=TIMESTAMP}
-            </if>
-        </where>
-    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from mro_quduan_download
@@ -118,4 +102,33 @@
             type       = #{type,jdbcType=SMALLINT}
         where id = #{id,jdbcType=INTEGER}
     </update>
+    <resultMap id="MuchResultMap" type="com.yintu.ruixing.entity.QuDuanDownloadEntity">
+        <id column="qd_id" jdbcType="INTEGER" property="id"/>
+        <result column="qb_cid" jdbcType="INTEGER" property="cid"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="status" jdbcType="SMALLINT" property="status"/>
+        <result column="type" jdbcType="SMALLINT" property="type"/>
+        <association column="qb_cid" property="cheZhanEntity">
+            <id column="cz_cid" jdbcType="INTEGER" property="cid"/>
+            <result column="cz_id" jdbcType="INTEGER" property="czId"/>
+            <result column="cz_name" jdbcType="VARCHAR" property="czName"/>
+        </association>
+    </resultMap>
+    <sql id="Much_Column_List">
+        qd.id as qd_id, qd.cid as qb_cid, qd.start_time, qd.end_time,qd.status, qd.type,
+        cz.cid as cz_cid ,cz.cz_id,cz.cz_name
+    </sql>
+
+    <select id="selectByDateTime" resultMap="MuchResultMap">
+        select
+        <include refid="Much_Column_List"/>
+        from mro_quduan_download qd inner join mro_chezhan cz on qd.cid=cz.cz_id
+        <where>
+            <if test="startDateTime!=null and endDateTime!=null">
+                qd.start_time &gt;= #{startDateTime,jdbcType=TIMESTAMP} and qd.end_time &lt;=
+                #{endDateTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
 </mapper>

@@ -15,12 +15,11 @@ import java.util.Map;
  */
 public interface QuDuanDownloadService extends BaseService<QuDuanDownloadEntity, Integer> {
 
-    List<QuDuanDownloadEntity> findAll();
-
-    List<QuDuanDownloadEntity> findByDateTime(Date startDateTime, Date endDateTime);
 
     Integer add(Integer czId, Short type, Date startDateTime, Date endDateTime);
 
     Map<String, Object> findPlayBackDataById(Integer id);
+
+    List<QuDuanDownloadEntity> findByDateTime(Date startDateTime, Date endDateTime);
 
 }

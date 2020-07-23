@@ -32,7 +32,6 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
     @Autowired
     private QuDuanInfoService quDuanInfoService;
 
-    private final ExecutorService executorService = Executors.newFixedThreadPool(3);
 
     @Override
     public void add(QuDuanDownloadEntity quDuanDownloadEntity) {
@@ -54,10 +53,6 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
         return quDuanDownloadDao.selectByPrimaryKey(id);
     }
 
-    @Override
-    public List<QuDuanDownloadEntity> findAll() {
-        return quDuanDownloadDao.selectAll();
-    }
 
     @Override
     public List<QuDuanDownloadEntity> findByDateTime(Date startDateTime, Date endDateTime) {
@@ -88,34 +83,6 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
         map.put("quDuanBaseJsonData", quDuanBaseJsonData);
         map.put("quDuanInfoEntityV2s", quDuanInfoEntityV2s);
         return map;
-    }
-
-
-    //异步更新数据
-    public static class QuDuanInfoRunnable implements Runnable {
-
-        private final QuDuanDownloadService quDuanDownloadService;
-        private final Integer id;
-
-        private QuDuanInfoRunnable(QuDuanDownloadService quDuanDownloadService, Integer id) {
-            this.quDuanDownloadService = quDuanDownloadService;
-            this.id = id;
-        }
-
-        @Override
-        public void run() {
-            QuDuanDownloadEntity quDuanDownloadEntity = quDuanDownloadService.findById(id);
-            if (quDuanDownloadEntity != null) {
-                Integer cid = quDuanDownloadEntity.getCid();
-                Date startDateTime = quDuanDownloadEntity.getStartTime();
-                Date endDateTime = quDuanDownloadEntity.getEndTime();
-                List<Integer> quDuanInfoIds = null;
-                JSONArray ja = (JSONArray) JSONArray.toJSON(quDuanInfoIds);
-                quDuanDownloadEntity.setStatus((short) 1);
-                quDuanDownloadService.edit(quDuanDownloadEntity);
-            }
-        }
-
     }
 
 }
