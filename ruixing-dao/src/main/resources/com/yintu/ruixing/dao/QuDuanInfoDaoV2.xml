@@ -251,13 +251,8 @@
         </association>
     </resultMap>
     <select id="findDianMaHuaDatabById" resultMap="quduanBaseResultMap" parameterType="java.lang.Integer">
-        SELECT qb. typeid ,
-              /* qi.Design_carrier,*/
-               qi.v3 V_out_zhu,
-               qi.v9 V_out_bei,
-               qi.v4 mA_out_zhu,
         SELECT qb.typeid,
-               qi.Design_carrier,
+               /*qi.Design_carrier,*/
                qi.v3  V_out_zhu,
                qi.v9  V_out_bei,
                qi.v4  mA_out_zhu,
