@@ -177,7 +177,7 @@
         <result column="qid" jdbcType="INTEGER" property="qid"/>
         <result column="cid" jdbcType="INTEGER" property="cid"/>
         <result column="sid" jdbcType="INTEGER" property="sid"/>
-        <result column="typeid" jdbcType="INTEGER" property="typeid"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
         <result column="data_zhengChang" jdbcType="INTEGER" property="dataZhengchang"/>
         <result column="Design_carrier" jdbcType="VARCHAR" property="designCarrier"/>
         <result column="direction" jdbcType="VARCHAR" property="direction"/>
@@ -251,7 +251,8 @@
         </association>
     </resultMap>
     <select id="findDianMaHuaDatabById" resultMap="quduanBaseResultMap" parameterType="java.lang.Integer">
-        SELECT qb.typeid,
+            SELECT
+               qi.type,
                /*qi.Design_carrier,*/
                qi.v3  V_out_zhu,
                qi.v9  V_out_bei,
@@ -268,13 +269,13 @@
                /*qi.FBJ_collection_zhu,
                qi.FBJ_collection_bei,*/
                sb.sb_name
-        FROM data_applydata qi,
-             mro_shebei sb,
-             mro_quduan_base qb
-        WHERE sb.id = qb.sid
-          AND qi.v1 = qb.qdid
-          AND qi.v1 = #{id}
-        GROUP BY sb.sb_name
+            FROM data_applydata qi,
+                 mro_shebei sb,
+                 mro_quduan_base qb
+            WHERE sb.id = qb.sid
+              AND qi.v1 = qb.qdid
+              AND qb.id = #{id}
+            GROUP BY sb.sb_name
     </select>
 
 
