@@ -3,6 +3,7 @@ package com.yintu.ruixing.service.impl;
 import com.yintu.ruixing.common.util.ExportExcelUtil;
 import com.yintu.ruixing.dao.GuZhangStudyDao;
 import com.yintu.ruixing.dao.QuDuanInfoDao;
+import com.yintu.ruixing.dao.QuDuanInfoDaoV2;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.GuZhangStudyService;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -30,6 +31,8 @@ public class GuZhangStudyServiceImpl implements GuZhangStudyService {
     @Autowired
     private QuDuanInfoDao quDuanInfoDao;
 
+    @Autowired
+    private QuDuanInfoDaoV2 quDuanInfoDaoV2;
     @Override //1
     public List<GuZhangStudyEntity> findGuZhangList(Integer page, Integer size) {
         return guZhangStudyDao.findGuZhangList();
@@ -95,7 +98,7 @@ public class GuZhangStudyServiceImpl implements GuZhangStudyService {
     @Override
     public List<QuDuanInfoEntity> findGuZhangKuData(Integer id, Integer page, Integer size) {
 
-        List<QuDuanInfoEntity> quDuanInfoEntities= quDuanInfoDao.findGuZhangKuData(id);
+        List<QuDuanInfoEntity> quDuanInfoEntities= quDuanInfoDaoV2.findGuZhangKuData(id);
 
         return quDuanInfoEntities;
     }
