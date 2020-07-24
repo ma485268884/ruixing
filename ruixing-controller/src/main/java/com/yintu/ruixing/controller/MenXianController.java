@@ -7,6 +7,7 @@ import com.yintu.ruixing.entity.MenXianEntity;
 import com.yintu.ruixing.service.MenXianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class MenXianController extends SessionController {
 
 
     @PostMapping
-    public Map<String, Object> add(MenXianEntity menXianEntity) {
+    public Map<String, Object> add(@Validated MenXianEntity menXianEntity) {
         Assert.notNull(menXianEntity.getQuduanId(), "区段id不能为空");
         Assert.notNull(menXianEntity.getPropertyId(), "属性id不能为空");
         menXianService.add(menXianEntity);
@@ -38,7 +39,7 @@ public class MenXianController extends SessionController {
     }
 
     @PutMapping("/{id}")
-    public Map<String, Object> edit(@PathVariable Integer id, MenXianEntity menXianEntity) {
+    public Map<String, Object> edit(@PathVariable Integer id, @Validated MenXianEntity menXianEntity) {
         Assert.notNull(menXianEntity.getQuduanId(), "区段id不能为空");
         Assert.notNull(menXianEntity.getPropertyId(), "属性id不能为空");
         menXianService.edit(menXianEntity);
