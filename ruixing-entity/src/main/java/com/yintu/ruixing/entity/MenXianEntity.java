@@ -36,7 +36,7 @@ public class MenXianEntity implements Serializable {
     @NotBlank
     private String outburstValueUnit;
 
-    private QuDuanInfoEntity quDuanInfoEntity;
+    private QuDuanBaseEntity quDuanBaseEntity;
 
     private MenXianPropertyEntity menXianPropertyEntity;
 }

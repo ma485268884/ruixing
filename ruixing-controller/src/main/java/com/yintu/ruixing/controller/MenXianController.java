@@ -55,13 +55,8 @@ public class MenXianController extends SessionController {
     @GetMapping
     public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber,
                                        @RequestParam("page_size") Integer pageSize,
-                                       @RequestParam(value = "sortby", required = false) String sortby,
-                                       @RequestParam(value = "order", required = false) String order,
-                                       @RequestParam Integer[] propertyIds) {
-        String tableName = "m.";
-        String orderBy = tableName + "id DESC";
-        if (sortby != null && !"".equals(sortby) && order != null && !"".equals(order))
-            orderBy = tableName + sortby + " " + order;
+                                       @RequestParam(value = "order_by", required = false, defaultValue = "m.id DESC") String orderBy,
+                                       @RequestParam(value = "propertyIds", required = false) Integer[] propertyIds) {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<MenXianEntity> menXianEntities = menXianService.findByPropertyIds(propertyIds);
         PageInfo<MenXianEntity> pageInfo = new PageInfo<>(menXianEntities);
