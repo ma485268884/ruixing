@@ -20,4 +20,8 @@ public class AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity {
 
     private String yuliu2;
 
+    private AnZhuangTiaoShiWorkNameTotalEntity anZhuangTiaoShiWorkNameTotalEntity;
+
+    private AnZhuangTiaoShiWorkNameLibraryEntity anZhuangTiaoShiWorkNameLibraryEntity;
+
 }

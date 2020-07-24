@@ -28,6 +28,28 @@ public class AnZhuangTiaoShiWorkNameTotalServiceImpl implements AnZhuangTiaoShiW
     private AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalDao anZhuangTiaoShiWorkNameLibraryShiWorkNameTotalDao;
 
     @Override
+    public List<AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity> findWorkNameByWorkname(String workname, Integer page, Integer size) {
+        return anZhuangTiaoShiWorkNameLibraryShiWorkNameTotalDao.findWorkNameByWorkname(workname);
+    }
+
+    @Override
+    public void deleteWorkNameByIds(Integer[] ids) {
+        for (int i = 0; i < ids.length; i++) {
+            anZhuangTiaoShiWorkNameLibraryShiWorkNameTotalDao.deleteByPrimaryKey(ids[i]);
+        }
+    }
+
+    @Override
+    public void editWorkNameById(AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity anZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity) {
+        anZhuangTiaoShiWorkNameLibraryShiWorkNameTotalDao.updateByPrimaryKeySelective(anZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity);
+    }
+
+    @Override
+    public List<AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity> findWorkNameById(Integer id, Integer page, Integer size) {
+        return anZhuangTiaoShiWorkNameLibraryShiWorkNameTotalDao.findWorkNameById(id);
+    }
+
+    @Override
     public void addWorkNameEdition(AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity anZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity,Integer[] wnlids) {
         for (int i = 0; i < wnlids.length; i++) {
             anZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity.setWnlid(wnlids[i]);
@@ -47,7 +69,14 @@ public class AnZhuangTiaoShiWorkNameTotalServiceImpl implements AnZhuangTiaoShiW
 
     @Override
     public List<AnZhuangTiaoShiWorkNameTotalEntity> findWorkNameTotal(Integer page, Integer size, String workname) {
-        return anZhuangTiaoShiWorkNameTotalDao.findWorkNameTotal(workname);
+        List<AnZhuangTiaoShiWorkNameTotalEntity> workNameTotalEntities=anZhuangTiaoShiWorkNameTotalDao.findWorkNameTotal(workname);
+        for (AnZhuangTiaoShiWorkNameTotalEntity workNameTotalEntity : workNameTotalEntities) {
+            Integer id = workNameTotalEntity.getId();
+            //查找此作业项配置版本有多少个作业项
+            Integer worknametotal=anZhuangTiaoShiWorkNameLibraryShiWorkNameTotalDao.findWorkNameTatol(id);
+            workNameTotalEntity.setWorknametotal(worknametotal);
+        }
+        return workNameTotalEntities;
     }
 
     @Override

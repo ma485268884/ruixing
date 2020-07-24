@@ -17,6 +17,8 @@ public class AnZhuangTiaoShiWorkNameTotalEntity {
 
     private Date endtime;
 
+    private Integer worknametotal;
+
     private String yuliu1;
 
     private String yuliu2;

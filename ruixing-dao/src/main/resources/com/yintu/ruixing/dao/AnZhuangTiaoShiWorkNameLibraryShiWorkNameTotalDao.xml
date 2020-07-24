@@ -8,6 +8,14 @@
     <result column="work_state" jdbcType="INTEGER" property="workState" />
     <result column="yuliu1" jdbcType="VARCHAR" property="yuliu1" />
     <result column="yuliu2" jdbcType="VARCHAR" property="yuliu2" />
+    <association property="anZhuangTiaoShiWorkNameTotalEntity" javaType="AnZhuangTiaoShiWorkNameTotalEntity">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="worknamesall" jdbcType="VARCHAR" property="worknamesall" />
+    </association>
+    <association property="anZhuangTiaoShiWorkNameLibraryEntity" javaType="AnZhuangTiaoShiWorkNameLibraryEntity">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="workname" jdbcType="VARCHAR" property="workname" />
+    </association>
   </resultMap>
   <sql id="Base_Column_List">
     id, wntid, wnlid, work_state, yuliu1, yuliu2
@@ -18,10 +26,39 @@
     from mro_anzhuangtiaoshi_worknamelibrary_worknametotal
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <!--根据作业项配置版本id  查找此作业项配置版本有多少个作业项-->
+  <select id="findWorkNameTatol" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT
+        COUNT( wnlid )
+    FROM
+        mro_anzhuangtiaoshi_worknamelibrary_worknametotal
+    WHERE
+        wntid =#{id}
+  </select>
+  <!--根据作业项的名称  进行模糊查询-->
+  <select id="findWorkNameByWorkname" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+        aww.id,
+        awt.worknamesall,
+        awl.workname,
+        aww.work_state
+    FROM
+        mro_anzhuangtiaoshi_worknametotal awt,
+        mro_anzhuangtiaoshi_worknamelibrary awl,
+        mro_anzhuangtiaoshi_worknamelibrary_worknametotal aww
+    WHERE
+        awt.id = aww.wntid
+        AND awl.id = aww.wnlid
+        AND awl.workname LIKE concat('%',#{workname},'%')
+  </select>
+
+  <!--根据id  删除版本里面的作业项数据-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from mro_anzhuangtiaoshi_worknamelibrary_worknametotal
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.yintu.ruixing.entity.AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity">
     insert into mro_anzhuangtiaoshi_worknamelibrary_worknametotal (id, wntid, wnlid, 
       work_state, yuliu1, yuliu2
@@ -30,6 +67,25 @@
       #{workState,jdbcType=INTEGER}, #{yuliu1,jdbcType=VARCHAR}, #{yuliu2,jdbcType=VARCHAR}
       )
   </insert>
+
+  <!--根据作业项配置版本id 查看对应的作业项-->
+  <select id="findWorkNameById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+        aww.id,
+        awt.worknamesall,
+        awl.workname,
+        aww.work_state
+    FROM
+        mro_anzhuangtiaoshi_worknametotal awt,
+        mro_anzhuangtiaoshi_worknamelibrary awl,
+        mro_anzhuangtiaoshi_worknamelibrary_worknametotal aww
+    WHERE
+        awt.id = aww.wntid
+        AND awl.id = aww.wnlid
+        AND awt.id =#{id}
+  </select>
+
+  <!--在对应的作业项配置版本下  添加作业项-->
   <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity">
     insert into mro_anzhuangtiaoshi_worknamelibrary_worknametotal
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -73,6 +129,8 @@
       </if>
     </trim>
   </insert>
+
+  <!--根据id  编辑对应的作业项-->
   <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity">
     update mro_anzhuangtiaoshi_worknamelibrary_worknametotal
     <set>
@@ -94,6 +152,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity">
     update mro_anzhuangtiaoshi_worknamelibrary_worknametotal
     set wntid = #{wntid,jdbcType=INTEGER},

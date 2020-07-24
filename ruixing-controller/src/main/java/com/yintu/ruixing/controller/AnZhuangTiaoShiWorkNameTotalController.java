@@ -53,7 +53,6 @@ public class AnZhuangTiaoShiWorkNameTotalController {
         anZhuangTiaoShiWorkNameTotalService.deleteWorkNameTotalByIds(ids);
         return ResponseDataUtil.ok("删除成功");
     }
-
 //////////////////////////////作业项配置版本/////////////////////////////////////
 
     // 在对应的作业项配置版本下  添加作业项
@@ -63,10 +62,35 @@ public class AnZhuangTiaoShiWorkNameTotalController {
         return ResponseDataUtil.ok("添加成功");
     }
 
-   /* //根据作业项配置版本id 查看对应的作业项
+    //根据作业项配置版本id 查看对应的作业项
     @GetMapping("/findWorkNameById/{id}")
     public Map<String,Object>findWorkNameById(@PathVariable Integer id ,Integer page,Integer size){
         PageHelper.startPage(page,size);
-        List<aztswnt>
-    }*/
+        List<AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity> workNameTotalEntities=anZhuangTiaoShiWorkNameTotalService.findWorkNameById(id,page,size);
+        PageInfo<AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity> workNameTotalEntityPageInfo=new PageInfo<>(workNameTotalEntities);
+        return ResponseDataUtil.ok("查询版本下的作业项成功",workNameTotalEntityPageInfo);
+    }
+
+    //根据id  编辑对应的作业项
+    @PutMapping("/editWorkNameById/{id}")
+    public Map<String,Object>editWorkNameById(@PathVariable Integer id,AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity anZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity){
+        anZhuangTiaoShiWorkNameTotalService.editWorkNameById(anZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity);
+        return ResponseDataUtil.ok("编辑成功");
+    }
+
+    //根据id  批量或者单个删除作业项数据
+    @DeleteMapping("/deleteWorkNameByIds/{ids}")
+    public Map<String,Object>deleteWorkNameByIds(@PathVariable Integer[] ids ){
+        anZhuangTiaoShiWorkNameTotalService.deleteWorkNameByIds(ids);
+        return ResponseDataUtil.ok("删除成功");
+    }
+
+    //根据作业项的名称  进行模糊查询
+    @GetMapping("/findWorkNameByWorkname")
+    public Map<String,Object>findWorkNameByWorkname(String workname,Integer page,Integer size){
+        PageHelper.startPage(page,size);
+        List<AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity> workNameTotalEntities=anZhuangTiaoShiWorkNameTotalService.findWorkNameByWorkname(workname,page,size);
+        PageInfo<AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity> workNameTotalEntityPageInfo=new PageInfo<>(workNameTotalEntities);
+        return ResponseDataUtil.ok("查询对应的作业项成功",workNameTotalEntityPageInfo);
+    }
 }
