@@ -184,7 +184,7 @@
         FROM
             mro_chezhan
         WHERE
-            xd_cz_id = 164
+            xd_cz_id = #{xid}
         ORDER BY
             cid
     </select>
