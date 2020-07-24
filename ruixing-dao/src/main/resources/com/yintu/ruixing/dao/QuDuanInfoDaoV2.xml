@@ -119,7 +119,6 @@
             <result column="daoChaGuanLianQuDuan2_ID" jdbcType="VARCHAR" property="daochaguanlianquduan2Id"/>
             <result column="dianMaHuaGuiHao" jdbcType="VARCHAR" property="dianmahuaguihao"/>
             <result column="guiNeiDiZhi" jdbcType="INTEGER" property="guineidizhi"/>
-            <result column="time" jdbcType="TIMESTAMP" property="time"/>
             <result column="yuliu" jdbcType="VARCHAR" property="yuliu"/>
         </association>
     </resultMap>

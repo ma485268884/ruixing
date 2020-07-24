@@ -7,6 +7,7 @@ import com.yintu.ruixing.entity.MenXianEntity;
 import com.yintu.ruixing.service.MenXianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class MenXianController extends SessionController {
 
 
     @PostMapping
-    public Map<String, Object> add(MenXianEntity menXianEntity) {
+    public Map<String, Object> add(@Validated MenXianEntity menXianEntity) {
         Assert.notNull(menXianEntity.getQuduanId(), "区段id不能为空");
         Assert.notNull(menXianEntity.getPropertyId(), "属性id不能为空");
         menXianService.add(menXianEntity);
@@ -38,7 +39,7 @@ public class MenXianController extends SessionController {
     }
 
     @PutMapping("/{id}")
-    public Map<String, Object> edit(@PathVariable Integer id, MenXianEntity menXianEntity) {
+    public Map<String, Object> edit(@PathVariable Integer id, @Validated MenXianEntity menXianEntity) {
         Assert.notNull(menXianEntity.getQuduanId(), "区段id不能为空");
         Assert.notNull(menXianEntity.getPropertyId(), "属性id不能为空");
         menXianService.edit(menXianEntity);
@@ -54,13 +55,8 @@ public class MenXianController extends SessionController {
     @GetMapping
     public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber,
                                        @RequestParam("page_size") Integer pageSize,
-                                       @RequestParam(value = "sortby", required = false) String sortby,
-                                       @RequestParam(value = "order", required = false) String order,
-                                       @RequestParam Integer[] propertyIds) {
-        String tableName = "m.";
-        String orderBy = tableName + "id DESC";
-        if (sortby != null && !"".equals(sortby) && order != null && !"".equals(order))
-            orderBy = tableName + sortby + " " + order;
+                                       @RequestParam(value = "order_by", required = false, defaultValue = "m.id DESC") String orderBy,
+                                       @RequestParam(value = "propertyIds", required = false) Integer[] propertyIds) {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<MenXianEntity> menXianEntities = menXianService.findByPropertyIds(propertyIds);
         PageInfo<MenXianEntity> pageInfo = new PageInfo<>(menXianEntities);

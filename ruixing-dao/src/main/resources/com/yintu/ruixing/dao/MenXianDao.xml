@@ -5,7 +5,7 @@
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="quduan_id" jdbcType="INTEGER" property="quduanId"/>
         <result column="property_id" jdbcType="INTEGER" property="propertyId"/>
-        <result column="measured_value" jdbcType="INTEGER" property="measuredValue"/>
+        <result column="measured_value" jdbcType="VARCHAR" property="measuredValue"/>
         <result column="measured_value_unit" jdbcType="VARCHAR" property="measuredValueUnit"/>
         <result column="superior_limit_value" jdbcType="INTEGER" property="superiorLimitValue"/>
         <result column="superior_limit_value_unit" jdbcType="VARCHAR" property="superiorLimitValueUnit"/>
@@ -36,7 +36,7 @@
                                  superior_limit_value_unit, lower_limit_value,
                                  lower_limit_value_unit, outburst_value, outburst_value_unit)
         values (#{id,jdbcType=INTEGER}, #{quduanId,jdbcType=INTEGER}, #{propertyId,jdbcType=INTEGER},
-                #{measuredValue,jdbcType=INTEGER}, #{measuredValueUnit,jdbcType=VARCHAR},
+                #{measuredValue,jdbcType=VARCHAR}, #{measuredValueUnit,jdbcType=VARCHAR},
                 #{superiorLimitValue,jdbcType=INTEGER},
                 #{superiorLimitValueUnit,jdbcType=VARCHAR}, #{lowerLimitValue,jdbcType=INTEGER},
                 #{lowerLimitValueUnit,jdbcType=VARCHAR}, #{outburstValue,jdbcType=INTEGER},
@@ -90,7 +90,7 @@
                 #{propertyId,jdbcType=INTEGER},
             </if>
             <if test="measuredValue != null">
-                #{measuredValue,jdbcType=INTEGER},
+                #{measuredValue,jdbcType=VARCHAR},
             </if>
             <if test="measuredValueUnit != null">
                 #{measuredValueUnit,jdbcType=VARCHAR},
@@ -125,7 +125,7 @@
                 property_id = #{propertyId,jdbcType=INTEGER},
             </if>
             <if test="measuredValue != null">
-                measured_value = #{measuredValue,jdbcType=INTEGER},
+                measured_value = #{measuredValue,jdbcType=VARCHAR},
             </if>
             <if test="measuredValueUnit != null">
                 measured_value_unit = #{measuredValueUnit,jdbcType=VARCHAR},
@@ -155,7 +155,7 @@
         update mro_menxian
         set quduan_id                 = #{quduanId,jdbcType=INTEGER},
             property_id               = #{propertyId,jdbcType=INTEGER},
-            measured_value            = #{measuredValue,jdbcType=INTEGER},
+            measured_value            = #{measuredValue,jdbcType=VARCHAR},
             measured_value_unit       = #{measuredValueUnit,jdbcType=VARCHAR},
             superior_limit_value      = #{superiorLimitValue,jdbcType=INTEGER},
             superior_limit_value_unit = #{superiorLimitValueUnit,jdbcType=VARCHAR},
@@ -178,7 +178,7 @@
         <id column="m_id" jdbcType="INTEGER" property="id"/>
         <result column="quduan_id" jdbcType="INTEGER" property="quduanId"/>
         <result column="property_id" jdbcType="INTEGER" property="propertyId"/>
-        <result column="measured_value" jdbcType="INTEGER" property="measuredValue"/>
+        <result column="measured_value" jdbcType="VARCHAR" property="measuredValue"/>
         <result column="measured_value_unit" jdbcType="VARCHAR" property="measuredValueUnit"/>
         <result column="superior_limit_value" jdbcType="INTEGER" property="superiorLimitValue"/>
         <result column="superior_limit_value_unit" jdbcType="VARCHAR" property="superiorLimitValueUnit"/>
@@ -186,12 +186,9 @@
         <result column="lower_limit_value_unit" jdbcType="VARCHAR" property="lowerLimitValueUnit"/>
         <result column="outburst_value" jdbcType="INTEGER" property="outburstValue"/>
         <result column="outburst_value_unit" jdbcType="VARCHAR" property="outburstValueUnit"/>
-        <association column="quduan_id" jdbcType="INTEGER" property="quDuanInfoEntity">
-            <id column="qi_id" jdbcType="INTEGER" property="id"/>
-            <association column="qid" jdbcType="INTEGER" property="quDuanBaseEntity">
-                <id column="qb_id" jdbcType="INTEGER" property="id"/>
-                <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
-            </association>
+        <association column="quduan_id" jdbcType="INTEGER" property="quDuanBaseEntity">
+            <id column="qb_id" jdbcType="INTEGER" property="id"/>
+            <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quduanyunyingName"/>
         </association>
         <association column="property_id" jdbcType="INTEGER" property="menXianPropertyEntity">
             <id column="mp_id" jdbcType="INTEGER" property="id"/>
@@ -202,19 +199,21 @@
         m.id as m_id, quduan_id, property_id, measured_value, measured_value_unit, superior_limit_value,
     superior_limit_value_unit, lower_limit_value, lower_limit_value_unit, outburst_value,
     outburst_value_unit,
-    qi.id as qi_id,
     qb.id as qb_id,qb.quDuanYunYing_name,
     mp.id as mp_id,mp.name
     </sql>
-    <select id="selectByPropertyIds"  resultMap="AllResultMap">
+    <select id="selectByPropertyIds" resultMap="AllResultMap">
         select
         <include refid="All_Column_List"/>
-        from mro_menxian m inner join mro_quduan_info as qi on m.quduan_id = qi.id
-        inner join mro_quduan_base as qb on qi.qid = qb.id
+        from mro_menxian m inner join mro_quduan_base as qb on m.quduan_id = qb.id
         inner join mro_menxian_property as mp on m.property_id = mp.id
-        where m.property_id in
-        <foreach collection="array" item="propertyId" index="index" open="(" close=")" separator=",">
-            #{propertyId,jdbcType=INTEGER}
-        </foreach>
+        <where>
+            <if test="array!=null and array.length>0">
+                and m.property_id in
+                <foreach collection="array" item="property" index="index" open="(" close=")" separator=",">
+                    #{property,jdbcType=INTEGER}
+                </foreach>
+            </if>
+        </where>
     </select>
 </mapper>

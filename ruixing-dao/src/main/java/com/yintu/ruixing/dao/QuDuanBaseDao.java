@@ -14,7 +14,7 @@ public interface QuDuanBaseDao {
 
     QuDuanBaseEntity selectByPrimaryKey(Integer id);
 
-    List<QuDuanBaseEntity> selectByXidAndCid(Integer xid, Integer cid);
+    List<QuDuanBaseEntity> selectByCzId(Integer czId);
 
     //int updateByPrimaryKeySelective(QuDuanBaseEntity record);
 
