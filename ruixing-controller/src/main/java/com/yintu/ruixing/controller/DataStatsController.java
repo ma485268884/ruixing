@@ -109,7 +109,8 @@ public class DataStatsController {
                             }
                             if (xingbie.equals("下行")) {
                                 quDuanBaseEntity.setXingBie(2);
-                            } else {
+                            }
+                            if (xingbie.equals("——") || xingbie.equals("")) {
                                 quDuanBaseEntity.setXingBie(0);
                             }
                             if (type.equals("接近")) {
@@ -117,31 +118,32 @@ public class DataStatsController {
                             }
                             if (type.equals("离去")) {
                                 quDuanBaseEntity.setType(2);
-                            } else {
+                            }
+                            if (type.equals("——") || type.equals("")) {
                                 quDuanBaseEntity.setType(0);
                             }
                             quDuanBaseEntity.setZongheId(zongheid);
                             quDuanBaseEntity.setQuduanshejiName(quduanshejiname);
                             quDuanBaseEntity.setQuduanyunyingName(qudunyunyingname);
-                            if (quduanlength.equals("")||quduanlength.equals("——")){
+                            if (quduanlength.equals("") || quduanlength.equals("——")) {
                                 quDuanBaseEntity.setQuduanLength(null);
-                            }else {
+                            } else {
                                 quDuanBaseEntity.setQuduanLength(Integer.parseInt(quduanlength));
                             }
                             //System.out.println("888888888888888888");
                             quDuanBaseEntity.setCarrier(carrier);
                             quDuanBaseEntity.setDiduanType(diduantype);
                             quDuanBaseEntity.setXianluqingkuang(xianluqingkuang);
-                            if (bianjie.equals("") || bianjie.equals("否")){
+                            if (bianjie.equals("") || bianjie.equals("否")) {
                                 quDuanBaseEntity.setBianjie(0);
-                            }else {
+                            } else {
                                 quDuanBaseEntity.setBianjie(1);
                             }
                             quDuanBaseEntity.setFenjiedianWhere(fenjiedianwhere);
-                           // System.out.println("99999999999999999");
-                            if (zhanqufenjie.equals("")||zhanqufenjie.equals("否")){
+                            // System.out.println("99999999999999999");
+                            if (zhanqufenjie.equals("") || zhanqufenjie.equals("否")) {
                                 quDuanBaseEntity.setZhanqufenjie(0);
-                            }else {
+                            } else {
                                 quDuanBaseEntity.setZhanqufenjie(1);
                             }
                             quDuanBaseEntity.setJinzhanxinhaojiName(jinzhanxinhaojiname);
@@ -158,9 +160,9 @@ public class DataStatsController {
                             quDuanBaseEntity.setDaochaguanlianquduan2Id(daochaguanlianquduan2id);
                             System.out.println("456");
                             quDuanBaseEntity.setDianmahuaguihao(dianmahuaguidao);
-                            if (guineidizhi.equals("")){
+                            if (guineidizhi.equals("")) {
                                 quDuanBaseEntity.setGuineidizhi(null);
-                            }else {
+                            } else {
                                 quDuanBaseEntity.setGuineidizhi(Integer.parseInt(guineidizhi));
                             }
 
@@ -199,7 +201,7 @@ public class DataStatsController {
                         String tljId = strings[0];
                         String tljName = strings[1];
                         List<TieLuJuEntity> tljname = dataStatsService.findAllTieLuJuByName(tljName);//查询铁路局表中是否有此铁路局
-                        System.out.println("铁路局个数"+tljname.size());
+                        System.out.println("铁路局个数" + tljname.size());
                         TieLuJuEntity luJuEntity = new TieLuJuEntity();
                         if (tljname.size() == 0) {//没有此铁路局
                             luJuEntity.setTljId(Long.parseLong(tljId));
@@ -209,7 +211,7 @@ public class DataStatsController {
                         String dwdid = strings[2];
                         String dwdname = strings[3];
                         List<DianWuDuanEntity> dianWuDuanEntityList = dataStatsService.findDianWuDuanBydid(Long.parseLong(dwdid));//查询电务段表中是否有此电务段
-                        System.out.println("电务段个数"+dianWuDuanEntityList.size());
+                        System.out.println("电务段个数" + dianWuDuanEntityList.size());
                         if (dianWuDuanEntityList.size() == 0) {//没有此电务段
                             Long tljid = dataStatsService.findTLJid(Long.parseLong(tljId));//获取上个铁路局的id
                             DianWuDuanEntity duanEntity = new DianWuDuanEntity();
@@ -223,7 +225,7 @@ public class DataStatsController {
                         String xdname = strings[5];
                         String xdzgname = strings[6];
                         List<XianDuanEntity> xianDuanEntityList = dataStatsService.findAllXianDuanByDwdid(Long.parseLong(dwdid));
-                        System.out.println("线段个数"+xianDuanEntityList.size());
+                        System.out.println("线段个数" + xianDuanEntityList.size());
                         if (xianDuanEntityList.size() == 0) {
                             Long dwdid1 = dataStatsService.findDWDid(Long.parseLong(dwdid));
                             XianDuanEntity xianDuanEntity1 = new XianDuanEntity();
@@ -283,7 +285,7 @@ public class DataStatsController {
                         String linzhan6OfXianduan = strings[53];
                         String linzhan6benDWD = strings[54];
                         List<CheZhanEntity> cheZhanEntityList = dataStatsService.findallChezhanByName(czname);
-                        System.out.println("车站个数"+cheZhanEntityList.size());
+                        System.out.println("车站个数" + cheZhanEntityList.size());
                         if (cheZhanEntityList.size() == 0) {
                             Long xianduanid = dataStatsService.findXDid(Long.parseLong(dwdid));
                             CheZhanEntity cheZhan = new CheZhanEntity();
@@ -509,43 +511,44 @@ public class DataStatsController {
 
     //新增线段配置 根据线段xid 查询此线段下的所有车站数据
     @GetMapping("/findSomeCheZhanByXid/{xid}")
-    public Map<String,Object>findSomeCheZhanByXid(@PathVariable Integer xid){
-        JSONObject js=new JSONObject();
-        List<CheZhanEntity>cheZhanEntities=dataStatsService.findSomeCheZhanByXid(xid);
+    public Map<String, Object> findSomeCheZhanByXid(@PathVariable Integer xid) {
+        JSONObject js = new JSONObject();
+        List<CheZhanEntity> cheZhanEntities = dataStatsService.findSomeCheZhanByXid(xid);
         //根据线段xid 查询此线段下的头车站id和尾车站id
-        Integer firstCZid=dataStatsService.findFirstCZid(xid);
-        List<CheZhanEntity> startCheZhanEntities=dataStatsService.findStartCheZhan(firstCZid);
-        Integer endCZid=dataStatsService.findEndCZid(xid);
-        List<CheZhanEntity> endCheZhanEntities=dataStatsService.findEndCheZhan(endCZid);
-        js.put("chezhan",cheZhanEntities);
-        js.put("startCheZhan",startCheZhanEntities);
-        js.put("endCheZhan",endCheZhanEntities);
-        return ResponseDataUtil.ok("查询对应车站数据成功",js);
+        Integer firstCZid = dataStatsService.findFirstCZid(xid);
+        List<CheZhanEntity> startCheZhanEntities = dataStatsService.findStartCheZhan(firstCZid);
+        Integer endCZid = dataStatsService.findEndCZid(xid);
+        List<CheZhanEntity> endCheZhanEntities = dataStatsService.findEndCheZhan(endCZid);
+        js.put("chezhan", cheZhanEntities);
+        js.put("startCheZhan", startCheZhanEntities);
+        js.put("endCheZhan", endCheZhanEntities);
+        return ResponseDataUtil.ok("查询对应车站数据成功", js);
     }
 
     //新增车站配置  根据车站cid  查询此车站下的所有区段数据
     @GetMapping("/findSomeQuDuanByCid/{cid}")
-    public Map<String,Object>findSomeQuDuanByCid(@PathVariable Long cid){
-        JSONObject js=new JSONObject();
-        List<QuDuanBaseEntity> quDuanBaseEntityList=dataStatsService.findQuDuanByCid(cid);
-        js.put("quDuan",quDuanBaseEntityList);
-        return ResponseDataUtil.ok("查询对应的区段数据成功",js);
+    public Map<String, Object> findSomeQuDuanByCid(@PathVariable Long cid) {
+        JSONObject js = new JSONObject();
+        List<QuDuanBaseEntity> quDuanBaseEntityList = dataStatsService.findQuDuanByCid(cid);
+        js.put("quDuan", quDuanBaseEntityList);
+        return ResponseDataUtil.ok("查询对应的区段数据成功", js);
     }
 
     //根据线段xid 查询此线段下的线段配置json数据
     @GetMapping("/findXDJsonByXid/{xid}")
-    public Map<String,Object>findXDJsonByXid(@PathVariable Integer xid){
-        String xdJson=dataStatsService.findXDJsonByXid(xid);
+    public Map<String, Object> findXDJsonByXid(@PathVariable Integer xid) {
+        String xdJson = dataStatsService.findXDJsonByXid(xid);
         //js.put("xdJson",xdJson);
-        return ResponseDataUtil.ok("查询线段的json数据成功",xdJson);
+        return ResponseDataUtil.ok("查询线段的json数据成功", xdJson);
     }
 
     //根据车站cid 查询此车站下的区段配置json数据
     @GetMapping("/findQDJsonByCid/{cid}")
-    public Map<String,Object>findQDJsonByCid(@PathVariable Integer cid){
-        String qdJson=dataStatsService.findQDJsonByCid(cid);
-        return ResponseDataUtil.ok("查询区段的json数据成功",qdJson);
+    public Map<String, Object> findQDJsonByCid(@PathVariable Integer cid) {
+        String qdJson = dataStatsService.findQDJsonByCid(cid);
+        return ResponseDataUtil.ok("查询区段的json数据成功", qdJson);
     }
+
     //查询所有的铁路局的名字  和 id
     @GetMapping("/findAllTieLuJu")
     public Map<String, Object> findAllTieLuJu() {
