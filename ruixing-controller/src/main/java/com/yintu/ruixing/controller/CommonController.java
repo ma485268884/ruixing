@@ -99,15 +99,14 @@ public class CommonController extends SessionController {
     }
 
     @PostMapping("/upload/photo")
-    public Map<String, Object> uploadPhotoFile(@RequestParam("photo") MultipartFile[] multipartFiles, HttpServletRequest request) throws IOException { ;
+    public Map<String, Object> uploadPhotoFile(@RequestParam("photo") MultipartFile[] multipartFiles, HttpServletRequest request) throws IOException {
         String prefix = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/files" + "/";
         JSONArray ja = new JSONArray();
         for (MultipartFile multipartFile : multipartFiles) {
             if (multipartFile.getSize() > 0) {
                 String photoName = multipartFile.getOriginalFilename();
                 String photoPath = FileUploadUtil.save(multipartFile.getInputStream(), photoName);
-                String defaultBaseFilePath = OSInfoUtil.isWindows() ? FileUploadUtil.WINDOW_BASE_FILE_PATH : OSInfoUtil.isLinux() ? FileUploadUtil.LINUX_BASE_FILE_PATH : FileUploadUtil.WINDOW_BASE_FILE_PATH;
-                if (!FileUtil.isImage(new File(defaultBaseFilePath + photoPath + File.separator + photoName)))//判断是否为图片文件
+                if (!FileUtil.isImage(new File(FileUploadUtil.FilePath + File.separator + photoPath + File.separator + photoName)))//判断是否为图片文件
                     throw new BaseRuntimeException("此文件不是图片文件");
                 JSONObject jo = new JSONObject();
                 jo.put("photoPath", prefix + photoPath.substring(1) + "/" + photoName);

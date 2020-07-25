@@ -82,35 +82,6 @@ public class EquipmentNumberController implements BaseController<EquipmentNumber
 
     }
 
-    @PostMapping("/upload")
-    @ResponseBody
-    public Map<String, Object> uploadFile(@RequestParam("photo") MultipartFile multipartFile) throws IOException {
-        String photoName = multipartFile.getOriginalFilename();
-        String photoPath = FileUploadUtil.save(multipartFile.getInputStream(), photoName);
-        if (!FileUtil.isImage(new File(FileUploadUtil.FilePath + photoPath + File.separator + photoName)))//判断是否为图片文件
-            throw new BaseRuntimeException("此文件不是图片文件");
-        JSONObject jo = new JSONObject();
-        jo.put("photoPath", photoPath);
-        jo.put("photoName", photoName);
-        return ResponseDataUtil.ok("上传器材编号图片成功", jo);
-    }
-
-    @GetMapping("/photo/{id}")
-    public void downloadFile(@PathVariable Integer id, HttpServletResponse response) throws IOException {
-        EquipmentNumberEntity equipmentNumberEntity = equipmentNumberService.findById(id);
-        if (equipmentNumberEntity != null) {
-            String filePath = equipmentNumberEntity.getPhotoPath();
-            String fileName = equipmentNumberEntity.getPhotoName();
-            if (filePath != null && !"".equals(filePath) && fileName != null && !"".equals(fileName)) {
-                response.setContentType("application/octet-stream;charset=ISO8859-1");
-                response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
-                response.addHeader("Pargam", "no-cache");
-                response.addHeader("Cache-Control", "no-cache");
-                FileUploadUtil.get(response.getOutputStream(), filePath + File.separator + fileName);
-            }
-        }
-    }
-
     /**
      * 查询设备全部信息
      *
