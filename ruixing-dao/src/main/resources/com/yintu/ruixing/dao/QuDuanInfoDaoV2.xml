@@ -83,7 +83,7 @@
         <result column="A_shortOut_JBA_diao" jdbcType="DECIMAL" property="aShortoutJbaDiao"/>
         <result column="rackAddress" jdbcType="VARCHAR" property="yuliu"/>
         <result column="yuliu" jdbcType="VARCHAR" property="yuliu"/>
-        <association  javaType="QuDuanBaseEntity" property="quDuanBaseEntity">
+        <association javaType="QuDuanBaseEntity" property="quDuanBaseEntity">
             <id column="id" jdbcType="INTEGER" property="id"/>
             <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
             <result column="cid" jdbcType="INTEGER" property="cid"/>
@@ -161,62 +161,61 @@
 
     <!--车站id 查询车站内电码化的信息-->
     <select id="findGuZhangKuData" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        SELECT
-        qi.v3 as V_out_zhu,
-        qi.v4 as mA_out_zhu,
-        qi.v5 as Hz_up_zhu,
-        qi.v6 as Hz_down_zhu,
-        qi.v7 as Hz_low_zhu,
-        qi.v8 as FBJ_drive_zhu,
-        qi.v9 as V_out_bei,
-        qi.v10 as mA_out_bei,
-        qi.v11 as Hz_up_bei,
-        qi.v12 as Hz_down_bei,
-        qi.v13 as Hz_low_bei,
-        qi.v14 as FBJ_drive_bei,
-        qi.v15 as V_songduan_Cable,
-        qi.v16 as mA_songduan_Cable,
-        qi.v17 as V_shouduan_Cable_host,
-        qi.v18 as V_shouduan_Cable_spare,
-        qi.v19 as mA_shouduan_Cable,
-        qi.v20 as V_in_all,
-        qi.v21 as mV_in_zhu,
-        qi.v22 as mV_in_diao_zhu,
-        qi.v23 as Hz_in_low_zhu,
-        qi.v24 as GJ_drive_zhu,
-        qi.v25 as baojing_zhu,
-        qi.v26 as mV_in_bing,
-        qi.v27 as mV_in_diao_bing,
-        qi.v28 as Hz_in_low_bing,
-        qi.v29 as GJ_drive_bing,
-        qi.v30 as baojing_bing,
-        qi.v40 as direction,
-        qi.v42 as mA_Cable_FBP,
-        qi.v43 as A_longIn_FBP,
-        qi.v44 as A_longOut_FBP,
-        qi.v45 as A_shortIn_FBP,
-        qi.v46 as A_shortOut_FBP,
-        qi.v52 as T_FBP,
-        qi.v54 as A_longIn_FBA_zhu,
-        qi.v55 as A_longOut_FBA_zhu,
-        qi.v56 as A_shortIn_FBA_zhu,
-        qi.v57 as A_shortOut_FBA_zhu,
-        qi.v62 as A_longIn_JBA_zhu,
-        qi.v63 as A_longOut_JBA_zhu,
-        qi.v64 as A_shortIn_JBA_zhu,
-        qi.v65 as A_shortOut_JBA_zhu,
-        qi.v47 as mA_Cable_JBP,
-        qi.v48 as A_longIn_JBP,
-        qi.v49 as A_longOut_JBP,
-        qi.v50 as A_shortIn_JBP,
-        qi.v51 as A_shortOut_JBP,
-        qi.v53 as T_JBP,
-        qb.*
+        SELECT qi.v3  as V_out_zhu,
+               qi.v4  as mA_out_zhu,
+               qi.v5  as Hz_up_zhu,
+               qi.v6  as Hz_down_zhu,
+               qi.v7  as Hz_low_zhu,
+               qi.v8  as FBJ_drive_zhu,
+               qi.v9  as V_out_bei,
+               qi.v10 as mA_out_bei,
+               qi.v11 as Hz_up_bei,
+               qi.v12 as Hz_down_bei,
+               qi.v13 as Hz_low_bei,
+               qi.v14 as FBJ_drive_bei,
+               qi.v15 as V_songduan_Cable,
+               qi.v16 as mA_songduan_Cable,
+               qi.v17 as V_shouduan_Cable_host,
+               qi.v18 as V_shouduan_Cable_spare,
+               qi.v19 as mA_shouduan_Cable,
+               qi.v20 as V_in_all,
+               qi.v21 as mV_in_zhu,
+               qi.v22 as mV_in_diao_zhu,
+               qi.v23 as Hz_in_low_zhu,
+               qi.v24 as GJ_drive_zhu,
+               qi.v25 as baojing_zhu,
+               qi.v26 as mV_in_bing,
+               qi.v27 as mV_in_diao_bing,
+               qi.v28 as Hz_in_low_bing,
+               qi.v29 as GJ_drive_bing,
+               qi.v30 as baojing_bing,
+               qi.v40 as direction,
+               qi.v42 as mA_Cable_FBP,
+               qi.v43 as A_longIn_FBP,
+               qi.v44 as A_longOut_FBP,
+               qi.v45 as A_shortIn_FBP,
+               qi.v46 as A_shortOut_FBP,
+               qi.v52 as T_FBP,
+               qi.v54 as A_longIn_FBA_zhu,
+               qi.v55 as A_longOut_FBA_zhu,
+               qi.v56 as A_shortIn_FBA_zhu,
+               qi.v57 as A_shortOut_FBA_zhu,
+               qi.v62 as A_longIn_JBA_zhu,
+               qi.v63 as A_longOut_JBA_zhu,
+               qi.v64 as A_shortIn_JBA_zhu,
+               qi.v65 as A_shortOut_JBA_zhu,
+               qi.v47 as mA_Cable_JBP,
+               qi.v48 as A_longIn_JBP,
+               qi.v49 as A_longOut_JBP,
+               qi.v50 as A_shortIn_JBP,
+               qi.v51 as A_shortOut_JBP,
+               qi.v53 as T_JBP,
+               qb.*
         FROM data_applydata qi,
              mro_quduan_base qb
         WHERE qi.v1 = qb.qdid
           AND qb.id = #{id,jdbcType=INTEGER}
-          GROUP BY v1
+        GROUP BY v1
     </select>
     <!--
 
@@ -247,7 +246,7 @@
              mro_quduan_base qb
         where qi.v1 = qb.qdid
           and qb.quDuanYunYing_name = "${quduanname}"
-          and qi.v1="${qdid}"
+          and qi.v1 = "${qdid}"
           and qi.createtime
             BETWEEN
             "${starttime}"
@@ -335,9 +334,8 @@
         </association>
     </resultMap>
     <select id="findDianMaHuaDatabById" resultMap="quduanBaseResultMap" parameterType="java.lang.Integer">
-            SELECT
-               qi.type,
-               /*qi.Design_carrier,*/
+        SELECT qi.type,
+            /*qi.Design_carrier,*/
                qi.v3  V_out_zhu,
                qi.v9  V_out_bei,
                qi.v4  mA_out_zhu,
@@ -350,16 +348,16 @@
                qi.v13 Hz_low_bei,
                qi.v8  FBJ_drive_zhu,
                qi.v14 FBJ_drive_bei,
-               /*qi.FBJ_collection_zhu,
-               qi.FBJ_collection_bei,*/
+            /*qi.FBJ_collection_zhu,
+            qi.FBJ_collection_bei,*/
                sb.sb_name
-            FROM data_applydata qi,
-                 mro_shebei sb,
-                 mro_quduan_base qb
-            WHERE sb.id = qb.sid
-              AND qi.v1 = qb.qdid
-              AND qb.id = #{id}
-            GROUP BY sb.sb_name
+        FROM data_applydata qi,
+             mro_shebei sb,
+             mro_quduan_base qb
+        WHERE sb.id = qb.sid
+          AND qi.v1 = qb.qdid
+          AND qb.id = #{id}
+        GROUP BY sb.sb_name
     </select>
 
 
@@ -468,7 +466,9 @@
         <result column="quDuanYunYing_name" jdbcType="VARCHAR" property="quDuanYunYingName"/>
     </resultMap>
     <sql id="Statistics__Column_List">
-        MAX(qi.v3) AS max_V_out_zhu,
+        MAX
+            (qi.v3)
+            AS max_V_out_zhu,
         MIN(qi.v3) AS min_V_out_zhu,
         MAX(qi.v4) AS max_mA_out_zhu,
         MIN(qi.v4) AS min_mA_out_zhu,
@@ -513,6 +513,6 @@
             </if>
         </where>
         GROUP BY
-        qi.station_id,qi.v1
+        qb.id
     </select>
 </mapper>

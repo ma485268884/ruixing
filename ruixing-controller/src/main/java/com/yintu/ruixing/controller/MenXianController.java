@@ -26,8 +26,6 @@ public class MenXianController extends SessionController {
 
     @PostMapping
     public Map<String, Object> add(@Validated MenXianEntity menXianEntity) {
-        Assert.notNull(menXianEntity.getQuduanId(), "区段id不能为空");
-        Assert.notNull(menXianEntity.getPropertyId(), "属性id不能为空");
         menXianService.add(menXianEntity);
         return ResponseDataUtil.ok("添加门限参数信息成功");
     }
@@ -40,8 +38,6 @@ public class MenXianController extends SessionController {
 
     @PutMapping("/{id}")
     public Map<String, Object> edit(@PathVariable Integer id, @Validated MenXianEntity menXianEntity) {
-        Assert.notNull(menXianEntity.getQuduanId(), "区段id不能为空");
-        Assert.notNull(menXianEntity.getPropertyId(), "属性id不能为空");
         menXianService.edit(menXianEntity);
         return ResponseDataUtil.ok("修改门限参数信息成功");
     }

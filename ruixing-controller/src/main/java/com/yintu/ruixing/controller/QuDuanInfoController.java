@@ -35,7 +35,7 @@ public class QuDuanInfoController extends SessionController {
 
 
     /**
-     * 查询区段基础信息列表
+     * 查询区段基础信息列表(门限参数列表)
      *
      * @param czId 车站id
      * @return 区段基本信息集
