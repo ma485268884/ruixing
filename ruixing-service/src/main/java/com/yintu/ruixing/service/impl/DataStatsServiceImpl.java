@@ -43,6 +43,38 @@ public class DataStatsServiceImpl implements DataStatsService {
     private CheZhanDao cheZhanDao;
 
     @Override
+    public List<CheZhanEntity> findStartCheZhan(Integer firstCZid) {
+        List<CheZhanEntity> fridtchezhan=cheZhanDao.findStartCheZhan(firstCZid);
+        for (CheZhanEntity cheZhanEntity : fridtchezhan) {
+            if (cheZhanEntity.getCzDuanTou()==1){
+                return null;
+            }
+        }
+        return fridtchezhan;
+    }
+
+    @Override
+    public List<CheZhanEntity> findEndCheZhan(Integer endCZid) {
+        List<CheZhanEntity> entityList=cheZhanDao.findEndCheZhan(endCZid);
+        for (CheZhanEntity cheZhanEntity : entityList) {
+            if (cheZhanEntity.getCzDuanTou()==1){
+                return null;
+            }
+        }
+        return entityList;
+    }
+
+    @Override
+    public Integer findFirstCZid(Integer xid) {
+        return cheZhanDao.findFirstCZid(xid);
+    }
+
+    @Override
+    public Integer findEndCZid(Integer xid) {
+        return cheZhanDao.findEndCZid(xid);
+    }
+
+    @Override
     public String findQDJsonByCid(Integer cid) {
         return cheZhanDao.findQDJsonByCid(cid);
     }

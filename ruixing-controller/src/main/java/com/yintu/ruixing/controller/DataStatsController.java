@@ -512,7 +512,14 @@ public class DataStatsController {
     public Map<String,Object>findSomeCheZhanByXid(@PathVariable Integer xid){
         JSONObject js=new JSONObject();
         List<CheZhanEntity>cheZhanEntities=dataStatsService.findSomeCheZhanByXid(xid);
+        //根据线段xid 查询此线段下的头车站id和尾车站id
+        Integer firstCZid=dataStatsService.findFirstCZid(xid);
+        List<CheZhanEntity> startCheZhanEntities=dataStatsService.findStartCheZhan(firstCZid);
+        Integer endCZid=dataStatsService.findEndCZid(xid);
+        List<CheZhanEntity> endCheZhanEntities=dataStatsService.findEndCheZhan(endCZid);
         js.put("chezhan",cheZhanEntities);
+        js.put("startCheZhan",startCheZhanEntities);
+        js.put("endCheZhan",endCheZhanEntities);
         return ResponseDataUtil.ok("查询对应车站数据成功",js);
     }
 
