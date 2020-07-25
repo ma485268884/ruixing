@@ -124,4 +124,12 @@ public interface DataStatsService {
     String findXDJsonByXid(Integer xid);
 
     String findQDJsonByCid(Integer cid);
+
+    Integer findFirstCZid(Integer xid);
+
+    Integer findEndCZid(Integer xid);
+
+    List<CheZhanEntity> findStartCheZhan(Integer firstCZid);
+
+    List<CheZhanEntity> findEndCheZhan(Integer endCZid);
 }
