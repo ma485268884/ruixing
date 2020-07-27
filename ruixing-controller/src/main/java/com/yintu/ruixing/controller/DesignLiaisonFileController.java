@@ -61,32 +61,32 @@ public class DesignLiaisonFileController extends SessionController {
         return ResponseDataUtil.ok("查询设计联络及后续技术交流文件信息成功", designLiaisonFileEntity);
     }
 
-    @PostMapping("/upload")
-    @ResponseBody
-    public Map<String, Object> uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        String fileName = multipartFile.getOriginalFilename();
-        String filePath = FileUploadUtil.save(multipartFile.getInputStream(), fileName);
-        JSONObject jo = new JSONObject();
-        jo.put("filePath", filePath);
-        jo.put("fileName", fileName);
-        return ResponseDataUtil.ok("查询设计联络及后续技术交流文件信息成功", jo);
-    }
-
-    @GetMapping("/download/{id}")
-    public void downloadFile(@PathVariable Integer id, HttpServletResponse response) throws IOException {
-        DesignLiaisonFileEntity designLiaisonFileEntity = designLiaisonFileService.findById(id);
-        if (designLiaisonFileEntity != null) {
-            String filePath = designLiaisonFileEntity.getPath();
-            String fileName = designLiaisonFileEntity.getName();
-            if (filePath != null && !"".equals(filePath) && fileName != null && !"".equals(fileName)) {
-                response.setContentType("application/octet-stream;charset=ISO8859-1");
-                response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
-                response.addHeader("Pargam", "no-cache");
-                response.addHeader("Cache-Control", "no-cache");
-                FileUploadUtil.get(response.getOutputStream(), filePath + "\\" + fileName);
-            }
-        }
-    }
+//    @PostMapping("/upload")
+//    @ResponseBody
+//    public Map<String, Object> uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+//        String fileName = multipartFile.getOriginalFilename();
+//        String filePath = FileUploadUtil.save(multipartFile.getInputStream(), fileName);
+//        JSONObject jo = new JSONObject();
+//        jo.put("filePath", filePath);
+//        jo.put("fileName", fileName);
+//        return ResponseDataUtil.ok("查询设计联络及后续技术交流文件信息成功", jo);
+//    }
+//
+//    @GetMapping("/download/{id}")
+//    public void downloadFile(@PathVariable Integer id, HttpServletResponse response) throws IOException {
+//        DesignLiaisonFileEntity designLiaisonFileEntity = designLiaisonFileService.findById(id);
+//        if (designLiaisonFileEntity != null) {
+//            String filePath = designLiaisonFileEntity.getPath();
+//            String fileName = designLiaisonFileEntity.getName();
+//            if (filePath != null && !"".equals(filePath) && fileName != null && !"".equals(fileName)) {
+//                response.setContentType("application/octet-stream;charset=ISO8859-1");
+//                response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
+//                response.addHeader("Pargam", "no-cache");
+//                response.addHeader("Cache-Control", "no-cache");
+//                FileUploadUtil.get(response.getOutputStream(), filePath + "\\" + fileName);
+//            }
+//        }
+//    }
 
     @GetMapping("/export/{ids}")
     public void exportFile(@PathVariable Integer[] ids, HttpServletResponse response) throws IOException {

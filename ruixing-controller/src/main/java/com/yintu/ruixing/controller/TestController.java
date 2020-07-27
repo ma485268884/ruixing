@@ -3,6 +3,7 @@ package com.yintu.ruixing.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.common.util.VerificationCode;
 import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.UserService;
 import com.yintu.ruixing.websocket.WebSocketServer;
@@ -14,7 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -98,6 +101,16 @@ public class TestController {
             });
         }
         Thread.sleep(10000);
+    }
+
+    @GetMapping("/verifyCode")
+    public void verifyCode(HttpServletRequest request, HttpServletResponse resp) throws IOException {
+        VerificationCode code = new VerificationCode();
+        BufferedImage image = code.getImage();
+        String text = code.getText();
+        HttpSession session = request.getSession(true);
+        session.setAttribute("verify_code", text);
+        VerificationCode.output(image, resp.getOutputStream());
     }
 
 
