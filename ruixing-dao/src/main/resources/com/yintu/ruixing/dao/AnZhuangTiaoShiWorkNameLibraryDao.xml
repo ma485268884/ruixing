@@ -28,6 +28,7 @@
         workname like concat ('%',#{workname},'%')
       </if>
     </where>
+    GROUP BY id DESC
   </select>
 
   <!--根据id  单个或者批量删除-->
