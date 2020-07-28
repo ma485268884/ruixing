@@ -7,7 +7,9 @@ import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.enumobject.EnumAuthType;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.*;
+import com.yintu.ruixing.entity.DistrictEntity;
 import com.yintu.ruixing.entity.MessageEntity;
+import com.yintu.ruixing.service.DistrictService;
 import com.yintu.ruixing.service.MessageService;
 import com.yintu.ruixing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,9 @@ public class CommonController extends SessionController {
     @Autowired
     private MessageService messageService;
 
+    @Autowired
+    private DistrictService districtService;
+
     /**
      * 获取当前用户菜单栏
      *
@@ -54,7 +59,7 @@ public class CommonController extends SessionController {
      * @return
      */
     @PutMapping("/message/{id}")
-    public Map<String, Object> changeStatus(@PathVariable Integer id) {
+    public Map<String, Object> changeMessageStatus(@PathVariable Integer id) {
         messageService.changeStatus(id);
         return ResponseDataUtil.ok("修改消息信息成功");
     }
@@ -70,17 +75,25 @@ public class CommonController extends SessionController {
      * @return
      */
     @GetMapping("/message")
-    public Map<String, Object> findById(@RequestParam("page_number") Integer pageNumber,
-                                        @RequestParam("page_size") Integer pageSize,
-                                        @RequestParam(value = "order_by", required = false, defaultValue = "id DESC") String orderBy,
-                                        @RequestParam(value = "type", required = false) Short type,
-                                        @RequestParam(value = "status", required = false) Short status) {
+    public Map<String, Object> findMessageById(@RequestParam("page_number") Integer pageNumber,
+                                               @RequestParam("page_size") Integer pageSize,
+                                               @RequestParam(value = "order_by", required = false, defaultValue = "id DESC") String orderBy,
+                                               @RequestParam(value = "type", required = false) Short type,
+                                               @RequestParam(value = "status", required = false) Short status) {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<MessageEntity> messageEntities = messageService.findByTypeAndStatus(type, status);
         PageInfo<MessageEntity> pageInfo = new PageInfo<>(messageEntities);
         return ResponseDataUtil.ok("查询消息信息列表成功", pageInfo);
     }
 
+    /**
+     * 上传文件集
+     *
+     * @param multipartFiles 文件数组
+     * @param request        请求数据
+     * @return 返回信息
+     * @throws IOException io异常
+     */
     @PostMapping("/upload/file")
     public Map<String, Object> uploadFile(@RequestParam("file") MultipartFile[] multipartFiles, HttpServletRequest request) throws IOException {
         String prefix = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/files" + "/";
@@ -98,6 +111,14 @@ public class CommonController extends SessionController {
         return ResponseDataUtil.ok("上传文件成功", ja);
     }
 
+    /**
+     * 上传图片集
+     *
+     * @param multipartFiles 文件数组
+     * @param request        请求数据
+     * @return 返回信息
+     * @throws IOException io异常
+     */
     @PostMapping("/upload/photo")
     public Map<String, Object> uploadPhotoFile(@RequestParam("photo") MultipartFile[] multipartFiles, HttpServletRequest request) throws IOException {
         String prefix = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/files" + "/";
@@ -116,5 +137,18 @@ public class CommonController extends SessionController {
         }
         return ResponseDataUtil.ok("上传图片成功", ja);
     }
+
+    /**
+     * 按照父节点id查询区域信息
+     *
+     * @param parentId 父节点id
+     * @return 返回信息
+     */
+    @GetMapping("/district")
+    public Map<String, Object> findDistrictByParentId(@RequestParam("parent_id") Integer parentId) {
+        List<DistrictEntity> districtEntities = districtService.findByParentId(parentId);
+        return ResponseDataUtil.ok("获取区域信息成功", districtEntities);
+    }
+
 
 }
