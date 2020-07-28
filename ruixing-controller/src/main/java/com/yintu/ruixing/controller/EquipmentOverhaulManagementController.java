@@ -1,0 +1,67 @@
+package com.yintu.ruixing.controller;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.yintu.ruixing.common.util.BaseController;
+import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.entity.EquipmentOverhaulManagementEntity;
+import com.yintu.ruixing.service.EquipmentOverhaulManagementService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 整改管理
+ *
+ * @author:mlf
+ * @date:2020/7/28 17:05
+ */
+@RestController
+@RequestMapping("/equipment/overhaul/managements")
+public class EquipmentOverhaulManagementController extends SessionController implements BaseController<EquipmentOverhaulManagementEntity, Integer> {
+    @Autowired
+    private EquipmentOverhaulManagementService equipmentOverhaulManagementService;
+
+    @PostMapping
+    public Map<String, Object> add(@Validated EquipmentOverhaulManagementEntity entity) {
+        equipmentOverhaulManagementService.add(entity);
+        return ResponseDataUtil.ok("添加整改管理信息成功");
+    }
+
+    @Override
+    public Map<String, Object> remove(Integer id) {
+        return null;
+    }
+
+    @DeleteMapping("/{ids}")
+    public Map<String, Object> remove(@PathVariable Integer[] ids) {
+        equipmentOverhaulManagementService.remove(ids);
+        return ResponseDataUtil.ok("删除整改管理信息成功");
+    }
+
+    @PutMapping("/{id}")
+    public Map<String, Object> edit(@PathVariable Integer id, @Validated EquipmentOverhaulManagementEntity entity) {
+        equipmentOverhaulManagementService.edit(entity);
+        return ResponseDataUtil.ok("修改整改管理信息成功");
+    }
+
+    @GetMapping("/{id}")
+    public Map<String, Object> findById(@PathVariable Integer id) {
+        EquipmentOverhaulManagementEntity equipmentOverhaulManagementEntity = equipmentOverhaulManagementService.findById(id);
+        return ResponseDataUtil.ok("查询整改管理信息成功", equipmentOverhaulManagementEntity);
+    }
+
+    @GetMapping
+    public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber,
+                                       @RequestParam("page_size") Integer pageSize,
+                                       @RequestParam(value = "order_by", required = false, defaultValue = "eom.id DESC") String orderBy,
+                                       @RequestParam(value = "equipment_number", required = false) String equipmentNumber) {
+        PageHelper.startPage(pageNumber, pageSize, orderBy);
+        List<EquipmentOverhaulManagementEntity> equipmentOverhaulManagementEntities = equipmentOverhaulManagementService.findByEquipmentNumber(equipmentNumber);
+        PageInfo<EquipmentOverhaulManagementEntity> pageInfo = new PageInfo<>(equipmentOverhaulManagementEntities);
+        return ResponseDataUtil.ok("查询整改管理信息列表成功", pageInfo);
+    }
+}

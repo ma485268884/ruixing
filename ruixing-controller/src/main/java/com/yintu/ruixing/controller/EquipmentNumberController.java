@@ -1,10 +1,9 @@
 package com.yintu.ruixing.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.yintu.ruixing.common.exception.BaseRuntimeException;
-import com.yintu.ruixing.common.util.*;
+import com.yintu.ruixing.common.util.BaseController;
+import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.EquipmentEntity;
 import com.yintu.ruixing.entity.EquipmentNumberEntity;
 import com.yintu.ruixing.service.EquipmentNumberService;
@@ -13,11 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 

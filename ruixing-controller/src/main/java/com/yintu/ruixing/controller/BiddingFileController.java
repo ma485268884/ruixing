@@ -1,8 +1,5 @@
 package com.yintu.ruixing.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.yintu.ruixing.common.util.BaseController;
-import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.BiddingFileEntity;
 import com.yintu.ruixing.entity.UserEntity;
@@ -11,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

@@ -4,7 +4,6 @@ import cn.hutool.core.date.DateUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.BaseController;
-import com.yintu.ruixing.common.util.FileUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.CheZhanEntity;
 import com.yintu.ruixing.entity.EquipmentEntity;
