@@ -51,6 +51,7 @@
         awt.id = aww.wntid
         AND awl.id = aww.wnlid
         AND awl.workname LIKE concat('%',#{workname},'%')
+        GROUP BY id DESC
   </select>
 
   <!--根据id  删除版本里面的作业项数据-->

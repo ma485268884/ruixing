@@ -23,6 +23,7 @@
         worknamesall like concat ('%',#{workname},'%')
       </if>
     </where>
+    GROUP BY id DESC
   </select>
 
 
