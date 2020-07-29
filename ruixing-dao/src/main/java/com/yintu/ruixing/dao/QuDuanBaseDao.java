@@ -54,4 +54,6 @@ public interface QuDuanBaseDao {
     List<QuDuanBaseEntity> findQuDuanByQuDuanYunYingName(String qudunyunyingname);
 
     Integer findQDid(String quduanname);
+
+    List<QuDuanBaseEntity> findQuDuanByIds(@Param("parseInt") Integer parseInt,@Param("parseInt1") Integer parseInt1);
 }

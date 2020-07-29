@@ -132,4 +132,9 @@ public interface DataStatsService {
     List<CheZhanEntity> findStartCheZhan(Integer firstCZid);
 
     List<CheZhanEntity> findEndCheZhan(Integer endCZid);
+
+
+    List<QuDuanBaseEntity> findQuDuanByIds(Integer parseInt, Integer parseInt1);
+
+    List<CheZhanEntity> findCheZhanByIds(Integer parseInt, Integer parseInt1);
 }

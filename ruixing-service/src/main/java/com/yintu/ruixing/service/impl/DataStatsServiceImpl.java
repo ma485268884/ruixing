@@ -43,6 +43,16 @@ public class DataStatsServiceImpl implements DataStatsService {
     private CheZhanDao cheZhanDao;
 
     @Override
+    public List<CheZhanEntity> findCheZhanByIds(Integer parseInt, Integer parseInt1) {
+        return cheZhanDao.findCheZhanByIds(parseInt,parseInt1);
+    }
+
+    @Override
+    public List<QuDuanBaseEntity> findQuDuanByIds(Integer parseInt, Integer parseInt1) {
+        return quDuanBaseDao.findQuDuanByIds(parseInt,parseInt1);
+    }
+
+    @Override
     public List<CheZhanEntity> findStartCheZhan(Integer firstCZid) {
         List<CheZhanEntity> fridtchezhan=cheZhanDao.findStartCheZhan(firstCZid);
         for (CheZhanEntity cheZhanEntity : fridtchezhan) {

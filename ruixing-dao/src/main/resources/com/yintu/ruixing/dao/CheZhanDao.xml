@@ -138,6 +138,16 @@
     </update>
 -->
 
+    <!--根据线段专用xdid 和车站专用czid  查询对应的车站信息-->
+    <select id="findCheZhanByIds" parameterType="java.lang.Integer" resultMap="chezhan">
+        select
+        <include refid="Base_Column_List"/>
+        FROM
+        mro_chezhan
+        WHERE
+        xd_id = #{parseInt1}
+        AND cz_id = #{parseInt}
+    </select>
     <!-- 查询此线段下的头车站数据-->
     <select id="findStartCheZhan" parameterType="java.lang.Integer" resultMap="chezhan">
        SELECT
