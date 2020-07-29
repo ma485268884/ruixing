@@ -148,7 +148,7 @@
         <result column="number" jdbcType="INTEGER" property="number"/>
         <result column="send_number" jdbcType="INTEGER" property="sendNumber"/>
         <result column="return_number" jdbcType="INTEGER" property="returnNumber"/>
-        <association column="equipment_number_id" jdbcType="INTEGER" property="equipmentNumberEntity">
+        <association column="equipment_number_id"  property="equipmentNumberEntity">
             <id column="en_id" jdbcType="INTEGER" property="id"/>
             <result column="rack_number" jdbcType="VARCHAR" property="rackNumber"/>
             <result column="equipment_number" jdbcType="VARCHAR" property="equipmentNumber"/>

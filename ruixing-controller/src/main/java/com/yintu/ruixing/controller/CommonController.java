@@ -9,10 +9,13 @@ import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.*;
 import com.yintu.ruixing.entity.DistrictEntity;
 import com.yintu.ruixing.entity.MessageEntity;
+import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.DistrictService;
 import com.yintu.ruixing.service.MessageService;
 import com.yintu.ruixing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -53,10 +56,57 @@ public class CommonController extends SessionController {
     }
 
     /**
+     * 修改真实姓名
+     *
+     * @param truename 真实姓名
+     * @return 返回信息
+     */
+    @PutMapping("/edit/truename")
+    public Map<String, Object> editTrueNameById(@RequestParam("truename") String truename) {
+        if (truename.isEmpty()) {
+            throw new BaseRuntimeException("真实姓名不能为空");
+        }
+        UserEntity userEntity = userService.findById(this.getLoginUserId());
+        if (userEntity != null) {
+            if (truename.equals(userEntity.getTrueName())) {
+                throw new BaseRuntimeException("原始信息和修改信息相同");
+            }
+            userService.editTruenameById(this.getLoginUserId(), truename);
+        }
+        return ResponseDataUtil.ok("修改真实姓名成功");
+    }
+
+    /**
+     * @param oldPassword 原始密码
+     * @param newPassword 新密码
+     * @return 返回信息
+     */
+    @PutMapping("/edit/password")
+    public Map<String, Object> editPasswordById(@RequestParam("old_password") String oldPassword, @RequestParam("new_password") String newPassword) {
+        if (oldPassword.isEmpty() || newPassword.isEmpty()) {
+            throw new BaseRuntimeException("原始密码或新密码不能为空");
+        }
+        if (oldPassword.equals(newPassword)) {
+            throw new BaseRuntimeException("原始密码和新密码相同");
+        }
+        UserEntity userEntity = userService.findById(this.getLoginUserId());
+        if (userEntity != null) {
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            if (!passwordEncoder.matches(oldPassword, userEntity.getPassword())) {
+                throw new BaseRuntimeException("原始密码错误");
+            }
+            userEntity.setPassword(newPassword);
+            userService.edit(userEntity);
+        }
+        return ResponseDataUtil.ok("修改密码成功,请重新登录");
+    }
+
+
+    /**
      * 未读消息改为已读消息
      *
      * @param id 消息id
-     * @return
+     * @return 返回信息
      */
     @PutMapping("/message/{id}")
     public Map<String, Object> changeMessageStatus(@PathVariable Integer id) {

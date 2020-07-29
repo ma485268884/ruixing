@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yintu.ruixing.dao.EquipmentFaultManagementDao">
+    <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.EquipmentFaultManagementEntity">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="equipment_number_id" jdbcType="INTEGER" property="equipmentNumberId"/>
+        <result column="tieluju_id" jdbcType="INTEGER" property="tielujuId"/>
+        <result column="dianwuduan_id" jdbcType="INTEGER" property="dianwuduanId"/>
+        <result column="xianduan_id" jdbcType="INTEGER" property="xianduanId"/>
+        <result column="chezhan_id" jdbcType="INTEGER" property="chezhanId"/>
+        <result column="start_date" jdbcType="DATE" property="startDate"/>
+        <result column="end_date" jdbcType="DATE" property="endDate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, equipment_number_id, tieluju_id, dianwuduan_id, xianduan_id, chezhan_id, start_date,
+    end_date
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_equipment_fault_management
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from mro_equipment_fault_management
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.yintu.ruixing.entity.EquipmentFaultManagementEntity">
+        insert into mro_equipment_fault_management (id, equipment_number_id, tieluju_id,
+                                                    dianwuduan_id, xianduan_id, chezhan_id,
+                                                    start_date, end_date)
+        values (#{id,jdbcType=INTEGER}, #{equipmentNumberId,jdbcType=INTEGER}, #{tielujuId,jdbcType=INTEGER},
+                #{dianwuduanId,jdbcType=INTEGER}, #{xianduanId,jdbcType=INTEGER}, #{chezhanId,jdbcType=INTEGER},
+                #{startDate,jdbcType=DATE}, #{endDate,jdbcType=DATE})
+    </insert>
+    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.EquipmentFaultManagementEntity">
+        insert into mro_equipment_fault_management
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="equipmentNumberId != null">
+                equipment_number_id,
+            </if>
+            <if test="tielujuId != null">
+                tieluju_id,
+            </if>
+            <if test="dianwuduanId != null">
+                dianwuduan_id,
+            </if>
+            <if test="xianduanId != null">
+                xianduan_id,
+            </if>
+            <if test="chezhanId != null">
+                chezhan_id,
+            </if>
+            <if test="startDate != null">
+                start_date,
+            </if>
+            <if test="endDate != null">
+                end_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="equipmentNumberId != null">
+                #{equipmentNumberId,jdbcType=INTEGER},
+            </if>
+            <if test="tielujuId != null">
+                #{tielujuId,jdbcType=INTEGER},
+            </if>
+            <if test="dianwuduanId != null">
+                #{dianwuduanId,jdbcType=INTEGER},
+            </if>
+            <if test="xianduanId != null">
+                #{xianduanId,jdbcType=INTEGER},
+            </if>
+            <if test="chezhanId != null">
+                #{chezhanId,jdbcType=INTEGER},
+            </if>
+            <if test="startDate != null">
+                #{startDate,jdbcType=DATE},
+            </if>
+            <if test="endDate != null">
+                #{endDate,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.EquipmentFaultManagementEntity">
+        update mro_equipment_fault_management
+        <set>
+            <if test="equipmentNumberId != null">
+                equipment_number_id = #{equipmentNumberId,jdbcType=INTEGER},
+            </if>
+            <if test="tielujuId != null">
+                tieluju_id = #{tielujuId,jdbcType=INTEGER},
+            </if>
+            <if test="dianwuduanId != null">
+                dianwuduan_id = #{dianwuduanId,jdbcType=INTEGER},
+            </if>
+            <if test="xianduanId != null">
+                xianduan_id = #{xianduanId,jdbcType=INTEGER},
+            </if>
+            <if test="chezhanId != null">
+                chezhan_id = #{chezhanId,jdbcType=INTEGER},
+            </if>
+            <if test="startDate != null">
+                start_date = #{startDate,jdbcType=DATE},
+            </if>
+            <if test="endDate != null">
+                end_date = #{endDate,jdbcType=DATE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.EquipmentFaultManagementEntity">
+        update mro_equipment_fault_management
+        set equipment_number_id = #{equipmentNumberId,jdbcType=INTEGER},
+            tieluju_id          = #{tielujuId,jdbcType=INTEGER},
+            dianwuduan_id       = #{dianwuduanId,jdbcType=INTEGER},
+            xianduan_id         = #{xianduanId,jdbcType=INTEGER},
+            chezhan_id          = #{chezhanId,jdbcType=INTEGER},
+            start_date          = #{startDate,jdbcType=DATE},
+            end_date            = #{endDate,jdbcType=DATE}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <resultMap id="ConnectResultMap" type="com.yintu.ruixing.entity.EquipmentFaultManagementEntity">
+        <id column="efm_id" jdbcType="INTEGER" property="id"/>
+        <result column="equipment_number_id" jdbcType="INTEGER" property="equipmentNumberId"/>
+        <result column="tieluju_id" jdbcType="INTEGER" property="tielujuId"/>
+        <result column="dianwuduan_id" jdbcType="INTEGER" property="dianwuduanId"/>
+        <result column="xianduan_id" jdbcType="INTEGER" property="xianduanId"/>
+        <result column="chezhan_id" jdbcType="INTEGER" property="chezhanId"/>
+        <result column="start_date" jdbcType="DATE" property="startDate"/>
+        <result column="end_date" jdbcType="DATE" property="endDate"/>
+        <association column="equipment_number_id" property="equipmentNumberEntity">
+            <id column="en_id" jdbcType="INTEGER" property="id"/>
+            <result column="rack_number" jdbcType="VARCHAR" property="rackNumber"/>
+            <result column="equipment_number" jdbcType="VARCHAR" property="equipmentNumber"/>
+            <result column="hierarchy" jdbcType="VARCHAR" property="hierarchy"/>
+            <result column="en_created_date" jdbcType="DATE" property="createdDate"/>
+            <result column="operator" jdbcType="VARCHAR" property="operator"/>
+            <result column="photo_path" jdbcType="VARCHAR" property="photoPath"/>
+            <result column="photo_name" jdbcType="VARCHAR" property="photoName"/>
+            <result column="equipment_id" jdbcType="INTEGER" property="equipmentId"/>
+            <association column="equipment_id" property="equipmentEntity">
+                <id column="e_id" jdbcType="INTEGER" property="id"/>
+                <result column="e_name" jdbcType="VARCHAR" property="name"/>
+                <result column="e_created_date" jdbcType="DATE" property="createdTime"/>
+            </association>
+        </association>
+        <association column="tieluju_id" property="tieLuJuEntity">
+            <id column="t_id" jdbcType="BIGINT" property="tid"/>
+            <result column="tlj_name" jdbcType="VARCHAR" property="tljName"/>
+        </association>
+        <association column="dianwuduan_id" property="dianWuDuanEntity">
+            <id column="d_id" jdbcType="BIGINT" property="did"/>
+            <result column="dwd_name" jdbcType="VARCHAR" property="dwdName"/>
+        </association>
+        <association column="xianduan_id" property="xianDuanEntity">
+            <id column="x_id" jdbcType="BIGINT" property="xid"/>
+            <result column="xd_name" jdbcType="VARCHAR" property="xdName"/>
+        </association>
+        <association column="dianwuduan_id" property="cheZhanEntity">
+            <id column="c_id" jdbcType="BIGINT" property="cid"/>
+            <result column="cz_name" jdbcType="VARCHAR" property="czName"/>
+        </association>
+    </resultMap>
+    <sql id="Connect_Column_List">
+        efm.id as efm_id, equipment_number_id, tieluju_id, dianwuduan_id, xianduan_id, chezhan_id, start_date, end_date,
+        en.id as en_id, rack_number, equipment_number, hierarchy, created_date as en_created_date, operator, photo_path, photo_name, equipment_id,
+        e.id as e_id, e.name as e_name, e.created_time as e_created_date,
+        t.tid as t_id,tlj_name,
+        d.did as d_id,dwd_name,
+        x.xid as x_id,xd_name,
+        c.cid as c_id,cz_name
+    </sql>
+    <sql id="Connect_Table_List">
+        mro_equipment_fault_management efm
+        inner join mro_equipment_number en on efm.equipment_number_id = en.id
+        inner join mro_equipment e on en.equipment_id = e.id
+        inner join mro_tieluju t on efm.tieluju_id = t.tid
+        inner join mro_dianwuduan d on efm.dianwuduan_id = d.did
+        inner join mro_xianduan x on efm.xianduan_id= x.xid
+        inner join mro_chezhan c on efm.chezhan_id= c.cid
+    </sql>
+    <sql id="Connect_Condition_List">
+        <where>
+            <if test="id != null">
+                efm.id=#{id,jdbcType=INTEGER}
+            </if>
+            <if test="startDate != null and endDate != null">
+                and efm.start_date &gt;= #{startDate,jdbcType=DATE} and efm.end_date &lt;= #{endDate,jdbcType=DATE}
+            </if>
+        </where>
+    </sql>
+    <select id="connectSelectByCondition" resultMap="ConnectResultMap">
+        select
+        <include refid="Connect_Column_List"/>
+        from
+        <include refid="Connect_Table_List"/>
+        <include refid="Connect_Condition_List"/>
+    </select>
+</mapper>
