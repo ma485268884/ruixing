@@ -95,5 +95,13 @@ public interface UserService extends UserDetailsService, BaseService<UserEntity,
      */
     List<TreeNodeUtil> findPermission(Long parentId, Short isMenu);
 
+    /**
+     * 修改用户真实姓名
+     *
+     * @param id       id
+     * @param truename 真实姓名
+     */
+    void editTruenameById(Long id, String truename);
+
 
 }

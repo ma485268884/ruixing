@@ -239,4 +239,14 @@ public class UserServiceImpl implements UserService {
         }
         return treeNodeUtils;
     }
+
+    @Override
+    public void editTruenameById(Long id, String truename) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(id);
+        userEntity.setTrueName(truename);
+        userDao.updateByPrimaryKeySelective(userEntity);
+    }
+
+
 }

@@ -4,7 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.entity.EquipmentNumberEntity;
 import com.yintu.ruixing.entity.EquipmentOverhaulManagementEntity;
+import com.yintu.ruixing.service.EquipmentNumberService;
 import com.yintu.ruixing.service.EquipmentOverhaulManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -24,6 +26,8 @@ import java.util.Map;
 public class EquipmentOverhaulManagementController extends SessionController implements BaseController<EquipmentOverhaulManagementEntity, Integer> {
     @Autowired
     private EquipmentOverhaulManagementService equipmentOverhaulManagementService;
+    @Autowired
+    private EquipmentNumberService equipmentNumberService;
 
     @PostMapping
     public Map<String, Object> add(@Validated EquipmentOverhaulManagementEntity entity) {
@@ -63,5 +67,17 @@ public class EquipmentOverhaulManagementController extends SessionController imp
         List<EquipmentOverhaulManagementEntity> equipmentOverhaulManagementEntities = equipmentOverhaulManagementService.findByEquipmentNumber(equipmentNumber);
         PageInfo<EquipmentOverhaulManagementEntity> pageInfo = new PageInfo<>(equipmentOverhaulManagementEntities);
         return ResponseDataUtil.ok("查询整改管理信息列表成功", pageInfo);
+    }
+
+    /**
+     * 查询器材编号全部信息
+     *
+     * @return
+     */
+    @GetMapping("/equipment/numbers")
+    @ResponseBody
+    public Map<String, Object> findEquipmentNumberAll() {
+        List<EquipmentNumberEntity> equipmentNumberEntities = equipmentNumberService.findByCondition(null, null);
+        return ResponseDataUtil.ok("查询器材编号信息列表成功", equipmentNumberEntities);
     }
 }
