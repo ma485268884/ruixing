@@ -2,13 +2,11 @@ package com.yintu.ruixing.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.DataStatsService;
-import com.yintu.ruixing.service.EquipmentFaultManagementService;
-import com.yintu.ruixing.service.EquipmentNumberService;
+import com.yintu.ruixing.service.FieldFaultInvestigationManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,28 +16,24 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 故障器材特征管理
+ * 现场故障调查管理
  *
  * @author:mlf
- * @date:2020/7/29 17:41
+ * @date:2020/7/30 19:30
  */
 @RestController
-@RequestMapping("/equipment/fault/managements")
-public class EquipmentFaultManagementController extends SessionController implements BaseController<EquipmentFaultManagementEntity, Integer> {
-    @Autowired
-    private EquipmentFaultManagementService equipmentFaultManagementService;
-    @Autowired
-    private EquipmentNumberService equipmentNumberService;
+@RequestMapping("/field/faultInvestigation/managements")
+public class FieldFaultInvestigationManagementController extends SessionController implements BaseController<FieldFaultInvestigationManagementEntity, Integer> {
 
+    @Autowired
+    private FieldFaultInvestigationManagementService fieldFaultInvestigationManagementService;
     @Autowired
     private DataStatsService dataStatsService;
 
     @PostMapping
-    public Map<String, Object> add(@Validated EquipmentFaultManagementEntity entity) {
-        if (entity.getStartDate().after(entity.getEndDate()))
-            throw new BaseRuntimeException("开始日期不能小于结束日期");
-        equipmentFaultManagementService.add(entity);
-        return ResponseDataUtil.ok("添加故障器材特征管理信息成功");
+    public Map<String, Object> add(@Validated FieldFaultInvestigationManagementEntity entity) {
+        fieldFaultInvestigationManagementService.add(entity);
+        return ResponseDataUtil.ok("添加现场故障调查管理信息成功");
     }
 
     @Override
@@ -49,49 +43,34 @@ public class EquipmentFaultManagementController extends SessionController implem
 
     @DeleteMapping("/{ids}")
     public Map<String, Object> remove(@PathVariable Integer[] ids) {
-        equipmentFaultManagementService.remove(ids);
-        return ResponseDataUtil.ok("删除故障器材特征管理信息成功");
+        fieldFaultInvestigationManagementService.remove(ids);
+        return ResponseDataUtil.ok("删除现场故障调查管理信息成功");
     }
 
-
     @PutMapping("/{id}")
-    public Map<String, Object> edit(@PathVariable Integer id, @Validated EquipmentFaultManagementEntity entity) {
-        if (entity.getStartDate().after(entity.getEndDate()))
-            throw new BaseRuntimeException("开始日期不能小于结束日期");
-        equipmentFaultManagementService.edit(entity);
-        return ResponseDataUtil.ok("修改故障器材特征管理信息成功");
+    public Map<String, Object> edit(@PathVariable Integer id, @Validated FieldFaultInvestigationManagementEntity entity) {
+        fieldFaultInvestigationManagementService.edit(entity);
+        return ResponseDataUtil.ok("修改现场故障调查管理信息成功");
     }
 
     @GetMapping("/{id}")
     public Map<String, Object> findById(@PathVariable Integer id) {
-        EquipmentFaultManagementEntity equipmentFaultManagementEntity = equipmentFaultManagementService.findById(id);
-        return ResponseDataUtil.ok("查询故障器材特征管理信息成功", equipmentFaultManagementEntity);
+        FieldFaultInvestigationManagementEntity fieldFaultInvestigationManagementEntity = fieldFaultInvestigationManagementService.findById(id);
+        return ResponseDataUtil.ok("查询现场故障调查管理信息成功", fieldFaultInvestigationManagementEntity);
     }
 
     @GetMapping
     public Map<String, Object> findByStartDateAndEndDate(@RequestParam("page_number") Integer pageNumber,
                                                          @RequestParam("page_size") Integer pageSize,
-                                                         @RequestParam(value = "order_by", required = false, defaultValue = "efm.id DESC") String orderBy,
+                                                         @RequestParam(value = "order_by", required = false, defaultValue = "ffim.id DESC") String orderBy,
                                                          @RequestParam(value = "start_date", required = false) Date startDate,
                                                          @RequestParam(value = "end_date", required = false) Date endDate) {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
-        List<EquipmentFaultManagementEntity> equipmentFaultManagementEntities = equipmentFaultManagementService.findByStartDateAndEndDate(startDate, endDate);
-        PageInfo<EquipmentFaultManagementEntity> pageInfo = new PageInfo<>(equipmentFaultManagementEntities);
-        return ResponseDataUtil.ok("查询故障器材特征管理信息列表成功", pageInfo);
+        List<FieldFaultInvestigationManagementEntity> fieldFaultInvestigationManagementEntities = fieldFaultInvestigationManagementService.findByStartDateAndEndDate(startDate, endDate);
+        PageInfo<FieldFaultInvestigationManagementEntity> pageInfo = new PageInfo<>(fieldFaultInvestigationManagementEntities);
+        return ResponseDataUtil.ok("查询现场故障调查管理信息列表成功", pageInfo);
     }
 
-
-    /**
-     * 查询器材编号全部信息
-     *
-     * @return 返回信息
-     */
-    @GetMapping("/equipment/numbers")
-    @ResponseBody
-    public Map<String, Object> findEquipmentNumberAll() {
-        List<EquipmentNumberEntity> equipmentNumberEntities = equipmentNumberService.findByCondition(null, null);
-        return ResponseDataUtil.ok("查询器材编号信息列表成功", equipmentNumberEntities);
-    }
 
     /**
      * 查询铁路局全部信息
@@ -139,4 +118,5 @@ public class EquipmentFaultManagementController extends SessionController implem
         List<CheZhanEntity> cheZhanEntities = dataStatsService.findCheZhanByXid(xid);
         return ResponseDataUtil.ok("查询车站信息列表成功", cheZhanEntities);
     }
+
 }

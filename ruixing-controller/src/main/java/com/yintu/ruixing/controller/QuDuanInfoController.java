@@ -55,8 +55,8 @@ public class QuDuanInfoController extends SessionController {
      */
     @GetMapping("/json")
     public Map<String, Object> findJsonConfigByCid(@RequestParam("czId") Integer czId) {
-        CheZhanEntity cheZhanEntity = cheZhanService.findByCzId(czId);
-        return ResponseDataUtil.ok("查询区段详情信息列表", cheZhanEntity.getCzJson());
+        String json = cheZhanService.findJsonByCzId(czId);
+        return ResponseDataUtil.ok("查询区段配置信息列表成功", json);
     }
 
     /**

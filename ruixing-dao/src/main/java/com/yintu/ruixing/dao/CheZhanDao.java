@@ -56,12 +56,12 @@ public interface CheZhanDao {
     List<CheZhanEntity> selectByCzName(String czName);
 
     /**
-     * 按照车站专用id名查询
+     * 按照车站专用id名查询json
      *
      * @param czId 车站专用id
      * @return
      */
-    CheZhanEntity selectByCzId(Integer czId);
+    String selectJsonByCzId(Integer czId);
 
     List<CheZhanEntity> findallChezhanByName(String czname);
 

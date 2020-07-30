@@ -67,8 +67,8 @@ public class CheZhanServiceImpl implements CheZhanService {
     }
 
     @Override
-    public CheZhanEntity findByCzId(Integer czId) {
-        return cheZhanDao.selectByCzId(czId);
+    public String  findJsonByCzId(Integer czId) {
+        return cheZhanDao.selectJsonByCzId(czId);
     }
 
 }
