@@ -2,6 +2,7 @@ package com.yintu.ruixing.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.*;
@@ -35,6 +36,8 @@ public class EquipmentFaultManagementController extends SessionController implem
 
     @PostMapping
     public Map<String, Object> add(@Validated EquipmentFaultManagementEntity entity) {
+        if (entity.getStartDate().after(entity.getEndDate()))
+            throw new BaseRuntimeException("开始日期不能小于结束日期");
         equipmentFaultManagementService.add(entity);
         return ResponseDataUtil.ok("添加故障器材特征管理信息成功");
     }
@@ -53,6 +56,8 @@ public class EquipmentFaultManagementController extends SessionController implem
 
     @PutMapping("/{id}")
     public Map<String, Object> edit(@PathVariable Integer id, @Validated EquipmentFaultManagementEntity entity) {
+        if (entity.getStartDate().after(entity.getEndDate()))
+            throw new BaseRuntimeException("开始日期不能小于结束日期");
         equipmentFaultManagementService.edit(entity);
         return ResponseDataUtil.ok("修改故障器材特征管理信息成功");
     }
