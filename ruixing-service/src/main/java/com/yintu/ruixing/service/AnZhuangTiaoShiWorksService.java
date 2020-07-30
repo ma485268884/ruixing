@@ -1,6 +1,9 @@
 package com.yintu.ruixing.service;
 
+import com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanEntity;
 import com.yintu.ruixing.entity.AnZhuangTiaoShiWorksCheZhanEntity;
+
+import java.util.List;
 
 /**
  * @Author Mr.liu
@@ -11,4 +14,7 @@ import com.yintu.ruixing.entity.AnZhuangTiaoShiWorksCheZhanEntity;
 public interface AnZhuangTiaoShiWorksService {
     void addWorksCheZhan(AnZhuangTiaoShiWorksCheZhanEntity anZhuangTiaoShiWorksCheZhanEntity, String[] chezhanname);
 
+    void editWorksCheZhanByXid(AnZhuangTiaoShiWorksCheZhanEntity anZhuangTiaoShiWorksCheZhanEntity);
+
+    List<AnZhuangTiaoShiCheZhanEntity> findCheZhanByXid(Integer xid);
 }

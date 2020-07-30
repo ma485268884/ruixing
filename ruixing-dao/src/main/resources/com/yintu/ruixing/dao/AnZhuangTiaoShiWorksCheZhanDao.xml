@@ -105,6 +105,7 @@
     </trim>
   </insert>
 
+  <!--根据线段xid  编辑对应的所有车站信息-->
   <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.AnZhuangTiaoShiWorksCheZhanEntity">
     update mro_anzhuangtiaoshi_works_chezhan
     <set>
@@ -139,7 +140,7 @@
         yuliu2 = #{yuliu2,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where xid = #{xid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.AnZhuangTiaoShiWorksCheZhanEntity">
     update mro_anzhuangtiaoshi_works_chezhan

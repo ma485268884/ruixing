@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.IIOException;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -74,15 +74,6 @@ public class DataStatsController {
         return ResponseDataUtil.ok("文件上传成功", datas);
     }
 
-    public static void main(String[] args) {
-        Integer i=1;
-        String j="2";
-
-        int k=2;
-        System.out.println(Integer.valueOf(j));
-        System.out.println(i.getClass().getTypeName().equals("java.lang.Integer"));
-        System.out.println(j.getClass().getTypeName());
-    }
 
     //将上传的区段数据保存到数据库
     @PostMapping("/uploadQuDuanData")

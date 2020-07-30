@@ -1,6 +1,7 @@
 package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.dao.AnZhuangTiaoShiWorkNameLibraryDao;
+import com.yintu.ruixing.dao.AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalDao;
 import com.yintu.ruixing.entity.AnZhuangTiaoShiWorkNameLibraryEntity;
 import com.yintu.ruixing.service.AnZhuangTiaoShiWorkNameLibraryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class AnZhuangTiaoShiWorkNameLibraryServiceImpl implements AnZhuangTiaoSh
     @Autowired
     private AnZhuangTiaoShiWorkNameLibraryDao anZhuangTiaoShiWorkNameLibraryDao;
 
+    @Autowired
+    private AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalDao anZhuangTiaoShiWorkNameLibraryShiWorkNameTotalDao;
+
     @Override
     public List<AnZhuangTiaoShiWorkNameLibraryEntity> findAllWorkName() {
         return anZhuangTiaoShiWorkNameLibraryDao.findAllWorkName();
@@ -30,6 +34,7 @@ public class AnZhuangTiaoShiWorkNameLibraryServiceImpl implements AnZhuangTiaoSh
     @Override
     public void deleteWorkNameByIds(Integer[] ids) {
         anZhuangTiaoShiWorkNameLibraryDao.deleteWorkNameByIds(ids);
+        anZhuangTiaoShiWorkNameLibraryShiWorkNameTotalDao.deleteWorkNameByIdss(ids);
     }
 
     @Override

@@ -27,6 +27,17 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
+  <!--根据wnlid  单个或者批量删除-->
+  <delete id="deleteWorkNameByIdss" parameterType="java.lang.Integer">
+    delete from mro_anzhuangtiaoshi_worknamelibrary_worknametotal
+    where wnlid
+    in
+    <foreach collection="array" item="ids" open="(" separator="," close=")">
+      #{ids}
+    </foreach>
+  </delete>
+
+
   <!--根据作业项配置版本id  查找此作业项配置版本有多少个作业项-->
   <select id="findWorkNameTatol" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     SELECT

@@ -67,6 +67,14 @@
   </sql>
 
 
+  <!--根据线段xid  查找对应的车站-->
+  <select id="findCheZhanByXid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    cz_name
+    from mro_anzhuangtiaoshi_chezhan
+    where xid =#{xid}
+  </select>
+
   <!--根据车站id数组  查找对应的数据-->
   <select id="findCheZhanData" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
