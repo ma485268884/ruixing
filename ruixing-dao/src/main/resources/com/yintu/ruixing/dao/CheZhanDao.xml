@@ -26,15 +26,15 @@
 
     <resultMap id="chezhan" type="com.yintu.ruixing.entity.CheZhanEntity">
         <id column="cid" jdbcType="INTEGER" property="cid"/>
-        <result column="cz_id"  property="czId"/>
-        <result column="xd_id"  property="xdId"/>
-        <result column="xd_cz_id"  property="xdCzId"/>
+        <result column="cz_id" property="czId"/>
+        <result column="xd_id" property="xdId"/>
+        <result column="xd_cz_id" property="xdCzId"/>
         <result column="cz_name" jdbcType="VARCHAR" property="czName"/>
         <result column="cz_name_jiancheng" jdbcType="VARCHAR" property="czNameJianCheng"/>
         <result column="cz_ip" jdbcType="VARCHAR" property="czIp"/>
         <result column="cz_type" jdbcType="VARCHAR" property="czType"/>
-        <result column="cz_stutrs"  property="czStutrs"/>
-        <result column="cz_open_stutrs"  property="czOpenStutrs"/>
+        <result column="cz_stutrs" property="czStutrs"/>
+        <result column="cz_open_stutrs" property="czOpenStutrs"/>
         <result column="cz_caozuo" jdbcType="INTEGER" property="czCaoZuo"/>
         <result column="cz_lasttime" jdbcType="TIMESTAMP" property="czLastTime"/>
         <result column="cz_duantou" jdbcType="INTEGER" property="czDuanTou"/>
@@ -91,10 +91,10 @@
         <result column="linzhan6IsNoBenDWD" jdbcType="VARCHAR" property="linzhan6isnobendwd"/>
     </resultMap>
     <resultMap extends="chezhan" id="ResultMapWithBLOBs" type="com.yintu.ruixing.entity.CheZhanEntity">
-        <result column="cz_json" jdbcType="LONGVARCHAR" property="czJson" />
+        <result column="cz_json" jdbcType="LONGVARCHAR" property="czJson"/>
     </resultMap>
     <sql id="Base_Column_List">
-    cid, cz_id, xd_id, xd_cz_id, cz_name, cz_name_jiancheng, cz_ip, cz_type, cz_stutrs,
+        cid, cz_id, xd_id, xd_cz_id, cz_name, cz_name_jiancheng, cz_ip, cz_type, cz_stutrs,
     cz_open_stutrs, cz_caozuo, cz_lasttime, cz_duantou, cz_miaoshu, cz_state, cz_r_shebei,
     cz_zhongjizhan, yuliushebei1, yuliushebei2,yuliushebei3, tongXinBianMaGuiDaoNumber, tongXinBianMaZhanNeiOneGuiDaoNumber,
     jiDianOneToOneGuiDaoNumber, jiDianNToOneGuiDaoNumber, jiDianNToOneSheBeiNumber, tongXinBianMaDianMaHuaSheBeiNumber,
@@ -106,10 +106,10 @@
     linzhan4IsNoBenDWD, linzhan5ID, linzhan5Name, linzhan5LineType, linzhan5OfXianDuan,
     linzhan5IsNoBenDWD, linzhan6ID, linzhan6Name, linzhan6LineType, linzhan6OfXianDuan,
     linzhan6IsNoBenDWD
-  </sql>
+    </sql>
     <sql id="Blob_Column_List">
-    cz_json
-  </sql>
+        cz_json
+    </sql>
 
     <!--&lt;!&ndash;添加车站&ndash;&gt;
     <insert id="insertChezhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity">
@@ -117,26 +117,26 @@
         values (#{czName,jdbcType=VARCHAR}, #{czId,jdbcType=BIGINT}, #{xdId,jdbcType=BIGINT}, #{czMiaoShu,jdbcType=VARCHAR}, #{xid,jdbcType=BIGINT}, #{czState,jdbcType=BIGINT})
     </insert>-->
 
-   <!-- &lt;!&ndash;更新车站&ndash;&gt;
-    <update id="updateCheZhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity">
-        update mro_chezhan
-        <set>
-            <if test="czName !=null">
-                cz_name = #{czName},
-            </if>
-            <if test="xdId !=null">
-                xd_id = #{xdId},
-            </if>
-            <if test="czMiaoShu !=null">
-                cz_miaoshu = #{czMiaoShu},
-            </if>
-            <if test="xdCzId !=null">
-                xd_cz_id = #{xdCzId}
-            </if>
-        </set>
-        where cid = #{cid}
-    </update>
--->
+    <!-- &lt;!&ndash;更新车站&ndash;&gt;
+     <update id="updateCheZhan" parameterType="com.yintu.ruixing.entity.CheZhanEntity">
+         update mro_chezhan
+         <set>
+             <if test="czName !=null">
+                 cz_name = #{czName},
+             </if>
+             <if test="xdId !=null">
+                 xd_id = #{xdId},
+             </if>
+             <if test="czMiaoShu !=null">
+                 cz_miaoshu = #{czMiaoShu},
+             </if>
+             <if test="xdCzId !=null">
+                 xd_cz_id = #{xdCzId}
+             </if>
+         </set>
+         where cid = #{cid}
+     </update>
+ -->
 
     <!--根据线段专用xdid 和车站专用czid  查询对应的车站信息-->
     <select id="findCheZhanByIds" parameterType="java.lang.Integer" resultMap="chezhan">
@@ -150,186 +150,174 @@
     </select>
     <!-- 查询此线段下的头车站数据-->
     <select id="findStartCheZhan" parameterType="java.lang.Integer" resultMap="chezhan">
-       SELECT
-            cid,
-            cz_id,
-            cz_name,
-            cz_name_jiancheng,
-            cz_type,
-            cz_duantou,
-            linzhan1ID,
-            linzhan1Name,
-            linzhan1LineType,
-            linzhan1OfXianDuan,
-            linzhan1IsNoBenDWD,
-            linzhan2ID,
-            linzhan2Name,
-            linzhan2LineType,
-            linzhan2OfXianDuan,
-            linzhan2IsNoBenDWD,
-            linzhan3ID,
-            linzhan3Name,
-            linzhan3LineType,
-            linzhan3OfXianDuan,
-            linzhan3IsNoBenDWD,
-            linzhan4ID,
-            linzhan4Name,
-            linzhan4LineType,
-            linzhan4OfXianDuan,
-            linzhan4IsNoBenDWD,
-            linzhan5ID,
-            linzhan5Name,
-            linzhan5LineType,
-            linzhan5OfXianDuan,
-            linzhan5IsNoBenDWD,
-            linzhan6ID,
-            linzhan6Name,
-            linzhan6LineType,
-            linzhan6OfXianDuan,
-            linzhan6IsNoBenDWD
-        FROM
-            mro_chezhan
-        WHERE
-           linzhan2ID = #{firstCZid}
+        SELECT cid,
+               cz_id,
+               cz_name,
+               cz_name_jiancheng,
+               cz_type,
+               cz_duantou,
+               linzhan1ID,
+               linzhan1Name,
+               linzhan1LineType,
+               linzhan1OfXianDuan,
+               linzhan1IsNoBenDWD,
+               linzhan2ID,
+               linzhan2Name,
+               linzhan2LineType,
+               linzhan2OfXianDuan,
+               linzhan2IsNoBenDWD,
+               linzhan3ID,
+               linzhan3Name,
+               linzhan3LineType,
+               linzhan3OfXianDuan,
+               linzhan3IsNoBenDWD,
+               linzhan4ID,
+               linzhan4Name,
+               linzhan4LineType,
+               linzhan4OfXianDuan,
+               linzhan4IsNoBenDWD,
+               linzhan5ID,
+               linzhan5Name,
+               linzhan5LineType,
+               linzhan5OfXianDuan,
+               linzhan5IsNoBenDWD,
+               linzhan6ID,
+               linzhan6Name,
+               linzhan6LineType,
+               linzhan6OfXianDuan,
+               linzhan6IsNoBenDWD
+        FROM mro_chezhan
+        WHERE linzhan2ID = #{firstCZid}
     </select>
 
     <!-- 查询此线段下的尾车站数据-->
     <select id="findEndCheZhan" parameterType="java.lang.Integer" resultMap="chezhan">
-       SELECT
-            cid,
-            cz_id,
-            cz_name,
-            cz_name_jiancheng,
-            cz_type,
-            cz_duantou,
-            linzhan1ID,
-            linzhan1Name,
-            linzhan1LineType,
-            linzhan1OfXianDuan,
-            linzhan1IsNoBenDWD,
-            linzhan2ID,
-            linzhan2Name,
-            linzhan2LineType,
-            linzhan2OfXianDuan,
-            linzhan2IsNoBenDWD,
-            linzhan3ID,
-            linzhan3Name,
-            linzhan3LineType,
-            linzhan3OfXianDuan,
-            linzhan3IsNoBenDWD,
-            linzhan4ID,
-            linzhan4Name,
-            linzhan4LineType,
-            linzhan4OfXianDuan,
-            linzhan4IsNoBenDWD,
-            linzhan5ID,
-            linzhan5Name,
-            linzhan5LineType,
-            linzhan5OfXianDuan,
-            linzhan5IsNoBenDWD,
-            linzhan6ID,
-            linzhan6Name,
-            linzhan6LineType,
-            linzhan6OfXianDuan,
-            linzhan6IsNoBenDWD
-        FROM
-            mro_chezhan
-        WHERE
-           linzhan1ID = #{endCZid}
+        SELECT cid,
+               cz_id,
+               cz_name,
+               cz_name_jiancheng,
+               cz_type,
+               cz_duantou,
+               linzhan1ID,
+               linzhan1Name,
+               linzhan1LineType,
+               linzhan1OfXianDuan,
+               linzhan1IsNoBenDWD,
+               linzhan2ID,
+               linzhan2Name,
+               linzhan2LineType,
+               linzhan2OfXianDuan,
+               linzhan2IsNoBenDWD,
+               linzhan3ID,
+               linzhan3Name,
+               linzhan3LineType,
+               linzhan3OfXianDuan,
+               linzhan3IsNoBenDWD,
+               linzhan4ID,
+               linzhan4Name,
+               linzhan4LineType,
+               linzhan4OfXianDuan,
+               linzhan4IsNoBenDWD,
+               linzhan5ID,
+               linzhan5Name,
+               linzhan5LineType,
+               linzhan5OfXianDuan,
+               linzhan5IsNoBenDWD,
+               linzhan6ID,
+               linzhan6Name,
+               linzhan6LineType,
+               linzhan6OfXianDuan,
+               linzhan6IsNoBenDWD
+        FROM mro_chezhan
+        WHERE linzhan1ID = #{endCZid}
     </select>
 
     <!--根据线段xid  查询头车站的id-->
     <select id="findFirstCZid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-        SELECT
-            cz_id
-        FROM
-            mro_chezhan
-        WHERE
-            xd_cz_id = #{xid}
-        ORDER BY
-            cid
-            LIMIT 1
+        SELECT cz_id
+        FROM mro_chezhan
+        WHERE xd_cz_id = #{xid}
+        ORDER BY cid
+        LIMIT 1
     </select>
 
     <!--根据线段xid  查询尾车站的id-->
     <select id="findEndCZid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-        SELECT
-            cz_id
-        FROM
-            mro_chezhan
-        WHERE
-            xd_cz_id = #{xid}
-        ORDER BY
-            cid  DESC
-	        LIMIT 1
+        SELECT cz_id
+        FROM mro_chezhan
+        WHERE xd_cz_id = #{xid}
+        ORDER BY cid DESC
+        LIMIT 1
     </select>
 
     <!--根据线段xid 查询此线段下的线段配置json数据-->
     <select id="findQDJsonByCid" resultType="java.lang.String">
-        select cz_json from mro_chezhan where cid=#{cid}
+        select cz_json
+        from mro_chezhan
+        where cid = #{cid}
     </select>
     <!--新增线段配置 根据线段xid 查询此线段下的所有车站数据-->
     <select id="findSomeCheZhanByXid" parameterType="java.lang.Integer" resultMap="chezhan">
-       SELECT
-            cid,
-            cz_id,
-            cz_name,
-            cz_name_jiancheng,
-            cz_type,
-            cz_duantou,
-            linzhan1ID,
-            linzhan1Name,
-            linzhan1LineType,
-            linzhan1OfXianDuan,
-            linzhan1IsNoBenDWD,
-            linzhan2ID,
-            linzhan2Name,
-            linzhan2LineType,
-            linzhan2OfXianDuan,
-            linzhan2IsNoBenDWD,
-            linzhan3ID,
-            linzhan3Name,
-            linzhan3LineType,
-            linzhan3OfXianDuan,
-            linzhan3IsNoBenDWD,
-            linzhan4ID,
-            linzhan4Name,
-            linzhan4LineType,
-            linzhan4OfXianDuan,
-            linzhan4IsNoBenDWD,
-            linzhan5ID,
-            linzhan5Name,
-            linzhan5LineType,
-            linzhan5OfXianDuan,
-            linzhan5IsNoBenDWD,
-            linzhan6ID,
-            linzhan6Name,
-            linzhan6LineType,
-            linzhan6OfXianDuan,
-            linzhan6IsNoBenDWD
-        FROM
-            mro_chezhan
-        WHERE
-            xd_cz_id = #{xid}
-        ORDER BY
-            cid
+        SELECT cid,
+               cz_id,
+               cz_name,
+               cz_name_jiancheng,
+               cz_type,
+               cz_duantou,
+               linzhan1ID,
+               linzhan1Name,
+               linzhan1LineType,
+               linzhan1OfXianDuan,
+               linzhan1IsNoBenDWD,
+               linzhan2ID,
+               linzhan2Name,
+               linzhan2LineType,
+               linzhan2OfXianDuan,
+               linzhan2IsNoBenDWD,
+               linzhan3ID,
+               linzhan3Name,
+               linzhan3LineType,
+               linzhan3OfXianDuan,
+               linzhan3IsNoBenDWD,
+               linzhan4ID,
+               linzhan4Name,
+               linzhan4LineType,
+               linzhan4OfXianDuan,
+               linzhan4IsNoBenDWD,
+               linzhan5ID,
+               linzhan5Name,
+               linzhan5LineType,
+               linzhan5OfXianDuan,
+               linzhan5IsNoBenDWD,
+               linzhan6ID,
+               linzhan6Name,
+               linzhan6LineType,
+               linzhan6OfXianDuan,
+               linzhan6IsNoBenDWD
+        FROM mro_chezhan
+        WHERE xd_cz_id = #{xid}
+        ORDER BY cid
     </select>
     <!--根据车站专用id 查询线段id  也就是线段和车站的外键xd_cz_id-->
     <select id="findxianduanid" resultType="java.lang.Integer">
-        select xd_cz_id from mro_chezhan where cz_id=#{parseLong}
+        select xd_cz_id
+        from mro_chezhan
+        where cz_id = #{parseLong}
     </select>
 
     <!--根据车站专用id  查询对应的id-->
     <select id="findchezhanid" resultType="java.lang.Long">
-        select cid from mro_chezhan where cz_id=#{parseLong}
+        select cid
+        from mro_chezhan
+        where cz_id = #{parseLong}
     </select>
 
     <!--根据车站名字 查询对应的数据-->
     <select id="findallChezhanByName" resultMap="chezhan">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         ,
-        <include refid="Blob_Column_List" />
+        <include refid="Blob_Column_List"/>
         from mro_chezhan where cz_name=#{czname}
     </select>
     <!--添加车站-->
@@ -898,9 +886,9 @@
     <!--查询全部车站-->
     <select id="selectByCheZhan" parameterType="java.lang.Long" resultMap="chezhan">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         ,
-        <include refid="Blob_Column_List" />
+        <include refid="Blob_Column_List"/>
         from mro_chezhan
         where cid = #{cid,jdbcType=BIGINT}
     </select>
@@ -914,26 +902,21 @@
     <!--查询全部车站-->
     <select id="selectAll" resultMap="chezhan">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         ,
-        <include refid="Blob_Column_List" />
+        <include refid="Blob_Column_List"/>
         from mro_chezhan
     </select>
     <!--按照车站名查询车站-->
     <select id="selectByCzName" parameterType="java.lang.String" resultMap="chezhan">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         ,
-        <include refid="Blob_Column_List" />
+        <include refid="Blob_Column_List"/>
         from mro_chezhan
         where cz_name like concat('%', #{czName,jdbcType=VARCHAR}, '%')
     </select>
-    <select id="selectByCzId" parameterType="java.lang.Integer" resultMap="chezhan">
-        select
-        <include refid="Base_Column_List" />
-        ,
-        <include refid="Blob_Column_List" />
-        from mro_chezhan
-        where cz_id=#{czId,jdbcType=INTEGER}
+    <select id="selectJsonByCzId" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select cz_json from mro_chezhan where cz_id = #{czId,jdbcType=INTEGER}
     </select>
 </mapper>

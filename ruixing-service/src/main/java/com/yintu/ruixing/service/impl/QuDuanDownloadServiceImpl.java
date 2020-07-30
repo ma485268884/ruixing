@@ -75,8 +75,7 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
     public Map<String, Object> findPlayBackDataById(Integer id) {
         QuDuanDownloadEntity quDuanDownloadEntity = this.findById(id);
         Integer czId = quDuanDownloadEntity.getCid();
-        CheZhanEntity cheZhanEntity = cheZhanService.findByCzId(czId);
-        String quDuanBaseJsonData = cheZhanEntity.getCzJson();
+        String quDuanBaseJsonData = cheZhanService.findJsonByCzId(czId);
         List<QuDuanInfoEntityV2> quDuanInfoEntityV2s = quDuanInfoService.findByCzIdAndTime(czId, quDuanDownloadEntity.getStartTime(), quDuanDownloadEntity.getEndTime());
         Map<String, Object> map = new HashMap<>();
         map.put("quDuanBaseJsonData", quDuanBaseJsonData);

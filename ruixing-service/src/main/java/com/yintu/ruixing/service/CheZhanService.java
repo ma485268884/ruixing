@@ -63,5 +63,5 @@ public interface CheZhanService {
      * @param czId 车站专用id
      * @return
      */
-    CheZhanEntity findByCzId(Integer czId);
+    String findJsonByCzId(Integer czId);
 }
