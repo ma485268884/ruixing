@@ -143,8 +143,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(O object) {
-                        object.setAccessDecisionManager(customAccessDecisionManager);
                         object.setSecurityMetadataSource(customFilterInvocationSecurityMetadataSource);
+                        object.setAccessDecisionManager(customAccessDecisionManager);
                         return object;
                     }
                 }).and().logout()
@@ -157,8 +157,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     out.write(jo.toJSONString());
                     out.flush();
                     out.close();
-                }).permitAll().and().csrf()
-                .disable().cors().and().exceptionHandling()
+                }).permitAll().and().csrf().disable().cors().and().exceptionHandling()
                 //没有登录权限时，在这里处理结果，不要重定向
                 .authenticationEntryPoint((HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException authenticationException) -> {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
@@ -181,16 +180,16 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     out.flush();
                     out.close();
                 }).and().addFilterAt(new ConcurrentSessionFilter(sessionRegistryImpl(), event -> {
-            HttpServletResponse resp = event.getResponse();
-            resp.setContentType("application/json;charset=utf-8");
-            resp.setStatus(HttpServletResponse.SC_OK);
-            PrintWriter out = resp.getWriter();
-            Map<String, Object> errorData = ResponseDataUtil.noLogin("您已在另一台设备登录，本次登录已下线!");
-            JSONObject jo = (JSONObject) JSONObject.toJSON(errorData);
-            out.write(jo.toJSONString());
-            out.flush();
-            out.close();
-        }), ConcurrentSessionFilter.class).addFilterAt(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                    HttpServletResponse resp = event.getResponse();
+                    resp.setContentType("application/json;charset=utf-8");
+                    resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    PrintWriter out = resp.getWriter();
+                    Map<String, Object> errorData = ResponseDataUtil.noLogin("您已在另一台设备登录，本次登录已下线!");
+                    JSONObject jo = (JSONObject) JSONObject.toJSON(errorData);
+                    out.write(jo.toJSONString());
+                    out.flush();
+                    out.close();
+                }), ConcurrentSessionFilter.class).addFilterAt(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
     }
 
