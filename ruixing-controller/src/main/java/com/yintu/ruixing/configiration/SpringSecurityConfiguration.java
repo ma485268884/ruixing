@@ -88,8 +88,9 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices() {
         PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices = new PersistentTokenBasedRememberMeServices(UUID.randomUUID().toString(), userServiceImpl, persistentTokenRepository());
-        persistentTokenBasedRememberMeServices.setTokenValiditySeconds(60 * 60 * 365);
+        persistentTokenBasedRememberMeServices.setTokenValiditySeconds(60 * 60 * 24 * 365);
         persistentTokenBasedRememberMeServices.setParameter("rememberMe");
+        persistentTokenBasedRememberMeServices.setCookieName("rememberMe");
         return persistentTokenBasedRememberMeServices;
     }
 
