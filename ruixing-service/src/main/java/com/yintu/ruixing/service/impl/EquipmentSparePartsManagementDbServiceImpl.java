@@ -50,6 +50,6 @@ public class EquipmentSparePartsManagementDbServiceImpl implements EquipmentSpar
 
     @Override
     public List<EquipmentSparePartsManagementDbEntity> findByEquipmentNameAndMaterialNumber(Integer id, String equipmentName, String materialNumber) {
-        return equipmentSparePartsManagementDbDao.connectSelectByCondition(null, null, null);
+        return equipmentSparePartsManagementDbDao.connectSelectByCondition(null, equipmentName, materialNumber);
     }
 }

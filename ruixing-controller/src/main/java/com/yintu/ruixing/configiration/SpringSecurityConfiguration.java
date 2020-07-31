@@ -2,11 +2,8 @@ package com.yintu.ruixing.configiration;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.component.CustomAccessDecisionManager;
-import com.yintu.ruixing.component.CustomFilterInvocationSecurityMetadataSource;
-import com.yintu.ruixing.component.CustomUsernamePasswordAuthenticationFilter;
+import com.yintu.ruixing.component.*;
 import com.yintu.ruixing.entity.UserEntity;
-import com.yintu.ruixing.component.VerificationCodeException;
 import com.yintu.ruixing.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -26,13 +23,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy;
 import org.springframework.security.web.session.ConcurrentSessionFilter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.util.Map;
+import java.util.UUID;
 
 @Configuration // 里面已经包含了@Component 所以不用再上下文中在引入入了
 @EnableWebSecurity
@@ -40,6 +42,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserServiceImpl userServiceImpl;
+    @Autowired
+    private DataSource dataSource;
     @Autowired
     private CustomAccessDecisionManager customAccessDecisionManager;
     @Autowired
@@ -67,6 +71,27 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new SessionRegistryImpl();
     }
 
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+        tokenRepository.setCreateTableOnStartup(false);
+        return tokenRepository;
+    }
+
+    /**
+     * 免密登录
+     *
+     * @return
+     */
+    @Bean
+    public PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices() {
+        PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices = new PersistentTokenBasedRememberMeServices(UUID.randomUUID().toString(), userServiceImpl, persistentTokenRepository());
+        persistentTokenBasedRememberMeServices.setTokenValiditySeconds(60 * 60 * 365);
+        persistentTokenBasedRememberMeServices.setParameter("rememberMe");
+        return persistentTokenBasedRememberMeServices;
+    }
 
     /**
      * 自定义登录拦截器
@@ -129,8 +154,10 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         ConcurrentSessionControlAuthenticationStrategy sessionStrategy = new ConcurrentSessionControlAuthenticationStrategy(sessionRegistryImpl());
         sessionStrategy.setMaximumSessions(1);
         customUsernamePasswordAuthenticationFilter.setSessionAuthenticationStrategy(sessionStrategy);
+        customUsernamePasswordAuthenticationFilter.setRememberMeServices(persistentTokenBasedRememberMeServices());
         return customUsernamePasswordAuthenticationFilter;
     }
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -180,16 +207,18 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     out.flush();
                     out.close();
                 }).and().addFilterAt(new ConcurrentSessionFilter(sessionRegistryImpl(), event -> {
-                    HttpServletResponse resp = event.getResponse();
-                    resp.setContentType("application/json;charset=utf-8");
-                    resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    PrintWriter out = resp.getWriter();
-                    Map<String, Object> errorData = ResponseDataUtil.noLogin("您已在另一台设备登录，本次登录已下线!");
-                    JSONObject jo = (JSONObject) JSONObject.toJSON(errorData);
-                    out.write(jo.toJSONString());
-                    out.flush();
-                    out.close();
-                }), ConcurrentSessionFilter.class).addFilterAt(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+            HttpServletResponse resp = event.getResponse();
+            resp.setContentType("application/json;charset=utf-8");
+            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            PrintWriter out = resp.getWriter();
+            Map<String, Object> errorData = ResponseDataUtil.noLogin("您已在另一台设备登录，本次登录已下线!");
+            JSONObject jo = (JSONObject) JSONObject.toJSON(errorData);
+            out.write(jo.toJSONString());
+            out.flush();
+            out.close();
+        }), ConcurrentSessionFilter.class).addFilterAt(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .rememberMe().rememberMeServices(persistentTokenBasedRememberMeServices());
+
 
     }
 
