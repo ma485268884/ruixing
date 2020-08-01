@@ -1,11 +1,15 @@
 package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.dao.AnZhuangTiaoShiCheZhanDao;
+import com.yintu.ruixing.dao.AnZhuangTiaoShiWorkNameTotalDao;
 import com.yintu.ruixing.dao.AnZhuangTiaoShiWorksCheZhanDao;
-import com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanEntity;
-import com.yintu.ruixing.entity.AnZhuangTiaoShiWorksCheZhanEntity;
+import com.yintu.ruixing.dao.AnZhuangTiaoShiWorksDing;
+import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.AnZhuangTiaoShiWorksService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +29,32 @@ public class AnZhuangTiaoShiWorksServiceImpl implements AnZhuangTiaoShiWorksServ
 
     @Autowired
     private AnZhuangTiaoShiCheZhanDao anZhuangTiaoShiCheZhanDao;
+
+    @Autowired
+    private AnZhuangTiaoShiWorksDing anZhuangTiaoShiWorksDing;
+
+    @Autowired
+    private AnZhuangTiaoShiWorkNameTotalDao anZhuangTiaoShiWorkNameTotalDao;
+
+    @Override
+    public List<AnZhuangTiaoShiWorkNameTotalEntity> findAllWorks() {
+        return anZhuangTiaoShiWorkNameTotalDao.findAllWorks();
+    }
+
+    @Override
+    public void addWorksDatas(AnZhuangTiaoShiWorksDingEntity anZhuangTiaoShiWorksDingEntity) {
+        anZhuangTiaoShiWorksDing.insertSelective(anZhuangTiaoShiWorksDingEntity);
+    }
+
+    @Override
+    public List<AnZhuangTiaoShiWorkNameLibraryEntity> findWorksDatasByCid(Integer cid, Integer page, Integer size) {
+        return anZhuangTiaoShiWorksDing.findWorksDatasByCid(cid);
+    }
+
+    @Override
+    public List<AnZhuangTiaoShiWorksCheZhanEntity> findCheZhanDatasByXid(Integer xid, Integer page, Integer size) {
+        return anZhuangTiaoShiWorksDing.findCheZhanDatasByXid(xid);
+    }
 
     @Override
     public List<AnZhuangTiaoShiCheZhanEntity> findCheZhanByXid(Integer xid) {

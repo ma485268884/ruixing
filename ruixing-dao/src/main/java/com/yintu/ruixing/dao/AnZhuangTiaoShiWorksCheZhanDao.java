@@ -2,6 +2,8 @@ package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.AnZhuangTiaoShiWorksCheZhanEntity;
 
+import java.util.List;
+
 public interface AnZhuangTiaoShiWorksCheZhanDao {
     int deleteByPrimaryKey(Integer id);
 
