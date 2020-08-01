@@ -25,4 +25,6 @@ public interface AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalDao {
     List<AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity> findWorkNameByWorkname(@Param("workname") String workname);
 
     Integer findWorkNameTatol(Integer id);
+
+    void deleteWorkNameByIdss(Integer[] ids);
 }

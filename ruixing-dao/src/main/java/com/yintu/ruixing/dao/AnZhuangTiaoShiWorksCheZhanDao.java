@@ -11,9 +11,10 @@ public interface AnZhuangTiaoShiWorksCheZhanDao {
 
     int updateByPrimaryKeySelective(AnZhuangTiaoShiWorksCheZhanEntity record);
 
-    int updateByPrimaryKey(AnZhuangTiaoShiWorksCheZhanEntity record);
 
     //////////////////////////////////////////////////
 
     int insertSelective(AnZhuangTiaoShiWorksCheZhanEntity record);
+
+    int updateByPrimaryKey(AnZhuangTiaoShiWorksCheZhanEntity record);
 }
