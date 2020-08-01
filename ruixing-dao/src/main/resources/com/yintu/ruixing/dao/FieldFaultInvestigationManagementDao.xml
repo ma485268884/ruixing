@@ -173,6 +173,8 @@
         <result column="documentation_name" jdbcType="VARCHAR" property="documentationName"/>
         <result column="engineering_report_path" jdbcType="VARCHAR" property="engineeringReportPath"/>
         <result column="engineering_report_name" jdbcType="VARCHAR" property="engineeringReportName"/>
+        <result column="start_date" jdbcType="DATE" property="startDate"/>
+        <result column="end_date" jdbcType="DATE" property="endDate"/>
         <association column="tieluju_id" property="tieLuJuEntity">
             <id column="t_id" jdbcType="BIGINT" property="tid"/>
             <result column="tlj_name" jdbcType="VARCHAR" property="tljName"/>
@@ -191,7 +193,7 @@
         </association>
     </resultMap>
     <sql id="Connect_Column_List">
-        ffim.id as ffim_id, tieluju_id, dianwuduan_id, xianduan_id, chezhan_id, documentation_path, documentation_name,engineering_report_path, engineering_report_name,
+        ffim.id as ffim_id, tieluju_id, dianwuduan_id, xianduan_id, chezhan_id, documentation_path, documentation_name,engineering_report_path, engineering_report_name,start_date, end_date,
         t.tid as t_id,tlj_name,
         d.did as d_id,dwd_name,
         x.xid as x_id,xd_name,
