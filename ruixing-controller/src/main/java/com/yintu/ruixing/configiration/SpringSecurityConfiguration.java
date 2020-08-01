@@ -26,6 +26,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy;
 import org.springframework.security.web.session.ConcurrentSessionFilter;
 
@@ -72,26 +73,40 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
 
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-        tokenRepository.setDataSource(dataSource);
-        tokenRepository.setCreateTableOnStartup(false);
-        return tokenRepository;
-    }
+//    @Bean
+//    public PersistentTokenRepository persistentTokenRepository() {
+//        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+//        tokenRepository.setDataSource(dataSource);
+//        tokenRepository.setCreateTableOnStartup(false);
+//        return tokenRepository;
+//    }
+//
+////    /**
+////     * 第一种
+////     *
+////     * @return
+////     */
+////    @Bean
+////    public PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices() {
+////        PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices = new PersistentTokenBasedRememberMeServices(UUID.randomUUID().toString(), userServiceImpl, persistentTokenRepository());
+////        persistentTokenBasedRememberMeServices.setTokenValiditySeconds(60 * 60 * 24 * 365);
+////        persistentTokenBasedRememberMeServices.setParameter("rememberMe");
+////        persistentTokenBasedRememberMeServices.setCookieName("rememberMe");
+////        return persistentTokenBasedRememberMeServices;
+////    }
 
     /**
-     * 免密登录
+     * 第二种
      *
      * @return
      */
     @Bean
-    public PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices() {
-        PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices = new PersistentTokenBasedRememberMeServices(UUID.randomUUID().toString(), userServiceImpl, persistentTokenRepository());
-        persistentTokenBasedRememberMeServices.setTokenValiditySeconds(60 * 60 * 24 * 365);
-        persistentTokenBasedRememberMeServices.setParameter("rememberMe");
-        persistentTokenBasedRememberMeServices.setCookieName("rememberMe");
-        return persistentTokenBasedRememberMeServices;
+    public TokenBasedRememberMeServices tokenBasedRememberMeServices() {
+        TokenBasedRememberMeServices tokenBasedRememberMeServices = new TokenBasedRememberMeServices(UUID.randomUUID().toString(), userServiceImpl);
+        tokenBasedRememberMeServices.setTokenValiditySeconds(60 * 60 * 24 * 365);
+        tokenBasedRememberMeServices.setParameter("rememberMe");
+        tokenBasedRememberMeServices.setCookieName("rememberMe");
+        return tokenBasedRememberMeServices;
     }
 
     /**
@@ -155,7 +170,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         ConcurrentSessionControlAuthenticationStrategy sessionStrategy = new ConcurrentSessionControlAuthenticationStrategy(sessionRegistryImpl());
         sessionStrategy.setMaximumSessions(1);
         customUsernamePasswordAuthenticationFilter.setSessionAuthenticationStrategy(sessionStrategy);
-        customUsernamePasswordAuthenticationFilter.setRememberMeServices(persistentTokenBasedRememberMeServices());
+        customUsernamePasswordAuthenticationFilter.setRememberMeServices(tokenBasedRememberMeServices());
         return customUsernamePasswordAuthenticationFilter;
     }
 
@@ -218,7 +233,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
             out.flush();
             out.close();
         }), ConcurrentSessionFilter.class).addFilterAt(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .rememberMe().rememberMeServices(persistentTokenBasedRememberMeServices());
+                .rememberMe().rememberMeServices(tokenBasedRememberMeServices());
 
 
     }
