@@ -52,6 +52,7 @@ public class CommonController extends SessionController {
         List<TreeNodeUtil> treeNodeUtils = this.getLoginAuthType().equals((EnumAuthType.ADMIN.getValue())) ?
                 userService.findPermission(-1L, (short) 1) :
                 userService.findPermissionById(this.getLoginUserId(), -1L, (short) 1);
+
         return ResponseDataUtil.ok("获取菜单栏成功", treeNodeUtils);
     }
 
@@ -149,14 +150,14 @@ public class CommonController extends SessionController {
         String prefix = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/files" + "/";
         JSONArray ja = new JSONArray();
         for (MultipartFile multipartFile : multipartFiles) {
-            if (multipartFile.getSize() > 0) {
-                String fileName = multipartFile.getOriginalFilename();
-                String filePath = FileUploadUtil.save(multipartFile.getInputStream(), fileName);
-                JSONObject jo = new JSONObject();
-                jo.put("filePath", prefix + filePath.substring(1) + "/" + fileName);
-                jo.put("fileName", fileName);
-                ja.add(jo);
-            }
+            if (multipartFile.getSize() == 0)
+                throw new BaseRuntimeException("不能上传空文件");
+            String fileName = multipartFile.getOriginalFilename();
+            String filePath = FileUploadUtil.save(multipartFile.getInputStream(), fileName);
+            JSONObject jo = new JSONObject();
+            jo.put("filePath", prefix + filePath.substring(1) + "/" + fileName);
+            jo.put("fileName", fileName);
+            ja.add(jo);
         }
         return ResponseDataUtil.ok("上传文件成功", ja);
     }
@@ -174,16 +175,16 @@ public class CommonController extends SessionController {
         String prefix = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/files" + "/";
         JSONArray ja = new JSONArray();
         for (MultipartFile multipartFile : multipartFiles) {
-            if (multipartFile.getSize() > 0) {
-                String photoName = multipartFile.getOriginalFilename();
-                String photoPath = FileUploadUtil.save(multipartFile.getInputStream(), photoName);
-                if (!FileUtil.isImage(new File(FileUploadUtil.FilePath + File.separator + photoPath + File.separator + photoName)))//判断是否为图片文件
-                    throw new BaseRuntimeException("此文件不是图片文件");
-                JSONObject jo = new JSONObject();
-                jo.put("photoPath", prefix + photoPath.substring(1) + "/" + photoName);
-                jo.put("photoName", photoName);
-                ja.add(jo);
-            }
+            if (multipartFile.getSize() == 0)
+                throw new BaseRuntimeException("不能上传空文件");
+            String photoName = multipartFile.getOriginalFilename();
+            String photoPath = FileUploadUtil.save(multipartFile.getInputStream(), photoName);
+            if (!FileUtil.isImage(new File(FileUploadUtil.FilePath + File.separator + photoPath + File.separator + photoName)))//判断是否为图片文件
+                throw new BaseRuntimeException("此文件不是图片文件");
+            JSONObject jo = new JSONObject();
+            jo.put("photoPath", prefix + photoPath.substring(1) + "/" + photoName);
+            jo.put("photoName", photoName);
+            ja.add(jo);
         }
         return ResponseDataUtil.ok("上传图片成功", ja);
     }
