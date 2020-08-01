@@ -28,6 +28,19 @@ public class AnZhuangTiaoShiWorksDingEntity {
 
     private String yuliu2;
 
+    private AnZhuangTiaoShiWorksCheZhanEntity anZhuangTiaoShiWorksCheZhanEntity;
+
+    private AnZhuangTiaoShiWorkNameLibraryEntity anZhuangTiaoShiWorkNameLibraryEntity;
+
+    private AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity anZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity;
+
+
+
+
+
+
+
+
     public Integer getId() {
         return id;
     }

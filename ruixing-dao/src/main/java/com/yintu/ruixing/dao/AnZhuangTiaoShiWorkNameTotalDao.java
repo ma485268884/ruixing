@@ -23,4 +23,7 @@ public interface AnZhuangTiaoShiWorkNameTotalDao {
     List<AnZhuangTiaoShiWorkNameTotalEntity> findWorkNameTotal(String workname);
 
     void deleteWorkNameTotalByIds(Integer[] ids);
+
+    List<AnZhuangTiaoShiWorkNameTotalEntity> findAllWorks();
+
 }

@@ -13,6 +13,13 @@
     id, worknamesall, starttime, endtime, yuliu1, yuliu2
   </sql>
 
+  <!--查询所有的作业项配置版本-->
+  <select id="findAllWorks"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mro_anzhuangtiaoshi_worknametotal
+  </select>
+
   <!--查询所有的作业项配置版本 或者 根据名字进行模糊查询-->
   <select id="findWorkNameTotal"  resultMap="BaseResultMap">
     select 

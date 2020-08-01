@@ -1,7 +1,6 @@
 package com.yintu.ruixing.service;
 
-import com.yintu.ruixing.entity.AnZhuangTiaoShiCheZhanEntity;
-import com.yintu.ruixing.entity.AnZhuangTiaoShiWorksCheZhanEntity;
+import com.yintu.ruixing.entity.*;
 
 import java.util.List;
 
@@ -17,4 +16,13 @@ public interface AnZhuangTiaoShiWorksService {
     void editWorksCheZhanByXid(AnZhuangTiaoShiWorksCheZhanEntity anZhuangTiaoShiWorksCheZhanEntity);
 
     List<AnZhuangTiaoShiCheZhanEntity> findCheZhanByXid(Integer xid);
+
+    List<AnZhuangTiaoShiWorksCheZhanEntity> findCheZhanDatasByXid(Integer xid, Integer page, Integer size);
+
+    List<AnZhuangTiaoShiWorkNameLibraryEntity> findWorksDatasByCid(Integer cid, Integer page, Integer size);
+
+    void addWorksDatas(AnZhuangTiaoShiWorksDingEntity anZhuangTiaoShiWorksDingEntity);
+
+    List<AnZhuangTiaoShiWorkNameTotalEntity> findAllWorks();
+
 }
