@@ -113,5 +113,18 @@ public class TestController {
         VerificationCode.output(image, resp.getOutputStream());
     }
 
+    @GetMapping("/test6")
+    @ResponseBody
+    public Map<String, Object> test6(HttpServletRequest request, HttpServletResponse resp) throws IOException {
+        JSONObject jo = new JSONObject();
+        jo.put("getRequestURI", request.getRequestURI());
+        jo.put("getContextPath", request.getContextPath());
+        jo.put("getServletPath", request.getServletPath());
+        jo.put("getPathInfo", request.getPathInfo());
+        jo.put("getRequestURL", request.getRequestURL());
+        jo.put("getRequestedSessionId", request.getRequestedSessionId());
+        return ResponseDataUtil.ok("上传售前技术支持文件信息成功", jo);
+    }
+
 
 }

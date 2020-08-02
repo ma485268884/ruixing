@@ -33,6 +33,7 @@ import org.springframework.security.web.session.SessionInformationExpiredStrateg
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.beans.Beans;
 import java.io.PrintWriter;
@@ -105,7 +106,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public CustomUsernamePasswordAuthenticationFilter customUsernamePasswordAuthenticationFilter() throws Exception {
         CustomUsernamePasswordAuthenticationFilter customUsernamePasswordAuthenticationFilter = new CustomUsernamePasswordAuthenticationFilter();
         customUsernamePasswordAuthenticationFilter.setAuthenticationSuccessHandler((HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) -> {
-                    sessionRegistryImpl().registerNewSession(httpServletRequest.getSession(false).getId(), authentication.getPrincipal());
+                    sessionRegistryImpl().registerNewSession(httpServletRequest.getSession().getId(), authentication.getPrincipal());
                     httpServletResponse.setContentType("application/json;charset=utf-8");
                     httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                     PrintWriter out = httpServletResponse.getWriter();
