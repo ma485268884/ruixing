@@ -23,6 +23,16 @@
             <result property="tid" column="tid"></result>
         </association>
     </resultMap>
+
+    <select id="selectDwdListByDwdId"  resultMap="dianwuduan">
+    SELECT
+        *
+    FROM
+        mro_dianwuduan
+    WHERE
+        did = #{dwdid}
+</select>
+
     <select id="selectDwdListBytId" parameterType="long" resultMap="dianwuduan">
     SELECT mro_dianwuduan.*, mro_tieluju.tid FROM `mro_dianwuduan`,`mro_tieluju`
     WHERE

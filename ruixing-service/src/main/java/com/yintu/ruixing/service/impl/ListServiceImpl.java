@@ -26,6 +26,48 @@ public class ListServiceImpl implements ListService {
     private ListDao ld;
 
     @Override
+    public List<DianWuDuanEntity> findXDAndCZByDWDId(Integer dwdid) {
+
+        //根据铁路局id获得电务段信息
+        List<DianWuDuanEntity> dianWuDuanEntityDtos = ld.selectDwdListByDwdId(dwdid);
+        System.out.println(dianWuDuanEntityDtos);
+        //遍历电务段
+        for (DianWuDuanEntity dianWuDuanEntityDto : dianWuDuanEntityDtos) {
+            //根据遍历的电务段的id 获取对应的线段信息
+            List<XianDuanEntity> xianDuanEntityDtos = ld.selectXdListByDwdId(dianWuDuanEntityDto.getDid());
+            System.out.println(xianDuanEntityDtos);
+            dianWuDuanEntityDto.setXianDuanEntities(xianDuanEntityDtos);
+            for (XianDuanEntity xianDuanEntityDto : xianDuanEntityDtos) {
+                //遍历线段  获取线段id  然后获取对应的车站
+                List<CheZhanEntity> cheZhanEntities = ld.selectCzListByXdId(xianDuanEntityDto.getXid());
+                System.out.println(cheZhanEntities);
+                xianDuanEntityDto.setCheZhanEntities(cheZhanEntities);
+            }
+        }
+        return dianWuDuanEntityDtos;
+
+    }
+
+    @Override
+    public List<TieLuJuEntity> findOneTwoDatas() {
+        //获取铁路局信息
+        List<TieLuJuEntity> tieLuJuEntityDtos = ld.selectTieLuJuList();
+        System.out.println(tieLuJuEntityDtos);
+        //遍历铁路局
+        for (TieLuJuEntity tieLuJuEntityDto : tieLuJuEntityDtos) {
+            //获取铁路局id
+            long tId = tieLuJuEntityDto.getTid();
+            System.out.println("铁路局id" + tId);
+            //根据铁路局id获得电务段信息
+            List<DianWuDuanEntity> dianWuDuanEntityDtos = ld.selectDwdListBytId(tId);
+            System.out.println(dianWuDuanEntityDtos);
+            //保存电务段信息
+            tieLuJuEntityDto.setDianWuDuanEntities(dianWuDuanEntityDtos);
+        }
+        return tieLuJuEntityDtos;
+    }
+
+    @Override
     public Object getMenuList() {
         //获取铁路局信息
         List<TieLuJuEntity> tieLuJuEntityDtos = ld.selectTieLuJuList();
@@ -33,9 +75,8 @@ public class ListServiceImpl implements ListService {
         //遍历铁路局
         for (TieLuJuEntity tieLuJuEntityDto : tieLuJuEntityDtos) {
             //获取铁路局id
-
             long tId = tieLuJuEntityDto.getTid();
-            System.out.println("铁路局id"+tId);
+            System.out.println("铁路局id" + tId);
             //根据铁路局id获得电务段信息
             List<DianWuDuanEntity> dianWuDuanEntityDtos = ld.selectDwdListBytId(tId);
             System.out.println(dianWuDuanEntityDtos);
@@ -79,12 +120,12 @@ public class ListServiceImpl implements ListService {
     @Override
     public Object getSanJi() {
         List<TieLuJuEntity> tieLuJuEntityDtos = ld.TieLuJuList();
-       // System.out.println("铁路局"+tieLuJuEntityDtos);
+        // System.out.println("铁路局"+tieLuJuEntityDtos);
         //遍历铁路局
         for (TieLuJuEntity tieLuJuEntityDto : tieLuJuEntityDtos) {
             //获取铁路局id
             long tId = tieLuJuEntityDto.getTid();
-           // System.out.println("铁路局id"+tId);
+            // System.out.println("铁路局id"+tId);
             //根据铁路局id获得电务段信息
             List<DianWuDuanEntity> dianWuDuanEntityDtos = ld.DwdListBytId(tId);
             //System.out.println("电务段"+dianWuDuanEntityDtos);
@@ -94,7 +135,7 @@ public class ListServiceImpl implements ListService {
             for (DianWuDuanEntity dianWuDuanEntityDto : dianWuDuanEntityDtos) {
                 //根据遍历的电务段的id 获取对应的线段信息
                 List<XianDuanEntity> xianDuanEntityDtos = ld.XdListByDwdId(dianWuDuanEntityDto.getDid());
-               // System.out.println("线段"+xianDuanEntityDtos);
+                // System.out.println("线段"+xianDuanEntityDtos);
                 dianWuDuanEntityDto.setXianDuanEntities(xianDuanEntityDtos);
             }
         }

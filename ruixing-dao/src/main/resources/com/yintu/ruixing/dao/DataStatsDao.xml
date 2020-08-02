@@ -219,6 +219,7 @@
             xd.xd_name,
             xd.xd_state,
             xd.xd_json,
+            xd.xid,
             cz.cz_state,
             cz.cz_json,
             cz.cz_name,

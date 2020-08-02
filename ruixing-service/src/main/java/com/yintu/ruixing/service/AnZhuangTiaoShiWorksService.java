@@ -25,4 +25,17 @@ public interface AnZhuangTiaoShiWorksService {
 
     List<AnZhuangTiaoShiWorkNameTotalEntity> findAllWorks();
 
+    List<AnZhuangTiaoShiWorksFileEntity> findShuRuFileByXid(Integer id, Integer page, Integer size);
+
+    List<AnZhuangTiaoShiWorksFileEntity> findShuChuFileByXid(Integer id, Integer page, Integer size);
+
+    void addFile(AnZhuangTiaoShiWorksFileEntity anZhuangTiaoShiWorksFileEntity);
+
+    void editFileById(AnZhuangTiaoShiWorksFileEntity anZhuangTiaoShiWorksFileEntity);
+
+    AnZhuangTiaoShiWorksFileEntity findById(Integer id);
+
+    List<AnZhuangTiaoShiWorksFileEntity> findFileByNmae(Integer page, Integer size, Integer xdid, Integer filetype, String filename);
+
+    void deletFileByIds(Integer[] ids);
 }

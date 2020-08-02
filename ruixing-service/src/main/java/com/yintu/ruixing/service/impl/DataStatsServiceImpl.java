@@ -43,6 +43,46 @@ public class DataStatsServiceImpl implements DataStatsService {
     private CheZhanDao cheZhanDao;
 
     @Override
+    public List<QuDuanBaseEntity> findDianMaHuaByTid(Integer tid, Integer page, Integer size) {
+        return quDuanBaseDao.findDianMaHuaByTid(tid);
+    }
+
+    @Override
+    public List<QuDuanBaseEntity> findDianMaHuaByDid(Integer did, Integer page, Integer size) {
+        return quDuanBaseDao.findDianMaHuaByDid(did);
+    }
+
+    @Override
+    public List<QuDuanBaseEntity> findDianMaHuaByXid(Integer xid, Integer page, Integer size) {
+        return quDuanBaseDao.findDianMaHuaByXid(xid);
+    }
+
+    @Override
+    public List<QuDuanBaseEntity> findDianMaHuaBycid(Integer cid, Integer page, Integer size) {
+        return quDuanBaseDao.findDianMaHuaBycid(cid);
+    }
+
+    @Override
+    public List<QuDuanBaseEntity> findQuDuanBycid(Integer cid, Integer page, Integer size) {
+        return quDuanBaseDao.findQuDuanBycid(cid);
+    }
+
+    @Override
+    public List<QuDuanBaseEntity> findQuDuanByXid(Integer xid, Integer page, Integer size) {
+        return quDuanBaseDao.findQuDuanByXid(xid);
+    }
+
+    @Override
+    public List<QuDuanBaseEntity> findQuDuanByDid(Integer did, Integer page, Integer size) {
+        return quDuanBaseDao.findQuDuanByDid(did);
+    }
+
+    @Override
+    public List<QuDuanBaseEntity> findQuDuanByTid(Integer tid, Integer page, Integer size) {
+        return quDuanBaseDao.findQuDuanByTid(tid);
+    }
+
+    @Override
     public List<CheZhanEntity> findCheZhanByIds(Integer parseInt, Integer parseInt1) {
         return cheZhanDao.findCheZhanByIds(parseInt,parseInt1);
     }
@@ -121,7 +161,11 @@ public class DataStatsServiceImpl implements DataStatsService {
 
     @Override
     public Integer findLastParentid() {
-        return quDuanBaseDao.lastParentid() ;
+        Integer parentId= quDuanBaseDao.lastParentid() ;
+        if (parentId==null){
+            return 0;
+        }
+        return parentId;
     }
 
     @Override
@@ -307,6 +351,9 @@ public class DataStatsServiceImpl implements DataStatsService {
     @Override
     public void addQuDuan(QuDuanBaseEntity quDuanBaseEntity) {
         Integer i=quDuanBaseDao.lastParentid();//查询表中最后一列数据的id
+        if (i==null){
+            i=0;
+        }
         quDuanBaseEntity.setParentId(i);//得到新增数据的parentid
         if (quDuanBaseEntity.getLine().equals("站内")){
             quDuanBaseEntity.setType(0);

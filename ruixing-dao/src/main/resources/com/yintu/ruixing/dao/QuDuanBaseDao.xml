@@ -58,6 +58,145 @@
     guiNeiDiZhi, yuliu
     </sql>
 
+    <!--根据车站cid  查询此车站下面所有的电码化区段数据-->
+    <select id="findDianMaHuaBycid" resultMap="BaseResultMap">
+        select
+            qb.*,
+            cz.cz_name
+        FROM
+            mro_chezhan cz,
+            mro_quduan_base qb
+        WHERE
+            cz.cid = qb.cid
+            AND line = '电码化'
+            AND cz.cid = #{cid}
+    </select>
+
+    <!--根据线段xid  查询此线段下面所有的电码化区段数据-->
+    <select id="findDianMaHuaByXid" resultMap="BaseResultMap">
+        select
+            qb.*,
+            cz.cz_name
+        FROM
+            mro_xianduan xd,
+            mro_chezhan cz,
+            mro_quduan_base qb
+        WHERE
+            xd.xid = cz.xd_cz_id
+            AND cz.cid = qb.cid
+            AND line = '电码化'
+            AND xd.xid = #{xid}
+    </select>
+
+
+    <!--根据电务段did  查询此电务段下面所有的电码化区段数据-->
+    <select id="findDianMaHuaByDid" resultMap="BaseResultMap">
+        select
+            qb.*,
+            cz.cz_name
+        FROM
+            mro_dianwuduan dwd,
+            mro_xianduan xd,
+            mro_chezhan cz,
+            mro_quduan_base qb
+        WHERE
+            dwd.did = xd.dwd_xd_id
+            AND xd.xid = cz.xd_cz_id
+            AND cz.cid = qb.cid
+            AND line = '电码化'
+            AND did = #{did}
+    </select>
+
+    <!--根据铁路局tid  查询此铁路局下面所有的电码化区段数据-->
+    <select id="findDianMaHuaByTid" resultMap="BaseResultMap">
+        select
+        qb.*,
+        cz.cz_name
+        FROM
+        mro_tieluju tlj,
+        mro_dianwuduan dwd,
+        mro_xianduan xd,
+        mro_chezhan cz,
+        mro_quduan_base qb
+        WHERE
+        tlj.tid = dwd.tlj_dwd_id
+        AND dwd.did = xd.dwd_xd_id
+        AND xd.xid = cz.xd_cz_id
+        AND cz.cid = qb.cid
+        AND line = '电码化'
+        AND tid = #{tid}
+    </select>
+
+    <!--根据车站cid  查询此车站下面所有的区段数据-->
+    <select id="findQuDuanBycid" resultMap="BaseResultMap">
+        select
+            qb.*,
+            cz.cz_name
+        FROM
+            mro_chezhan cz,
+            mro_quduan_base qb
+        WHERE
+            cz.cid = qb.cid
+            AND line != '电码化'
+            AND cz.cid = #{cid}
+    </select>
+
+
+    <!--根据线段xid  查询此线段下面所有的区段数据-->
+    <select id="findQuDuanByXid" resultMap="BaseResultMap">
+        select
+            qb.*,
+            cz.cz_name
+        FROM
+            mro_xianduan xd,
+            mro_chezhan cz,
+            mro_quduan_base qb
+        WHERE
+            xd.xid = cz.xd_cz_id
+            AND cz.cid = qb.cid
+            AND line != '电码化'
+            AND xd.xid = #{xid}
+    </select>
+
+
+    <!--根据电务段did  查询此电务段下面所有的区段数据-->
+    <select id="findQuDuanByDid" resultMap="BaseResultMap">
+        select
+            qb.*,
+            cz.cz_name
+        FROM
+            mro_dianwuduan dwd,
+            mro_xianduan xd,
+            mro_chezhan cz,
+            mro_quduan_base qb
+        WHERE
+            dwd.did = xd.dwd_xd_id
+            AND xd.xid = cz.xd_cz_id
+            AND cz.cid = qb.cid
+            AND line != '电码化'
+            AND did = #{did}
+    </select>
+
+    <!--根据铁路局tid  查询此铁路局下面所有的区段数据-->
+    <select id="findQuDuanByTid" resultMap="BaseResultMap">
+        select
+        qb.*,
+        cz.cz_name
+        FROM
+        mro_tieluju tlj,
+        mro_dianwuduan dwd,
+        mro_xianduan xd,
+        mro_chezhan cz,
+        mro_quduan_base qb
+        WHERE
+        tlj.tid = dwd.tlj_dwd_id
+        AND dwd.did = xd.dwd_xd_id
+        AND xd.xid = cz.xd_cz_id
+        AND cz.cid = qb.cid
+        AND line != '电码化'
+        AND tid = #{tid}
+    </select>
+
     <!--根据区段里面的车站专用id 和区段专用id  查询对应的区段数据-->
     <select id="findQuDuanByIds" resultMap="BaseResultMap">
         select
