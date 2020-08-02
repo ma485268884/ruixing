@@ -29,10 +29,12 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy;
 import org.springframework.security.web.session.ConcurrentSessionFilter;
+import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import java.beans.Beans;
 import java.io.PrintWriter;
 import java.util.Map;
 import java.util.UUID;
@@ -44,11 +46,9 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserServiceImpl userServiceImpl;
     @Autowired
-    private DataSource dataSource;
+    private CustomFilterInvocationSecurityMetadataSource customFilterInvocationSecurityMetadataSource;
     @Autowired
     private CustomAccessDecisionManager customAccessDecisionManager;
-    @Autowired
-    private CustomFilterInvocationSecurityMetadataSource customFilterInvocationSecurityMetadataSource;
 
 
     /**
@@ -73,30 +73,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
 
-//    @Bean
-//    public PersistentTokenRepository persistentTokenRepository() {
-//        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-//        tokenRepository.setDataSource(dataSource);
-//        tokenRepository.setCreateTableOnStartup(false);
-//        return tokenRepository;
-//    }
-//
-////    /**
-////     * 第一种
-////     *
-////     * @return
-////     */
-////    @Bean
-////    public PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices() {
-////        PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices = new PersistentTokenBasedRememberMeServices(UUID.randomUUID().toString(), userServiceImpl, persistentTokenRepository());
-////        persistentTokenBasedRememberMeServices.setTokenValiditySeconds(60 * 60 * 24 * 365);
-////        persistentTokenBasedRememberMeServices.setParameter("rememberMe");
-////        persistentTokenBasedRememberMeServices.setCookieName("rememberMe");
-////        return persistentTokenBasedRememberMeServices;
-////    }
-
     /**
-     * 第二种
+     * 免密登录
      *
      * @return
      */
@@ -109,6 +87,14 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return tokenBasedRememberMeServices;
     }
 
+    @Bean
+    public ConcurrentSessionControlAuthenticationStrategy concurrentSessionControlAuthenticationStrategy() {
+        ConcurrentSessionControlAuthenticationStrategy sessionStrategy = new ConcurrentSessionControlAuthenticationStrategy(sessionRegistryImpl());
+        sessionStrategy.setMaximumSessions(1);
+        sessionStrategy.setExceptionIfMaximumExceeded(false);
+        return sessionStrategy;
+    }
+
     /**
      * 自定义登录拦截器
      *
@@ -119,12 +105,11 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public CustomUsernamePasswordAuthenticationFilter customUsernamePasswordAuthenticationFilter() throws Exception {
         CustomUsernamePasswordAuthenticationFilter customUsernamePasswordAuthenticationFilter = new CustomUsernamePasswordAuthenticationFilter();
         customUsernamePasswordAuthenticationFilter.setAuthenticationSuccessHandler((HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) -> {
+                    sessionRegistryImpl().registerNewSession(httpServletRequest.getSession(false).getId(), authentication.getPrincipal());
                     httpServletResponse.setContentType("application/json;charset=utf-8");
                     httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                     PrintWriter out = httpServletResponse.getWriter();
-                    UserEntity userEntity = (UserEntity) authentication.getPrincipal();
-                    userEntity.setPassword(null);
-                    JSONObject jo = (JSONObject) JSONObject.toJSON(ResponseDataUtil.ok("登录成功", userEntity));
+                    JSONObject jo = (JSONObject) JSONObject.toJSON(ResponseDataUtil.ok("登录成功", authentication.getPrincipal()));
                     out.write(jo.toJSONString());
                     out.flush();
                     out.close();
@@ -135,30 +120,23 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                     PrintWriter out = httpServletResponse.getWriter();
                     Map<String, Object> errorData = ResponseDataUtil.noLogin(authenticationException.getMessage());
-                    if (authenticationException instanceof AuthenticationServiceException) {
-                        //服务器异常
-                        errorData = ResponseDataUtil.error(authenticationException.getMessage());
-                    }
                     if (authenticationException instanceof VerificationCodeException) {
                         errorData = ResponseDataUtil.noLogin("验证码不正确");
                     }
+                    if (authenticationException instanceof AuthenticationServiceException) {
+                        errorData = ResponseDataUtil.noLogin("登录方式有误，请重新登录");
+                    }
                     if (authenticationException instanceof LockedException) {
-                        //  respBean.setMsg("账户被锁定，请联系管理员!");
                         errorData = ResponseDataUtil.noLogin("账户被锁定，请联系管理员");
+                    } else if (authenticationException instanceof DisabledException) {
+                        errorData = ResponseDataUtil.noLogin("账户被禁用，请联系管理员");
                     } else if (authenticationException instanceof CredentialsExpiredException) {
-                        //  respBean.setMsg("密码过期，请联系管理员!");
                         errorData = ResponseDataUtil.noLogin("密码过期，请联系管理员");
                     } else if (authenticationException instanceof AccountExpiredException) {
-                        //  respBean.setMsg("账户过期，请联系管理员!");
                         errorData = ResponseDataUtil.noLogin("账户过期，请联系管理员");
-                    } else if (authenticationException instanceof DisabledException) {
-                        // respBean.setMsg("账户被禁用，请联系管理员!");
-                        errorData = ResponseDataUtil.noLogin("账户被禁用，请联系管理员");
                     } else if (authenticationException instanceof BadCredentialsException) {
-                        // respBean.setMsg("用户名或者密码输入错误，请重新输入!");
                         errorData = ResponseDataUtil.noLogin("用户名或者密码输入错误，请重新输入");
                     }
-                    // out.write(new ObjectMapper().writeValueAsString(respBean));
                     JSONObject jo = (JSONObject) JSONObject.toJSON(errorData);
                     out.write(jo.toJSONString());
                     out.flush();
@@ -167,11 +145,26 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
         );
         customUsernamePasswordAuthenticationFilter.setAuthenticationManager(authenticationManagerBean());
         customUsernamePasswordAuthenticationFilter.setFilterProcessesUrl("/login");
-        ConcurrentSessionControlAuthenticationStrategy sessionStrategy = new ConcurrentSessionControlAuthenticationStrategy(sessionRegistryImpl());
-        sessionStrategy.setMaximumSessions(1);
-        customUsernamePasswordAuthenticationFilter.setSessionAuthenticationStrategy(sessionStrategy);
         customUsernamePasswordAuthenticationFilter.setRememberMeServices(tokenBasedRememberMeServices());
+        customUsernamePasswordAuthenticationFilter.setSessionAuthenticationStrategy(concurrentSessionControlAuthenticationStrategy());
         return customUsernamePasswordAuthenticationFilter;
+    }
+
+
+    @Bean
+    public ConcurrentSessionFilter concurrentSessionFilter() {
+        return new ConcurrentSessionFilter(sessionRegistryImpl(), sessionInformationExpiredStrategy -> {
+            tokenBasedRememberMeServices().loginFail(sessionInformationExpiredStrategy.getRequest(), sessionInformationExpiredStrategy.getResponse());
+            HttpServletResponse resp = sessionInformationExpiredStrategy.getResponse();
+            resp.setContentType("application/json;charset=utf-8");
+            resp.setStatus(HttpServletResponse.SC_OK);
+            PrintWriter out = resp.getWriter();
+            Map<String, Object> errorData = ResponseDataUtil.noLogin("您已在另一台设备登录，本次登录已下线");
+            JSONObject jo = (JSONObject) JSONObject.toJSON(errorData);
+            out.write(jo.toJSONString());
+            out.flush();
+            out.close();
+        });
     }
 
 
@@ -182,7 +175,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.rememberMe()
+                .rememberMeServices(tokenBasedRememberMeServices()).and().authorizeRequests()
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(O object) {
@@ -200,7 +194,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     out.write(jo.toJSONString());
                     out.flush();
                     out.close();
-                }).permitAll().and().csrf().disable().cors().and().exceptionHandling()
+                }).permitAll().and().csrf()
+                .disable().cors().and().exceptionHandling()
                 //没有登录权限时，在这里处理结果，不要重定向
                 .authenticationEntryPoint((HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException authenticationException) -> {
                     httpServletResponse.setContentType("application/json;charset=utf-8");
@@ -222,20 +217,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     out.write(jo.toJSONString());
                     out.flush();
                     out.close();
-                }).and().addFilterAt(new ConcurrentSessionFilter(sessionRegistryImpl(), event -> {
-            HttpServletResponse resp = event.getResponse();
-            resp.setContentType("application/json;charset=utf-8");
-            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            PrintWriter out = resp.getWriter();
-            Map<String, Object> errorData = ResponseDataUtil.noLogin("您已在另一台设备登录，本次登录已下线!");
-            JSONObject jo = (JSONObject) JSONObject.toJSON(errorData);
-            out.write(jo.toJSONString());
-            out.flush();
-            out.close();
-        }), ConcurrentSessionFilter.class).addFilterAt(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .rememberMe().rememberMeServices(tokenBasedRememberMeServices());
-
-
+                }).and().addFilterAt(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class).addFilterAt(concurrentSessionFilter(), ConcurrentSessionFilter.class);
     }
 
     @Override
