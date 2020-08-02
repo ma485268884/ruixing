@@ -6,7 +6,7 @@ import com.yintu.ruixing.entity.AnZhuangTiaoShiWorksDingEntity;
 
 import java.util.List;
 
-public interface AnZhuangTiaoShiWorksDing {
+public interface AnZhuangTiaoShiWorksDingDao {
     int deleteByPrimaryKey(Integer id);
 
     int insert(AnZhuangTiaoShiWorksDingEntity record);

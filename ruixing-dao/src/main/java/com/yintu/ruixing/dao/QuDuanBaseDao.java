@@ -56,4 +56,20 @@ public interface QuDuanBaseDao {
     Integer findQDid(String quduanname);
 
     List<QuDuanBaseEntity> findQuDuanByIds(@Param("parseInt") Integer parseInt,@Param("parseInt1") Integer parseInt1);
+
+    List<QuDuanBaseEntity> findQuDuanByTid(Integer tid);
+
+    List<QuDuanBaseEntity> findQuDuanByDid(Integer did);
+
+    List<QuDuanBaseEntity> findQuDuanByXid(Integer xid);
+
+    List<QuDuanBaseEntity> findQuDuanBycid(Integer cid);
+
+    List<QuDuanBaseEntity> findDianMaHuaByTid(Integer tid);
+
+    List<QuDuanBaseEntity> findDianMaHuaByDid(Integer did);
+
+    List<QuDuanBaseEntity> findDianMaHuaByXid(Integer xid);
+
+    List<QuDuanBaseEntity> findDianMaHuaBycid(Integer cid);
 }

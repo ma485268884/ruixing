@@ -1,6 +1,11 @@
 package com.yintu.ruixing.service;
 
 
+import com.yintu.ruixing.entity.DianWuDuanEntity;
+import com.yintu.ruixing.entity.TieLuJuEntity;
+import com.yintu.ruixing.entity.XianDuanEntity;
+
+import java.util.List;
 
 /**
  * @author Qiao
@@ -16,4 +21,7 @@ public interface ListService {
 
     Object getSanJi();
 
+    List<TieLuJuEntity> findOneTwoDatas();
+
+    List<DianWuDuanEntity> findXDAndCZByDWDId(Integer dwdid);
 }

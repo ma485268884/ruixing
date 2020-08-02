@@ -1,15 +1,9 @@
 package com.yintu.ruixing.service.impl;
 
-import com.yintu.ruixing.dao.AnZhuangTiaoShiCheZhanDao;
-import com.yintu.ruixing.dao.AnZhuangTiaoShiWorkNameTotalDao;
-import com.yintu.ruixing.dao.AnZhuangTiaoShiWorksCheZhanDao;
-import com.yintu.ruixing.dao.AnZhuangTiaoShiWorksDing;
+import com.yintu.ruixing.dao.*;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.AnZhuangTiaoShiWorksService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,10 +25,48 @@ public class AnZhuangTiaoShiWorksServiceImpl implements AnZhuangTiaoShiWorksServ
     private AnZhuangTiaoShiCheZhanDao anZhuangTiaoShiCheZhanDao;
 
     @Autowired
-    private AnZhuangTiaoShiWorksDing anZhuangTiaoShiWorksDing;
+    private AnZhuangTiaoShiWorksDingDao anZhuangTiaoShiWorksDingDao;
 
     @Autowired
     private AnZhuangTiaoShiWorkNameTotalDao anZhuangTiaoShiWorkNameTotalDao;
+
+    @Autowired
+    private AnZhuangTiaoShiWorksFileDao anZhuangTiaoShiWorksFileDao;
+
+    @Override
+    public void deletFileByIds(Integer[] ids) {
+        anZhuangTiaoShiWorksFileDao.deletFileByIds(ids);
+    }
+
+    @Override
+    public List<AnZhuangTiaoShiWorksFileEntity> findFileByNmae(Integer page, Integer size, Integer xdid, Integer filetype, String filename) {
+        return anZhuangTiaoShiWorksFileDao.findFileByNmae(xdid,filename,filetype);
+    }
+
+    @Override
+    public AnZhuangTiaoShiWorksFileEntity findById(Integer id) {
+        return anZhuangTiaoShiWorksFileDao.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void editFileById(AnZhuangTiaoShiWorksFileEntity anZhuangTiaoShiWorksFileEntity) {
+        anZhuangTiaoShiWorksFileDao.updateByPrimaryKeySelective(anZhuangTiaoShiWorksFileEntity);
+    }
+
+    @Override
+    public void addFile(AnZhuangTiaoShiWorksFileEntity anZhuangTiaoShiWorksFileEntity) {
+        anZhuangTiaoShiWorksFileDao.insertSelective(anZhuangTiaoShiWorksFileEntity);
+    }
+
+    @Override
+    public List<AnZhuangTiaoShiWorksFileEntity> findShuRuFileByXid(Integer id, Integer page, Integer size) {
+        return anZhuangTiaoShiWorksFileDao.findShuRuFileByXid(id);
+    }
+
+    @Override
+    public List<AnZhuangTiaoShiWorksFileEntity> findShuChuFileByXid(Integer id, Integer page, Integer size) {
+        return anZhuangTiaoShiWorksFileDao.findShuChuFileByXid(id);
+    }
 
     @Override
     public List<AnZhuangTiaoShiWorkNameTotalEntity> findAllWorks() {
@@ -43,17 +75,17 @@ public class AnZhuangTiaoShiWorksServiceImpl implements AnZhuangTiaoShiWorksServ
 
     @Override
     public void addWorksDatas(AnZhuangTiaoShiWorksDingEntity anZhuangTiaoShiWorksDingEntity) {
-        anZhuangTiaoShiWorksDing.insertSelective(anZhuangTiaoShiWorksDingEntity);
+        anZhuangTiaoShiWorksDingDao.insertSelective(anZhuangTiaoShiWorksDingEntity);
     }
 
     @Override
     public List<AnZhuangTiaoShiWorkNameLibraryEntity> findWorksDatasByCid(Integer cid, Integer page, Integer size) {
-        return anZhuangTiaoShiWorksDing.findWorksDatasByCid(cid);
+        return anZhuangTiaoShiWorksDingDao.findWorksDatasByCid(cid);
     }
 
     @Override
     public List<AnZhuangTiaoShiWorksCheZhanEntity> findCheZhanDatasByXid(Integer xid, Integer page, Integer size) {
-        return anZhuangTiaoShiWorksDing.findCheZhanDatasByXid(xid);
+        return anZhuangTiaoShiWorksDingDao.findCheZhanDatasByXid(xid);
     }
 
     @Override

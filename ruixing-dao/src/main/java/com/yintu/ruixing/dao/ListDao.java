@@ -28,4 +28,6 @@ public interface ListDao {
 
 
     List<XianDuanEntity> XdListByDwdId(@Param("dwdId") long dwdId);
+
+    List<DianWuDuanEntity> selectDwdListByDwdId(@Param("dwdid") Integer dwdid);
 }

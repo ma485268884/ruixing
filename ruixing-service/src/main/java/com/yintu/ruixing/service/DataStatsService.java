@@ -137,4 +137,20 @@ public interface DataStatsService {
     List<QuDuanBaseEntity> findQuDuanByIds(Integer parseInt, Integer parseInt1);
 
     List<CheZhanEntity> findCheZhanByIds(Integer parseInt, Integer parseInt1);
+
+    List<QuDuanBaseEntity> findQuDuanByTid(Integer tid, Integer page, Integer size);
+
+    List<QuDuanBaseEntity> findQuDuanByDid(Integer did, Integer page, Integer size);
+
+    List<QuDuanBaseEntity> findQuDuanByXid(Integer xid, Integer page, Integer size);
+
+    List<QuDuanBaseEntity> findQuDuanBycid(Integer cid, Integer page, Integer size);
+
+    List<QuDuanBaseEntity> findDianMaHuaByTid(Integer tid, Integer page, Integer size);
+
+    List<QuDuanBaseEntity> findDianMaHuaByDid(Integer did, Integer page, Integer size);
+
+    List<QuDuanBaseEntity> findDianMaHuaByXid(Integer xid, Integer page, Integer size);
+
+    List<QuDuanBaseEntity> findDianMaHuaBycid(Integer cid, Integer page, Integer size);
 }

@@ -1068,7 +1068,78 @@ public class DataStatsController {
         return ResponseDataUtil.ok("批量删除成功");
     }
 
+    //根据铁路局tid 查询此铁路局下所有的区段
+    @GetMapping("/findQuDuanByTid/{tid}")
+    public Map<String,Object>findQuDuanByTid(@PathVariable Integer tid,Integer page,Integer size){
+        PageHelper.startPage(page,size);
+        List<QuDuanBaseEntity> quDuanBaseEntityList=dataStatsService.findQuDuanByTid(tid,page,size);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo=new PageInfo<>(quDuanBaseEntityList);
+        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功",quDuanBaseEntityPageInfo);
+    }
 
+    //根据电务段Did 查询此电务段下所有的区段
+    @GetMapping("/findQuDuanByDid/{did}")
+    public Map<String,Object>findQuDuanByDid(@PathVariable Integer did,Integer page,Integer size){
+        PageHelper.startPage(page,size);
+        List<QuDuanBaseEntity> quDuanBaseEntityList=dataStatsService.findQuDuanByDid(did,page,size);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo=new PageInfo<>(quDuanBaseEntityList);
+        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功",quDuanBaseEntityPageInfo);
+    }
+
+    //根据线段Xid 查询此线段下所有的区段
+    @GetMapping("/findQuDuanByXid/{xid}")
+    public Map<String,Object>findQuDuanByXid(@PathVariable Integer xid,Integer page,Integer size){
+        PageHelper.startPage(page,size);
+        List<QuDuanBaseEntity> quDuanBaseEntityList=dataStatsService.findQuDuanByXid(xid,page,size);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo=new PageInfo<>(quDuanBaseEntityList);
+        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功",quDuanBaseEntityPageInfo);
+    }
+
+    //根据车站Cid 查询此车站下所有的区段
+    @GetMapping("/findQuDuanBycid/{cid}")
+    public Map<String,Object>findQuDuanBycid(@PathVariable Integer cid,Integer page,Integer size){
+        PageHelper.startPage(page,size);
+        List<QuDuanBaseEntity> quDuanBaseEntityList=dataStatsService.findQuDuanBycid(cid,page,size);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo=new PageInfo<>(quDuanBaseEntityList);
+        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功",quDuanBaseEntityPageInfo);
+    }
+
+
+    //根据铁路局tid 查询此铁路局下所有的电码化区段
+    @GetMapping("/findDianMaHuaByTid/{tid}")
+    public Map<String,Object>findDianMaHuaByTid(@PathVariable Integer tid,Integer page,Integer size){
+        PageHelper.startPage(page,size);
+        List<QuDuanBaseEntity> quDuanBaseEntityList=dataStatsService.findDianMaHuaByTid(tid,page,size);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo=new PageInfo<>(quDuanBaseEntityList);
+        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功",quDuanBaseEntityPageInfo);
+    }
+
+    //根据电务段Did 查询此电务段下所有的电码化区段
+    @GetMapping("/findDianMaHuaByDid/{did}")
+    public Map<String,Object>findDianMaHuaByDid(@PathVariable Integer did,Integer page,Integer size){
+        PageHelper.startPage(page,size);
+        List<QuDuanBaseEntity> quDuanBaseEntityList=dataStatsService.findDianMaHuaByDid(did,page,size);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo=new PageInfo<>(quDuanBaseEntityList);
+        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功",quDuanBaseEntityPageInfo);
+    }
+
+    //根据线段Xid 查询此线段下所有的电码化区段
+    @GetMapping("/findDianMaHuaByXid/{xid}")
+    public Map<String,Object>findDianMaHuaByXid(@PathVariable Integer xid,Integer page,Integer size){
+        PageHelper.startPage(page,size);
+        List<QuDuanBaseEntity> quDuanBaseEntityList=dataStatsService.findDianMaHuaByXid(xid,page,size);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo=new PageInfo<>(quDuanBaseEntityList);
+        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功",quDuanBaseEntityPageInfo);
+    }
+
+    //根据车站Cid 查询此车站下所有的电码化区段
+    @GetMapping("/findDianMaHuaBycid/{cid}")
+    public Map<String,Object>findDianMaHuaBycid(@PathVariable Integer cid,Integer page,Integer size){
+        PageHelper.startPage(page,size);
+        List<QuDuanBaseEntity> quDuanBaseEntityList=dataStatsService.findDianMaHuaBycid(cid,page,size);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo=new PageInfo<>(quDuanBaseEntityList);
+        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功",quDuanBaseEntityPageInfo);
+    }
 
 
 
