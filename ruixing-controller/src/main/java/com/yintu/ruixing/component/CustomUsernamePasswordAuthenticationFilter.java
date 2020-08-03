@@ -24,9 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class CustomUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    @Autowired
-    private SessionRegistry sessionRegistry;
-
     /**
      * 校验验证码
      */
@@ -36,7 +33,9 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
             throw new AuthenticationServiceException(
                     "Authentication method not supported: " + request.getMethod());
         }
-        String verify_code = (String) request.getSession().getAttribute("verify_code");
+        //String verify_code = (String) request.getSession().getAttribute("verify_code");
+        //String code = request.getParameter("code");
+        // checkCode(response, code, verify_code);
         if (request.getContentType().contains(MediaType.APPLICATION_FORM_URLENCODED_VALUE)) {
             String username = super.obtainUsername(request);
             String password = super.obtainPassword(request);
@@ -49,16 +48,8 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
             username = username.trim();
             UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
             super.setDetails(request, authRequest);
-
-            UserEntity principal = new UserEntity();
-            principal.setUsername(username);
-            sessionRegistry.registerNewSession(request.getSession(true).getId(), principal);
-            String code = request.getParameter("code");
-           // checkCode(response, code, verify_code);
-
             return super.getAuthenticationManager().authenticate(authRequest);
         } else {
-            //checkCode(response, request.getParameter("code"), verify_code);
             return super.attemptAuthentication(request, response);
         }
     }
