@@ -20,7 +20,7 @@
         <result property="xdId" column="xd_id"/>
         <result property="czNameJianCheng" column="cz_name_jiancheng"/>
         <result property="czIp" column="cz_ip"/>
-        <result property="czType" column="cz_type"/>
+        <result property="czType" jdbcType="VARCHAR" column="cz_type"/>
         <result property="czStutrs" column="cz_stutrs"/>
         <result property="czOpenStutrs" column="cz_open_stutrs"/>
         <result property="czLastTime" column="cz_lasttime"/>
@@ -31,7 +31,161 @@
         <result property="xdJson" column="xd_json"/>
         <result property="czState" column="cz_state"/>
         <result property="czJson" column="cz_json"/>
+        <result column="cz_r_shebei" jdbcType="INTEGER" property="czRSheBei"/>
+        <result column="cz_zhongjizhan" jdbcType="INTEGER" property="czZhongJiZhan"/>
+        <result column="yuliushebei1" jdbcType="VARCHAR" property="yuliushebei1"/>
+        <result column="yuliushebei2" jdbcType="VARCHAR" property="yuliushebei2"/>
+        <result column="yuliushebei3" jdbcType="VARCHAR" property="yuliushebei3"/>
+        <result column="tongXinBianMaGuiDaoNumber" jdbcType="INTEGER" property="tongxinbianmaguidaonumber"/>
+        <result column="tongXinBianMaZhanNeiOneGuiDaoNumber" jdbcType="INTEGER"
+                property="tongxinbianmazhanneioneguidaonumber"/>
+        <result column="jiDianOneToOneGuiDaoNumber" jdbcType="INTEGER" property="jidianonetooneguidaonumber"/>
+        <result column="jiDianNToOneGuiDaoNumber" jdbcType="INTEGER" property="jidianntooneguidaonumber"/>
+        <result column="jiDianNToOneSheBeiNumber" jdbcType="INTEGER" property="jidianntooneshebeinumber"/>
+        <result column="tongXinBianMaDianMaHuaSheBeiNumber" jdbcType="INTEGER"
+                property="tongxinbianmadianmahuashebeinumber"/>
+        <result column="jiDianNToOneDianMaHuaSheBeiNumber" jdbcType="INTEGER"
+                property="jidianntoonedianmahuashebeinumber"/>
+        <result column="jiDianJiaShiGuiDaoNumber" jdbcType="INTEGER" property="jidianjiashiguidaonumber"/>
+        <result column="jiDianJiaShiDianMaHuaSheBeiNumber" jdbcType="INTEGER"
+                property="jidianjiashidianmahuashebeinumber"/>
+        <result column="jiDianDianMaHuaNumber" jdbcType="INTEGER"
+                property="jiDianDianMaHuaNumber"/>
+        <result column="quJianBiSaiType" jdbcType="VARCHAR" property="qujianbisaitype"/>
+        <result column="linzhan1ID" jdbcType="INTEGER" property="linzhan1id"/>
+        <result column="linzhan1Name" jdbcType="VARCHAR" property="linzhan1name"/>
+        <result column="linzhan1LineType" jdbcType="VARCHAR" property="linzhan1linetype"/>
+        <result column="linzhan1OfXianDuan" jdbcType="VARCHAR" property="linzhan1ofxianduan"/>
+        <result column="linzhan1IsNoBenDWD" jdbcType="VARCHAR" property="linzhan1isnobendwd"/>
+        <result column="linzhan2ID" jdbcType="INTEGER" property="linzhan2id"/>
+        <result column="linzhan2Name" jdbcType="VARCHAR" property="linzhan2name"/>
+        <result column="linzhan2LineType" jdbcType="VARCHAR" property="linzhan2linetype"/>
+        <result column="linzhan2OfXianDuan" jdbcType="VARCHAR" property="linzhan2ofxianduan"/>
+        <result column="linzhan2IsNoBenDWD" jdbcType="VARCHAR" property="linzhan2isnobendwd"/>
+        <result column="linzhan3ID" jdbcType="INTEGER" property="linzhan3id"/>
+        <result column="linzhan3Name" jdbcType="VARCHAR" property="linzhan3name"/>
+        <result column="linzhan3LineType" jdbcType="VARCHAR" property="linzhan3linetype"/>
+        <result column="linzhan3OfXianDuan" jdbcType="VARCHAR" property="linzhan3ofxianduan"/>
+        <result column="linzhan3IsNoBenDWD" jdbcType="VARCHAR" property="linzhan3isnobendwd"/>
+        <result column="linzhan4ID" jdbcType="INTEGER" property="linzhan4id"/>
+        <result column="linzhan4Name" jdbcType="VARCHAR" property="linzhan4name"/>
+        <result column="linzhan4LineType" jdbcType="VARCHAR" property="linzhan4linetype"/>
+        <result column="linzhan4OfXianDuan" jdbcType="VARCHAR" property="linzhan4ofxianduan"/>
+        <result column="linzhan4IsNoBenDWD" jdbcType="VARCHAR" property="linzhan4isnobendwd"/>
+        <result column="linzhan5ID" jdbcType="INTEGER" property="linzhan5id"/>
+        <result column="linzhan5Name" jdbcType="VARCHAR" property="linzhan5name"/>
+        <result column="linzhan5LineType" jdbcType="VARCHAR" property="linzhan5linetype"/>
+        <result column="linzhan5OfXianDuan" jdbcType="VARCHAR" property="linzhan5ofxianduan"/>
+        <result column="linzhan5IsNoBenDWD" jdbcType="VARCHAR" property="linzhan5isnobendwd"/>
+        <result column="linzhan6ID" jdbcType="INTEGER" property="linzhan6id"/>
+        <result column="linzhan6Name" jdbcType="VARCHAR" property="linzhan6name"/>
+        <result column="linzhan6LineType" jdbcType="VARCHAR" property="linzhan6linetype"/>
+        <result column="linzhan6OfXianDuan" jdbcType="VARCHAR" property="linzhan6ofxianduan"/>
+        <result column="linzhan6IsNoBenDWD" jdbcType="VARCHAR" property="linzhan6isnobendwd"/>
     </resultMap>
+
+    <!--<resultMap id="dataStatEntities" type="com.yintu.ruixing.entity.CheZhanEntity">
+        <id column="cid" jdbcType="INTEGER" property="cid"/>
+        <result property="tljName" column="tlj_name"/>
+        <result property="dwdName" column="dwd_name"/>
+        <result property="dwdMiaoShu" column="dwd_miaoshu"/>
+        <result property="tljMiaoShu" column="tlj_miaoshu"/>
+        <result property="xdName" column="xd_name"/>
+        <result property="xdMiaoShu" column="xd_miaoshu"/>
+        <result property="cid" column="cid"/>
+        <result property="tid" column="tid"/>
+        <result property="did" column="did"/>
+        <result property="xid" column="xid"/>
+        <result property="xdState" column="xd_state"/>
+        <result property="xdJson" column="xd_json"/>
+        <result property="tljId" column="tlj_id"/>
+        <result property="dwdId" column="dwd_id"/>
+        <result property="xdId" column="xd_id"/>
+        <result property="czId" column="cz_id"/>
+        <result column="xd_cz_id" property="xdCzId"/>
+        <result column="cz_name" jdbcType="VARCHAR" property="czName"/>
+        <result column="cz_name_jiancheng" jdbcType="VARCHAR" property="czNameJianCheng"/>
+        <result column="cz_ip" jdbcType="VARCHAR" property="czIp"/>
+        <result column="cz_type" jdbcType="VARCHAR" property="czType"/>
+        <result column="cz_stutrs" property="czStutrs"/>
+        <result column="cz_open_stutrs" property="czOpenStutrs"/>
+        <result column="cz_caozuo" jdbcType="INTEGER" property="czCaoZuo"/>
+        <result column="cz_lasttime" jdbcType="TIMESTAMP" property="czLastTime"/>
+        <result column="cz_duantou" jdbcType="INTEGER" property="czDuanTou"/>
+        <result column="cz_miaoshu" jdbcType="VARCHAR" property="czMiaoShu"/>
+        <result column="cz_state" jdbcType="INTEGER" property="czState"/>
+        <result column="cz_r_shebei" jdbcType="INTEGER" property="czRSheBei"/>
+        <result column="cz_zhongjizhan" jdbcType="INTEGER" property="czZhongJiZhan"/>
+        <result column="yuliushebei1" jdbcType="VARCHAR" property="yuliushebei1"/>
+        <result column="yuliushebei2" jdbcType="VARCHAR" property="yuliushebei2"/>
+        <result column="yuliushebei3" jdbcType="VARCHAR" property="yuliushebei3"/>
+        <result column="tongXinBianMaGuiDaoNumber" jdbcType="INTEGER" property="tongxinbianmaguidaonumber"/>
+        <result column="tongXinBianMaZhanNeiOneGuiDaoNumber" jdbcType="INTEGER"
+                property="tongxinbianmazhanneioneguidaonumber"/>
+        <result column="jiDianOneToOneGuiDaoNumber" jdbcType="INTEGER" property="jidianonetooneguidaonumber"/>
+        <result column="jiDianNToOneGuiDaoNumber" jdbcType="INTEGER" property="jidianntooneguidaonumber"/>
+        <result column="jiDianNToOneSheBeiNumber" jdbcType="INTEGER" property="jidianntooneshebeinumber"/>
+        <result column="tongXinBianMaDianMaHuaSheBeiNumber" jdbcType="INTEGER"
+                property="tongxinbianmadianmahuashebeinumber"/>
+        <result column="jiDianNToOneDianMaHuaSheBeiNumber" jdbcType="INTEGER"
+                property="jidianntoonedianmahuashebeinumber"/>
+        <result column="jiDianJiaShiGuiDaoNumber" jdbcType="INTEGER" property="jidianjiashiguidaonumber"/>
+        <result column="jiDianJiaShiDianMaHuaSheBeiNumber" jdbcType="INTEGER"
+                property="jidianjiashidianmahuashebeinumber"/>
+        <result column="quJianBiSaiType" jdbcType="VARCHAR" property="qujianbisaitype"/>
+        <result column="linzhan1ID" jdbcType="INTEGER" property="linzhan1id"/>
+        <result column="linzhan1Name" jdbcType="VARCHAR" property="linzhan1name"/>
+        <result column="linzhan1LineType" jdbcType="VARCHAR" property="linzhan1linetype"/>
+        <result column="linzhan1OfXianDuan" jdbcType="VARCHAR" property="linzhan1ofxianduan"/>
+        <result column="linzhan1IsNoBenDWD" jdbcType="VARCHAR" property="linzhan1isnobendwd"/>
+        <result column="linzhan2ID" jdbcType="INTEGER" property="linzhan2id"/>
+        <result column="linzhan2Name" jdbcType="VARCHAR" property="linzhan2name"/>
+        <result column="linzhan2LineType" jdbcType="VARCHAR" property="linzhan2linetype"/>
+        <result column="linzhan2OfXianDuan" jdbcType="VARCHAR" property="linzhan2ofxianduan"/>
+        <result column="linzhan2IsNoBenDWD" jdbcType="VARCHAR" property="linzhan2isnobendwd"/>
+        <result column="linzhan3ID" jdbcType="INTEGER" property="linzhan3id"/>
+        <result column="linzhan3Name" jdbcType="VARCHAR" property="linzhan3name"/>
+        <result column="linzhan3LineType" jdbcType="VARCHAR" property="linzhan3linetype"/>
+        <result column="linzhan3OfXianDuan" jdbcType="VARCHAR" property="linzhan3ofxianduan"/>
+        <result column="linzhan3IsNoBenDWD" jdbcType="VARCHAR" property="linzhan3isnobendwd"/>
+        <result column="linzhan4ID" jdbcType="INTEGER" property="linzhan4id"/>
+        <result column="linzhan4Name" jdbcType="VARCHAR" property="linzhan4name"/>
+        <result column="linzhan4LineType" jdbcType="VARCHAR" property="linzhan4linetype"/>
+        <result column="linzhan4OfXianDuan" jdbcType="VARCHAR" property="linzhan4ofxianduan"/>
+        <result column="linzhan4IsNoBenDWD" jdbcType="VARCHAR" property="linzhan4isnobendwd"/>
+        <result column="linzhan5ID" jdbcType="INTEGER" property="linzhan5id"/>
+        <result column="linzhan5Name" jdbcType="VARCHAR" property="linzhan5name"/>
+        <result column="linzhan5LineType" jdbcType="VARCHAR" property="linzhan5linetype"/>
+        <result column="linzhan5OfXianDuan" jdbcType="VARCHAR" property="linzhan5ofxianduan"/>
+        <result column="linzhan5IsNoBenDWD" jdbcType="VARCHAR" property="linzhan5isnobendwd"/>
+        <result column="linzhan6ID" jdbcType="INTEGER" property="linzhan6id"/>
+        <result column="linzhan6Name" jdbcType="VARCHAR" property="linzhan6name"/>
+        <result column="linzhan6LineType" jdbcType="VARCHAR" property="linzhan6linetype"/>
+        <result column="linzhan6OfXianDuan" jdbcType="VARCHAR" property="linzhan6ofxianduan"/>
+        <result column="linzhan6IsNoBenDWD" jdbcType="VARCHAR" property="linzhan6isnobendwd"/>
+    </resultMap>
+    <resultMap extends="chezhan" id="ResultMapWithBLOBs" type="com.yintu.ruixing.entity.CheZhanEntity">
+        <result column="cz_json" jdbcType="LONGVARCHAR" property="czJson"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        cid, cz_id, xd_id, xd_cz_id, cz_name, cz_name_jiancheng, cz_ip, cz_type, cz_stutrs,
+    cz_open_stutrs, cz_caozuo, cz_lasttime, cz_duantou, cz_miaoshu, cz_state, cz_r_shebei,
+    cz_zhongjizhan, yuliushebei1, yuliushebei2,yuliushebei3, tongXinBianMaGuiDaoNumber, tongXinBianMaZhanNeiOneGuiDaoNumber,
+    jiDianOneToOneGuiDaoNumber, jiDianNToOneGuiDaoNumber, jiDianNToOneSheBeiNumber, tongXinBianMaDianMaHuaSheBeiNumber,
+    jiDianNToOneDianMaHuaSheBeiNumber, jiDianJiaShiGuiDaoNumber, jiDianJiaShiDianMaHuaSheBeiNumber,
+    quJianBiSaiType, linzhan1ID, linzhan1Name, linzhan1LineType, linzhan1OfXianDuan,
+    linzhan1IsNoBenDWD, linzhan2ID, linzhan2Name, linzhan2LineType, linzhan2OfXianDuan,
+    linzhan2IsNoBenDWD, linzhan3ID, linzhan3Name, linzhan3LineType, linzhan3OfXianDuan,
+    linzhan3IsNoBenDWD, linzhan4ID, linzhan4Name, linzhan4LineType, linzhan4OfXianDuan,
+    linzhan4IsNoBenDWD, linzhan5ID, linzhan5Name, linzhan5LineType, linzhan5OfXianDuan,
+    linzhan5IsNoBenDWD, linzhan6ID, linzhan6Name, linzhan6LineType, linzhan6OfXianDuan,
+    linzhan6IsNoBenDWD
+    </sql>
+    <sql id="Blob_Column_List">
+        cz_json
+    </sql>
+
+-->
 
     <!--查詢所有的车站数据-->
     <select id="findAll" resultType="com.yintu.ruixing.entity.DataStatsEntity" resultMap="dataStatEntities">
@@ -39,12 +193,7 @@
 		tlj.tlj_name,
 		dwd.dwd_name,
 		xd.xd_name,
-		cz.cz_name,
-		cz.cid,
-		cz.cz_ip,
-		cz.cz_type,
-		cz.cz_lasttime,
-		cz.cz_open_stutrs
+		cz.*
 	FROM
 		mro_chezhan cz,
 		mro_dianwuduan dwd,
@@ -73,17 +222,13 @@
                 tlj.tlj_name,
                 dwd.dwd_name,
                 xd.xd_name,
-                cz.cz_name,
-                cz.cz_miaoshu,
                 xd.xd_state,
                 xd.xd_json,
                 xd.xid,
-                cz.cz_state,
-                cz.cz_json,
-                cz.cz_id,
-                cz.xd_id,
-                cz.cid,
-                cz.xd_cz_id
+                tlj.tlj_id,
+                dwd.dwd_id,
+                xd.xd_id,
+                cz.*
             FROM
                 mro_tieluju tlj,
                 mro_dianwuduan dwd,
@@ -127,16 +272,11 @@
         tlj.tlj_miaoshu,
         dwd.dwd_name,
         xd.xd_name,
-        cz.cz_name,
-        cz.cz_miaoshu,
         xd.xd_state,
         xd.xd_json,
-        cz.cz_state,
-        cz.cz_json,
-        cz.cid,
-        cz.cz_id,
-        cz.xd_id,
-        cz.xd_cz_id
+        dwd.dwd_id,
+        xd.xd_id,
+        cz.*
         FROM
         mro_tieluju tlj,
         mro_dianwuduan dwd,
@@ -158,16 +298,11 @@
             dwd.dwd_id,
             dwd.dwd_miaoshu,
             xd.xd_name,
-            cz.cz_name,
-            cz.cz_miaoshu,
             xd.xd_state,
             xd.xd_json,
-            cz.cz_state,
-            cz.cz_json,
-            cz.cid,
-            cz.cz_id,
-            cz.xd_id,
-            cz.xd_cz_id
+            tlj.tlj_id,
+            xd.xd_id,
+            cz.*
         FROM
             mro_tieluju tlj,
             mro_dianwuduan dwd,
@@ -190,14 +325,10 @@
             xd.xd_miaoshu,
             xd.xd_state,
             xd.xd_json,
-            cz.cz_name,
-            cz.cz_state,
-            cz.cz_json,
-            cz.cz_miaoshu,
-            cz.cid,
-            cz.cz_id,
-            cz.xd_id,
-            cz.xd_cz_id
+            tlj.tlj_id,
+            dwd.dwd_id,
+            xd.xd_id,
+            cz.*
         FROM
             mro_tieluju tlj,
             mro_dianwuduan dwd,
@@ -220,15 +351,10 @@
             xd.xd_state,
             xd.xd_json,
             xd.xid,
-            cz.cz_state,
-            cz.cz_json,
-            cz.cz_name,
-            cz.cz_id,
-            cz.cz_miaoshu,
-            cz.cid,
-            cz.cz_id,
-            cz.xd_id,
-            cz.xd_cz_id
+            tlj.tlj_id,
+            dwd.dwd_id,
+            xd.xd_id,
+            cz.*
         FROM
             mro_tieluju tlj,
             mro_dianwuduan dwd,

@@ -29,6 +29,36 @@ public class CheZhanServiceImpl implements CheZhanService {
     private QuDuanBaseDao quDuanBaseDao;
 
     @Override
+    public List<CheZhanEntity> findXiangLinTwoCheZhanByXdid(Integer xdid) {
+        return cheZhanDao.findXiangLinTwoCheZhanByXdid(xdid);
+    }
+
+    @Override
+    public List<CheZhanEntity> findXiangLinThreeCheZhanByXdid(Integer xdid) {
+        return cheZhanDao.findXiangLinThreeCheZhanByXdid(xdid);
+    }
+
+    @Override
+    public List<CheZhanEntity> findXiangLinFourCheZhanByXdid(Integer xdid) {
+        return cheZhanDao.findXiangLinFourCheZhanByXdid(xdid);
+    }
+
+    @Override
+    public List<CheZhanEntity> findXiangLinFiveCheZhanByXdid(Integer xdid) {
+        return cheZhanDao.findXiangLinFiveCheZhanByXdid(xdid);
+    }
+
+    @Override
+    public List<CheZhanEntity> findXiangLinSixCheZhanByXdid(Integer xdid) {
+        return cheZhanDao.findXiangLinSixCheZhanByXdid(xdid);
+    }
+
+    @Override
+    public List<CheZhanEntity> findXiangLinOneCheZhanByXdid(Integer xdid) {
+        return cheZhanDao.findXiangLinOneCheZhanByXdid(xdid);
+    }
+
+    @Override
     public void add(CheZhanEntity cheZhanEntity) {
         long xid = cheZhanEntity.getXid();
         cheZhanEntity.setCzState(0);

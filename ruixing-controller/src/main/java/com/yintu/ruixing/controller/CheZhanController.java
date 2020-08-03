@@ -51,4 +51,45 @@ public class CheZhanController {
             return ResponseDataUtil.error("此车站不能删除");
         }
     }
+
+    //根据线段id 查询对应的相邻1车站
+    @GetMapping("/findXiangLinOneCheZhanByXdid/{xdid}")
+    public Map<String,Object>findXiangLinOneCheZhanByXdid(@PathVariable Integer xdid){
+        List<CheZhanEntity> cheZhanEntityList=cheZhanService.findXiangLinOneCheZhanByXdid(xdid);
+        return ResponseDataUtil.ok("查询相邻车站1成功",cheZhanEntityList);
+    }
+
+    //根据线段id 查询对应的相邻2车站
+    @GetMapping("/findXiangLinTwoCheZhanByXdid/{xdid}")
+    public Map<String,Object>findXiangLinTwoCheZhanByXdid(@PathVariable Integer xdid){
+        List<CheZhanEntity> cheZhanEntityList=cheZhanService.findXiangLinTwoCheZhanByXdid(xdid);
+        return ResponseDataUtil.ok("查询相邻车站1成功",cheZhanEntityList);
+    }
+
+    //根据线段id 查询对应的相邻3车站
+    @GetMapping("/findXiangLinThreeCheZhanByXdid/{xdid}")
+    public Map<String,Object>findXiangLinThreeCheZhanByXdid(@PathVariable Integer xdid){
+        List<CheZhanEntity> cheZhanEntityList=cheZhanService.findXiangLinThreeCheZhanByXdid(xdid);
+        return ResponseDataUtil.ok("查询相邻车站1成功",cheZhanEntityList);
+    }
+    //根据线段id 查询对应的相邻4车站
+    @GetMapping("/findXiangLinFourCheZhanByXdid/{xdid}")
+    public Map<String,Object>findXiangLinFourCheZhanByXdid(@PathVariable Integer xdid){
+        List<CheZhanEntity> cheZhanEntityList=cheZhanService.findXiangLinFourCheZhanByXdid(xdid);
+        return ResponseDataUtil.ok("查询相邻车站1成功",cheZhanEntityList);
+    }
+
+    //根据线段id 查询对应的相邻5车站
+    @GetMapping("/findXiangLinFiveCheZhanByXdid/{xdid}")
+    public Map<String,Object>findXiangLinFiveCheZhanByXdid(@PathVariable Integer xdid){
+        List<CheZhanEntity> cheZhanEntityList=cheZhanService.findXiangLinFiveCheZhanByXdid(xdid);
+        return ResponseDataUtil.ok("查询相邻车站1成功",cheZhanEntityList);
+    }
+
+    //根据线段id 查询对应的相邻6车站
+    @GetMapping("/findXiangLinSixCheZhanByXdid/{xdid}")
+    public Map<String,Object>findXiangLinSixCheZhanByXdid(@PathVariable Integer xdid){
+        List<CheZhanEntity> cheZhanEntityList=cheZhanService.findXiangLinSixCheZhanByXdid(xdid);
+        return ResponseDataUtil.ok("查询相邻车站1成功",cheZhanEntityList);
+    }
 }

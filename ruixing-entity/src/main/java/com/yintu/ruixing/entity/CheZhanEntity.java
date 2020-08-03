@@ -31,6 +31,8 @@ public class CheZhanEntity {
     private long czId;
 
     private long xdId;
+    private long tljId;
+    private long dwdId;
 
     private String czNameJianCheng;//图中简称
 
@@ -45,7 +47,6 @@ public class CheZhanEntity {
     private Date czLastTime;//最后连接时间
 
     private long xdCzId;
-
     private String czMiaoShu;//车站运用概况
 
     private Integer czCaoZuo;//操作 0：断开  ，1：连接
@@ -53,8 +54,10 @@ public class CheZhanEntity {
     private Integer czDuanTou;//是否为端头站   0：否  1：是
 
     private Integer czState; //车站配置状态  0：未配置    1：已配置
+    private Integer xdState; //线段配置状态  0：未配置    1：已配置
 
     private String czJson; //车站储存json
+    private String xdJson; //线段储存json
 
     private Integer czRSheBei;//站内是否有2000R设备  0：无   1：有
 
@@ -93,6 +96,8 @@ public class CheZhanEntity {
     private Integer jidianjiashiguidaonumber;
 
     private Integer jidianjiashidianmahuashebeinumber;
+
+    private Integer jiDianDianMaHuaNumber;
 
     private String qujianbisaitype;
 

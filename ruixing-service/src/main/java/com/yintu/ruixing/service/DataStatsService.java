@@ -18,13 +18,17 @@ import java.util.List;
 public interface DataStatsService {
     //查询所有数据
     List<DataStatsEntity> findAll();
+
     //分页查询
     PageInfo<DataStatsEntity> findPage(Integer page, Integer size);
 
 
     List<DataStatsEntity> findTieLuJuById(Long tid, Integer page, Integer size);
+
     List<DataStatsEntity> findDianWuDuanCheZhanById(Long did, Integer page, Integer size);
+
     List<DataStatsEntity> findXianDuanCheZhanById(Long xid, Integer page, Integer size);
+
     List<DataStatsEntity> findCheZhanById(Long cid, Integer page, Integer size);
 
 
@@ -42,11 +46,10 @@ public interface DataStatsService {
     int delCheZhanListById(int[] ids);
 
 
-
-
     List<DataStatsEntity> findAllCheZhan(Integer page, Integer size);
 
     void editStateByXid(XianDuanEntity xianDuanEntity);
+
     void editStateByCid(CheZhanEntity cheZhanEntity);
 
     List<TieLuJuEntity> findAllTieLuJu();
@@ -57,7 +60,7 @@ public interface DataStatsService {
 
     List<CheZhanEntity> findCheZhanByXid(Integer xid);
 
-    List<QuDuanBaseEntity> findAllQuDuan(Integer page,Integer size);
+    List<QuDuanBaseEntity> findAllQuDuan(Integer page, Integer size);
 
     List<QuDuanBaseEntity> findAllDianMaHua(Integer page, Integer size);
 
@@ -113,7 +116,7 @@ public interface DataStatsService {
 
     Integer findxianduanid(long parseLong);
 
-	List<XianDuanEntity> findAllXianDuanByDwdid(long parseLong);
+    List<XianDuanEntity> findAllXianDuanByDwdid(long parseLong);
 
     List<DianWuDuanEntity> findDianWuDuanBydid(long parseLong);
 
