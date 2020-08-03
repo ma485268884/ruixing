@@ -15,6 +15,7 @@ import java.util.Map;
  */
 public interface QuDuanDownloadService extends BaseService<QuDuanDownloadEntity, Integer> {
 
+    QuDuanDownloadEntity findByCidAndDataType(Integer cid, Short dataType);
 
     Integer add(Integer czId, Short type, Date startDateTime, Date endDateTime);
 

@@ -60,6 +60,11 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
 
 
     @Override
+    public QuDuanDownloadEntity findByCidAndDataType(Integer cid, Short dataType) {
+        return quDuanDownloadDao.selectByCidAndDataType(cid, dataType);
+    }
+
+    @Override
     public Integer add(Integer czId, Short type, Date startDateTime, Date endDateTime) {
         QuDuanDownloadEntity quDuanDownloadEntity = new QuDuanDownloadEntity();
         quDuanDownloadEntity.setCid(czId);
@@ -67,6 +72,7 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
         quDuanDownloadEntity.setEndTime(endDateTime);
         quDuanDownloadEntity.setStatus((short) 0);
         quDuanDownloadEntity.setType(type);
+        quDuanDownloadEntity.setDataType((short) 1);
         this.add(quDuanDownloadEntity);
         return quDuanDownloadEntity.getId();
     }

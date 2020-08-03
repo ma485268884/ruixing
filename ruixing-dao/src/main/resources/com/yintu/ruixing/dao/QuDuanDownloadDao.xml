@@ -8,9 +8,11 @@
         <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
         <result column="status" jdbcType="SMALLINT" property="status"/>
         <result column="type" jdbcType="SMALLINT" property="type"/>
+        <result column="data_status" jdbcType="SMALLINT" property="dataStatus"/>
+        <result column="data_type" jdbcType="SMALLINT" property="dataType"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, cid,  start_time, end_time, status, type
+        id, cid,  start_time, end_time, status, type,data_status,data_type
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -18,16 +20,22 @@
         from mro_quduan_download
         where id = #{id,jdbcType=INTEGER}
     </select>
-
+    <select id="selectByCidAndDataType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_quduan_download
+        where cid = #{cid,jdbcType=INTEGER} and data_type #{cid,jdbcType=SMALLINT}
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from mro_quduan_download
         where id = #{id,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.yintu.ruixing.entity.QuDuanDownloadEntity">
-        insert into mro_quduan_download (id, cid, start_time, end_time, status, type)
+        insert into mro_quduan_download (id, cid, start_time, end_time, status, type, data_status, data_type)
         values (#{id,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP},
-                #{endTime,jdbcType=TIMESTAMP}, #{status,jdbcType=SMALLINT}, #{type,jdbcType=SMALLINT})
+                #{endTime,jdbcType=TIMESTAMP}, #{status,jdbcType=SMALLINT}, #{type,jdbcType=SMALLINT},
+                #{dataStatus,jdbcType=SMALLINT}, #{dataType,jdbcType=SMALLINT})
     </insert>
     <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.QuDuanDownloadEntity" useGeneratedKeys="true" keyProperty="id">
         insert into mro_quduan_download
@@ -50,6 +58,12 @@
             <if test="type != null">
                 type,
             </if>
+            <if test="dataStatus != null">
+                data_status,
+            </if>
+            <if test="dataType != null">
+                data_type,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -69,6 +83,12 @@
             </if>
             <if test="type != null">
                 #{type,jdbcType=SMALLINT},
+            </if>
+            <if test="dataStatus != null">
+                #{dataStatus,jdbcType=SMALLINT},
+            </if>
+            <if test="dataType != null">
+                #{dataType,jdbcType=SMALLINT},
             </if>
         </trim>
     </insert>
@@ -90,16 +110,24 @@
             <if test="type != null">
                 type = #{type,jdbcType=SMALLINT}
             </if>
+            <if test="dataStatus != null">
+                data_status = #{dataStatus,jdbcType=SMALLINT},
+            </if>
+            <if test="dataType != null">
+                data_type = #{dataType,jdbcType=SMALLINT}
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.QuDuanDownloadEntity">
         update mro_quduan_download
-        set cid        = #{cid,jdbcType=INTEGER},
-            start_time = #{startTime,jdbcType=TIMESTAMP},
-            end_time   = #{endTime,jdbcType=TIMESTAMP},
-            status     = #{status,jdbcType=SMALLINT},
-            type       = #{type,jdbcType=SMALLINT}
+        set cid         = #{cid,jdbcType=INTEGER},
+            start_time  = #{startTime,jdbcType=TIMESTAMP},
+            end_time    = #{endTime,jdbcType=TIMESTAMP},
+            status      = #{status,jdbcType=SMALLINT},
+            type        = #{type,jdbcType=SMALLINT},
+            data_status = #{dataStatus,jdbcType=SMALLINT},
+            data_type   = #{dataType,jdbcType=SMALLINT}
         where id = #{id,jdbcType=INTEGER}
     </update>
     <resultMap id="MuchResultMap" type="com.yintu.ruixing.entity.QuDuanDownloadEntity">
@@ -109,6 +137,8 @@
         <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
         <result column="status" jdbcType="SMALLINT" property="status"/>
         <result column="type" jdbcType="SMALLINT" property="type"/>
+        <result column="data_status" jdbcType="SMALLINT" property="dataStatus"/>
+        <result column="data_type" jdbcType="SMALLINT" property="dataType"/>
         <association column="qb_cid" property="cheZhanEntity">
             <id column="cz_cid" jdbcType="INTEGER" property="cid"/>
             <result column="cz_id" jdbcType="INTEGER" property="czId"/>
@@ -116,7 +146,7 @@
         </association>
     </resultMap>
     <sql id="Much_Column_List">
-        qd.id as qd_id, qd.cid as qb_cid, qd.start_time, qd.end_time,qd.status, qd.type,
+        qd.id as qd_id, qd.cid as qb_cid, qd.start_time, qd.end_time,qd.status, qd.type,data_status,data_type,
         cz.cid as cz_cid ,cz.cz_id,cz.cz_name
     </sql>
 
@@ -127,7 +157,7 @@
         <where>
             <if test="startDateTime!=null and endDateTime!=null">
                 qd.start_time &gt;= #{startDateTime,jdbcType=TIMESTAMP} and qd.end_time &lt;=
-                #{endDateTime,jdbcType=TIMESTAMP}
+                #{endDateTime,jdbcType=TIMESTAMP} and qd.data_type=1
             </if>
         </where>
     </select>
