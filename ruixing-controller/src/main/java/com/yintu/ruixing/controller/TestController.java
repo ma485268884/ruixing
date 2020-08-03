@@ -6,7 +6,9 @@ import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.VerificationCode;
 import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.UserService;
-import com.yintu.ruixing.websocket.WebSocketServer;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -16,13 +18,15 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author:mlf
@@ -30,6 +34,7 @@ import java.util.concurrent.Executors;
  */
 @Controller
 @RequestMapping("/test")
+@Api("测试接口描述")
 public class TestController {
 
     @Autowired
@@ -38,6 +43,7 @@ public class TestController {
 
     @PostMapping("/test1")
     @ResponseBody
+
     public Map<String, Object> test1(@RequestBody JSONObject jsonObject) throws IOException {
 //        Map<String, Session> webSocketServers = WebSocketServer
 //        for (String s : webSocketServers.keySet()) {
@@ -78,8 +84,8 @@ public class TestController {
     }
 
     @GetMapping("/test5")
-    public void test5() throws InterruptedException {
-        for (int i = 0; i < 3; i++) {
+    public void test5() {
+        for (int i = 0; i < 10; i++) {
             executorService.submit(() -> {
                 synchronized (TestController.class) {
                     List<UserEntity> userEntities = userService.findByTruename("马葳严");
@@ -90,17 +96,12 @@ public class TestController {
                         userEntity.setTrueName("马葳严");
                         userEntity.setIsCustomer((short) 0);
                         userEntity.setEnableds((short) 1);
+                        userEntity.setDepartmentId(1L);
                         userService.add(userEntity);
-                        try {
-                            Thread.sleep(2000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
                     }
                 }
             });
         }
-        Thread.sleep(10000);
     }
 
     @GetMapping("/verifyCode")
@@ -115,7 +116,8 @@ public class TestController {
 
     @GetMapping("/test6")
     @ResponseBody
-    public Map<String, Object> test6(HttpServletRequest request, HttpServletResponse resp) throws IOException {
+    @ApiOperation(value = "方法介绍描述", httpMethod = "GET", response = String.class, notes = "方法介绍描述")
+    public Map<String, Object> test6(@ApiParam("参数描述") HttpServletRequest request, @ApiParam("参数描述") HttpServletResponse resp) throws IOException {
         JSONObject jo = new JSONObject();
         jo.put("getRequestURI", request.getRequestURI());
         jo.put("getContextPath", request.getContextPath());
