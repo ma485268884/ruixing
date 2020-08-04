@@ -16,4 +16,13 @@ public class StringUtil {
         else
             return false;
     }
+
+    public static <T> String arrayToStrWithComma(T[] array) {
+        StringBuilder sb = new StringBuilder();
+        for (T t : array) {
+            sb.append(t.toString()).append(",");
+        }
+        return sb.toString().substring(0, sb.length() - 1);
+    }
+
 }

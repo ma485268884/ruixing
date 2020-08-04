@@ -614,7 +614,8 @@
    v20 as V_in_all,   v21 as mV_in_zhu,  v22 as mV_in_diao_zhu,  v23 as Hz_in_low_zhu,   v24 as GJ_drive_zhu, v25 as baojing_zhu,
                       v26 as mV_in_bing, v27 as mV_in_diao_bing, v28 as Hz_in_low_bing,  v29 as GJ_drive_bing,v30 as baojing_bing,
 
-    v31,v32,v33, v34, v35, v36, v37, v38, v39,     v40 as direction , v41 as signalPosition,
+    v31,v32,v33, v34, v35, v36, v37, v38, v39,
+    v39_sc1,v39_sc2 as FBJ_collection_bei,v39_sc3 as FBJ_collection_zhu,v39_sc4 as GJcollection,v40 as direction , v41 as signalPosition,
 
 
 

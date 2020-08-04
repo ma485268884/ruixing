@@ -1,5 +1,6 @@
 package com.yintu.ruixing.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.entity.QuDuanInfoEntityV2;
 
 import java.util.Date;
@@ -58,7 +59,7 @@ public interface QuDuanInfoService {
     List<Map<String, Object>> findStatisticsByCzIdAndTime(Integer czId, Date time);
 
 
-    List<QuDuanInfoEntityV2> findByCondition(Integer czId, Date time);
+    List<JSONObject> findByCondition(Integer czId, Date time);
 
 
     Integer[] findDistinctTypeByCzId(Integer czId);
