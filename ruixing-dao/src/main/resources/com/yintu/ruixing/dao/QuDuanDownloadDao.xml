@@ -20,11 +20,11 @@
         from mro_quduan_download
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <select id="selectByCidAndDataType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectByCidAndDataType"  resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from mro_quduan_download
-        where cid = #{cid,jdbcType=INTEGER} and data_type #{cid,jdbcType=SMALLINT}
+        where cid = #{cid,jdbcType=INTEGER} and data_type = #{dataType,jdbcType=SMALLINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
@@ -62,7 +62,7 @@
                 data_status,
             </if>
             <if test="dataType != null">
-                data_type,
+                data_type
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -88,7 +88,7 @@
                 #{dataStatus,jdbcType=SMALLINT},
             </if>
             <if test="dataType != null">
-                #{dataType,jdbcType=SMALLINT},
+                #{dataType,jdbcType=SMALLINT}
             </if>
         </trim>
     </insert>
@@ -108,7 +108,7 @@
                 status = #{status,jdbcType=SMALLINT},
             </if>
             <if test="type != null">
-                type = #{type,jdbcType=SMALLINT}
+                type = #{type,jdbcType=SMALLINT},
             </if>
             <if test="dataStatus != null">
                 data_status = #{dataStatus,jdbcType=SMALLINT},
@@ -157,8 +157,9 @@
         <where>
             <if test="startDateTime!=null and endDateTime!=null">
                 qd.start_time &gt;= #{startDateTime,jdbcType=TIMESTAMP} and qd.end_time &lt;=
-                #{endDateTime,jdbcType=TIMESTAMP} and qd.data_type=1
+                #{endDateTime,jdbcType=TIMESTAMP}
             </if>
+            and qd.data_type=1
         </where>
     </select>
 </mapper>
