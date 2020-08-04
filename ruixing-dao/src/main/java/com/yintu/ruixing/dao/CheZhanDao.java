@@ -83,4 +83,16 @@ public interface CheZhanDao {
     List<CheZhanEntity> findEndCheZhan(Integer endCZid);
 
     List<CheZhanEntity> findCheZhanByIds(@Param("parseInt") Integer parseInt,@Param("parseInt1") Integer parseInt1);
+
+    List<CheZhanEntity> findXiangLinOneCheZhanByXdid(Integer xdid);
+
+    List<CheZhanEntity> findXiangLinTwoCheZhanByXdid(Integer xdid);
+
+    List<CheZhanEntity> findXiangLinThreeCheZhanByXdid(Integer xdid);
+
+    List<CheZhanEntity> findXiangLinFourCheZhanByXdid(Integer xdid);
+
+    List<CheZhanEntity> findXiangLinFiveCheZhanByXdid(Integer xdid);
+
+    List<CheZhanEntity> findXiangLinSixCheZhanByXdid(Integer xdid);
 }

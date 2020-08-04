@@ -128,7 +128,7 @@ public class AnZhuangTiaoShiWorksController {
         return ResponseDataUtil.ok("添加文件数据成功");
     }
 
-    //根据线段id  编辑对应的文件数据
+    //根据文件id  编辑对应的文件数据
     @PutMapping("/editFileById/{id}")
     public Map<String,Object>editFileById(@PathVariable Integer id ,AnZhuangTiaoShiWorksFileEntity anZhuangTiaoShiWorksFileEntity){
         anZhuangTiaoShiWorksService.editFileById(anZhuangTiaoShiWorksFileEntity);

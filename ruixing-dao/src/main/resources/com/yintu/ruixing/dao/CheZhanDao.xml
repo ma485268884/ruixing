@@ -58,6 +58,8 @@
         <result column="jiDianJiaShiGuiDaoNumber" jdbcType="INTEGER" property="jidianjiashiguidaonumber"/>
         <result column="jiDianJiaShiDianMaHuaSheBeiNumber" jdbcType="INTEGER"
                 property="jidianjiashidianmahuashebeinumber"/>
+        <result column="jiDianDianMaHuaNumber" jdbcType="INTEGER"
+                property="jiDianDianMaHuaNumber"/>
         <result column="quJianBiSaiType" jdbcType="VARCHAR" property="qujianbisaitype"/>
         <result column="linzhan1ID" jdbcType="INTEGER" property="linzhan1id"/>
         <result column="linzhan1Name" jdbcType="VARCHAR" property="linzhan1name"/>
@@ -98,7 +100,7 @@
     cz_open_stutrs, cz_caozuo, cz_lasttime, cz_duantou, cz_miaoshu, cz_state, cz_r_shebei,
     cz_zhongjizhan, yuliushebei1, yuliushebei2,yuliushebei3, tongXinBianMaGuiDaoNumber, tongXinBianMaZhanNeiOneGuiDaoNumber,
     jiDianOneToOneGuiDaoNumber, jiDianNToOneGuiDaoNumber, jiDianNToOneSheBeiNumber, tongXinBianMaDianMaHuaSheBeiNumber,
-    jiDianNToOneDianMaHuaSheBeiNumber, jiDianJiaShiGuiDaoNumber, jiDianJiaShiDianMaHuaSheBeiNumber,
+    jiDianNToOneDianMaHuaSheBeiNumber, jiDianJiaShiGuiDaoNumber, jiDianJiaShiDianMaHuaSheBeiNumber,jiDianDianMaHuaNumber,
     quJianBiSaiType, linzhan1ID, linzhan1Name, linzhan1LineType, linzhan1OfXianDuan,
     linzhan1IsNoBenDWD, linzhan2ID, linzhan2Name, linzhan2LineType, linzhan2OfXianDuan,
     linzhan2IsNoBenDWD, linzhan3ID, linzhan3Name, linzhan3LineType, linzhan3OfXianDuan,
@@ -137,6 +139,72 @@
          where cid = #{cid}
      </update>
  -->
+    <!--根据线段专用xdid  查询对应的相邻6车站信息-->
+    <select id="findXiangLinSixCheZhanByXdid" parameterType="java.lang.Integer" resultMap="chezhan">
+        select
+        linzhan6ID,
+        linzhan6Name
+        FROM
+        mro_chezhan
+        WHERE
+        xd_id = #{xdid}
+    </select>
+
+    <!--根据线段专用xdid  查询对应的相邻5车站信息-->
+    <select id="findXiangLinFiveCheZhanByXdid" parameterType="java.lang.Integer" resultMap="chezhan">
+        select
+        linzhan5ID,
+        linzhan5Name
+        FROM
+        mro_chezhan
+        WHERE
+        xd_id = #{xdid}
+    </select>
+
+    <!--根据线段专用xdid  查询对应的相邻4车站信息-->
+    <select id="findXiangLinFourCheZhanByXdid" parameterType="java.lang.Integer" resultMap="chezhan">
+        select
+        linzhan4ID,
+        linzhan4Name
+        FROM
+        mro_chezhan
+        WHERE
+        xd_id = #{xdid}
+    </select>
+
+    <!--根据线段专用xdid  查询对应的相邻3车站信息-->
+    <select id="findXiangLinThreeCheZhanByXdid" parameterType="java.lang.Integer" resultMap="chezhan">
+        select
+        linzhan3ID,
+        linzhan3Name
+        FROM
+        mro_chezhan
+        WHERE
+        xd_id = #{xdid}
+    </select>
+
+    <!--根据线段专用xdid  查询对应的相邻2车站信息-->
+    <select id="findXiangLinTwoCheZhanByXdid" parameterType="java.lang.Integer" resultMap="chezhan">
+        select
+        linzhan2ID,
+        linzhan2Name
+        FROM
+        mro_chezhan
+        WHERE
+        xd_id = #{xdid}
+    </select>
+
+    <!--根据线段专用xdid  查询对应的相邻1车站信息-->
+    <select id="findXiangLinOneCheZhanByXdid" parameterType="java.lang.Integer" resultMap="chezhan">
+        select
+        linzhan1ID,
+        linzhan1Name
+        FROM
+        mro_chezhan
+        WHERE
+        xd_id = #{xdid}
+    </select>
+
 
     <!--根据线段专用xdid 和车站专用czid  查询对应的车站信息-->
     <select id="findCheZhanByIds" parameterType="java.lang.Integer" resultMap="chezhan">
@@ -411,6 +479,9 @@
             <if test="jidianjiashidianmahuashebeinumber != null">
                 jiDianJiaShiDianMaHuaSheBeiNumber,
             </if>
+            <if test="jiDianDianMaHuaNumber != null">
+                jiDianDianMaHuaNumber,
+            </if>
             <if test="qujianbisaitype != null">
                 quJianBiSaiType,
             </if>
@@ -595,6 +666,9 @@
             </if>
             <if test="jidianjiashidianmahuashebeinumber != null">
                 #{jidianjiashidianmahuashebeinumber,jdbcType=INTEGER},
+            </if>
+            <if test="jiDianDianMaHuaNumber != null">
+                #{jiDianDianMaHuaNumber,jdbcType=INTEGER},
             </if>
             <if test="qujianbisaitype != null">
                 #{qujianbisaitype,jdbcType=VARCHAR},
@@ -782,6 +856,9 @@
             </if>
             <if test="jidianjiashidianmahuashebeinumber != null">
                 jiDianJiaShiDianMaHuaSheBeiNumber = #{jidianjiashidianmahuashebeinumber,jdbcType=INTEGER},
+            </if>
+            <if test="jiDianDianMaHuaNumber != null">
+                jiDianDianMaHuaNumber = #{jiDianDianMaHuaNumber,jdbcType=INTEGER},
             </if>
             <if test="qujianbisaitype != null">
                 quJianBiSaiType = #{qujianbisaitype,jdbcType=VARCHAR},

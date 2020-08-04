@@ -34,6 +34,8 @@ public class AnZhuangTiaoShiWorksDingEntity {
 
     private AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity anZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity;
 
+    private AnZhuangTiaoShiWorkNameTotalEntity anZhuangTiaoShiWorkNameTotalEntity;
+
 
 
 

@@ -49,7 +49,7 @@
     select
     <include refid="Base_Column_List" />
     from mro_anzhuangtiaoshi_works_file
-    where id = #{xdid,jdbcType=INTEGER}
+    where xdid = #{id,jdbcType=INTEGER}
     AND file_type =1
   </select>
 
@@ -58,8 +58,8 @@
     select
     <include refid="Base_Column_List" />
     from mro_anzhuangtiaoshi_works_file
-    where id = #{xdid,jdbcType=INTEGER}
-    AND file_type =1
+    where xdid = #{id,jdbcType=INTEGER}
+    AND file_type =2
   </select>
 
   <!--根据文件id 查询对应的文件数据 -->

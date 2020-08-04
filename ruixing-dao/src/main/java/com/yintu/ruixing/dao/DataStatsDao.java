@@ -20,10 +20,15 @@ public interface DataStatsDao {
     public List<DataStatsEntity> findAll();
 
     List<DataStatsEntity> findTieLuJuById(Long tid);
+
     List<DataStatsEntity> findDianWuDuanCheZhanById(Long did);
+
     List<DataStatsEntity> findXianDuanCheZhanById(Long xid);
+
     List<DataStatsEntity> findCheZhanById(Long cid);
+
     void editStateByXid(XianDuanEntity xianDuanEntity);
+
     void editStateByCid(CheZhanEntity cheZhanEntity);
 
 
@@ -41,10 +46,6 @@ public interface DataStatsDao {
     int delCheZhanListById(int[] ids);
 
     List<DataStatsEntity> findAllCheZhan();
-
-
-
-
 
 
     List<TieLuJuEntity> findAllTieLuJu();
