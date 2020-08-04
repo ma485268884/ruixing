@@ -23,6 +23,10 @@ public class QuDuanDownloadEntity implements Serializable {
     private Short status;
 
     private Short type;
+
+    private Short dataStatus;
+
+    private Short dataType;
     
     private CheZhanEntity cheZhanEntity;
 }

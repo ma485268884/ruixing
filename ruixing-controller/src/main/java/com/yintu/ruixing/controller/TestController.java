@@ -117,7 +117,7 @@ public class TestController {
     @GetMapping("/test6")
     @ResponseBody
     @ApiOperation(value = "方法介绍描述", httpMethod = "GET", response = String.class, notes = "方法介绍描述")
-    public Map<String, Object> test6(@ApiParam("参数描述") HttpServletRequest request, @ApiParam("参数描述") HttpServletResponse resp) throws IOException {
+    public Map<String, Object> test6(@ApiParam("参数描述") HttpServletRequest request, @ApiParam("参数描述") HttpServletResponse resp){
         JSONObject jo = new JSONObject();
         jo.put("getRequestURI", request.getRequestURI());
         jo.put("getContextPath", request.getContextPath());

@@ -58,7 +58,6 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
         return quDuanDownloadDao.selectByDateTime(startDateTime, endDateTime);
     }
 
-
     @Override
     public Integer add(Integer czId, Short type, Date startDateTime, Date endDateTime) {
         QuDuanDownloadEntity quDuanDownloadEntity = new QuDuanDownloadEntity();
@@ -67,6 +66,7 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
         quDuanDownloadEntity.setEndTime(endDateTime);
         quDuanDownloadEntity.setStatus((short) 0);
         quDuanDownloadEntity.setType(type);
+        quDuanDownloadEntity.setDataType((short) 1);
         this.add(quDuanDownloadEntity);
         return quDuanDownloadEntity.getId();
     }
@@ -83,5 +83,21 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
         return map;
     }
 
+
+    @Override
+    public Integer changeDataStatus(Integer czId, Short dataStatus) {
+        QuDuanDownloadEntity quDuanDownloadEntity = this.quDuanDownloadDao.selectByCidAndDataType(czId, (short) 2);
+        if (quDuanDownloadEntity == null) {
+            quDuanDownloadEntity = new QuDuanDownloadEntity();
+            quDuanDownloadEntity.setCid(czId);
+            quDuanDownloadEntity.setDataStatus((short) 1);
+            quDuanDownloadEntity.setDataType((short) 2);
+            this.add(quDuanDownloadEntity);
+        } else {
+            quDuanDownloadEntity.setDataStatus(dataStatus);
+            this.edit(quDuanDownloadEntity);
+        }
+        return quDuanDownloadEntity.getId();
+    }
 }
 

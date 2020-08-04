@@ -19,4 +19,6 @@ public interface QuDuanDownloadDao {
     int updateByPrimaryKeySelective(QuDuanDownloadEntity record);
 
     int updateByPrimaryKey(QuDuanDownloadEntity record);
+
+    QuDuanDownloadEntity selectByCidAndDataType(Integer cid, Short dataType);
 }

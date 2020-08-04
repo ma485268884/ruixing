@@ -47,9 +47,9 @@
         <!--               enableCountByExample="false" enableUpdateByExample="false"-->
         <!--               enableDeleteByExample="false" enableSelectByExample="false"-->
         <!--               selectByExampleQueryId="false"/>-->
-        <table tableName="mro_equipment_spare_parts_management_db"
-               domainObjectName="EquipmentSparePartsManagementDbEntity1"
-               mapperName="EquipmentSparePartsManagementDbDao1"
+        <table tableName="mro_equipment_reprocessed_product_management"
+               domainObjectName="EquipmentReprocessedProductManagementEntity"
+               mapperName="EquipmentReprocessedProductManagementDao"
                enableCountByExample="false"
                enableDeleteByExample="false"
                enableUpdateByExample="false"

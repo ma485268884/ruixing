@@ -22,4 +22,10 @@ public interface QuDuanDownloadService extends BaseService<QuDuanDownloadEntity,
 
     List<QuDuanDownloadEntity> findByDateTime(Date startDateTime, Date endDateTime);
 
+    /**
+     * @param czId       车站id
+     * @param dataStatus 数据接收状态
+     */
+    Integer changeDataStatus(Integer czId, Short dataStatus);
+
 }

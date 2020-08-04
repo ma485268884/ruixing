@@ -512,4 +512,157 @@
         GROUP BY
         qb.id
     </select>
+
+
+    <resultMap id="BaseResultMap1" type="com.yintu.ruixing.entity.QuDuanInfoEntityV2">
+        <id column="qiId" jdbcType="INTEGER" property="id"/>
+        <result column="cid" jdbcType="INTEGER" property="cid"/>
+        <result column="qid" jdbcType="INTEGER" property="qid"/>
+        <result column="time" jdbcType="INTEGER" property="time"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="data_zhengChang" jdbcType="INTEGER" property="dataZhengchang"/>
+        <result column="Design_carrier" jdbcType="VARCHAR" property="designCarrier"/>
+        <result column="direction" jdbcType="VARCHAR" property="direction"/>
+        <result column="GJcollection" jdbcType="VARCHAR" property="gjcollection"/>
+        <result column="V_in_all" jdbcType="DECIMAL" property="vInAll"/>
+        <result column="mV_in_zhu" jdbcType="DECIMAL" property="mvInZhu"/>
+        <result column="mV_in_bing" jdbcType="DECIMAL" property="mvInBing"/>
+        <result column="mV_in_diao_zhu" jdbcType="DECIMAL" property="mvInDiaoZhu"/>
+        <result column="mV_in_diao_bing" jdbcType="DECIMAL" property="mvInDiaoBing"/>
+        <result column="Hz_in_low_zhu" jdbcType="DECIMAL" property="hzInLowZhu"/>
+        <result column="Hz_in_low_bing" jdbcType="DECIMAL" property="hzInLowBing"/>
+        <result column="GJ_drive_zhu" jdbcType="INTEGER" property="gjDriveZhu"/>
+        <result column="GJ_drive_bing" jdbcType="INTEGER" property="gjDriveBing"/>
+        <result column="GJ_rear_collection_zhu" jdbcType="VARCHAR" property="gjRearCollectionZhu"/>
+        <result column="GJ_rear_collection_bing" jdbcType="VARCHAR" property="gjRearCollectionBing"/>
+        <result column="baojing_zhu" jdbcType="INTEGER" property="baojingZhu"/>
+        <result column="baojing_bing" jdbcType="INTEGER" property="baojingBing"/>
+        <result column="v31" jdbcType="VARCHAR" property="v31"/>
+        <result column="v32" jdbcType="VARCHAR" property="v32"/>
+        <result column="v33" jdbcType="VARCHAR" property="v33"/>
+        <result column="v34" jdbcType="VARCHAR" property="v34"/>
+        <result column="v35" jdbcType="VARCHAR" property="v35"/>
+        <result column="v36" jdbcType="VARCHAR" property="v36"/>
+        <result column="v37" jdbcType="VARCHAR" property="v37"/>
+        <result column="v38" jdbcType="VARCHAR" property="v38"/>
+        <result column="v39" jdbcType="VARCHAR" property="v39"/>
+        <result column="V_out_zhu" jdbcType="DECIMAL" property="vOutZhu"/>
+        <result column="V_out_bei" jdbcType="DECIMAL" property="vOutBei"/>
+        <result column="mA_out_zhu" jdbcType="DECIMAL" property="maOutZhu"/>
+        <result column="mA_out_bei" jdbcType="DECIMAL" property="maOutBei"/>
+        <result column="Hz_up_zhu" jdbcType="DECIMAL" property="hzUpZhu"/>
+        <result column="Hz_up_bei" jdbcType="DECIMAL" property="hzUpBei"/>
+        <result column="Hz_down_zhu" jdbcType="DECIMAL" property="hzDownZhu"/>
+        <result column="Hz_down_bei" jdbcType="DECIMAL" property="hzDownBei"/>
+        <result column="Hz_low_zhu" jdbcType="DECIMAL" property="hzLowZhu"/>
+        <result column="Hz_low_bei" jdbcType="DECIMAL" property="hzLowBei"/>
+        <result column="FBJ_drive_zhu" jdbcType="INTEGER" property="fbjDriveZhu"/>
+        <result column="FBJ_drive_bei" jdbcType="INTEGER" property="fbjDriveBei"/>
+        <result column="FBJ_collection_zhu" jdbcType="VARCHAR" property="fbjCollectionZhu"/>
+        <result column="FBJ_collection_bei" jdbcType="VARCHAR" property="fbjCollectionBei"/>
+        <result column="V_songduan_Cable" jdbcType="DECIMAL" property="vSongduanCable"/>
+        <result column="mA_songduan_Cable" jdbcType="DECIMAL" property="maSongduanCable"/>
+        <result column="V_shouduan_Cable_host" jdbcType="DECIMAL" property="vShouduanCableHost"/>
+        <result column="V_shouduan_Cable_spare" jdbcType="DECIMAL" property="vShouduanCableSpare"/>
+        <result column="mA_shouduan_Cable" jdbcType="DECIMAL" property="maShouduanCable"/>
+        <result column="mA_Cable_JBP" jdbcType="DECIMAL" property="maCableJbp"/>
+        <result column="A_longIn_JBP" jdbcType="DECIMAL" property="aLonginJbp"/>
+        <result column="A_longOut_JBP" jdbcType="DECIMAL" property="aLongoutJbp"/>
+        <result column="A_shortIn_JBP" jdbcType="DECIMAL" property="aShortinJbp"/>
+        <result column="A_shortOut_JBP" jdbcType="DECIMAL" property="aShortoutJbp"/>
+        <result column="T_JBP" jdbcType="INTEGER" property="tJbp"/>
+        <result column="mA_Cable_FBP" jdbcType="DECIMAL" property="maCableFbp"/>
+        <result column="A_longIn_FBP" jdbcType="DECIMAL" property="aLonginFbp"/>
+        <result column="A_longOut_FBP" jdbcType="DECIMAL" property="aLongoutFbp"/>
+        <result column="A_shortIn_FBP" jdbcType="DECIMAL" property="aShortinFbp"/>
+        <result column="A_shortOut_FBP" jdbcType="DECIMAL" property="aShortoutFbp"/>
+        <result column="T_FBP" jdbcType="INTEGER" property="tFbp"/>
+        <result column="A_longIn_FBA_zhu" jdbcType="DECIMAL" property="aLonginFbaZhu"/>
+        <result column="A_longIn_FBA_diao" jdbcType="DECIMAL" property="aLonginFbaDiao"/>
+        <result column="A_longOut_FBA_zhu" jdbcType="DECIMAL" property="aLongoutFbaZhu"/>
+        <result column="A_longOut_FBA_diao" jdbcType="DECIMAL" property="aLongoutFbaDiao"/>
+        <result column="A_shortIn_FBA_zhu" jdbcType="DECIMAL" property="aShortinFbaZhu"/>
+        <result column="A_shortIn_FBA_diao" jdbcType="DECIMAL" property="aShortinFbaDiao"/>
+        <result column="A_shortOut_FBA_zhu" jdbcType="DECIMAL" property="aShortoutFbaZhu"/>
+        <result column="A_shortOut_FBA_diao" jdbcType="DECIMAL" property="aShortoutFbaDiao"/>
+        <result column="A_longIn_JBA_zhu" jdbcType="DECIMAL" property="aLonginJbaZhu"/>
+        <result column="A_longIn_JBA_diao" jdbcType="DECIMAL" property="aLonginJbaDiao"/>
+        <result column="A_longOut_JBA_zhu" jdbcType="DECIMAL" property="aLongoutJbaZhu"/>
+        <result column="A_longOut_JBA_diao" jdbcType="DECIMAL" property="aLongoutJbaDiao"/>
+        <result column="A_shortIn_JBA_zhu" jdbcType="DECIMAL" property="aShortinJbaZhu"/>
+        <result column="A_shortIn_JBA_diao" jdbcType="DECIMAL" property="aShortinJbaDiao"/>
+        <result column="A_shortOut_JBA_zhu" jdbcType="DECIMAL" property="aShortoutJbaZhu"/>
+        <result column="A_shortOut_JBA_diao" jdbcType="DECIMAL" property="aShortoutJbaDiao"/>
+        <result column="A_shortOut_JBA_diao" jdbcType="DECIMAL" property="aShortoutJbaDiao"/>
+        <result column="rackAddress" jdbcType="VARCHAR" property="yuliu"/>
+        <result column="yuliu" jdbcType="VARCHAR" property="yuliu"/>
+    </resultMap>
+    <sql id="Base_Column_List1">
+        qi.id as qiId, msg_id, send_num, createtime as time, station_id as cid, type,v1 as qid, v2 as data_zhengChang,
+
+    v3 as V_out_zhu , v4 as mA_out_zhu,  v5 as Hz_up_zhu,  v6 as Hz_down_zhu,  v7 as Hz_low_zhu,  v8 as FBJ_drive_zhu,
+    v9 as V_out_bei, v10 as mA_out_bei, v11 as Hz_up_bei, v12 as Hz_down_bei, v13 as Hz_low_bei, v14 as FBJ_drive_bei,
+
+
+   v15 as V_songduan_Cable, v16 as mA_songduan_Cable,
+   v17 as V_shouduan_Cable_host, v18 as V_shouduan_Cable_spare, v19 as mA_shouduan_Cable,
+
+
+   v20 as V_in_all,   v21 as mV_in_zhu,  v22 as mV_in_diao_zhu,  v23 as Hz_in_low_zhu,   v24 as GJ_drive_zhu, v25 as baojing_zhu,
+                      v26 as mV_in_bing, v27 as mV_in_diao_bing, v28 as Hz_in_low_bing,  v29 as GJ_drive_bing,v30 as baojing_bing,
+
+    v31,v32,v33, v34, v35, v36, v37, v38, v39,     v40 as direction , v41 as signalPosition,
+
+
+
+
+   v42 as mA_Cable_FBP, v43 as A_longIn_FBP, v44 as A_longOut_FBP, v45 as A_shortIn_FBP, v46 as A_shortOut_FBP, v52 as T_FBP,
+
+
+   v54 as A_longIn_FBA_zhu, v55 as A_longOut_FBA_zhu, v56 as A_shortIn_FBA_zhu, v57 as A_shortOut_FBA_zhu,
+   v58 as A_longIn_FBA_diao, v59 as A_longOut_FBA_diao, v60 as A_shortIn_FBA_diao, v61 as A_shortOut_FBA_diao,
+
+   v62 as A_longIn_JBA_zhu, v63 as A_longOut_JBA_zhu, v64 as A_shortIn_JBA_zhu,v65 as A_shortOut_JBA_zhu,
+   v66 as A_longIn_JBA_diao, v67 as A_longOut_JBA_diao, v68 as A_shortIn_JBA_diao, v69 as A_shortOut_JBA_diao,
+
+
+   v47 as mA_Cable_JBP, v48 as A_longIn_JBP, v49 as A_longOut_JBP, v50 as A_shortIn_JBP, v51 as A_shortOut_JBP,  v53 as T_JBP,
+
+    v70 as rackAddress , v71, v72, v73, v74, v75, v76,v77, v78
+    </sql>
+    <!--查询一条车站区段详情-->
+    <select id="selectFirstByCzId1" resultMap="BaseResultMap1">
+        select
+        <include refid="Base_Column_List1"/>
+        from data_applydata qi
+        <where>
+            <if test="czId!=null">
+                qi.station_id=#{czId,jdbcType=INTEGER}
+            </if>
+            <if test="qid!=null">
+                and qi.v1 =#{qid,jdbcType=INTEGER}
+            </if>
+        </where>
+        order by qi.id DESC limit 1
+    </select>
+    <!--查询时间区间车站区段详情-->
+    <select id="selectByCzIdAndTime1" resultMap="BaseResultMap1">
+        select
+        <include refid="Base_Column_List1"/>
+        from data_applydata qi
+        <where>
+            <if test="czId!=null">
+                qi.station_id=#{czId,jdbcType=INTEGER}
+            </if>
+            <if test="time !=null">
+                and FROM_UNIXTIME(qi.createtime)=#{time,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+    <!--通过车站查询去重的type-->
+    <select id="selectDistinctTypeByCzId" resultType="java.lang.Integer">
+        select DISTINCT type
+        from data_applydata
+        where station_id = #{czId,jdbcType=INTEGER}
+    </select>
 </mapper>
