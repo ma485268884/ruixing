@@ -123,4 +123,17 @@ public class QuDuanInfoController extends SessionController {
     }
 
 
+    /**
+     * @param czId 车站id
+     * @param time 时刻
+     * @return
+     */
+    @GetMapping("/data")
+    public Map<String, Object> findByCondition(@RequestParam("czId") Integer czId,
+                                               @RequestParam(value = "time", required = false) Date time) {
+        List<QuDuanInfoEntityV2> quDuanInfoEntityV2s = quDuanInfoService.findByCondition(czId, time);
+        return ResponseDataUtil.ok("查询区段详情成功", quDuanInfoEntityV2s);
+    }
+
+
 }

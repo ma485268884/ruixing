@@ -24,10 +24,9 @@ public interface QuDuanInfoService {
     QuDuanInfoEntityV2 findLastBycZId(Integer czId);
 
     /**
-     *
-     * @param czId 车站id
+     * @param czId      车站id
      * @param startTime 开始时间
-     * @param endTime 结束时间
+     * @param endTime   结束时间
      * @return
      */
     List<QuDuanInfoEntityV2> findByCzIdAndTime(Integer czId, Date startTime, Date endTime);
@@ -57,6 +56,12 @@ public interface QuDuanInfoService {
      * @return 统计
      */
     List<Map<String, Object>> findStatisticsByCzIdAndTime(Integer czId, Date time);
+
+
+    List<QuDuanInfoEntityV2> findByCondition(Integer czId, Date time);
+
+
+    Integer[] findDistinctTypeByCzId(Integer czId);
 
 
 }

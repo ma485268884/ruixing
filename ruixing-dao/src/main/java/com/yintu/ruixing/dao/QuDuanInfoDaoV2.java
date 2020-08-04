@@ -24,6 +24,22 @@ public interface QuDuanInfoDaoV2 {
 
     List<Map<String, Object>> selectStatisticsByCzIdAndTime(Integer czId, Date time);
 
+
+
+
+
+
+
+    QuDuanInfoEntityV2 selectFirstByCzId1(Integer czId, Integer qid);
+
+    List<QuDuanInfoEntityV2> selectByCzIdAndTime1(Integer czId, Date time);
+
+    Integer[] selectDistinctTypeByCzId(Integer czId);
+
+
+
+
+
     //根据区段id  查询相关的数据
 
     List<QuDuanInfoEntity> findGuZhangKuData(Integer id);
@@ -36,6 +52,6 @@ public interface QuDuanInfoDaoV2 {
     Integer findQuDuanDataByTime2(@Param("format") String format, @Param("name") String name);
 
     List<Integer> findQuDuanData(@Param("starttime") Long starttime, @Param("endtime") Long endtime,
-                                 @Param("shuxingname") String shuxingname, @Param("quduanname") String quduanname,@Param("qdid") Integer qdid);
+                                 @Param("shuxingname") String shuxingname, @Param("quduanname") String quduanname, @Param("qdid") Integer qdid);
 
 }
