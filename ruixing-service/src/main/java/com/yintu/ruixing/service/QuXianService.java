@@ -25,7 +25,7 @@ public interface QuXianService {
     Integer findQuDuanDataByTime2(String format,String name);
 
 
-    List<Integer> findQuDuanData(Long starttime, Long endtime, String shuxingname, String quduanname,Integer qdid);
+    Integer findQuDuanData(Long starttimee,  String shuxingname, String quduanname,Integer qdid);
 
 
     List<QuDuanShuXingEntity> shuXingMing();

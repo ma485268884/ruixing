@@ -247,11 +247,8 @@
         where qi.v1 = qb.qdid
           and qb.quDuanYunYing_name = "${quduanname}"
           and qi.v1 = "${qdid}"
-          and qi.createtime
-            BETWEEN
-            "${starttime}"
-            and
-            "${endtime}"
+          and qi.createtime="${starttimee}"
+
     </select>
 
     <resultMap id="quduanBaseResultMap" type="com.yintu.ruixing.entity.QuDuanInfoEntityV2">
