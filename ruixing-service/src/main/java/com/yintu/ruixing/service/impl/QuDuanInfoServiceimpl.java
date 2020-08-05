@@ -70,6 +70,11 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
     }
 
     @Override
+    public Integer[] findDistinctTypeByCzId(Integer czId) {
+        return quDuanInfoDaoV2.selectDistinctTypeByCzId(czId);
+    }
+
+    @Override
     public List<JSONObject> findByCondition(Integer czId, Date time) {
         List<QuDuanInfoEntityV2> quDuanInfoEntityV2s = new ArrayList<>();
         if (time == null) {
@@ -96,10 +101,6 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         return jsonObjects;
     }
 
-    @Override
-    public Integer[] findDistinctTypeByCzId(Integer czId) {
-        return quDuanInfoDaoV2.selectDistinctTypeByCzId(czId);
-    }
 
     public JSONObject convert(List<QuDuanInfoTypesPropertyEntity> quDuanInfoTypesPropertyEntities, QuDuanInfoEntityV2 quDuanInfoEntityV2) {
         JSONObject jo = new JSONObject();
@@ -108,7 +109,7 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         jo.put("time", quDuanInfoEntityV2.getTime());
         jo.put("type", quDuanInfoEntityV2.getType());
         jo.put("dataZhengchang", quDuanInfoEntityV2.getDataZhengchang());
-        JSONArray ja = new JSONArray();
+        JSONArray jsonArray = new JSONArray();
         for (QuDuanInfoTypesPropertyEntity quDuanInfoTypesPropertyEntity : quDuanInfoTypesPropertyEntities) {
             JSONObject jsonObject = new JSONObject();
             QuDuanInfoPropertyEntity quDuanInfoPropertyEntity = quDuanInfoTypesPropertyEntity.getQuDuanInfoPropertyEntity();
@@ -127,7 +128,7 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
                     jsonObject.put("column", 1);
                     break;
                 case 4:
-                    jsonObject.put("propertyV", null);
+                    jsonObject.put("propertyV", quDuanInfoEntityV2.getDjcollection());
                     jsonObject.put("column", 1);
                     break;
                 case 5:
@@ -352,9 +353,9 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
                     jsonObject.put("column", 7);
                     break;
             }
-            ja.add(jsonObject);
+            jsonArray.add(jsonObject);
         }
-        jo.put("properties", ja);
+        jo.put("properties", jsonArray);
         return jo;
     }
 }

@@ -59,10 +59,9 @@ public interface QuDuanInfoService {
     List<Map<String, Object>> findStatisticsByCzIdAndTime(Integer czId, Date time);
 
 
-    List<JSONObject> findByCondition(Integer czId, Date time);
-
-
     Integer[] findDistinctTypeByCzId(Integer czId);
+
+    List<JSONObject> findByCondition(Integer czId, Date time);
 
 
 }
