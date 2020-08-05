@@ -14,11 +14,12 @@ public interface QuDuanDownloadDao {
 
     QuDuanDownloadEntity selectByPrimaryKey(Integer id);
 
-    List<QuDuanDownloadEntity> selectByDateTime(Date startDateTime, Date endDateTime);
-
     int updateByPrimaryKeySelective(QuDuanDownloadEntity record);
 
     int updateByPrimaryKey(QuDuanDownloadEntity record);
+
+
+    List<QuDuanDownloadEntity> selectByDateTime(Integer czId, Date startDateTime, Date endDateTime);
 
     QuDuanDownloadEntity selectByCidAndDataType(Integer cid, Short dataType);
 }

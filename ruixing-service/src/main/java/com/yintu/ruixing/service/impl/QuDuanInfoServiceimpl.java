@@ -88,7 +88,7 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         }
         Integer[] types = this.findDistinctTypeByCzId(czId);
         List<QuDuanInfoTypesPropertyEntity> quDuanInfoTypesPropertyEntities = quDuanInfoTypesPropertyService.connectFindByCondition(StringUtil.arrayToStrWithComma(types));
-
+        //动态转换
         List<JSONObject> jsonObjects = new ArrayList<>();
         for (QuDuanInfoEntityV2 quDuanInfoEntityV2 : quDuanInfoEntityV2s) {
             if (quDuanInfoEntityV2 == null) {
@@ -103,7 +103,8 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
 
 
     public JSONObject convert(List<QuDuanInfoTypesPropertyEntity> quDuanInfoTypesPropertyEntities, QuDuanInfoEntityV2 quDuanInfoEntityV2) {
-        JSONObject jo = new JSONObject();
+        JSONObject jo = new JSONObject(true);
+        jo.put("id", quDuanInfoEntityV2.getId());
         jo.put("cid", quDuanInfoEntityV2.getCid());
         jo.put("qid", quDuanInfoEntityV2.getQid());
         jo.put("time", quDuanInfoEntityV2.getTime());

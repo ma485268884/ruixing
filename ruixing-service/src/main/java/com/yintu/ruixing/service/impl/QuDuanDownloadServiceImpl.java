@@ -54,8 +54,8 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
 
 
     @Override
-    public List<QuDuanDownloadEntity> findByDateTime(Date startDateTime, Date endDateTime) {
-        return quDuanDownloadDao.selectByDateTime(startDateTime, endDateTime);
+    public List<QuDuanDownloadEntity> findByDateTime(Integer czId, Date startDateTime, Date endDateTime) {
+        return quDuanDownloadDao.selectByDateTime(czId, startDateTime, endDateTime);
     }
 
     @Override
