@@ -9,6 +9,7 @@
         <result column="Design_carrier" jdbcType="VARCHAR" property="designCarrier"/>
         <result column="direction" jdbcType="VARCHAR" property="direction"/>
         <result column="GJcollection" jdbcType="VARCHAR" property="gjcollection"/>
+        <result column="DJcollection" jdbcType="VARCHAR" property="djcollection"/>
         <result column="V_in_all" jdbcType="INTEGER" property="vInAll"/>
         <result column="mV_in_zhu" jdbcType="INTEGER" property="mvInZhu"/>
         <result column="mV_in_bing" jdbcType="INTEGER" property="mvInBing"/>
@@ -77,7 +78,7 @@
         </association>
     </resultMap>
     <sql id="Base_Column_List">
-        qi.id as qiId,time,qid,data_zhengChang,Design_carrier, direction, GJcollection, V_in_all,
+        qi.id as qiId,time,qid,data_zhengChang,Design_carrier, direction, GJcollection,DJcollection,V_in_all,
     mV_in_zhu, mV_in_bing, mV_in_diao_zhu, mV_in_diao_bing, Hz_in_low_zhu, Hz_in_low_bing, 
     GJ_drive_zhu, GJ_drive_bing, GJ_rear_collection_zhu, GJ_rear_collection_bing, baojing_zhu, 
     baojing_bing, V_out_zhu, V_out_bei, mA_out_zhu, mA_out_bei, Hz_up_zhu, Hz_up_bei, 
@@ -181,6 +182,7 @@
         <result column="Design_carrier" jdbcType="VARCHAR" property="designCarrier"/>
         <result column="direction" jdbcType="VARCHAR" property="direction"/>
         <result column="GJcollection" jdbcType="VARCHAR" property="gjcollection"/>
+        <result column="DJcollection" jdbcType="VARCHAR" property="djcollection"/>
         <result column="V_in_all" jdbcType="INTEGER" property="vInAll"/>
         <result column="mV_in_zhu" jdbcType="INTEGER" property="mvInZhu"/>
         <result column="mV_in_bing" jdbcType="INTEGER" property="mvInBing"/>
@@ -283,7 +285,7 @@
     <insert id="insert" parameterType="com.yintu.ruixing.entity.QuDuanInfoEntity">
         insert into mro_quduan_info (id, qid,
                                      data_zhengChang,
-                                     Design_carrier, direction, GJcollection,
+                                     Design_carrier, direction, GJcollection,DJcollection,
                                      V_in_all, mV_in_zhu, mV_in_bing,
                                      mV_in_diao_zhu, mV_in_diao_bing, Hz_in_low_zhu,
                                      Hz_in_low_bing, GJ_drive_zhu, GJ_drive_bing,
@@ -307,6 +309,7 @@
                                      A_shortOut_JBA_zhu, A_shortOut_JBA_diao, yuliu)
         values (#{id,jdbcType=INTEGER}, #{qid,jdbcType=INTEGER}, #{dataZhengchang,jdbcType=INTEGER},
                 #{designCarrier,jdbcType=VARCHAR}, #{direction,jdbcType=VARCHAR}, #{gjcollection,jdbcType=VARCHAR},
+                #{djcollection,jdbcType=VARCHAR},
                 #{vInAll,jdbcType=INTEGER}, #{mvInZhu,jdbcType=INTEGER}, #{mvInBing,jdbcType=INTEGER},
                 #{mvInDiaoZhu,jdbcType=INTEGER}, #{mvInDiaoBing,jdbcType=INTEGER}, #{hzInLowZhu,jdbcType=INTEGER},
                 #{hzInLowBing,jdbcType=INTEGER}, #{gjDriveZhu,jdbcType=VARCHAR}, #{gjDriveBing,jdbcType=VARCHAR},
@@ -355,6 +358,9 @@
             </if>
             <if test="gjcollection != null">
                 GJcollection,
+            </if>
+            <if test="djcollection != null">
+                DJcollection,
             </if>
             <if test="vInAll != null">
                 V_in_all,
@@ -568,6 +574,9 @@
             <if test="gjcollection != null">
                 #{gjcollection,jdbcType=VARCHAR},
             </if>
+            <if test="djcollection != null">
+                #{djcollection,jdbcType=VARCHAR},
+            </if>
             <if test="vInAll != null">
                 #{vInAll,jdbcType=INTEGER},
             </if>
@@ -771,6 +780,9 @@
             <if test="gjcollection != null">
                 GJcollection = #{gjcollection,jdbcType=VARCHAR},
             </if>
+            <if test="djcollection != null">
+                DJcollection = #{djcollection,jdbcType=VARCHAR},
+            </if>
             <if test="vInAll != null">
                 V_in_all = #{vInAll,jdbcType=INTEGER},
             </if>
@@ -964,6 +976,7 @@
             Design_carrier          = #{designCarrier,jdbcType=VARCHAR},
             direction               = #{direction,jdbcType=VARCHAR},
             GJcollection            = #{gjcollection,jdbcType=VARCHAR},
+            DJcollection            = #{djcollection,jdbcType=VARCHAR},
             V_in_all                = #{vInAll,jdbcType=INTEGER},
             mV_in_zhu               = #{mvInZhu,jdbcType=INTEGER},
             mV_in_bing              = #{mvInBing,jdbcType=INTEGER},

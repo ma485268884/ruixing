@@ -1,5 +1,6 @@
 package com.yintu.ruixing.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
@@ -131,8 +132,8 @@ public class QuDuanInfoController extends SessionController {
     @GetMapping("/data")
     public Map<String, Object> findByCondition(@RequestParam("czId") Integer czId,
                                                @RequestParam(value = "time", required = false) Date time) {
-        List<QuDuanInfoEntityV2> quDuanInfoEntityV2s = quDuanInfoService.findByCondition(czId, time);
-        return ResponseDataUtil.ok("查询区段详情成功", quDuanInfoEntityV2s);
+        List<JSONObject> jsonObjects = quDuanInfoService.findByCondition(czId, time);
+        return ResponseDataUtil.ok("查询区段详情成功", jsonObjects);
     }
 
 

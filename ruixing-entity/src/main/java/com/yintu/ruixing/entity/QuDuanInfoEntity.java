@@ -32,6 +32,8 @@ public class QuDuanInfoEntity implements Serializable {
 
     private String gjcollection;
 
+    private String djcollection;
+
     private Integer vInAll;
 
     private Integer mvInZhu;
