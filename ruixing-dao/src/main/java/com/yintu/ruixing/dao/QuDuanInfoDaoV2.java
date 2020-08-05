@@ -2,6 +2,7 @@ package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.QuDuanInfoEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntityV2;
+import com.yintu.ruixing.entity.quduanEntity;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
@@ -56,4 +57,6 @@ public interface QuDuanInfoDaoV2 {
     List<Integer> findQuDuanData(@Param("starttime") Long starttime, @Param("endtime") Long endtime,
                                  @Param("shuxingname") String shuxingname, @Param("quduanname") String quduanname, @Param("qdid") Integer qdid);
 
+    List<quduanEntity> findQuDuanDatas(@Param("starttime")long starttime, @Param("endtime") long endtime,
+                                       @Param("shuxingname") String shuxingname, @Param("quduanname") String quduanname, @Param("qdid") Integer qdid);
 }
