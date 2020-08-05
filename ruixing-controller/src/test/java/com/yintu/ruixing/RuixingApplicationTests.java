@@ -2,6 +2,7 @@ package com.yintu.ruixing;
 
 import com.yintu.ruixing.entity.PreSaleFileAuditorEntity;
 import com.yintu.ruixing.service.PreSaleFileAuditorService;
+import com.yintu.ruixing.service.QuDuanInfoTypesPropertyService;
 import com.yintu.ruixing.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ class RuixingApplicationTests {
     private UserService userService;
     @Autowired
     private PreSaleFileAuditorService preSaleFileAuditorService;
+    @Autowired
+    private QuDuanInfoTypesPropertyService quDuanInfoTypesPropertyService;
 
 
     @Test
@@ -30,5 +33,9 @@ class RuixingApplicationTests {
         preSaleFileAuditorService.addMuch(preSaleFileAuditorEntities);
     }
 
+    @Test
+    void contextLoads1() {
+        System.out.println(quDuanInfoTypesPropertyService.connectFindByCondition("1,3"));
+    }
 
 }
