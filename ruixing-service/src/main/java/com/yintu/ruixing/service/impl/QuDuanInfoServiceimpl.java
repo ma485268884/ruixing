@@ -267,14 +267,14 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
                     jsonArray22.add(quDuanInfoEntityV2.getGjRearCollectionZhu());
                     jsonArray22.add(quDuanInfoEntityV2.getGjRearCollectionBing());
                     jsonObject.put("propertyV", jsonArray22);
-                    jsonObject.put("column", 5);
+                    jsonObject.put("column", 4);
                     break;
                 case 23:
                     JSONArray jsonArray23 = new JSONArray();
                     jsonArray23.add(quDuanInfoEntityV2.getBaojingZhu());
                     jsonArray23.add(quDuanInfoEntityV2.getBaojingBing());
                     jsonObject.put("propertyV", jsonArray23);
-                    jsonObject.put("column", 5);
+                    jsonObject.put("column", 4);
                     break;
 
                 case 24:
