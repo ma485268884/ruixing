@@ -15,6 +15,14 @@
     id, xianduantime, tlj_name, dwd_name, xd_name, xd_type, xd_fenlei, guanlianxiangmu
   </sql>
 
+  <!-- 查询线段名-->
+  <select id="findXianDuan" resultMap="BaseResultMap">
+    SELECT
+	    xd_name
+    FROM
+        mro_anzhuangtiaoshi_xiangmu
+  </select>
+
   <!--根据项目id  查询对应的数据-->
   <select id="findXiangMuData" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select

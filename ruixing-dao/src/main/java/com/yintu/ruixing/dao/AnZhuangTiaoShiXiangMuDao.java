@@ -47,4 +47,6 @@ public interface AnZhuangTiaoShiXiangMuDao {
                                                               @Param("xdtype")String xdtype,@Param("xdleixing") Integer xdleixing);
 
     List<AnZhuangTiaoShiXiangMuEntity> findXiangMuData(Integer[] ids);
+
+    List<AnZhuangTiaoShiXiangMuEntity> findXianDuan();
 }

@@ -2,15 +2,13 @@ package com.yintu.ruixing.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.entity.QuDuanBaseEntity;
-import com.yintu.ruixing.entity.QuDuanInfoEntity;
-import com.yintu.ruixing.entity.QuDuanShuXingEntity;
-import com.yintu.ruixing.entity.SheBeiEntity;
+import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.QuXianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -95,26 +93,163 @@ public class QuXianController {
                                               @RequestParam("shuxingId") Integer[] shuxingId,
                                               @RequestParam("quduanName") String[] quduanName) throws Exception {
         List<String> list = new ArrayList<>();
+        List<Integer> listdata1 = new ArrayList<>();
+        List<Integer> listdata2 = new ArrayList<>();
+        List<Integer> listdata3 = new ArrayList<>();
+        List<Integer> listdata4 = new ArrayList<>();
+        List<Integer> listdata5 = new ArrayList<>();
         Map<String, Object> map = new HashMap<>();
-        JSONObject js=new JSONObject();
-        long time = endTime.getTime() - startTime.getTime();//得到这两个时间差 单位是秒
-        Integer j = 0;
-        for (long i = 0; i < time / 1000; i++) {
-            j++;
-            list.add(j.toString());
-        }
-        map.put("shijian", list);
-        js.put("shijian", list);
-        //String starttime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(startTime);//把开始时间转换格式
-        long starttime = startTime.getTime()/1000;
-        //System.out.println("starttime"+starttime);
-        //String endtime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(endTime);//把结束时间转换格式
-        long endtime = endTime.getTime()/1000;
-        //System.out.println("endtime"+endtime);
+        JSONObject js = new JSONObject();
         List<String> sqlname = quXianService.findShuXingName(shuxingId);//获取区段属性的英文名
-        List<String>name=quXianService.findShuXingHanZiName(shuxingId);//获取区段属性的中文名
         System.out.println("11111" + sqlname);
-        //String[] name=new String[sqlname.size()];
+        List<String> name = quXianService.findShuXingHanZiName(shuxingId);//获取区段属性的中文名
+        SimpleDateFormat starttime11 = new SimpleDateFormat("HH:mm:ss");
+        long time = endTime.getTime() / 1000 - startTime.getTime() / 1000;//得到这两个时间差 单位是秒
+        long starttimea = startTime.getTime();
+        if (sqlname.size() != 1) {
+            for (long i = 0; i <= time; i++) {
+                long starttimee = starttimea + i * 1000;
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+                String time1 = format.format(new Date(starttimee));
+                list.add(time1);
+                for (int l = 0; l < sqlname.size(); l++) {
+                    long starttimeee = starttimee / 1000;
+                    System.out.println("222222" + sqlname.get(l));//获得每一个属性名
+                    String shuxingname = sqlname.get(l);
+                    System.out.println("123=" + quduanName[l]);//获得每一个区段名
+                    String quduanname = quduanName[l];
+                    Integer qdid = quXianService.findQDid(quduanname);
+                    Integer date = quXianService.findQuDuanData(starttimeee, shuxingname, quduanname, qdid);
+                    if (l == 0) {
+                        listdata1.add(date);
+                    }
+                    if (l == 1) {
+                        listdata2.add(date);
+                    }
+                    if (l == 2) {
+                        listdata3.add(date);
+                    }
+                    if (l == 3) {
+                        listdata4.add(date);
+                    }
+                    if (l == 4) {
+                        listdata5.add(date);
+                    }
+                }
+            }
+            if (listdata1.size() != 0) {
+                js.put("shuju1", listdata1);
+                js.put("mingzi1", name.get(0) + quduanName[0]);
+                System.out.println(name.get(0) + quduanName[0]);
+            }
+            if (listdata2.size() != 0) {
+                js.put("shuju2", listdata2);
+                js.put("mingzi2", name.get(1) + quduanName[1]);
+                System.out.println(name.get(1) + quduanName[1]);
+            }
+            if (listdata3.size() != 0) {
+                js.put("shuju3", listdata3);
+                js.put("mingzi3", name.get(2) + quduanName[2]);
+                System.out.println(name.get(2) + quduanName[2]);
+            }
+            if (listdata4.size() != 0) {
+                js.put("shuju4", listdata4);
+                js.put("mingzi4", name.get(3) + quduanName[3]);
+                System.out.println(name.get(3) + quduanName[3]);
+            }
+            if (listdata5.size() != 0) {
+                js.put("shuju5", listdata5);
+                js.put("mingzi5", name.get(4) + quduanName[4]);
+                System.out.println(name.get(4) + quduanName[4]);
+            }
+        } else {
+            for (long i = 0; i <= time; i++) {
+                long starttimee = starttimea + i * 1000;
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+                String time1 = format.format(new Date(starttimee));
+                list.add(time1);
+                for (int l = 0; l < quduanName.length; l++) {
+                    long starttimeee = starttimee / 1000;
+                    System.out.println("222222" + sqlname.get(0));//获得每一个属性名
+                    String shuxingname = sqlname.get(0);
+                    System.out.println("123=" + quduanName[l]);//获得每一个区段名
+                    String quduanname = quduanName[l];
+                    Integer qdid = quXianService.findQDid(quduanname);
+                    Integer date = quXianService.findQuDuanData(starttimeee, shuxingname, quduanname, qdid);
+                    if (l == 0) {
+                        listdata1.add(date);
+                    }
+                    if (l == 1) {
+                        listdata2.add(date);
+                    }
+                    if (l == 2) {
+                        listdata3.add(date);
+                    }
+                    if (l == 3) {
+                        listdata4.add(date);
+                    }
+                    if (l == 4) {
+                        listdata5.add(date);
+                    }
+                }
+            }
+            if (listdata1.size() != 0) {
+                js.put("shuju1", listdata1);
+                js.put("mingzi1", name.get(0) + quduanName[0]);
+                System.out.println(name.get(0) + quduanName[0]);
+            }
+            if (listdata2.size() != 0) {
+                js.put("shuju2", listdata2);
+                js.put("mingzi2", name.get(0) + quduanName[1]);
+                System.out.println(name.get(0) + quduanName[1]);
+            }
+            if (listdata3.size() != 0) {
+                js.put("shuju3", listdata3);
+                js.put("mingzi3", name.get(0) + quduanName[2]);
+                System.out.println(name.get(0) + quduanName[2]);
+            }
+            if (listdata4.size() != 0) {
+                js.put("shuju4", listdata4);
+                js.put("mingzi4", name.get(0) + quduanName[3]);
+                System.out.println(name.get(0) + quduanName[3]);
+            }
+            if (listdata5.size() != 0) {
+                js.put("shuju5", listdata5);
+                js.put("mingzi5", name.get(0) + quduanName[4]);
+                System.out.println(name.get(0) + quduanName[4]);
+            }
+        }
+        js.put("shijian", list);
+        return ResponseDataUtil.ok("查询数据成功", js);
+    }
+
+
+    //根据传进来的区段id 和本区段所选择的属性id  包括传进来的日期获取对应的数据
+    @GetMapping("/findQuDuanData1")
+    public Map<String, Object> findQuDuanData1(@RequestParam("startTime") Date startTime,
+                                               @RequestParam("endTime") Date endTime,
+                                               @RequestParam("shuxingId") Integer[] shuxingId,
+                                               @RequestParam("quduanName") String[] quduanName) throws Exception {
+        List<String> list = new ArrayList<>();
+        List<BigDecimal> listt = new ArrayList<>();
+        List<Long> timelist = new ArrayList<>();
+        JSONObject js = new JSONObject();
+        long time = endTime.getTime() / 1000 - startTime.getTime() / 1000;//得到这两个时间差 单位是秒
+        long starttimea = startTime.getTime();
+        for (long i = 0; i <= time; i++) {
+            long starttimee = starttimea + i * 1000;
+            SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+            String time1 = format.format(new Date(starttimee));
+            list.add(time1);
+            timelist.add(starttimee/1000);
+        }
+        System.out.println("timelist=="+timelist);
+        js.put("shijian", list);
+        long starttime = startTime.getTime() / 1000;
+        long endtime = endTime.getTime() / 1000;
+        List<String> sqlname = quXianService.findShuXingName(shuxingId);//获取区段属性的英文名
+        List<String> name = quXianService.findShuXingHanZiName(shuxingId);//获取区段属性的中文名
+        System.out.println("11111" + sqlname);
         Integer k = 0;
         for (int i = 0; i < sqlname.size(); i++) {
             k++;
@@ -122,24 +257,109 @@ public class QuXianController {
             String shuxingname = sqlname.get(i);
             System.out.println("123=" + quduanName[i]);//获得每一个区段名
             String quduanname = quduanName[i];
-            Integer qdid=quXianService.findQDid(quduanname);
-            List<Integer> date = quXianService.findQuDuanData(starttime, endtime, shuxingname, quduanname,qdid);
-            map.put("shuju" + k.toString(), date);
-            js.put("shuju" + k.toString(), date);
+            Integer qdid = quXianService.findQDid(quduanname);
+            List<quduanEntity> date = quXianService.findQuDuanDatas(starttime, endtime, shuxingname, quduanname, qdid);
+            System.out.println("1234" + date);
+            if (date.size() == timelist.size()) {
+                for (int i1 = 0; i1 < date.size(); i1++) {
+                    listt.add(i1,date.get(i1).getName());
+                }
+                /*for (quduanEntity quduanEntity : date) {
+                    listt.add(quduanEntity.getName());
+                }*/
+            } else {
+                for (int i1 = 0; i1 < timelist.size(); i1++) {
+                    for (int i2 = 0; i2 < date.size(); i2++) {
+                        if (timelist.get(i1)!=(long) date.get(i2).getCreatetime()){
+                            listt.add(i1,null);
+                        }else {
+                            listt.add(i1,date.get(i1).getName());
+                        }
+                    }
+                }
+            }
+            js.put("shuju" + k.toString(), listt);
             js.put("mingzi" + k.toString(), name.get(i));
         }
         return ResponseDataUtil.ok("查询数据成功", js);
     }
 
-    public static void main(String[] args) {
-            long value=     1595304033*1000L;//1595303879  2020-07-21 11:57:59     1595304033  2020-07-21 12:00:33
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
-            String time = format.format(new Date(value)) ;
-            System.out.println(time);
 
-            Date date=new Date();
+    public static void main(String[] args) {   //1596509890 2020-08-04 10:58:10    1596519568  2020-08-04 13:39:28
+        long value = 1596519568 * 1000L;//1595303879  2020-07-21 11:57:59     1595304033  2020-07-21 12:00:33
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = format.format(new Date(value));
+        System.out.println("1" + time);
+        Date d = new Date("2020/08/04 10:58:10 ");
+        SimpleDateFormat starttime1 = new SimpleDateFormat("HH:mm:ss");
+        String format1 = starttime1.format(d);
+        Date date = new Date();
         long time1 = date.getTime();
-        System.out.println(time1);
+        SimpleDateFormat format2 = new SimpleDateFormat("HH:mm:ss");
+        String time12 = format2.format(new Date(time1));
+        System.out.println("2" + time1);
+        System.out.println("3" + time12);
+        System.out.println("4" + format1);
+        System.out.println("5" + d.getTime());
+        System.out.println("6" + d.getTime() + 1000);
+        System.out.println("7" + format.format(new Date(d.getTime() + 1000)));
 
     }
+
+
+
+
+/*
+    List<String> list = new ArrayList<>();
+    Map<String, Object> map = new HashMap<>();
+    JSONObject js=new JSONObject();
+    SimpleDateFormat  starttime11 = new SimpleDateFormat("HH:mm:ss");
+    String starttime1 = starttime11.format(startTime);
+    String endtime1 = starttime11.format(endTime);
+    //String starttime1 = new SimpleDateFormat("HH:mm:ss").format(startTime);//把开始时间转换格式
+    // String endtime1 = new SimpleDateFormat("HH:mm:ss").format(endTime);//把结束时间转换格式
+    long time = endTime.getTime()/1000 - startTime.getTime()/1000;//得到这两个时间差 单位是秒
+    Integer j = 0;
+        list.add(starttime1);
+    long starttimea = startTime.getTime();
+        for (long i = 1; i < time; i++) {
+        long starttimee = starttimea+i*1000;
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss") ;
+        String time1 = format.format(new Date(starttimee)) ;
+        //j++;
+        list.add(time1);
+
+    }
+        list.add(endtime1);
+        map.put("shijian", list);
+        js.put("shijian", list);
+    //String starttime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(startTime);//把开始时间转换格式
+    long starttime = startTime.getTime()/1000;
+    //System.out.println("starttime"+starttime);
+    //String endtime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(endTime);//把结束时间转换格式
+    long endtime = endTime.getTime()/1000;
+    //System.out.println("endtime"+endtime);
+    List<String> sqlname = quXianService.findShuXingName(shuxingId);//获取区段属性的英文名
+    List<String>name=quXianService.findShuXingHanZiName(shuxingId);//获取区段属性的中文名
+        System.out.println("11111" + sqlname);
+    //String[] name=new String[sqlname.size()];
+    Integer k = 0;
+        for (int i = 0; i < sqlname.size(); i++) {
+        k++;
+        System.out.println("222222" + sqlname.get(i));//获得每一个属性名
+        String shuxingname = sqlname.get(i);
+        System.out.println("123=" + quduanName[i]);//获得每一个区段名
+        String quduanname = quduanName[i];
+        Integer qdid=quXianService.findQDid(quduanname);
+        List<Integer> date = quXianService.findQuDuanData(starttime, endtime, shuxingname, quduanname,qdid);
+        map.put("shuju" + k.toString(), date);
+        js.put("shuju" + k.toString(), date);
+        js.put("mingzi" + k.toString(), name.get(i));
+    }
+        return ResponseDataUtil.ok("查询数据成功", js);
+
+
+    */
+
+
 }

@@ -1,12 +1,10 @@
 package com.yintu.ruixing.service;
 
-import com.yintu.ruixing.entity.QuDuanBaseEntity;
-import com.yintu.ruixing.entity.QuDuanInfoEntity;
-import com.yintu.ruixing.entity.QuDuanShuXingEntity;
-import com.yintu.ruixing.entity.SheBeiEntity;
+import com.yintu.ruixing.entity.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author:lcy
@@ -25,7 +23,7 @@ public interface QuXianService {
     Integer findQuDuanDataByTime2(String format,String name);
 
 
-    List<Integer> findQuDuanData(Long starttime, Long endtime, String shuxingname, String quduanname,Integer qdid);
+    Integer findQuDuanData(Long starttimee,  String shuxingname, String quduanname,Integer qdid);
 
 
     List<QuDuanShuXingEntity> shuXingMing();
@@ -36,4 +34,5 @@ public interface QuXianService {
 
     Integer findQDid(String quduanname);
 
+    List<quduanEntity> findQuDuanDatas(long starttime, long endtime, String shuxingname, String quduanname, Integer qdid);
 }

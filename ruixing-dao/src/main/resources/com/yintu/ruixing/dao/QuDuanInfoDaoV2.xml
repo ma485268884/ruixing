@@ -243,17 +243,66 @@
 
     <!--根据传来的时间段和区段名和属性名 按秒来 查询对应的数据   -->
     <select id="findQuDuanData" resultType="java.lang.Integer" statementType="STATEMENT">
-        select ${shuxingname}
+         select ${shuxingname}
+         from data_applydata qi,
+              mro_quduan_base qb
+         where qi.v1 = qb.qdid
+           and qb.quDuanYunYing_name = "${quduanname}"
+           and qi.v1 = "${qdid}"
+           and qi.createtime="${starttimee}"
+
+     </select>
+
+    <resultMap id="quduanResultMap" type="com.yintu.ruixing.entity.quduanEntity">
+        <result column="createtime" jdbcType="INTEGER" property="createtime"/>
+        <result column="v3" jdbcType="DECIMAL" property="name"/>
+        <result column="v4" jdbcType="DECIMAL" property="name"/>
+        <result column="v5" jdbcType="DECIMAL" property="name"/>
+        <result column="v6" jdbcType="DECIMAL" property="name"/>
+        <result column="v7" jdbcType="DECIMAL" property="name"/>
+        <result column="v15" jdbcType="DECIMAL" property="name"/>
+        <result column="v16" jdbcType="DECIMAL" property="name"/>
+        <result column="v17" jdbcType="DECIMAL" property="name"/>
+        <result column="v18" jdbcType="DECIMAL" property="name"/>
+        <result column="v19" jdbcType="DECIMAL" property="name"/>
+        <result column="v20" jdbcType="DECIMAL" property="name"/>
+        <result column="v21" jdbcType="DECIMAL" property="name"/>
+        <result column="v22" jdbcType="DECIMAL" property="name"/>
+        <result column="v23" jdbcType="DECIMAL" property="name"/>
+        <result column="v42" jdbcType="DECIMAL" property="name"/>
+        <result column="v43" jdbcType="DECIMAL" property="name"/>
+        <result column="v44" jdbcType="DECIMAL" property="name"/>
+        <result column="v45" jdbcType="DECIMAL" property="name"/>
+        <result column="v46" jdbcType="DECIMAL" property="name"/>
+        <result column="v52" jdbcType="DECIMAL" property="name"/>
+        <result column="v54" jdbcType="DECIMAL" property="name"/>
+        <result column="v55" jdbcType="DECIMAL" property="name"/>
+        <result column="v56" jdbcType="DECIMAL" property="name"/>
+        <result column="v57" jdbcType="DECIMAL" property="name"/>
+        <result column="v62" jdbcType="DECIMAL" property="name"/>
+        <result column="v63" jdbcType="DECIMAL" property="name"/>
+        <result column="v64" jdbcType="DECIMAL" property="name"/>
+        <result column="v65" jdbcType="DECIMAL" property="name"/>
+        <result column="v47" jdbcType="DECIMAL" property="name"/>
+        <result column="v48" jdbcType="DECIMAL" property="name"/>
+        <result column="v49" jdbcType="DECIMAL" property="name"/>
+        <result column="v50" jdbcType="DECIMAL" property="name"/>
+        <result column="v51" jdbcType="DECIMAL" property="name"/>
+        <result column="v53" jdbcType="DECIMAL" property="name"/>
+    </resultMap>
+    <!--根据传来的时间段和区段名和属性名 按秒来 查询对应的数据   -->
+    <select id="findQuDuanDatas" resultMap="quduanResultMap" statementType="STATEMENT">
+        select ${shuxingname},qi.createtime
         from data_applydata qi,
              mro_quduan_base qb
         where qi.v1 = qb.qdid
           and qb.quDuanYunYing_name = "${quduanname}"
           and qi.v1 = "${qdid}"
           and qi.createtime
-            BETWEEN
-            "${starttime}"
-            and
-            "${endtime}"
+          BETWEEN
+          "${starttime}"
+          AND
+          "${endtime}"
     </select>
 
     <resultMap id="quduanBaseResultMap" type="com.yintu.ruixing.entity.QuDuanInfoEntityV2">
