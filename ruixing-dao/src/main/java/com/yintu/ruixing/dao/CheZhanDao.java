@@ -74,6 +74,8 @@ public interface CheZhanDao {
 
     String findQDJsonByCid(Integer cid);
 
+    String findDMHJsonByCid(Integer cid);
+
     Integer findFirstCZid(Integer xid);
 
     Integer findEndCZid(Integer xid);

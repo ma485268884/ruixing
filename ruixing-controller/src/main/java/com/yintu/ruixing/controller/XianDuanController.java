@@ -52,4 +52,11 @@ public class XianDuanController {
         XianDuanEntity xianDuanEntity=xianDuanService.findXianDuanById(xid);
         return ResponseDataUtil.ok("查询线段成功",xianDuanEntity);
     }
+
+    //根据电务段id 查询此电务段下面所有线段的json数据
+    @GetMapping("/findAllJsonByDid/{did}")
+    public Map<String,Object>findAllJsonByDid(@PathVariable Integer did){
+        List<String> xdJsons=xianDuanService.findAllJsonByDid(did);
+        return ResponseDataUtil.ok("查询所有的json数据成功",xdJsons);
+    }
 }

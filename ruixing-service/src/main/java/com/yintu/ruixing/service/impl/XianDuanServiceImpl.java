@@ -54,4 +54,9 @@ public class XianDuanServiceImpl implements XianDuanService {
     public List<Integer> findId(Long xid) {
         return xianDuanDao.findId(xid);
     }
+
+    @Override
+    public List<String> findAllJsonByDid(Integer did) {
+        return xianDuanDao.findAllJsonByDid(did);
+    }
 }

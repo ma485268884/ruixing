@@ -43,6 +43,17 @@ public class DataStatsServiceImpl implements DataStatsService {
     private CheZhanDao cheZhanDao;
 
     @Override
+    public void editDMHStaCteByCid(CheZhanEntity cheZhanEntity) {
+        cheZhanEntity.setCzdmhState(1);
+        dataStatsDao.editDMHStaCteByCid(cheZhanEntity);
+    }
+
+    @Override
+    public List<QuDuanBaseEntity> findDianMaHuaByCid(Integer cid) {
+        return quDuanBaseDao.findDianMaHuaByCid(cid);
+    }
+
+    @Override
     public List<QuDuanBaseEntity> findDianMaHuaByTid(Integer tid, Integer page, Integer size) {
         return quDuanBaseDao.findDianMaHuaByTid(tid);
     }
@@ -122,6 +133,11 @@ public class DataStatsServiceImpl implements DataStatsService {
     @Override
     public Integer findEndCZid(Integer xid) {
         return cheZhanDao.findEndCZid(xid);
+    }
+
+    @Override
+    public String findDMHJsonByCid(Integer cid) {
+        return cheZhanDao.findDMHJsonByCid(cid);
     }
 
     @Override
@@ -406,6 +422,12 @@ public class DataStatsServiceImpl implements DataStatsService {
         dataStatsDao.qingChuaByCid(cheZhanEntity);
     }
 
+    @Override
+    public void qingChuaDMHByCid(CheZhanEntity cheZhanEntity) {
+        cheZhanEntity.setCzdmhState(0);
+        cheZhanEntity.setCzdmhJson(null);
+        dataStatsDao.qingChuaDMHByCid(cheZhanEntity);
+    }
 
     @Override
     public List<DataStatsEntity> findAllCheZhan(Integer page, Integer size) {

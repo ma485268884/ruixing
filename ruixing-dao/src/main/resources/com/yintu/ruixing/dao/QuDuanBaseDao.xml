@@ -58,6 +58,21 @@
     guiNeiDiZhi, yuliu
     </sql>
 
+    <!--根据车站cid  查询对应的电码化数据-->
+    <select id="findDianMaHuaByCid" resultMap="BaseResultMap">
+        SELECT
+            cid,
+            cz_id,
+            qdid,
+            zongHe_id,
+            quDuanYunYing_name
+        FROM
+            mro_quduan_base
+        WHERE
+            cid = #{cid}
+            AND line = '电码化'
+    </select>
+
     <!--根据车站cid  查询此车站下面所有的电码化区段数据-->
     <select id="findDianMaHuaBycid" resultMap="BaseResultMap">
         select

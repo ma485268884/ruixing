@@ -30,4 +30,6 @@ public interface XianDuanDao {
 	List<XianDuanEntity> findAllXianDuanByDwdid(long parseLong);
 
     String findXDJsonByXid(Integer xid);
+
+    List<String> findAllJsonByDid(Integer did);
 }

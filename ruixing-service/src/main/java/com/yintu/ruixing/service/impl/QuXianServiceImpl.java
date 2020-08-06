@@ -70,7 +70,11 @@ public class QuXianServiceImpl implements QuXianService {
 
     @Override
     public List<String> findShuXingName(Integer[] shuxingId) {
-        return quXianDao.findShuXingName(shuxingId);
+        List<String> name=null;
+        for (int i = 0; i < shuxingId.length; i++) {
+          name= quXianDao.findShuXingName(shuxingId[i]);
+        }
+        return name;
     }
 
     @Override
