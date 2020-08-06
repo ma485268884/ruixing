@@ -19,4 +19,6 @@ public interface XianDuanService {
     XianDuanEntity findXianDuanById(Long xid);
 
     List<Integer> findId(Long xid);
+
+    List<String> findAllJsonByDid(Integer did);
 }

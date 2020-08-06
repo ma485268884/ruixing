@@ -40,6 +40,7 @@
         <result column="cz_duantou" jdbcType="INTEGER" property="czDuanTou"/>
         <result column="cz_miaoshu" jdbcType="VARCHAR" property="czMiaoShu"/>
         <result column="cz_state" jdbcType="INTEGER" property="czState"/>
+        <result column="cz_dmh_state" jdbcType="INTEGER" property="czdmhState"/>
         <result column="cz_r_shebei" jdbcType="INTEGER" property="czRSheBei"/>
         <result column="cz_zhongjizhan" jdbcType="INTEGER" property="czZhongJiZhan"/>
         <result column="yuliushebei1" jdbcType="VARCHAR" property="yuliushebei1"/>
@@ -94,6 +95,7 @@
     </resultMap>
     <resultMap extends="chezhan" id="ResultMapWithBLOBs" type="com.yintu.ruixing.entity.CheZhanEntity">
         <result column="cz_json" jdbcType="LONGVARCHAR" property="czJson"/>
+        <result column="cz_dmh_json" jdbcType="LONGVARCHAR" property="czdmhJson"/>
     </resultMap>
     <sql id="Base_Column_List">
         cid, cz_id, xd_id, xd_cz_id, cz_name, cz_name_jiancheng, cz_ip, cz_type, cz_stutrs,
@@ -318,12 +320,20 @@
         LIMIT 1
     </select>
 
-    <!--根据线段xid 查询此线段下的线段配置json数据-->
+    <!--根据车站cid 查询此车站下的车站配置json数据-->
     <select id="findQDJsonByCid" resultType="java.lang.String">
         select cz_json
         from mro_chezhan
         where cid = #{cid}
     </select>
+
+    <!--根据车站cid 查询此车站下的车站内电码化配置json数据-->
+    <select id="findDMHJsonByCid" resultType="java.lang.String">
+        select cz_dmh_json
+        from mro_chezhan
+        where cid = #{cid}
+    </select>
+
     <!--新增线段配置 根据线段xid 查询此线段下的所有车站数据-->
     <select id="findSomeCheZhanByXid" parameterType="java.lang.Integer" resultMap="chezhan">
         SELECT cid,

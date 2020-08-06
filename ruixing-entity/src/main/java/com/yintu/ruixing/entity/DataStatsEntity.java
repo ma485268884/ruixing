@@ -33,6 +33,10 @@ public class DataStatsEntity {
 
     private String xdJson;//储存的json',
 
+    private Integer czdmhState; //站内电码化配置状态  0：未配置    1：已配置
+
+    private String czdmhJson; //站内电码化储存json
+
     private Integer czState;//'车站设置状态  0：未设置  1：已设置',
 
     private String czJson;//储存的json',

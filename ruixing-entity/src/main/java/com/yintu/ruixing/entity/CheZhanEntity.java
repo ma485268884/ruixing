@@ -55,9 +55,11 @@ public class CheZhanEntity {
 
     private Integer czState; //车站配置状态  0：未配置    1：已配置
     private Integer xdState; //线段配置状态  0：未配置    1：已配置
+    private Integer czdmhState; //站内电码化配置状态  0：未配置    1：已配置
 
     private String czJson; //车站储存json
     private String xdJson; //线段储存json
+    private String czdmhJson; //站内电码化储存json
 
     private Integer czRSheBei;//站内是否有2000R设备  0：无   1：有
 

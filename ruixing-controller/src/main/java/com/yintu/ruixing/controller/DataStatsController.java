@@ -903,6 +903,13 @@ public class DataStatsController {
         return ResponseDataUtil.ok("更改车站状态成功");
     }
 
+    //根据车站id更改站内电码化的状态
+    @PutMapping("/editDMHStateByCid/{cid}")
+    public Map<String, Object> editDMHStateByCid(@PathVariable Integer cid, CheZhanEntity cheZhanEntity) {
+        dataStatsService.editDMHStaCteByCid(cheZhanEntity);
+        return ResponseDataUtil.ok("更改站内电码化状态成功");
+    }
+
     //根据线段id 清除json  和更改状态
     @PutMapping("/qingChuaByXid/{xid}")
     public Map<String, Object> qingChuaByXid(@PathVariable Integer xid, XianDuanEntity xianDuanEntity) {
@@ -917,6 +924,23 @@ public class DataStatsController {
         return ResponseDataUtil.ok("清除车站成功");
     }
 
+    //根据车站id  清除站内电码化的 json  和更改状态
+    @PutMapping("/qingChuaDMHByCid/{cid}")
+    public Map<String, Object> qingChuaDMHByCid(@PathVariable Integer cid, CheZhanEntity cheZhanEntity) {
+        dataStatsService.qingChuaDMHByCid(cheZhanEntity);
+        return ResponseDataUtil.ok("清除站内电码化成功");
+    }
+
+    //根据车站id  查询对应的电码化数据
+    @GetMapping("/findDianMaHuaByCid/{cid}")
+    public Map<String,Object>findDianMaHuaByCid(@PathVariable Integer cid){
+        List<QuDuanBaseEntity> dianMaHuaList=dataStatsService.findDianMaHuaByCid(cid);
+        if (dianMaHuaList.size()==0){
+            return ResponseDataUtil.ok("此车站无电码化");
+        }else {
+            return ResponseDataUtil.ok("查询电码化成功",dianMaHuaList);
+        }
+    }
     //新增线段配置 根据线段xid 查询此线段下的所有车站数据
     @GetMapping("/findSomeCheZhanByXid/{xid}")
     public Map<String, Object> findSomeCheZhanByXid(@PathVariable Integer xid) {
@@ -956,6 +980,14 @@ public class DataStatsController {
         String qdJson = dataStatsService.findQDJsonByCid(cid);
         return ResponseDataUtil.ok("查询区段的json数据成功", qdJson);
     }
+
+    //根据车站cid 查询此车站内电码化的区段配置json数据
+    @GetMapping("/findDMHJsonByCid/{cid}")
+    public Map<String, Object> findDMHJsonByCid(@PathVariable Integer cid) {
+        String dmhJson = dataStatsService.findDMHJsonByCid(cid);
+        return ResponseDataUtil.ok("查询区段的json数据成功", dmhJson);
+    }
+
 
     //查询所有的铁路局的名字  和 id
     @GetMapping("/findAllTieLuJu")
@@ -1013,7 +1045,6 @@ public class DataStatsController {
     }
 
     //根据车站的cid  查找本车站下的所有站外的区段
-
     @GetMapping("/findAllQuDuanByCid/{cid}")
     public Map<String, Object> findAllQuDuanByCid(@PathVariable Integer cid,
                                                   @RequestParam(value = "page", required = false) Integer page,

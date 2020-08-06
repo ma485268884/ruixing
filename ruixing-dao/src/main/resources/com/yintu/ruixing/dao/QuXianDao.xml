@@ -89,10 +89,7 @@
     <!--根据传来的区段属性id数组  查询对应的属性名-->
     <select id="findShuXingName" resultType="java.lang.String" parameterType="java.lang.Integer">
       select sqlname from mro_quduan_shuxing
-      where id
-      in <foreach collection="array" index="index" item="id" open="(" separator="," close=")">
-        #{id}
-    </foreach>
+      where id=#{shuxingId}
     </select>
 
 

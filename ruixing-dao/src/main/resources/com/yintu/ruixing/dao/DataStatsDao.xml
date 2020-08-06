@@ -31,6 +31,8 @@
         <result property="xdJson" column="xd_json"/>
         <result property="czState" column="cz_state"/>
         <result property="czJson" column="cz_json"/>
+        <result property="czdmhState" column="cz_dmh_state"/>
+        <result property="czdmhJson" column="cz_dmh_json"/>
         <result column="cz_r_shebei" jdbcType="INTEGER" property="czRSheBei"/>
         <result column="cz_zhongjizhan" jdbcType="INTEGER" property="czZhongJiZhan"/>
         <result column="yuliushebei1" jdbcType="VARCHAR" property="yuliushebei1"/>
@@ -383,6 +385,20 @@
         where xid = #{xid}
     </update>
 
+    <!--根据车站id  更改站内电码化的状态-->
+    <update id="editDMHStaCteByCid" parameterType="com.yintu.ruixing.entity.CheZhanEntity" >
+        update mro_chezhan
+        <set>
+            <if test="czdmhState !=null">
+                cz_dmh_state = #{czdmhState},
+            </if>
+            <if test="czdmhJson !=null">
+                cz_dmh_json = #{czdmhJson}
+            </if>
+        </set>
+        where cid = #{cid}
+    </update>
+
     <!--根据车站id  更改车站的状态-->
     <update id="editStateByCid" parameterType="com.yintu.ruixing.entity.CheZhanEntity" >
         update mro_chezhan
@@ -415,6 +431,14 @@
         where cid = #{cid}
     </update>
 
+    <!--清除站内电码化的json  和更改状态-->
+    <update id="qingChuaDMHByCid" parameterType="com.yintu.ruixing.entity.CheZhanEntity" >
+        update mro_chezhan
+            set
+               cz_dmh_state = #{czdmhState},
+                cz_dmh_json = #{czdmhJson}
+        where cid = #{cid}
+    </update>
 
     <!--查询所有的铁路局-->
     <select id="findAllTieLuJu"  resultMap="tieluju">

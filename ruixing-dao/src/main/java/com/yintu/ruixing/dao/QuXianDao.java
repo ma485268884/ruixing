@@ -25,7 +25,7 @@ public interface QuXianDao {
 
     List<QuDuanShuXingEntity> shuXingMing();
 
-    List<String> findShuXingName(Integer[] shuxingId);
+    List<String> findShuXingName(Integer shuxingId);
 
     List<String> findShuXingHanZiName(Integer[] shuxingId);
 }

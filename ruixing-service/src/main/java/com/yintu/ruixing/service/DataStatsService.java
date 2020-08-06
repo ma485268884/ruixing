@@ -128,6 +128,8 @@ public interface DataStatsService {
 
     String findQDJsonByCid(Integer cid);
 
+    String findDMHJsonByCid(Integer cid);
+
     Integer findFirstCZid(Integer xid);
 
     Integer findEndCZid(Integer xid);
@@ -156,4 +158,10 @@ public interface DataStatsService {
     List<QuDuanBaseEntity> findDianMaHuaByXid(Integer xid, Integer page, Integer size);
 
     List<QuDuanBaseEntity> findDianMaHuaBycid(Integer cid, Integer page, Integer size);
+
+    List<QuDuanBaseEntity> findDianMaHuaByCid(Integer cid);
+
+    void editDMHStaCteByCid(CheZhanEntity cheZhanEntity);
+
+    void qingChuaDMHByCid(CheZhanEntity cheZhanEntity);
 }
