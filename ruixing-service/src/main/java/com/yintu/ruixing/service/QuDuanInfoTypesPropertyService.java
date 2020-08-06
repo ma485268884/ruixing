@@ -1,9 +1,11 @@
 package com.yintu.ruixing.service;
 
+import cn.hutool.core.thread.FinalizableDelegatedExecutorService;
 import com.yintu.ruixing.common.util.BaseService;
 import com.yintu.ruixing.entity.QuDuanInfoTypesPropertyEntity;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author:mlf
@@ -14,4 +16,6 @@ public interface QuDuanInfoTypesPropertyService extends BaseService<QuDuanInfoTy
 
 
     List<QuDuanInfoTypesPropertyEntity> connectFindByCondition(String types);
+
+   String countByType(List<Integer> types);
 }

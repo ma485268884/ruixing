@@ -1006,4 +1006,7 @@
     <select id="selectJsonByCzId" parameterType="java.lang.Integer" resultType="java.lang.String">
         select cz_json from mro_chezhan where cz_id = #{czId,jdbcType=INTEGER}
     </select>
+    <select id="selectByczId" parameterType="java.lang.Integer" resultMap="chezhan">
+        select  <include refid="Base_Column_List"/> from mro_chezhan where cz_id = #{czId,jdbcType=INTEGER}
+    </select>
 </mapper>

@@ -20,12 +20,6 @@
         from mro_quduan_download
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <select id="selectByCidAndDataType"  resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from mro_quduan_download
-        where cid = #{cid,jdbcType=INTEGER} and data_type = #{dataType,jdbcType=SMALLINT}
-    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from mro_quduan_download
@@ -155,11 +149,20 @@
         <include refid="Much_Column_List"/>
         from mro_quduan_download qd inner join mro_chezhan cz on qd.cid=cz.cz_id
         <where>
+            <if test="czId!=null">
+                qd.cid=#{czId,jdbcType=INTEGER}
+            </if>
             <if test="startDateTime!=null and endDateTime!=null">
-                qd.start_time &gt;= #{startDateTime,jdbcType=TIMESTAMP} and qd.end_time &lt;=
+                and qd.start_time &gt;= #{startDateTime,jdbcType=TIMESTAMP} and qd.end_time &lt;=
                 #{endDateTime,jdbcType=TIMESTAMP}
             </if>
             and qd.data_type=1
         </where>
+    </select>
+    <select id="selectByCidAndDataType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_quduan_download
+        where cid = #{cid,jdbcType=INTEGER} and data_type = #{dataType,jdbcType=SMALLINT}
     </select>
 </mapper>

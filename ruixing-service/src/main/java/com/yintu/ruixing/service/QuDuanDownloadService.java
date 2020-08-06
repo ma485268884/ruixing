@@ -20,7 +20,7 @@ public interface QuDuanDownloadService extends BaseService<QuDuanDownloadEntity,
 
     Map<String, Object> findPlayBackDataById(Integer id);
 
-    List<QuDuanDownloadEntity> findByDateTime(Date startDateTime, Date endDateTime);
+    List<QuDuanDownloadEntity> findByDateTime(Integer czId, Date startDateTime, Date endDateTime);
 
     /**
      * @param czId       车站id

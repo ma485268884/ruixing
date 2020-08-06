@@ -26,18 +26,9 @@ public interface QuDuanInfoDaoV2 {
     List<Map<String, Object>> selectStatisticsByCzIdAndTime(Integer czId, Date time);
 
 
-
-
-
-
-
     QuDuanInfoEntityV2 selectFirstByCzId1(Integer czId, Integer qid);
 
     List<QuDuanInfoEntityV2> selectByCzIdAndTime1(Integer czId, Date time);
-
-    Integer[] selectDistinctTypeByCzId(Integer czId);
-
-
 
 
 

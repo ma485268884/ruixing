@@ -69,7 +69,8 @@ public class QuDuanDownloadController extends SessionController {
     @GetMapping
     public Map<String, Object> findAll(@RequestParam(value = "page_number") Integer pageNumber,
                                        @RequestParam(value = "page_size") Integer pageSize,
-                                       @RequestParam(value = "order_by", required = false,defaultValue = "qd.id DESC") String orderBy,
+                                       @RequestParam(value = "order_by", required = false, defaultValue = "qd.id DESC") String orderBy,
+                                       @RequestParam(value = "czId") Integer cdId,
                                        @RequestParam(value = "startDateTime", required = false) Date startDateTime,
                                        @RequestParam(value = "endDateTime", required = false) Date endDateTime) {
 
@@ -77,7 +78,7 @@ public class QuDuanDownloadController extends SessionController {
             throw new BaseRuntimeException("开始时间不能大于结束时间");
         }
         PageHelper.startPage(pageNumber, pageSize, orderBy);
-        List<QuDuanDownloadEntity> quDuanDownloadEntities = quDuanDownloadService.findByDateTime(startDateTime, endDateTime);
+        List<QuDuanDownloadEntity> quDuanDownloadEntities = quDuanDownloadService.findByDateTime(cdId, startDateTime, endDateTime);
         PageInfo<QuDuanDownloadEntity> pageInfo = new PageInfo<>(quDuanDownloadEntities);
         return ResponseDataUtil.ok("查询下载记录列表成功", pageInfo);
     }

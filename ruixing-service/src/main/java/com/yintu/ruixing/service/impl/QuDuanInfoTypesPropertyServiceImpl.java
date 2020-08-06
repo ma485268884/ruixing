@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author:mlf
@@ -42,5 +43,10 @@ public class QuDuanInfoTypesPropertyServiceImpl implements QuDuanInfoTypesProper
     @Override
     public List<QuDuanInfoTypesPropertyEntity> connectFindByCondition(String types) {
         return quDuanInfoTypesPropertyDao.connectSelectByCondition(types);
+    }
+
+    @Override
+    public String countByType(List<Integer> types) {
+        return quDuanInfoTypesPropertyDao.countByType(types);
     }
 }

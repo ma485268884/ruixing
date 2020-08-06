@@ -3,6 +3,7 @@ package com.yintu.ruixing.dao;
 import com.yintu.ruixing.entity.QuDuanInfoTypesPropertyEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface QuDuanInfoTypesPropertyDao {
     int deleteByPrimaryKey(Integer id);
@@ -18,4 +19,7 @@ public interface QuDuanInfoTypesPropertyDao {
     int updateByPrimaryKey(QuDuanInfoTypesPropertyEntity record);
 
     List<QuDuanInfoTypesPropertyEntity> connectSelectByCondition(String types);
+
+    String countByType(List<Integer> types);
+
 }
