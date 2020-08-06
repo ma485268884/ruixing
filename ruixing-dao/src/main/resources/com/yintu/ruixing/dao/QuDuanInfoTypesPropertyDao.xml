@@ -100,4 +100,19 @@
         <include refid="Connect_Table_List"/>
         <include refid="Connect_Condition_List"/>
     </select>
+
+    <select id="countByType" parameterType="java.lang.Integer" resultType="java.lang.String">
+        SELECT
+        types
+          FROM(select count(*) as typesSum,types
+                  from mro_quduan_info_types_property
+                     where types in
+                <foreach collection="list" item="type" index="index" open="(" close=")" separator=",">
+                    '${type}'
+                </foreach>
+        group by types) a
+        ORDER BY
+        typesSum
+        LIMIT 1
+    </select>
 </mapper>

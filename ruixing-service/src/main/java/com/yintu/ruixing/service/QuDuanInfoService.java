@@ -59,9 +59,20 @@ public interface QuDuanInfoService {
     List<Map<String, Object>> findStatisticsByCzIdAndTime(Integer czId, Date time);
 
 
-    Integer[] findDistinctTypeByCzId(Integer czId);
-
+    /**
+     * @param czId 车站id
+     * @param time 时间
+     * @return
+     */
     List<JSONObject> findByCondition(Integer czId, Date time);
+
+    /**
+     * 查询车站下区段对应动态属性参数
+     *
+     * @param czId 车站id
+     * @return
+     */
+    JSONObject findNullProperties(Integer czId);
 
 
 }

@@ -65,6 +65,8 @@ public interface CheZhanService {
      */
     String findJsonByCzId(Integer czId);
 
+    CheZhanEntity findByczId(Integer czId);
+
     List<CheZhanEntity> findXiangLinOneCheZhanByXdid(Integer xdid);
 
     List<CheZhanEntity> findXiangLinTwoCheZhanByXdid(Integer xdid);

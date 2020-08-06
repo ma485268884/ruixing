@@ -136,5 +136,15 @@ public class QuDuanInfoController extends SessionController {
         return ResponseDataUtil.ok("查询区段详情成功", jsonObjects);
     }
 
+    /**
+     * @param czId 车站id
+     * @return
+     */
+    @GetMapping("/properties")
+    public Map<String, Object> findNullProperties(@RequestParam("czId") Integer czId) {
+        JSONObject jsonObjects = quDuanInfoService.findNullProperties(czId);
+        return ResponseDataUtil.ok("查询区段详情成功", jsonObjects);
+    }
+
 
 }

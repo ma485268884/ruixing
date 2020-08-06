@@ -63,6 +63,15 @@ public interface CheZhanDao {
      */
     String selectJsonByCzId(Integer czId);
 
+    /**
+     * 按照车站专用id名查询车站信息
+     *
+     * @param czId 车站专用id
+     * @return
+     */
+    CheZhanEntity selectByczId(Integer czId);
+
+
     List<CheZhanEntity> findallChezhanByName(String czname);
 
 
@@ -82,7 +91,7 @@ public interface CheZhanDao {
 
     List<CheZhanEntity> findEndCheZhan(Integer endCZid);
 
-    List<CheZhanEntity> findCheZhanByIds(@Param("parseInt") Integer parseInt,@Param("parseInt1") Integer parseInt1);
+    List<CheZhanEntity> findCheZhanByIds(@Param("parseInt") Integer parseInt, @Param("parseInt1") Integer parseInt1);
 
     List<CheZhanEntity> findXiangLinOneCheZhanByXdid(Integer xdid);
 

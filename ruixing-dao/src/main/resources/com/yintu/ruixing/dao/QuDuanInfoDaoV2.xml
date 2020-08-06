@@ -667,10 +667,4 @@
             </if>
         </where>
     </select>
-    <!--通过车站查询去重的type-->
-    <select id="selectDistinctTypeByCzId" resultType="java.lang.Integer">
-        select DISTINCT type
-        from data_applydata
-        where station_id = #{czId,jdbcType=INTEGER}
-    </select>
 </mapper>

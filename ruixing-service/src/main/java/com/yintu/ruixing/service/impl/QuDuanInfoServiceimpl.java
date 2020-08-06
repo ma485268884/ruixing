@@ -4,20 +4,17 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.common.util.StringUtil;
 import com.yintu.ruixing.dao.QuDuanInfoDaoV2;
-import com.yintu.ruixing.entity.QuDuanBaseEntity;
-import com.yintu.ruixing.entity.QuDuanInfoEntityV2;
-import com.yintu.ruixing.entity.QuDuanInfoPropertyEntity;
-import com.yintu.ruixing.entity.QuDuanInfoTypesPropertyEntity;
+import com.yintu.ruixing.entity.*;
+import com.yintu.ruixing.service.CheZhanService;
+import com.yintu.ruixing.service.DataStatsService;
 import com.yintu.ruixing.service.QuDuanBaseService;
 import com.yintu.ruixing.service.QuDuanInfoService;
+import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author:mlf
@@ -34,6 +31,9 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
 
     @Autowired
     private QuDuanInfoTypesPropertyServiceImpl quDuanInfoTypesPropertyService;
+
+    @Autowired
+    private CheZhanService cheZhanService;
 
 
     @Override
@@ -70,35 +70,64 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
     }
 
     @Override
-    public Integer[] findDistinctTypeByCzId(Integer czId) {
-        return quDuanInfoDaoV2.selectDistinctTypeByCzId(czId);
-    }
-
-    @Override
     public List<JSONObject> findByCondition(Integer czId, Date time) {
-        List<QuDuanInfoEntityV2> quDuanInfoEntityV2s = new ArrayList<>();
+        List<QuDuanInfoTypesPropertyEntity> quDuanInfoTypesPropertyEntities = this.findPropertiesByCzId(czId);
+        List<JSONObject> jsonObjects = new ArrayList<>();
         if (time == null) {
             List<QuDuanBaseEntity> quDuanBaseEntities = quDuanBaseService.findByCzId(czId);
             for (QuDuanBaseEntity quDuanBaseEntity : quDuanBaseEntities) {
                 QuDuanInfoEntityV2 quDuanInfoEntityV2 = quDuanInfoDaoV2.selectFirstByCzId1(czId, quDuanBaseEntity.getQdid());
-                quDuanInfoEntityV2s.add(quDuanInfoEntityV2);
+                if (quDuanInfoEntityV2 == null) {
+                    jsonObjects.add(null);
+                    continue;
+                }
+                JSONObject jo = this.convert(quDuanInfoTypesPropertyEntities, quDuanInfoEntityV2);
+                jsonObjects.add(jo);
             }
         } else {
-            quDuanInfoEntityV2s = quDuanInfoDaoV2.selectByCzIdAndTime1(czId, time);
-        }
-        Integer[] types = this.findDistinctTypeByCzId(czId);
-        List<QuDuanInfoTypesPropertyEntity> quDuanInfoTypesPropertyEntities = quDuanInfoTypesPropertyService.connectFindByCondition(StringUtil.arrayToStrWithComma(types));
-        //动态转换
-        List<JSONObject> jsonObjects = new ArrayList<>();
-        for (QuDuanInfoEntityV2 quDuanInfoEntityV2 : quDuanInfoEntityV2s) {
-            if (quDuanInfoEntityV2 == null) {
-                jsonObjects.add(null);
-                continue;
+            List<QuDuanInfoEntityV2> quDuanInfoEntityV2s = quDuanInfoDaoV2.selectByCzIdAndTime1(czId, time);
+            for (QuDuanInfoEntityV2 quDuanInfoEntityV2 : quDuanInfoEntityV2s) {
+                JSONObject jo = this.convert(quDuanInfoTypesPropertyEntities, quDuanInfoEntityV2);
+                jsonObjects.add(jo);
             }
-            JSONObject jo = this.convert(quDuanInfoTypesPropertyEntities, quDuanInfoEntityV2);
-            jsonObjects.add(jo);
         }
         return jsonObjects;
+    }
+
+
+    public JSONObject findNullProperties(Integer czId) {
+        List<QuDuanInfoTypesPropertyEntity> quDuanInfoTypesPropertyEntities = this.findPropertiesByCzId(czId);
+        return convert(quDuanInfoTypesPropertyEntities, new QuDuanInfoEntityV2());
+    }
+
+    public List<QuDuanInfoTypesPropertyEntity> findPropertiesByCzId(Integer czId) {
+        //读取车站配置，根据配置读取不同的属性
+        List<Integer> types = new ArrayList<>();
+        CheZhanEntity cheZhanEntity = cheZhanService.findByczId(czId);
+        if (cheZhanEntity != null) {
+            if (cheZhanEntity.getTongxinbianmaguidaonumber() != null && cheZhanEntity.getTongxinbianmaguidaonumber() > 0)
+                types.add(1);
+            if (cheZhanEntity.getTongxinbianmazhanneioneguidaonumber() != null && cheZhanEntity.getTongxinbianmazhanneioneguidaonumber() > 0)
+                types.add(2);
+            if (cheZhanEntity.getJidianonetooneguidaonumber() != null && cheZhanEntity.getJidianonetooneguidaonumber() > 0)
+                types.add(3);
+            if (cheZhanEntity.getJidianntooneguidaonumber() != null && cheZhanEntity.getJidianntooneguidaonumber() > 0)
+                types.add(4);
+            if (cheZhanEntity.getJidianntooneshebeinumber() != null && cheZhanEntity.getJidianntooneshebeinumber() > 0)
+                types.add(5);
+            if (cheZhanEntity.getTongxinbianmadianmahuashebeinumber() != null && cheZhanEntity.getTongxinbianmadianmahuashebeinumber() > 0)
+                types.add(6);
+            if (cheZhanEntity.getJidianntoonedianmahuashebeinumber() != null && cheZhanEntity.getJidianntoonedianmahuashebeinumber() > 0)
+                types.add(7);
+            if (cheZhanEntity.getJidianjiashiguidaonumber() != null && cheZhanEntity.getJidianjiashiguidaonumber() > 0)
+                types.add(8);
+            if (cheZhanEntity.getJidianjiashidianmahuashebeinumber() != null && cheZhanEntity.getJidianjiashidianmahuashebeinumber() > 0)
+                types.add(9);
+            if (cheZhanEntity.getJiDianDianMaHuaNumber() != null && cheZhanEntity.getJiDianDianMaHuaNumber() > 0)
+                types.add(10);
+        }
+        String type = quDuanInfoTypesPropertyService.countByType(types);
+        return quDuanInfoTypesPropertyService.connectFindByCondition(type);
     }
 
 
