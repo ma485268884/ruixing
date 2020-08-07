@@ -65,7 +65,9 @@
             cz_id,
             qdid,
             zongHe_id,
-            quDuanYunYing_name
+            quDuanYunYing_name,
+            dianMaHuaGuiHao,
+            guiNeiDiZhi
         FROM
             mro_quduan_base
         WHERE
