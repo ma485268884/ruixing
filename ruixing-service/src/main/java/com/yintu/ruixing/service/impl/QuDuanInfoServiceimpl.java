@@ -100,6 +100,7 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         return convert(quDuanInfoTypesPropertyEntities, new QuDuanInfoEntityV2());
     }
 
+
     public List<QuDuanInfoTypesPropertyEntity> findPropertiesByCzId(Integer czId) {
         //读取车站配置，根据配置读取不同的属性
         List<Integer> types = new ArrayList<>();
