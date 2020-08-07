@@ -150,7 +150,7 @@ public class QuDuanInfoController extends SessionController {
     @GetMapping("/properties")
     public Map<String, Object> findNullProperties(@RequestParam("czId") Integer czId) {
         JSONObject jsonObjects = quDuanInfoService.findNullProperties(czId);
-        return ResponseDataUtil.ok("查询区段详情成功", jsonObjects);
+        return ResponseDataUtil.ok("查询区段属性成功", jsonObjects);
     }
 
 

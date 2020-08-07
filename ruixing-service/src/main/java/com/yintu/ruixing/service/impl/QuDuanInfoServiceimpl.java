@@ -154,11 +154,11 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
                     jsonObject.put("column", 1);
                     break;
                 case 3:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getGjcollection());
+                    jsonObject.put("propertyV", quDuanInfoEntityV2.getGjcollection() == null ? null : quDuanInfoEntityV2.getGjcollection().equals("10") ? "落下" : quDuanInfoEntityV2.getGjcollection().equals("1") ? "吸起" : "无效");
                     jsonObject.put("column", 1);
                     break;
                 case 4:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getDjcollection());
+                    jsonObject.put("propertyV", quDuanInfoEntityV2.getDjcollection() == null ? null : quDuanInfoEntityV2.getDjcollection().equals("10") ? "落下" : quDuanInfoEntityV2.getDjcollection().equals("1") ? "吸起" : "无效");
                     jsonObject.put("column", 1);
                     break;
                 case 5:
@@ -198,15 +198,15 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
                     break;
                 case 10:
                     JSONArray jsonArray10 = new JSONArray();
-                    jsonArray10.add(quDuanInfoEntityV2.getFbjDriveZhu());
-                    jsonArray10.add(quDuanInfoEntityV2.getFbjDriveBei());
+                    jsonArray10.add(quDuanInfoEntityV2.getFbjDriveZhu() == null ? null : quDuanInfoEntityV2.getFbjDriveZhu() == 1 ? "正常" : quDuanInfoEntityV2.getFbjDriveZhu() == 2 ? "无" : "无效");
+                    jsonArray10.add(quDuanInfoEntityV2.getFbjDriveBei() == null ? null : quDuanInfoEntityV2.getFbjDriveZhu() == 1 ? "正常" : quDuanInfoEntityV2.getFbjDriveBei() == 2 ? "无" : "无效");
                     jsonObject.put("propertyV", jsonArray10);
                     jsonObject.put("column", 2);
                     break;
                 case 11:
                     JSONArray jsonArray11 = new JSONArray();
-                    jsonArray11.add(quDuanInfoEntityV2.getFbjCollectionZhu());
-                    jsonArray11.add(quDuanInfoEntityV2.getFbjCollectionBei());
+                    jsonArray11.add(quDuanInfoEntityV2.getFbjCollectionZhu() == null ? null : quDuanInfoEntityV2.getFbjCollectionZhu().equals("10") ? "落下" : quDuanInfoEntityV2.getFbjCollectionZhu().equals("1") ? "吸起" : "无效");
+                    jsonArray11.add(quDuanInfoEntityV2.getFbjCollectionBei() == null ? null : quDuanInfoEntityV2.getFbjCollectionBei().equals("10") ? "落下" : quDuanInfoEntityV2.getFbjCollectionBei().equals("1") ? "吸起" : "无效");
                     jsonObject.put("propertyV", jsonArray11);
                     jsonObject.put("column", 2);
                     break;
@@ -257,22 +257,22 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
                     break;
                 case 21:
                     JSONArray jsonArray21 = new JSONArray();
-                    jsonArray21.add(quDuanInfoEntityV2.getGjDriveZhu());
-                    jsonArray21.add(quDuanInfoEntityV2.getGjDriveBing());
+                    jsonArray21.add(quDuanInfoEntityV2.getGjDriveZhu() == null ? null : quDuanInfoEntityV2.getGjDriveZhu() == 1 ? "正常" : quDuanInfoEntityV2.getGjDriveZhu() == 2 ? "无" : "无效");
+                    jsonArray21.add(quDuanInfoEntityV2.getGjDriveBing() == null ? null : quDuanInfoEntityV2.getGjDriveBing() == 1 ? "正常" : quDuanInfoEntityV2.getGjDriveBing() == 2 ? "无" : "无效");
                     jsonObject.put("propertyV", jsonArray21);
                     jsonObject.put("column", 4);
                     break;
                 case 22:
                     JSONArray jsonArray22 = new JSONArray();
-                    jsonArray22.add(quDuanInfoEntityV2.getGjRearCollectionZhu());
-                    jsonArray22.add(quDuanInfoEntityV2.getGjRearCollectionBing());
+                    jsonArray22.add(null == quDuanInfoEntityV2.getGjRearCollectionZhu());
+                    jsonArray22.add(null == quDuanInfoEntityV2.getGjRearCollectionBing());
                     jsonObject.put("propertyV", jsonArray22);
                     jsonObject.put("column", 4);
                     break;
                 case 23:
                     JSONArray jsonArray23 = new JSONArray();
-                    jsonArray23.add(quDuanInfoEntityV2.getBaojingZhu());
-                    jsonArray23.add(quDuanInfoEntityV2.getBaojingBing());
+                    jsonArray23.add(null == quDuanInfoEntityV2.getBaojingZhu() ? null : quDuanInfoEntityV2.getBaojingZhu() == 1 ? "正常" : quDuanInfoEntityV2.getBaojingZhu() == 2 ? "报警" : "无效");
+                    jsonArray23.add(null == quDuanInfoEntityV2.getBaojingBing() ? null : quDuanInfoEntityV2.getBaojingBing() == 1 ? "正常" : quDuanInfoEntityV2.getBaojingZhu() == 2 ? "报警" : "无效");
                     jsonObject.put("propertyV", jsonArray23);
                     jsonObject.put("column", 4);
                     break;
@@ -414,7 +414,7 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
     }
 
     /**
-     * 充当属性类表表
+     * 充当属性类别表
      *
      * @param types 类别id
      * @return
