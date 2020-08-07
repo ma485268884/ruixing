@@ -15,4 +15,6 @@ public class QuDuanInfoPropertyEntity implements Serializable {
 
     private String name;
 
+    private Short type;
+
 }

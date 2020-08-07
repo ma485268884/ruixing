@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.CheZhanEntity;
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntityV2;
@@ -104,6 +105,12 @@ public class QuDuanInfoController extends SessionController {
         return ResponseDataUtil.ok("查询实时报表成功", pageInfo);
     }
 
+    @GetMapping("/properties/tree")
+    public Map<String, Object> findByCzId(@RequestParam("czId") Integer czId) {
+        List<TreeNodeUtil> treeNodeUtils = quDuanInfoService.findPropertiesTree(czId);
+        return ResponseDataUtil.ok("查询实时报表属性树成功", treeNodeUtils);
+    }
+
     /**
      * 日报表
      *
@@ -143,7 +150,7 @@ public class QuDuanInfoController extends SessionController {
     @GetMapping("/properties")
     public Map<String, Object> findNullProperties(@RequestParam("czId") Integer czId) {
         JSONObject jsonObjects = quDuanInfoService.findNullProperties(czId);
-        return ResponseDataUtil.ok("查询区段详情成功", jsonObjects);
+        return ResponseDataUtil.ok("查询区段属性成功", jsonObjects);
     }
 
 

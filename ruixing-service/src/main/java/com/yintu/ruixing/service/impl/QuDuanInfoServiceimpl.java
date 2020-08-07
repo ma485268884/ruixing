@@ -3,12 +3,10 @@ package com.yintu.ruixing.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.common.util.StringUtil;
+import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.QuDuanInfoDaoV2;
 import com.yintu.ruixing.entity.*;
-import com.yintu.ruixing.service.CheZhanService;
-import com.yintu.ruixing.service.DataStatsService;
-import com.yintu.ruixing.service.QuDuanBaseService;
-import com.yintu.ruixing.service.QuDuanInfoService;
+import com.yintu.ruixing.service.*;
 import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +20,8 @@ import java.util.*;
  */
 @Service
 public class QuDuanInfoServiceimpl implements QuDuanInfoService {
-
+    @Autowired
+    private CheZhanService cheZhanService;
     @Autowired
     private QuDuanInfoDaoV2 quDuanInfoDaoV2;
 
@@ -33,7 +32,7 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
     private QuDuanInfoTypesPropertyServiceImpl quDuanInfoTypesPropertyService;
 
     @Autowired
-    private CheZhanService cheZhanService;
+    private QuDuanInfoPropertyService quDuanInfoPropertyService;
 
 
     @Override
@@ -155,11 +154,11 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
                     jsonObject.put("column", 1);
                     break;
                 case 3:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getGjcollection());
+                    jsonObject.put("propertyV", quDuanInfoEntityV2.getGjcollection() == null ? null : quDuanInfoEntityV2.getGjcollection().equals("10") ? "落下" : quDuanInfoEntityV2.getGjcollection().equals("1") ? "吸起" : "无效");
                     jsonObject.put("column", 1);
                     break;
                 case 4:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getDjcollection());
+                    jsonObject.put("propertyV", quDuanInfoEntityV2.getDjcollection() == null ? null : quDuanInfoEntityV2.getDjcollection().equals("10") ? "落下" : quDuanInfoEntityV2.getDjcollection().equals("1") ? "吸起" : "无效");
                     jsonObject.put("column", 1);
                     break;
                 case 5:
@@ -199,15 +198,15 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
                     break;
                 case 10:
                     JSONArray jsonArray10 = new JSONArray();
-                    jsonArray10.add(quDuanInfoEntityV2.getFbjDriveZhu());
-                    jsonArray10.add(quDuanInfoEntityV2.getFbjDriveBei());
+                    jsonArray10.add(quDuanInfoEntityV2.getFbjDriveZhu() == null ? null : quDuanInfoEntityV2.getFbjDriveZhu() == 1 ? "正常" : quDuanInfoEntityV2.getFbjDriveZhu() == 2 ? "无" : "无效");
+                    jsonArray10.add(quDuanInfoEntityV2.getFbjDriveBei() == null ? null : quDuanInfoEntityV2.getFbjDriveZhu() == 1 ? "正常" : quDuanInfoEntityV2.getFbjDriveBei() == 2 ? "无" : "无效");
                     jsonObject.put("propertyV", jsonArray10);
                     jsonObject.put("column", 2);
                     break;
                 case 11:
                     JSONArray jsonArray11 = new JSONArray();
-                    jsonArray11.add(quDuanInfoEntityV2.getFbjCollectionZhu());
-                    jsonArray11.add(quDuanInfoEntityV2.getFbjCollectionBei());
+                    jsonArray11.add(quDuanInfoEntityV2.getFbjCollectionZhu() == null ? null : quDuanInfoEntityV2.getFbjCollectionZhu().equals("10") ? "落下" : quDuanInfoEntityV2.getFbjCollectionZhu().equals("1") ? "吸起" : "无效");
+                    jsonArray11.add(quDuanInfoEntityV2.getFbjCollectionBei() == null ? null : quDuanInfoEntityV2.getFbjCollectionBei().equals("10") ? "落下" : quDuanInfoEntityV2.getFbjCollectionBei().equals("1") ? "吸起" : "无效");
                     jsonObject.put("propertyV", jsonArray11);
                     jsonObject.put("column", 2);
                     break;
@@ -258,22 +257,22 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
                     break;
                 case 21:
                     JSONArray jsonArray21 = new JSONArray();
-                    jsonArray21.add(quDuanInfoEntityV2.getGjDriveZhu());
-                    jsonArray21.add(quDuanInfoEntityV2.getGjDriveBing());
+                    jsonArray21.add(quDuanInfoEntityV2.getGjDriveZhu() == null ? null : quDuanInfoEntityV2.getGjDriveZhu() == 1 ? "正常" : quDuanInfoEntityV2.getGjDriveZhu() == 2 ? "无" : "无效");
+                    jsonArray21.add(quDuanInfoEntityV2.getGjDriveBing() == null ? null : quDuanInfoEntityV2.getGjDriveBing() == 1 ? "正常" : quDuanInfoEntityV2.getGjDriveBing() == 2 ? "无" : "无效");
                     jsonObject.put("propertyV", jsonArray21);
                     jsonObject.put("column", 4);
                     break;
                 case 22:
                     JSONArray jsonArray22 = new JSONArray();
-                    jsonArray22.add(quDuanInfoEntityV2.getGjRearCollectionZhu());
-                    jsonArray22.add(quDuanInfoEntityV2.getGjRearCollectionBing());
+                    jsonArray22.add(null == quDuanInfoEntityV2.getGjRearCollectionZhu());
+                    jsonArray22.add(null == quDuanInfoEntityV2.getGjRearCollectionBing());
                     jsonObject.put("propertyV", jsonArray22);
                     jsonObject.put("column", 4);
                     break;
                 case 23:
                     JSONArray jsonArray23 = new JSONArray();
-                    jsonArray23.add(quDuanInfoEntityV2.getBaojingZhu());
-                    jsonArray23.add(quDuanInfoEntityV2.getBaojingBing());
+                    jsonArray23.add(null == quDuanInfoEntityV2.getBaojingZhu() ? null : quDuanInfoEntityV2.getBaojingZhu() == 1 ? "正常" : quDuanInfoEntityV2.getBaojingZhu() == 2 ? "报警" : "无效");
+                    jsonArray23.add(null == quDuanInfoEntityV2.getBaojingBing() ? null : quDuanInfoEntityV2.getBaojingBing() == 1 ? "正常" : quDuanInfoEntityV2.getBaojingZhu() == 2 ? "报警" : "无效");
                     jsonObject.put("propertyV", jsonArray23);
                     jsonObject.put("column", 4);
                     break;
@@ -389,4 +388,93 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         jo.put("properties", jsonArray);
         return jo;
     }
+
+    @Override
+    public List<TreeNodeUtil> findPropertiesTree(Integer czId) {
+        List<QuDuanInfoTypesPropertyEntity> quDuanInfoTypesPropertyEntities = this.findPropertiesByCzId(czId);
+        Set<Integer> types = new HashSet<>();
+        for (QuDuanInfoTypesPropertyEntity quDuanInfoTypesPropertyEntity : quDuanInfoTypesPropertyEntities) {
+            Short type = quDuanInfoTypesPropertyEntity.getQuDuanInfoPropertyEntity().getType();
+            if (type != null)
+                types.add(type.intValue());
+        }
+        List<TreeNodeUtil> treeNodeUtils = this.findByTypes(types);
+        for (TreeNodeUtil treeNodeUtil : treeNodeUtils) {
+            List<QuDuanInfoPropertyEntity> quDuanInfoPropertyEntities = quDuanInfoPropertyService.findByType(treeNodeUtil.getId().shortValue());
+            List<TreeNodeUtil> trees = new ArrayList<>();
+            for (QuDuanInfoPropertyEntity quDuanInfoPropertyEntity : quDuanInfoPropertyEntities) {
+                TreeNodeUtil tree = new TreeNodeUtil();
+                tree.setId(quDuanInfoPropertyEntity.getId().longValue());
+                tree.setLabel(quDuanInfoPropertyEntity.getName());
+                trees.add(tree);
+            }
+            treeNodeUtil.setChildren(trees);
+        }
+        return treeNodeUtils;
+    }
+
+    /**
+     * 充当属性类别表
+     *
+     * @param types 类别id
+     * @return
+     */
+    public List<TreeNodeUtil> findByTypes(Set<Integer> types) {
+        List<TreeNodeUtil> treeNodeUtils = new ArrayList<>();
+        for (int i = 0; i < types.size(); i++) {
+            long id = i + 1;
+            switch (i) {
+                case 0:
+                    TreeNodeUtil treeNodeUtil0 = new TreeNodeUtil();
+                    treeNodeUtil0.setId(id);
+                    treeNodeUtil0.setLabel("发送设备数据");
+                    treeNodeUtils.add(treeNodeUtil0);
+                    break;
+                case 1:
+                    TreeNodeUtil treeNodeUtil1 = new TreeNodeUtil();
+                    treeNodeUtil1.setId(id);
+                    treeNodeUtil1.setLabel("送端模拟电缆数据");
+                    treeNodeUtils.add(treeNodeUtil1);
+                    break;
+                case 2:
+                    TreeNodeUtil treeNodeUtil2 = new TreeNodeUtil();
+                    treeNodeUtil2.setId(id);
+                    treeNodeUtil2.setLabel("受端模拟电缆数据");
+                    treeNodeUtils.add(treeNodeUtil2);
+                    break;
+                case 3:
+                    TreeNodeUtil treeNodeUtil3 = new TreeNodeUtil();
+                    treeNodeUtil3.setId(id);
+                    treeNodeUtil3.setLabel("接收设备数据");
+                    treeNodeUtils.add(treeNodeUtil3);
+                    break;
+                case 4:
+                    TreeNodeUtil treeNodeUtil4 = new TreeNodeUtil();
+                    treeNodeUtil4.setId(id);
+                    treeNodeUtil4.setLabel("FBP采集数据");
+                    treeNodeUtils.add(treeNodeUtil4);
+                    break;
+                case 5:
+                    TreeNodeUtil treeNodeUtil5 = new TreeNodeUtil();
+                    treeNodeUtil5.setId(id);
+                    treeNodeUtil5.setLabel("FBA采集数据");
+                    treeNodeUtils.add(treeNodeUtil5);
+                    break;
+                case 6:
+                    TreeNodeUtil treeNodeUtil6 = new TreeNodeUtil();
+                    treeNodeUtil6.setId(id);
+                    treeNodeUtil6.setLabel("JBA采集数据");
+                    treeNodeUtils.add(treeNodeUtil6);
+                    break;
+                case 7:
+                    TreeNodeUtil treeNodeUtil7 = new TreeNodeUtil();
+                    treeNodeUtil7.setId(id);
+                    treeNodeUtil7.setLabel("JBP采集数据");
+                    treeNodeUtils.add(treeNodeUtil7);
+                    break;
+            }
+        }
+        return treeNodeUtils;
+    }
+
 }

@@ -75,12 +75,13 @@
         <association column="property_id" property="quDuanInfoPropertyEntity">
             <id column="qip_id" jdbcType="INTEGER" property="id"/>
             <result column="name" jdbcType="VARCHAR" property="name"/>
+            <result column="type" jdbcType="SMALLINT" property="type"/>
         </association>
     </resultMap>
 
     <sql id="Connect_Column_List">
         qitp.id as qitp_id , types, property_id,
-        qip.id as qip_id, name
+        qip.id as qip_id, name,type
     </sql>
     <sql id="Connect_Table_List">
         mro_quduan_info_types_property qitp
