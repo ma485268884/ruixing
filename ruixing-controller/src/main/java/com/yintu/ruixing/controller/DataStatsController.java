@@ -58,11 +58,11 @@ public class DataStatsController {
                     if (!strings[0].equals("") || !strings[1].equals("") || !strings[2].equals("") || !strings[3].equals("") || !strings[4].equals("") || !strings[5].equals("")) {
                         if (strings[5].equals("下行") || strings[5].equals("上行") ||
                                 strings[5].equals("——") || strings[5].equals("") ||
-                                strings[6].equals("接近") || strings[6].equals("离去")||
+                                strings[6].equals("接近") || strings[6].equals("离去") ||
                                 strings[6].equals("——") || strings[6].equals("")) {
                             String[] strings1 = strings;
                             datas.add(strings1);
-                        }else {
+                        } else {
                             return ResponseDataUtil.error("请选择正确的Excel数据");
                         }
                     }
@@ -100,16 +100,16 @@ public class DataStatsController {
                 String ofxianduan = strings[4];
                 String xingbie = strings[5];
                 String type = strings[6];
-                //System.out.println("11111111111");
+                System.out.println("11111111111");
                 String qdid1 = strings[7];
                 String zongheid = strings[8];
                 String quduanshejiname = strings[9];
                 String qudunyunyingname = strings[10];
-                    String quduanlength = strings[11];
+                String quduanlength = strings[11];
                 String carrier = strings[12];
                 String diduantype = strings[13];
                 String xianluqingkuang = strings[14];
-                //System.out.println("2222222222222");
+                System.out.println("2222222222222");
                 String bianjie = strings[15];
                 String fenjiedianwhere = strings[16];
                 String zhanqufenjie = strings[17];
@@ -119,27 +119,27 @@ public class DataStatsController {
                 String xinhaojiewhere = strings[21];
                 String zuocejueyuantype = strings[22];
                 String youcejueyuantype = strings[23];
-                //System.out.println("33333333333333333");
+                System.out.println("33333333333333333");
                 String zhengxianhoufangquduanid = strings[24];
                 String zhengxianqianfangquduanid = strings[25];
                 String daochaguanlianquduan1id = strings[26];
                 String daochaguanlianquduan2id = strings[27];
                 String dianmahuaguidao = strings[28];
                 String guineidizhi = strings[29];
-                //System.out.println("44444444444444444");
+                System.out.println("44444444444444444");
                 Long cid = dataStatsService.findchezhanid(Long.parseLong(czid1));//根据车站专用czid  查询对应的id
-                //System.out.println("55555555555555555");
+                System.out.println("55555555555555555");
                 Integer lastParentid = dataStatsService.findLastParentid();
                 QuDuanBaseEntity quDuanBaseEntity = new QuDuanBaseEntity();
                 quDuanBaseEntity.setCzid(Integer.parseInt(czid1));
                 quDuanBaseEntity.setParentId(lastParentid);
-                //System.out.println("666666666666666666");
+                System.out.println("666666666666666666");
                 Integer xdid = dataStatsService.findxianduanid(Long.parseLong(czid1));
                 quDuanBaseEntity.setXid(xdid);
                 quDuanBaseEntity.setCid(Integer.parseInt(cid.toString()));
                 quDuanBaseEntity.setQdid(Integer.parseInt(qdid1));
                 quDuanBaseEntity.setLine(line);
-                //System.out.println("77777777777777777");
+                System.out.println("77777777777777777");
                 quDuanBaseEntity.setOfXianDuan(ofxianduan);
                 quDuanBaseEntity.setLeftRight(leftright);
                 if (xingbie.equals("上行")) {
@@ -168,7 +168,7 @@ public class DataStatsController {
                 } else {
                     quDuanBaseEntity.setQuduanLength(Integer.parseInt(quduanlength));
                 }
-                //System.out.println("888888888888888888");
+                System.out.println("888888888888888888");
                 quDuanBaseEntity.setCarrier(carrier);
                 quDuanBaseEntity.setDiduanType(diduantype);
                 quDuanBaseEntity.setXianluqingkuang(xianluqingkuang);
@@ -178,7 +178,7 @@ public class DataStatsController {
                     quDuanBaseEntity.setBianjie(1);
                 }
                 quDuanBaseEntity.setFenjiedianWhere(fenjiedianwhere);
-                // System.out.println("99999999999999999");
+                System.out.println("99999999999999999");
                 if (zhanqufenjie.equals("") || zhanqufenjie.equals("否")) {
                     quDuanBaseEntity.setZhanqufenjie(0);
                 } else {
@@ -190,10 +190,10 @@ public class DataStatsController {
                 quDuanBaseEntity.setXinhaojiWhere(xinhaojiewhere);
                 quDuanBaseEntity.setZuocejueyuanType(zuocejueyuantype);
                 quDuanBaseEntity.setYoucejueyuanType(youcejueyuantype);
-                //System.out.println("111111112222222222222");
+                System.out.println("111111112222222222222");
                 quDuanBaseEntity.setZhengxianhoufangquduanId(zhengxianhoufangquduanid);
                 quDuanBaseEntity.setZhengxianqianfangquduanId(zhengxianqianfangquduanid);
-                //System.out.println("123");
+                System.out.println("123");
                 quDuanBaseEntity.setDaochaguanlianquduan1Id(daochaguanlianquduan1id);
                 quDuanBaseEntity.setDaochaguanlianquduan2Id(daochaguanlianquduan2id);
                 System.out.println("456");
@@ -376,10 +376,10 @@ public class DataStatsController {
                                 && Integer.valueOf(strings[7]).getClass().getTypeName().equals("java.lang.Integer")
                                 && Integer.valueOf(strings[11]).getClass().getTypeName().equals("java.lang.Integer")
                                 && Integer.valueOf(strings[12]).getClass().getTypeName().equals("java.lang.Integer")
-                                && Integer.valueOf(strings[13]).getClass().getTypeName().equals("java.lang.Integer")){
+                                && Integer.valueOf(strings[13]).getClass().getTypeName().equals("java.lang.Integer")) {
                             String[] strings1 = strings;
                             datas.add(strings1);
-                        }else {
+                        } else {
                             return ResponseDataUtil.error("请选择正确的Excel数据");
                         }
                     }
@@ -460,7 +460,7 @@ public class DataStatsController {
                 String jidianNtoOneDianMaHuaNumber = strings[17];
                 String jidianJiashiGuidaoNumber = strings[18];
                 String jidianJiashiDianmahuaNumber = strings[19];
-                String jiDianDianMaHuaNumber =strings[20];
+                String jiDianDianMaHuaNumber = strings[20];
                 String yuliushebei1 = strings[21];
                 String yuliushebei2 = strings[22];
                 String yuliushebei3 = strings[23];
@@ -918,14 +918,15 @@ public class DataStatsController {
 
     //根据车站id  查询对应的电码化数据
     @GetMapping("/findDianMaHuaByCid/{cid}")
-    public Map<String,Object>findDianMaHuaByCid(@PathVariable Integer cid){
-        List<QuDuanBaseEntity> dianMaHuaList=dataStatsService.findDianMaHuaByCid(cid);
-        if (dianMaHuaList.size()==0){
+    public Map<String, Object> findDianMaHuaByCid(@PathVariable Integer cid) {
+        List<QuDuanBaseEntity> dianMaHuaList = dataStatsService.findDianMaHuaByCid(cid);
+        if (dianMaHuaList.size() == 0) {
             return ResponseDataUtil.ok("此车站无电码化");
-        }else {
-            return ResponseDataUtil.ok("查询电码化成功",dianMaHuaList);
+        } else {
+            return ResponseDataUtil.ok("查询电码化成功", dianMaHuaList);
         }
     }
+
     //新增线段配置 根据线段xid 查询此线段下的所有车站数据
     @GetMapping("/findSomeCheZhanByXid/{xid}")
     public Map<String, Object> findSomeCheZhanByXid(@PathVariable Integer xid) {
@@ -1088,75 +1089,75 @@ public class DataStatsController {
 
     //根据铁路局tid 查询此铁路局下所有的区段
     @GetMapping("/findQuDuanByTid/{tid}")
-    public Map<String,Object>findQuDuanByTid(@PathVariable Integer tid,Integer page,Integer size){
-        PageHelper.startPage(page,size);
-        List<QuDuanBaseEntity> quDuanBaseEntityList=dataStatsService.findQuDuanByTid(tid,page,size);
-        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo=new PageInfo<>(quDuanBaseEntityList);
-        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功",quDuanBaseEntityPageInfo);
+    public Map<String, Object> findQuDuanByTid(@PathVariable Integer tid, Integer page, Integer size) {
+        PageHelper.startPage(page, size);
+        List<QuDuanBaseEntity> quDuanBaseEntityList = dataStatsService.findQuDuanByTid(tid, page, size);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo = new PageInfo<>(quDuanBaseEntityList);
+        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功", quDuanBaseEntityPageInfo);
     }
 
     //根据电务段Did 查询此电务段下所有的区段
     @GetMapping("/findQuDuanByDid/{did}")
-    public Map<String,Object>findQuDuanByDid(@PathVariable Integer did,Integer page,Integer size){
-        PageHelper.startPage(page,size);
-        List<QuDuanBaseEntity> quDuanBaseEntityList=dataStatsService.findQuDuanByDid(did,page,size);
-        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo=new PageInfo<>(quDuanBaseEntityList);
-        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功",quDuanBaseEntityPageInfo);
+    public Map<String, Object> findQuDuanByDid(@PathVariable Integer did, Integer page, Integer size) {
+        PageHelper.startPage(page, size);
+        List<QuDuanBaseEntity> quDuanBaseEntityList = dataStatsService.findQuDuanByDid(did, page, size);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo = new PageInfo<>(quDuanBaseEntityList);
+        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功", quDuanBaseEntityPageInfo);
     }
 
     //根据线段Xid 查询此线段下所有的区段
     @GetMapping("/findQuDuanByXid/{xid}")
-    public Map<String,Object>findQuDuanByXid(@PathVariable Integer xid,Integer page,Integer size){
-        PageHelper.startPage(page,size);
-        List<QuDuanBaseEntity> quDuanBaseEntityList=dataStatsService.findQuDuanByXid(xid,page,size);
-        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo=new PageInfo<>(quDuanBaseEntityList);
-        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功",quDuanBaseEntityPageInfo);
+    public Map<String, Object> findQuDuanByXid(@PathVariable Integer xid, Integer page, Integer size) {
+        PageHelper.startPage(page, size);
+        List<QuDuanBaseEntity> quDuanBaseEntityList = dataStatsService.findQuDuanByXid(xid, page, size);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo = new PageInfo<>(quDuanBaseEntityList);
+        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功", quDuanBaseEntityPageInfo);
     }
 
     //根据车站Cid 查询此车站下所有的区段
     @GetMapping("/findQuDuanBycid/{cid}")
-    public Map<String,Object>findQuDuanBycid(@PathVariable Integer cid,Integer page,Integer size){
-        PageHelper.startPage(page,size);
-        List<QuDuanBaseEntity> quDuanBaseEntityList=dataStatsService.findQuDuanBycid(cid,page,size);
-        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo=new PageInfo<>(quDuanBaseEntityList);
-        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功",quDuanBaseEntityPageInfo);
+    public Map<String, Object> findQuDuanBycid(@PathVariable Integer cid, Integer page, Integer size) {
+        PageHelper.startPage(page, size);
+        List<QuDuanBaseEntity> quDuanBaseEntityList = dataStatsService.findQuDuanBycid(cid, page, size);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo = new PageInfo<>(quDuanBaseEntityList);
+        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功", quDuanBaseEntityPageInfo);
     }
 
 
     //根据铁路局tid 查询此铁路局下所有的电码化区段
     @GetMapping("/findDianMaHuaByTid/{tid}")
-    public Map<String,Object>findDianMaHuaByTid(@PathVariable Integer tid,Integer page,Integer size){
-        PageHelper.startPage(page,size);
-        List<QuDuanBaseEntity> quDuanBaseEntityList=dataStatsService.findDianMaHuaByTid(tid,page,size);
-        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo=new PageInfo<>(quDuanBaseEntityList);
-        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功",quDuanBaseEntityPageInfo);
+    public Map<String, Object> findDianMaHuaByTid(@PathVariable Integer tid, Integer page, Integer size) {
+        PageHelper.startPage(page, size);
+        List<QuDuanBaseEntity> quDuanBaseEntityList = dataStatsService.findDianMaHuaByTid(tid, page, size);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo = new PageInfo<>(quDuanBaseEntityList);
+        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功", quDuanBaseEntityPageInfo);
     }
 
     //根据电务段Did 查询此电务段下所有的电码化区段
     @GetMapping("/findDianMaHuaByDid/{did}")
-    public Map<String,Object>findDianMaHuaByDid(@PathVariable Integer did,Integer page,Integer size){
-        PageHelper.startPage(page,size);
-        List<QuDuanBaseEntity> quDuanBaseEntityList=dataStatsService.findDianMaHuaByDid(did,page,size);
-        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo=new PageInfo<>(quDuanBaseEntityList);
-        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功",quDuanBaseEntityPageInfo);
+    public Map<String, Object> findDianMaHuaByDid(@PathVariable Integer did, Integer page, Integer size) {
+        PageHelper.startPage(page, size);
+        List<QuDuanBaseEntity> quDuanBaseEntityList = dataStatsService.findDianMaHuaByDid(did, page, size);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo = new PageInfo<>(quDuanBaseEntityList);
+        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功", quDuanBaseEntityPageInfo);
     }
 
     //根据线段Xid 查询此线段下所有的电码化区段
     @GetMapping("/findDianMaHuaByXid/{xid}")
-    public Map<String,Object>findDianMaHuaByXid(@PathVariable Integer xid,Integer page,Integer size){
-        PageHelper.startPage(page,size);
-        List<QuDuanBaseEntity> quDuanBaseEntityList=dataStatsService.findDianMaHuaByXid(xid,page,size);
-        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo=new PageInfo<>(quDuanBaseEntityList);
-        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功",quDuanBaseEntityPageInfo);
+    public Map<String, Object> findDianMaHuaByXid(@PathVariable Integer xid, Integer page, Integer size) {
+        PageHelper.startPage(page, size);
+        List<QuDuanBaseEntity> quDuanBaseEntityList = dataStatsService.findDianMaHuaByXid(xid, page, size);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo = new PageInfo<>(quDuanBaseEntityList);
+        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功", quDuanBaseEntityPageInfo);
     }
 
     //根据车站Cid 查询此车站下所有的电码化区段
     @GetMapping("/findDianMaHuaBycid/{cid}")
-    public Map<String,Object>findDianMaHuaBycid(@PathVariable Integer cid,Integer page,Integer size){
-        PageHelper.startPage(page,size);
-        List<QuDuanBaseEntity> quDuanBaseEntityList=dataStatsService.findDianMaHuaBycid(cid,page,size);
-        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo=new PageInfo<>(quDuanBaseEntityList);
-        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功",quDuanBaseEntityPageInfo);
+    public Map<String, Object> findDianMaHuaBycid(@PathVariable Integer cid, Integer page, Integer size) {
+        PageHelper.startPage(page, size);
+        List<QuDuanBaseEntity> quDuanBaseEntityList = dataStatsService.findDianMaHuaBycid(cid, page, size);
+        PageInfo<QuDuanBaseEntity> quDuanBaseEntityPageInfo = new PageInfo<>(quDuanBaseEntityList);
+        return ResponseDataUtil.ok("查询铁路局下所有的区段数据成功", quDuanBaseEntityPageInfo);
     }
 
 

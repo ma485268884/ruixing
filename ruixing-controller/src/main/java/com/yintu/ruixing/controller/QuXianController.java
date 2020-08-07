@@ -466,7 +466,7 @@ public class QuXianController {
 
 
     public static void main(String[] args) {   //1596509890 2020-08-04 10:58:10    1596519568  2020-08-04 13:39:28
-        long value = 1596519568 * 1000L;//1595303879  2020-07-21 11:57:59     1595304033  2020-07-21 12:00:33
+        long value = 1596797215  * 1000L;//1595303879  2020-07-21 11:57:59     1595304033  2020-07-21 12:00:33
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = format.format(new Date(value));
         System.out.println("1" + time);

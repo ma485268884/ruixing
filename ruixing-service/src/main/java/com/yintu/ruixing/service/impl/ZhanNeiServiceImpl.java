@@ -6,6 +6,7 @@ import com.yintu.ruixing.dao.ZhanNeiDao;
 import com.yintu.ruixing.entity.CheZhanEntity;
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntity;
+import com.yintu.ruixing.entity.QuDuanInfoEntityV2;
 import com.yintu.ruixing.service.ZhanNeiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,5 +54,10 @@ public class ZhanNeiServiceImpl implements ZhanNeiService {
     @Override
     public List<CheZhanEntity> findTieLuJuById(Integer page, Integer size) {
         return zhanNeiDao.findAllWangLuoLianJie();
+    }
+
+    @Override
+    public List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZid(Integer czid, long time) {
+        return quDuanInfoDaoV2.findDianMaHuaDatasByCZid(czid,time);
     }
 }

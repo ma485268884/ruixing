@@ -50,4 +50,6 @@ public interface QuDuanInfoDaoV2 {
 
     List<quduanEntity> findQuDuanDatas(@Param("starttime")long starttime, @Param("endtime") long endtime,
                                        @Param("shuxingname") String shuxingname, @Param("quduanname") String quduanname, @Param("qdid") Integer qdid);
+
+    List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZid(@Param("czid") Integer czid,@Param("time") long time);
 }
