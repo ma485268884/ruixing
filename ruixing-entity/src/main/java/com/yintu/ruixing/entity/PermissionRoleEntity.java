@@ -10,8 +10,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PermissionRoleEntity implements Serializable {
-    private static final long serialVersionUID = 7667009621254933740L;
 
+
+    private static final long serialVersionUID = -7242102245855505129L;
     private Long id;
 
     private Long roleId;

@@ -11,7 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PermissionEntity implements Serializable {
-    private static final long serialVersionUID = 7667009621254933756L;
+
+    private static final long serialVersionUID = -2742251652831479682L;
     private Long id;
 
     private Long parentId;
