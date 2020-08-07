@@ -1,6 +1,7 @@
 package com.yintu.ruixing.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
@@ -129,6 +130,10 @@ public class QuDuanInfoController extends SessionController {
     }
 
 
+    /*----------------------------------------------分割线---------------------------------------------------------------
+       ---------------------------------------------v2版本----------------------------------------------------------------
+     */
+
     /**
      * @param czId 车站id
      * @param time 时刻
@@ -150,6 +155,7 @@ public class QuDuanInfoController extends SessionController {
         JSONObject jsonObjects = quDuanInfoService.findNullProperties(czId);
         return ResponseDataUtil.ok("查询区段属性成功", jsonObjects);
     }
+
 
     @GetMapping("/properties/tree")
     public Map<String, Object> findByCzId(@RequestParam("czId") Integer czId) {

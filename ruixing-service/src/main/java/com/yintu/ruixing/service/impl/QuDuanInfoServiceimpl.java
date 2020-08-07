@@ -2,19 +2,16 @@ package com.yintu.ruixing.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.common.util.StringUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.QuDuanInfoDaoV2;
 import com.yintu.ruixing.entity.*;
-import com.yintu.ruixing.service.*;
-import org.omg.CORBA.INTERNAL;
+import com.yintu.ruixing.service.CheZhanService;
+import com.yintu.ruixing.service.QuDuanBaseService;
+import com.yintu.ruixing.service.QuDuanInfoPropertyService;
+import com.yintu.ruixing.service.QuDuanInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Time;
 import java.util.*;
 
 /**
@@ -408,6 +405,7 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
             if (type != null)
                 types.add(type.intValue());
         }
+
         List<TreeNodeUtil> treeNodeUtils = this.findByTypes(types);
         for (TreeNodeUtil treeNodeUtil : treeNodeUtils) {
             List<QuDuanInfoPropertyEntity> quDuanInfoPropertyEntities = quDuanInfoPropertyService.findByType(treeNodeUtil.getId().shortValue());
@@ -432,7 +430,7 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
     public List<TreeNodeUtil> findByTypes(Set<Integer> types) {
         List<TreeNodeUtil> treeNodeUtils = new ArrayList<>();
         for (int i = 0; i < types.size(); i++) {
-            long id = i + 1;
+            long id = i + 1001;
             switch (i) {
                 case 0:
                     TreeNodeUtil treeNodeUtil0 = new TreeNodeUtil();
