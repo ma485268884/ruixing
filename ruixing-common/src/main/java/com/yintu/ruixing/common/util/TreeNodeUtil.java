@@ -72,4 +72,17 @@ public class TreeNodeUtil {
     public void setA_attr(Map<String, Object> a_attr) {
         this.a_attr = a_attr;
     }
+
+    @Override
+    public String toString() {
+        return "TreeNodeUtil{" +
+                "id=" + id +
+                ", label='" + label + '\'' +
+                ", icon='" + icon + '\'' +
+                ", state=" + state +
+                ", children=" + children +
+                ", li_attr=" + li_attr +
+                ", a_attr=" + a_attr +
+                '}';
+    }
 }

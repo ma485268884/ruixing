@@ -68,7 +68,7 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="selectByType" parameterType="java.lang.Short" resultType="BaseResultMap">
+    <select id="selectByType" parameterType="java.lang.Short" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from mro_quduan_info_property

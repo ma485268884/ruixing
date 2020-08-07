@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.CheZhanEntity;
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntityV2;
@@ -102,6 +103,12 @@ public class QuDuanInfoController extends SessionController {
         List<QuDuanInfoEntityV2> quDuanInfoEntities = quDuanInfoService.findByCzIdAndTime(cZid, new Date());
         PageInfo<QuDuanInfoEntityV2> pageInfo = new PageInfo<>(quDuanInfoEntities);
         return ResponseDataUtil.ok("查询实时报表成功", pageInfo);
+    }
+
+    @GetMapping("/properties/tree")
+    public Map<String, Object> findByCzId(@RequestParam("czId") Integer czId) {
+        List<TreeNodeUtil> treeNodeUtils = quDuanInfoService.findPropertiesTree(czId);
+        return ResponseDataUtil.ok("查询实时报表属性树成功", treeNodeUtils);
     }
 
     /**

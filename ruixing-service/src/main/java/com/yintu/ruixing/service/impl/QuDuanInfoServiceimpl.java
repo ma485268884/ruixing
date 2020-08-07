@@ -394,7 +394,9 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         List<QuDuanInfoTypesPropertyEntity> quDuanInfoTypesPropertyEntities = this.findPropertiesByCzId(czId);
         Set<Integer> types = new HashSet<>();
         for (QuDuanInfoTypesPropertyEntity quDuanInfoTypesPropertyEntity : quDuanInfoTypesPropertyEntities) {
-            types.add(quDuanInfoTypesPropertyEntity.getQuDuanInfoPropertyEntity().getId());
+            Short type = quDuanInfoTypesPropertyEntity.getQuDuanInfoPropertyEntity().getType();
+            if (type != null)
+                types.add(type.intValue());
         }
         List<TreeNodeUtil> treeNodeUtils = this.findByTypes(types);
         for (TreeNodeUtil treeNodeUtil : treeNodeUtils) {
@@ -411,6 +413,12 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         return treeNodeUtils;
     }
 
+    /**
+     * 充当属性类表表
+     *
+     * @param types 类别id
+     * @return
+     */
     public List<TreeNodeUtil> findByTypes(Set<Integer> types) {
         List<TreeNodeUtil> treeNodeUtils = new ArrayList<>();
         for (int i = 0; i < types.size(); i++) {

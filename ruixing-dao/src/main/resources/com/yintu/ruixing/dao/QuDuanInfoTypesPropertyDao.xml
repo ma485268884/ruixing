@@ -75,7 +75,7 @@
         <association column="property_id" property="quDuanInfoPropertyEntity">
             <id column="qip_id" jdbcType="INTEGER" property="id"/>
             <result column="name" jdbcType="VARCHAR" property="name"/>
-            <result column="type" jdbcType="SMALLTYPE" property="type"/>
+            <result column="type" jdbcType="SMALLINT" property="type"/>
         </association>
     </resultMap>
 
