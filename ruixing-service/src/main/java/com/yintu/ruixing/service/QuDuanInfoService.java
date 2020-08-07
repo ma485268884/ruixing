@@ -1,6 +1,7 @@
 package com.yintu.ruixing.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.QuDuanInfoEntityV2;
 
 import java.util.Date;
@@ -73,6 +74,15 @@ public interface QuDuanInfoService {
      * @return
      */
     JSONObject findNullProperties(Integer czId);
+
+
+    /**
+     * 实时报表树
+     *
+     * @param czId 车站id
+     * @return
+     */
+    List<TreeNodeUtil> findPropertiesTree(Integer czId);
 
 
 }

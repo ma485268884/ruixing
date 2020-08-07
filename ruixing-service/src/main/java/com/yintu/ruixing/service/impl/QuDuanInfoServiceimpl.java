@@ -3,12 +3,10 @@ package com.yintu.ruixing.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.common.util.StringUtil;
+import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.QuDuanInfoDaoV2;
 import com.yintu.ruixing.entity.*;
-import com.yintu.ruixing.service.CheZhanService;
-import com.yintu.ruixing.service.DataStatsService;
-import com.yintu.ruixing.service.QuDuanBaseService;
-import com.yintu.ruixing.service.QuDuanInfoService;
+import com.yintu.ruixing.service.*;
 import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +20,8 @@ import java.util.*;
  */
 @Service
 public class QuDuanInfoServiceimpl implements QuDuanInfoService {
-
+    @Autowired
+    private CheZhanService cheZhanService;
     @Autowired
     private QuDuanInfoDaoV2 quDuanInfoDaoV2;
 
@@ -33,7 +32,7 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
     private QuDuanInfoTypesPropertyServiceImpl quDuanInfoTypesPropertyService;
 
     @Autowired
-    private CheZhanService cheZhanService;
+    private QuDuanInfoPropertyService quDuanInfoPropertyService;
 
 
     @Override
@@ -389,4 +388,85 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         jo.put("properties", jsonArray);
         return jo;
     }
+
+    @Override
+    public List<TreeNodeUtil> findPropertiesTree(Integer czId) {
+        List<QuDuanInfoTypesPropertyEntity> quDuanInfoTypesPropertyEntities = this.findPropertiesByCzId(czId);
+        Set<Integer> types = new HashSet<>();
+        for (QuDuanInfoTypesPropertyEntity quDuanInfoTypesPropertyEntity : quDuanInfoTypesPropertyEntities) {
+            types.add(quDuanInfoTypesPropertyEntity.getQuDuanInfoPropertyEntity().getId());
+        }
+        List<TreeNodeUtil> treeNodeUtils = this.findByTypes(types);
+        for (TreeNodeUtil treeNodeUtil : treeNodeUtils) {
+            List<QuDuanInfoPropertyEntity> quDuanInfoPropertyEntities = quDuanInfoPropertyService.findByType(treeNodeUtil.getId().shortValue());
+            List<TreeNodeUtil> trees = new ArrayList<>();
+            for (QuDuanInfoPropertyEntity quDuanInfoPropertyEntity : quDuanInfoPropertyEntities) {
+                TreeNodeUtil tree = new TreeNodeUtil();
+                tree.setId(quDuanInfoPropertyEntity.getId().longValue());
+                tree.setLabel(quDuanInfoPropertyEntity.getName());
+                trees.add(tree);
+            }
+            treeNodeUtil.setChildren(trees);
+        }
+        return treeNodeUtils;
+    }
+
+    public List<TreeNodeUtil> findByTypes(Set<Integer> types) {
+        List<TreeNodeUtil> treeNodeUtils = new ArrayList<>();
+        for (int i = 0; i < types.size(); i++) {
+            long id = i + 1;
+            switch (i) {
+                case 0:
+                    TreeNodeUtil treeNodeUtil0 = new TreeNodeUtil();
+                    treeNodeUtil0.setId(id);
+                    treeNodeUtil0.setLabel("发送设备数据");
+                    treeNodeUtils.add(treeNodeUtil0);
+                    break;
+                case 1:
+                    TreeNodeUtil treeNodeUtil1 = new TreeNodeUtil();
+                    treeNodeUtil1.setId(id);
+                    treeNodeUtil1.setLabel("送端模拟电缆数据");
+                    treeNodeUtils.add(treeNodeUtil1);
+                    break;
+                case 2:
+                    TreeNodeUtil treeNodeUtil2 = new TreeNodeUtil();
+                    treeNodeUtil2.setId(id);
+                    treeNodeUtil2.setLabel("受端模拟电缆数据");
+                    treeNodeUtils.add(treeNodeUtil2);
+                    break;
+                case 3:
+                    TreeNodeUtil treeNodeUtil3 = new TreeNodeUtil();
+                    treeNodeUtil3.setId(id);
+                    treeNodeUtil3.setLabel("接收设备数据");
+                    treeNodeUtils.add(treeNodeUtil3);
+                    break;
+                case 4:
+                    TreeNodeUtil treeNodeUtil4 = new TreeNodeUtil();
+                    treeNodeUtil4.setId(id);
+                    treeNodeUtil4.setLabel("FBP采集数据");
+                    treeNodeUtils.add(treeNodeUtil4);
+                    break;
+                case 5:
+                    TreeNodeUtil treeNodeUtil5 = new TreeNodeUtil();
+                    treeNodeUtil5.setId(id);
+                    treeNodeUtil5.setLabel("FBA采集数据");
+                    treeNodeUtils.add(treeNodeUtil5);
+                    break;
+                case 6:
+                    TreeNodeUtil treeNodeUtil6 = new TreeNodeUtil();
+                    treeNodeUtil6.setId(id);
+                    treeNodeUtil6.setLabel("JBA采集数据");
+                    treeNodeUtils.add(treeNodeUtil6);
+                    break;
+                case 7:
+                    TreeNodeUtil treeNodeUtil7 = new TreeNodeUtil();
+                    treeNodeUtil7.setId(id);
+                    treeNodeUtil7.setLabel("JBP采集数据");
+                    treeNodeUtils.add(treeNodeUtil7);
+                    break;
+            }
+        }
+        return treeNodeUtils;
+    }
+
 }
