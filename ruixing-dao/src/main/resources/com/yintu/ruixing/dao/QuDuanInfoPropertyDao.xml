@@ -64,7 +64,7 @@
     <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.QuDuanInfoPropertyEntity">
         update mro_quduan_info_property
         set name = #{name,jdbcType=VARCHAR},
-        set type = #{type,jdbcType=SMALLINT}
+            set type = #{type,jdbcType=SMALLINT}
         where id = #{id,jdbcType=INTEGER}
     </update>
 
@@ -73,5 +73,14 @@
         <include refid="Base_Column_List"/>
         from mro_quduan_info_property
         where type = #{type,jdbcType=SMALLINT}
+    </select>
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mro_quduan_info_property
+        where id in
+        <foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
+            #{id,jdbcType=INTEGER}
+        </foreach>
     </select>
 </mapper>

@@ -43,4 +43,9 @@ public class QuDuanInfoPropertyServiceImpl implements QuDuanInfoPropertyService 
     public List<QuDuanInfoPropertyEntity> findByType(Short type) {
         return quDuanInfoPropertyDao.selectByType(type);
     }
+
+    @Override
+    public List<QuDuanInfoPropertyEntity> findByIds(Integer[] ids) {
+        return quDuanInfoPropertyDao.selectByIds(ids);
+    }
 }

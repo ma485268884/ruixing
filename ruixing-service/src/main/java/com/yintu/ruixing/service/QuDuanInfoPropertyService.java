@@ -11,4 +11,6 @@ import java.util.List;
  */
 public interface QuDuanInfoPropertyService extends BaseService<QuDuanInfoPropertyEntity, Integer> {
     List<QuDuanInfoPropertyEntity> findByType(Short type);
+
+    List<QuDuanInfoPropertyEntity> findByIds(Integer[] ids);
 }
