@@ -71,7 +71,7 @@ public interface QuDuanBaseDao {
 
     List<QuDuanBaseEntity> findDianMaHuaByXid(Integer xid);
 
-    List<QuDuanBaseEntity> findDianMaHuaBycid(Integer cid);
+    List<QuDuanBaseEntity> findDianMaHuaBycid( Integer cid);
 
     List<QuDuanBaseEntity> findDianMaHuaByCid(Integer cid);
 }

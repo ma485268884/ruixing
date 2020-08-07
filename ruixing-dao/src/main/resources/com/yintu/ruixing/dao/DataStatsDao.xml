@@ -28,11 +28,8 @@
         <result property="czMiaoShu" column="cz_miaoshu"/>
         <result property="czDuanTou" column="cz_duantou"/>
         <result property="xdState" column="xd_state"/>
-        <result property="xdJson" column="xd_json"/>
         <result property="czState" column="cz_state"/>
-        <result property="czJson" column="cz_json"/>
         <result property="czdmhState" column="cz_dmh_state"/>
-        <result property="czdmhJson" column="cz_dmh_json"/>
         <result column="cz_r_shebei" jdbcType="INTEGER" property="czRSheBei"/>
         <result column="cz_zhongjizhan" jdbcType="INTEGER" property="czZhongJiZhan"/>
         <result column="yuliushebei1" jdbcType="VARCHAR" property="yuliushebei1"/>
@@ -85,6 +82,7 @@
         <result column="linzhan6OfXianDuan" jdbcType="VARCHAR" property="linzhan6ofxianduan"/>
         <result column="linzhan6IsNoBenDWD" jdbcType="VARCHAR" property="linzhan6isnobendwd"/>
     </resultMap>
+
 
     <!--<resultMap id="dataStatEntities" type="com.yintu.ruixing.entity.CheZhanEntity">
         <id column="cid" jdbcType="INTEGER" property="cid"/>
@@ -221,15 +219,19 @@
     <!--查询所有车站信息-->
     <select id="findAllCheZhan" resultMap="dataStatEntities">
             SELECT
+                tlj.tid,
+                tlj.tlj_id,
                 tlj.tlj_name,
+                tlj.tlj_miaoshu,
+                dwd.did,
+                dwd.dwd_id,
                 dwd.dwd_name,
+                dwd.dwd_miaoshu,
+                xd.xid,
+                xd.xd_id,
                 xd.xd_name,
                 xd.xd_state,
-                xd.xd_json,
-                xd.xid,
-                tlj.tlj_id,
-                dwd.dwd_id,
-                xd.xd_id,
+                xd.xd_miaoshu,
                 cz.*
             FROM
                 mro_tieluju tlj,
@@ -252,7 +254,7 @@
     </resultMap>
 
     <!--根据铁路局id 查询铁路局下的所有车站-->
-    <select id="findTieLuJuById" resultType="com.yintu.ruixing.entity.DataStatsEntity" parameterType="java.lang.Long"
+    <select id="findTieLuJuById"  parameterType="java.lang.Long"
             resultMap="dataStatEntities">
         <!--SELECT
         tlj.tlj_name,
@@ -269,15 +271,19 @@
         </where>-->
 
         SELECT
-        tlj.tlj_name,
+        tlj.tid,
         tlj.tlj_id,
+        tlj.tlj_name,
         tlj.tlj_miaoshu,
+        dwd.did,
+        dwd.dwd_id,
         dwd.dwd_name,
+        dwd.dwd_miaoshu,
+        xd.xid,
+        xd.xd_id,
         xd.xd_name,
         xd.xd_state,
-        xd.xd_json,
-        dwd.dwd_id,
-        xd.xd_id,
+        xd.xd_miaoshu,
         cz.*
         FROM
         mro_tieluju tlj,
@@ -292,18 +298,22 @@
 
     </select>
     <!--根据电务段id  查询此电务段下的所有车站信息-->
-    <select id="findDianWuDuanCheZhanById" resultType="com.yintu.ruixing.entity.DataStatsEntity" parameterType="java.lang.Long"
+    <select id="findDianWuDuanCheZhanById"  parameterType="java.lang.Long"
             resultMap="dataStatEntities">
         SELECT
+            tlj.tid,
+            tlj.tlj_id,
             tlj.tlj_name,
-            dwd.dwd_name,
+            tlj.tlj_miaoshu,
+            dwd.did,
             dwd.dwd_id,
+            dwd.dwd_name,
             dwd.dwd_miaoshu,
+            xd.xid,
+            xd.xd_id,
             xd.xd_name,
             xd.xd_state,
-            xd.xd_json,
-            tlj.tlj_id,
-            xd.xd_id,
+            xd.xd_miaoshu,
             cz.*
         FROM
             mro_tieluju tlj,
@@ -318,18 +328,22 @@
 
     </select>
     <!--根据线段id   查询此线段下的所有车站信息-->
-    <select id="findXianDuanCheZhanById" resultType="com.yintu.ruixing.entity.DataStatsEntity" parameterType="java.lang.Long"
+    <select id="findXianDuanCheZhanById"  parameterType="java.lang.Long"
             resultMap="dataStatEntities">
         SELECT
-            tlj.tlj_name,
-            dwd.dwd_name,
-            xd.xd_name,
-            xd.xd_miaoshu,
-            xd.xd_state,
-            xd.xd_json,
+            tlj.tid,
             tlj.tlj_id,
+            tlj.tlj_name,
+            tlj.tlj_miaoshu,
+            dwd.did,
             dwd.dwd_id,
+            dwd.dwd_name,
+            dwd.dwd_miaoshu,
+            xd.xid,
             xd.xd_id,
+            xd.xd_name,
+            xd.xd_state,
+            xd.xd_miaoshu,
             cz.*
         FROM
             mro_tieluju tlj,
@@ -344,18 +358,22 @@
     </select>
 
     <!--根据车站id   查询此车站的id-->
-    <select id="findCheZhanById" resultType="com.yintu.ruixing.entity.DataStatsEntity" parameterType="java.lang.Long"
+    <select id="findCheZhanById"  parameterType="java.lang.Long"
             resultMap="dataStatEntities">
         SELECT
+            tlj.tid,
+            tlj.tlj_id,
             tlj.tlj_name,
+            tlj.tlj_miaoshu,
+            dwd.did,
+            dwd.dwd_id,
             dwd.dwd_name,
+            dwd.dwd_miaoshu,
+            xd.xid,
+            xd.xd_id,
             xd.xd_name,
             xd.xd_state,
-            xd.xd_json,
-            xd.xid,
-            tlj.tlj_id,
-            dwd.dwd_id,
-            xd.xd_id,
+            xd.xd_miaoshu,
             cz.*
         FROM
             mro_tieluju tlj,

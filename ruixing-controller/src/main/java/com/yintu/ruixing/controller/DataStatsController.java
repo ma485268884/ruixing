@@ -815,13 +815,11 @@ public class DataStatsController {
     @RequestMapping("/findAllCheZhan")
     public Map<String, Object> findAllCheZhan(@RequestParam(value = "page", required = false) Integer page,
                                               @RequestParam(value = "size", required = false) Integer size) {
-        JSONObject jo = new JSONObject();
+
         PageHelper.startPage(page, size);
         List<DataStatsEntity> dataStatEntities = dataStatsService.findAllCheZhan(page, size);
-        jo.put("dataStatEntities", dataStatEntities);
         PageInfo<DataStatsEntity> pageInfo = new PageInfo<>(dataStatEntities);
-        jo.put("pageInfo", pageInfo);
-        return ResponseDataUtil.ok("查询所有车站信息成功", jo);
+        return ResponseDataUtil.ok("查询所有车站信息成功", pageInfo);
     }
 
     //根据铁路局id  查询此铁路局下的所有车站
@@ -829,15 +827,15 @@ public class DataStatsController {
     public Map<String, Object> findTieLuJuById(@PathVariable Long tid,
                                                @RequestParam(value = "page", required = false) Integer
                                                        page, @RequestParam(value = "size", required = false) Integer size) {
-        JSONObject jo = new JSONObject();
-        List<DataStatsEntity> tieLuJuEntity = dataStatsService.findTieLuJuById(tid, page, size);
-        jo.put("tieLuJuEntity", tieLuJuEntity);
+        //JSONObject jo = new JSONObject();
+        //List<DataStatsEntity> tieLuJuEntity = dataStatsService.findTieLuJuById(tid, page, size);
+        //jo.put("tieLuJuEntity", tieLuJuEntity);
         PageHelper.startPage(page, size);
         List<DataStatsEntity> all = dataStatsService.findTieLuJuById(tid, page, size);
-        PageInfo<DataStatsEntity> pageInfo = new PageInfo<DataStatsEntity>(all);
-        jo.put("pageInfo", pageInfo);
+        PageInfo<DataStatsEntity> pageInfo = new PageInfo<>(all);
+        //jo.put("pageInfo", pageInfo);
         //System.out.println("分页为" + pageInfo);
-        return ResponseDataUtil.ok("查询铁路局成功", jo);
+        return ResponseDataUtil.ok("查询铁路局成功", pageInfo);
     }
 
     //根据电务段id  查询此电务段下的所有车站
@@ -845,15 +843,11 @@ public class DataStatsController {
     public Map<String, Object> findDianWuDuanById(@PathVariable Long did,
                                                   @RequestParam(value = "page", required = false) Integer
                                                           page, @RequestParam(value = "size", required = false) Integer size) {
-        JSONObject jo = new JSONObject();
-        List<DataStatsEntity> dianwuduan = dataStatsService.findDianWuDuanCheZhanById(did, page, size);
-        jo.put("dianwuduan", dianwuduan);
+
         PageHelper.startPage(page, size);
         List<DataStatsEntity> all = dataStatsService.findDianWuDuanCheZhanById(did, page, size);
-        PageInfo<DataStatsEntity> pageInfo = new PageInfo<DataStatsEntity>(all);
-        jo.put("pageInfo", pageInfo);
-        //System.out.println("分页为" + pageInfo);
-        return ResponseDataUtil.ok("查询铁路局成功", jo);
+        PageInfo<DataStatsEntity> pageInfo = new PageInfo<>(all);
+        return ResponseDataUtil.ok("查询铁路局成功", pageInfo);
     }
 
     //根据线段id  查询此线段下的所有车站
@@ -861,15 +855,11 @@ public class DataStatsController {
     public Map<String, Object> findXianDuanCheZhanById(@PathVariable Long xid,
                                                        @RequestParam(value = "page", required = false) Integer
                                                                page, @RequestParam(value = "size", required = false) Integer size) {
-        JSONObject jo = new JSONObject();
-        List<DataStatsEntity> xianduan = dataStatsService.findXianDuanCheZhanById(xid, page, size);
-        jo.put("xianduan", xianduan);
+
         PageHelper.startPage(page, size);
         List<DataStatsEntity> all = dataStatsService.findXianDuanCheZhanById(xid, page, size);
-        PageInfo<DataStatsEntity> pageInfo = new PageInfo<DataStatsEntity>(all);
-        jo.put("pageInfo", pageInfo);
-        //System.out.println("分页为" + pageInfo);
-        return ResponseDataUtil.ok("查询铁路局成功", jo);
+        PageInfo<DataStatsEntity> pageInfo = new PageInfo<>(all);
+        return ResponseDataUtil.ok("查询铁路局成功", pageInfo);
     }
 
     //根据车站id  查询车站信息
@@ -877,15 +867,10 @@ public class DataStatsController {
     public Map<String, Object> findCheZhanById(@PathVariable Long cid,
                                                @RequestParam(value = "page", required = false) Integer page,
                                                @RequestParam(value = "size", required = false) Integer size) {
-        JSONObject jo = new JSONObject();
-        List<DataStatsEntity> chezhan = dataStatsService.findCheZhanById(cid, page, size);
-        jo.put("chezhan", chezhan);
         PageHelper.startPage(page, size);
         List<DataStatsEntity> all = dataStatsService.findCheZhanById(cid, page, size);
-        PageInfo<DataStatsEntity> pageInfo = new PageInfo<DataStatsEntity>(all);
-        jo.put("pageInfo", pageInfo);
-        //System.out.println("分页为" + pageInfo);
-        return ResponseDataUtil.ok("查询铁路局成功", jo);
+        PageInfo<DataStatsEntity> pageInfo = new PageInfo<>(all);
+        return ResponseDataUtil.ok("查询铁路局成功", pageInfo);
     }
 
 

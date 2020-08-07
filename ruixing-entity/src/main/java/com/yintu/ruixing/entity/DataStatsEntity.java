@@ -17,51 +17,49 @@ import java.util.List;
 @AllArgsConstructor
 public class DataStatsEntity {
 
+
     private long tid;
+
     private long did;
+
     private long xid;
+
     private long cid;
+
     private String tljName;
 
     private String dwdName;
 
-    private String dwdMiaoShu;
-
-    private String tljMiaoShu;
-
-    private Integer xdState;//'线段设置状态  0：未设置  1：已设置',
-
-    private String xdJson;//储存的json',
-
-    private Integer czdmhState; //站内电码化配置状态  0：未配置    1：已配置
-
-    private String czdmhJson; //站内电码化储存json
-
-    private Integer czState;//'车站设置状态  0：未设置  1：已设置',
-
-    private String czJson;//储存的json',
-
     private String xdName;
 
-    private  String xdMiaoShu;
-
-    private long id;
-
     private String czName;
-
-    private int czId;
-
-    private int xdId;
 
     private int tljId;
 
     private int dwdId;
 
+    private int xdId;
+
+    private int czId;
+
+    private String tljMiaoShu;
+
+    private String dwdMiaoShu;
+
+    private String xdMiaoShu;
+
+    private String czMiaoShu;
+
+    private Integer xdState;//'线段设置状态  0：未设置  1：已设置',
+
+    private Integer czdmhState; //站内电码化配置状态  0：未配置    1：已配置
+
+    private Integer czState;//'车站设置状态  0：未设置  1：已设置',
+
+
     private String czNameJianCheng;
 
     private String czIp;
-
-
 
     private Long czStutrs;
 
@@ -71,15 +69,12 @@ public class DataStatsEntity {
 
     private long xdCzId;
 
-    private String czMiaoShu;
 
     private String yuliu1;
 
     private String yuliu2;
 
     private long czDuanTou;
-
-
 
     private String czType;//车站类型
 
@@ -95,6 +90,11 @@ public class DataStatsEntity {
 
     private XianDuanEntity xianDuanEntity;
 
+
+
+    private String xdJson;//储存的json',
+    private String czdmhJson; //站内电码化储存json
+    private String czJson;//储存的json',
     private String yuliushebei1;
 
     private String yuliushebei2;
