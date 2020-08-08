@@ -84,5 +84,14 @@ public interface QuDuanInfoService {
      */
     List<TreeNodeUtil> findPropertiesTree(Integer czId);
 
+    /**
+     *
+     * @param properties 属性集合
+     * @param czId 车站id
+     * @param time 时间
+     * @return
+     */
+    List<JSONObject> realTimeReport(Integer[] properties, Integer czId, Date time);
+
 
 }

@@ -1,6 +1,7 @@
 package com.yintu.ruixing.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -100,16 +102,13 @@ public class QuDuanInfoController extends SessionController {
                                           @RequestParam(value = "order_by", required = false, defaultValue = "qb.id ASC") String orderBy,
                                           @RequestParam("cz_id") Integer cZid) {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
-        List<QuDuanInfoEntityV2> quDuanInfoEntities = quDuanInfoService.findByCzIdAndTime(cZid, new Date());
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DATE, 5);
+        List<QuDuanInfoEntityV2> quDuanInfoEntities = quDuanInfoService.findByCzIdAndTime(cZid, c.getTime());
         PageInfo<QuDuanInfoEntityV2> pageInfo = new PageInfo<>(quDuanInfoEntities);
         return ResponseDataUtil.ok("查询实时报表成功", pageInfo);
     }
 
-    @GetMapping("/properties/tree")
-    public Map<String, Object> findByCzId(@RequestParam("czId") Integer czId) {
-        List<TreeNodeUtil> treeNodeUtils = quDuanInfoService.findPropertiesTree(czId);
-        return ResponseDataUtil.ok("查询实时报表属性树成功", treeNodeUtils);
-    }
 
     /**
      * 日报表
@@ -131,6 +130,10 @@ public class QuDuanInfoController extends SessionController {
     }
 
 
+    /*----------------------------------------------分割线---------------------------------------------------------------
+       ---------------------------------------------v2版本----------------------------------------------------------------
+     */
+
     /**
      * @param czId 车站id
      * @param time 时刻
@@ -151,6 +154,34 @@ public class QuDuanInfoController extends SessionController {
     public Map<String, Object> findNullProperties(@RequestParam("czId") Integer czId) {
         JSONObject jsonObjects = quDuanInfoService.findNullProperties(czId);
         return ResponseDataUtil.ok("查询区段属性成功", jsonObjects);
+    }
+
+
+    @GetMapping("/properties/tree")
+    public Map<String, Object> findByCzId(@RequestParam("czId") Integer czId) {
+        List<TreeNodeUtil> treeNodeUtils = quDuanInfoService.findPropertiesTree(czId);
+        return ResponseDataUtil.ok("查询实时报表属性树成功", treeNodeUtils);
+    }
+
+    /**
+     * 实时报表
+     *
+     * @param pageNumber 页码
+     * @param pageSize   页数
+     * @return
+     */
+    @GetMapping("/realreport/v2")
+    public Map<String, Object> realreport(@RequestParam("page_number") Integer pageNumber,
+                                          @RequestParam("page_size") Integer pageSize,
+                                          @RequestParam(value = "order_by", required = false, defaultValue = "qb.id ASC") String orderBy,
+                                          @RequestParam("properties") Integer[] properties,
+                                          @RequestParam("cz_id") Integer czId) {
+        PageHelper.startPage(pageNumber, pageSize, orderBy);
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DATE, 4);
+        List<JSONObject> jsonObjects = quDuanInfoService.realTimeReport(properties, czId, c.getTime());
+        PageInfo<JSONObject> pageInfo = new PageInfo<>(jsonObjects);
+        return ResponseDataUtil.ok("查询实时报表成功", pageInfo);
     }
 
 

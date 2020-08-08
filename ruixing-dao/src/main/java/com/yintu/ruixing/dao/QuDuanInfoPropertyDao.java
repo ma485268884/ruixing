@@ -18,4 +18,6 @@ public interface QuDuanInfoPropertyDao {
     int updateByPrimaryKey(QuDuanInfoPropertyEntity record);
 
     List<QuDuanInfoPropertyEntity> selectByType(Short type);
+
+    List<QuDuanInfoPropertyEntity> selectByIds(Integer[] ids);
 }
