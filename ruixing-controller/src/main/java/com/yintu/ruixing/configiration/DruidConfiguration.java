@@ -33,6 +33,7 @@ public class DruidConfiguration {
         initParameters.put("loginPassword", "123456");
         initParameters.put("allow", "");//默认允许所有访问
         initParameters.put("deny", "192.168.1.5");
+        initParameters.put("resetEnable", "false");// 禁用HTML页面上的“Reset All”功能
         servletRegistrationBean.setInitParameters(initParameters);
         return servletRegistrationBean;
     }
@@ -42,7 +43,8 @@ public class DruidConfiguration {
     public FilterRegistrationBean<WebStatFilter> filterRegistrationBean() {
         FilterRegistrationBean<WebStatFilter> filterRegistrationBean = new FilterRegistrationBean<>(new WebStatFilter());
         Map<String, String> initParameters = new HashMap<>();
-        initParameters.put("exclusions", "*.html,*.css,*.js,/druid/*");
+        initParameters.put("enabled", "true");
+        initParameters.put("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
         filterRegistrationBean.setInitParameters(initParameters);
         filterRegistrationBean.setUrlPatterns(Collections.singletonList("/*"));
         return filterRegistrationBean;
