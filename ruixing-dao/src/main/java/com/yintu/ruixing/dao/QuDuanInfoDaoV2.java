@@ -52,4 +52,6 @@ public interface QuDuanInfoDaoV2 {
                                        @Param("shuxingname") String shuxingname, @Param("quduanname") String quduanname, @Param("qdid") Integer qdid);
 
     List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZid(@Param("czid") Integer czid,@Param("time") long time);
+
+    List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZids(@Param("czid") Integer czid);
 }

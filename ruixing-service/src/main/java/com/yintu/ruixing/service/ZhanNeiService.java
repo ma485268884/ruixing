@@ -24,4 +24,6 @@ public interface ZhanNeiService  {
     List<CheZhanEntity> findTieLuJuById(Integer page, Integer size);
 
     List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZid(Integer czid, long time);
+
+    List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZids(Integer czid);
 }

@@ -3,6 +3,7 @@ package com.yintu.ruixing.dao;
 import com.yintu.ruixing.entity.CheZhanEntity;
 import com.yintu.ruixing.entity.LineEntity;
 import com.yintu.ruixing.entity.QuDuanBaseEntity;
+import com.yintu.ruixing.entity.QuDuanInfoEntityV2;
 
 import java.util.List;
 

@@ -39,6 +39,8 @@
         from mro_anzhuangtiaoshi_train
         where id = #{id,jdbcType=INTEGER}
     </select>
+
+    <!--根据id  删除对应的数据-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from mro_anzhuangtiaoshi_train
     where id = #{id,jdbcType=INTEGER}

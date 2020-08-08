@@ -1,6 +1,7 @@
 package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.entity.AnZhuangTiaoShiTrainEntity;
+import com.yintu.ruixing.entity.AnZhuangTiaoShiTrainFileEntity;
 import com.yintu.ruixing.entity.AnZhuangTiaoShiXiangMuEntity;
 
 import java.util.List;
@@ -19,4 +20,16 @@ public interface AnZhuangTiaoShiTrainService {
     void editTrainById(AnZhuangTiaoShiTrainEntity anZhuangTiaoShiTrainEntity);
 
     List<AnZhuangTiaoShiTrainEntity> findAllTrain(Integer page, Integer size, String xdName, String customer);
+
+    void deleteTrainByIds(Integer[] ids);
+
+    void addFile(AnZhuangTiaoShiTrainFileEntity anZhuangTiaoShiFileEntity);
+
+    AnZhuangTiaoShiTrainFileEntity findById(Integer id);
+
+    List<AnZhuangTiaoShiTrainFileEntity> findAllTrainFiles(Integer page, Integer size, String filename);
+
+    void deleteTrainFilesByIds(Integer[] ids);
+
+    List<AnZhuangTiaoShiTrainFileEntity> findTrainFile(Integer id);
 }

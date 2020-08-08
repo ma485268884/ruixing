@@ -32,6 +32,11 @@ public class ZhanNeiServiceImpl implements ZhanNeiService {
     private QuDuanInfoDaoV2 quDuanInfoDaoV2;
 
     @Override
+    public List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZids(Integer czid) {
+        return quDuanInfoDaoV2.findDianMaHuaDatasByCZids(czid);
+    }
+
+    @Override
     public List<QuDuanBaseEntity> findAllDianMaHua(Long id) {
         return zhanNeiDao.findAllDianMaHua(id);
     }
