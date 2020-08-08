@@ -1,5 +1,6 @@
 package com.yintu.ruixing.service.impl;
 
+import com.yintu.ruixing.common.enumobject.EnumAuthType;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.UserDao;
@@ -139,11 +140,15 @@ public class UserServiceImpl implements UserService {
         UserEntityExample.Criteria criteria = userEntityExample.createCriteria();
         criteria.andUsernameEqualTo(username);
         List<UserEntity> userEntities = userDao.selectByExample(userEntityExample);
-        if (userEntities.size() == 0) {
+        if (userEntities.isEmpty()) {
             throw new UsernameNotFoundException("用户名不存在");
         }
         UserEntity userEntity = userEntities.get(0);
-        userEntity.setRoleEntities(roleService.findByUserId(userEntity.getId()));
+        List<RoleEntity> roleEntities = roleService.findByUserId(userEntity.getId());
+        if (roleEntities.isEmpty() && userEntity.getAuthType().equals(EnumAuthType.USER.getValue())) {
+            throw new UsernameNotFoundException("用户没有分配角色");
+        }
+        userEntity.setRoleEntities(roleEntities);
         return userEntity;
     }
 
