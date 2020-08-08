@@ -47,16 +47,23 @@
         <!--               enableCountByExample="false" enableUpdateByExample="false"-->
         <!--               enableDeleteByExample="false" enableSelectByExample="false"-->
         <!--               selectByExampleQueryId="false"/>-->
-        <table tableName="mro_quduan_info_property"
-               domainObjectName="QuDuanInfoPropertyEntity"
-               mapperName="QuDuanInfoPropertyDao"
-               enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableUpdateByExample="false"
-               enableSelectByExample="false"/>
-        <table tableName="mro_quduan_info_types_property"
-               domainObjectName="QuDuanInfoTypesPropertyEntity"
-               mapperName="QuDuanInfoTypesPropertyDao"
+        <!--        <table tableName="mro_quduan_info_property"-->
+        <!--               domainObjectName="QuDuanInfoPropertyEntity"-->
+        <!--               mapperName="QuDuanInfoPropertyDao"-->
+        <!--               enableCountByExample="false"-->
+        <!--               enableDeleteByExample="false"-->
+        <!--               enableUpdateByExample="false"-->
+        <!--               enableSelectByExample="false"/>-->
+        <!--        <table tableName="mro_quduan_info_types_property"-->
+        <!--               domainObjectName="QuDuanInfoTypesPropertyEntity"-->
+        <!--               mapperName="QuDuanInfoTypesPropertyDao"-->
+        <!--               enableCountByExample="false"-->
+        <!--               enableDeleteByExample="false"-->
+        <!--               enableUpdateByExample="false"-->
+        <!--               enableSelectByExample="false"/>-->
+        <table tableName="mro_customer_units"
+               domainObjectName="CustomerUnitsEntity"
+               mapperName="CustomerUnitsDao"
                enableCountByExample="false"
                enableDeleteByExample="false"
                enableUpdateByExample="false"
