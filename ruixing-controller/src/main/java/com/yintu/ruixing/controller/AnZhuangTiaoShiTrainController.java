@@ -87,7 +87,7 @@ public class AnZhuangTiaoShiTrainController {
         return ResponseDataUtil.ok("上传文件成功", jo);
     }
 
-    //添加线段的文件
+    //添加培训的文件
     @PostMapping("/addFile")
     public Map<String,Object>addFile(AnZhuangTiaoShiTrainFileEntity anZhuangTiaoShiFileEntity){
         anZhuangTiaoShiTrainService.addFile(anZhuangTiaoShiFileEntity);

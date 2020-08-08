@@ -26,9 +26,11 @@
     select
     <include refid="Base_Column_List" />
     from mro_anzhuangtiaoshi_train_file
-   <if test="filename!=null">
-     file_name=#{filename}
-   </if>
+    <where>
+      <if test="filename!=null">
+        file_name like concat('%',#{filename},'%')
+      </if>
+    </where>
   </select>
 
 

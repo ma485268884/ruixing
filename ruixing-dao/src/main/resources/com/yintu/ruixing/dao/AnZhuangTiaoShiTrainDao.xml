@@ -25,10 +25,11 @@
         from mro_anzhuangtiaoshi_train
         <where>
             <if test="xdName != null">
-                xd_name=#{xdName}
+                xd_name like concat('%', #{xdName},'%')
             </if>
             <if test="customer != null">
-                customer=#{customer}
+                and
+                customer like concat ('%', #{customer},'%')
             </if>
         </where>
     </select>

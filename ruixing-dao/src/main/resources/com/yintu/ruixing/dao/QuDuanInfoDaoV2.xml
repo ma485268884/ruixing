@@ -294,6 +294,7 @@
     <select id="findDianMaHuaDatasByCZids" resultMap="quduanBaseResultMap">
         SELECT
         da.createtime time,
+        da.type,
         da.v1 qid,
         da.v3 V_out_zhu,
         da.v9 V_out_bei,
@@ -320,6 +321,7 @@
     <select id="findDianMaHuaDatasByCZid" resultMap="quduanBaseResultMap">
         SELECT
         da.createtime time,
+        da.type,
         da.v1 qid,
         da.v3 V_out_zhu,
         da.v9 V_out_bei,
