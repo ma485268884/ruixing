@@ -21,5 +21,5 @@ public interface QuDuanDownloadDao {
 
     List<QuDuanDownloadEntity> selectByDateTime(Integer czId, Date startDateTime, Date endDateTime);
 
-    QuDuanDownloadEntity selectByCidAndDataType(Integer cid, Short dataType);
+    QuDuanDownloadEntity selectByCidAndDataType(Integer cid, Integer userId, Short dataType);
 }
