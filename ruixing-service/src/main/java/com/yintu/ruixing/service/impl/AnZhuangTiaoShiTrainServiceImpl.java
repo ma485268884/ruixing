@@ -44,8 +44,8 @@ public class AnZhuangTiaoShiTrainServiceImpl implements AnZhuangTiaoShiTrainServ
     }
 
     @Override
-    public List<AnZhuangTiaoShiTrainFileEntity> findAllTrainFiles(Integer page, Integer size, String filename) {
-        return anZhuangTiaoShiTrainFileDao.findAllTrainFiles(filename);
+    public List<AnZhuangTiaoShiTrainFileEntity> findAllTrainFiles(Integer id,Integer page, Integer size, String filename) {
+        return anZhuangTiaoShiTrainFileDao.findAllTrainFiles(id,filename);
     }
 
     @Override

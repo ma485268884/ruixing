@@ -30,6 +30,10 @@
       <if test="filename!=null">
         file_name like concat('%',#{filename},'%')
       </if>
+      <if test="id!=null">
+        and
+        tid = #{id}
+      </if>
     </where>
   </select>
 

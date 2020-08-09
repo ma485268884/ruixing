@@ -113,9 +113,9 @@ public class AnZhuangTiaoShiTrainController {
 
     //根据文件名 或者初始化查询
     @GetMapping("/findAllTrainFiles")
-    public Map<String,Object>findAllTrainFiles(Integer page,Integer size,String filename){
+    public Map<String,Object>findAllTrainFiles( Integer id, Integer page,Integer size,String filename){
         PageHelper.startPage(page,size);
-        List<AnZhuangTiaoShiTrainFileEntity>fileEntityList=anZhuangTiaoShiTrainService.findAllTrainFiles(page,size,filename);
+        List<AnZhuangTiaoShiTrainFileEntity>fileEntityList=anZhuangTiaoShiTrainService.findAllTrainFiles(id,page,size,filename);
         PageInfo<AnZhuangTiaoShiTrainFileEntity> fileEntityPageInfo=new PageInfo<>(fileEntityList);
         return ResponseDataUtil.ok("查询文件成功",fileEntityPageInfo);
     }

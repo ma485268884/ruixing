@@ -13,24 +13,52 @@
   <sql id="Base_Column_List">
     id, wid, fenlei, file_name, file_path, file_state, yuliu
   </sql>
+
+  <!--根据id  查询所有的输出文件-->
+  <select id="findAllShuChuFileById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mro_anzhuangtiaoshi_wenti_file
+    <where>
+      id = #{id,jdbcType=INTEGER}
+      and fenlei=2
+      <if test="fileName!=null">
+        and  file_name like concat('%',#{fileName},'%')
+      </if>
+    </where>
+  </select>
+
+  <!--根据id  查询所有的反馈文件-->
+  <select id="findAllFanKuiFileById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mro_anzhuangtiaoshi_wenti_file
+    <where>
+      <if test="id!=null">
+        id = #{id,jdbcType=INTEGER}
+      </if>
+      and fenlei=1
+      <if test="fileName!=null">
+        and  file_name like concat('%',#{fileName},'%')
+      </if>
+    </where>
+  </select>
+
+  <!--根据id  查询对应的文件-->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from mro_anzhuangtiaoshi_wenti_file
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <!--根据id  删除对应的文件-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from mro_anzhuangtiaoshi_wenti_file
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.yintu.ruixing.entity.AnZhuangTiaoShiWenTiFileEntity">
-    insert into mro_anzhuangtiaoshi_wenti_file (id, wid, fenlei, 
-      file_name, file_path, file_state, 
-      yuliu)
-    values (#{id,jdbcType=INTEGER}, #{wid,jdbcType=INTEGER}, #{fenlei,jdbcType=INTEGER}, 
-      #{fileName,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}, #{fileState,jdbcType=INTEGER}, 
-      #{yuliu,jdbcType=VARCHAR})
-  </insert>
+
+  <!--新增文件-->
   <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.AnZhuangTiaoShiWenTiFileEntity">
     insert into mro_anzhuangtiaoshi_wenti_file
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -114,4 +142,13 @@
       yuliu = #{yuliu,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <insert id="insert" parameterType="com.yintu.ruixing.entity.AnZhuangTiaoShiWenTiFileEntity">
+    insert into mro_anzhuangtiaoshi_wenti_file (id, wid, fenlei,
+      file_name, file_path, file_state,
+      yuliu)
+    values (#{id,jdbcType=INTEGER}, #{wid,jdbcType=INTEGER}, #{fenlei,jdbcType=INTEGER},
+      #{fileName,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}, #{fileState,jdbcType=INTEGER},
+      #{yuliu,jdbcType=VARCHAR})
+  </insert>
 </mapper>

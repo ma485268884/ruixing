@@ -1,6 +1,7 @@
 package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.entity.AnZhuangTiaoShiWenTiEntity;
+import com.yintu.ruixing.entity.AnZhuangTiaoShiWenTiFileEntity;
 
 import java.util.List;
 
@@ -18,4 +19,14 @@ public interface AnZhuangTiaoShiWenTiService {
     List<AnZhuangTiaoShiWenTiEntity> findSomeWenTi(Integer page, Integer size, String xdname, String wenTiMiaoShu);
 
     void deleteWenTiByIds(Integer[] ids);
+
+    List<AnZhuangTiaoShiWenTiFileEntity> findAllFanKuiFileById(Integer id, Integer page, Integer size,String fileName);
+
+    List<AnZhuangTiaoShiWenTiFileEntity> findAllShuChuFileById(Integer id, Integer page, Integer size,String fileName);
+
+    void addFile(AnZhuangTiaoShiWenTiFileEntity anZhuangTiaoShiWenTiFileEntity);
+
+    AnZhuangTiaoShiWenTiFileEntity findById(Integer id);
+
+    void deleteFileByIds(Integer[] ids);
 }

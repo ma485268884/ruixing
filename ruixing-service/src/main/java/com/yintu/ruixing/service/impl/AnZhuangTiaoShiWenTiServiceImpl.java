@@ -1,7 +1,9 @@
 package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.dao.AnZhuangTiaoShiWenTiDao;
+import com.yintu.ruixing.dao.AnZhuangTiaoShiWenTiFileDao;
 import com.yintu.ruixing.entity.AnZhuangTiaoShiWenTiEntity;
+import com.yintu.ruixing.entity.AnZhuangTiaoShiWenTiFileEntity;
 import com.yintu.ruixing.service.AnZhuangTiaoShiWenTiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,36 @@ import java.util.List;
 public class AnZhuangTiaoShiWenTiServiceImpl implements AnZhuangTiaoShiWenTiService {
     @Autowired
     private AnZhuangTiaoShiWenTiDao anZhuangTiaoShiWenTiDao;
+
+    @Autowired
+    private AnZhuangTiaoShiWenTiFileDao anZhuangTiaoShiWenTiFileDao;
+
+    @Override
+    public void deleteFileByIds(Integer[] ids) {
+        for (int i = 0; i < ids.length; i++) {
+            anZhuangTiaoShiWenTiFileDao.deleteByPrimaryKey(ids[i]);
+        }
+    }
+
+    @Override
+    public AnZhuangTiaoShiWenTiFileEntity findById(Integer id) {
+        return anZhuangTiaoShiWenTiFileDao.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void addFile(AnZhuangTiaoShiWenTiFileEntity anZhuangTiaoShiWenTiFileEntity) {
+        anZhuangTiaoShiWenTiFileDao.insertSelective(anZhuangTiaoShiWenTiFileEntity);
+    }
+
+    @Override
+    public List<AnZhuangTiaoShiWenTiFileEntity> findAllShuChuFileById(Integer id, Integer page, Integer size,String fileName) {
+        return anZhuangTiaoShiWenTiFileDao.findAllShuChuFileById(id,fileName);
+    }
+
+    @Override
+    public List<AnZhuangTiaoShiWenTiFileEntity> findAllFanKuiFileById(Integer id, Integer page, Integer size,String fileName) {
+        return anZhuangTiaoShiWenTiFileDao.findAllFanKuiFileById(id,fileName);
+    }
 
     @Override
     public void deleteWenTiByIds(Integer[] ids) {

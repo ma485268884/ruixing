@@ -27,7 +27,7 @@ public interface AnZhuangTiaoShiTrainService {
 
     AnZhuangTiaoShiTrainFileEntity findById(Integer id);
 
-    List<AnZhuangTiaoShiTrainFileEntity> findAllTrainFiles(Integer page, Integer size, String filename);
+    List<AnZhuangTiaoShiTrainFileEntity> findAllTrainFiles(Integer id,Integer page, Integer size, String filename);
 
     void deleteTrainFilesByIds(Integer[] ids);
 

@@ -82,6 +82,7 @@ public class DataStatsController {
         Integer j = 0;
         List<Integer> number = new ArrayList<>();
         List<String[]> list = quDuanDatas1.toJavaList(String[].class);
+        Integer qq=0;
         for (String[] stringss : list) {
             j++;
             String czid = stringss[0];
@@ -93,6 +94,8 @@ public class DataStatsController {
         }
         if (number.size() == 0) {
             for (String[] strings : list) {
+                System.out.println("qqqqqqq"+qq++);
+                System.out.println("qqqqqqq"+qq +"+"+strings);
                 String czid1 = strings[0];
                 String czname = strings[1];
                 String line = strings[2];
@@ -366,6 +369,18 @@ public class DataStatsController {
             if (list != null && list.size() > 0) {
                 for (String[] strings : list) {
                     if (!strings[0].equals("") || !strings[1].equals("") || !strings[2].equals("") || !strings[3].equals("") || !strings[4].equals("") || !strings[5].equals("")) {
+                       /* System.out.println("1111"+Integer.valueOf(strings[0]).getClass());
+                        System.out.println("1112"+strings[1].getClass().getTypeName());
+                        System.out.println("1113"+Integer.valueOf(strings[2]).getClass().getTypeName());
+                        System.out.println("1114"+strings[3].getClass().getTypeName());
+                        System.out.println("1115"+Integer.valueOf(strings[4]).getClass().getTypeName());
+                        System.out.println("1116"+strings[5].getClass().getTypeName());
+                        System.out.println("1117"+strings[6].getClass().getTypeName());
+                        System.out.println("1118"+Integer.valueOf(strings[7]).getClass().getTypeName());
+                        System.out.println("1119"+Integer.valueOf(strings[11]).getClass().getTypeName());
+                        System.out.println("11112"+Integer.valueOf(strings[12]).getClass().getTypeName());
+                        System.out.println("11113"+Integer.valueOf(strings[13]).getClass().getTypeName());
+                        System.out.println("11114"+Integer.valueOf(strings[14]).getClass().getTypeName());*/
                         if (Integer.valueOf(strings[0]).getClass().getTypeName().equals("java.lang.Integer")
                                 && strings[1].getClass().getTypeName().equals("java.lang.String")
                                 && Integer.valueOf(strings[2]).getClass().getTypeName().equals("java.lang.Integer")
@@ -469,8 +484,8 @@ public class DataStatsController {
                 String linzhan1id = strings[26];
                 String linzhan1name = strings[27];
                 String linzhan1LineType = strings[28];
-                String linzhan1OfXianduan = strings[289];
-                String linzhan1benDWD = strings[230];
+                String linzhan1OfXianduan = strings[29];
+                String linzhan1benDWD = strings[30];
                 String linzhan2id = strings[31];
                 String linzhan2name = strings[32];
                 String linzhan2LineType = strings[33];

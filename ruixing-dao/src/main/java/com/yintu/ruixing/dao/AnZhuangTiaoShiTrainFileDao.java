@@ -20,7 +20,7 @@ public interface AnZhuangTiaoShiTrainFileDao {
 
     int insertSelective(AnZhuangTiaoShiTrainFileEntity record);
 
-    List<AnZhuangTiaoShiTrainFileEntity> findAllTrainFiles(@Param("filename") String filename);
+    List<AnZhuangTiaoShiTrainFileEntity> findAllTrainFiles(@Param("id") Integer id,@Param("filename") String filename);
 
     List<AnZhuangTiaoShiTrainFileEntity> findTrainFile(Integer id);
 }
