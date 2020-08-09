@@ -87,6 +87,13 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
     public Integer changeDataStatus(Integer czId, Integer userId, Short dataStatus) {
         QuDuanDownloadEntity quDuanDownloadEntity = this.insertData(czId, userId);
         quDuanDownloadEntity.setDataStatus(dataStatus);
+        if (dataStatus.equals((short) 1)) {
+            quDuanDownloadEntity.setCreateTime(new Date());
+        } else {
+            if (quDuanDownloadEntity.getSwitchStatus().equals((short) 0)) {
+                quDuanDownloadEntity.setSwitchStatus((short) 1);
+            }
+        }
         this.edit(quDuanDownloadEntity);
         return quDuanDownloadEntity.getId();
     }
