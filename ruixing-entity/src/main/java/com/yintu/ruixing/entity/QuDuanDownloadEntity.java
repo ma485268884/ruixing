@@ -27,6 +27,16 @@ public class QuDuanDownloadEntity implements Serializable {
     private Short dataStatus;
 
     private Short dataType;
-    
+
+    private Integer userId;
+
+    private Date createTime;
+
+    private Short switchStatus;
+
+    private Date updateTime;
+
     private CheZhanEntity cheZhanEntity;
+
+
 }

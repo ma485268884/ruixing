@@ -1,7 +1,6 @@
 package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.dao.QuDuanDownloadDao;
-import com.yintu.ruixing.entity.CheZhanEntity;
 import com.yintu.ruixing.entity.QuDuanDownloadEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntityV2;
 import com.yintu.ruixing.service.CheZhanService;
@@ -85,19 +84,45 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
 
 
     @Override
-    public Integer changeDataStatus(Integer czId, Short dataStatus) {
-        QuDuanDownloadEntity quDuanDownloadEntity = this.quDuanDownloadDao.selectByCidAndDataType(czId, (short) 2);
+    public Integer changeDataStatus(Integer czId, Integer userId, Short dataStatus) {
+        QuDuanDownloadEntity quDuanDownloadEntity = this.insertData(czId, userId);
+        quDuanDownloadEntity.setDataStatus(dataStatus);
+        this.edit(quDuanDownloadEntity);
+        return quDuanDownloadEntity.getId();
+    }
+
+    @Override
+    public Integer changeSwitchStatus(Integer czId, Integer userId, Short switchStatus) {
+        QuDuanDownloadEntity quDuanDownloadEntity = this.insertData(czId, userId);
+        quDuanDownloadEntity.setSwitchStatus(switchStatus);
+        this.edit(quDuanDownloadEntity);
+        return quDuanDownloadEntity.getId();
+    }
+
+    @Override
+    public Short changeUpdateTime(Integer czId, Integer userId) {
+        QuDuanDownloadEntity quDuanDownloadEntity = this.insertData(czId, userId);
+        quDuanDownloadEntity.setUpdateTime(new Date());
+        this.edit(quDuanDownloadEntity);
+        return quDuanDownloadEntity.getSwitchStatus();
+    }
+
+
+    public QuDuanDownloadEntity insertData(Integer czId, Integer userId) {
+        QuDuanDownloadEntity quDuanDownloadEntity = this.quDuanDownloadDao.selectByCidAndDataType(czId, userId, (short) 2);
         if (quDuanDownloadEntity == null) {
             quDuanDownloadEntity = new QuDuanDownloadEntity();
             quDuanDownloadEntity.setCid(czId);
-            quDuanDownloadEntity.setDataStatus((short) 1);
+            quDuanDownloadEntity.setUserId(userId);
+            quDuanDownloadEntity.setDataStatus((short) 0);
             quDuanDownloadEntity.setDataType((short) 2);
+            Date date = new Date();
+            quDuanDownloadEntity.setCreateTime(date);
+            quDuanDownloadEntity.setSwitchStatus((short) 1);
+            quDuanDownloadEntity.setUpdateTime(date);
             this.add(quDuanDownloadEntity);
-        } else {
-            quDuanDownloadEntity.setDataStatus(dataStatus);
-            this.edit(quDuanDownloadEntity);
         }
-        return quDuanDownloadEntity.getId();
+        return quDuanDownloadEntity;
     }
 }
 
