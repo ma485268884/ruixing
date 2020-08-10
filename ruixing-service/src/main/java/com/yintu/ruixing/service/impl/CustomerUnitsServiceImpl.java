@@ -21,8 +21,8 @@ public class CustomerUnitsServiceImpl implements CustomerUnitsService {
     private CustomerUnitsDao customerUnitsDao;
 
     @Override
-    public List<CustomerUnitsEntity> findAll(CustomerUnitsEntity entity) {
-        return customerUnitsDao.selectByName(entity);
+    public List<CustomerUnitsEntity> findByExample(CustomerUnitsEntity entity) {
+        return customerUnitsDao.selectByExample(entity);
     }
 
     @Override

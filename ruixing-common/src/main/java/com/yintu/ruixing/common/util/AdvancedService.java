@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface AdvancedService<T extends Serializable, PK extends Serializable> extends BaseService<T, PK> {
 
-    List<T> findAll(T entity);
+    List<T> findByExample(T entity);
 
     void removeByIds(PK[] ids);
 

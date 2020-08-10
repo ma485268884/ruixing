@@ -17,5 +17,5 @@ public interface CustomerUnitsDao {
 
     int updateByPrimaryKey(CustomerUnitsEntity record);
 
-    List<CustomerUnitsEntity> selectByName(CustomerUnitsEntity customerUnitsEntity);
+    List<CustomerUnitsEntity> selectByExample(CustomerUnitsEntity customerUnitsEntity);
 }
