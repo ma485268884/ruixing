@@ -44,8 +44,9 @@ public class UserEntity implements UserDetails {
 
     private Short isCustomer;
 
-    private List<RoleEntity> roleEntities;
+    private List<DepartmentEntity> departmentEntities;
 
+    private List<RoleEntity> roleEntities;
 
 
     @Override

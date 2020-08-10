@@ -80,7 +80,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity findById(Long id) {
-        return userDao.selectByPrimaryKey(id);
+        UserEntity userEntity = userDao.selectByPrimaryKey(id);
+        if (userEntity != null) {
+            userEntity.setDepartmentEntities(this.findDepartmentsById(userEntity.getId()));
+        }
+        return userEntity;
     }
 
     @Override
@@ -131,6 +135,9 @@ public class UserServiceImpl implements UserService {
             criteria.andUsernameLike("%" + username + "%");
             userEntities = this.findByExample(userEntityExample);
         }
+        for (UserEntity userEntity : userEntities) {
+            userEntity.setDepartmentEntities(this.findDepartmentsById(userEntity.getId()));
+        }
         return userEntities;
     }
 
@@ -157,6 +164,11 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("用户没有分配角色");
         }
         userEntity.setRoleEntities(roleEntities);
+        List<DepartmentEntity> departmentEntities = this.findDepartmentsById(userEntity.getId());
+        if (departmentEntities.isEmpty()) {
+            throw new UsernameNotFoundException("用户没有添加部门");
+        }
+        userEntity.setDepartmentEntities(departmentEntities);
         return userEntity;
     }
 
