@@ -1,5 +1,6 @@
 package com.yintu.ruixing.service;
 
+import com.yintu.ruixing.common.util.BaseService;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.DepartmentEntity;
 import com.yintu.ruixing.entity.DepartmentEntityExample;
@@ -10,27 +11,14 @@ import java.util.List;
  * @author:mlf
  * @date:2020/5/27 11:59
  */
-public interface DepartmentService {
+public interface DepartmentService extends BaseService<DepartmentEntity, Long> {
     /**
-     * 添加部门
+     * id集合查询
      *
-     * @param departmentEntity 部门信息
+     * @param ids id集合
+     * @return 部门集合
      */
-    void add(DepartmentEntity departmentEntity);
-
-    /**
-     * 修改部门
-     *
-     * @param departmentEntity 部门信息
-     */
-    void edit(DepartmentEntity departmentEntity);
-
-    /**
-     * 删除
-     *
-     * @param id id
-     */
-    void remove(Long id);
+    List<DepartmentEntity> findByIds(List<Long> ids);
 
     /**
      * 按照条件删除
@@ -39,13 +27,6 @@ public interface DepartmentService {
      */
     void removeByExample(DepartmentEntityExample departmentEntityExample);
 
-    /**
-     * 按照id查询部门信息
-     *
-     * @param id id
-     * @return 部门信息
-     */
-    DepartmentEntity findById(Long id);
 
     /**
      * 按照条件查询部门集合
@@ -70,5 +51,6 @@ public interface DepartmentService {
      * @param isFirst 是否第一次
      */
     void removeByIdAndIsFirst(Long id, Boolean isFirst);
+
 
 }

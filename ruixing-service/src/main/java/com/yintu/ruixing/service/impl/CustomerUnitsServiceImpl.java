@@ -21,13 +21,13 @@ public class CustomerUnitsServiceImpl implements CustomerUnitsService {
     private CustomerUnitsDao customerUnitsDao;
 
     @Override
-    public List<CustomerUnitsEntity> findAll(CustomerUnitsEntity entity) {
-        return customerUnitsDao.selectByName(entity);
+    public List<CustomerUnitsEntity> findByExample(CustomerUnitsEntity entity) {
+        return customerUnitsDao.selectByExample(entity);
     }
 
     @Override
-    public void removeByIds(Integer[] ids) {
-        for (Integer id : ids) {
+    public void removeByIds(Long[] ids) {
+        for (Long id : ids) {
             this.remove(id);
         }
     }
@@ -35,21 +35,24 @@ public class CustomerUnitsServiceImpl implements CustomerUnitsService {
     @Override
     public void add(CustomerUnitsEntity entity) {
         entity.setCreateTime(new Date());
+        entity.setModifiedTime(new Date());
         customerUnitsDao.insertSelective(entity);
     }
 
     @Override
-    public void remove(Integer id) {
+    public void remove(Long id) {
         customerUnitsDao.deleteByPrimaryKey(id);
     }
 
     @Override
     public void edit(CustomerUnitsEntity entity) {
+        entity.setModifiedTime(new Date());
         customerUnitsDao.updateByPrimaryKeySelective(entity);
+
     }
 
     @Override
-    public CustomerUnitsEntity findById(Integer id) {
+    public CustomerUnitsEntity findById(Long id) {
         return customerUnitsDao.selectByPrimaryKey(id);
     }
 }

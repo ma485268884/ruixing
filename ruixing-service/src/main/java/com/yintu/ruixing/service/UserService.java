@@ -2,6 +2,8 @@ package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.common.util.BaseService;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
+import com.yintu.ruixing.dao.DepartmentDao;
+import com.yintu.ruixing.entity.DepartmentEntity;
 import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.entity.UserEntityExample;
@@ -34,7 +36,7 @@ public interface UserService extends UserDetailsService, BaseService<UserEntity,
      * @param userEntity 用户信息
      * @param roleIds    角色id集
      */
-    void addUserAndRoles(UserEntity userEntity, Long[] roleIds);
+    void addUserAndRoles(UserEntity userEntity, Long[] roleIds, Long[] departmentIds, String loginUserName);
 
     /**
      * 修改用户并且重新分配角色
@@ -43,7 +45,7 @@ public interface UserService extends UserDetailsService, BaseService<UserEntity,
      * @param roleIds    角色id集
      */
 
-    void editUserAndRoles(UserEntity userEntity, Long[] roleIds);
+    void editUserAndRoles(UserEntity userEntity, Long[] roleIds, Long[] departmentIds, String loginUserName);
 
     /**
      * 通过真实姓名查询用户
@@ -71,12 +73,27 @@ public interface UserService extends UserDetailsService, BaseService<UserEntity,
     List<RoleEntity> findRolesById(Long id);
 
     /**
+     * 通过用户id查询角色
+     *
+     * @param id 用户id
+     * @return 角色信息
+     */
+
+    List<DepartmentEntity> findDepartmentsById(Long id);
+
+    /**
      * 指定用户分配角色
      *
      * @param Id      用户id
      * @param roleIds 角色id集
      */
     void addRolesByIdAndRoleIds(Long Id, Long[] roleIds);
+
+    /**
+     * @param id             用户id
+     * @param departmentsIds 部门id集
+     */
+    void addDepartmentsByIdAndDepartmentIds(Long id, Long[] departmentsIds, String loginUsername);
 
 
     /**

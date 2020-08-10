@@ -1,23 +1,20 @@
 package com.yintu.ruixing.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DepartmentEntity implements Serializable {
-    private static final long serialVersionUID = -1781483341931616568L;
+public class CustomerDutyEntity implements Serializable {
+    private static final long serialVersionUID = 777657015259947938L;
     private Long id;
-    @NotNull
-    private Long parentId;
 
     private String createBy;
 
@@ -27,9 +24,8 @@ public class DepartmentEntity implements Serializable {
 
     private Date modifiedTime;
     @NotBlank
+    @Length(min = 1, max = 50)
     private String name;
-    @NotNull
-    private Long customerUnitsId;
 
 
 }

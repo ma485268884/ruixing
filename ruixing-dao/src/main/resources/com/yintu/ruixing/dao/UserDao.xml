@@ -13,14 +13,7 @@
         <result column="enableds" jdbcType="SMALLINT" property="enableds"/>
         <result column="salt" jdbcType="VARCHAR" property="salt"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-        <result column="department_id" jdbcType="BIGINT" property="departmentId"/>
         <result column="is_customer" jdbcType="SMALLINT" property="isCustomer"/>
-        <association column="department_id" property="departmentEntity">
-            <id column="did" property="id"/>
-            <result column="dparent_id" property="parentId"/>
-            <result column="dname" property="name"/>
-            <result column="dcreate_time" property="createTime"/>
-        </association>
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -83,12 +76,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        u.id, u.username, u.password, u.true_name, u.phone, u.email, u.auth_type, u.locked, u.enableds, u.salt,
-    u.create_time, department_id, is_customer,
-    d.id as did,
-    d.parent_id as dparent_id,
-    d.name as dname,
-    d.create_time as dcreate_time
+        id, username, password, true_name, phone, email, auth_type, locked, enableds, salt,create_time, is_customer
     </sql>
     <select id="selectByExample" parameterType="com.yintu.ruixing.entity.UserEntityExample" resultMap="BaseResultMap">
         select
@@ -96,7 +84,7 @@
             distinct
         </if>
         <include refid="Base_Column_List"/>
-        from tb_user u inner join tb_department d on u.department_id = d.id
+        from tb_user
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
@@ -107,8 +95,8 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_user u inner join tb_department d on u.department_id = d.id
-        where u.id = #{id,jdbcType=BIGINT}
+        from tb_user
+        where id = #{id,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
@@ -125,13 +113,11 @@
         insert into tb_user (id, username, password,
                              true_name, phone, email,
                              auth_type, locked, enableds,
-                             salt, create_time, department_id,
-                             is_customer)
+                             salt, create_time, is_customer)
         values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
                 #{trueName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
                 #{authType,jdbcType=SMALLINT}, #{locked,jdbcType=SMALLINT}, #{enableds,jdbcType=SMALLINT},
-                #{salt,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{departmentId,jdbcType=BIGINT},
-                #{isCustomer,jdbcType=SMALLINT})
+                #{salt,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{isCustomer,jdbcType=SMALLINT})
     </insert>
     <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
         insert into tb_user
@@ -168,9 +154,6 @@
             </if>
             <if test="createTime != null">
                 create_time,
-            </if>
-            <if test="departmentId != null">
-                department_id,
             </if>
             <if test="isCustomer != null">
                 is_customer,
@@ -209,9 +192,6 @@
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="departmentId != null">
-                #{departmentId,jdbcType=BIGINT},
             </if>
             <if test="isCustomer != null">
                 #{isCustomer,jdbcType=SMALLINT},
@@ -260,9 +240,6 @@
             <if test="record.createTime != null">
                 create_time = #{record.createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="record.departmentId != null">
-                department_id = #{record.departmentId,jdbcType=BIGINT},
-            </if>
             <if test="record.isCustomer != null">
                 is_customer = #{record.isCustomer,jdbcType=SMALLINT},
             </if>
@@ -284,7 +261,6 @@
         enableds = #{record.enableds,jdbcType=SMALLINT},
         salt = #{record.salt,jdbcType=VARCHAR},
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
-        department_id = #{record.departmentId,jdbcType=BIGINT},
         is_customer = #{record.isCustomer,jdbcType=SMALLINT}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
@@ -323,9 +299,6 @@
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="departmentId != null">
-                department_id = #{departmentId,jdbcType=BIGINT},
-            </if>
             <if test="isCustomer != null">
                 is_customer = #{isCustomer,jdbcType=SMALLINT},
             </if>
@@ -334,18 +307,17 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.UserEntity">
         update tb_user
-        set username      = #{username,jdbcType=VARCHAR},
-            password      = #{password,jdbcType=VARCHAR},
-            true_name     = #{trueName,jdbcType=VARCHAR},
-            phone         = #{phone,jdbcType=VARCHAR},
-            email         = #{email,jdbcType=VARCHAR},
-            auth_type     = #{authType,jdbcType=SMALLINT},
-            locked        = #{locked,jdbcType=SMALLINT},
-            enableds      = #{enableds,jdbcType=SMALLINT},
-            salt          = #{salt,jdbcType=VARCHAR},
-            create_time   = #{createTime,jdbcType=TIMESTAMP},
-            department_id = #{departmentId,jdbcType=BIGINT},
-            is_customer   = #{isCustomer,jdbcType=SMALLINT}
+        set username    = #{username,jdbcType=VARCHAR},
+            password    = #{password,jdbcType=VARCHAR},
+            true_name   = #{trueName,jdbcType=VARCHAR},
+            phone       = #{phone,jdbcType=VARCHAR},
+            email       = #{email,jdbcType=VARCHAR},
+            auth_type   = #{authType,jdbcType=SMALLINT},
+            locked      = #{locked,jdbcType=SMALLINT},
+            enableds    = #{enableds,jdbcType=SMALLINT},
+            salt        = #{salt,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            is_customer = #{isCustomer,jdbcType=SMALLINT}
         where id = #{id,jdbcType=BIGINT}
     </update>
 

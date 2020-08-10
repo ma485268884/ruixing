@@ -61,13 +61,13 @@
         <!--               enableDeleteByExample="false"-->
         <!--               enableUpdateByExample="false"-->
         <!--               enableSelectByExample="false"/>-->
-        <table tableName="mro_customer_units"
-               domainObjectName="CustomerUnitsEntity"
-               mapperName="CustomerUnitsDao"
-               enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableUpdateByExample="false"
-               enableSelectByExample="false"/>
+        <table tableName="tb_department_user"
+               domainObjectName="DepartmentUserEntity"
+               mapperName="DepartmentUserDao"/>
+<!--               enableCountByExample="false"-->
+<!--               enableDeleteByExample="false"-->
+<!--               enableUpdateByExample="false"-->
+<!--               enableSelectByExample="false"/>-->
 
     </context>
 </generatorConfiguration>

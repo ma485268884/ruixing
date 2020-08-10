@@ -5,6 +5,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.entity.DepartmentEntity;
 import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.PermissionService;
@@ -31,14 +32,13 @@ public class UserController extends SessionController {
 
 
     @PostMapping
-    public Map<String, Object> add(UserEntity userEntity, @RequestParam Long[] roleIds) {
+    public Map<String, Object> add(UserEntity userEntity, @RequestParam Long[] roleIds, @RequestParam Long[] departmentIds) {
         Assert.notNull(userEntity.getUsername(), "用户名不能为空");
         Assert.notNull(userEntity.getPassword(), "密码不能为空");
         Assert.notNull(userEntity.getAuthType(), "类型不能为空");
         Assert.notNull(userEntity.getEnableds(), "状态不能为空");
-        Assert.notNull(userEntity.getDepartmentId(), "部门id不能为空");
         userEntity.setIsCustomer((short) 0);
-        userService.addUserAndRoles(userEntity, roleIds);
+        userService.addUserAndRoles(userEntity, roleIds, departmentIds, this.getLoginUserName());
         return ResponseDataUtil.ok("添加用户成功");
     }
 
@@ -49,14 +49,13 @@ public class UserController extends SessionController {
     }
 
     @PutMapping("/{id}")
-    public Map<String, Object> edit(@PathVariable Long id, UserEntity userEntity, @RequestParam Long[] roleIds) {
+    public Map<String, Object> edit(@PathVariable Long id, UserEntity userEntity, @RequestParam Long[] roleIds, @RequestParam Long[] departmentIds) {
         Assert.notNull(userEntity.getUsername(), "用户名不能为空");
         Assert.notNull(userEntity.getPassword(), "密码不能为空");
         Assert.notNull(userEntity.getAuthType(), "类型不能为空");
         Assert.notNull(userEntity.getEnableds(), "状态不能为空");
-        Assert.notNull(userEntity.getDepartmentId(), "部门id不能为空");
         userEntity.setIsCustomer((short) 0);
-        userService.editUserAndRoles(userEntity, roleIds);
+        userService.editUserAndRoles(userEntity, roleIds, departmentIds, this.getLoginUserName());
         return ResponseDataUtil.ok("修改用户成功");
     }
 
@@ -85,6 +84,12 @@ public class UserController extends SessionController {
     public Map<String, Object> findRolesById(@PathVariable Long id) {
         List<RoleEntity> roleEntities = userService.findRolesById(id);
         return ResponseDataUtil.ok("查询用户角色成功", roleEntities);
+    }
+
+    @GetMapping("/{id}/departments")
+    public Map<String, Object> findDepartmentsById(@PathVariable Long id) {
+        List<DepartmentEntity> departmentEntities = userService.findDepartmentsById(id);
+        return ResponseDataUtil.ok("查询用户部门成功", departmentEntities);
     }
 
 }
