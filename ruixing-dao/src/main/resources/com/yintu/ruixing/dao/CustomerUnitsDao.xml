@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yintu.ruixing.dao.CustomerUnitsDao">
     <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.CustomerUnitsEntity">
-        <id column="id" jdbcType="INTEGER" property="id"/>
+        <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="modified_by" jdbcType="VARCHAR" property="modifiedBy"/>
@@ -17,18 +17,18 @@
         select
         <include refid="Base_Column_List"/>
         from mro_customer_units
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from mro_customer_units
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </delete>
     <insert id="insert" parameterType="com.yintu.ruixing.entity.CustomerUnitsEntity">
         insert into mro_customer_units (id, create_by, create_time,
                                         modified_by, modified_time, category,
                                         name)
-        values (#{id,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+        values (#{id,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
                 #{modifiedBy,jdbcType=VARCHAR}, #{modifiedTime,jdbcType=TIMESTAMP}, #{category,jdbcType=SMALLINT},
                 #{name,jdbcType=VARCHAR})
     </insert>
@@ -59,7 +59,7 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
-                #{id,jdbcType=INTEGER},
+                #{id,jdbcType=BIGINT},
             </if>
             <if test="createBy != null">
                 #{createBy,jdbcType=VARCHAR},
@@ -103,7 +103,7 @@
                 name = #{name,jdbcType=VARCHAR},
             </if>
         </set>
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.CustomerUnitsEntity">
         update mro_customer_units
@@ -113,7 +113,7 @@
             modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
             category      = #{category,jdbcType=SMALLINT},
             name          = #{name,jdbcType=VARCHAR}
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </update>
     <select id="selectByExample" resultMap="BaseResultMap">
         select

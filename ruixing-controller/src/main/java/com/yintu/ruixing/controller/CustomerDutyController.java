@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/customer/duty")
-public class CustomerDutyController extends SessionController implements BaseController<CustomerDutyEntity, Integer> {
+public class CustomerDutyController extends SessionController implements BaseController<CustomerDutyEntity, Long> {
     @Autowired
     private CustomerDutyService customerDutyService;
 
@@ -30,31 +30,31 @@ public class CustomerDutyController extends SessionController implements BaseCon
         entity.setCreateBy(this.getLoginUserName());
         entity.setModifiedBy(this.getLoginUserName());
         customerDutyService.add(entity);
-        return ResponseDataUtil.ok("添加职务信息成功");
+        return ResponseDataUtil.ok("添加顾客职务信息成功");
     }
 
     @Override
-    public Map<String, Object> remove(Integer id) {
+    public Map<String, Object> remove(Long id) {
         return null;
     }
 
     @DeleteMapping("/{ids}")
-    public Map<String, Object> remove(@PathVariable Integer[] ids) {
+    public Map<String, Object> remove(@PathVariable Long[] ids) {
         customerDutyService.removeByIds(ids);
-        return ResponseDataUtil.ok("删除职务信息成功");
+        return ResponseDataUtil.ok("删除顾客职务信息成功");
     }
 
     @PutMapping("/{id}")
-    public Map<String, Object> edit(@PathVariable Integer id, @Validated CustomerDutyEntity entity) {
+    public Map<String, Object> edit(@PathVariable Long id, @Validated CustomerDutyEntity entity) {
         entity.setModifiedBy(this.getLoginUserName());
         customerDutyService.edit(entity);
-        return ResponseDataUtil.ok("修改职务信息成功");
+        return ResponseDataUtil.ok("修改顾客职务信息成功");
     }
 
     @GetMapping("/{id}")
-    public Map<String, Object> findById(@PathVariable Integer id) {
+    public Map<String, Object> findById(@PathVariable Long id) {
         CustomerDutyEntity customerDutyEntity = customerDutyService.findById(id);
-        return ResponseDataUtil.ok("修改职务信息成功", customerDutyEntity);
+        return ResponseDataUtil.ok("修改顾客职务信息成功", customerDutyEntity);
     }
 
     @GetMapping
@@ -65,7 +65,7 @@ public class CustomerDutyController extends SessionController implements BaseCon
         PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<CustomerDutyEntity> customerDutyEntities = customerDutyService.findByExample(new CustomerDutyEntity(null, null, null, null, null, name));
         PageInfo<CustomerDutyEntity> pageInfo = new PageInfo<>(customerDutyEntities);
-        return ResponseDataUtil.ok("查询职务列表信息成功", pageInfo);
+        return ResponseDataUtil.ok("查询顾客职务列表信息成功", pageInfo);
     }
 
 }

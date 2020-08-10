@@ -3,6 +3,7 @@ package com.yintu.ruixing.service.impl;
 import com.yintu.ruixing.common.enumobject.EnumAuthType;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
+import com.yintu.ruixing.dao.DepartmentDao;
 import com.yintu.ruixing.dao.UserDao;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.*;
@@ -25,7 +26,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleService roleService;
     @Autowired
+    private DepartmentUserService departmentUserService;
+    @Autowired
+    private DepartmentService departmentService;
+    @Autowired
     private UserRoleService userRoleService;
+
 
     @Override
     public void add(UserEntity userEntity) {
@@ -91,15 +97,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUserAndRoles(UserEntity userEntity, Long[] roleIds) {
+    public void addUserAndRoles(UserEntity userEntity, Long[] roleIds, Long[] departmentIds, String loginUserName) {
         this.add(userEntity);
         this.addRolesByIdAndRoleIds(userEntity.getId(), roleIds);
+        this.addDepartmentsByIdAndDepartmentIds(userEntity.getId(), departmentIds, loginUserName);
     }
 
     @Override
-    public void editUserAndRoles(UserEntity userEntity, Long[] roleIds) {
+    public void editUserAndRoles(UserEntity userEntity, Long[] roleIds, Long[] departmentIds, String loginUserName) {
         this.edit(userEntity);
         this.addRolesByIdAndRoleIds(userEntity.getId(), roleIds);
+        this.addDepartmentsByIdAndDepartmentIds(userEntity.getId(), departmentIds, loginUserName);
 
     }
 
@@ -159,6 +167,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<DepartmentEntity> findDepartmentsById(Long id) {
+        DepartmentUserEntityExample departmentUserEntityExample = new DepartmentUserEntityExample();
+        DepartmentUserEntityExample.Criteria criteria = departmentUserEntityExample.createCriteria();
+        criteria.andUserIdEqualTo(id);
+        List<DepartmentUserEntity> departmentUserEntities = departmentUserService.findByExample(departmentUserEntityExample);
+        List<Long> departmentIds = new ArrayList<>();
+        for (DepartmentUserEntity departmentUserEntity : departmentUserEntities) {
+            departmentIds.add(departmentUserEntity.getDepartmentId());
+        }
+        return departmentService.findByIds(departmentIds);
+    }
+
+    @Override
     public void addRolesByIdAndRoleIds(Long id, Long[] roleIds) {
         //去重
         Set<Long> set = new HashSet<>(Arrays.asList(roleIds));
@@ -190,6 +211,48 @@ public class UserServiceImpl implements UserService {
                         userRoleEntity.setUserId(id);
                         userRoleEntity.setRoleId(roleId);
                         userRoleService.add(userRoleEntity);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void addDepartmentsByIdAndDepartmentIds(Long id, Long[] departmentsIds, String loginUserName) {
+        //去重
+        Set<Long> set = new HashSet<>(Arrays.asList(departmentsIds));
+
+        UserEntity userEntity = this.findById(id);
+        if (userEntity != null) {//判断当前用户是否存在
+            //查询当前用户添加的部门
+            DepartmentUserEntityExample departmentUserEntityExample = new DepartmentUserEntityExample();
+            DepartmentUserEntityExample.Criteria criteria = departmentUserEntityExample.createCriteria();
+            criteria.andUserIdEqualTo(id);
+            List<DepartmentUserEntity> departmentUserEntities = departmentUserService.findByExample(departmentUserEntityExample);
+
+            //删除当前用户添加的部门
+            if (departmentUserEntities.size() > 0) {
+                List<Long> longs = new ArrayList<>();
+                for (DepartmentUserEntity departmentUserEntity : departmentUserEntities) {
+                    longs.add(departmentUserEntity.getDepartmentId());
+                }
+                criteria.andDepartmentIdIn(longs);
+                departmentUserService.removeByExample(departmentUserEntityExample);
+            }
+
+            //添加当前用户新添加的部门
+            for (Long departmentId : set) {
+                if (departmentId != null) {
+                    DepartmentEntity departmentEntity = departmentService.findById(departmentId);
+                    if (departmentEntity != null) {
+                        DepartmentUserEntity departmentUserEntity = new DepartmentUserEntity();
+                        departmentUserEntity.setCreateBy(loginUserName);
+                        departmentUserEntity.setCreateTime(new Date());
+                        departmentUserEntity.setModifiedBy(loginUserName);
+                        departmentUserEntity.setModifiedTime(new Date());
+                        departmentUserEntity.setDepartmentId(departmentId);
+                        departmentUserEntity.setUserId(id);
+                        departmentUserService.add(departmentUserEntity);
                     }
                 }
             }

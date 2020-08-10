@@ -11,6 +11,7 @@ public class TreeNodeUtil {
 
     private Long id;
     private String label;
+    private String value;
     private String icon;
     private Map<String, Boolean> state;
     private List<TreeNodeUtil> children;
@@ -29,8 +30,16 @@ public class TreeNodeUtil {
         return label;
     }
 
-    public void setLabel(String text) {
-        this.label = text;
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public String getIcon() {
@@ -78,6 +87,7 @@ public class TreeNodeUtil {
         return "TreeNodeUtil{" +
                 "id=" + id +
                 ", label='" + label + '\'' +
+                ", value='" + value + '\'' +
                 ", icon='" + icon + '\'' +
                 ", state=" + state +
                 ", children=" + children +

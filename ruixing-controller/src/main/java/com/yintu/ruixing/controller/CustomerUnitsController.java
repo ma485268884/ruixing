@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/customer/units")
-public class CustomerUnitsController extends SessionController implements BaseController<CustomerUnitsEntity, Integer> {
+public class CustomerUnitsController extends SessionController implements BaseController<CustomerUnitsEntity, Long> {
     @Autowired
     private CustomerUnitsService customerUnitsService;
 
@@ -34,25 +34,25 @@ public class CustomerUnitsController extends SessionController implements BaseCo
     }
 
     @Override
-    public Map<String, Object> remove(Integer id) {
+    public Map<String, Object> remove(Long id) {
         return null;
     }
 
     @DeleteMapping("/{ids}")
-    public Map<String, Object> remove(@PathVariable Integer[] ids) {
+    public Map<String, Object> remove(@PathVariable Long[] ids) {
         customerUnitsService.removeByIds(ids);
         return ResponseDataUtil.ok("删除顾客单位信息成功");
     }
 
     @PutMapping("/{id}")
-    public Map<String, Object> edit(@PathVariable Integer id, @Validated CustomerUnitsEntity entity) {
+    public Map<String, Object> edit(@PathVariable Long id, @Validated CustomerUnitsEntity entity) {
         entity.setModifiedBy(this.getLoginUserName());
         customerUnitsService.edit(entity);
         return ResponseDataUtil.ok("修改顾客单位信息成功");
     }
 
     @GetMapping("/{id}")
-    public Map<String, Object> findById(@PathVariable Integer id) {
+    public Map<String, Object> findById(@PathVariable Long id) {
         CustomerUnitsEntity customerUnitsEntity = customerUnitsService.findById(id);
         return ResponseDataUtil.ok("查询顾客单位信息成功", customerUnitsEntity);
     }

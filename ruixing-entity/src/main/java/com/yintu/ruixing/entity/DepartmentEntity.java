@@ -5,19 +5,31 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DepartmentEntity {
+public class DepartmentEntity implements Serializable {
+    private static final long serialVersionUID = -1781483341931616568L;
     private Long id;
-
+    @NotNull
     private Long parentId;
 
-    private String name;
+    private String createBy;
 
-    @JSONField(format = "yyyy-MM-dd hh:mm:ss")
     private Date createTime;
+
+    private String modifiedBy;
+
+    private Date modifiedTime;
+    @NotBlank
+    private String name;
+    @NotNull
+    private Long customerUnitsId;
+
 
 }

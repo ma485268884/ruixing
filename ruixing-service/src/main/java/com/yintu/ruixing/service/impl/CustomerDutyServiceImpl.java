@@ -27,8 +27,8 @@ public class CustomerDutyServiceImpl implements CustomerDutyService {
     }
 
     @Override
-    public void removeByIds(Integer[] ids) {
-        for (Integer id : ids) {
+    public void removeByIds(Long[] ids) {
+        for (Long id : ids) {
             this.remove(id);
         }
     }
@@ -41,7 +41,7 @@ public class CustomerDutyServiceImpl implements CustomerDutyService {
     }
 
     @Override
-    public void remove(Integer id) {
+    public void remove(Long id) {
         customerDutyDao.deleteByPrimaryKey(id);
     }
 
@@ -52,7 +52,7 @@ public class CustomerDutyServiceImpl implements CustomerDutyService {
     }
 
     @Override
-    public CustomerDutyEntity findById(Integer id) {
+    public CustomerDutyEntity findById(Long id) {
         return customerDutyDao.selectByPrimaryKey(id);
     }
 }

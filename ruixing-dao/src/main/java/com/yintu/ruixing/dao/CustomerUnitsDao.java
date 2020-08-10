@@ -5,13 +5,13 @@ import com.yintu.ruixing.entity.CustomerUnitsEntity;
 import java.util.List;
 
 public interface CustomerUnitsDao {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(CustomerUnitsEntity record);
 
     int insertSelective(CustomerUnitsEntity record);
 
-    CustomerUnitsEntity selectByPrimaryKey(Integer id);
+    CustomerUnitsEntity selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(CustomerUnitsEntity record);
 

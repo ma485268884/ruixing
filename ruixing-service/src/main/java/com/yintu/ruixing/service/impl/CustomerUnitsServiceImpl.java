@@ -26,8 +26,8 @@ public class CustomerUnitsServiceImpl implements CustomerUnitsService {
     }
 
     @Override
-    public void removeByIds(Integer[] ids) {
-        for (Integer id : ids) {
+    public void removeByIds(Long[] ids) {
+        for (Long id : ids) {
             this.remove(id);
         }
     }
@@ -40,7 +40,7 @@ public class CustomerUnitsServiceImpl implements CustomerUnitsService {
     }
 
     @Override
-    public void remove(Integer id) {
+    public void remove(Long id) {
         customerUnitsDao.deleteByPrimaryKey(id);
     }
 
@@ -52,7 +52,7 @@ public class CustomerUnitsServiceImpl implements CustomerUnitsService {
     }
 
     @Override
-    public CustomerUnitsEntity findById(Integer id) {
+    public CustomerUnitsEntity findById(Long id) {
         return customerUnitsDao.selectByPrimaryKey(id);
     }
 }

@@ -96,7 +96,6 @@ public class TestController {
                         userEntity.setTrueName("马葳严");
                         userEntity.setIsCustomer((short) 0);
                         userEntity.setEnableds((short) 1);
-                        userEntity.setDepartmentId(1L);
                         userService.add(userEntity);
                     }
                 }

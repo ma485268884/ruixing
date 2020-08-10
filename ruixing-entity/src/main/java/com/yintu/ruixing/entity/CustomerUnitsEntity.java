@@ -16,7 +16,7 @@ import java.util.Date;
 public class CustomerUnitsEntity implements Serializable {
     private static final long serialVersionUID = 4122923342722134486L;
 
-    private Integer id;
+    private Long id;
 
     private String createBy;
 

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.entity.DepartmentEntity;
 import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.PermissionService;
@@ -29,13 +30,12 @@ public class CustomerController extends SessionController {
 
 
     @PostMapping
-    public Map<String, Object> add(UserEntity userEntity, @RequestParam Long[] roleIds) {
+    public Map<String, Object> add(UserEntity userEntity, @RequestParam Long[] roleIds, @RequestParam Long[] departmentIds) {
         Assert.notNull(userEntity.getUsername(), "用户名不能为空");
         Assert.notNull(userEntity.getPassword(), "密码不能为空");
         Assert.notNull(userEntity.getEnableds(), "状态不能为空");
-        Assert.notNull(userEntity.getDepartmentId(), "部门id不能为空");
         userEntity.setIsCustomer((short) 1);
-        userService.addUserAndRoles(userEntity, roleIds);
+        userService.addUserAndRoles(userEntity, roleIds, departmentIds, this.getLoginUserName());
         return ResponseDataUtil.ok("添加客户成功");
     }
 
@@ -46,13 +46,12 @@ public class CustomerController extends SessionController {
     }
 
     @PutMapping("/{id}")
-    public Map<String, Object> edit(@PathVariable Long id, UserEntity userEntity, @RequestParam Long[] roleIds) {
+    public Map<String, Object> edit(@PathVariable Long id, UserEntity userEntity, @RequestParam Long[] roleIds, @RequestParam Long[] departmentIds) {
         Assert.notNull(userEntity.getUsername(), "用户名不能为空");
         Assert.notNull(userEntity.getPassword(), "密码不能为空");
         Assert.notNull(userEntity.getEnableds(), "状态不能为空");
-        Assert.notNull(userEntity.getDepartmentId(), "部门id不能为空");
         userEntity.setIsCustomer((short) 1);
-        userService.editUserAndRoles(userEntity, roleIds);
+        userService.editUserAndRoles(userEntity, roleIds, departmentIds, this.getLoginUserName());
         return ResponseDataUtil.ok("修改客户成功");
     }
 
@@ -82,4 +81,11 @@ public class CustomerController extends SessionController {
         List<RoleEntity> roleEntities = userService.findRolesById(id);
         return ResponseDataUtil.ok("查询客户角色成功", roleEntities);
     }
+
+    @GetMapping("/{id}/departments")
+    public Map<String, Object> findDepartmentsById(@PathVariable Long id) {
+        List<DepartmentEntity> departmentEntities = userService.findDepartmentsById(id);
+        return ResponseDataUtil.ok("查询客户部门成功", departmentEntities);
+    }
+
 }

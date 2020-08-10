@@ -46,9 +46,6 @@ public class UserEntity implements UserDetails {
 
     private List<RoleEntity> roleEntities;
 
-    private Long departmentId;
-
-    private DepartmentEntity departmentEntity;
 
 
     @Override

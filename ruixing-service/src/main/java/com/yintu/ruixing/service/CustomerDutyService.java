@@ -7,5 +7,5 @@ import com.yintu.ruixing.entity.CustomerDutyEntity;
  * @author:mlf
  * @date:2020/8/10 14:28
  */
-public interface CustomerDutyService extends AdvancedService<CustomerDutyEntity, Integer> {
+public interface CustomerDutyService extends AdvancedService<CustomerDutyEntity, Long> {
 }

@@ -33,6 +33,7 @@ public class DepartmentServiceImpl implements DepartmentService {
             throw new BaseRuntimeException("添加失败，部门名重复");
         }
         departmentEntity.setCreateTime(new Date());
+        departmentEntity.setModifiedTime(new Date());
         departmentDao.insertSelective(departmentEntity);
     }
 
@@ -45,6 +46,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         if (departmentEntitis.size() > 0 && !departmentEntitis.get(0).getId().equals(departmentEntity.getId())) {
             throw new BaseRuntimeException("修改失败，部门名重复");
         }
+        departmentEntity.setModifiedTime(new Date());
         departmentDao.updateByPrimaryKeySelective(departmentEntity);
     }
 
@@ -64,6 +66,14 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    public List<DepartmentEntity> findByIds(List<Long> ids) {
+        DepartmentEntityExample departmentEntityExample = new DepartmentEntityExample();
+        DepartmentEntityExample.Criteria criteria = departmentEntityExample.createCriteria();
+        criteria.andIdIn(ids);
+        return ids.isEmpty() ? new ArrayList<>() : this.findByExample(departmentEntityExample);
+    }
+
+    @Override
     public List<DepartmentEntity> findByExample(DepartmentEntityExample departmentEntityExample) {
         return departmentDao.selectByExample(departmentEntityExample);
     }
@@ -80,9 +90,13 @@ public class DepartmentServiceImpl implements DepartmentService {
             TreeNodeUtil treeNodeUtil = new TreeNodeUtil();
             treeNodeUtil.setId(departmentEntity.getId());
             treeNodeUtil.setLabel(departmentEntity.getName());
+            treeNodeUtil.setValue(departmentEntity.getId().toString());
             Map<String, Object> map = new HashMap<>();
             map.put("parentId", departmentEntity.getParentId());
-            map.put("create_time",departmentEntity.getCreateTime());
+            map.put("create_by", departmentEntity.getCreateBy());
+            map.put("create_time", departmentEntity.getCreateTime());
+            map.put("modified_by", departmentEntity.getModifiedBy());
+            map.put("modified_time", departmentEntity.getModifiedTime());
             treeNodeUtil.setA_attr(map);
             treeNodeUtil.setChildren(this.findDepartmentTree(departmentEntity.getId()));
             treeNodeUtils.add(treeNodeUtil);
@@ -109,4 +123,6 @@ public class DepartmentServiceImpl implements DepartmentService {
             }
         }
     }
+
+
 }

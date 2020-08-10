@@ -6,7 +6,7 @@ import com.yintu.ruixing.entity.DepartmentEntity;
 import com.yintu.ruixing.entity.DepartmentEntityExample;
 import com.yintu.ruixing.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.Assert;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,9 +23,9 @@ public class DepartmentController extends SessionController {
     private DepartmentService departmentService;
 
     @PostMapping
-    public Map<String, Object> add(DepartmentEntity departmentEntity) {
-        Assert.notNull(departmentEntity.getParentId(), "上级部门id不能为空");
-        Assert.notNull(departmentEntity.getName(), "名称不能为空");
+    public Map<String, Object> add(@Validated DepartmentEntity departmentEntity) {
+        departmentEntity.setCreateBy(this.getLoginUserName());
+        departmentEntity.setModifiedBy(this.getLoginUserName());
         departmentService.add(departmentEntity);
         return ResponseDataUtil.ok("添加部门成功");
     }
@@ -37,10 +37,8 @@ public class DepartmentController extends SessionController {
     }
 
     @PutMapping("/{id}")
-    public Map<String, Object> edit(@PathVariable Long id, DepartmentEntity departmentEntity) {
-        Assert.notNull(id, "id不能为空");
-        Assert.notNull(departmentEntity.getParentId(), "上级部门id不能为空");
-        Assert.notNull(departmentEntity.getName(), "名称不能为空");
+    public Map<String, Object> edit(@PathVariable Long id, @Validated DepartmentEntity departmentEntity) {
+        departmentEntity.setModifiedBy(this.getLoginUserName());
         departmentService.edit(departmentEntity);
         return ResponseDataUtil.ok("修改部门成功");
     }

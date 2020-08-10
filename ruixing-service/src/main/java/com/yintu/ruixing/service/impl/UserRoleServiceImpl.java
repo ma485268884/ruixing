@@ -37,10 +37,6 @@ public class UserRoleServiceImpl implements UserRoleService {
         userRoleDao.deleteByPrimaryKey(id);
     }
 
-    @Override
-    public void removeByExample(UserRoleEntityExample userRoleEntityExample) {
-        userRoleDao.deleteByExample(userRoleEntityExample);
-    }
 
     @Override
     public UserRoleEntity findById(Long id) {
@@ -52,4 +48,10 @@ public class UserRoleServiceImpl implements UserRoleService {
     public List<UserRoleEntity> findByExample(UserRoleEntityExample userRoleEntityExample) {
         return userRoleDao.selectByExample(userRoleEntityExample);
     }
+
+    @Override
+    public void removeByExample(UserRoleEntityExample userRoleEntityExample) {
+        userRoleDao.deleteByExample(userRoleEntityExample);
+    }
+
 }
