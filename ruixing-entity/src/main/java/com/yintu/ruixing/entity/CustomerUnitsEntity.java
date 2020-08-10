@@ -14,13 +14,21 @@ import java.util.Date;
 @AllArgsConstructor
 public class CustomerUnitsEntity implements Serializable {
     private static final long serialVersionUID = 4122923342722134486L;
+
     private Integer id;
+
+    private String createBy;
+
+    private Date createTime;
+
+    private String modifiedBy;
+
+    private Date modifiedTime;
+
     @NotNull
     private Short category;
     @NotBlank
     private String name;
-
-    private Date createTime;
 
 
 }

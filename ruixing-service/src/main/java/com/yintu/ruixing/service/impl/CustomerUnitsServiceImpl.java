@@ -35,6 +35,7 @@ public class CustomerUnitsServiceImpl implements CustomerUnitsService {
     @Override
     public void add(CustomerUnitsEntity entity) {
         entity.setCreateTime(new Date());
+        entity.setModifiedTime(new Date());
         customerUnitsDao.insertSelective(entity);
     }
 
@@ -45,7 +46,9 @@ public class CustomerUnitsServiceImpl implements CustomerUnitsService {
 
     @Override
     public void edit(CustomerUnitsEntity entity) {
+        entity.setModifiedTime(new Date());
         customerUnitsDao.updateByPrimaryKeySelective(entity);
+
     }
 
     @Override

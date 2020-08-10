@@ -66,6 +66,7 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
         quDuanDownloadEntity.setStatus((short) 0);
         quDuanDownloadEntity.setType(type);
         quDuanDownloadEntity.setDataType((short) 1);
+        quDuanDownloadEntity.setCreateTime(new Date());
         this.add(quDuanDownloadEntity);
         return quDuanDownloadEntity.getId();
     }

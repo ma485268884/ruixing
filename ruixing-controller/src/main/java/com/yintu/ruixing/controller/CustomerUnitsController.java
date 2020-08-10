@@ -25,6 +25,8 @@ public class CustomerUnitsController extends SessionController implements BaseCo
 
     @PostMapping
     public Map<String, Object> add(@Validated CustomerUnitsEntity entity) {
+        entity.setCreateBy(this.getLoginUserName());
+        entity.setModifiedBy(this.getLoginUserName());
         customerUnitsService.add(entity);
         return ResponseDataUtil.ok("添加顾客单位信息成功");
     }
@@ -42,6 +44,7 @@ public class CustomerUnitsController extends SessionController implements BaseCo
 
     @PutMapping("/{id}")
     public Map<String, Object> edit(@PathVariable Integer id, CustomerUnitsEntity entity) {
+        entity.setModifiedBy(this.getLoginUserName());
         customerUnitsService.edit(entity);
         return ResponseDataUtil.ok("修改顾客单位信息成功");
     }
@@ -58,7 +61,7 @@ public class CustomerUnitsController extends SessionController implements BaseCo
                                        @RequestParam(value = "order_by", required = false, defaultValue = "id DESC") String orderBy,
                                        @RequestParam(value = "name", required = false) String name) {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
-        List<CustomerUnitsEntity> customerUnitsEntities = customerUnitsService.findAll(new CustomerUnitsEntity(null, null, name, null));
+        List<CustomerUnitsEntity> customerUnitsEntities = customerUnitsService.findAll(new CustomerUnitsEntity(null, null, null, null, null, null, name));
         PageInfo<CustomerUnitsEntity> pageInfo = new PageInfo<>(customerUnitsEntities);
         return ResponseDataUtil.ok("查询顾客单位信息列表成功", pageInfo);
     }

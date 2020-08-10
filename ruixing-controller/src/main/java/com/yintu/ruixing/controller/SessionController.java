@@ -36,6 +36,15 @@ public class SessionController {
     }
 
     /**
+     * 获取登录用户名
+     *
+     * @return 用户名
+     */
+    protected String getLoginUserName() {
+        return this.getLoginUser().getUsername();
+    }
+
+    /**
      * 获取登录用户类型
      *
      * @return 用户类型值
