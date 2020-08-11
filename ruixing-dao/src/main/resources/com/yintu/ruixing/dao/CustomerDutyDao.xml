@@ -23,13 +23,13 @@
         from mro_customer_duty
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.yintu.ruixing.entity.CustomerDutyEntity">
+    <insert id="insert" parameterType="com.yintu.ruixing.entity.CustomerDutyEntity" useGeneratedKeys="true" >
         insert into mro_customer_duty (id, create_by, create_time,
                                        modified_by, modified_time, name)
         values (#{id,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
                 #{modifiedBy,jdbcType=VARCHAR}, #{modifiedTime,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR})
     </insert>
-    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.CustomerDutyEntity">
+    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.CustomerDutyEntity" useGeneratedKeys="true">
         insert into mro_customer_duty
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

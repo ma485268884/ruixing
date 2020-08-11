@@ -2,8 +2,9 @@ package com.yintu.ruixing.service;
 
 import com.yintu.ruixing.common.util.AdvancedService;
 import com.yintu.ruixing.entity.CustomerDutyEntity;
+import com.yintu.ruixing.entity.DepartmentEntity;
 
-import java.util.Date;
+import java.util.List;
 
 /**
  * @author:mlf
@@ -12,8 +13,10 @@ import java.util.Date;
 public interface CustomerDutyService extends AdvancedService<CustomerDutyEntity, Long> {
 
 
-    void add(CustomerDutyEntity entity, Integer[] departmentIds);
+    void add(CustomerDutyEntity entity, Long[] departmentIds, String loginUserName);
 
-    void edit(CustomerDutyEntity entity, Integer[] departmentIds);
+    void edit(CustomerDutyEntity entity, Long[] departmentIds, String loginUserName);
+
+    List<DepartmentEntity> findDepartmentsById(Long id);
 
 }
