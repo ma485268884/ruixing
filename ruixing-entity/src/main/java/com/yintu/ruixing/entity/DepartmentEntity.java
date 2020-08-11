@@ -31,5 +31,7 @@ public class DepartmentEntity implements Serializable {
     @NotNull
     private Long customerUnitsId;
 
+    private CustomerUnitsEntity customerUnitsEntity;
+
 
 }
