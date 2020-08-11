@@ -20,7 +20,7 @@ import java.util.Map;
  * @date:2020/8/10 14:38
  */
 @RestController
-@RequestMapping("/customer/duty")
+@RequestMapping("/customer/duties")
 public class CustomerDutyController extends SessionController implements BaseController<CustomerDutyEntity, Long> {
     @Autowired
     private CustomerDutyService customerDutyService;

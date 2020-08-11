@@ -12,6 +12,26 @@ public enum EnumAuthType {
     private final Short value;
     private final Boolean flag;
 
+
+    EnumAuthType(String name, Short value, Boolean flag) {
+        this.name = name;
+        this.value = value;
+        this.flag = flag;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Short getValue() {
+        return value;
+    }
+
+
+    public Boolean getFlag() {
+        return flag;
+    }
+
     public static EnumAuthType get(Short value) {
         EnumAuthType[] enumAuthTypes = null;
         int length = (enumAuthTypes = values()).length;
@@ -38,25 +58,5 @@ public enum EnumAuthType {
         }
         return defaultObject;
     }
-
-    EnumAuthType(String name, Short value, Boolean flag) {
-        this.name = name;
-        this.value = value;
-        this.flag = flag;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Short getValue() {
-        return value;
-    }
-
-
-    public Boolean getFlag() {
-        return flag;
-    }
-
 
 }
