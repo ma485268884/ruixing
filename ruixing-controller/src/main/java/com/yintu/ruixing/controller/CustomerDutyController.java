@@ -2,10 +2,12 @@ package com.yintu.ruixing.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.yintu.ruixing.common.util.BaseController;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.CustomerDutyEntity;
+import com.yintu.ruixing.entity.DepartmentEntity;
 import com.yintu.ruixing.service.CustomerDutyService;
+import com.yintu.ruixing.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,21 +23,18 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/customer/duties")
-public class CustomerDutyController extends SessionController implements BaseController<CustomerDutyEntity, Long> {
+public class CustomerDutyController extends SessionController {
     @Autowired
     private CustomerDutyService customerDutyService;
+    @Autowired
+    private DepartmentService departmentService;
 
     @PostMapping
-    public Map<String, Object> add(@Validated CustomerDutyEntity entity) {
+    public Map<String, Object> add(@Validated CustomerDutyEntity entity, @RequestParam Long[] departmentIds) {
         entity.setCreateBy(this.getLoginUserName());
         entity.setModifiedBy(this.getLoginUserName());
-        customerDutyService.add(entity);
+        customerDutyService.add(entity, departmentIds, this.getLoginUserName());
         return ResponseDataUtil.ok("添加顾客职务信息成功");
-    }
-
-    @Override
-    public Map<String, Object> remove(Long id) {
-        return null;
     }
 
     @DeleteMapping("/{ids}")
@@ -45,16 +44,16 @@ public class CustomerDutyController extends SessionController implements BaseCon
     }
 
     @PutMapping("/{id}")
-    public Map<String, Object> edit(@PathVariable Long id, @Validated CustomerDutyEntity entity) {
+    public Map<String, Object> edit(@PathVariable Long id, @Validated CustomerDutyEntity entity, @RequestParam Long[] departmentIds) {
         entity.setModifiedBy(this.getLoginUserName());
-        customerDutyService.edit(entity);
+        customerDutyService.edit(entity, departmentIds, this.getLoginUserName());
         return ResponseDataUtil.ok("修改顾客职务信息成功");
     }
 
     @GetMapping("/{id}")
     public Map<String, Object> findById(@PathVariable Long id) {
         CustomerDutyEntity customerDutyEntity = customerDutyService.findById(id);
-        return ResponseDataUtil.ok("修改顾客职务信息成功", customerDutyEntity);
+        return ResponseDataUtil.ok("查询顾客职务信息成功", customerDutyEntity);
     }
 
     @GetMapping
@@ -66,6 +65,18 @@ public class CustomerDutyController extends SessionController implements BaseCon
         List<CustomerDutyEntity> customerDutyEntities = customerDutyService.findByExample(new CustomerDutyEntity(null, null, null, null, null, name));
         PageInfo<CustomerDutyEntity> pageInfo = new PageInfo<>(customerDutyEntities);
         return ResponseDataUtil.ok("查询顾客职务列表信息成功", pageInfo);
+    }
+
+    @GetMapping("/departments")
+    public Map<String, Object> findDepartments() {
+        List<TreeNodeUtil> treeNodeUtils = departmentService.findDepartmentTree(-1L);
+        return ResponseDataUtil.ok("查询部门列表信息成功", treeNodeUtils);
+    }
+
+    @GetMapping("/{id}/departments")
+    public Map<String, Object> findDepartmentsById(@PathVariable Long id) {
+        List<DepartmentEntity> departmentEntities = customerDutyService.findDepartmentsById(id);
+        return ResponseDataUtil.ok("查询职务部门列表信息成功", departmentEntities);
     }
 
 }

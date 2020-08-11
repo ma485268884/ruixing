@@ -86,7 +86,21 @@ public class CustomerDutyServiceImpl implements CustomerDutyService {
 
     @Override
     public void edit(CustomerDutyEntity entity, Long[] departmentIds, String loginUserName) {
-
+        this.edit(entity);
+        DepartmentCustomerDutyEntityExample departmentCustomerDutyEntityExample = new DepartmentCustomerDutyEntityExample();
+        DepartmentCustomerDutyEntityExample.Criteria criteria = departmentCustomerDutyEntityExample.createCriteria();
+        criteria.andDutyIdEqualTo(entity.getId());
+        departmentCustomerDutyService.removeByExample(departmentCustomerDutyEntityExample);
+        for (Long departmentId : departmentIds) {
+            DepartmentCustomerDutyEntity departmentCustomerDutyEntity = new DepartmentCustomerDutyEntity();
+            departmentCustomerDutyEntity.setCreateBy(loginUserName);
+            departmentCustomerDutyEntity.setCreateTime(new Date());
+            departmentCustomerDutyEntity.setModifiedBy(loginUserName);
+            departmentCustomerDutyEntity.setModifiedTime(new Date());
+            departmentCustomerDutyEntity.setDepartmentId(departmentId);
+            departmentCustomerDutyEntity.setDutyId(entity.getId());
+            departmentCustomerDutyService.add(departmentCustomerDutyEntity);
+        }
     }
 
     @Override
@@ -97,6 +111,5 @@ public class CustomerDutyServiceImpl implements CustomerDutyService {
         List<DepartmentCustomerDutyEntity> departmentCustomerDutyEntities = departmentCustomerDutyService.findByExample(departmentCustomerDutyEntityExample);
         List<Long> departmentIds = departmentCustomerDutyEntities.stream().map(DepartmentCustomerDutyEntity::getDepartmentId).collect(Collectors.toList());
         return departmentService.findByIds(departmentIds);
-
     }
 }
