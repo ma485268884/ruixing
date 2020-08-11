@@ -1,6 +1,8 @@
 package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.AnZhuangTiaoShiWenTiFileEntity;
+import com.yintu.ruixing.entity.AnZhuangTiaoShiWorksFileEntity;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,7 +21,9 @@ public interface AnZhuangTiaoShiWenTiFileDao {
 
     int insertSelective(AnZhuangTiaoShiWenTiFileEntity record);
 
-    List<AnZhuangTiaoShiWenTiFileEntity> findAllFanKuiFileById(Integer id,String fileName);
+    List<AnZhuangTiaoShiWenTiFileEntity> findAllFanKuiFileById(@Param("wid") Integer wid,@Param("fileName") String fileName);
 
-    List<AnZhuangTiaoShiWenTiFileEntity> findAllShuChuFileById(Integer id,String fileName);
+    List<AnZhuangTiaoShiWenTiFileEntity> findAllShuChuFileById(@Param("wid") Integer wid,@Param("fileName") String fileName);
+
+    List<AnZhuangTiaoShiWorksFileEntity> findFileById(Integer id);
 }

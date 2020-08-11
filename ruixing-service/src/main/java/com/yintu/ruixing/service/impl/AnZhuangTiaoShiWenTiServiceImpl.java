@@ -2,8 +2,8 @@ package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.dao.AnZhuangTiaoShiWenTiDao;
 import com.yintu.ruixing.dao.AnZhuangTiaoShiWenTiFileDao;
-import com.yintu.ruixing.entity.AnZhuangTiaoShiWenTiEntity;
-import com.yintu.ruixing.entity.AnZhuangTiaoShiWenTiFileEntity;
+import com.yintu.ruixing.dao.DepartmentDao;
+import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.AnZhuangTiaoShiWenTiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +26,19 @@ public class AnZhuangTiaoShiWenTiServiceImpl implements AnZhuangTiaoShiWenTiServ
     @Autowired
     private AnZhuangTiaoShiWenTiFileDao anZhuangTiaoShiWenTiFileDao;
 
+    @Autowired
+    private DepartmentDao departmentDao;
+
+    @Override
+    public List<AnZhuangTiaoShiWorksFileEntity> findFileById(Integer id) {
+        return anZhuangTiaoShiWenTiFileDao.findFileById(id);
+    }
+
+    @Override
+    public List<DepartmentEntity> findAllDepartment(DepartmentEntityExample departmentEntityExample) {
+        return departmentDao.selectByExample(departmentEntityExample);
+    }
+
     @Override
     public void deleteFileByIds(Integer[] ids) {
         for (int i = 0; i < ids.length; i++) {
@@ -39,18 +52,25 @@ public class AnZhuangTiaoShiWenTiServiceImpl implements AnZhuangTiaoShiWenTiServ
     }
 
     @Override
-    public void addFile(AnZhuangTiaoShiWenTiFileEntity anZhuangTiaoShiWenTiFileEntity) {
+    public void addFanKuiFile(AnZhuangTiaoShiWenTiFileEntity anZhuangTiaoShiWenTiFileEntity) {
+        anZhuangTiaoShiWenTiFileEntity.setFenlei(1);
         anZhuangTiaoShiWenTiFileDao.insertSelective(anZhuangTiaoShiWenTiFileEntity);
     }
 
     @Override
-    public List<AnZhuangTiaoShiWenTiFileEntity> findAllShuChuFileById(Integer id, Integer page, Integer size,String fileName) {
-        return anZhuangTiaoShiWenTiFileDao.findAllShuChuFileById(id,fileName);
+    public void addShuRuFile(AnZhuangTiaoShiWenTiFileEntity anZhuangTiaoShiWenTiFileEntity) {
+        anZhuangTiaoShiWenTiFileEntity.setFenlei(2);
+        anZhuangTiaoShiWenTiFileDao.insertSelective(anZhuangTiaoShiWenTiFileEntity);
     }
 
     @Override
-    public List<AnZhuangTiaoShiWenTiFileEntity> findAllFanKuiFileById(Integer id, Integer page, Integer size,String fileName) {
-        return anZhuangTiaoShiWenTiFileDao.findAllFanKuiFileById(id,fileName);
+    public List<AnZhuangTiaoShiWenTiFileEntity> findAllShuChuFileById(Integer wid, Integer page, Integer size,String fileName) {
+        return anZhuangTiaoShiWenTiFileDao.findAllShuChuFileById(wid,fileName);
+    }
+
+    @Override
+    public List<AnZhuangTiaoShiWenTiFileEntity> findAllFanKuiFileById(Integer wid, Integer page, Integer size,String fileName) {
+        return anZhuangTiaoShiWenTiFileDao.findAllFanKuiFileById(wid,fileName);
     }
 
     @Override

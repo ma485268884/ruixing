@@ -1,6 +1,7 @@
 package com.yintu.ruixing.dao;
 
 import com.yintu.ruixing.entity.AnZhuangTiaoShiWenTiEntity;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,6 +20,6 @@ public interface AnZhuangTiaoShiWenTiDao {
 
     int insertSelective(AnZhuangTiaoShiWenTiEntity record);
 
-    List<AnZhuangTiaoShiWenTiEntity> findSomeWenTi(String xdname, String wenTiMiaoShu);
+    List<AnZhuangTiaoShiWenTiEntity> findSomeWenTi(@Param("xdname") String xdname,@Param("wenTiMiaoShu") String wenTiMiaoShu);
 
 }

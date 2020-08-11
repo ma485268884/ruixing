@@ -34,7 +34,7 @@
     select
     id, MaterialsName, MaterialsNumber,  MaterialsGuiGe
     from mro_anzhuangtiaoshi_material
-    ORDER BY id
+    ORDER BY id desc
   </select>
 
   <!--初始化类别数据  或者根据物料编号模糊查询类别-->
@@ -47,7 +47,7 @@
         MaterialsNumber like concat('%',#{materialNumber},'%')
       </if>
     </where>
-    ORDER BY id
+    ORDER BY id desc
   </select>
 
   <!--根据id  查询物料的库存数量-->
@@ -63,7 +63,12 @@
     select
     <include refid="Base_Column_List" />
     from mro_anzhuangtiaoshi_material
-    ORDER BY id
+    <where>
+      <if test="materialName!=null">
+        MaterialsNumber like concat('%',#{materialName},'%')
+      </if>
+    </where>
+    ORDER BY id desc
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

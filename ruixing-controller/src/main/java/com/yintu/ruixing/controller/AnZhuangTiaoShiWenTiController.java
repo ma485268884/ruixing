@@ -5,8 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.entity.AnZhuangTiaoShiWenTiEntity;
-import com.yintu.ruixing.entity.AnZhuangTiaoShiWenTiFileEntity;
+import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.AnZhuangTiaoShiWenTiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +28,14 @@ public class AnZhuangTiaoShiWenTiController {
     @Autowired
     private AnZhuangTiaoShiWenTiService anZhuangTiaoShiWenTiService;
 
+
+    //查询所有的单位名称
+    @GetMapping("findAllDepartment")
+    public Map<String, Object> findAllDepartment() {
+        List<DepartmentEntity> departmentEntities = anZhuangTiaoShiWenTiService.findAllDepartment(new DepartmentEntityExample());
+        return ResponseDataUtil.ok("查询部门成功", departmentEntities);
+    }
+
     //新增问题
     @PostMapping("/addWenTi")
     public Map<String, Object> addWenTi(AnZhuangTiaoShiWenTiEntity anZhuangTiaoShiWenTiEntity) {
@@ -38,25 +45,33 @@ public class AnZhuangTiaoShiWenTiController {
 
     //根据id 编辑问题
     @PutMapping("/editWenTiById/{id}")
-    public Map<String,Object>editWenTiById(@PathVariable Integer id,AnZhuangTiaoShiWenTiEntity anZhuangTiaoShiWenTiEntity){
+    public Map<String, Object> editWenTiById(@PathVariable Integer id, AnZhuangTiaoShiWenTiEntity anZhuangTiaoShiWenTiEntity) {
         anZhuangTiaoShiWenTiService.editWenTiById(anZhuangTiaoShiWenTiEntity);
         return ResponseDataUtil.ok("编辑问题成功");
     }
 
     //初始化页面   或者根据线段名 或问题描述查询数据
     @GetMapping("/findSomeWenTi")
-    public Map<String,Object>findSomeWenTi(Integer page,Integer size,String xdname,String wenTiMiaoShu){
-        PageHelper.startPage(page,size);
-        List<AnZhuangTiaoShiWenTiEntity>wenTiEntityList=anZhuangTiaoShiWenTiService.findSomeWenTi(page,size,xdname,wenTiMiaoShu);
-        PageInfo<AnZhuangTiaoShiWenTiEntity>wenTiEntityPageInfo=new PageInfo<>(wenTiEntityList);
-        return ResponseDataUtil.ok("查询成功",wenTiEntityPageInfo);
+    public Map<String, Object> findSomeWenTi(Integer page, Integer size, String xdname, String wenTiMiaoShu) {
+        PageHelper.startPage(page, size);
+        List<AnZhuangTiaoShiWenTiEntity> wenTiEntityList = anZhuangTiaoShiWenTiService.findSomeWenTi(page, size, xdname, wenTiMiaoShu);
+        PageInfo<AnZhuangTiaoShiWenTiEntity> wenTiEntityPageInfo = new PageInfo<>(wenTiEntityList);
+        return ResponseDataUtil.ok("查询成功", wenTiEntityPageInfo);
     }
 
     //批量删除  或者单个删除
     @DeleteMapping("/deleteWenTiByIds/{ids}")
-    public Map<String,Object>deleteWenTiByIds(@PathVariable Integer[] ids){
-        anZhuangTiaoShiWenTiService.deleteWenTiByIds(ids);
-        return ResponseDataUtil.ok("删除成功");
+    public Map<String, Object> deleteWenTiByIds(@PathVariable Integer[] ids) {
+        for (int i = 0; i < ids.length; i++) {
+            List<AnZhuangTiaoShiWorksFileEntity>fileEntityList=anZhuangTiaoShiWenTiService.findFileById(ids[i]);
+            if (fileEntityList.size()==0){
+                anZhuangTiaoShiWenTiService.deleteWenTiByIds(ids);
+                return ResponseDataUtil.ok("删除成功");
+            }else {
+                return ResponseDataUtil.error("存在有文件,不能删除此项问题记录");
+            }
+        }
+        return ResponseDataUtil.ok("ok");
     }
 
 
@@ -64,20 +79,20 @@ public class AnZhuangTiaoShiWenTiController {
 
     //查看反馈文件 或者根据文件名查询
     @GetMapping("/findAllFanKuiFileById")
-    public Map<String,Object>findAllFanKuiFileById(@PathVariable Integer id,Integer page,Integer size,String fileName){
-        PageHelper.startPage(page,size);
-        List<AnZhuangTiaoShiWenTiFileEntity> fileEntityList=anZhuangTiaoShiWenTiService.findAllFanKuiFileById(id,page,size,fileName);
-        PageInfo<AnZhuangTiaoShiWenTiFileEntity>fileEntityPageInfo=new PageInfo<>(fileEntityList);
-        return ResponseDataUtil.ok("查询反馈文件成功",fileEntityPageInfo);
+    public Map<String, Object> findAllFanKuiFileById( Integer wid, Integer page, Integer size, String fileName) {
+        PageHelper.startPage(page, size);
+        List<AnZhuangTiaoShiWenTiFileEntity> fileEntityList = anZhuangTiaoShiWenTiService.findAllFanKuiFileById(wid, page, size, fileName);
+        PageInfo<AnZhuangTiaoShiWenTiFileEntity> fileEntityPageInfo = new PageInfo<>(fileEntityList);
+        return ResponseDataUtil.ok("查询反馈文件成功", fileEntityPageInfo);
     }
 
     //查看输出文件  或者根据文件名查询
     @GetMapping("/findAllShuChuFileById")
-    public Map<String,Object>findAllShuChuFileById(@PathVariable Integer id,Integer page,Integer size,String fileName){
-        PageHelper.startPage(page,size);
-        List<AnZhuangTiaoShiWenTiFileEntity> fileEntityList=anZhuangTiaoShiWenTiService.findAllShuChuFileById(id,page,size,fileName);
-        PageInfo<AnZhuangTiaoShiWenTiFileEntity>fileEntityPageInfo=new PageInfo<>(fileEntityList);
-        return ResponseDataUtil.ok("查询输出文件成功",fileEntityPageInfo);
+    public Map<String, Object> findAllShuChuFileById( Integer wid, Integer page, Integer size, String fileName) {
+        PageHelper.startPage(page, size);
+        List<AnZhuangTiaoShiWenTiFileEntity> fileEntityList = anZhuangTiaoShiWenTiService.findAllShuChuFileById(wid, page, size, fileName);
+        PageInfo<AnZhuangTiaoShiWenTiFileEntity> fileEntityPageInfo = new PageInfo<>(fileEntityList);
+        return ResponseDataUtil.ok("查询输出文件成功", fileEntityPageInfo);
     }
 
     //上传文件
@@ -92,17 +107,24 @@ public class AnZhuangTiaoShiWenTiController {
         return ResponseDataUtil.ok("上传文件成功", jo);
     }
 
-    //新增文件
-    @PostMapping("/addFile")
-    public Map<String,Object>addFile(AnZhuangTiaoShiWenTiFileEntity anZhuangTiaoShiWenTiFileEntity){
-        anZhuangTiaoShiWenTiService.addFile(anZhuangTiaoShiWenTiFileEntity);
+    //新增反馈文件
+    @PostMapping("/addFanKuiFile")
+    public Map<String, Object> addFanKuiFile(AnZhuangTiaoShiWenTiFileEntity anZhuangTiaoShiWenTiFileEntity) {
+        anZhuangTiaoShiWenTiService.addFanKuiFile(anZhuangTiaoShiWenTiFileEntity);
+        return ResponseDataUtil.ok("新增文件成功");
+    }
+
+    //新增输出文件
+    @PostMapping("/addShuRuFile")
+    public Map<String, Object> addShuRuFile(AnZhuangTiaoShiWenTiFileEntity anZhuangTiaoShiWenTiFileEntity) {
+        anZhuangTiaoShiWenTiService.addShuRuFile(anZhuangTiaoShiWenTiFileEntity);
         return ResponseDataUtil.ok("新增文件成功");
     }
 
     //根据id  下载对应的文件
     @GetMapping("/downloads/{id}")
     public void downloadFile(@PathVariable Integer id, HttpServletResponse response) throws IOException {
-        AnZhuangTiaoShiWenTiFileEntity anZhuangTiaoShiWenTiFileEntity=anZhuangTiaoShiWenTiService.findById(id);
+        AnZhuangTiaoShiWenTiFileEntity anZhuangTiaoShiWenTiFileEntity = anZhuangTiaoShiWenTiService.findById(id);
         if (anZhuangTiaoShiWenTiFileEntity != null) {
             String filePath = anZhuangTiaoShiWenTiFileEntity.getFilePath();
             String fileName = anZhuangTiaoShiWenTiFileEntity.getFileName();
@@ -118,7 +140,7 @@ public class AnZhuangTiaoShiWenTiController {
 
     //根据id  单个删除或者批量删除
     @DeleteMapping("deleteFileByIds/{ids}")
-    public Map<String,Object>deleteFileByIds(@PathVariable Integer[] ids){
+    public Map<String, Object> deleteFileByIds(@PathVariable Integer[] ids) {
         anZhuangTiaoShiWenTiService.deleteFileByIds(ids);
         return ResponseDataUtil.ok("删除文件成功");
     }

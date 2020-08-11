@@ -90,7 +90,7 @@ public class AnZhuangTiaoShiMaterialServiceImpl implements AnZhuangTiaoShiMateri
     }
 
     @Override
-    public List<AnZhuangTiaoShiMaterialEntity> findAllMaterial(Integer page, Integer size) {
-        return anZhuangTiaoShiMaterialDao.findAllMaterial();
+    public List<AnZhuangTiaoShiMaterialEntity> findAllMaterial(Integer page, Integer size,String materialName) {
+        return anZhuangTiaoShiMaterialDao.findAllMaterial(materialName);
     }
 }

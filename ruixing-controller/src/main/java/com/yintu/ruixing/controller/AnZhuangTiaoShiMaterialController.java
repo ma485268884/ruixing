@@ -24,11 +24,11 @@ public class AnZhuangTiaoShiMaterialController {
     @Autowired
     private AnZhuangTiaoShiMaterialService anZhuangTiaoShiMaterialService;
 
-    //查询所有的库存物料
+    //查询所有的库存物料  或者根据物料编码查询
     @GetMapping("findAllMaterial")
-    public Map<String, Object> findAllMaterial(Integer page, Integer size) {
+    public Map<String, Object> findAllMaterial(Integer page, Integer size,String materialName) {
         PageHelper.startPage(page, size);
-        List<AnZhuangTiaoShiMaterialEntity> materialEntityList = anZhuangTiaoShiMaterialService.findAllMaterial(page, size);
+        List<AnZhuangTiaoShiMaterialEntity> materialEntityList = anZhuangTiaoShiMaterialService.findAllMaterial(page, size,materialName);
         PageInfo<AnZhuangTiaoShiMaterialEntity> materialEntityPageInfo = new PageInfo<>(materialEntityList);
         return ResponseDataUtil.ok("查询所有的物料数据成功", materialEntityPageInfo);
     }
@@ -84,7 +84,7 @@ public class AnZhuangTiaoShiMaterialController {
         return ResponseDataUtil.ok("查询物料出库数据成功", materialOutInEntityPageInfo);
     }
 
-    //物料出库 初始化  或者根据物料编码查询数据
+    //物料入库 初始化  或者根据物料编码查询数据
     @GetMapping("/findAllInMaterial")
     public Map<String,Object>findAllInMaterial(Integer page, Integer size, String materialNumber){
         PageHelper.startPage(page,size);

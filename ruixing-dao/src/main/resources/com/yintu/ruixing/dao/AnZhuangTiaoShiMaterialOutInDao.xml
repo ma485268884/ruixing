@@ -26,9 +26,9 @@
       <if test="materialNumber!=null">
         MaterialsNumber like concat('%',#{materialNumber},'%')
       </if>
+      and inOutState=1
+      ORDER BY id desc
     </where>
-    and inOutState=1
-    ORDER BY id
   </select>
 
 
@@ -41,9 +41,9 @@
       <if test="materialNumber!=null">
         MaterialsNumber like concat('%',#{materialNumber},'%')
       </if>
+      and inOutState=2
+      ORDER BY id desc
     </where>
-    and inOutState=2
-    ORDER BY id
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

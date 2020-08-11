@@ -12,7 +12,7 @@ import java.util.List;
  * 需求:安装调试  库存管理
  */
 public interface AnZhuangTiaoShiMaterialService {
-    List<AnZhuangTiaoShiMaterialEntity> findAllMaterial(Integer page, Integer size);
+    List<AnZhuangTiaoShiMaterialEntity> findAllMaterial(Integer page, Integer size,String materialName);
 
     void addMaterial(AnZhuangTiaoShiMaterialEntity anZhuangTiaoShiMaterialEntity);
 

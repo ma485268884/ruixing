@@ -22,7 +22,7 @@ public interface AnZhuangTiaoShiMaterialDao {
 
     int insertSelective(AnZhuangTiaoShiMaterialEntity record);
 
-    List<AnZhuangTiaoShiMaterialEntity> findAllMaterial();
+    List<AnZhuangTiaoShiMaterialEntity> findAllMaterial(String materialName);
 
     List<AnZhuangTiaoShiMaterialEntity> findAllMaterialDatas(String materialNumber);
 

@@ -1,7 +1,6 @@
 package com.yintu.ruixing.service;
 
-import com.yintu.ruixing.entity.AnZhuangTiaoShiWenTiEntity;
-import com.yintu.ruixing.entity.AnZhuangTiaoShiWenTiFileEntity;
+import com.yintu.ruixing.entity.*;
 
 import java.util.List;
 
@@ -20,13 +19,19 @@ public interface AnZhuangTiaoShiWenTiService {
 
     void deleteWenTiByIds(Integer[] ids);
 
-    List<AnZhuangTiaoShiWenTiFileEntity> findAllFanKuiFileById(Integer id, Integer page, Integer size,String fileName);
+    List<AnZhuangTiaoShiWenTiFileEntity> findAllFanKuiFileById(Integer wid, Integer page, Integer size,String fileName);
 
-    List<AnZhuangTiaoShiWenTiFileEntity> findAllShuChuFileById(Integer id, Integer page, Integer size,String fileName);
+    List<AnZhuangTiaoShiWenTiFileEntity> findAllShuChuFileById(Integer wid, Integer page, Integer size,String fileName);
 
-    void addFile(AnZhuangTiaoShiWenTiFileEntity anZhuangTiaoShiWenTiFileEntity);
+    void addFanKuiFile(AnZhuangTiaoShiWenTiFileEntity anZhuangTiaoShiWenTiFileEntity);
+
+    void addShuRuFile(AnZhuangTiaoShiWenTiFileEntity anZhuangTiaoShiWenTiFileEntity);
 
     AnZhuangTiaoShiWenTiFileEntity findById(Integer id);
 
     void deleteFileByIds(Integer[] ids);
+
+    List<DepartmentEntity> findAllDepartment(DepartmentEntityExample departmentEntityExample);
+
+    List<AnZhuangTiaoShiWorksFileEntity> findFileById(Integer id);
 }

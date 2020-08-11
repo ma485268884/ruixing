@@ -15,12 +15,22 @@
   </sql>
 
   <!--根据id  查询所有的输出文件-->
+  <select id="findFileById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mro_anzhuangtiaoshi_wenti_file
+    where wid = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--根据id  查询所有的输出文件-->
   <select id="findAllShuChuFileById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from mro_anzhuangtiaoshi_wenti_file
     <where>
-      id = #{id,jdbcType=INTEGER}
+      <if test="wid!=null">
+        wid = #{wid,jdbcType=INTEGER}
+      </if>
       and fenlei=2
       <if test="fileName!=null">
         and  file_name like concat('%',#{fileName},'%')
@@ -34,8 +44,8 @@
     <include refid="Base_Column_List" />
     from mro_anzhuangtiaoshi_wenti_file
     <where>
-      <if test="id!=null">
-        id = #{id,jdbcType=INTEGER}
+      <if test="wid!=null">
+        wid = #{wid,jdbcType=INTEGER}
       </if>
       and fenlei=1
       <if test="fileName!=null">
