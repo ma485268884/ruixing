@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -184,10 +185,7 @@ public class UserServiceImpl implements UserService {
         DepartmentUserEntityExample.Criteria criteria = departmentUserEntityExample.createCriteria();
         criteria.andUserIdEqualTo(id);
         List<DepartmentUserEntity> departmentUserEntities = departmentUserService.findByExample(departmentUserEntityExample);
-        List<Long> departmentIds = new ArrayList<>();
-        for (DepartmentUserEntity departmentUserEntity : departmentUserEntities) {
-            departmentIds.add(departmentUserEntity.getDepartmentId());
-        }
+        List<Long> departmentIds = departmentUserEntities.stream().map(DepartmentUserEntity::getDepartmentId).collect(Collectors.toList());
         return departmentService.findByIds(departmentIds);
     }
 

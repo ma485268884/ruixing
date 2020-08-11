@@ -2,8 +2,10 @@ package com.yintu.ruixing.controller;
 
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
+import com.yintu.ruixing.entity.CustomerUnitsEntity;
 import com.yintu.ruixing.entity.DepartmentEntity;
 import com.yintu.ruixing.entity.DepartmentEntityExample;
+import com.yintu.ruixing.service.CustomerUnitsService;
 import com.yintu.ruixing.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -21,6 +23,8 @@ import java.util.Map;
 public class DepartmentController extends SessionController {
     @Autowired
     private DepartmentService departmentService;
+    @Autowired
+    private CustomerUnitsService customerUnitsService;
 
     @PostMapping
     public Map<String, Object> add(@Validated DepartmentEntity departmentEntity) {
@@ -52,12 +56,21 @@ public class DepartmentController extends SessionController {
     @GetMapping
     public Map<String, Object> findAll() {
         List<TreeNodeUtil> treeNodeUtils = departmentService.findDepartmentTree(-1L);
-        return ResponseDataUtil.ok("查询部门树成功", treeNodeUtils);
+        return ResponseDataUtil.ok("查询部门树信息成功", treeNodeUtils);
     }
 
     @GetMapping("/list")
     public Map<String, Object> findList() {
         List<DepartmentEntity> departmentEntities = departmentService.findByExample(new DepartmentEntityExample());
-        return ResponseDataUtil.ok("查询部门成功", departmentEntities);
+        return ResponseDataUtil.ok("查询部门列表信息成功", departmentEntities);
     }
+
+
+    @GetMapping("/customer/units")
+    public Map<String, Object> findCustomerUnits() {
+        List<CustomerUnitsEntity> customerUnitsEntities = customerUnitsService.findByExample(new CustomerUnitsEntity());
+        return ResponseDataUtil.ok("查询顾客单位列表信息成功", customerUnitsEntities);
+    }
+
+
 }

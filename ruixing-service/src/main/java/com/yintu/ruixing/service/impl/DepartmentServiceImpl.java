@@ -3,8 +3,10 @@ package com.yintu.ruixing.service.impl;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.DepartmentDao;
+import com.yintu.ruixing.entity.CustomerUnitsEntity;
 import com.yintu.ruixing.entity.DepartmentEntity;
 import com.yintu.ruixing.entity.DepartmentEntityExample;
+import com.yintu.ruixing.service.CustomerUnitsService;
 import com.yintu.ruixing.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Autowired
     private DepartmentDao departmentDao;
+
+    @Autowired
+    private CustomerUnitsService customerUnitsService;
 
     @Override
     public void add(DepartmentEntity departmentEntity) {
@@ -62,7 +67,15 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentEntity findById(Long id) {
-        return departmentDao.selectByPrimaryKey(id);
+        DepartmentEntity departmentEntity = departmentDao.selectByPrimaryKey(id);
+        if (departmentEntity != null) {
+            Long customerUnitsId = departmentEntity.getCustomerUnitsId();
+            if (customerUnitsId != null) {
+                CustomerUnitsEntity customerUnitsEntity = customerUnitsService.findById(customerUnitsId);
+                departmentEntity.setCustomerUnitsEntity(customerUnitsEntity);
+            }
+        }
+        return departmentEntity;
     }
 
     @Override
@@ -93,10 +106,11 @@ public class DepartmentServiceImpl implements DepartmentService {
             treeNodeUtil.setValue(departmentEntity.getId().toString());
             Map<String, Object> map = new HashMap<>();
             map.put("parentId", departmentEntity.getParentId());
-            map.put("create_by", departmentEntity.getCreateBy());
-            map.put("create_time", departmentEntity.getCreateTime());
-            map.put("modified_by", departmentEntity.getModifiedBy());
-            map.put("modified_time", departmentEntity.getModifiedTime());
+            map.put("createBy", departmentEntity.getCreateBy());
+            map.put("createTime", departmentEntity.getCreateTime());
+            map.put("modifiedBy", departmentEntity.getModifiedBy());
+            map.put("modifiedTime", departmentEntity.getModifiedTime());
+            map.put("customerUnitsId", departmentEntity.getCustomerUnitsId());
             treeNodeUtil.setA_attr(map);
             treeNodeUtil.setChildren(this.findDepartmentTree(departmentEntity.getId()));
             treeNodeUtils.add(treeNodeUtil);

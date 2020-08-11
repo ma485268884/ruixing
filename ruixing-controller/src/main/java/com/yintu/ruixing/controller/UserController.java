@@ -1,14 +1,17 @@
 package com.yintu.ruixing.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yintu.ruixing.common.enumobject.EnumFlag;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.DepartmentEntity;
 import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.entity.UserEntity;
+import com.yintu.ruixing.service.DepartmentService;
 import com.yintu.ruixing.service.PermissionService;
+import com.yintu.ruixing.service.RoleService;
 import com.yintu.ruixing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -27,6 +30,10 @@ public class UserController extends SessionController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private DepartmentService departmentService;
     @Autowired
     private PermissionService permissionService;
 
@@ -80,10 +87,23 @@ public class UserController extends SessionController {
         return ResponseDataUtil.ok("查询用户列表成功", jo);
     }
 
+    @GetMapping("/roles")
+    public Map<String, Object> findRoles() {
+        List<RoleEntity> roleEntities = roleService.findAll();
+        return ResponseDataUtil.ok("查询角色列表信息成功", roleEntities);
+    }
+
+
     @GetMapping("/{id}/roles")
     public Map<String, Object> findRolesById(@PathVariable Long id) {
         List<RoleEntity> roleEntities = userService.findRolesById(id);
         return ResponseDataUtil.ok("查询用户角色成功", roleEntities);
+    }
+
+    @GetMapping("/departments")
+    public Map<String, Object> findDepartments() {
+        List<TreeNodeUtil> treeNodeUtils = departmentService.findDepartmentTree(-1L);
+        return ResponseDataUtil.ok("查询部门列表信息成功", treeNodeUtils);
     }
 
     @GetMapping("/{id}/departments")

@@ -12,24 +12,24 @@
     <sql id="Base_Column_List">
         id, create_by, create_time, modified_by, modified_time, name
     </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from mro_customer_duty
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
         from mro_customer_duty
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.yintu.ruixing.entity.CustomerDutyEntity">
+    <insert id="insert" parameterType="com.yintu.ruixing.entity.CustomerDutyEntity" useGeneratedKeys="true" keyProperty="id">
         insert into mro_customer_duty (id, create_by, create_time,
                                        modified_by, modified_time, name)
         values (#{id,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
                 #{modifiedBy,jdbcType=VARCHAR}, #{modifiedTime,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR})
     </insert>
-    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.CustomerDutyEntity">
+    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.CustomerDutyEntity" useGeneratedKeys="true" keyProperty="id">
         insert into mro_customer_duty
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
