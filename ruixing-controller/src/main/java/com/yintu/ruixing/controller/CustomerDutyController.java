@@ -67,7 +67,7 @@ public class CustomerDutyController extends SessionController {
                                        @RequestParam(value = "order_by", required = false, defaultValue = "id DESC") String orderBy,
                                        @RequestParam(value = "name", required = false) String name) {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
-        List<CustomerDutyEntity> customerDutyEntities = customerDutyService.findByExample(new CustomerDutyEntity(null, null, null, null, null, name));
+        List<CustomerDutyEntity> customerDutyEntities = customerDutyService.findByExample(new CustomerDutyEntity(null, null, null, null, null, name, null, null, null));
         PageInfo<CustomerDutyEntity> pageInfo = new PageInfo<>(customerDutyEntities);
         return ResponseDataUtil.ok("查询顾客职务列表信息成功", pageInfo);
     }

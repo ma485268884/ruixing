@@ -3,13 +3,13 @@ package com.yintu.ruixing.service.impl;
 import com.yintu.ruixing.dao.CustomerDutyDao;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.CustomerDutyService;
+import com.yintu.ruixing.service.CustomerUnitsService;
 import com.yintu.ruixing.service.DepartmentCustomerDutyService;
 import com.yintu.ruixing.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +25,8 @@ public class CustomerDutyServiceImpl implements CustomerDutyService {
 
     @Autowired
     private CustomerDutyDao customerDutyDao;
-
+    @Autowired
+    private CustomerUnitsService customerUnitsService;
     @Autowired
     private DepartmentService departmentService;
     @Autowired
@@ -53,7 +54,12 @@ public class CustomerDutyServiceImpl implements CustomerDutyService {
 
     @Override
     public CustomerDutyEntity findById(Long id) {
-        return customerDutyDao.selectByPrimaryKey(id);
+        CustomerDutyEntity customerDutyEntity = customerDutyDao.selectByPrimaryKey(id);
+        if (customerDutyEntity != null) {
+            customerDutyEntity.setDepartmentEntities(this.findDepartmentsById(customerDutyEntity.getId()));
+            customerDutyEntity.setCustomerUnitsEntity(customerUnitsService.findById(customerDutyEntity.getId()));
+        }
+        return customerDutyEntity;
     }
 
 
@@ -115,8 +121,16 @@ public class CustomerDutyServiceImpl implements CustomerDutyService {
     public List<CustomerDutyEntity> findByExample(CustomerDutyEntity entity) {
         CustomerDutyEntityExample customerDutyEntityExample = new CustomerDutyEntityExample();
         CustomerDutyEntityExample.Criteria criteria = customerDutyEntityExample.createCriteria();
-        criteria.andNameLike("%" + entity.getName() + "%");
-        return this.findByExample(customerDutyEntityExample);
+        if (entity.getName() != null)
+            criteria.andNameLike("%" + entity.getName() + "%");
+        List<CustomerDutyEntity> customerDutyEntities = this.findByExample(customerDutyEntityExample);
+        for (CustomerDutyEntity customerDutyEntity : customerDutyEntities) {
+            if (customerDutyEntity != null) {
+                customerDutyEntity.setDepartmentEntities(this.findDepartmentsById(customerDutyEntity.getId()));
+                customerDutyEntity.setCustomerUnitsEntity(customerUnitsService.findById(customerDutyEntity.getCustomerUnitsId()));
+            }
+        }
+        return customerDutyEntities;
     }
 
     @Override

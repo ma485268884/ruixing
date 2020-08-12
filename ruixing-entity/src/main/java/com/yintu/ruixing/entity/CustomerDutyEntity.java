@@ -6,8 +6,10 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -26,6 +28,12 @@ public class CustomerDutyEntity implements Serializable {
     @NotBlank
     @Length(min = 1, max = 50)
     private String name;
+    @NotNull
+    private Long customerUnitsId;
+
+    private CustomerUnitsEntity customerUnitsEntity;
+
+    private List<DepartmentEntity> departmentEntities;
 
 
 }
