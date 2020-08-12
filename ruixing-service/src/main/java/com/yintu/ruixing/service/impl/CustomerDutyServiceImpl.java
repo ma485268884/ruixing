@@ -57,7 +57,7 @@ public class CustomerDutyServiceImpl implements CustomerDutyService {
         CustomerDutyEntity customerDutyEntity = customerDutyDao.selectByPrimaryKey(id);
         if (customerDutyEntity != null) {
             customerDutyEntity.setDepartmentEntities(this.findDepartmentsById(customerDutyEntity.getId()));
-            customerDutyEntity.setCustomerUnitsEntity(customerUnitsService.findById(customerDutyEntity.getId()));
+            customerDutyEntity.setCustomerUnitsEntity(customerUnitsService.findById(customerDutyEntity.getCustomerUnitsId()));
         }
         return customerDutyEntity;
     }
