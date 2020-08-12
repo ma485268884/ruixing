@@ -28,6 +28,46 @@ public class ZhiShiGuanLiFileTypeServiceImpl implements ZhiShiGuanLiFileTypeServ
     private ZhiShiGuanLiFileTypeFileDao zhiShiGuanLiFileTypeFileDao;
 
     @Override
+    public void deleteFileByIds(Integer id) {
+        zhiShiGuanLiFileTypeFileDao.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<ZhiShiGuanLiFileTypeFileEntity> findFileByParentid(Integer id) {
+        return zhiShiGuanLiFileTypeFileDao.findFileByParentid(id);
+    }
+
+    @Override
+    public void deleteUpdataFileByIds(Integer id) {
+        zhiShiGuanLiFileTypeFileDao.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public void deleteFileTypeByIds(Integer id) {
+        zhiShiGuanLiFileTypeDao.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<ZhiShiGuanLiFileTypeFileEntity> findFiles(Integer id) {
+        return zhiShiGuanLiFileTypeFileDao.findFiles(id);
+    }
+
+    @Override
+    public ZhiShiGuanLiFileTypeFileEntity findById(Integer id) {
+        return zhiShiGuanLiFileTypeFileDao.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<ZhiShiGuanLiFileTypeFileEntity> findFileById(Integer id, Integer page, Integer size, String fileName) {
+        return zhiShiGuanLiFileTypeFileDao.findFileById(id,fileName);
+    }
+
+    @Override
+    public List<ZhiShiGuanLiFileTypeFileEntity> findSomeFile(Integer page, Integer size, String fileName) {
+        return zhiShiGuanLiFileTypeFileDao.findSomeFile(fileName);
+    }
+
+    @Override
     public void updateFileById(ZhiShiGuanLiFileTypeFileEntity zhiShiGuanLiFileTypeFileEntity) {
         zhiShiGuanLiFileTypeFileDao.updateByPrimaryKeySelective(zhiShiGuanLiFileTypeFileEntity);
     }

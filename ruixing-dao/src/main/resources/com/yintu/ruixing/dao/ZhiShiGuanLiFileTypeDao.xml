@@ -19,6 +19,7 @@
       <if test="fileTypeName!=null">
         fileType like concat('%',#{fileTypeName},'%')
       </if>
+      group by id desc
     </where>
   </select>
   
@@ -28,6 +29,8 @@
     from mro_zhishiguanli_filetype
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <!--根据id  删除对应的数据-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from mro_zhishiguanli_filetype
     where id = #{id,jdbcType=INTEGER}

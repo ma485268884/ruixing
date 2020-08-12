@@ -218,6 +218,8 @@ public class DataStatsServiceImpl implements DataStatsService {
     public void addCheZhan(CheZhanEntity cheZhan) {
         cheZhan.setCzState(0);
         cheZhan.setCzdmhState(0);
+        cheZhan.setCzLianJieType(0);
+        cheZhan.setCzStutrs(0);
         cheZhanDao.insertChezhan(cheZhan);
     }
 

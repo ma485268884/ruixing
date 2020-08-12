@@ -33,6 +33,7 @@
         <result column="cz_name_jiancheng" jdbcType="VARCHAR" property="czNameJianCheng"/>
         <result column="cz_ip" jdbcType="VARCHAR" property="czIp"/>
         <result column="cz_type" jdbcType="VARCHAR" property="czType"/>
+        <result column="cz_lianjie_type" jdbcType="INTEGER" property="czLianJieType"/>
         <result column="cz_stutrs" property="czStutrs"/>
         <result column="cz_open_stutrs" property="czOpenStutrs"/>
         <result column="cz_caozuo" jdbcType="INTEGER" property="czCaoZuo"/>
@@ -98,7 +99,7 @@
         <result column="cz_dmh_json" jdbcType="LONGVARCHAR" property="czdmhJson"/>
     </resultMap>
     <sql id="Base_Column_List">
-        cid, cz_id, xd_id, xd_cz_id, cz_name, cz_name_jiancheng, cz_ip, cz_type, cz_stutrs,
+        cid, cz_id, xd_id, xd_cz_id, cz_name, cz_name_jiancheng, cz_ip, cz_type, cz_stutrs,cz_lianjie_type,
     cz_open_stutrs, cz_caozuo, cz_lasttime, cz_duantou, cz_miaoshu, cz_state, cz_r_shebei,
     cz_zhongjizhan, yuliushebei1, yuliushebei2,yuliushebei3, tongXinBianMaGuiDaoNumber, tongXinBianMaZhanNeiOneGuiDaoNumber,
     jiDianOneToOneGuiDaoNumber, jiDianNToOneGuiDaoNumber, jiDianNToOneSheBeiNumber, tongXinBianMaDianMaHuaSheBeiNumber,
@@ -426,6 +427,9 @@
             <if test="czType != null">
                 cz_type,
             </if>
+            <if test="czLianJieType != null">
+                cz_lianjie_type,
+            </if>
             <if test="czStutrs != null">
                 cz_stutrs,
             </if>
@@ -613,6 +617,9 @@
             </if>
             <if test="czType != null">
                 #{czType,jdbcType=VARCHAR},
+            </if>
+            <if test="czLianJieType != null">
+                #{czLianJieType,jdbcType=INTEGER},
             </if>
             <if test="czStutrs != null">
                 #{czStutrs},
@@ -803,6 +810,9 @@
             </if>
             <if test="czType != null">
                 cz_type = #{czType,jdbcType=VARCHAR},
+            </if>
+            <if test="czLianJieType != null">
+                cz_lianjie_type = #{czLianJieType,jdbcType=INTEGER},
             </if>
             <if test="czStutrs != null">
                 cz_stutrs = #{czStutrs},

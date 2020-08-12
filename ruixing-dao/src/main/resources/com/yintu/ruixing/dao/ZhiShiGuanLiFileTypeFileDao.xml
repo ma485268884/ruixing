@@ -14,12 +14,60 @@
   <sql id="Base_Column_List">
     id, parentid, tid, file_name, file_path, createtime, fabu_type, yuliu
   </sql>
+
+  <!--根据id 查询对应的文件数据-->
+  <select id="findFileByParentid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mro_zhishiguanli_filetype_file
+    where parentid = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--根据id 查询对应的文件数据-->
+  <select id="findFiles" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mro_zhishiguanli_filetype_file
+    where tid = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--根据文件id  查询其历史版本文件-->
+  <select id="findFileById"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mro_zhishiguanli_filetype_file
+    <where>
+       parentid=#{id}
+      <if test="fileName!=null">
+        and
+        file_name like concat('%',#{fileName},'%')
+      </if>
+    </where>
+    group by id desc
+  </select>
+
+  <!--文件初始化   或者根据文件名查询文件-->
+  <select id="findSomeFile"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mro_zhishiguanli_filetype_file
+    <where>
+      <if test="fileName!=null">
+        file_name like concat('%',#{fileName},'%')
+      </if>
+    </where>
+    group by id desc
+  </select>
+
+  <!--根据id 查询对应的文件数据-->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from mro_zhishiguanli_filetype_file
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <!--根据文件id  删除对应的文件-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from mro_zhishiguanli_filetype_file
     where id = #{id,jdbcType=INTEGER}

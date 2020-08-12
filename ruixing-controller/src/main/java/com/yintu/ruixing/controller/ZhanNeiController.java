@@ -48,18 +48,10 @@ public class ZhanNeiController {
     //网络连接
     @GetMapping("/findAllWangLuoLianJie")
     public Map<String, Object> findAllWangLuoLianJie(Integer page, Integer size) {
-        JSONObject js = new JSONObject();
-        //PageHelper.startPage(page, size);
-        List<CheZhanEntity> cheZhanEntities = zhanNeiService.findAllWangLuoLianJie();
-        js.put("cheZhanEntities",cheZhanEntities);
-        System.out.println("车站信息1" + cheZhanEntities);
         PageHelper.startPage(page, size);
         List<CheZhanEntity> all = zhanNeiService.findTieLuJuById( page, size);
         PageInfo<CheZhanEntity> pageInfo = new PageInfo<>(all);
-        System.out.println("车站信息2" + pageInfo);
-        js.put("pageInfo", pageInfo);
-        System.out.println("pageeee" + pageInfo);
-        return ResponseDataUtil.ok("查询车站信息成功", js);
+        return ResponseDataUtil.ok("查询车站信息成功", pageInfo);
     }
     //根据id更改车站的各个状态
     @PutMapping("/editWangLuoLianJieById/{cid}")

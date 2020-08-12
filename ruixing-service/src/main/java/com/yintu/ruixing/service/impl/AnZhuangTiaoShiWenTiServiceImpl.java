@@ -30,6 +30,11 @@ public class AnZhuangTiaoShiWenTiServiceImpl implements AnZhuangTiaoShiWenTiServ
     private DepartmentDao departmentDao;
 
     @Override
+    public List<AnZhuangTiaoShiWenTiEntity> findAllNotDoWellWenTi(Integer page, Integer size) {
+        return anZhuangTiaoShiWenTiDao.findAllNotDoWellWenTi();
+    }
+
+    @Override
     public List<AnZhuangTiaoShiWorksFileEntity> findFileById(Integer id) {
         return anZhuangTiaoShiWenTiFileDao.findFileById(id);
     }

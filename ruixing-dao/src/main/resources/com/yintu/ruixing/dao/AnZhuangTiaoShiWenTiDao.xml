@@ -23,6 +23,15 @@
     yuliu
   </sql>
 
+  <!--主页面显示  显示为未完成的问题-->
+  <select id="findAllNotDoWellWenTi" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mro_anzhuangtiaoshi_wenti
+    where wenTiIsOver=0
+    group by id desc
+  </select>
+
   <!--初始化页面   或者根据线段名 或问题描述查询数据-->
   <select id="findSomeWenTi" resultMap="BaseResultMap">
     select

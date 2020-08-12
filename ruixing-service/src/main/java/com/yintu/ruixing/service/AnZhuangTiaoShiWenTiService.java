@@ -34,4 +34,7 @@ public interface AnZhuangTiaoShiWenTiService {
     List<DepartmentEntity> findAllDepartment(DepartmentEntityExample departmentEntityExample);
 
     List<AnZhuangTiaoShiWorksFileEntity> findFileById(Integer id);
+
+    List<AnZhuangTiaoShiWenTiEntity> findAllNotDoWellWenTi(Integer page, Integer size);
+
 }

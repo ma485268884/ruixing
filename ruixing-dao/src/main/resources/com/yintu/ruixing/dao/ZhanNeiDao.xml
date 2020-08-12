@@ -65,6 +65,7 @@
         <result property="czNameJianCheng" column="cz_name_jiancheng"/>
         <result property="czIp" column="cz_ip"/>
         <result property="czType" column="cz_type"/>
+        <result column="cz_lianjie_type" jdbcType="INTEGER" property="czLianJieType"/>
         <result property="czStutrs" column="cz_stutrs"/>
         <result property="czOpenStutrs" column="cz_open_stutrs"/>
         <result property="czCaoZuo" column="cz_caozuo"/>
@@ -82,7 +83,7 @@
             cz.cz_name,
             cz.cz_id,
             cz.cz_ip,
-            cz.cz_type,
+            cz.cz_lianjie_type,
             cz.cz_stutrs,
             cz.cz_open_stutrs,
             cz.cz_lasttime,
@@ -103,8 +104,8 @@
     <update id="editWangLuoLianJieById" parameterType="com.yintu.ruixing.entity.CheZhanEntity">
         update mro_chezhan
         <set>
-            <if test="czType !=null">
-                cz_type = #{czType},
+            <if test="czLianJieType !=null">
+                cz_lianjie_type = #{czLianJieType},
             </if>
             <if test="czStutrs !=null">
                 cz_stutrs = #{czStutrs},

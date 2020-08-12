@@ -59,6 +59,14 @@ public class AnZhuangTiaoShiWenTiController {
         return ResponseDataUtil.ok("查询成功", wenTiEntityPageInfo);
     }
 
+    //主页面显示  显示为未完成的问题
+    @GetMapping("/findAllNotDoWellWenTi")
+    public Map<String,Object>findAllNotDoWellWenTi(Integer page,Integer size){
+        PageHelper.startPage(page,size);
+        List<AnZhuangTiaoShiWenTiEntity> wenTiEntityList = anZhuangTiaoShiWenTiService.findAllNotDoWellWenTi(page, size);
+        PageInfo<AnZhuangTiaoShiWenTiEntity> wenTiEntityPageInfo = new PageInfo<>(wenTiEntityList);
+        return ResponseDataUtil.ok("查询成功", wenTiEntityPageInfo);
+    }
     //批量删除  或者单个删除
     @DeleteMapping("/deleteWenTiByIds/{ids}")
     public Map<String, Object> deleteWenTiByIds(@PathVariable Integer[] ids) {
@@ -66,12 +74,11 @@ public class AnZhuangTiaoShiWenTiController {
             List<AnZhuangTiaoShiWorksFileEntity>fileEntityList=anZhuangTiaoShiWenTiService.findFileById(ids[i]);
             if (fileEntityList.size()==0){
                 anZhuangTiaoShiWenTiService.deleteWenTiByIds(ids);
-                return ResponseDataUtil.ok("删除成功");
             }else {
                 return ResponseDataUtil.error("存在有文件,不能删除此项问题记录");
             }
         }
-        return ResponseDataUtil.ok("ok");
+        return ResponseDataUtil.ok("删除成功");
     }
 
 

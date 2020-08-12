@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -48,7 +49,7 @@ public class ZhanNeiServiceImpl implements ZhanNeiService {
 
     @Override
     public void editWangLuoLianJieById(CheZhanEntity cheZhanEntity) {
-        zhanNeiDao.editWangLuoLianJieById(cheZhanEntity);
+            zhanNeiDao.editWangLuoLianJieById(cheZhanEntity);
     }
 
     @Override

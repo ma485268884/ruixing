@@ -4,17 +4,19 @@ import com.yintu.ruixing.entity.ZhiShiGuanLiFileTypeFileEntity;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
+import java.util.List;
 
 public interface ZhiShiGuanLiFileTypeFileDao {
-    int deleteByPrimaryKey(Integer id);
-
     int insert(ZhiShiGuanLiFileTypeFileEntity record);
-
-    ZhiShiGuanLiFileTypeFileEntity selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKey(ZhiShiGuanLiFileTypeFileEntity record);
 
+
     ////////////////////////////////////////////////////////////
+
+    int deleteByPrimaryKey(Integer id);
+
+    ZhiShiGuanLiFileTypeFileEntity selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(ZhiShiGuanLiFileTypeFileEntity record);
 
@@ -22,4 +24,12 @@ public interface ZhiShiGuanLiFileTypeFileDao {
 
     void addOneFile(@Param("fileName") String fileName,@Param("createtime") Date createtime,
                     @Param("filePath")String filePath,@Param("id1") Integer id1,@Param("tid") Integer tid);
+
+    List<ZhiShiGuanLiFileTypeFileEntity> findSomeFile(@Param("fileName") String fileName);
+
+    List<ZhiShiGuanLiFileTypeFileEntity> findFileById(@Param("id") Integer id,@Param("fileName") String fileName);
+
+    List<ZhiShiGuanLiFileTypeFileEntity> findFiles(Integer id);
+
+    List<ZhiShiGuanLiFileTypeFileEntity> findFileByParentid(Integer id);
 }

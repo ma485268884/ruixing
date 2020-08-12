@@ -22,4 +22,6 @@ public interface AnZhuangTiaoShiWenTiDao {
 
     List<AnZhuangTiaoShiWenTiEntity> findSomeWenTi(@Param("xdname") String xdname,@Param("wenTiMiaoShu") String wenTiMiaoShu);
 
+    List<AnZhuangTiaoShiWenTiEntity> findAllNotDoWellWenTi();
+
 }

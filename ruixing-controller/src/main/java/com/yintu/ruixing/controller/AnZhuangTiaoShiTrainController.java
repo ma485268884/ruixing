@@ -65,13 +65,13 @@ public class AnZhuangTiaoShiTrainController {
     public Map<String,Object>deleteTrainByIds(@PathVariable Integer[] ids){
         for (int i = 0; i < ids.length; i++) {
             List<AnZhuangTiaoShiTrainFileEntity>fileEntityList=anZhuangTiaoShiTrainService.findTrainFile(ids[i]);
-            if (fileEntityList.size()!=0){
+            if (fileEntityList.size()==0){
+                anZhuangTiaoShiTrainService.deleteTrainByIds(ids);
+            }else {
                 return ResponseDataUtil.error("不能删除，存在文件");
             }
-            anZhuangTiaoShiTrainService.deleteTrainByIds(ids);
-            return ResponseDataUtil.ok("删除成功");
         }
-        return ResponseDataUtil.ok("ok");
+        return ResponseDataUtil.ok("删除成功");
     }
 
     /////////////////////文件上传/////////////////////

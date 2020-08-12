@@ -5,8 +5,6 @@ import com.yintu.ruixing.entity.ZhiShiGuanLiFileTypeEntity;
 import java.util.List;
 
 public interface ZhiShiGuanLiFileTypeDao {
-    int deleteByPrimaryKey(Integer id);
-
     int insert(ZhiShiGuanLiFileTypeEntity record);
 
     ZhiShiGuanLiFileTypeEntity selectByPrimaryKey(Integer id);
@@ -14,7 +12,9 @@ public interface ZhiShiGuanLiFileTypeDao {
     int updateByPrimaryKey(ZhiShiGuanLiFileTypeEntity record);
 
 
+
     //////////////////////////////////////////////////////////////////
+    int deleteByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(ZhiShiGuanLiFileTypeEntity record);
 

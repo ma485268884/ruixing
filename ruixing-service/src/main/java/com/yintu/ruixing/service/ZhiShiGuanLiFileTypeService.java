@@ -27,4 +27,19 @@ public interface ZhiShiGuanLiFileTypeService {
 
     void updateFileById(ZhiShiGuanLiFileTypeFileEntity zhiShiGuanLiFileTypeFileEntity);
 
+    List<ZhiShiGuanLiFileTypeFileEntity> findSomeFile(Integer page, Integer size, String fileName);
+
+    List<ZhiShiGuanLiFileTypeFileEntity> findFileById(Integer id, Integer page, Integer size, String fileName);
+
+    ZhiShiGuanLiFileTypeFileEntity findById(Integer id);
+
+    List<ZhiShiGuanLiFileTypeFileEntity> findFiles(Integer id);
+
+    void deleteFileTypeByIds(Integer id);
+
+    void deleteUpdataFileByIds(Integer id);
+
+    List<ZhiShiGuanLiFileTypeFileEntity> findFileByParentid(Integer id);
+
+    void deleteFileByIds(Integer id);
 }

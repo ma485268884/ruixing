@@ -40,9 +40,11 @@ public class CheZhanEntity {
 
     private String czType;//车站类型
 
-    private long czStutrs;//车站连接状态  0：已配置未连接  1：连接中
+    private Integer czLianJieType;//车站连接类型 0：已配置未连接  1：已配置已连接
 
-    private long czOpenStutrs;//开通状态   0：未连接   1：已连接
+    private long czStutrs;//车站连接状态  0：故障断开  1：连接中
+
+    private long czOpenStutrs;//启用状态   0：未启用   1：启用
 
     private Date czLastTime;//最后连接时间
 

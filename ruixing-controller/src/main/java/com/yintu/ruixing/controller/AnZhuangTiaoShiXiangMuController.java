@@ -17,6 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -123,4 +126,42 @@ public class AnZhuangTiaoShiXiangMuController {
         response.addHeader("Cache-Control", "no-cache");
         anZhuangTiaoShiXiangMuService.exportFile(response.getOutputStream(), ids);
     }
+
+    //查询近一个月开通的项目
+    @GetMapping("/findLastMonthXiangMu")
+    public Map<String,Object>findLastMonthXiangMu(Integer page,Integer size)throws Exception{
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        Date end = c.getTime();
+        String dqrq= format.format(end);//当前日期
+        c.add(Calendar.MONTH, -1);
+        Date start = c.getTime();
+        String startDay = format.format(start);//前一月
+
+        return null;
+    }
+
+    public static void main(String[] args)throws Exception {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        String end = c.getTime().toString();
+        System.out.println(end);
+        String format1 = format.format(end);
+        System.out.println("000"+format1);
+        Date dqrq= format.parse(format1);//当前日期
+
+        System.out.println("11111"+dqrq);
+
+        c.add(Calendar.MONTH, -1);
+        Date start = c.getTime();
+        String startDay = format.format(start);//前一月
+
+        System.out.println("11222"+startDay);
+
+        System.out.println(new Date());
+
+    }
+
 }

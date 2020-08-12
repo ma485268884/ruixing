@@ -35,6 +35,7 @@
       <if test="fileName!=null">
         and  file_name like concat('%',#{fileName},'%')
       </if>
+      group by id desc
     </where>
   </select>
 
@@ -51,6 +52,7 @@
       <if test="fileName!=null">
         and  file_name like concat('%',#{fileName},'%')
       </if>
+      group by id desc
     </where>
   </select>
 

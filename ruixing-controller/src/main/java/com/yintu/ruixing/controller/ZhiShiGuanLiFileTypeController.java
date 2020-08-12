@@ -1,14 +1,19 @@
 package com.yintu.ruixing.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.entity.ZhiShiGuanLiFileTypeEntity;
 import com.yintu.ruixing.entity.ZhiShiGuanLiFileTypeFileEntity;
 import com.yintu.ruixing.service.ZhiShiGuanLiFileTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -51,30 +56,110 @@ public class ZhiShiGuanLiFileTypeController {
     //根据id  批量删除文件类型  或者单个删除
     @DeleteMapping("/deleteFileTypeByIds/{ids}")
     public Map<String, Object> deleteFileTypeByIds(@PathVariable Integer[] ids) {
-        return null;
+        for (int i = 0; i < ids.length; i++) {
+            List<ZhiShiGuanLiFileTypeFileEntity> fileEntityList = zhiShiGuanLiFileTypeService.findFiles(ids[i]);
+            if (fileEntityList.size() == 0) {
+                zhiShiGuanLiFileTypeService.deleteFileTypeByIds(ids[i]);
+            }else {
+                return ResponseDataUtil.error("文件类型下面存在有文件,不能删除");
+            }
+        }
+        return ResponseDataUtil.ok("删除文件类型成功");
     }
 
 
     ///////////////////////文件////////////////////////////////
 
+    //上传文件
+    @PostMapping("/uploads")
+    @ResponseBody
+    public Map<String, Object> uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+        String fileName = multipartFile.getOriginalFilename();
+        String filePath = FileUploadUtil.save(multipartFile.getInputStream(), fileName);
+        JSONObject jo = new JSONObject();
+        jo.put("filePath", filePath);
+        jo.put("fileName", fileName);
+        return ResponseDataUtil.ok("上传文件成功", jo);
+    }
+
     //新增文件
     @PostMapping("/addFile")
-    public Map<String,Object>addFile(ZhiShiGuanLiFileTypeFileEntity zhiShiGuanLiFileTypeFileEntity){
+    public Map<String, Object> addFile(ZhiShiGuanLiFileTypeFileEntity zhiShiGuanLiFileTypeFileEntity) {
         zhiShiGuanLiFileTypeService.addFile(zhiShiGuanLiFileTypeFileEntity);
         return ResponseDataUtil.ok("新增文件成功");
     }
 
     //更新文件版本
     @PutMapping("updateFileById")
-    public Map<String,Object>updateFileById(Integer id,ZhiShiGuanLiFileTypeFileEntity zhiShiGuanLiFileTypeFileEntity){
-        ZhiShiGuanLiFileTypeFileEntity fileEntity=zhiShiGuanLiFileTypeService.findFile(id);
+    public Map<String, Object> updateFileById(Integer id, ZhiShiGuanLiFileTypeFileEntity zhiShiGuanLiFileTypeFileEntity) {
+        ZhiShiGuanLiFileTypeFileEntity fileEntity = zhiShiGuanLiFileTypeService.findFile(id);
         String fileName = fileEntity.getFileName();
         Date createtime = fileEntity.getCreatetime();
         String filePath = fileEntity.getFilePath();
         Integer id1 = fileEntity.getId();
         Integer tid = fileEntity.getTid();
-        zhiShiGuanLiFileTypeService.addOneFile(fileName,createtime,filePath,id1,tid);
+        zhiShiGuanLiFileTypeService.addOneFile(fileName, createtime, filePath, id1, tid);
         zhiShiGuanLiFileTypeService.updateFileById(zhiShiGuanLiFileTypeFileEntity);
         return ResponseDataUtil.ok("更新成功");
+    }
+
+    //文件初始化   或者根据文件名查询文件
+    @GetMapping("/findSomeFile")
+    public Map<String, Object> findSomeFile(Integer page, Integer size, String fileName) {
+        PageHelper.startPage(page, size);
+        List<ZhiShiGuanLiFileTypeFileEntity> fileEntityList = zhiShiGuanLiFileTypeService.findSomeFile(page, size, fileName);
+        PageInfo<ZhiShiGuanLiFileTypeFileEntity> fileTypeFileEntityPageInfo = new PageInfo<>(fileEntityList);
+        return ResponseDataUtil.ok("查询文件成功", fileTypeFileEntityPageInfo);
+    }
+
+    //根据文件id  查询其历史版本文件
+    @GetMapping("/findFileById/{id}")
+    public Map<String, Object> findFileById(@PathVariable Integer id, Integer page, Integer size, String fileName) {
+        PageHelper.startPage(page, size);
+        List<ZhiShiGuanLiFileTypeFileEntity> fileEntityList = zhiShiGuanLiFileTypeService.findFileById(id, page, size, fileName);
+        PageInfo<ZhiShiGuanLiFileTypeFileEntity> fileTypeFileEntityPageInfo = new PageInfo<>(fileEntityList);
+        return ResponseDataUtil.ok("查询文件成功", fileTypeFileEntityPageInfo);
+    }
+
+    //根据id  下载对应的文件
+    @GetMapping("/downloads/{id}")
+    public void downloadFile(@PathVariable Integer id, HttpServletResponse response) throws IOException {
+        ZhiShiGuanLiFileTypeFileEntity anZhuangTiaoShiWenTiFileEntity = zhiShiGuanLiFileTypeService.findById(id);
+        if (anZhuangTiaoShiWenTiFileEntity != null) {
+            String filePath = anZhuangTiaoShiWenTiFileEntity.getFilePath();
+            String fileName = anZhuangTiaoShiWenTiFileEntity.getFileName();
+            if (filePath != null && !"".equals(filePath) && fileName != null && !"".equals(fileName)) {
+                response.setContentType("application/octet-stream;charset=ISO8859-1");
+                response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
+                response.addHeader("Pargam", "no-cache");
+                response.addHeader("Cache-Control", "no-cache");
+                FileUploadUtil.get(response.getOutputStream(), filePath + "\\" + fileName);
+            }
+        }
+    }
+
+
+    //根据id 批量删除  或者单个删除历史版本文件
+    @DeleteMapping("/deleteUpdataFileByIds/{ids}")
+    public Map<String, Object> deleteUpdataFileByIds(@PathVariable Integer[] ids) {
+        for (int i = 0; i < ids.length; i++) {
+            zhiShiGuanLiFileTypeService.deleteUpdataFileByIds(ids[i]);
+        }
+        return ResponseDataUtil.ok("删除文件成功");
+    }
+
+
+    //根据id 批量删除  或者单个删除文件
+    @DeleteMapping("/deleteFileByIds/{ids}")
+    public Map<String, Object> deleteFileByIds(@PathVariable Integer[] ids) {
+        for (int i = 0; i < ids.length; i++) {
+            List<ZhiShiGuanLiFileTypeFileEntity> fileEntityList = zhiShiGuanLiFileTypeService.findFileByParentid(ids[i]);
+            if (fileEntityList.size() == 0) {
+                zhiShiGuanLiFileTypeService.deleteFileByIds(ids[i]);
+            }else {
+                return ResponseDataUtil.error("存在历史更新文件,不能删除");
+            }
+        }
+        return ResponseDataUtil.ok("删除文件成功");
     }
 }
