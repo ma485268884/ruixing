@@ -5,8 +5,10 @@ import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.CustomerDutyEntity;
+import com.yintu.ruixing.entity.CustomerUnitsEntity;
 import com.yintu.ruixing.entity.DepartmentEntity;
 import com.yintu.ruixing.service.CustomerDutyService;
+import com.yintu.ruixing.service.CustomerUnitsService;
 import com.yintu.ruixing.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -27,7 +29,10 @@ public class CustomerDutyController extends SessionController {
     @Autowired
     private CustomerDutyService customerDutyService;
     @Autowired
+    private CustomerUnitsService customerUnitsService;
+    @Autowired
     private DepartmentService departmentService;
+
 
     @PostMapping
     public Map<String, Object> add(@Validated CustomerDutyEntity entity, @RequestParam Long[] departmentIds) {
@@ -67,16 +72,17 @@ public class CustomerDutyController extends SessionController {
         return ResponseDataUtil.ok("查询顾客职务列表信息成功", pageInfo);
     }
 
+    @GetMapping("/customer/units")
+    public Map<String, Object> findCustomerUnits() {
+        List<CustomerUnitsEntity> customerUnitsEntities = customerUnitsService.findByExample(new CustomerUnitsEntity());
+        return ResponseDataUtil.ok("查询客户单位列表信息成功", customerUnitsEntities);
+    }
+
     @GetMapping("/departments")
-    public Map<String, Object> findDepartments() {
-        List<TreeNodeUtil> treeNodeUtils = departmentService.findDepartmentTree(-1L);
+    public Map<String, Object> findDepartments(@RequestParam Long customerUnitsId) {
+        List<TreeNodeUtil> treeNodeUtils = departmentService.findDepartmentTree(-1L, customerUnitsId);
         return ResponseDataUtil.ok("查询部门列表信息成功", treeNodeUtils);
     }
 
-    @GetMapping("/{id}/departments")
-    public Map<String, Object> findDepartmentsById(@PathVariable Long id) {
-        List<DepartmentEntity> departmentEntities = customerDutyService.findDepartmentsById(id);
-        return ResponseDataUtil.ok("查询职务部门列表信息成功", departmentEntities);
-    }
 
 }

@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerDutyEntity implements Serializable {
-    private static final long serialVersionUID = 777657015259947938L;
+    private static final long serialVersionUID = 913100906419871766L;
     private Long id;
 
     private String createBy;

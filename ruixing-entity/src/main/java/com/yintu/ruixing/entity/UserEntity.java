@@ -2,8 +2,9 @@ package com.yintu.ruixing.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,11 +18,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEntity implements UserDetails {
-    private static final long serialVersionUID = 7348214022276474920L;
+    private static final long serialVersionUID = 4205226663617649421L;
     private Long id;
 
-    private String username;
+    private String createBy;
 
+    private Date createTime;
+
+    private String modifiedBy;
+
+    private Date modifiedTime;
+
+    private String username;
     @JsonIgnore
     @JSONField(serialize = false)
     private String password;
@@ -29,6 +37,8 @@ public class UserEntity implements UserDetails {
     private String trueName;
 
     private String phone;
+
+    private String telephone;
 
     private String email;
 
@@ -38,15 +48,33 @@ public class UserEntity implements UserDetails {
 
     private Short enableds;
 
-    private String salt;
+    private Integer provinceId;
 
-    private Date createTime;
+    private Integer cityId;
+
+    private Integer districtId;
+
+    private String address;
+
+    private Long customerUnitsId;
+
+    private Long customerDutyId;
 
     private Short isCustomer;
 
+    private CustomerUnitsEntity customerUnitsEntity;
+
     private List<DepartmentEntity> departmentEntities;
 
+    private CustomerDutyEntity customerDutyEntity;
+
     private List<RoleEntity> roleEntities;
+
+    private DistrictEntity provinceEntity;
+
+    private DistrictEntity cityEntity;
+
+    private DistrictEntity districtEntity;
 
 
     @Override
@@ -61,20 +89,15 @@ public class UserEntity implements UserDetails {
     }
 
     @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    /**
+     * 是否没没被锁
+     *
+     * @return
+     */
     @Override
     public boolean isAccountNonLocked() {
         return locked == 0;
@@ -85,10 +108,13 @@ public class UserEntity implements UserDetails {
         return true;
     }
 
+    /**
+     * 是否开启
+     *
+     * @return
+     */
     @Override
     public boolean isEnabled() {
         return enableds == 1;
     }
-
-
 }

@@ -4,11 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
-import com.yintu.ruixing.entity.DepartmentEntity;
-import com.yintu.ruixing.entity.RoleEntity;
-import com.yintu.ruixing.entity.UserEntity;
-import com.yintu.ruixing.service.PermissionService;
-import com.yintu.ruixing.service.UserService;
+import com.yintu.ruixing.common.util.TreeNodeUtil;
+import com.yintu.ruixing.entity.*;
+import com.yintu.ruixing.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +23,12 @@ import java.util.Map;
 public class CustomerController extends SessionController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private CustomerUnitsService customerUnitsService;
+    @Autowired
+    private DepartmentService departmentService;
     @Autowired
     private PermissionService permissionService;
 
@@ -76,16 +80,29 @@ public class CustomerController extends SessionController {
         return ResponseDataUtil.ok("查询客户列表成功", jo);
     }
 
-    @GetMapping("/{id}/roles")
-    public Map<String, Object> findRolesById(@PathVariable Long id) {
-        List<RoleEntity> roleEntities = userService.findRolesById(id);
-        return ResponseDataUtil.ok("查询客户角色成功", roleEntities);
+    @GetMapping("/roles")
+    public Map<String, Object> findRoles() {
+        List<RoleEntity> roleEntities = roleService.findAll();
+        return ResponseDataUtil.ok("查询角色列表信息成功", roleEntities);
     }
 
-    @GetMapping("/{id}/departments")
-    public Map<String, Object> findDepartmentsById(@PathVariable Long id) {
-        List<DepartmentEntity> departmentEntities = userService.findDepartmentsById(id);
-        return ResponseDataUtil.ok("查询客户部门成功", departmentEntities);
+
+    @GetMapping("/customer/units")
+    public Map<String, Object> findCustomerUnits() {
+        List<CustomerUnitsEntity> customerUnitsEntities = customerUnitsService.findByExample(new CustomerUnitsEntity());
+        return ResponseDataUtil.ok("查询客户单位列表信息成功", customerUnitsEntities);
+    }
+
+    @GetMapping("/departments")
+    public Map<String, Object> findDepartments(@RequestParam Long customerUnitsId) {
+        List<TreeNodeUtil> treeNodeUtils = departmentService.findDepartmentTree(-1L, customerUnitsId);
+        return ResponseDataUtil.ok("查询部门列表信息成功", treeNodeUtils);
+    }
+
+    @GetMapping("/customer/duties")
+    public Map<String, Object> findCustomerDuties(@RequestParam Long[] departmentIds) {
+        List<CustomerDutyEntity> customerDutyEntities = departmentService.findCustomerDutiesByIds(departmentIds);
+        return ResponseDataUtil.ok("查询部门列表信息成功", customerDutyEntities);
     }
 
 }

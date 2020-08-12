@@ -125,10 +125,10 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         errorData = ResponseDataUtil.noLogin("验证码不正确");
                     } else if (authenticationException instanceof AuthenticationServiceException) {
                         errorData = ResponseDataUtil.noLogin("登录方式有误，请重新登录");
-                    } else if (authenticationException instanceof LockedException) {
-                        errorData = ResponseDataUtil.noLogin("账户被锁定，请联系管理员");
                     } else if (authenticationException instanceof DisabledException) {
                         errorData = ResponseDataUtil.noLogin("账户被禁用，请联系管理员");
+                    } else if (authenticationException instanceof LockedException) {
+                        errorData = ResponseDataUtil.noLogin("账户被锁定，请联系管理员");
                     } else if (authenticationException instanceof CredentialsExpiredException) {
                         errorData = ResponseDataUtil.noLogin("密码过期，请联系管理员");
                     } else if (authenticationException instanceof AccountExpiredException) {

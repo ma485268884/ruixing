@@ -1,6 +1,7 @@
 package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.common.enumobject.EnumAuthType;
+import com.yintu.ruixing.common.enumobject.EnumFlag;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.DepartmentDao;
@@ -8,6 +9,8 @@ import com.yintu.ruixing.dao.UserDao;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,11 +30,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleService roleService;
     @Autowired
+    private UserRoleService userRoleService;
+    @Autowired
+    private CustomerUnitsService customerUnitsService;
+    @Autowired
     private DepartmentUserService departmentUserService;
     @Autowired
     private DepartmentService departmentService;
     @Autowired
-    private UserRoleService userRoleService;
+    private CustomerDutyService customerDutyService;
+    @Autowired
+    private DistrictService districtService;
 
 
     @Override
@@ -84,6 +93,14 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userDao.selectByPrimaryKey(id);
         if (userEntity != null) {
             userEntity.setDepartmentEntities(this.findDepartmentsById(userEntity.getId()));
+            userEntity.setRoleEntities(this.findRolesById(userEntity.getId()));
+            if (userEntity.getIsCustomer().equals(EnumFlag.FlagTrue.getValue())) {
+                userEntity.setCustomerUnitsEntity(customerUnitsService.findById(userEntity.getCustomerUnitsId()));
+                userEntity.setCustomerDutyEntity(customerDutyService.findById(userEntity.getCustomerDutyId()));
+                userEntity.setProvinceEntity(districtService.findById(userEntity.getProvinceId()));
+                userEntity.setCityEntity(districtService.findById(userEntity.getCityId()));
+                userEntity.setDistrictEntity(districtService.findById(userEntity.getDistrictId()));
+            }
         }
         return userEntity;
     }
@@ -138,6 +155,14 @@ public class UserServiceImpl implements UserService {
         }
         for (UserEntity userEntity : userEntities) {
             userEntity.setDepartmentEntities(this.findDepartmentsById(userEntity.getId()));
+            userEntity.setRoleEntities(this.findRolesById(userEntity.getId()));
+            if (userEntity.getIsCustomer().equals(EnumFlag.FlagTrue.getValue())) {
+                userEntity.setCustomerUnitsEntity(customerUnitsService.findById(userEntity.getCustomerUnitsId()));
+                userEntity.setCustomerDutyEntity(customerDutyService.findById(userEntity.getCustomerDutyId()));
+                userEntity.setProvinceEntity(districtService.findById(userEntity.getProvinceId()));
+                userEntity.setCityEntity(districtService.findById(userEntity.getCityId()));
+                userEntity.setDistrictEntity(districtService.findById(userEntity.getDistrictId()));
+            }
         }
         return userEntities;
     }
@@ -160,16 +185,17 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("用户名不存在");
         }
         UserEntity userEntity = userEntities.get(0);
+        if (!userEntity.isEnabled()) {
+            throw new DisabledException("账户已关闭");
+        }
+        if (!userEntity.isAccountNonLocked()) {
+            throw new LockedException("账户被锁定");
+        }
         List<RoleEntity> roleEntities = roleService.findByUserId(userEntity.getId());
         if (roleEntities.isEmpty() && userEntity.getAuthType().equals(EnumAuthType.USER.getValue())) {
             throw new UsernameNotFoundException("用户没有分配角色");
         }
         userEntity.setRoleEntities(roleEntities);
-        List<DepartmentEntity> departmentEntities = this.findDepartmentsById(userEntity.getId());
-        if (departmentEntities.isEmpty()) {
-            throw new UsernameNotFoundException("用户没有添加部门");
-        }
-        userEntity.setDepartmentEntities(departmentEntities);
         return userEntity;
     }
 
