@@ -102,7 +102,7 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <insert id="insert" parameterType="com.yintu.ruixing.entity.CustomerDutyEntity">
+    <insert id="insert" parameterType="com.yintu.ruixing.entity.CustomerDutyEntity" useGeneratedKeys="true" keyProperty="id">
         insert into mro_customer_duty (id, create_by, create_time,
                                        modified_by, modified_time, name,
                                        customer_units_id)
@@ -110,7 +110,7 @@
                 #{modifiedBy,jdbcType=VARCHAR}, #{modifiedTime,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR},
                 #{customerUnitsId,jdbcType=BIGINT})
     </insert>
-    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.CustomerDutyEntity">
+    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.CustomerDutyEntity" useGeneratedKeys="true" keyProperty="id">
         insert into mro_customer_duty
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
