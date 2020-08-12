@@ -6,13 +6,11 @@ import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.enumobject.EnumFlag;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
+import com.yintu.ruixing.entity.CustomerUnitsEntity;
 import com.yintu.ruixing.entity.DepartmentEntity;
 import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.entity.UserEntity;
-import com.yintu.ruixing.service.DepartmentService;
-import com.yintu.ruixing.service.PermissionService;
-import com.yintu.ruixing.service.RoleService;
-import com.yintu.ruixing.service.UserService;
+import com.yintu.ruixing.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +30,8 @@ public class UserController extends SessionController {
     private UserService userService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private CustomerUnitsService customerUnitsService;
     @Autowired
     private DepartmentService departmentService;
     @Autowired
@@ -94,22 +94,16 @@ public class UserController extends SessionController {
     }
 
 
-    @GetMapping("/{id}/roles")
-    public Map<String, Object> findRolesById(@PathVariable Long id) {
-        List<RoleEntity> roleEntities = userService.findRolesById(id);
-        return ResponseDataUtil.ok("查询用户角色成功", roleEntities);
+    @GetMapping("/customer/units")
+    public Map<String, Object> findCustomerUnits() {
+        List<CustomerUnitsEntity> customerUnitsEntities = customerUnitsService.findByExample(new CustomerUnitsEntity());
+        return ResponseDataUtil.ok("查询客户单位列表信息成功", customerUnitsEntities);
     }
 
     @GetMapping("/departments")
-    public Map<String, Object> findDepartments() {
-        List<TreeNodeUtil> treeNodeUtils = departmentService.findDepartmentTree(-1L);
+    public Map<String, Object> findDepartments(@RequestParam Long customerUnitsId) {
+        List<TreeNodeUtil> treeNodeUtils = departmentService.findDepartmentTree(-1L, customerUnitsId);
         return ResponseDataUtil.ok("查询部门列表信息成功", treeNodeUtils);
-    }
-
-    @GetMapping("/{id}/departments")
-    public Map<String, Object> findDepartmentsById(@PathVariable Long id) {
-        List<DepartmentEntity> departmentEntities = userService.findDepartmentsById(id);
-        return ResponseDataUtil.ok("查询用户部门成功", departmentEntities);
     }
 
 }

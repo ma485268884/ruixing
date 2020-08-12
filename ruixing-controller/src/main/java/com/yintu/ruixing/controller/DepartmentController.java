@@ -55,7 +55,7 @@ public class DepartmentController extends SessionController {
 
     @GetMapping
     public Map<String, Object> findAll() {
-        List<TreeNodeUtil> treeNodeUtils = departmentService.findDepartmentTree(-1L);
+        List<TreeNodeUtil> treeNodeUtils = departmentService.findDepartmentTree(-1L, null);
         return ResponseDataUtil.ok("查询部门树信息成功", treeNodeUtils);
     }
 

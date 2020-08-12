@@ -3,16 +3,17 @@ package com.yintu.ruixing.service.impl;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.DepartmentDao;
-import com.yintu.ruixing.entity.CustomerUnitsEntity;
-import com.yintu.ruixing.entity.DepartmentEntity;
-import com.yintu.ruixing.entity.DepartmentEntityExample;
+import com.yintu.ruixing.entity.*;
+import com.yintu.ruixing.service.CustomerDutyService;
 import com.yintu.ruixing.service.CustomerUnitsService;
+import com.yintu.ruixing.service.DepartmentCustomerDutyService;
 import com.yintu.ruixing.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author:mlf
@@ -27,6 +28,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Autowired
     private CustomerUnitsService customerUnitsService;
+
+    @Autowired
+    private DepartmentCustomerDutyService departmentCustomerDutyService;
+
+    @Autowired
+    private CustomerDutyService customerDutyService;
 
     @Override
     public void add(DepartmentEntity departmentEntity) {
@@ -92,10 +99,13 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public List<TreeNodeUtil> findDepartmentTree(Long parentId) {
+    public List<TreeNodeUtil> findDepartmentTree(Long parentId, Long customerUnitsId) {
         DepartmentEntityExample departmentEntityExample = new DepartmentEntityExample();
         DepartmentEntityExample.Criteria criteria = departmentEntityExample.createCriteria();
         criteria.andParentIdEqualTo(parentId);
+        if (customerUnitsId != null) {
+            criteria.andCustomerUnitsIdEqualTo(customerUnitsId);
+        }
         List<DepartmentEntity> departmentEntities = departmentDao.selectByExample(departmentEntityExample);
 
         List<TreeNodeUtil> treeNodeUtils = new ArrayList<>();
@@ -112,7 +122,8 @@ public class DepartmentServiceImpl implements DepartmentService {
             map.put("modifiedTime", departmentEntity.getModifiedTime());
             map.put("customerUnitsId", departmentEntity.getCustomerUnitsId());
             treeNodeUtil.setA_attr(map);
-            treeNodeUtil.setChildren(this.findDepartmentTree(departmentEntity.getId()));
+            treeNodeUtil.setChildren(customerUnitsId != null ? this.findDepartmentTree(departmentEntity.getId(), customerUnitsId) :
+                    this.findDepartmentTree(departmentEntity.getId(), null));
             treeNodeUtils.add(treeNodeUtil);
         }
         return treeNodeUtils;
@@ -138,5 +149,19 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
     }
 
+    @Override
+    public List<CustomerDutyEntity> findCustomerDutiesByIds(Long[] ids) {
+        DepartmentCustomerDutyEntityExample departmentCustomerDutyEntityExample = new DepartmentCustomerDutyEntityExample();
+        DepartmentCustomerDutyEntityExample.Criteria criteria = departmentCustomerDutyEntityExample.createCriteria();
+        criteria.andIdIn(Arrays.asList(ids));
+        List<DepartmentCustomerDutyEntity> departmentCustomerDutyEntities = departmentCustomerDutyService.findByExample(departmentCustomerDutyEntityExample);
+        List<Long> dutyIds = departmentCustomerDutyEntities.stream()
+                .map(DepartmentCustomerDutyEntity::getDutyId)
+                .distinct().collect(Collectors.toList());
+        CustomerDutyEntityExample customerDutyEntityExample = new CustomerDutyEntityExample();
+        CustomerDutyEntityExample.Criteria criteria1 = customerDutyEntityExample.createCriteria();
+        criteria1.andIdIn(dutyIds);
+        return customerDutyService.findByExample(customerDutyEntityExample);
+    }
 
 }

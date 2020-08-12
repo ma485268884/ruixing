@@ -3,16 +3,25 @@
 <mapper namespace="com.yintu.ruixing.dao.UserDao">
     <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.UserEntity">
         <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modified_by" jdbcType="VARCHAR" property="modifiedBy"/>
+        <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
         <result column="true_name" jdbcType="VARCHAR" property="trueName"/>
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="telephone" jdbcType="VARCHAR" property="telephone"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="auth_type" jdbcType="SMALLINT" property="authType"/>
         <result column="locked" jdbcType="SMALLINT" property="locked"/>
         <result column="enableds" jdbcType="SMALLINT" property="enableds"/>
-        <result column="salt" jdbcType="VARCHAR" property="salt"/>
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="province_id" jdbcType="INTEGER" property="provinceId"/>
+        <result column="city_id" jdbcType="INTEGER" property="cityId"/>
+        <result column="district_id" jdbcType="INTEGER" property="districtId"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="customer_units_id" jdbcType="BIGINT" property="customerUnitsId"/>
+        <result column="customer_duty_id" jdbcType="BIGINT" property="customerDutyId"/>
         <result column="is_customer" jdbcType="SMALLINT" property="isCustomer"/>
     </resultMap>
     <sql id="Example_Where_Clause">
@@ -33,8 +42,7 @@
                                 </when>
                                 <when test="criterion.listValue">
                                     and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
-                                             separator=",">
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                                         #{listItem}
                                     </foreach>
                                 </when>
@@ -63,8 +71,7 @@
                                 </when>
                                 <when test="criterion.listValue">
                                     and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
-                                             separator=",">
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                                         #{listItem}
                                     </foreach>
                                 </when>
@@ -76,7 +83,9 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        id, username, password, true_name, phone, email, auth_type, locked, enableds, salt,create_time, is_customer
+        id, create_by, create_time, modified_by, modified_time, username, password, true_name,
+    phone, telephone, email, auth_type, locked, enableds, province_id, city_id, district_id, 
+    address, customer_units_id, customer_duty_id, is_customer
     </sql>
     <select id="selectByExample" parameterType="com.yintu.ruixing.entity.UserEntityExample" resultMap="BaseResultMap">
         select
@@ -110,20 +119,38 @@
         </if>
     </delete>
     <insert id="insert" parameterType="com.yintu.ruixing.entity.UserEntity">
-        insert into tb_user (id, username, password,
-                             true_name, phone, email,
-                             auth_type, locked, enableds,
-                             salt, create_time, is_customer)
-        values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-                #{trueName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
-                #{authType,jdbcType=SMALLINT}, #{locked,jdbcType=SMALLINT}, #{enableds,jdbcType=SMALLINT},
-                #{salt,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{isCustomer,jdbcType=SMALLINT})
+        insert into tb_user (id, create_by, create_time,
+                             modified_by, modified_time, username,
+                             password, true_name, phone,
+                             telephone, email, auth_type,
+                             locked, enableds, province_id,
+                             city_id, district_id, address,
+                             customer_units_id, customer_duty_id, is_customer)
+        values (#{id,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+                #{modifiedBy,jdbcType=VARCHAR}, #{modifiedTime,jdbcType=TIMESTAMP}, #{username,jdbcType=VARCHAR},
+                #{password,jdbcType=VARCHAR}, #{trueName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+                #{telephone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{authType,jdbcType=SMALLINT},
+                #{locked,jdbcType=SMALLINT}, #{enableds,jdbcType=SMALLINT}, #{provinceId,jdbcType=INTEGER},
+                #{cityId,jdbcType=INTEGER}, #{districtId,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR},
+                #{customerUnitsId,jdbcType=BIGINT}, #{customerDutyId,jdbcType=BIGINT}, #{isCustomer,jdbcType=SMALLINT})
     </insert>
-    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.UserEntity">
         insert into tb_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifiedBy != null">
+                modified_by,
+            </if>
+            <if test="modifiedTime != null">
+                modified_time,
             </if>
             <if test="username != null">
                 username,
@@ -137,6 +164,9 @@
             <if test="phone != null">
                 phone,
             </if>
+            <if test="telephone != null">
+                telephone,
+            </if>
             <if test="email != null">
                 email,
             </if>
@@ -149,11 +179,23 @@
             <if test="enableds != null">
                 enableds,
             </if>
-            <if test="salt != null">
-                salt,
+            <if test="provinceId != null">
+                province_id,
             </if>
-            <if test="createTime != null">
-                create_time,
+            <if test="cityId != null">
+                city_id,
+            </if>
+            <if test="districtId != null">
+                district_id,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="customerUnitsId != null">
+                customer_units_id,
+            </if>
+            <if test="customerDutyId != null">
+                customer_duty_id,
             </if>
             <if test="isCustomer != null">
                 is_customer,
@@ -162,6 +204,18 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 #{id,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifiedBy != null">
+                #{modifiedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifiedTime != null">
+                #{modifiedTime,jdbcType=TIMESTAMP},
             </if>
             <if test="username != null">
                 #{username,jdbcType=VARCHAR},
@@ -175,6 +229,9 @@
             <if test="phone != null">
                 #{phone,jdbcType=VARCHAR},
             </if>
+            <if test="telephone != null">
+                #{telephone,jdbcType=VARCHAR},
+            </if>
             <if test="email != null">
                 #{email,jdbcType=VARCHAR},
             </if>
@@ -187,11 +244,23 @@
             <if test="enableds != null">
                 #{enableds,jdbcType=SMALLINT},
             </if>
-            <if test="salt != null">
-                #{salt,jdbcType=VARCHAR},
+            <if test="provinceId != null">
+                #{provinceId,jdbcType=INTEGER},
             </if>
-            <if test="createTime != null">
-                #{createTime,jdbcType=TIMESTAMP},
+            <if test="cityId != null">
+                #{cityId,jdbcType=INTEGER},
+            </if>
+            <if test="districtId != null">
+                #{districtId,jdbcType=INTEGER},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="customerUnitsId != null">
+                #{customerUnitsId,jdbcType=BIGINT},
+            </if>
+            <if test="customerDutyId != null">
+                #{customerDutyId,jdbcType=BIGINT},
             </if>
             <if test="isCustomer != null">
                 #{isCustomer,jdbcType=SMALLINT},
@@ -210,6 +279,18 @@
             <if test="record.id != null">
                 id = #{record.id,jdbcType=BIGINT},
             </if>
+            <if test="record.createBy != null">
+                create_by = #{record.createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.modifiedBy != null">
+                modified_by = #{record.modifiedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="record.modifiedTime != null">
+                modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+            </if>
             <if test="record.username != null">
                 username = #{record.username,jdbcType=VARCHAR},
             </if>
@@ -221,6 +302,9 @@
             </if>
             <if test="record.phone != null">
                 phone = #{record.phone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.telephone != null">
+                telephone = #{record.telephone,jdbcType=VARCHAR},
             </if>
             <if test="record.email != null">
                 email = #{record.email,jdbcType=VARCHAR},
@@ -234,11 +318,23 @@
             <if test="record.enableds != null">
                 enableds = #{record.enableds,jdbcType=SMALLINT},
             </if>
-            <if test="record.salt != null">
-                salt = #{record.salt,jdbcType=VARCHAR},
+            <if test="record.provinceId != null">
+                province_id = #{record.provinceId,jdbcType=INTEGER},
             </if>
-            <if test="record.createTime != null">
-                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            <if test="record.cityId != null">
+                city_id = #{record.cityId,jdbcType=INTEGER},
+            </if>
+            <if test="record.districtId != null">
+                district_id = #{record.districtId,jdbcType=INTEGER},
+            </if>
+            <if test="record.address != null">
+                address = #{record.address,jdbcType=VARCHAR},
+            </if>
+            <if test="record.customerUnitsId != null">
+                customer_units_id = #{record.customerUnitsId,jdbcType=BIGINT},
+            </if>
+            <if test="record.customerDutyId != null">
+                customer_duty_id = #{record.customerDutyId,jdbcType=BIGINT},
             </if>
             <if test="record.isCustomer != null">
                 is_customer = #{record.isCustomer,jdbcType=SMALLINT},
@@ -251,16 +347,25 @@
     <update id="updateByExample" parameterType="map">
         update tb_user
         set id = #{record.id,jdbcType=BIGINT},
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        modified_by = #{record.modifiedBy,jdbcType=VARCHAR},
+        modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
         username = #{record.username,jdbcType=VARCHAR},
         password = #{record.password,jdbcType=VARCHAR},
         true_name = #{record.trueName,jdbcType=VARCHAR},
         phone = #{record.phone,jdbcType=VARCHAR},
+        telephone = #{record.telephone,jdbcType=VARCHAR},
         email = #{record.email,jdbcType=VARCHAR},
         auth_type = #{record.authType,jdbcType=SMALLINT},
         locked = #{record.locked,jdbcType=SMALLINT},
         enableds = #{record.enableds,jdbcType=SMALLINT},
-        salt = #{record.salt,jdbcType=VARCHAR},
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        province_id = #{record.provinceId,jdbcType=INTEGER},
+        city_id = #{record.cityId,jdbcType=INTEGER},
+        district_id = #{record.districtId,jdbcType=INTEGER},
+        address = #{record.address,jdbcType=VARCHAR},
+        customer_units_id = #{record.customerUnitsId,jdbcType=BIGINT},
+        customer_duty_id = #{record.customerDutyId,jdbcType=BIGINT},
         is_customer = #{record.isCustomer,jdbcType=SMALLINT}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
@@ -269,6 +374,18 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.UserEntity">
         update tb_user
         <set>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifiedBy != null">
+                modified_by = #{modifiedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifiedTime != null">
+                modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+            </if>
             <if test="username != null">
                 username = #{username,jdbcType=VARCHAR},
             </if>
@@ -280,6 +397,9 @@
             </if>
             <if test="phone != null">
                 phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone,jdbcType=VARCHAR},
             </if>
             <if test="email != null">
                 email = #{email,jdbcType=VARCHAR},
@@ -293,11 +413,23 @@
             <if test="enableds != null">
                 enableds = #{enableds,jdbcType=SMALLINT},
             </if>
-            <if test="salt != null">
-                salt = #{salt,jdbcType=VARCHAR},
+            <if test="provinceId != null">
+                province_id = #{provinceId,jdbcType=INTEGER},
             </if>
-            <if test="createTime != null">
-                create_time = #{createTime,jdbcType=TIMESTAMP},
+            <if test="cityId != null">
+                city_id = #{cityId,jdbcType=INTEGER},
+            </if>
+            <if test="districtId != null">
+                district_id = #{districtId,jdbcType=INTEGER},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="customerUnitsId != null">
+                customer_units_id = #{customerUnitsId,jdbcType=BIGINT},
+            </if>
+            <if test="customerDutyId != null">
+                customer_duty_id = #{customerDutyId,jdbcType=BIGINT},
             </if>
             <if test="isCustomer != null">
                 is_customer = #{isCustomer,jdbcType=SMALLINT},
@@ -307,21 +439,28 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.UserEntity">
         update tb_user
-        set username    = #{username,jdbcType=VARCHAR},
-            password    = #{password,jdbcType=VARCHAR},
-            true_name   = #{trueName,jdbcType=VARCHAR},
-            phone       = #{phone,jdbcType=VARCHAR},
-            email       = #{email,jdbcType=VARCHAR},
-            auth_type   = #{authType,jdbcType=SMALLINT},
-            locked      = #{locked,jdbcType=SMALLINT},
-            enableds    = #{enableds,jdbcType=SMALLINT},
-            salt        = #{salt,jdbcType=VARCHAR},
-            create_time = #{createTime,jdbcType=TIMESTAMP},
-            is_customer = #{isCustomer,jdbcType=SMALLINT}
+        set create_by         = #{createBy,jdbcType=VARCHAR},
+            create_time       = #{createTime,jdbcType=TIMESTAMP},
+            modified_by       = #{modifiedBy,jdbcType=VARCHAR},
+            modified_time     = #{modifiedTime,jdbcType=TIMESTAMP},
+            username          = #{username,jdbcType=VARCHAR},
+            password          = #{password,jdbcType=VARCHAR},
+            true_name         = #{trueName,jdbcType=VARCHAR},
+            phone             = #{phone,jdbcType=VARCHAR},
+            telephone         = #{telephone,jdbcType=VARCHAR},
+            email             = #{email,jdbcType=VARCHAR},
+            auth_type         = #{authType,jdbcType=SMALLINT},
+            locked            = #{locked,jdbcType=SMALLINT},
+            enableds          = #{enableds,jdbcType=SMALLINT},
+            province_id       = #{provinceId,jdbcType=INTEGER},
+            city_id           = #{cityId,jdbcType=INTEGER},
+            district_id       = #{districtId,jdbcType=INTEGER},
+            address           = #{address,jdbcType=VARCHAR},
+            customer_units_id = #{customerUnitsId,jdbcType=BIGINT},
+            customer_duty_id  = #{customerDutyId,jdbcType=BIGINT},
+            is_customer       = #{isCustomer,jdbcType=SMALLINT}
         where id = #{id,jdbcType=BIGINT}
     </update>
-
-
     <resultMap id="BasePermissionResultMap" type="com.yintu.ruixing.entity.PermissionEntity">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="parent_id" jdbcType="BIGINT" property="parentId"/>

@@ -1,18 +1,16 @@
 package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.dao.CustomerDutyDao;
-import com.yintu.ruixing.entity.CustomerDutyEntity;
-import com.yintu.ruixing.entity.DepartmentCustomerDutyEntity;
-import com.yintu.ruixing.entity.DepartmentCustomerDutyEntityExample;
-import com.yintu.ruixing.entity.DepartmentEntity;
+import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.CustomerDutyService;
+import com.yintu.ruixing.service.CustomerUnitsService;
 import com.yintu.ruixing.service.DepartmentCustomerDutyService;
 import com.yintu.ruixing.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,24 +25,13 @@ public class CustomerDutyServiceImpl implements CustomerDutyService {
 
     @Autowired
     private CustomerDutyDao customerDutyDao;
-
+    @Autowired
+    private CustomerUnitsService customerUnitsService;
     @Autowired
     private DepartmentService departmentService;
     @Autowired
     private DepartmentCustomerDutyService departmentCustomerDutyService;
 
-
-    @Override
-    public List<CustomerDutyEntity> findByExample(CustomerDutyEntity entity) {
-        return customerDutyDao.selectByExample(entity);
-    }
-
-    @Override
-    public void removeByIds(Long[] ids) {
-        for (Long id : ids) {
-            this.remove(id);
-        }
-    }
 
     @Override
     public void add(CustomerDutyEntity entity) {
@@ -58,6 +45,7 @@ public class CustomerDutyServiceImpl implements CustomerDutyService {
         customerDutyDao.deleteByPrimaryKey(id);
     }
 
+
     @Override
     public void edit(CustomerDutyEntity entity) {
         entity.setModifiedTime(new Date());
@@ -66,8 +54,14 @@ public class CustomerDutyServiceImpl implements CustomerDutyService {
 
     @Override
     public CustomerDutyEntity findById(Long id) {
-        return customerDutyDao.selectByPrimaryKey(id);
+        CustomerDutyEntity customerDutyEntity = customerDutyDao.selectByPrimaryKey(id);
+        if (customerDutyEntity != null) {
+            customerDutyEntity.setDepartmentEntities(this.findDepartmentsById(customerDutyEntity.getId()));
+            customerDutyEntity.setCustomerUnitsEntity(customerUnitsService.findById(customerDutyEntity.getCustomerUnitsId()));
+        }
+        return customerDutyEntity;
     }
+
 
     @Override
     public void add(CustomerDutyEntity entity, Long[] departmentIds, String loginUserName) {
@@ -82,6 +76,11 @@ public class CustomerDutyServiceImpl implements CustomerDutyService {
             departmentCustomerDutyEntity.setDutyId(entity.getId());
             departmentCustomerDutyService.add(departmentCustomerDutyEntity);
         }
+    }
+
+    @Override
+    public void removeByExample(CustomerDutyEntityExample customerDutyEntityExample) {
+        customerDutyDao.deleteByExample(customerDutyEntityExample);
     }
 
     @Override
@@ -104,6 +103,11 @@ public class CustomerDutyServiceImpl implements CustomerDutyService {
     }
 
     @Override
+    public List<CustomerDutyEntity> findByExample(CustomerDutyEntityExample customerDutyEntityExample) {
+        return customerDutyDao.selectByExample(customerDutyEntityExample);
+    }
+
+    @Override
     public List<DepartmentEntity> findDepartmentsById(Long id) {
         DepartmentCustomerDutyEntityExample departmentCustomerDutyEntityExample = new DepartmentCustomerDutyEntityExample();
         DepartmentCustomerDutyEntityExample.Criteria criteria = departmentCustomerDutyEntityExample.createCriteria();
@@ -111,5 +115,29 @@ public class CustomerDutyServiceImpl implements CustomerDutyService {
         List<DepartmentCustomerDutyEntity> departmentCustomerDutyEntities = departmentCustomerDutyService.findByExample(departmentCustomerDutyEntityExample);
         List<Long> departmentIds = departmentCustomerDutyEntities.stream().map(DepartmentCustomerDutyEntity::getDepartmentId).collect(Collectors.toList());
         return departmentService.findByIds(departmentIds);
+    }
+
+    @Override
+    public List<CustomerDutyEntity> findByExample(CustomerDutyEntity entity) {
+        CustomerDutyEntityExample customerDutyEntityExample = new CustomerDutyEntityExample();
+        CustomerDutyEntityExample.Criteria criteria = customerDutyEntityExample.createCriteria();
+        if (entity.getName() != null)
+            criteria.andNameLike("%" + entity.getName() + "%");
+        List<CustomerDutyEntity> customerDutyEntities = this.findByExample(customerDutyEntityExample);
+        for (CustomerDutyEntity customerDutyEntity : customerDutyEntities) {
+            if (customerDutyEntity != null) {
+                customerDutyEntity.setDepartmentEntities(this.findDepartmentsById(customerDutyEntity.getId()));
+                customerDutyEntity.setCustomerUnitsEntity(customerUnitsService.findById(customerDutyEntity.getCustomerUnitsId()));
+            }
+        }
+        return customerDutyEntities;
+    }
+
+    @Override
+    public void removeByIds(Long[] ids) {
+        CustomerDutyEntityExample customerDutyEntityExample = new CustomerDutyEntityExample();
+        CustomerDutyEntityExample.Criteria criteria = customerDutyEntityExample.createCriteria();
+        criteria.andIdIn(Arrays.asList(ids));
+        this.removeByExample(customerDutyEntityExample);
     }
 }
