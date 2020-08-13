@@ -14,11 +14,14 @@ import java.util.List;
  */
 public interface CustomerDutyService extends AdvancedService<CustomerDutyEntity, Long> {
 
+
     void add(CustomerDutyEntity entity, Long[] departmentIds, String loginUserName);
 
     void removeByExample(CustomerDutyEntityExample customerDutyEntityExample);
 
     void edit(CustomerDutyEntity entity, Long[] departmentIds, String loginUserName);
+
+    CustomerDutyEntity findSimpleById(Long id);
 
     List<CustomerDutyEntity> findByExample(CustomerDutyEntityExample customerDutyEntityExample);
 

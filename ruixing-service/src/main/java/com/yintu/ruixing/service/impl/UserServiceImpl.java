@@ -4,7 +4,6 @@ import com.yintu.ruixing.common.enumobject.EnumAuthType;
 import com.yintu.ruixing.common.enumobject.EnumFlag;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
-import com.yintu.ruixing.dao.DepartmentDao;
 import com.yintu.ruixing.dao.UserDao;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.*;
@@ -96,7 +95,7 @@ public class UserServiceImpl implements UserService {
             userEntity.setRoleEntities(this.findRolesById(userEntity.getId()));
             if (userEntity.getIsCustomer().equals(EnumFlag.FlagTrue.getValue())) {
                 userEntity.setCustomerUnitsEntity(customerUnitsService.findById(userEntity.getCustomerUnitsId()));
-                userEntity.setCustomerDutyEntity(customerDutyService.findById(userEntity.getCustomerDutyId()));
+                userEntity.setCustomerDutyEntity(customerDutyService.findSimpleById(userEntity.getCustomerDutyId()));
                 userEntity.setProvinceEntity(districtService.findById(userEntity.getProvinceId()));
                 userEntity.setCityEntity(districtService.findById(userEntity.getCityId()));
                 userEntity.setDistrictEntity(districtService.findById(userEntity.getDistrictId()));
@@ -120,6 +119,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUserAndRoles(UserEntity userEntity, Long[] roleIds, Long[] departmentIds, String loginUserName) {
+        userEntity.setCreateBy(loginUserName);
+        userEntity.setCreateTime(new Date());
+        userEntity.setModifiedBy(loginUserName);
+        userEntity.setModifiedTime(new Date());
         this.add(userEntity);
         this.addRolesByIdAndRoleIds(userEntity.getId(), roleIds);
         this.addDepartmentsByIdAndDepartmentIds(userEntity.getId(), departmentIds, loginUserName);
@@ -127,6 +130,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void editUserAndRoles(UserEntity userEntity, Long[] roleIds, Long[] departmentIds, String loginUserName) {
+        userEntity.setModifiedBy(loginUserName);
+        userEntity.setModifiedTime(new Date());
         this.edit(userEntity);
         this.addRolesByIdAndRoleIds(userEntity.getId(), roleIds);
         this.addDepartmentsByIdAndDepartmentIds(userEntity.getId(), departmentIds, loginUserName);
@@ -158,7 +163,7 @@ public class UserServiceImpl implements UserService {
             userEntity.setRoleEntities(this.findRolesById(userEntity.getId()));
             if (userEntity.getIsCustomer().equals(EnumFlag.FlagTrue.getValue())) {
                 userEntity.setCustomerUnitsEntity(customerUnitsService.findById(userEntity.getCustomerUnitsId()));
-                userEntity.setCustomerDutyEntity(customerDutyService.findById(userEntity.getCustomerDutyId()));
+                userEntity.setCustomerDutyEntity(customerDutyService.findSimpleById(userEntity.getCustomerDutyId()));
                 userEntity.setProvinceEntity(districtService.findById(userEntity.getProvinceId()));
                 userEntity.setCityEntity(districtService.findById(userEntity.getCityId()));
                 userEntity.setDistrictEntity(districtService.findById(userEntity.getDistrictId()));
