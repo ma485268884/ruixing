@@ -1,12 +1,15 @@
 package com.yintu.ruixing.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import com.yintu.ruixing.common.enumobject.EnumAuthType;
 import com.yintu.ruixing.common.enumobject.EnumFlag;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
+import com.yintu.ruixing.common.util.ExportExcelUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.UserDao;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
@@ -17,6 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -103,6 +108,14 @@ public class UserServiceImpl implements UserService {
             }
         }
         return userEntity;
+    }
+
+    @Override
+    public void removeByIds(Long[] ids) {
+        UserEntityExample userEntityExample = new UserEntityExample();
+        UserEntityExample.Criteria criteria = userEntityExample.createCriteria();
+        criteria.andIdIn(Arrays.asList(ids));
+        userDao.deleteByExample(userEntityExample);
     }
 
     @Override
@@ -357,6 +370,61 @@ public class UserServiceImpl implements UserService {
         userEntity.setId(id);
         userEntity.setTrueName(truename);
         userDao.updateByPrimaryKeySelective(userEntity);
+    }
+
+    @Override
+    public void exportFile(OutputStream outputStream, Long[] ids) throws IOException {
+        //excel标题
+        String title = "顾客档案列表信息";
+        //excel表名
+        String[] headers = {"序号", "单位", "单位", "职务", "姓名", "手机", "座机", "邮箱", "省份", "城市", "县区", "邮寄地址", "创建人", "创建时间", "更新人", "更新时间"};
+        //获取数据
+        UserEntityExample userEntityExample = new UserEntityExample();
+        UserEntityExample.Criteria criteria = userEntityExample.createCriteria();
+        criteria.andIsCustomerEqualTo(EnumFlag.FlagTrue.getValue());
+        criteria.andIdIn(Arrays.asList(ids));
+        List<UserEntity> userEntities = this.findByExample(userEntityExample).stream().
+                sorted(Comparator.comparing(UserEntity::getId).reversed())
+                .collect(Collectors.toList());
+        for (UserEntity userEntity : userEntities) {
+            userEntity.setCustomerUnitsEntity(customerUnitsService.findById(userEntity.getCustomerUnitsId()));
+            userEntity.setDepartmentEntities(this.findDepartmentsById(userEntity.getId()));
+            userEntity.setCustomerDutyEntity(customerDutyService.findSimpleById(userEntity.getCustomerDutyId()));
+            userEntity.setProvinceEntity(districtService.findById(userEntity.getProvinceId()));
+            userEntity.setCityEntity(districtService.findById(userEntity.getCityId()));
+            userEntity.setDistrictEntity(districtService.findById(userEntity.getDistrictId()));
+        }
+
+        //excel元素
+        String[][] content = new String[userEntities.size()][headers.length];
+        for (int i = 0; i < userEntities.size(); i++) {
+            content[i][0] = userEntities.get(i).getId().toString();
+            content[i][1] = userEntities.get(i).getCustomerUnitsEntity().getName();
+            List<DepartmentEntity> departmentEntities = userEntities.get(i).getDepartmentEntities();
+            StringBuilder sb = new StringBuilder();
+            for (DepartmentEntity departmentEntity : departmentEntities) {
+                sb.append(departmentEntity.getName()).append("\r\n");
+            }
+            content[i][2] = sb.toString();
+            content[i][3] = userEntities.get(i).getCustomerDutyEntity().getName();
+            content[i][4] = userEntities.get(i).getTrueName();
+            content[i][5] = userEntities.get(i).getPhone();
+            content[i][6] = userEntities.get(i).getTelephone();
+            content[i][7] = userEntities.get(i).getEmail();
+            content[i][8] = userEntities.get(i).getProvinceEntity().getName();
+            content[i][9] = userEntities.get(i).getCityEntity().getName();
+            content[i][10] = userEntities.get(i).getDistrictEntity().getName();
+            content[i][11] = userEntities.get(i).getAddress();
+            content[i][12] = userEntities.get(i).getCreateBy();
+            content[i][13] = DateUtil.format(userEntities.get(i).getCreateTime(), "yyy-MM-dd hh:ss:mm");
+            content[i][14] = userEntities.get(i).getModifiedBy();
+            content[i][15] = DateUtil.format(userEntities.get(i).getModifiedTime(), "yyy-MM-dd hh:ss:mm");
+        }
+        //创建XSSFWorkbook
+        XSSFWorkbook wb = ExportExcelUtil.getXSSFWorkbook(title, headers, content);
+        wb.write(outputStream);
+        outputStream.flush();
+        outputStream.close();
     }
 
 

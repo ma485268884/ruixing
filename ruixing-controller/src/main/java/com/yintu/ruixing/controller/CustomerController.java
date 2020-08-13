@@ -8,9 +8,12 @@ import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +21,7 @@ import java.util.Map;
  * @author:mlf
  * @date:2020/5/28 14:15
  */
-@RestController
+@Controller
 @RequestMapping("/customers")
 public class CustomerController extends SessionController {
     @Autowired
@@ -34,6 +37,7 @@ public class CustomerController extends SessionController {
 
 
     @PostMapping
+    @ResponseBody
     public Map<String, Object> add(UserEntity userEntity, @RequestParam Long[] roleIds, @RequestParam Long[] departmentIds) {
         Assert.notNull(userEntity.getUsername(), "用户名不能为空");
         Assert.notNull(userEntity.getPassword(), "密码不能为空");
@@ -43,13 +47,15 @@ public class CustomerController extends SessionController {
         return ResponseDataUtil.ok("添加客户成功");
     }
 
-    @DeleteMapping("/{id}")
-    public Map<String, Object> remove(@PathVariable Long id) {
-        userService.remove(id);
+    @DeleteMapping("/{ids}")
+    @ResponseBody
+    public Map<String, Object> remove(@PathVariable Long[] ids) {
+        userService.removeByIds(ids);
         return ResponseDataUtil.ok("删除客户成功");
     }
 
     @PutMapping("/{id}")
+    @ResponseBody
     public Map<String, Object> edit(@PathVariable Long id, UserEntity userEntity, @RequestParam Long[] roleIds, @RequestParam Long[] departmentIds) {
         Assert.notNull(userEntity.getUsername(), "用户名不能为空");
         Assert.notNull(userEntity.getPassword(), "密码不能为空");
@@ -60,12 +66,14 @@ public class CustomerController extends SessionController {
     }
 
     @GetMapping("/{id}")
+    @ResponseBody
     public Map<String, Object> findById(@PathVariable Long id) {
         UserEntity userEntity = userService.findById(id);
         return ResponseDataUtil.ok("查询客户成功", userEntity);
     }
 
     @GetMapping
+    @ResponseBody
     public Map<String, Object> findAll(@RequestParam("page_number") Integer pageNumber,
                                        @RequestParam("page_size") Integer pageSize,
                                        @RequestParam(value = "order_by", required = false, defaultValue = "id DESC") String orderBy,
@@ -81,6 +89,7 @@ public class CustomerController extends SessionController {
     }
 
     @GetMapping("/roles")
+    @ResponseBody
     public Map<String, Object> findRoles() {
         List<RoleEntity> roleEntities = roleService.findAll();
         return ResponseDataUtil.ok("查询角色列表信息成功", roleEntities);
@@ -88,21 +97,35 @@ public class CustomerController extends SessionController {
 
 
     @GetMapping("/customer/units")
+    @ResponseBody
     public Map<String, Object> findCustomerUnits() {
         List<CustomerUnitsEntity> customerUnitsEntities = customerUnitsService.findByExample(new CustomerUnitsEntity());
         return ResponseDataUtil.ok("查询客户单位列表信息成功", customerUnitsEntities);
     }
 
     @GetMapping("/departments")
+    @ResponseBody
     public Map<String, Object> findDepartments(@RequestParam Long customerUnitsId) {
         List<TreeNodeUtil> treeNodeUtils = departmentService.findDepartmentTree(-1L, customerUnitsId);
         return ResponseDataUtil.ok("查询部门列表信息成功", treeNodeUtils);
     }
 
     @GetMapping("/customer/duties")
+    @ResponseBody
     public Map<String, Object> findCustomerDuties(@RequestParam Long[] departmentIds) {
         List<CustomerDutyEntity> customerDutyEntities = departmentService.findCustomerDutiesByIds(departmentIds);
         return ResponseDataUtil.ok("查询部门列表信息成功", customerDutyEntities);
     }
+
+    @GetMapping("/export/{ids}")
+    public void exportFile(@PathVariable Long[] ids, HttpServletResponse response) throws IOException {
+        String fileName = "顾客档案列表信息" + System.currentTimeMillis() + ".xlsx";
+        response.setContentType("application/octet-stream;charset=ISO8859-1");
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1"));
+        response.addHeader("Pargam", "no-cache");
+        response.addHeader("Cache-Control", "no-cache");
+        userService.exportFile(response.getOutputStream(), ids);
+    }
+
 
 }

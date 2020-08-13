@@ -14,6 +14,12 @@ import java.util.List;
  * @date:2020/5/19 9:43
  */
 public interface RoleService extends BaseService<RoleEntity, Long> {
+    /**
+     * 批量删除
+     *
+     * @param ids id集合
+     */
+    void removeByIds(Long[] ids);
 
     /**
      * @return 角色信息

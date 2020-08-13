@@ -67,6 +67,14 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public void removeByIds(Long[] ids) {
+        RoleEntityExample roleEntityExample = new RoleEntityExample();
+        RoleEntityExample.Criteria criteria = roleEntityExample.createCriteria();
+        criteria.andIdIn(Arrays.asList(ids));
+        roleDao.deleteByExample(roleEntityExample);
+    }
+
+    @Override
     public List<RoleEntity> findAll() {
         RoleEntityExample roleEntityExample = new RoleEntityExample();
         return roleDao.selectByExample(roleEntityExample);

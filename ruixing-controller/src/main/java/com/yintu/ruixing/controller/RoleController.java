@@ -35,9 +35,9 @@ public class RoleController extends SessionController {
         return ResponseDataUtil.ok("添加角色成功");
     }
 
-    @DeleteMapping("/{id}")
-    public Map<String, Object> remove(@PathVariable Long id) {
-        roleService.remove(id);
+    @DeleteMapping("/{ids}")
+    public Map<String, Object> remove(@PathVariable Long[] ids) {
+        roleService.removeByIds(ids);
         return ResponseDataUtil.ok("删除角色成功");
     }
 
