@@ -43,6 +43,7 @@
         <result column="cz_state" jdbcType="INTEGER" property="czState"/>
         <result column="cz_dmh_state" jdbcType="INTEGER" property="czdmhState"/>
         <result column="cz_r_shebei" jdbcType="INTEGER" property="czRSheBei"/>
+        <result property="publicMessage" column="publicMessage"/>
         <result column="cz_zhongjizhan" jdbcType="INTEGER" property="czZhongJiZhan"/>
         <result column="yuliushebei1" jdbcType="VARCHAR" property="yuliushebei1"/>
         <result column="yuliushebei2" jdbcType="VARCHAR" property="yuliushebei2"/>
@@ -99,7 +100,7 @@
         <result column="cz_dmh_json" jdbcType="LONGVARCHAR" property="czdmhJson"/>
     </resultMap>
     <sql id="Base_Column_List">
-        cid, cz_id, xd_id, xd_cz_id, cz_name, cz_name_jiancheng, cz_ip, cz_type, cz_stutrs,cz_lianjie_type,
+        cid, cz_id, xd_id, xd_cz_id, cz_name, cz_name_jiancheng, cz_ip, cz_type, cz_stutrs,cz_lianjie_type,publicMessage,
     cz_open_stutrs, cz_caozuo, cz_lasttime, cz_duantou, cz_miaoshu, cz_state, cz_r_shebei,
     cz_zhongjizhan, yuliushebei1, yuliushebei2,yuliushebei3, tongXinBianMaGuiDaoNumber, tongXinBianMaZhanNeiOneGuiDaoNumber,
     jiDianOneToOneGuiDaoNumber, jiDianNToOneGuiDaoNumber, jiDianNToOneSheBeiNumber, tongXinBianMaDianMaHuaSheBeiNumber,
@@ -457,6 +458,9 @@
             <if test="czZhongJiZhan != null">
                 cz_zhongjizhan,
             </if>
+            <if test="publicMessage != null">
+                publicMessage,
+            </if>
             <if test="yuliushebei1 != null">
                 yuliushebei1,
             </if>
@@ -647,6 +651,9 @@
             </if>
             <if test="czZhongJiZhan != null">
                 #{czZhongJiZhan,jdbcType=INTEGER},
+            </if>
+            <if test="publicMessage != null">
+                #{publicMessage,jdbcType=VARCHAR},
             </if>
             <if test="yuliushebei1 != null">
                 #{yuliushebei1,jdbcType=VARCHAR},
@@ -840,6 +847,9 @@
             </if>
             <if test="czZhongJiZhan != null">
                 cz_zhongjizhan = #{czZhongJiZhan,jdbcType=INTEGER},
+            </if>
+            <if test="publicMessage != null">
+                publicMessage = #{publicMessage,jdbcType=VARCHAR},
             </if>
             <if test="yuliushebei1 != null">
                 yuliushebei1 = #{yuliushebei1,jdbcType=VARCHAR},

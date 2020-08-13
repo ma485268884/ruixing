@@ -40,4 +40,6 @@ public interface AnZhuangTiaoShiXiangMuService {
     Integer findCheZhanTotal(Integer id);
 
     void exportFile(ServletOutputStream outputStream, Integer[] ids)throws IOException;
+
+    List<AnZhuangTiaoShiXiangMuEntity> findLastMonthXiangMu(String today, String lastMothDay);
 }

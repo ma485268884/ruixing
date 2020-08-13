@@ -30,6 +30,7 @@
         <result property="xdState" column="xd_state"/>
         <result property="czState" column="cz_state"/>
         <result property="czdmhState" column="cz_dmh_state"/>
+        <result property="publicMessage" column="publicMessage"/>
         <result column="cz_r_shebei" jdbcType="INTEGER" property="czRSheBei"/>
         <result column="cz_zhongjizhan" jdbcType="INTEGER" property="czZhongJiZhan"/>
         <result column="yuliushebei1" jdbcType="VARCHAR" property="yuliushebei1"/>

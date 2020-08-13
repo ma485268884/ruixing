@@ -134,11 +134,12 @@ public class AnZhuangTiaoShiXiangMuController {
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
         Date end = c.getTime();
-        String dqrq= format.format(end);//当前日期
+        String today= format.format(end);//当前日期
         c.add(Calendar.MONTH, -1);
         Date start = c.getTime();
-        String startDay = format.format(start);//前一月
+        String lastMothDay = format.format(start);//前一月
 
+        List<AnZhuangTiaoShiXiangMuEntity> xiangMuEntityList=anZhuangTiaoShiXiangMuService.findLastMonthXiangMu(today,lastMothDay);
         return null;
     }
 
