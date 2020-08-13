@@ -95,6 +95,10 @@ public class DataStatsEntity {
     private String xdJson;//储存的json',
     private String czdmhJson; //站内电码化储存json
     private String czJson;//储存的json',
+
+
+    private String publicMessage;//公共开关量信息
+
     private String yuliushebei1;
 
     private String yuliushebei2;

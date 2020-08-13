@@ -43,6 +43,11 @@ public class AnZhuangTiaoShiXiangMuServiceImpl implements AnZhuangTiaoShiXiangMu
     private AnZhuangTiaoShiCheZhanDao anZhuangTiaoShiCheZhanDao;
 
     @Override
+    public List<AnZhuangTiaoShiXiangMuEntity> findLastMonthXiangMu(String today, String lastMothDay) {
+        return anZhuangTiaoShiXiangMuDao.findLastMonthXiangMu(today,lastMothDay);
+    }
+
+    @Override
     public void exportFile(ServletOutputStream outputStream, Integer[] ids) throws IOException {
         //excel标题
         String title = "安装调试线段列表";

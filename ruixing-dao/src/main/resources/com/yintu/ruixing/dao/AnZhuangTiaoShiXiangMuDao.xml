@@ -15,6 +15,15 @@
     id, xianduantime, tlj_name, dwd_name, xd_name, xd_type, xd_fenlei, guanlianxiangmu
   </sql>
 
+  <!-- 查询近一个月开通的项目-->
+  <select id="findLastMonthXiangMu" resultMap="BaseResultMap">
+    SELECT
+	    xd_name
+    FROM
+        mro_anzhuangtiaoshi_xiangmu
+  </select>
+
+
   <!-- 查询线段名-->
   <select id="findXianDuan" resultMap="BaseResultMap">
     SELECT
