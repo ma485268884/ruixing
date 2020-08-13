@@ -91,6 +91,7 @@ public class UserServiceImpl implements UserService {
     public UserEntity findById(Long id) {
         UserEntity userEntity = userDao.selectByPrimaryKey(id);
         if (userEntity != null) {
+            userEntity.setCustomerUnitsEntity(customerUnitsService.findById(userEntity.getCustomerUnitsId()));
             userEntity.setDepartmentEntities(this.findDepartmentsById(userEntity.getId()));
             userEntity.setRoleEntities(this.findRolesById(userEntity.getId()));
             if (userEntity.getIsCustomer().equals(EnumFlag.FlagTrue.getValue())) {
@@ -159,6 +160,7 @@ public class UserServiceImpl implements UserService {
             userEntities = this.findByExample(userEntityExample);
         }
         for (UserEntity userEntity : userEntities) {
+            userEntity.setCustomerUnitsEntity(customerUnitsService.findById(userEntity.getCustomerUnitsId()));
             userEntity.setDepartmentEntities(this.findDepartmentsById(userEntity.getId()));
             userEntity.setRoleEntities(this.findRolesById(userEntity.getId()));
             if (userEntity.getIsCustomer().equals(EnumFlag.FlagTrue.getValue())) {
