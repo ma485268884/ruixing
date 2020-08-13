@@ -31,6 +31,7 @@
                 and
                 customer like concat ('%', #{customer},'%')
             </if>
+            group by id desc
         </where>
     </select>
 

@@ -18,9 +18,12 @@
   <!-- 查询近一个月开通的项目-->
   <select id="findLastMonthXiangMu" resultMap="BaseResultMap">
     SELECT
-	    xd_name
+        xd_name
     FROM
         mro_anzhuangtiaoshi_xiangmu
+    WHERE
+        xianduantime BETWEEN #{lastMothDay}
+        AND #{today}
   </select>
 
 

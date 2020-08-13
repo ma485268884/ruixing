@@ -63,6 +63,7 @@ public class CheZhanServiceImpl implements CheZhanService {
         long xid = cheZhanEntity.getXid();
         cheZhanEntity.setCzState(0);
         cheZhanEntity.setXdCzId(xid);
+        cheZhanEntity.setPublicMessage(0);
         cheZhanDao.insertChezhan(cheZhanEntity);
     }
 
