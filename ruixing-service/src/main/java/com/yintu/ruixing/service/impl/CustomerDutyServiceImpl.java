@@ -103,6 +103,11 @@ public class CustomerDutyServiceImpl implements CustomerDutyService {
     }
 
     @Override
+    public CustomerDutyEntity findSimpleById(Long id) {
+        return customerDutyDao.selectByPrimaryKey(id);
+    }
+
+    @Override
     public List<CustomerDutyEntity> findByExample(CustomerDutyEntityExample customerDutyEntityExample) {
         return customerDutyDao.selectByExample(customerDutyEntityExample);
     }

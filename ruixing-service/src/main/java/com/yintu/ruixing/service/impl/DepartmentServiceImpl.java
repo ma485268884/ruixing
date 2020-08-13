@@ -153,7 +153,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public List<CustomerDutyEntity> findCustomerDutiesByIds(Long[] ids) {
         DepartmentCustomerDutyEntityExample departmentCustomerDutyEntityExample = new DepartmentCustomerDutyEntityExample();
         DepartmentCustomerDutyEntityExample.Criteria criteria = departmentCustomerDutyEntityExample.createCriteria();
-        criteria.andIdIn(Arrays.asList(ids));
+        criteria.andDepartmentIdIn(Arrays.asList(ids));
         List<DepartmentCustomerDutyEntity> departmentCustomerDutyEntities = departmentCustomerDutyService.findByExample(departmentCustomerDutyEntityExample);
         List<Long> dutyIds = departmentCustomerDutyEntities.stream()
                 .map(DepartmentCustomerDutyEntity::getDutyId)

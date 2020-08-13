@@ -9,9 +9,13 @@ import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.entity.UserEntityExample;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 public interface UserService extends UserDetailsService, BaseService<UserEntity, Long> {
+
+    void removeByIds(Long[] ids);
 
     /**
      * 查询所有用户
@@ -119,6 +123,14 @@ public interface UserService extends UserDetailsService, BaseService<UserEntity,
      * @param truename 真实姓名
      */
     void editTruenameById(Long id, String truename);
+
+    /**
+     * 顾客文件导出
+     *
+     * @param outputStream 输出流
+     * @param ids          id集合
+     */
+    void exportFile(OutputStream outputStream, Long[] ids) throws IOException;
 
 
 }

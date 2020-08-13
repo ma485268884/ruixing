@@ -3,11 +3,9 @@ package com.yintu.ruixing.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.yintu.ruixing.common.enumobject.EnumFlag;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.entity.CustomerUnitsEntity;
-import com.yintu.ruixing.entity.DepartmentEntity;
 import com.yintu.ruixing.entity.RoleEntity;
 import com.yintu.ruixing.entity.UserEntity;
 import com.yintu.ruixing.service.*;
@@ -49,9 +47,9 @@ public class UserController extends SessionController {
         return ResponseDataUtil.ok("添加用户成功");
     }
 
-    @DeleteMapping("/{id}")
-    public Map<String, Object> remove(@PathVariable Long id) {
-        userService.remove(id);
+    @DeleteMapping("/{ids}")
+    public Map<String, Object> remove(@PathVariable Long[] ids) {
+        userService.removeByIds(ids);
         return ResponseDataUtil.ok("删除用户成功");
     }
 

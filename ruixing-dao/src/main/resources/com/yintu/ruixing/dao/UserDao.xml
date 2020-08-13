@@ -118,7 +118,7 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <insert id="insert" parameterType="com.yintu.ruixing.entity.UserEntity">
+    <insert id="insert" parameterType="com.yintu.ruixing.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
         insert into tb_user (id, create_by, create_time,
                              modified_by, modified_time, username,
                              password, true_name, phone,
@@ -134,7 +134,7 @@
                 #{cityId,jdbcType=INTEGER}, #{districtId,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR},
                 #{customerUnitsId,jdbcType=BIGINT}, #{customerDutyId,jdbcType=BIGINT}, #{isCustomer,jdbcType=SMALLINT})
     </insert>
-    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.UserEntity">
+    <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
         insert into tb_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

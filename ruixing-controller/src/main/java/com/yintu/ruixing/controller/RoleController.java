@@ -10,9 +10,11 @@ import com.yintu.ruixing.service.PermissionService;
 import com.yintu.ruixing.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,21 +31,25 @@ public class RoleController extends SessionController {
     private PermissionService permissionService;
 
     @PostMapping
-    public Map<String, Object> add(RoleEntity roleEntity, @RequestParam Long[] permissionIds) {
-        Assert.notNull(roleEntity.getName(), "角色名不能为空");
+    public Map<String, Object> add(@Validated RoleEntity roleEntity, @RequestParam Long[] permissionIds) {
+        roleEntity.setCreateBy(this.getLoginUserName());
+        roleEntity.setCreateTime(new Date());
+        roleEntity.setModifiedBy(this.getLoginUserName());
+        roleEntity.setModifiedTime(new Date());
         roleService.addRoleAndPermissions(roleEntity, permissionIds);
         return ResponseDataUtil.ok("添加角色成功");
     }
 
-    @DeleteMapping("/{id}")
-    public Map<String, Object> remove(@PathVariable Long id) {
-        roleService.remove(id);
+    @DeleteMapping("/{ids}")
+    public Map<String, Object> remove(@PathVariable Long[] ids) {
+        roleService.removeByIds(ids);
         return ResponseDataUtil.ok("删除角色成功");
     }
 
     @PutMapping("/{id}")
-    public Map<String, Object> edit(@PathVariable Long id, RoleEntity roleEntity, @RequestParam Long[] permissionIds) {
-        Assert.notNull(roleEntity.getName(), "角色名不能为空");
+    public Map<String, Object> edit(@PathVariable Long id, @Validated RoleEntity roleEntity, @RequestParam Long[] permissionIds) {
+        roleEntity.setModifiedBy(this.getLoginUserName());
+        roleEntity.setModifiedTime(new Date());
         roleService.editRoleAndPermissions(roleEntity, permissionIds);
         return ResponseDataUtil.ok("修改角色成功");
     }
@@ -66,14 +72,19 @@ public class RoleController extends SessionController {
         List<RoleEntity> roleEntities = roleService.findAllOrByName(name);
         PageInfo<RoleEntity> pageInfo = new PageInfo<>(roleEntities);
         jo.put("pageInfo", pageInfo);
-        return ResponseDataUtil.ok("查询角色列表成功", jo);
+        return ResponseDataUtil.ok("查询角色列表信息成功", jo);
     }
 
+    @GetMapping("/permissions")
+    public Map<String, Object> findPermissions() {
+        List<TreeNodeUtil> treeNodeUtils = permissionService.findPermissionTree(-1L);
+        return ResponseDataUtil.ok("查询权限树信息成功", treeNodeUtils);
+    }
 
     @GetMapping("/{id}/permissions")
-    public Map<String, Object> findRolesById(@PathVariable Long id) {
+    public Map<String, Object> findPermissionsById(@PathVariable Long id) {
         List<TreeNodeUtil> treeNodeUtils = new ArrayList<>();
         roleService.findPermissionsById(id, -1L, treeNodeUtils);
-        return ResponseDataUtil.ok("查询角色权限成功", treeNodeUtils);
+        return ResponseDataUtil.ok("查询角色权限信息成功", treeNodeUtils);
     }
 }

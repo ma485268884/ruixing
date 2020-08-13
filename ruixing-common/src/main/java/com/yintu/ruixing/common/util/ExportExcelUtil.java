@@ -19,6 +19,7 @@ import org.apache.poi.xssf.usermodel.*;
 public class ExportExcelUtil {
     /**
      * 创建后缀为.xls的表格文件
+     *
      * @param title   标题
      * @param headers 表头
      * @param values  表中元素
@@ -90,6 +91,7 @@ public class ExportExcelUtil {
 
     /**
      * 创建后缀为.xlsx的表格文件
+     *
      * @param title   标题
      * @param headers 表头
      * @param values  表中元素
@@ -102,6 +104,8 @@ public class ExportExcelUtil {
 
         //在workbook中添加一个sheet,对应Excel文件中的sheet
         XSSFSheet xssfSheet = xssfWorkbook.createSheet(title);
+        //自适应列宽度
+        xssfSheet.autoSizeColumn(1, true);
 
         //创建标题合并行
         xssfSheet.addMergedRegion(new CellRangeAddress(0, (short) 0, 0, (short) headers.length - 1));
