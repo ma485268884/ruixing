@@ -3,6 +3,10 @@
 <mapper namespace="com.yintu.ruixing.dao.RoleDao">
     <resultMap id="BaseResultMap" type="com.yintu.ruixing.entity.RoleEntity">
         <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modified_by" jdbcType="VARCHAR" property="modifiedBy"/>
+        <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="description" jdbcType="VARCHAR" property="description"/>
     </resultMap>
@@ -65,7 +69,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-        id, name, description
+        id, create_by, create_time, modified_by, modified_time, name, description
     </sql>
     <select id="selectByExample" parameterType="com.yintu.ruixing.entity.RoleEntityExample" resultMap="BaseResultMap">
         select
@@ -98,15 +102,31 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <insert id="insert" parameterType="com.yintu.ruixing.entity.RoleEntity">
-        insert into tb_role (id, name, description)
-        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
+    <insert id="insert" parameterType="com.yintu.ruixing.entity.RoleEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_role (id, create_by, create_time,
+                             modified_by, modified_time, name,
+                             description)
+        values (#{id,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+                #{modifiedBy,jdbcType=VARCHAR}, #{modifiedTime,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR},
+                #{description,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.yintu.ruixing.entity.RoleEntity" useGeneratedKeys="true" keyProperty="id">
         insert into tb_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifiedBy != null">
+                modified_by,
+            </if>
+            <if test="modifiedTime != null">
+                modified_time,
             </if>
             <if test="name != null">
                 name,
@@ -118,6 +138,18 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 #{id,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifiedBy != null">
+                #{modifiedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifiedTime != null">
+                #{modifiedTime,jdbcType=TIMESTAMP},
             </if>
             <if test="name != null">
                 #{name,jdbcType=VARCHAR},
@@ -139,6 +171,18 @@
             <if test="record.id != null">
                 id = #{record.id,jdbcType=BIGINT},
             </if>
+            <if test="record.createBy != null">
+                create_by = #{record.createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.modifiedBy != null">
+                modified_by = #{record.modifiedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="record.modifiedTime != null">
+                modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+            </if>
             <if test="record.name != null">
                 name = #{record.name,jdbcType=VARCHAR},
             </if>
@@ -153,6 +197,10 @@
     <update id="updateByExample" parameterType="map">
         update tb_role
         set id = #{record.id,jdbcType=BIGINT},
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        modified_by = #{record.modifiedBy,jdbcType=VARCHAR},
+        modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
         name = #{record.name,jdbcType=VARCHAR},
         description = #{record.description,jdbcType=VARCHAR}
         <if test="_parameter != null">
@@ -162,6 +210,18 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.entity.RoleEntity">
         update tb_role
         <set>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifiedBy != null">
+                modified_by = #{modifiedBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifiedTime != null">
+                modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+            </if>
             <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
             </if>
@@ -173,8 +233,12 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.entity.RoleEntity">
         update tb_role
-        set name        = #{name,jdbcType=VARCHAR},
-            description = #{description,jdbcType=VARCHAR}
+        set create_by     = #{createBy,jdbcType=VARCHAR},
+            create_time   = #{createTime,jdbcType=TIMESTAMP},
+            modified_by   = #{modifiedBy,jdbcType=VARCHAR},
+            modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+            name          = #{name,jdbcType=VARCHAR},
+            description   = #{description,jdbcType=VARCHAR}
         where id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>
