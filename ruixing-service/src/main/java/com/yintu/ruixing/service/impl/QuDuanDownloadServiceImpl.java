@@ -2,7 +2,6 @@ package com.yintu.ruixing.service.impl;
 
 import com.yintu.ruixing.dao.QuDuanDownloadDao;
 import com.yintu.ruixing.entity.QuDuanDownloadEntity;
-import com.yintu.ruixing.entity.QuDuanInfoEntityV2;
 import com.yintu.ruixing.service.CheZhanService;
 import com.yintu.ruixing.service.QuDuanDownloadService;
 import com.yintu.ruixing.service.QuDuanInfoService;
@@ -11,9 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author:mlf
@@ -70,19 +67,6 @@ public class QuDuanDownloadServiceImpl implements QuDuanDownloadService {
         this.add(quDuanDownloadEntity);
         return quDuanDownloadEntity.getId();
     }
-
-    @Override
-    public Map<String, Object> findPlayBackDataById(Integer id) {
-        QuDuanDownloadEntity quDuanDownloadEntity = this.findById(id);
-        Integer czId = quDuanDownloadEntity.getCid();
-        String quDuanBaseJsonData = cheZhanService.findJsonByCzId(czId);
-        List<QuDuanInfoEntityV2> quDuanInfoEntityV2s = quDuanInfoService.findByCzIdAndTime(czId, quDuanDownloadEntity.getStartTime(), quDuanDownloadEntity.getEndTime());
-        Map<String, Object> map = new HashMap<>();
-        map.put("quDuanBaseJsonData", quDuanBaseJsonData);
-        map.put("quDuanInfoEntityV2s", quDuanInfoEntityV2s);
-        return map;
-    }
-
 
     @Override
     public Integer changeDataStatus(Integer czId, Integer userId, Short dataStatus) {
