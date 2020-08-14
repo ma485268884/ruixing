@@ -17,21 +17,8 @@ public interface QuDuanInfoService {
 
     QuDuanInfoEntityV2 findById(Integer id);
 
-    /**
-     * 按照车站查询区段详情
-     *
-     * @param czId 车站id
-     * @return 区段详情
-     */
-    QuDuanInfoEntityV2 findLastBycZId(Integer czId);
 
-    /**
-     * @param czId      车站id
-     * @param startTime 开始时间
-     * @param endTime   结束时间
-     * @return
-     */
-    List<QuDuanInfoEntityV2> findByCzIdAndTime(Integer czId, Date startTime, Date endTime);
+
 
     /**
      * 按照车站查询区段详情

@@ -54,17 +54,6 @@ public class QuDuanDownloadController extends SessionController {
 
     }
 
-    /**
-     * 回放接口
-     *
-     * @param id
-     * @return
-     */
-    @GetMapping("/backdata")
-    public Map<String, Object> findPlayBackDataById(@RequestParam("id") Integer id) {
-        Map<String, Object> map = quDuanDownloadService.findPlayBackDataById(id);
-        return ResponseDataUtil.ok("查询下载记录成功", map);
-    }
 
     @GetMapping
     public Map<String, Object> findAll(@RequestParam(value = "page_number") Integer pageNumber,

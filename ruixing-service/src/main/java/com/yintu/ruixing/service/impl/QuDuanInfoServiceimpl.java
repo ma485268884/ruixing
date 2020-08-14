@@ -1,6 +1,5 @@
 package com.yintu.ruixing.service.impl;
 
-import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.common.util.StringUtil;
@@ -24,6 +23,7 @@ import java.util.*;
 public class QuDuanInfoServiceimpl implements QuDuanInfoService {
     @Autowired
     private CheZhanService cheZhanService;
+
     @Autowired
     private QuDuanInfoDaoV2 quDuanInfoDaoV2;
 
@@ -42,33 +42,21 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         return quDuanInfoDaoV2.selectByPrimaryKey(id);
     }
 
-
-    @Override
-    public QuDuanInfoEntityV2 findLastBycZId(Integer czId) {
-        return quDuanInfoDaoV2.selectLastByCzId(czId);
-    }
-
-    @Override
-    public List<QuDuanInfoEntityV2> findByCzIdAndTime(Integer czId, Date startTime, Date endTime) {
-        return quDuanInfoDaoV2.selectByCzIdAndTime(czId, startTime, endTime);
-    }
-
-
     @Override
     public QuDuanInfoEntityV2 findLastByQid(Integer qid) {
         return quDuanInfoDaoV2.selectLastByQid(qid);
     }
 
-
     @Override
     public List<QuDuanInfoEntityV2> findByCzIdAndTime(Integer czId, Date time) {
-        return quDuanInfoDaoV2.selectByCzIdAndQid(czId, time);
+        return quDuanInfoDaoV2.selectByCzId(czId, time, StringUtil.getTableName(czId, time));
     }
 
     @Override
     public List<Map<String, Object>> findStatisticsByCzIdAndTime(Integer czId, Date time) {
-        return quDuanInfoDaoV2.selectStatisticsByCzIdAndTime(czId, time);
+        return quDuanInfoDaoV2.selectStatisticsByCzIdAndTime(czId, time, StringUtil.getTableName(czId, time));
     }
+
 
     @Override
     public List<JSONObject> findByCondition(Integer czId, Date time) {

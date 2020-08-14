@@ -1,16 +1,12 @@
 package com.yintu.ruixing.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
-import com.yintu.ruixing.entity.CheZhanEntity;
-import com.yintu.ruixing.entity.QuDuanBaseEntity;
 import com.yintu.ruixing.entity.QuDuanInfoEntityV2;
 import com.yintu.ruixing.service.CheZhanService;
-import com.yintu.ruixing.service.QuDuanBaseService;
 import com.yintu.ruixing.service.QuDuanInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,47 +29,7 @@ public class QuDuanInfoController extends SessionController {
     @Autowired
     private QuDuanInfoService quDuanInfoService;
     @Autowired
-    private QuDuanBaseService quDuanBaseService;
-    @Autowired
     private CheZhanService cheZhanService;
-
-
-    /**
-     * 查询区段基础信息列表(门限参数列表)
-     *
-     * @param czId 车站id
-     * @return 区段基本信息集
-     */
-    @GetMapping("/base")
-    public Map<String, Object> findQuDuanBaseByCid(@RequestParam("czId") Integer czId) {
-        List<QuDuanBaseEntity> quDuanBaseEntities = quDuanBaseService.findByCzId(czId);
-        return ResponseDataUtil.ok("查询区段基础信息列表", quDuanBaseEntities);
-    }
-
-
-    /**
-     * 查询区段基础信息列表
-     *
-     * @param czId 车站id
-     * @return 区段基本封装的json串
-     */
-    @GetMapping("/json")
-    public Map<String, Object> findJsonConfigByCid(@RequestParam("czId") Integer czId) {
-        String json = cheZhanService.findJsonByCzId(czId);
-        return ResponseDataUtil.ok("查询区段配置信息列表成功", json);
-    }
-
-    /**
-     * 按照车站随机取出一条区段详情
-     *
-     * @param czId 区段id
-     * @return
-     */
-    @GetMapping("/random")
-    public Map<String, Object> findLastBycZId(@RequestParam("czId") Integer czId) {
-        QuDuanInfoEntityV2 quDuanInfoEntity = quDuanInfoService.findLastBycZId(czId);
-        return ResponseDataUtil.ok("查询区段详情成功", quDuanInfoEntity);
-    }
 
 
     /**
@@ -155,9 +111,6 @@ public class QuDuanInfoController extends SessionController {
         JSONObject jsonObjects = quDuanInfoService.findNullProperties(czId);
         return ResponseDataUtil.ok("查询区段属性成功", jsonObjects);
     }
-
-
-
 
 
     @GetMapping("/properties/tree")

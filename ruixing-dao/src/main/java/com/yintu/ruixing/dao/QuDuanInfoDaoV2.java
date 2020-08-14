@@ -13,17 +13,13 @@ public interface QuDuanInfoDaoV2 {
 
     QuDuanInfoEntityV2 selectByPrimaryKey(Integer id);
 
-    QuDuanInfoEntityV2 selectLastByCzId(Integer czId);
-
-
-    List<QuDuanInfoEntityV2> selectByCzIdAndTime(Integer czId, Date startTime, Date endTime);
-
 
     QuDuanInfoEntityV2 selectLastByQid(Integer qid);
 
-    List<QuDuanInfoEntityV2> selectByCzIdAndQid(Integer czId, Date time);
 
-    List<Map<String, Object>> selectStatisticsByCzIdAndTime(Integer czId, Date time);
+    List<QuDuanInfoEntityV2> selectByCzId(Integer czId, Date time, String tableName);
+
+    List<Map<String, Object>> selectStatisticsByCzIdAndTime(Integer czId, Date time, String tableName);
 
 
     QuDuanInfoEntityV2 selectFirstByCzId1(Integer czId, Integer qid, String tableName);
@@ -33,7 +29,7 @@ public interface QuDuanInfoDaoV2 {
 
     //根据区段id  查询相关的数据
 
-    List<QuDuanInfoEntity> findGuZhangKuData(@Param("id")Integer id,@Param("tableName")String tableName);
+    List<QuDuanInfoEntity> findGuZhangKuData(@Param("id") Integer id, @Param("tableName") String tableName);
 
     List<QuDuanInfoEntity> findDianMaHuaDatabById(Integer id);
 
@@ -50,9 +46,9 @@ public interface QuDuanInfoDaoV2 {
 
     List<quduanEntity> findQuDuanDatas(@Param("starttime") long starttime, @Param("endtime") long endtime,
                                        @Param("shuxingname") String shuxingname, @Param("quduanname") String quduanname,
-                                       @Param("qdid") Integer qdid,@Param("tableName")String tableName);
+                                       @Param("qdid") Integer qdid, @Param("tableName") String tableName);
 
-    List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZid(@Param("czid") Integer czid, @Param("time") long time,@Param("tableName") String tableName);
+    List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZid(@Param("czid") Integer czid, @Param("time") long time, @Param("tableName") String tableName);
 
-    List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZids(@Param("czid") Integer czid,@Param("tableName") String tableName);
+    List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZids(@Param("czid") Integer czid, @Param("tableName") String tableName);
 }
