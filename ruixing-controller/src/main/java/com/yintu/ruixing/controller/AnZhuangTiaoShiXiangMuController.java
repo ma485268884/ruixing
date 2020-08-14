@@ -138,9 +138,10 @@ public class AnZhuangTiaoShiXiangMuController {
         c.add(Calendar.MONTH, -1);
         Date start = c.getTime();
         String lastMothDay = format.format(start);//前一月
-
-        List<AnZhuangTiaoShiXiangMuEntity> xiangMuEntityList=anZhuangTiaoShiXiangMuService.findLastMonthXiangMu(today,lastMothDay);
-        return null;
+        PageHelper.startPage(page,size);
+        List<AnZhuangTiaoShiXiangMuEntity> xiangMuEntityList = anZhuangTiaoShiXiangMuService.findLastMonthXiangMu(today, lastMothDay);
+        PageInfo<AnZhuangTiaoShiXiangMuEntity>xiangMuEntityPageInfo=new PageInfo<>(xiangMuEntityList);
+        return ResponseDataUtil.ok("查询成功",xiangMuEntityPageInfo);
     }
 
     public static void main(String[] args)throws Exception {

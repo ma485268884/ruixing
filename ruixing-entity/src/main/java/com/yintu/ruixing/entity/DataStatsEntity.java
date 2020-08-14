@@ -97,7 +97,7 @@ public class DataStatsEntity {
     private String czJson;//储存的json',
 
 
-    private String publicMessage;//公共开关量信息
+    private Integer publicMessage;//公共开关量信息
 
     private String yuliushebei1;
 

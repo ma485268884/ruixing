@@ -98,16 +98,16 @@ public class ZhiShiGuanLiFileTypeController {
         String filePath = fileEntity.getFilePath();
         Integer id1 = fileEntity.getId();
         Integer tid = fileEntity.getTid();
-        zhiShiGuanLiFileTypeService.addOneFile(fileName, createtime, filePath, id1, tid);
-        zhiShiGuanLiFileTypeService.updateFileById(zhiShiGuanLiFileTypeFileEntity);
+        zhiShiGuanLiFileTypeService.addOneFile(fileName, createtime, filePath, id1);
+        zhiShiGuanLiFileTypeService.updateFileById(zhiShiGuanLiFileTypeFileEntity,id);
         return ResponseDataUtil.ok("更新成功");
     }
 
     //文件初始化   或者根据文件名查询文件
     @GetMapping("/findSomeFile")
-    public Map<String, Object> findSomeFile(Integer page, Integer size, String fileName) {
+    public Map<String, Object> findSomeFile(Integer page, Integer size, String fileName,Integer id) {
         PageHelper.startPage(page, size);
-        List<ZhiShiGuanLiFileTypeFileEntity> fileEntityList = zhiShiGuanLiFileTypeService.findSomeFile(page, size, fileName);
+        List<ZhiShiGuanLiFileTypeFileEntity> fileEntityList = zhiShiGuanLiFileTypeService.findSomeFile(page, size, fileName,id);
         PageInfo<ZhiShiGuanLiFileTypeFileEntity> fileTypeFileEntityPageInfo = new PageInfo<>(fileEntityList);
         return ResponseDataUtil.ok("查询文件成功", fileTypeFileEntityPageInfo);
     }

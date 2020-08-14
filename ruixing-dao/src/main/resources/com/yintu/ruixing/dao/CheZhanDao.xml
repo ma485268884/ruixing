@@ -653,7 +653,7 @@
                 #{czZhongJiZhan,jdbcType=INTEGER},
             </if>
             <if test="publicMessage != null">
-                #{publicMessage,jdbcType=VARCHAR},
+                #{publicMessage,jdbcType=INTEGER},
             </if>
             <if test="yuliushebei1 != null">
                 #{yuliushebei1,jdbcType=VARCHAR},
@@ -849,7 +849,7 @@
                 cz_zhongjizhan = #{czZhongJiZhan,jdbcType=INTEGER},
             </if>
             <if test="publicMessage != null">
-                publicMessage = #{publicMessage,jdbcType=VARCHAR},
+                publicMessage = #{publicMessage,jdbcType=INTEGER},
             </if>
             <if test="yuliushebei1 != null">
                 yuliushebei1 = #{yuliushebei1,jdbcType=VARCHAR},

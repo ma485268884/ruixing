@@ -63,18 +63,18 @@ public class ZhiShiGuanLiFileTypeServiceImpl implements ZhiShiGuanLiFileTypeServ
     }
 
     @Override
-    public List<ZhiShiGuanLiFileTypeFileEntity> findSomeFile(Integer page, Integer size, String fileName) {
-        return zhiShiGuanLiFileTypeFileDao.findSomeFile(fileName);
+    public List<ZhiShiGuanLiFileTypeFileEntity> findSomeFile(Integer page, Integer size, String fileName,Integer id) {
+        return zhiShiGuanLiFileTypeFileDao.findSomeFile(fileName,id);
     }
 
     @Override
-    public void updateFileById(ZhiShiGuanLiFileTypeFileEntity zhiShiGuanLiFileTypeFileEntity) {
+    public void updateFileById(ZhiShiGuanLiFileTypeFileEntity zhiShiGuanLiFileTypeFileEntity,Integer id) {
         zhiShiGuanLiFileTypeFileDao.updateByPrimaryKeySelective(zhiShiGuanLiFileTypeFileEntity);
     }
 
     @Override
-    public void addOneFile(String fileName, Date createtime, String filePath, Integer id1, Integer tid) {
-        zhiShiGuanLiFileTypeFileDao.addOneFile(fileName,createtime,filePath,id1,tid);
+    public void addOneFile(String fileName, Date createtime, String filePath, Integer id1) {
+        zhiShiGuanLiFileTypeFileDao.addOneFile(fileName,createtime,filePath,id1);
     }
 
     @Override

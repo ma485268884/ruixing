@@ -50,5 +50,5 @@ public interface AnZhuangTiaoShiXiangMuDao {
 
     List<AnZhuangTiaoShiXiangMuEntity> findXianDuan();
 
-    List<AnZhuangTiaoShiXiangMuEntity> findLastMonthXiangMu(String today, String lastMothDay);
+    List<AnZhuangTiaoShiXiangMuEntity> findLastMonthXiangMu(@Param("today") String today,@Param("lastMothDay") String lastMothDay);
 }

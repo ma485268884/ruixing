@@ -23,9 +23,9 @@ public interface ZhiShiGuanLiFileTypeFileDao {
     int insertSelective(ZhiShiGuanLiFileTypeFileEntity record);
 
     void addOneFile(@Param("fileName") String fileName,@Param("createtime") Date createtime,
-                    @Param("filePath")String filePath,@Param("id1") Integer id1,@Param("tid") Integer tid);
+                    @Param("filePath")String filePath,@Param("id1") Integer id1);
 
-    List<ZhiShiGuanLiFileTypeFileEntity> findSomeFile(@Param("fileName") String fileName);
+    List<ZhiShiGuanLiFileTypeFileEntity> findSomeFile(@Param("fileName") String fileName,@Param("id")Integer id);
 
     List<ZhiShiGuanLiFileTypeFileEntity> findFileById(@Param("id") Integer id,@Param("fileName") String fileName);
 

@@ -55,6 +55,9 @@
       <if test="fileName!=null">
         file_name like concat('%',#{fileName},'%')
       </if>
+      <if test="id!=null">
+       and tid =#{id}
+      </if>
     </where>
     group by id desc
   </select>
@@ -76,9 +79,9 @@
 
   <!--新增文件-->
   <insert id="addOneFile" parameterType="com.yintu.ruixing.entity.ZhiShiGuanLiFileTypeFileEntity">
-    insert into mro_zhishiguanli_filetype_file ( parentid, tid,
+    insert into mro_zhishiguanli_filetype_file ( parentid,
     file_name, file_path, createtime)
-    values ( #{id1,jdbcType=INTEGER}, #{tid,jdbcType=INTEGER},
+    values ( #{id1,jdbcType=INTEGER},
     #{fileName,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP})
   </insert>
 

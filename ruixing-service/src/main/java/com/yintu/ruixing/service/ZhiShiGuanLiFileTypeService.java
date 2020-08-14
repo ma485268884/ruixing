@@ -23,11 +23,11 @@ public interface ZhiShiGuanLiFileTypeService {
 
     ZhiShiGuanLiFileTypeFileEntity findFile(Integer id);
 
-    void addOneFile(String fileName, Date createtime, String filePath, Integer id1, Integer tid);
+    void addOneFile(String fileName, Date createtime, String filePath, Integer id1);
 
-    void updateFileById(ZhiShiGuanLiFileTypeFileEntity zhiShiGuanLiFileTypeFileEntity);
+    void updateFileById(ZhiShiGuanLiFileTypeFileEntity zhiShiGuanLiFileTypeFileEntity,Integer id);
 
-    List<ZhiShiGuanLiFileTypeFileEntity> findSomeFile(Integer page, Integer size, String fileName);
+    List<ZhiShiGuanLiFileTypeFileEntity> findSomeFile(Integer page, Integer size, String fileName,Integer id);
 
     List<ZhiShiGuanLiFileTypeFileEntity> findFileById(Integer id, Integer page, Integer size, String fileName);
 
