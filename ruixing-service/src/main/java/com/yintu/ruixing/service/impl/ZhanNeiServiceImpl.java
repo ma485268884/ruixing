@@ -33,8 +33,8 @@ public class ZhanNeiServiceImpl implements ZhanNeiService {
     private QuDuanInfoDaoV2 quDuanInfoDaoV2;
 
     @Override
-    public List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZids(Integer czid) {
-        return quDuanInfoDaoV2.findDianMaHuaDatasByCZids(czid);
+    public List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZids(Integer czid,String tableName) {
+        return quDuanInfoDaoV2.findDianMaHuaDatasByCZids(czid,tableName);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class ZhanNeiServiceImpl implements ZhanNeiService {
     }
 
     @Override
-    public List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZid(Integer czid, long time) {
-        return quDuanInfoDaoV2.findDianMaHuaDatasByCZid(czid,time);
+    public List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZid(Integer czid, long time,String tableName) {
+        return quDuanInfoDaoV2.findDianMaHuaDatasByCZid(czid,time,tableName);
     }
 }

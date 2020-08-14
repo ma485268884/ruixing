@@ -37,7 +37,7 @@ public interface GuZhangStudyService {
 
 
 
-    List<QuDuanInfoEntity> findGuZhangKuData(Integer id,Integer page,Integer size);
+    List<QuDuanInfoEntity> findGuZhangKuData(Integer id,Integer page,Integer size,String tableName);
 
     List<QuDuanBaseEntity> findFristId(Integer id);
 

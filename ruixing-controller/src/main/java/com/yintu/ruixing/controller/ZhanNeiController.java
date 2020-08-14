@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.common.util.StringUtil;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.ZhanNeiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,12 +67,14 @@ public class ZhanNeiController {
     //根据车站专用id  和时间查询对应的区段数据
     @GetMapping("/findDianMaHuaDatasByCZid/{czid}")
     public Map<String,Object>findDianMaHuaDatasByCZid(@PathVariable Integer czid, Date datetime){
+        Date today =new Date();
+        String tableName = StringUtil.getTableName(czid, today);
         if (datetime!=null){
             long time = datetime.getTime()/1000;
-            List<QuDuanInfoEntityV2> quDuanInfoEntityV2List=zhanNeiService.findDianMaHuaDatasByCZid(czid,time);
+            List<QuDuanInfoEntityV2> quDuanInfoEntityV2List=zhanNeiService.findDianMaHuaDatasByCZid(czid,time,tableName);
             return ResponseDataUtil.ok("查询电码化数据成功",quDuanInfoEntityV2List);
         }else {
-            List<QuDuanInfoEntityV2> quDuanInfoEntityV2List=zhanNeiService.findDianMaHuaDatasByCZids(czid);
+            List<QuDuanInfoEntityV2> quDuanInfoEntityV2List=zhanNeiService.findDianMaHuaDatasByCZids(czid,tableName);
             return ResponseDataUtil.ok("查询电码化数据成功",quDuanInfoEntityV2List);
         }
     }

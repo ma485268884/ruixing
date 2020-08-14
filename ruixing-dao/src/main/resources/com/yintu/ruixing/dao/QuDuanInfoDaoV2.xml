@@ -213,7 +213,7 @@
                qi.v51 as A_shortOut_JBP,
                qi.v53 as T_JBP,
                qb.*
-        FROM data_applydata qi,
+        FROM ${tableName} qi,
              mro_quduan_base qb
         WHERE qi.v1 = qb.qdid
           AND qb.id = #{id,jdbcType=INTEGER}
@@ -311,7 +311,7 @@
         da.v39_sc3 FBJ_collection_zhu,
         da.v39_sc2 FBJ_collection_bei
         FROM
-        data_applydata da
+        ${tableName} da
         WHERE
         da.v1 IN ( SELECT qdid FROM mro_quduan_base WHERE cz_id = #{czid} AND line = '电码化' )
         AND da.createtime = ( SELECT max( createtime ) createtime FROM data_applydata WHERE station_id =  #{czid} )
@@ -338,7 +338,7 @@
         da.v39_sc3 FBJ_collection_zhu,
         da.v39_sc2 FBJ_collection_bei
         FROM
-        data_applydata da
+        ${tableName} da
         WHERE
         da.v1 IN ( SELECT qdid FROM mro_quduan_base WHERE cz_id = #{czid} AND line = '电码化' )
         AND da.createtime = #{time}
@@ -348,7 +348,7 @@
     <!--根据传来的时间段和区段名和属性名 按秒来 查询对应的数据   -->
     <select id="findQuDuanDatas" resultMap="quduanResultMap" statementType="STATEMENT">
         select ${shuxingname},qi.createtime
-        from data_applydata qi,
+        from ${tableName} qi,
              mro_quduan_base qb
         where qi.v1 = qb.qdid
           and qb.quDuanYunYing_name = "${quduanname}"

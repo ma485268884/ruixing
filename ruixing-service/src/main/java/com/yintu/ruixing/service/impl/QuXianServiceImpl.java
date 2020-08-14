@@ -88,7 +88,7 @@ public class QuXianServiceImpl implements QuXianService {
     }
 
     @Override
-    public List<quduanEntity> findQuDuanDatas(long starttime, long endtime, String shuxingname, String quduanname, Integer qdid) {
-        return quDuanInfoDaoV2.findQuDuanDatas(starttime,endtime,shuxingname,quduanname,qdid);
+    public List<quduanEntity> findQuDuanDatas(long starttime, long endtime, String shuxingname, String quduanname, Integer qdid,String tableName) {
+        return quDuanInfoDaoV2.findQuDuanDatas(starttime,endtime,shuxingname,quduanname,qdid,tableName);
     }
 }

@@ -2,6 +2,7 @@ package com.yintu.ruixing.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.common.util.StringUtil;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.QuXianService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -229,7 +230,10 @@ public class QuXianController {
     public Map<String, Object> findQuDuanData(@RequestParam("startTime") Date startTime,
                                               @RequestParam("endTime") Date endTime,
                                               @RequestParam("shuxingId") Integer[] shuxingId,
-                                              @RequestParam("quduanName") String[] quduanName) throws Exception {
+                                              @RequestParam("quduanName") String[] quduanName,
+                                             Integer czid) throws Exception {
+        Date today =new Date();
+        String tableName = StringUtil.getTableName(czid, today);
         if (shuxingId.length == 0 || quduanName.length == 0 || startTime == null || endTime == null) {
             return ResponseDataUtil.error("请选择正确的数据");
         } else {
@@ -266,7 +270,7 @@ public class QuXianController {
                     System.out.println("123=" + quduanName[i]);//获得每一个区段名
                     String quduanname = quduanName[i];
                     Integer qdid = quXianService.findQDid(quduanname);
-                    List<quduanEntity> date = quXianService.findQuDuanDatas(starttime, endtime, shuxingname, quduanname, qdid);
+                    List<quduanEntity> date = quXianService.findQuDuanDatas(starttime, endtime, shuxingname, quduanname, qdid,tableName);
                     System.out.println("1234" + date);
                     if (date.size() == timelist.size()) {
                         for (int i1 = 0; i1 < date.size(); i1++) {
@@ -368,7 +372,7 @@ public class QuXianController {
                     System.out.println("123=" + quduanName[i]);//获得每一个区段名
                     String quduanname = quduanName[i];
                     Integer qdid = quXianService.findQDid(quduanname);
-                    List<quduanEntity> date = quXianService.findQuDuanDatas(starttime, endtime, shuxingname, quduanname, qdid);
+                    List<quduanEntity> date = quXianService.findQuDuanDatas(starttime, endtime, shuxingname, quduanname, qdid,tableName);
                     System.out.println("1234" + date);
                     if (date.size() == timelist.size()) {
                         for (int i1 = 0; i1 < date.size(); i1++) {
@@ -470,7 +474,7 @@ public class QuXianController {
 
 
     public static void main(String[] args) {   //1596509890 2020-08-04 10:58:10    1596519568  2020-08-04 13:39:28
-        long value = 1596797215 * 1000L;//1595303879  2020-07-21 11:57:59     1595304033  2020-07-21 12:00:33
+        long value = 1597393207 * 1000L;//1595303879  2020-07-21 11:57:59     1595304033  2020-07-21 12:00:33
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = format.format(new Date(value));
         System.out.println("1" + time);

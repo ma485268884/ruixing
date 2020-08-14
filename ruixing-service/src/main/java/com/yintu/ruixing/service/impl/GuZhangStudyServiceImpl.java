@@ -96,9 +96,9 @@ public class GuZhangStudyServiceImpl implements GuZhangStudyService {
 
 
     @Override
-    public List<QuDuanInfoEntity> findGuZhangKuData(Integer id, Integer page, Integer size) {
+    public List<QuDuanInfoEntity> findGuZhangKuData(Integer id, Integer page, Integer size,String tableName) {
 
-        List<QuDuanInfoEntity> quDuanInfoEntities= quDuanInfoDaoV2.findGuZhangKuData(id);
+        List<QuDuanInfoEntity> quDuanInfoEntities= quDuanInfoDaoV2.findGuZhangKuData(id,tableName);
 
         return quDuanInfoEntities;
     }

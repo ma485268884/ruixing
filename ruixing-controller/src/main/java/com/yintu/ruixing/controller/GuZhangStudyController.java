@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.common.util.StringUtil;
 import com.yintu.ruixing.entity.*;
 import com.yintu.ruixing.service.GuZhangStudyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -107,27 +109,31 @@ public class GuZhangStudyController {
     }
     //根据区段id查看故障库 并分页
     @GetMapping("/findGuZhangKuData/{id}")
-    public Map<String, Object> findGuZhangKuDataById(@PathVariable Integer id, Integer page, Integer size) {
-
+    public Map<String, Object> findGuZhangKuDataById(@PathVariable Integer id, Integer page, Integer size,Integer czid) {
+        Date today =new Date();
+        String tableName = StringUtil.getTableName(czid, today);
         JSONObject js = new JSONObject();
         //Map<String, List<QuDuanInfoEntity>> map = new HashMap<>();
         //List<QuDuanInfoEntity> quDuanInfoEntities = new ArrayList<>();
         List<QuDuanBaseEntity> quDuanBaseEntities1 = guZhangStudyService.findFristId(id);
         if (quDuanBaseEntities1.size() > 0) {
             Integer fristId = quDuanBaseEntities1.get(0).getId();
-            List<QuDuanInfoEntity> quDuanInfoEntityList1 = guZhangStudyService.findGuZhangKuData(fristId, page, size);
+            List<QuDuanInfoEntity> quDuanInfoEntityList1 = guZhangStudyService.findGuZhangKuData(fristId, page, size,tableName);
             js.put("Frist", quDuanInfoEntityList1);
             //quDuanInfoEntities.addAll(quDuanInfoEntityList1);
         }
         List<QuDuanBaseEntity> quDuanBaseEntities2 = guZhangStudyService.findLastId(id);
         if (quDuanBaseEntities2.size() > 0) {
             Integer lastId = quDuanBaseEntities2.get(0).getId();
-            List<QuDuanInfoEntity> quDuanInfoEntityList2 = guZhangStudyService.findGuZhangKuData(lastId, page, size);
+            List<QuDuanInfoEntity> quDuanInfoEntityList2 = guZhangStudyService.findGuZhangKuData(lastId, page, size,tableName);
             js.put("Last", quDuanInfoEntityList2);
             //quDuanInfoEntities.addAll(quDuanInfoEntityList2);
         }
-        List<QuDuanInfoEntity> quDuanInfoEntityList = guZhangStudyService.findGuZhangKuData(id, page, size);
+        List<QuDuanInfoEntity> quDuanInfoEntityList = guZhangStudyService.findGuZhangKuData(id, page, size,tableName);
         js.put("Mysel", quDuanInfoEntityList);
+
+
+
         //quDuanInfoEntities.addAll(quDuanInfoEntityList);
         //System.out.println(quDuanInfoEntities);
         //分页处理
