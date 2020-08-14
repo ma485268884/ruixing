@@ -1,7 +1,9 @@
 package com.yintu.ruixing.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.yintu.ruixing.common.util.StringUtil;
 import com.yintu.ruixing.common.util.TreeNodeUtil;
 import com.yintu.ruixing.dao.QuDuanInfoDaoV2;
 import com.yintu.ruixing.entity.*;
@@ -75,7 +77,7 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         if (time == null) {
             List<QuDuanBaseEntity> quDuanBaseEntities = quDuanBaseService.findByCzId(czId);
             for (QuDuanBaseEntity quDuanBaseEntity : quDuanBaseEntities) {
-                QuDuanInfoEntityV2 quDuanInfoEntityV2 = quDuanInfoDaoV2.selectFirstByCzId1(czId, quDuanBaseEntity.getQdid());
+                QuDuanInfoEntityV2 quDuanInfoEntityV2 = quDuanInfoDaoV2.selectFirstByCzId1(czId, quDuanBaseEntity.getQdid(), StringUtil.getTableName(czId, new Date()));
                 if (quDuanInfoEntityV2 == null) {
                     jsonObjects.add(null);
                     continue;
@@ -84,7 +86,7 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
                 jsonObjects.add(jo);
             }
         } else {
-            List<QuDuanInfoEntityV2> quDuanInfoEntityV2s = quDuanInfoDaoV2.selectByCzIdAndTime1(czId, time);
+            List<QuDuanInfoEntityV2> quDuanInfoEntityV2s = quDuanInfoDaoV2.selectByCzIdAndTime1(czId, time, StringUtil.getTableName(czId, time));
             for (QuDuanInfoEntityV2 quDuanInfoEntityV2 : quDuanInfoEntityV2s) {
                 JSONObject jo = this.convert(quDuanInfoTypesPropertyEntities, quDuanInfoEntityV2);
                 jsonObjects.add(jo);

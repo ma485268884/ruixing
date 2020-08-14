@@ -26,10 +26,9 @@ public interface QuDuanInfoDaoV2 {
     List<Map<String, Object>> selectStatisticsByCzIdAndTime(Integer czId, Date time);
 
 
-    QuDuanInfoEntityV2 selectFirstByCzId1(Integer czId, Integer qid);
+    QuDuanInfoEntityV2 selectFirstByCzId1(Integer czId, Integer qid, String tableName);
 
-    List<QuDuanInfoEntityV2> selectByCzIdAndTime1(Integer czId, Date time);
-
+    List<QuDuanInfoEntityV2> selectByCzIdAndTime1(Integer czId, Date time, String tableName);
 
 
     //根据区段id  查询相关的数据
@@ -44,14 +43,15 @@ public interface QuDuanInfoDaoV2 {
     Integer findQuDuanDataByTime2(@Param("format") String format, @Param("name") String name);
 
     Integer findQuDuanData(@Param("starttimee") Long starttimee, @Param("shuxingname") String shuxingname,
-                                 @Param("quduanname") String quduanname,@Param("qdid") Integer qdid);
+                           @Param("quduanname") String quduanname, @Param("qdid") Integer qdid);
+
     List<Integer> findQuDuanData(@Param("starttime") Long starttime, @Param("endtime") Long endtime,
                                  @Param("shuxingname") String shuxingname, @Param("quduanname") String quduanname, @Param("qdid") Integer qdid);
 
-    List<quduanEntity> findQuDuanDatas(@Param("starttime")long starttime, @Param("endtime") long endtime,
+    List<quduanEntity> findQuDuanDatas(@Param("starttime") long starttime, @Param("endtime") long endtime,
                                        @Param("shuxingname") String shuxingname, @Param("quduanname") String quduanname, @Param("qdid") Integer qdid);
 
-    List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZid(@Param("czid") Integer czid,@Param("time") long time);
+    List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZid(@Param("czid") Integer czid, @Param("time") long time);
 
     List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZids(@Param("czid") Integer czid);
 }

@@ -749,7 +749,7 @@
     <select id="selectFirstByCzId1" resultMap="BaseResultMap1">
         select
         <include refid="Base_Column_List1"/>
-        from data_applydata qi
+        from ${tableName} qi
         <where>
             <if test="czId!=null">
                 qi.station_id=#{czId,jdbcType=INTEGER}
@@ -764,7 +764,7 @@
     <select id="selectByCzIdAndTime1" resultMap="BaseResultMap1">
         select
         <include refid="Base_Column_List1"/>
-        from data_applydata qi
+        from ${tableName} qi
         <where>
             <if test="czId!=null">
                 qi.station_id=#{czId,jdbcType=INTEGER}

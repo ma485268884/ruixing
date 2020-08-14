@@ -1,5 +1,9 @@
 package com.yintu.ruixing.common.util;
 
+import cn.hutool.core.date.DateUtil;
+
+import java.util.Date;
+
 /**
  * @author:mlf
  * @date:2020/5/22 15:09
@@ -23,6 +27,12 @@ public class StringUtil {
             sb.append(t.toString()).append(",");
         }
         return sb.toString().substring(0, sb.length() - 1);
+    }
+
+    public static String getTableName(int czId, Date time) {
+        int month = DateUtil.month(time) + 1;
+        String monthStr = Integer.toString(month).length() == 1 ? "0" + month : Integer.toString(month);
+        return "data_applydata_" + czId + "_" + DateUtil.year(time) + monthStr;
     }
 
 }

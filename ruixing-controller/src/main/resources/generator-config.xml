@@ -61,9 +61,9 @@
         <!--               enableDeleteByExample="false"-->
         <!--               enableUpdateByExample="false"-->
         <!--               enableSelectByExample="false"/>-->
-        <table tableName="tb_department_user"
-               domainObjectName="DepartmentUserEntity"
-               mapperName="DepartmentUserDao"/>
+        <table tableName="tb_role"
+               domainObjectName="RoleEntity1"
+               mapperName="RoleDao1"/>
 <!--               enableCountByExample="false"-->
 <!--               enableDeleteByExample="false"-->
 <!--               enableUpdateByExample="false"-->
