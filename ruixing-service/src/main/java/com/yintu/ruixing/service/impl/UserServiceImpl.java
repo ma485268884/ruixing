@@ -377,7 +377,7 @@ public class UserServiceImpl implements UserService {
         //excel标题
         String title = "顾客档案列表信息";
         //excel表名
-        String[] headers = {"序号", "单位", "单位", "职务", "姓名", "手机", "座机", "邮箱", "省份", "城市", "县区", "邮寄地址", "创建人", "创建时间", "更新人", "更新时间"};
+        String[] headers = {"序号", "单位", "部门", "职务", "姓名", "手机", "座机", "邮箱", "省份", "城市", "县区", "邮寄地址", "创建人", "创建时间", "更新人", "更新时间"};
         //获取数据
         UserEntityExample userEntityExample = new UserEntityExample();
         UserEntityExample.Criteria criteria = userEntityExample.createCriteria();
