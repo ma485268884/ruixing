@@ -63,6 +63,7 @@ class RuixingApplicationTests {
         String monthStr = Integer.toString(month).length() == 1 ? "0" + month : Integer.toString(month);
         String tableName = "data_applydata_" + 11 + "_" + DateUtil.thisYear() + monthStr;
         System.out.println(tableName);
+
     }
 
 }
