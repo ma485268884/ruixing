@@ -1,0 +1,32 @@
+package com.yintu.ruixing.anzhuangtiaoshi;
+
+import com.yintu.ruixing.anzhuangtiaoshi.AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity;
+import com.yintu.ruixing.anzhuangtiaoshi.AnZhuangTiaoShiWorkNameTotalEntity;
+
+import java.util.List;
+
+/**
+ * @Author Mr.liu
+ * @Date 2020/7/17 11:13
+ * @Version 1.0
+ * 需求:
+ */
+public interface AnZhuangTiaoShiWorkNameTotalService {
+    void addWorkNameTotal(AnZhuangTiaoShiWorkNameTotalEntity anZhuangTiaoShiWorkNameTotalEntity);
+
+    List<AnZhuangTiaoShiWorkNameTotalEntity> findWorkNameTotal(Integer page, Integer size, String workname);
+
+    void editWorkNameTotalById(AnZhuangTiaoShiWorkNameTotalEntity anZhuangTiaoShiWorkNameTotalEntity);
+
+    void deleteWorkNameTotalByIds(Integer[] ids);
+
+    void addWorkNameEdition(AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity anZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity,Integer[] wnlids);
+
+    List<AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity> findWorkNameById(Integer id, Integer page, Integer size);
+
+    void editWorkNameById(AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity anZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity);
+
+    void deleteWorkNameByIds(Integer[] ids);
+
+    List<AnZhuangTiaoShiWorkNameLibraryShiWorkNameTotalEntity> findWorkNameByWorkname(String workname, Integer page, Integer size);
+}

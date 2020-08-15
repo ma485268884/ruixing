@@ -1,17 +1,19 @@
 package com.yintu.ruixing;
 
 import cn.hutool.core.date.DateUtil;
-import com.yintu.ruixing.entity.PreSaleFileAuditorEntity;
-import com.yintu.ruixing.service.*;
+import com.yintu.ruixing.guzhangzhenduan.CheZhanService;
+import com.yintu.ruixing.guzhangzhenduan.QuDuanInfoService;
+import com.yintu.ruixing.guzhangzhenduan.QuDuanInfoTypesPropertyService;
+import com.yintu.ruixing.jiejuefangan.PreSaleFileAuditorEntity;
+import com.yintu.ruixing.jiejuefangan.PreSaleFileAuditorService;
+import com.yintu.ruixing.xitongguanli.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)

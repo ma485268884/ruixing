@@ -1,8 +1,8 @@
 package com.yintu.ruixing.component;
 
-import com.yintu.ruixing.entity.PermissionEntity;
-import com.yintu.ruixing.entity.RoleEntity;
-import com.yintu.ruixing.service.PermissionService;
+import com.yintu.ruixing.xitongguanli.PermissionEntity;
+import com.yintu.ruixing.xitongguanli.RoleEntity;
+import com.yintu.ruixing.xitongguanli.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
