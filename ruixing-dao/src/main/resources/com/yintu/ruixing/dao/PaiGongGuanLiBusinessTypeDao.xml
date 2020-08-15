@@ -20,10 +20,10 @@
       </if>
       <if test="businessName!=null">
         and
-        businessType like concat('%',#{businessName},'%')
+        chuChaiTask like concat('%',#{businessName},'%')
       </if>
-      group by id desc
     </where>
+    group by id desc
   </select>
 
 
