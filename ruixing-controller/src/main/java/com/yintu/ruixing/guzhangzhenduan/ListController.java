@@ -25,7 +25,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/lieBiao")
 public class ListController {
-
+    @Autowired
     private ListService ls;
 
     @GetMapping("/getLieBiao")
