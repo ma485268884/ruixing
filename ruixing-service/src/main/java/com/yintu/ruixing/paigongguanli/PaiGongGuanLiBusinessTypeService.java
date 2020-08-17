@@ -1,6 +1,6 @@
 package com.yintu.ruixing.paigongguanli;
 
-import com.yintu.ruixing.paigongguanli.PaiGongGuanLiBusinessTypeEntity;
+
 
 import java.util.List;
 
@@ -11,11 +11,22 @@ import java.util.List;
  * 需求:派工管理  任务类型
  */
 public interface PaiGongGuanLiBusinessTypeService {
-    void addBusinessType(PaiGongGuanLiBusinessTypeEntity paiGongGuanLiBusinessTypeEntity);
 
-    void editBusinessTypeById(PaiGongGuanLiBusinessTypeEntity paiGongGuanLiBusinessTypeEntity);
+    void addBusinessTypea(PaiGongGuanLiBusinessTypeEntity paiGongGuanLiBusinessTypeEntity);
 
-    List<PaiGongGuanLiBusinessTypeEntity> findBusinessType(Integer page, Integer size, String typeName, String businessName);
+    void editBusinessTypeaById(PaiGongGuanLiBusinessTypeEntity paiGongGuanLiBusinessTypeEntity);
 
-    void deleteBusinessTypeByIds(Integer[] ids);
+    List<PaiGongGuanLiBusinessTypeEntity> findSomeBusinessTypea(Integer page, Integer size, String businessTypeaName);
+
+    List<PaiGongGuanLiBusinessTypeEntity> findSomeChuChaRenWu(Integer id,Integer page, Integer size, String businessTypeaName);
+
+    void addChuChaRenWu(Integer id, PaiGongGuanLiBusinessTypeEntity paiGongGuanLiBusinessTypeEntity);
+
+    void editChuChaRenWuById(PaiGongGuanLiBusinessTypeEntity paiGongGuanLiBusinessTypeEntity);
+
+    void deleteChuChaRenWuByIds(Integer[] ids);
+
+    List<PaiGongGuanLiBusinessTypeEntity> findChuChaRenWu(Integer id);
+
+    void deleteBusinessTypeByIds(Integer id);
 }

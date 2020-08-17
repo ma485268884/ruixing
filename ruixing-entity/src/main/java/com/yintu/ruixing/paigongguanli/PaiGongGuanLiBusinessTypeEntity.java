@@ -1,5 +1,6 @@
 package com.yintu.ruixing.paigongguanli;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,9 +11,9 @@ import lombok.NoArgsConstructor;
 public class PaiGongGuanLiBusinessTypeEntity {
     private Integer id;
 
-    private String businesstype;
+    private Integer parentid;
 
-    private String chuchaitask;
+    private String businessname;
 
     public Integer getId() {
         return id;
@@ -22,19 +23,19 @@ public class PaiGongGuanLiBusinessTypeEntity {
         this.id = id;
     }
 
-    public String getBusinesstype() {
-        return businesstype;
+    public Integer getParentid() {
+        return parentid;
     }
 
-    public void setBusinesstype(String businesstype) {
-        this.businesstype = businesstype == null ? null : businesstype.trim();
+    public void setParentid(Integer parentid) {
+        this.parentid = parentid;
     }
 
-    public String getChuchaitask() {
-        return chuchaitask;
+    public String getBusinessname() {
+        return businessname;
     }
 
-    public void setChuchaitask(String chuchaitask) {
-        this.chuchaitask = chuchaitask == null ? null : chuchaitask.trim();
+    public void setBusinessname(String businessname) {
+        this.businessname = businessname == null ? null : businessname.trim();
     }
 }

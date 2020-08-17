@@ -3,29 +3,48 @@
 <mapper namespace="com.yintu.ruixing.paigongguanli.PaiGongGuanLiBusinessTypeDao">
   <resultMap id="BaseResultMap" type="com.yintu.ruixing.paigongguanli.PaiGongGuanLiBusinessTypeEntity">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="businessType" jdbcType="VARCHAR" property="businesstype" />
-    <result column="chuChaiTask" jdbcType="VARCHAR" property="chuchaitask" />
+    <result column="parentid" jdbcType="INTEGER" property="parentid" />
+    <result column="businessName" jdbcType="VARCHAR" property="businessname" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, businessType, chuChaiTask
+    id, parentid, businessName
   </sql>
 
-  <select id="findBusinessType"  resultMap="BaseResultMap">
+  <!--根据parentid 查询对应的出差任务-->
+  <select id="findChuChaRenWu" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mro_paigongguanli_businesstype
+    where parentid = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--初始化页面  或者根据出差任务名进行模糊查询-->
+  <select id="findSomeChuChaRenWu"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from mro_paigongguanli_businesstype
     <where>
-      <if test="typeName!=null">
-        businessType like concat('%',#{typeName},'%')
-      </if>
-      <if test="businessName!=null">
+      parentid=#{id}
+      <if test="businessTypeaName!=null">
         and
-        chuChaiTask like concat('%',#{businessName},'%')
+        businessName like concat('%',#{businessTypeaName},'%')
       </if>
     </where>
     group by id desc
   </select>
 
+  <!--初始化页面  或者根据业务类别名进行模糊查询-->
+  <select id="findSomeBusinessTypea"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mro_paigongguanli_businesstype
+    <where>
+      <if test="businessTypeaName!=null">
+        businessName like concat('%',#{businessTypeaName},'%')
+      </if>
+    </where>
+    group by id desc
+  </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -34,66 +53,65 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
-  <!--根据id  进行删除任务-->
+  <!--删除数据-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from mro_paigongguanli_businesstype
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
 
-  <!--新增任务类型-->
+  <!--新增业务类别-->
   <insert id="insertSelective" parameterType="com.yintu.ruixing.paigongguanli.PaiGongGuanLiBusinessTypeEntity">
     insert into mro_paigongguanli_businesstype
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="businesstype != null">
-        businessType,
+      <if test="parentid != null">
+        parentid,
       </if>
-      <if test="chuchaitask != null">
-        chuChaiTask,
+      <if test="businessname != null">
+        businessName,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="businesstype != null">
-        #{businesstype,jdbcType=VARCHAR},
+      <if test="parentid != null">
+        #{parentid,jdbcType=INTEGER},
       </if>
-      <if test="chuchaitask != null">
-        #{chuchaitask,jdbcType=VARCHAR},
+      <if test="businessname != null">
+        #{businessname,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
 
-  <!--根据id  编辑对应的任务类型-->
+  <!--根据id  编辑业务类型-->
   <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.paigongguanli.PaiGongGuanLiBusinessTypeEntity">
     update mro_paigongguanli_businesstype
     <set>
-      <if test="businesstype != null">
-        businessType = #{businesstype,jdbcType=VARCHAR},
+      <if test="parentid != null">
+        parentid = #{parentid,jdbcType=INTEGER},
       </if>
-      <if test="chuchaitask != null">
-        chuChaiTask = #{chuchaitask,jdbcType=VARCHAR},
+      <if test="businessname != null">
+        businessName = #{businessname,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-
-
   <update id="updateByPrimaryKey" parameterType="com.yintu.ruixing.paigongguanli.PaiGongGuanLiBusinessTypeEntity">
     update mro_paigongguanli_businesstype
-    set businessType = #{businesstype,jdbcType=VARCHAR},
-      chuChaiTask = #{chuchaitask,jdbcType=VARCHAR}
+    set parentid = #{parentid,jdbcType=INTEGER},
+      businessName = #{businessname,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+
   <insert id="insert" parameterType="com.yintu.ruixing.paigongguanli.PaiGongGuanLiBusinessTypeEntity">
-    insert into mro_paigongguanli_businesstype (id, businessType, chuChaiTask
+    insert into mro_paigongguanli_businesstype (id, parentid, businessName
       )
-    values (#{id,jdbcType=INTEGER}, #{businesstype,jdbcType=VARCHAR}, #{chuchaitask,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{parentid,jdbcType=INTEGER}, #{businessname,jdbcType=VARCHAR}
       )
   </insert>
 </mapper>

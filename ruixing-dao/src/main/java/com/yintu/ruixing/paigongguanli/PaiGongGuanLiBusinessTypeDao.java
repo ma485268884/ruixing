@@ -1,10 +1,9 @@
 package com.yintu.ruixing.paigongguanli;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import com.yintu.ruixing.paigongguanli.PaiGongGuanLiBusinessTypeEntity;
 
 import java.util.List;
-@Mapper
+
 public interface PaiGongGuanLiBusinessTypeDao {
     int insert(PaiGongGuanLiBusinessTypeEntity record);
 
@@ -14,12 +13,16 @@ public interface PaiGongGuanLiBusinessTypeDao {
 
 
 
-    /////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
     int deleteByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(PaiGongGuanLiBusinessTypeEntity record);
 
     int insertSelective(PaiGongGuanLiBusinessTypeEntity record);
 
-    List<PaiGongGuanLiBusinessTypeEntity> findBusinessType(@Param("typeName") String typeName,@Param("businessName") String businessName);
+    List<PaiGongGuanLiBusinessTypeEntity> findSomeBusinessTypea(String businessTypeaName);
+
+    List<PaiGongGuanLiBusinessTypeEntity> findSomeChuChaRenWu(Integer id, String businessTypeaName);
+
+    List<PaiGongGuanLiBusinessTypeEntity> findChuChaRenWu(Integer id);
 }
