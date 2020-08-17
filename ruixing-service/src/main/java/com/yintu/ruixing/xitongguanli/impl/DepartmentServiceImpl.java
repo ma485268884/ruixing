@@ -157,6 +157,8 @@ public class DepartmentServiceImpl implements DepartmentService {
         DepartmentCustomerDutyEntityExample.Criteria criteria = departmentCustomerDutyEntityExample.createCriteria();
         criteria.andDepartmentIdIn(Arrays.asList(ids));
         List<DepartmentCustomerDutyEntity> departmentCustomerDutyEntities = departmentCustomerDutyService.findByExample(departmentCustomerDutyEntityExample);
+        if (departmentCustomerDutyEntities.isEmpty())
+            return new ArrayList<>();
         List<Long> dutyIds = departmentCustomerDutyEntities.stream()
                 .map(DepartmentCustomerDutyEntity::getDutyId)
                 .distinct().collect(Collectors.toList());
