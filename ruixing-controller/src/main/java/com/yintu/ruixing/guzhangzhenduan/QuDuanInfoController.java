@@ -26,8 +26,7 @@ import java.util.Map;
 public class QuDuanInfoController extends SessionController {
     @Autowired
     private QuDuanInfoService quDuanInfoService;
-    @Autowired
-    private CheZhanService cheZhanService;
+
 
     /**
      * 按照车站随机取出一条区段详情
