@@ -29,6 +29,17 @@ public class QuDuanInfoController extends SessionController {
     @Autowired
     private CheZhanService cheZhanService;
 
+    /**
+     * 按照车站随机取出一条区段详情
+     *
+     * @param czId 区段id
+     * @return
+     */
+    @GetMapping("/random")
+    public Map<String, Object> findLastBycZId(@RequestParam("czId") Integer czId) {
+        QuDuanInfoEntityV2 quDuanInfoEntity = quDuanInfoService.findLastBycZId(czId);
+        return ResponseDataUtil.ok("查询区段详情成功", quDuanInfoEntity);
+    }
 
     /**
      * 数据分析

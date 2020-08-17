@@ -6,11 +6,12 @@ import org.apache.ibatis.annotations.Param;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 @Mapper
 public interface QuDuanInfoDaoV2 {
 
-    QuDuanInfoEntityV2 selectByPrimaryKey(Integer id);
 
+    QuDuanInfoEntityV2 selectLastByCzId(Integer czId, String tableName);
 
     QuDuanInfoEntityV2 selectLastByQid(Integer qid);
 

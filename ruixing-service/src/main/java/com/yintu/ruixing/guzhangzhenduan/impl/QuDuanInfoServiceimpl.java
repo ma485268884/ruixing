@@ -37,8 +37,8 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
 
 
     @Override
-    public QuDuanInfoEntityV2 findById(Integer id) {
-        return quDuanInfoDaoV2.selectByPrimaryKey(id);
+    public QuDuanInfoEntityV2 findLastBycZId(Integer czId) {
+        return quDuanInfoDaoV2.selectLastByCzId(czId, StringUtil.getTableName(czId, new Date()));
     }
 
     @Override
@@ -56,6 +56,16 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         return quDuanInfoDaoV2.selectStatisticsByCzIdAndTime(czId, time, StringUtil.getTableName(czId, time));
     }
 
+    @Override
+    public QuDuanInfoEntityV2 findFirstByCzId1(Integer czId, Integer qid) {
+        return quDuanInfoDaoV2.selectFirstByCzId1(czId, qid, StringUtil.getTableName(czId, new Date()));
+    }
+
+    @Override
+    public List<QuDuanInfoEntityV2> findByCzIdAndTime1(Integer czId, Date time) {
+        return quDuanInfoDaoV2.selectByCzIdAndTime1(czId, time, StringUtil.getTableName(czId, new Date()));
+    }
+
 
     @Override
     public List<JSONObject> findByCondition(Integer czId, Date time) {
@@ -64,7 +74,7 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         if (time == null) {
             List<QuDuanBaseEntity> quDuanBaseEntities = quDuanBaseService.findByCzId(czId);
             for (QuDuanBaseEntity quDuanBaseEntity : quDuanBaseEntities) {
-                QuDuanInfoEntityV2 quDuanInfoEntityV2 = quDuanInfoDaoV2.selectFirstByCzId1(czId, quDuanBaseEntity.getQdid(), StringUtil.getTableName(czId, new Date()));
+                QuDuanInfoEntityV2 quDuanInfoEntityV2 = this.findFirstByCzId1(czId, quDuanBaseEntity.getQdid());
                 if (quDuanInfoEntityV2 == null) {
                     jsonObjects.add(null);
                     continue;
@@ -73,7 +83,7 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
                 jsonObjects.add(jo);
             }
         } else {
-            List<QuDuanInfoEntityV2> quDuanInfoEntityV2s = quDuanInfoDaoV2.selectByCzIdAndTime1(czId, time, StringUtil.getTableName(czId, time));
+            List<QuDuanInfoEntityV2> quDuanInfoEntityV2s = this.findByCzIdAndTime1(czId, time);
             for (QuDuanInfoEntityV2 quDuanInfoEntityV2 : quDuanInfoEntityV2s) {
                 JSONObject jo = this.convert(quDuanInfoTypesPropertyEntities, quDuanInfoEntityV2);
                 jsonObjects.add(jo);
