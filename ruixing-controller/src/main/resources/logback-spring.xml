@@ -85,19 +85,19 @@
     <!--logger会覆盖root的level，但仅仅会覆盖logger指定包里的日志信息-->
     <!-- 日志输出级别 -->
     <springProfile name="dev">
-        <logger name="com.yintu.ruixing.dao" level="debug" />
+        <logger name="com.yintu.ruixing" level="debug" />
         <root level="info">
             <appender-ref ref="console"/>
         </root>
     </springProfile>
     <springProfile name="test">
-        <logger name="com.yintu.ruixing.dao" level="error" />
+        <logger name="com.yintu.ruixing" level="error" />
         <root level="info">
             <appender-ref ref="console"/>
         </root>
     </springProfile>
     <springProfile name="prod">
-        <logger name="com.yintu.ruixing.dao" level="debug" />
+        <logger name="com.yintu.ruixing" level="debug" />
         <root level="info">
             <appender-ref ref="allFile"/>
             <appender-ref ref="errorFile"/>

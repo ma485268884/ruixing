@@ -6,12 +6,16 @@ import com.yintu.ruixing.guzhangzhenduan.QuDuanInfoService;
 import com.yintu.ruixing.guzhangzhenduan.QuDuanInfoTypesPropertyService;
 import com.yintu.ruixing.jiejuefangan.PreSaleFileAuditorEntity;
 import com.yintu.ruixing.jiejuefangan.PreSaleFileAuditorService;
+import com.yintu.ruixing.xitongguanli.RoleEntity;
+import com.yintu.ruixing.xitongguanli.UserEntity;
 import com.yintu.ruixing.xitongguanli.UserService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.management.relation.Role;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -67,5 +71,16 @@ class RuixingApplicationTests {
         System.out.println(tableName);
 
     }
+
+    @Test
+    void contextLoads4() {
+        UserEntity userEntity1 = new UserEntity();
+        userEntity1.setUsername("马龙飞");
+        UserEntity userEntity2 = new UserEntity();
+        BeanUtils.copyProperties(userEntity1, userEntity2);
+        System.out.println(userEntity2);
+
+    }
+
 
 }
