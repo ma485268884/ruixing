@@ -415,7 +415,7 @@ public class UserServiceImpl implements UserService {
             content[i][8] = userEntities.get(i).getProvinceEntity().getName();
             content[i][9] = userEntities.get(i).getCityEntity().getName();
             content[i][10] = userEntities.get(i).getDistrictEntity().getName();
-            content[i][11] = userEntities.get(i).getAddress();
+            content[i][11] = userEntities.get(i).getAddress() + content[i][8] + content[i][9] + content[i][10];
             content[i][12] = userEntities.get(i).getCreateBy();
             content[i][13] = DateUtil.format(userEntities.get(i).getCreateTime(), "yyy-MM-dd hh:ss:mm");
             content[i][14] = userEntities.get(i).getModifiedBy();
