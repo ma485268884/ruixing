@@ -47,7 +47,7 @@ public class SkylightTimeController extends SessionController {
                                        @RequestParam("page_size") Integer pageSize,
                                        @RequestParam(value = "order_by", required = false, defaultValue = "st.id DESC") String orderBy,
                                        @RequestParam(value = "start_time", required = false) Date startTime,
-                                       @RequestParam(value = "start_time", required = false) Date endTime) {
+                                       @RequestParam(value = "end_time", required = false) Date endTime) {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
         List<SkylightTimeEntity> skylightTimeEntities = skylightTimeService.findByCondition(null, startTime, endTime);
         PageInfo<SkylightTimeEntity> pageInfo = new PageInfo<>(skylightTimeEntities);
