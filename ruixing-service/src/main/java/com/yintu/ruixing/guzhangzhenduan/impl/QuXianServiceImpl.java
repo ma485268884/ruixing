@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -65,11 +66,14 @@ public class QuXianServiceImpl implements QuXianService {
 
     @Override
     public List<String> findShuXingName(Integer[] shuxingId) {
-        List<String> name=null;
+       // List<String> name=null;
+        List<String> list=new ArrayList<>();
         for (int i = 0; i < shuxingId.length; i++) {
-          name= quXianDao.findShuXingName(shuxingId[i]);
+            String shuXingName = quXianDao.findShuXingName(shuxingId[i]);
+            list.add(i,shuXingName);
         }
-        return name;
+
+        return list;
     }
 
     @Override
@@ -79,7 +83,12 @@ public class QuXianServiceImpl implements QuXianService {
 
     @Override
     public List<String> findShuXingHanZiName(Integer[] shuxingId) {
-        return quXianDao.findShuXingHanZiName(shuxingId);
+        List<String> list=new ArrayList<>();
+        for (int i = 0; i < shuxingId.length; i++) {
+            String shuXingHanZiName = quXianDao.findShuXingHanZiName(shuxingId[i]);
+            list.add(i,shuXingHanZiName);
+        }
+        return list;
     }
 
     @Override

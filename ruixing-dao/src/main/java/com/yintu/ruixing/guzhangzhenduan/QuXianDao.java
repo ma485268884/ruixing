@@ -22,7 +22,7 @@ public interface QuXianDao {
 
     List<QuDuanShuXingEntity> shuXingMing();
 
-    List<String> findShuXingName(Integer shuxingId);
+    String findShuXingName(Integer shuxingId);
 
-    List<String> findShuXingHanZiName(Integer[] shuxingId);
+    String findShuXingHanZiName(Integer shuxingId);
 }
