@@ -1,9 +1,11 @@
 package com.yintu.ruixing.paigongguanli;
 
 import com.yintu.ruixing.paigongguanli.PaiGongGuanLiBusinessTypeEntity;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+@Mapper
 public interface PaiGongGuanLiBusinessTypeDao {
     int insert(PaiGongGuanLiBusinessTypeEntity record);
 
