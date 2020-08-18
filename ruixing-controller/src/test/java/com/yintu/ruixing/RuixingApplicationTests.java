@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import com.yintu.ruixing.guzhangzhenduan.CheZhanService;
 import com.yintu.ruixing.guzhangzhenduan.QuDuanInfoService;
 import com.yintu.ruixing.guzhangzhenduan.QuDuanInfoTypesPropertyService;
+import com.yintu.ruixing.guzhangzhenduan.SkylightTimeService;
 import com.yintu.ruixing.jiejuefangan.PreSaleFileAuditorEntity;
 import com.yintu.ruixing.jiejuefangan.PreSaleFileAuditorService;
 import com.yintu.ruixing.xitongguanli.RoleEntity;
@@ -36,6 +37,9 @@ class RuixingApplicationTests {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private SkylightTimeService skylightTimeService;
 
 
     @Test
@@ -80,6 +84,20 @@ class RuixingApplicationTests {
         BeanUtils.copyProperties(userEntity1, userEntity2);
         System.out.println(userEntity2);
 
+    }
+
+    @Test
+    void contextLoads5() {
+        UserEntity userEntity1 = new UserEntity();
+        userEntity1.setUsername("马龙飞");
+        UserEntity userEntity2 = new UserEntity();
+        BeanUtils.copyProperties(userEntity1, userEntity2);
+        System.out.println(userEntity2);
+    }
+
+    @Test
+    void contextLoads6() {
+        System.out.println(skylightTimeService.findByCondition(null, null, null));
     }
 
 
