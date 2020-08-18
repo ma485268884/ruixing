@@ -45,11 +45,10 @@ public class SkylightTimeServiceImpl implements SkylightTimeService {
     public void add(SkylightTimeEntity entity, Integer[] qdIds) {
         for (Integer qbId : qdIds) {
             SkylightTimeEntity skylightTimeEntity = this.findByCzIdAndQdId(entity.getCzId(), qbId);
-            if (skylightTimeEntity != null) {
-                throw new BaseRuntimeException("该车站下已经添加过该区段的天窗时间");
+            if (skylightTimeEntity == null) {
+                entity.setQdId(qbId);
+                this.add(entity);
             }
-            entity.setQdId(qbId);
-            this.add(entity);
         }
     }
 
