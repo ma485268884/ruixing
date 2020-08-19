@@ -87,7 +87,8 @@ public class SkylightTimeController extends SessionController {
 
     @PostMapping("/import/data")
     @ResponseBody
-    public Map<String, Object> importData(@RequestBody JSONArray ja) {
+    public Map<String, Object> importData(@RequestBody String[][] context) {
+        JSONArray ja = (JSONArray) JSONArray.toJSON(context);
         skylightTimeService.importData(ja, this.getLoginUserName());
         return ResponseDataUtil.ok("导入天窗时间列表信息成功");
     }

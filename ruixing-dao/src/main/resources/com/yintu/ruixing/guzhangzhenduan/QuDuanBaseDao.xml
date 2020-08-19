@@ -781,7 +781,7 @@
                 cz_id= #{czId,jdbcType=INTEGER}
             </if>
             <if test="quDuanYunYingName!=null">
-                and quDuanYunYingName like concat('%', #{quDuanYunYingName,jdbcType=VARCHAR}, '%')
+                and quDuanYunYing_name like concat('%', #{quDuanYunYingName,jdbcType=VARCHAR}, '%')
             </if>
         </where>
     </select>

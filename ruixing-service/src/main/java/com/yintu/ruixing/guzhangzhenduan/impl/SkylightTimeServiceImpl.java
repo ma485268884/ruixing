@@ -123,9 +123,19 @@ public class SkylightTimeServiceImpl implements SkylightTimeService {
                             skylightTimeEntity.setModifiedTime(new Date());
                             skylightTimeEntity.setCzId(czId);
                             skylightTimeEntity.setQdId(qdId);
-                            skylightTimeEntity.setStartTime(jsonArray.getDate(3));
-                            skylightTimeEntity.setEndTime(jsonArray.getDate(4));
-                            this.add(skylightTimeEntity);
+                            try {
+                                Date startTime = jsonArray.getDate(3);
+                                Date entTime = jsonArray.getDate(4);
+                                if (!entTime.after(startTime))
+                                    throw new BaseRuntimeException("结束时间不能再开始时间之前");
+                                skylightTimeEntity.setStartTime(startTime);
+                                skylightTimeEntity.setEndTime(entTime);
+                                this.add(skylightTimeEntity);
+                            } catch (NumberFormatException e) {
+                                throw new BaseRuntimeException("时间格式有误，格式为yyyy/MM/dd hh:mm:ss");
+                            } catch (BaseRuntimeException e) {
+                                throw new BaseRuntimeException(e.getMessage());
+                            }
                         }
                     }
                 }
