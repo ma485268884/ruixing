@@ -726,7 +726,7 @@
                 and qi.v1 =#{qid,jdbcType=INTEGER}
             </if>
         </where>
-        order by qi.id DESC limit 1
+        order by qi.createtime DESC limit 1
     </select>
     <!--查询时间区间车站区段详情-->
     <select id="selectByCzIdAndTime1" resultMap="BaseResultMap1">

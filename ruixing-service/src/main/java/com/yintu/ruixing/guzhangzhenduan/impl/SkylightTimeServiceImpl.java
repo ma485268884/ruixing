@@ -127,7 +127,7 @@ public class SkylightTimeServiceImpl implements SkylightTimeService {
                                 Date startTime = jsonArray.getDate(3);
                                 Date entTime = jsonArray.getDate(4);
                                 if (!entTime.after(startTime))
-                                    throw new BaseRuntimeException("结束时间不能再开始时间之前");
+                                    throw new BaseRuntimeException("结束时间不能在开始时间之前");
                                 skylightTimeEntity.setStartTime(startTime);
                                 skylightTimeEntity.setEndTime(entTime);
                                 this.add(skylightTimeEntity);
