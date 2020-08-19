@@ -21,5 +21,5 @@ public interface SkylightTimeDao {
 
     SkylightTimeEntity selectByCzIdAndQdId(Integer czId, Integer qdId);
 
-    List<SkylightTimeEntity> connectSelectByCondition(Integer id, Date startTime, Date endTime);
+    List<SkylightTimeEntity> connectSelectByCondition(Integer id, Date startTime, Date endTime, Integer czId);
 }

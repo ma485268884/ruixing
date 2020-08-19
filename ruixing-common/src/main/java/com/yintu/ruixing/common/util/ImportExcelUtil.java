@@ -1,8 +1,10 @@
 package com.yintu.ruixing.common.util;
 
+import cn.hutool.core.date.DateUtil;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -30,7 +32,20 @@ public class ImportExcelUtil {
         for (int i = 0; i < context.length; i++) {
             for (int j = 0; j < context[i].length; j++) {
                 HSSFCell value = hssfSheet.getRow(index + i).getCell(j);
-                context[i][j] = value == null ? null : value.toString();
+                if (value != null) {
+                    if (value.getCellTypeEnum() == CellType.NUMERIC) {
+                        if ("General".equals(value.getCellStyle().getDataFormatString())) {
+                            value.setCellType(CellType.STRING);
+                            context[i][j] = value.getStringCellValue();
+                        } else {
+                            context[i][j] = DateUtil.format(value.getDateCellValue(), "yyyy/MM/dd hh:mm:ss");
+                        }
+                    } else if (value.getCellTypeEnum() == CellType.STRING) {
+                        context[i][j] = value.getStringCellValue();
+                    }
+                } else {
+                    context[i][j] = null;
+                }
             }
         }
         return context;
@@ -52,7 +67,20 @@ public class ImportExcelUtil {
         for (int i = 0; i < context.length; i++) {
             for (int j = 0; j < context[i].length; j++) {
                 XSSFCell value = xssfSheet.getRow(index + i).getCell(j);
-                context[i][j] = value == null ? null : value.toString();
+                if (value != null) {
+                    if (value.getCellTypeEnum() == CellType.NUMERIC) {
+                        if ("General".equals(value.getCellStyle().getDataFormatString())) {
+                            value.setCellType(CellType.STRING);
+                            context[i][j] = value.getStringCellValue();
+                        } else {
+                            context[i][j] = DateUtil.format(value.getDateCellValue(), "yyyy/MM/dd hh:mm:ss");
+                        }
+                    } else if (value.getCellTypeEnum() == CellType.STRING) {
+                        context[i][j] = value.getStringCellValue();
+                    }
+                } else {
+                    context[i][j] = null;
+                }
             }
         }
         return context;

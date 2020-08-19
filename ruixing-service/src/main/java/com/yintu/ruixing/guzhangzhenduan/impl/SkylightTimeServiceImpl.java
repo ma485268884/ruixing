@@ -1,13 +1,20 @@
 package com.yintu.ruixing.guzhangzhenduan.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.yintu.ruixing.common.exception.BaseRuntimeException;
-import com.yintu.ruixing.guzhangzhenduan.SkylightTimeDao;
-import com.yintu.ruixing.guzhangzhenduan.SkylightTimeEntity;
-import com.yintu.ruixing.guzhangzhenduan.SkylightTimeService;
+import com.yintu.ruixing.common.util.ExportExcelUtil;
+import com.yintu.ruixing.common.util.FileUtil;
+import com.yintu.ruixing.common.util.ImportExcelUtil;
+import com.yintu.ruixing.guzhangzhenduan.*;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +27,10 @@ import java.util.List;
 public class SkylightTimeServiceImpl implements SkylightTimeService {
     @Autowired
     private SkylightTimeDao skylightTimeDao;
+    @Autowired
+    private CheZhanService cheZhanService;
+    @Autowired
+    private QuDuanBaseService quDuanBaseService;
 
     @Override
     public void add(SkylightTimeEntity entity) {
@@ -65,7 +76,74 @@ public class SkylightTimeServiceImpl implements SkylightTimeService {
     }
 
     @Override
-    public List<SkylightTimeEntity> findByCondition(Integer id, Date startTime, Date endTime) {
-        return skylightTimeDao.connectSelectByCondition(id, startTime, endTime);
+    public List<SkylightTimeEntity> findByCondition(Integer id, Date startTime, Date endTime, Integer czId) {
+        return skylightTimeDao.connectSelectByCondition(id, startTime, endTime, czId);
     }
+
+
+    @Override
+    public String[][] importFile(InputStream inputStream, String fileName) throws IOException {
+        //excel标题
+        String title = "天窗时间列表";
+        String[][] content;
+        if ("xls".equals(FileUtil.getExtensionName(fileName))) {
+            content = ImportExcelUtil.getHSSFData(title, new HSSFWorkbook(inputStream));
+        } else if ("xlsx".equals(FileUtil.getExtensionName(fileName))) {
+            content = ImportExcelUtil.getXSSFData(title, new XSSFWorkbook(inputStream));
+        } else {
+            throw new BaseRuntimeException("文件格式有误");
+        }
+        return content;
+    }
+
+    @Override
+    public void importData(JSONArray ja, String loginUserName) {
+        for (Object obj : ja) {
+            if (obj instanceof JSONArray) {
+                JSONArray jsonArray = (JSONArray) obj;
+                String czName = jsonArray.getString(1);
+                if (czName != null && !"".equals(czName)) {
+                    List<CheZhanEntity> cheZhanEntities = cheZhanService.findByCzName(czName);
+                    if (cheZhanEntities.isEmpty())
+                        throw new BaseRuntimeException("车站不存在");
+                    Integer czId = (int) cheZhanEntities.get(0).getCzId();
+                    String qdName = jsonArray.getString(2);
+                    if (qdName != null && !"".equals(qdName)) {
+                        QuDuanBaseEntity quDuanBaseEntity = quDuanBaseService.findByCzIdAndQuduanyunyingName(czId, qdName);
+                        if (quDuanBaseEntity == null) {
+                            throw new BaseRuntimeException("车站下边没有此区段");
+                        }
+                        Integer qdId = quDuanBaseEntity.getQdid();
+                        SkylightTimeEntity skylightTimeEntity = this.findByCzIdAndQdId(czId, qdId);
+                        if (skylightTimeEntity == null) {
+                            skylightTimeEntity = new SkylightTimeEntity();
+                            skylightTimeEntity.setCreateBy(loginUserName);
+                            skylightTimeEntity.setCreateTime(new Date());
+                            skylightTimeEntity.setModifiedBy(loginUserName);
+                            skylightTimeEntity.setModifiedTime(new Date());
+                            skylightTimeEntity.setCzId(czId);
+                            skylightTimeEntity.setQdId(qdId);
+                            skylightTimeEntity.setStartTime(jsonArray.getDate(3));
+                            skylightTimeEntity.setEndTime(jsonArray.getDate(4));
+                            this.add(skylightTimeEntity);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void templateFile(OutputStream outputStream) throws IOException {
+        //excel标题
+        String title = "天窗时间列表";
+        //excel表名
+        String[] headers = {"序号", "车站", "区段", "开始时间", "结束时间"};
+        //创建HSSFWorkbook
+        XSSFWorkbook wb = ExportExcelUtil.getXSSFWorkbook(title, headers, new String[0][0]);
+        wb.write(outputStream);
+        outputStream.flush();
+        outputStream.close();
+    }
+
 }

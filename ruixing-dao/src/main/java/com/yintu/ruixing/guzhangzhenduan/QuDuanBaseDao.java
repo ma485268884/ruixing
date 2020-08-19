@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+
 @Mapper
 public interface QuDuanBaseDao {
     //int deleteByPrimaryKey(Integer id);
@@ -19,8 +20,6 @@ public interface QuDuanBaseDao {
     //int updateByPrimaryKeySelective(QuDuanBaseEntity record);
 
     int updateByPrimaryKey(QuDuanBaseEntity record);
-
-
 
 
     List<QuDuanBaseEntity> findAllQuDuan();
@@ -45,7 +44,7 @@ public interface QuDuanBaseDao {
 
     Integer findId(Integer id);
 
-    void updateParentid(@Param("id1") Integer id1,@Param("parentid") Integer parentid);
+    void updateParentid(@Param("id1") Integer id1, @Param("parentid") Integer parentid);
 
     List<QuDuanBaseEntity> findAllQuDuanName();
 
@@ -55,7 +54,7 @@ public interface QuDuanBaseDao {
 
     Integer findQDid(String quduanname);
 
-    List<QuDuanBaseEntity> findQuDuanByIds(@Param("parseInt") Integer parseInt,@Param("parseInt1") Integer parseInt1);
+    List<QuDuanBaseEntity> findQuDuanByIds(@Param("parseInt") Integer parseInt, @Param("parseInt1") Integer parseInt1);
 
     List<QuDuanBaseEntity> findQuDuanByTid(Integer tid);
 
@@ -71,7 +70,9 @@ public interface QuDuanBaseDao {
 
     List<QuDuanBaseEntity> findDianMaHuaByXid(Integer xid);
 
-    List<QuDuanBaseEntity> findDianMaHuaBycid( Integer cid);
+    List<QuDuanBaseEntity> findDianMaHuaBycid(Integer cid);
 
     List<QuDuanBaseEntity> findDianMaHuaByCid(Integer cid);
+
+    QuDuanBaseEntity selectByCzIdAndQuduanyunyingName(Integer czId, String quDuanYunYingName);
 }

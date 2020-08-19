@@ -44,4 +44,9 @@ public class QuDuanBaseServiceImpl implements QuDuanBaseService {
     public List<QuDuanBaseEntity> findByCzId(Integer czId) {
         return quDuanBaseDao.selectByCzId(czId);
     }
+
+    @Override
+    public QuDuanBaseEntity findByCzIdAndQuduanyunyingName(Integer czId, String quDuanYunYingName) {
+        return quDuanBaseDao.selectByCzIdAndQuduanyunyingName(czId, quDuanYunYingName);
+    }
 }

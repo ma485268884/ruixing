@@ -17,4 +17,6 @@ public interface QuDuanBaseService extends BaseService<QuDuanBaseEntity, Integer
      * @return 区段基础信息集合
      */
     List<QuDuanBaseEntity> findByCzId(Integer czId);
+
+    QuDuanBaseEntity findByCzIdAndQuduanyunyingName(Integer czId, String quDuanYunYingName);
 }

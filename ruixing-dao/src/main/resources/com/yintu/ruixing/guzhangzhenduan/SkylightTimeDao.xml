@@ -184,10 +184,13 @@
                 st.id=#{id,jdbcType=INTEGER}
             </if>
             <if test="startTime != null">
-                and st.start_time=#{startTime,jdbcType=TIMESTAMP}
+                and st.start_time &gt;= #{startTime,jdbcType=TIMESTAMP}
             </if>
             <if test="endTime != null">
-                and st.end_time=#{endTime,jdbcType=TIMESTAMP}
+                and st.end_time &lt;= #{endTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="czId != null">
+                and st.cz_id=#{czId,jdbcType=INTEGER}
             </if>
         </where>
     </sql>

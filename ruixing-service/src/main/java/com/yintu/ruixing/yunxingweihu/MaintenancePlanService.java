@@ -49,7 +49,7 @@ public interface MaintenancePlanService extends BaseService<MaintenancePlanEntit
      *
      * @param inputStream 输入流
      */
-    void importFile(InputStream inputStream, String title) throws IOException;
+    void importFile(InputStream inputStream, String fileName) throws IOException;
 
     /**
      * 下载excel数据模板
