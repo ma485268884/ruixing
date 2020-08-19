@@ -4,6 +4,7 @@ import com.yintu.ruixing.guzhangzhenduan.QuDuanBaseEntity;
 import com.yintu.ruixing.guzhangzhenduan.QuDuanShuXingEntity;
 import com.yintu.ruixing.guzhangzhenduan.quduanEntity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -37,4 +38,8 @@ public interface QuXianService {
 
     List<quduanEntity> findQuDuanDatas(long starttime, long endtime, String shuxingname,
                                        String quduanname, Integer qdid, String tableName);
+
+    BigDecimal findOneQuDuanDatas(Long time, String shuxingname, String quduanname, Integer qdid, String tableName);
+
+    BigDecimal findQuDuanShiShiData(long shishitimes, String shuxingname, String quduanname, Integer qdid, String tableName);
 }

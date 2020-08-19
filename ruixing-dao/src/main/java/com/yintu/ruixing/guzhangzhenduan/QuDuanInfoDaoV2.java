@@ -3,6 +3,7 @@ package com.yintu.ruixing.guzhangzhenduan;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -50,4 +51,10 @@ public interface QuDuanInfoDaoV2 {
     List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZid(@Param("czid") Integer czid, @Param("time") long time, @Param("tableName") String tableName);
 
     List<QuDuanInfoEntityV2> findDianMaHuaDatasByCZids(@Param("czid") Integer czid, @Param("tableName") String tableName);
+
+    BigDecimal findOneQuDuanDatas(@Param("time") Long time, @Param("shuxingname") String shuxingname,
+                                  @Param("quduanname") String quduanname, @Param("qdid") Integer qdid, @Param("tableName") String tableName);
+
+    BigDecimal findQuDuanShiShiData(@Param("shishitimes") long shishitimes,@Param("shuxingname") String shuxingname,
+                                    @Param("quduanname") String quduanname,@Param("qdid") Integer qdid,@Param("tableName") String tableName);
 }

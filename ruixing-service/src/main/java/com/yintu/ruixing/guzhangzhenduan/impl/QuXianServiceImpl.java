@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -89,6 +90,16 @@ public class QuXianServiceImpl implements QuXianService {
             list.add(i,shuXingHanZiName);
         }
         return list;
+    }
+
+    @Override
+    public BigDecimal findQuDuanShiShiData(long shishitimes, String shuxingname, String quduanname, Integer qdid, String tableName) {
+        return quDuanInfoDaoV2.findQuDuanShiShiData(shishitimes,shuxingname,quduanname,qdid,tableName);
+    }
+
+    @Override
+    public BigDecimal findOneQuDuanDatas(Long time, String shuxingname, String quduanname, Integer qdid, String tableName) {
+        return quDuanInfoDaoV2.findOneQuDuanDatas(time,shuxingname,quduanname,qdid,tableName);
     }
 
     @Override
