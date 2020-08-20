@@ -121,11 +121,18 @@ public class QuDuanInfoController extends SessionController {
     }
 
 
+    /**
+     * 根据车站id查询出不同的属性树
+     *
+     * @param czId 车站id
+     * @return
+     */
     @GetMapping("/properties/tree")
     public Map<String, Object> findByCzId(@RequestParam("czId") Integer czId) {
         List<TreeNodeUtil> treeNodeUtils = quDuanInfoService.findPropertiesTree(czId);
         return ResponseDataUtil.ok("查询实时报表属性树成功", treeNodeUtils);
     }
+
 
     /**
      * 实时报表

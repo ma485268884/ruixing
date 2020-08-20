@@ -98,9 +98,13 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         return convert(quDuanInfoTypesPropertyEntities, new QuDuanInfoEntityV2());
     }
 
-
+    /**
+     * 读取车站配置，根据配置读取不同的属性
+     *
+     * @param czId 车站id
+     * @return
+     */
     public List<QuDuanInfoTypesPropertyEntity> findPropertiesByCzId(Integer czId) {
-        //读取车站配置，根据配置读取不同的属性
         List<Integer> types = new ArrayList<>();
         CheZhanEntity cheZhanEntity = cheZhanService.findByczId(czId);
         if (cheZhanEntity != null) {
@@ -125,7 +129,7 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
             if (cheZhanEntity.getJiDianDianMaHuaNumber() != null && cheZhanEntity.getJiDianDianMaHuaNumber() > 0)
                 types.add(10);
         }
-        String type = quDuanInfoTypesPropertyService.countByType(types);
+        String type = quDuanInfoTypesPropertyService.countByType(types);//最大值求出配置参数
         return quDuanInfoTypesPropertyService.connectFindByCondition(type);
     }
 
