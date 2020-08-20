@@ -94,11 +94,13 @@ class RuixingApplicationTests {
         BeanUtils.copyProperties(userEntity1, userEntity2);
         System.out.println(userEntity2);
     }
+/*
 
     @Test
     void contextLoads6() {
         System.out.println(skylightTimeService.findByCondition(null, null, null));
     }
+*/
 
 
 }

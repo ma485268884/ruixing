@@ -25,4 +25,6 @@ public interface QuXianDao {
     String findShuXingName(Integer shuxingId);
 
     String findShuXingHanZiName(Integer shuxingId);
+
+    List<String> findDMHQuDuanById(Integer id);
 }
