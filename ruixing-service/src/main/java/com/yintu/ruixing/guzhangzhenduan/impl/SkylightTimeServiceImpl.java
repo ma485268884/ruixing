@@ -98,20 +98,21 @@ public class SkylightTimeServiceImpl implements SkylightTimeService {
 
     @Override
     public void importData(JSONArray ja, String loginUserName) {
-        for (Object obj : ja) {
+        for (int i = 0; i < ja.size(); i++) {
+            Object obj = ja.get(i);
             if (obj instanceof JSONArray) {
                 JSONArray jsonArray = (JSONArray) obj;
                 String czName = jsonArray.getString(1);
                 if (czName != null && !"".equals(czName)) {
                     List<CheZhanEntity> cheZhanEntities = cheZhanService.findByCzName(czName);
                     if (cheZhanEntities.isEmpty())
-                        throw new BaseRuntimeException("车站不存在");
+                        throw new BaseRuntimeException("第" + (i + 1) + "行数据有误，原因：" + "车站不存在");
                     Integer czId = (int) cheZhanEntities.get(0).getCzId();
                     String qdName = jsonArray.getString(2);
                     if (qdName != null && !"".equals(qdName)) {
                         QuDuanBaseEntity quDuanBaseEntity = quDuanBaseService.findByCzIdAndQuduanyunyingName(czId, qdName);
                         if (quDuanBaseEntity == null) {
-                            throw new BaseRuntimeException("车站下边没有此区段");
+                            throw new BaseRuntimeException("第" + (i + 1) + "行数据有误，原因：" + "车站下边没有此区段");
                         }
                         Integer qdId = quDuanBaseEntity.getQdid();
                         SkylightTimeEntity skylightTimeEntity = this.findByCzIdAndQdId(czId, qdId);
@@ -127,12 +128,12 @@ public class SkylightTimeServiceImpl implements SkylightTimeService {
                                 Date startTime = jsonArray.getDate(3);
                                 Date entTime = jsonArray.getDate(4);
                                 if (!entTime.after(startTime))
-                                    throw new BaseRuntimeException("结束时间不能在开始时间之前");
+                                    throw new BaseRuntimeException("第" + (i + 1) + "行数据有误，原因：" + "结束时间不能在开始时间之前");
                                 skylightTimeEntity.setStartTime(startTime);
                                 skylightTimeEntity.setEndTime(entTime);
                                 this.add(skylightTimeEntity);
                             } catch (NumberFormatException e) {
-                                throw new BaseRuntimeException("时间格式有误，格式为yyyy/MM/dd hh:mm:ss");
+                                throw new BaseRuntimeException("第" + (i + 1) + "行数据有误，原因：" + "时间格式有误，格式为yyyy/MM/dd hh:mm:ss");
                             } catch (BaseRuntimeException e) {
                                 throw new BaseRuntimeException(e.getMessage());
                             }
