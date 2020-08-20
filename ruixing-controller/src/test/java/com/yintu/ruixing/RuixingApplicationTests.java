@@ -1,6 +1,9 @@
 package com.yintu.ruixing;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.extra.qrcode.QrCodeUtil;
+import cn.hutool.extra.qrcode.QrConfig;
 import com.yintu.ruixing.guzhangzhenduan.CheZhanService;
 import com.yintu.ruixing.guzhangzhenduan.QuDuanInfoService;
 import com.yintu.ruixing.guzhangzhenduan.QuDuanInfoTypesPropertyService;
@@ -17,6 +20,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.management.relation.Role;
+import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -97,7 +102,14 @@ class RuixingApplicationTests {
 
     @Test
     void contextLoads6() {
-        System.out.println(skylightTimeService.findByCondition(null, null, null));
+        System.out.println(skylightTimeService.findByCondition(null, null, null, null));
+
+    }
+
+    @Test
+    void contextLoads7() {
+        QrCodeUtil.generate("https://hutool.cn/", 300, 300, FileUtil.file("d:/qrcode.jpg"));
+
     }
 
 
