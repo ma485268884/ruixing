@@ -99,6 +99,7 @@ class RuixingApplicationTests {
         BeanUtils.copyProperties(userEntity1, userEntity2);
         System.out.println(userEntity2);
     }
+/*
 
     @Test
     void contextLoads6() {
@@ -111,6 +112,7 @@ class RuixingApplicationTests {
         QrCodeUtil.generate("https://hutool.cn/", 300, 300, FileUtil.file("d:/qrcode.jpg"));
 
     }
+*/
 
 
 }

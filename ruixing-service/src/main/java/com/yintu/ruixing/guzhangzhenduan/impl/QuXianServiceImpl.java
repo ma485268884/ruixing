@@ -93,8 +93,23 @@ public class QuXianServiceImpl implements QuXianService {
     }
 
     @Override
-    public BigDecimal findQuDuanShiShiData(long shishitimes, String shuxingname, String quduanname, Integer qdid, String tableName) {
-        return quDuanInfoDaoV2.findQuDuanShiShiData(shishitimes,shuxingname,quduanname,qdid,tableName);
+    public List<quduanEntity> findDMHQuDuanData(long starttime, long endtime, String shuxingname, String quduanname, Integer qdid, String tableName) {
+        return quDuanInfoDaoV2.findDMHQuDuanData(starttime,endtime,shuxingname,quduanname,qdid,tableName);
+    }
+
+    @Override
+    public List<quduanEntity> findDMHQuDuanShiShiData(String shuxingname, String quduanname, Integer qdid, String tableName) {
+        return quDuanInfoDaoV2.findDMHQuDuanShiShiData(shuxingname,quduanname,qdid,tableName);
+    }
+
+    @Override
+    public List<String> findDMHQuDuanById(Integer id) {
+        return quXianDao.findDMHQuDuanById(id);
+    }
+
+    @Override
+    public List<quduanEntity> findQuDuanShiShiData(  String shuxingname, String quduanname, Integer qdid, String tableName) {
+        return quDuanInfoDaoV2.findQuDuanShiShiData( shuxingname,quduanname,qdid,tableName);
     }
 
     @Override

@@ -66,8 +66,23 @@
             mro_quduan_base qb
           WHERE
             qb.cid=#{cid}
-
+          AND qb.line != '电码化'
     </select>
+
+    <!--根据cid查询对应的电码化区段-->
+    <select id="findDMHQuDuanById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+          SELECT
+            qb.quDuanYunYing_name,
+            qb.id,
+            qb.qdid
+          FROM
+            mro_quduan_base qb
+          WHERE
+            qb.cid=#{cid}
+          AND qb.line = '电码化'
+    </select>
+
+
 
     <!--跟选择的日期  获取对应的24个小时点-->
     <select id="findQuDuanDataByTime1" resultMap="BaseResultMap">

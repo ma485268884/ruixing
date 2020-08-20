@@ -55,6 +55,13 @@ public interface QuDuanInfoDaoV2 {
     BigDecimal findOneQuDuanDatas(@Param("time") Long time, @Param("shuxingname") String shuxingname,
                                   @Param("quduanname") String quduanname, @Param("qdid") Integer qdid, @Param("tableName") String tableName);
 
-    BigDecimal findQuDuanShiShiData(@Param("shishitimes") long shishitimes,@Param("shuxingname") String shuxingname,
-                                    @Param("quduanname") String quduanname,@Param("qdid") Integer qdid,@Param("tableName") String tableName);
+    List<quduanEntity> findQuDuanShiShiData( @Param("shuxingname") String shuxingname, @Param("quduanname") String quduanname,
+                                             @Param("qdid") Integer qdid,@Param("tableName") String tableName);
+
+    List<quduanEntity> findDMHQuDuanShiShiData(@Param("shuxingname") String shuxingname, @Param("quduanname") String quduanname,
+                                               @Param("qdid") Integer qdid,@Param("tableName") String tableName);
+
+    List<quduanEntity> findDMHQuDuanData(@Param("starttime") long starttime, @Param("endtime") long endtime,
+                                         @Param("shuxingname") String shuxingname, @Param("quduanname") String quduanname,
+                                         @Param("qdid") Integer qdid, @Param("tableName") String tableName);
 }
