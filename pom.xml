@@ -29,6 +29,7 @@
         <fastjson.version>1.2.62</fastjson.version>
         <poi-ooxml.version>3.17</poi-ooxml.version>
         <hutool-all.version>5.3.9</hutool-all.version>
+        <core.version>3.3.3</core.version>
         <mybatis-generator-maven-plugin.version>1.4.0</mybatis-generator-maven-plugin.version>
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
@@ -88,6 +89,11 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool-all.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>core</artifactId>
+                <version>${core.version}</version>
             </dependency>
 
             <dependency>
