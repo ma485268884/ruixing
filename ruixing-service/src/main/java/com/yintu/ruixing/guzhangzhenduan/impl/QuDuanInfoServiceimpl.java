@@ -507,14 +507,11 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
             return jo;
         }
         //表头数组
-        List<QuDuanInfoPropertyEntity> quDuanInfoPropertyEntities = quDuanInfoPropertyService.findByIds(properties);
+        List<QuDuanInfoPropertyEntity> quDuanInfoPropertyEntities = new ArrayList<>();
         quDuanInfoPropertyEntities.add(new QuDuanInfoPropertyEntity(-1, "区段运用名称", null));
-
-        quDuanInfoPropertyEntities = quDuanInfoPropertyEntities.stream().
-                sorted(Comparator.comparing(QuDuanInfoPropertyEntity::getId))
-                .collect(Collectors.toList());
-
+        quDuanInfoPropertyEntities.addAll(quDuanInfoPropertyService.findByIds(properties));
         jo.put("title", quDuanInfoPropertyEntities);
+
         //表头对应数据数组
         List<QuDuanBaseEntity> quDuanBaseEntities = quDuanBaseService.findByCzId(czId);
         JSONArray dataJa = new JSONArray();
