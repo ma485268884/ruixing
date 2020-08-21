@@ -20,7 +20,7 @@ public interface PaiGongGuanLiBusinessTypeService {
 
     List<PaiGongGuanLiBusinessTypeEntity> findSomeChuChaRenWu(Integer id,Integer page, Integer size, String businessTypeaName);
 
-    void addChuChaRenWu(Integer id, PaiGongGuanLiBusinessTypeEntity paiGongGuanLiBusinessTypeEntity);
+    void addChuChaRenWu(Integer pid, PaiGongGuanLiBusinessTypeEntity paiGongGuanLiBusinessTypeEntity);
 
     void editChuChaRenWuById(PaiGongGuanLiBusinessTypeEntity paiGongGuanLiBusinessTypeEntity);
 

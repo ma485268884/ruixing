@@ -28,7 +28,7 @@
             ptu.uid = u.id
             AND ptu.tid = pt.id
             and ptu.uid=#{id}
-        group by id desc
+        group by ptu.id desc
     </select>
 
 
@@ -49,7 +49,7 @@
               AND u.true_name like concat('%',#{userName},'%')
           </if>
       </where>
-      group by id desc
+        group by ptu.id desc
     </select>
 
 
@@ -111,8 +111,9 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective"
-            parameterType="com.yintu.ruixing.paigongguanli.PaiGongGuanLiTaskUserEntity">
+
+    <!--编辑分数-->
+    <update id="updateByPrimaryKeySelective" parameterType="com.yintu.ruixing.paigongguanli.PaiGongGuanLiTaskUserEntity">
         update mro_paigongguanli_task_user
         <set>
             <if test="uid != null">

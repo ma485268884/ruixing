@@ -22,6 +22,24 @@ public class PaiGongGuanLiTaskServiceImpl implements PaiGongGuanLiTaskService {
     @Autowired
     private PaiGongGuanLiTaskUserDao paiGongGuanLiTaskUserDao;
 
+    @Autowired
+    private PaiGongGuanLiBusinessTypeDao paiGongGuanLiBusinessTypeDao;
+
+    @Override
+    public List<PaiGongGuanLiBusinessTypeEntity> findChuChaiById(Integer id) {
+        return paiGongGuanLiBusinessTypeDao.findChuChaiById(id);
+    }
+
+    @Override
+    public List<PaiGongGuanLiBusinessTypeEntity> findAllBusinessType() {
+        return paiGongGuanLiBusinessTypeDao.findAllBusinessType();
+    }
+
+    @Override
+    public void editUserPowerScoreById(PaiGongGuanLiTaskUserEntity paiGongGuanLiTaskUserEntity) {
+        paiGongGuanLiTaskUserDao.updateByPrimaryKeySelective(paiGongGuanLiTaskUserEntity);
+    }
+
     @Override
     public List<PaiGongGuanLiTaskUserEntity> findUserPowerScoreById(Integer page, Integer size, Integer id) {
         return paiGongGuanLiTaskUserDao.findUserPowerScoreById(id);

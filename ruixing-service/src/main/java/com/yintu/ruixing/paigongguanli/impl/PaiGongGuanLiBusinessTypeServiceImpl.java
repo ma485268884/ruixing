@@ -44,8 +44,8 @@ public class PaiGongGuanLiBusinessTypeServiceImpl implements PaiGongGuanLiBusine
     }
 
     @Override
-    public void addChuChaRenWu(Integer id, PaiGongGuanLiBusinessTypeEntity paiGongGuanLiBusinessTypeEntity) {
-        paiGongGuanLiBusinessTypeEntity.setParentid(id);
+    public void addChuChaRenWu(Integer pid, PaiGongGuanLiBusinessTypeEntity paiGongGuanLiBusinessTypeEntity) {
+        paiGongGuanLiBusinessTypeEntity.setParentid(pid);
         paiGongGuanLiBusinessTypeDao.insertSelective(paiGongGuanLiBusinessTypeEntity);
     }
 

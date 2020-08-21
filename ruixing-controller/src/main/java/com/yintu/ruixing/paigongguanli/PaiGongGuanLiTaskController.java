@@ -4,6 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yintu.ruixing.common.SessionController;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
+import com.yintu.ruixing.xitongguanli.UserEntity;
+import com.yintu.ruixing.xitongguanli.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +24,21 @@ public class PaiGongGuanLiTaskController {
     @Autowired
     private PaiGongGuanLiTaskService paiGongGuanLiTaskService;
 
+    @Autowired
+    private UserService userService;
+    //查询所有的业务类别
+    @GetMapping("/findAllBusinessType")
+    public Map<String,Object>findAllBusinessType(){
+        List<PaiGongGuanLiBusinessTypeEntity> businessTypeEntityList=paiGongGuanLiTaskService.findAllBusinessType();
+        return ResponseDataUtil.ok("查询业务类型成功",businessTypeEntityList);
+    }
+
+    //根据业务类别id 查询对应的出差任务
+    @GetMapping("/findChuChaiById/{id}")
+    public Map<String,Object>findChuChaiById(@PathVariable Integer id){
+        List<PaiGongGuanLiBusinessTypeEntity>chuchailist=paiGongGuanLiTaskService.findChuChaiById(id);
+        return ResponseDataUtil.ok("查询出差任务成功",chuchailist);
+    }
     //新增任务
     @PostMapping("/addTask")
     public Map<String, Object> addTask(PaiGongGuanLiTaskEntity paiGongGuanLiTaskEntity) {
@@ -50,6 +67,14 @@ public class PaiGongGuanLiTaskController {
 
     /////////////////////人员能力配置////////////////////////////
 
+
+    //查询所有人员姓名
+    @GetMapping("/findAllUserName")
+    public Map<String,Object>findAllUserName(String truename){
+        List<UserEntity> userEntities=userService.findByTruename(truename);
+        return ResponseDataUtil.ok("查询姓名成功",userEntities);
+    }
+
     //新增人员
     @PostMapping("/addUser")
     public Map<String,Object>addUser(Integer[] uid){
@@ -74,5 +99,14 @@ public class PaiGongGuanLiTaskController {
         PageInfo<PaiGongGuanLiTaskUserEntity>taskUserEntityPageInfo=new PageInfo<>(taskUserEntityList);
         return ResponseDataUtil.ok("查询人员能力配置数据成功",taskUserEntityPageInfo);
     }
+
+    //根据id  编辑对应的分数
+    @PutMapping("/editUserPowerScoreById/{id}")
+    public Map<String,Object>editUserPowerScoreById(@PathVariable Integer id,PaiGongGuanLiTaskUserEntity paiGongGuanLiTaskUserEntity){
+        paiGongGuanLiTaskService.editUserPowerScoreById(paiGongGuanLiTaskUserEntity);
+        return ResponseDataUtil.ok("编辑分数成功");
+    }
+
+    //
 
 }

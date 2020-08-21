@@ -2,6 +2,7 @@ package com.yintu.ruixing.paigongguanli;
 
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,9 +23,13 @@ public interface PaiGongGuanLiBusinessTypeDao {
 
     int insertSelective(PaiGongGuanLiBusinessTypeEntity record);
 
-    List<PaiGongGuanLiBusinessTypeEntity> findSomeBusinessTypea(String businessTypeaName);
+    List<PaiGongGuanLiBusinessTypeEntity> findSomeBusinessTypea(@Param("businessTypeaName") String businessTypeaName);
 
-    List<PaiGongGuanLiBusinessTypeEntity> findSomeChuChaRenWu(Integer id, String businessTypeaName);
+    List<PaiGongGuanLiBusinessTypeEntity> findSomeChuChaRenWu(@Param("id") Integer id,@Param("businessTypeaName") String businessTypeaName);
 
     List<PaiGongGuanLiBusinessTypeEntity> findChuChaRenWu(Integer id);
+
+    List<PaiGongGuanLiBusinessTypeEntity> findAllBusinessType();
+
+    List<PaiGongGuanLiBusinessTypeEntity> findChuChaiById(Integer id);
 }

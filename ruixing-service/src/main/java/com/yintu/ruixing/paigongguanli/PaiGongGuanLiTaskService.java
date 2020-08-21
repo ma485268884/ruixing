@@ -21,4 +21,10 @@ public interface PaiGongGuanLiTaskService {
     List<PaiGongGuanLiTaskUserEntity> findSomeUserPowerScore(Integer page, Integer size, String userName);
 
     List<PaiGongGuanLiTaskUserEntity> findUserPowerScoreById(Integer page, Integer size, Integer id);
+
+    void editUserPowerScoreById(PaiGongGuanLiTaskUserEntity paiGongGuanLiTaskUserEntity);
+
+    List<PaiGongGuanLiBusinessTypeEntity> findAllBusinessType();
+
+    List<PaiGongGuanLiBusinessTypeEntity> findChuChaiById(Integer id);
 }

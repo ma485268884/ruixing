@@ -16,11 +16,11 @@ public interface PaiGongGuanLiTaskUserDao {
 
     PaiGongGuanLiTaskUserEntity selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(PaiGongGuanLiTaskUserEntity record);
-
     int updateByPrimaryKey(PaiGongGuanLiTaskUserEntity record);
 
+
     /////////////////////////////////////////////
+    int updateByPrimaryKeySelective(PaiGongGuanLiTaskUserEntity record);
 
     List<Integer> findUid();
 

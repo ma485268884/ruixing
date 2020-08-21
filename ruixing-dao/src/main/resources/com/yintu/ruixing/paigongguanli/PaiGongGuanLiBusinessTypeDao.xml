@@ -10,6 +10,22 @@
     id, parentid, businessName
   </sql>
 
+  <!--根据业务类别id 查询对应的出差任务-->
+  <select id="findChuChaiById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    businessName
+    from mro_paigongguanli_businesstype
+    where parentid = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--查询所有的业务类别-->
+  <select id="findAllBusinessType"   resultMap="BaseResultMap">
+    select
+    id,  businessName
+    from mro_paigongguanli_businesstype
+    where parentid = 0
+  </select>
+
   <!--根据parentid 查询对应的出差任务-->
   <select id="findChuChaRenWu" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -42,6 +58,7 @@
       <if test="businessTypeaName!=null">
         businessName like concat('%',#{businessTypeaName},'%')
       </if>
+      and parentid = 0
     </where>
     group by id desc
   </select>

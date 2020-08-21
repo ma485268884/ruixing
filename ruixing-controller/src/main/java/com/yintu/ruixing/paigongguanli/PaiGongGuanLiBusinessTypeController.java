@@ -74,8 +74,8 @@ public class PaiGongGuanLiBusinessTypeController {
 
     //新增出差任务
     @PostMapping("/addChuChaRenWu")
-    public Map<String,Object>addChuChaRenWu(Integer id,PaiGongGuanLiBusinessTypeEntity paiGongGuanLiBusinessTypeEntity){
-        paiGongGuanLiBusinessTypeService.addChuChaRenWu(id,paiGongGuanLiBusinessTypeEntity);
+    public Map<String,Object>addChuChaRenWu(Integer pid,PaiGongGuanLiBusinessTypeEntity paiGongGuanLiBusinessTypeEntity){
+        paiGongGuanLiBusinessTypeService.addChuChaRenWu(pid,paiGongGuanLiBusinessTypeEntity);
         return ResponseDataUtil.ok("新增出差任务成功");
     }
 
