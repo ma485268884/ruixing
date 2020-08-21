@@ -82,5 +82,9 @@
         <foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
             #{id,jdbcType=INTEGER}
         </foreach>
+        ORDER BY field
+        <foreach collection="array" item="id" index="index" open="(id," separator="," close=")">
+            #{id,jdbcType=INTEGER}
+        </foreach>
     </select>
 </mapper>

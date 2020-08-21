@@ -49,9 +49,6 @@ public interface QuDuanInfoService {
     List<Map<String, Object>> findStatisticsByCzIdAndTime(Integer czId, Date time);
 
 
-
-
-
     /**
      * 车站下每个区段最新的一条
      *
@@ -97,10 +94,9 @@ public interface QuDuanInfoService {
     /**
      * @param properties 属性集合
      * @param czId       车站id
-     * @param time       时间
      * @return
      */
-    List<JSONObject> realTimeReport(Integer[] properties, Integer czId, Date time);
+    JSONObject realTimeReport(Integer czId, Integer[] properties);
 
 
 }
