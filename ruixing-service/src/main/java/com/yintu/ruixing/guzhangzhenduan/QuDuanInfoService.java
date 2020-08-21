@@ -96,7 +96,7 @@ public interface QuDuanInfoService {
      * @param czId       车站id
      * @return
      */
-    List<JSONObject> realTimeReport(Integer[] properties, Integer czId);
+    JSONObject realTimeReport(Integer czId, Integer[] properties);
 
 
 }

@@ -9,10 +9,12 @@ import com.yintu.ruixing.guzhangzhenduan.CheZhanService;
 import com.yintu.ruixing.guzhangzhenduan.QuDuanBaseService;
 import com.yintu.ruixing.guzhangzhenduan.QuDuanInfoPropertyService;
 import com.yintu.ruixing.guzhangzhenduan.QuDuanInfoService;
+import com.yintu.ruixing.jiejuefangan.BiddingFileEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author:mlf
@@ -497,21 +499,36 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
      * @return
      */
     @Override
-    public List<JSONObject> realTimeReport(Integer[] properties, Integer czId) {
-        List<JSONObject> jsonObjects = new ArrayList<>();
-        List<QuDuanBaseEntity> quDuanBaseEntities = quDuanBaseService.findByCzId(czId);
+    public JSONObject realTimeReport(Integer czId, Integer[] properties) {
+        JSONObject jo = new JSONObject(true);
+        if (properties == null || properties.length == 0) {
+            jo.put("title", new JSONArray());
+            jo.put("data", new JSONArray());
+            return jo;
+        }
+        //表头数组
         List<QuDuanInfoPropertyEntity> quDuanInfoPropertyEntities = quDuanInfoPropertyService.findByIds(properties);
+        quDuanInfoPropertyEntities.add(new QuDuanInfoPropertyEntity(-1, "区段运用名称", null));
+
+        quDuanInfoPropertyEntities = quDuanInfoPropertyEntities.stream().
+                sorted(Comparator.comparing(QuDuanInfoPropertyEntity::getId))
+                .collect(Collectors.toList());
+
+        jo.put("title", quDuanInfoPropertyEntities);
+        //表头对应数据数组
+        List<QuDuanBaseEntity> quDuanBaseEntities = quDuanBaseService.findByCzId(czId);
+        JSONArray dataJa = new JSONArray();
         for (QuDuanBaseEntity quDuanBaseEntity : quDuanBaseEntities) {
             QuDuanInfoEntityV2 quDuanInfoEntityV2 = this.findFirstByCzId1(czId, quDuanBaseEntity.getQdid());
             if (quDuanInfoEntityV2 == null) {
                 quDuanInfoEntityV2 = new QuDuanInfoEntityV2();
             }
             quDuanInfoEntityV2.setQuDuanBaseEntity(quDuanBaseEntity);
-            JSONObject jo = this.findDate(quDuanInfoPropertyEntities, quDuanInfoEntityV2);
-            jsonObjects.add(jo);
-
+            JSONObject jsonObject = this.findDate(quDuanInfoPropertyEntities, quDuanInfoEntityV2);
+            dataJa.add(jsonObject);
         }
-        return jsonObjects;
+        jo.put("data", dataJa);
+        return jo;
     }
 
     public JSONObject findDate(List<QuDuanInfoPropertyEntity> quDuanInfoPropertyEntities, QuDuanInfoEntityV2 quDuanInfoEntityV2) {
@@ -522,211 +539,206 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         jo.put("time", quDuanInfoEntityV2.getTime());
         jo.put("type", quDuanInfoEntityV2.getType());
         jo.put("dataZhengchang", quDuanInfoEntityV2.getDataZhengchang());
-        jo.put("quduanyunyingName", quDuanInfoEntityV2.getQuDuanBaseEntity().getQuduanyunyingName());
-        JSONArray jsonArray = new JSONArray();
+        jo.put("-1", quDuanInfoEntityV2.getQuDuanBaseEntity().getQuduanyunyingName());
         for (QuDuanInfoPropertyEntity quDuanInfoPropertyEntity : quDuanInfoPropertyEntities) {
-            JSONObject jsonObject = new JSONObject(true);
-            jsonObject.put("id", quDuanInfoPropertyEntity.getId());
-            jsonObject.put("property", quDuanInfoPropertyEntity.getName());
-            switch (quDuanInfoPropertyEntity.getId()) {
-                case 1:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getDesignCarrier());
+            String idStr = String.valueOf(quDuanInfoPropertyEntity.getId());
+            switch (idStr) {
+                case "1":
+                    jo.put(idStr, quDuanInfoEntityV2.getDesignCarrier());
                     break;
-                case 2:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getDirection());
+                case "2":
+                    jo.put(idStr, quDuanInfoEntityV2.getDirection() == null ? null : quDuanInfoEntityV2.getDirection().equals(1) ? "正向" : quDuanInfoEntityV2.getDirection().equals(2) ? "反向" : "无效");
                     break;
-                case 3:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getGjcollection() == null ? null : quDuanInfoEntityV2.getGjcollection().equals("10") ? "落下" : quDuanInfoEntityV2.getGjcollection().equals("1") ? "吸起" : "无效");
+                case "3":
+                    jo.put(idStr, quDuanInfoEntityV2.getGjcollection() == null ? null : quDuanInfoEntityV2.getGjcollection().equals("10") ? "落下" : quDuanInfoEntityV2.getGjcollection().equals("1") ? "吸起" : "无效");
                     break;
-                case 4:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getDjcollection() == null ? null : quDuanInfoEntityV2.getDjcollection().equals("10") ? "落下" : quDuanInfoEntityV2.getDjcollection().equals("1") ? "吸起" : "无效");
+                case "4":
+                    jo.put(idStr, quDuanInfoEntityV2.getDjcollection() == null ? null : quDuanInfoEntityV2.getDjcollection().equals("10") ? "落下" : quDuanInfoEntityV2.getDjcollection().equals("1") ? "吸起" : "无效");
                     break;
-                case 5:
+                case "5":
                     JSONArray jsonArray5 = new JSONArray();
                     jsonArray5.add(quDuanInfoEntityV2.getVOutZhu());
-                    jsonArray5.add(quDuanInfoEntityV2.getVOutBei());
-                    jsonObject.put("propertyV", jsonArray5);
+                    jsonArray5.add(quDuanInfoEntityV2.getVOutBei().toString());
+                    jo.put(idStr, jsonArray5.get(0) + "/" + jsonArray5.get(1));
                     break;
-                case 6:
+                case "6":
                     JSONArray jsonArray6 = new JSONArray();
                     jsonArray6.add(quDuanInfoEntityV2.getMaOutZhu());
                     jsonArray6.add(quDuanInfoEntityV2.getMaOutBei());
-                    jsonObject.put("propertyV", jsonArray6);
+                    jo.put(idStr, jsonArray6.get(0) + "/" + jsonArray6.get(1));
                     break;
-                case 7:
+                case "7":
                     JSONArray jsonArray7 = new JSONArray();
                     jsonArray7.add(quDuanInfoEntityV2.getHzUpZhu());
                     jsonArray7.add(quDuanInfoEntityV2.getHzUpBei());
-                    jsonObject.put("propertyV", jsonArray7);
+                    jo.put(idStr, jsonArray7.get(0) + "/" + jsonArray7.get(1));
                     break;
-                case 8:
+                case "8":
                     JSONArray jsonArray8 = new JSONArray();
                     jsonArray8.add(quDuanInfoEntityV2.getHzDownZhu());
                     jsonArray8.add(quDuanInfoEntityV2.getHzDownBei());
-                    jsonObject.put("propertyV", jsonArray8);
+                    jo.put(idStr, jsonArray8.get(0) + "/" + jsonArray8.get(1));
                     break;
-                case 9:
+                case "9":
                     JSONArray jsonArray9 = new JSONArray();
                     jsonArray9.add(quDuanInfoEntityV2.getHzLowZhu());
                     jsonArray9.add(quDuanInfoEntityV2.getHzLowBei());
-                    jsonObject.put("propertyV", jsonArray9);
+                    jo.put(idStr, jsonArray9.get(0) + "/" + jsonArray9.get(1));
                     break;
-                case 10:
+                case "10":
                     JSONArray jsonArray10 = new JSONArray();
                     jsonArray10.add(quDuanInfoEntityV2.getFbjDriveZhu() == null ? null : quDuanInfoEntityV2.getFbjDriveZhu() == 1 ? "正常" : quDuanInfoEntityV2.getFbjDriveZhu() == 2 ? "无" : "无效");
                     jsonArray10.add(quDuanInfoEntityV2.getFbjDriveBei() == null ? null : quDuanInfoEntityV2.getFbjDriveZhu() == 1 ? "正常" : quDuanInfoEntityV2.getFbjDriveBei() == 2 ? "无" : "无效");
-                    jsonObject.put("propertyV", jsonArray10);
+                    jo.put(idStr, jsonArray10.get(0) + "/" + jsonArray10.get(1));
                     break;
-                case 11:
+                case "11":
                     JSONArray jsonArray11 = new JSONArray();
                     jsonArray11.add(quDuanInfoEntityV2.getFbjCollectionZhu() == null ? null : quDuanInfoEntityV2.getFbjCollectionZhu().equals("10") ? "落下" : quDuanInfoEntityV2.getFbjCollectionZhu().equals("1") ? "吸起" : "无效");
                     jsonArray11.add(quDuanInfoEntityV2.getFbjCollectionBei() == null ? null : quDuanInfoEntityV2.getFbjCollectionBei().equals("10") ? "落下" : quDuanInfoEntityV2.getFbjCollectionBei().equals("1") ? "吸起" : "无效");
-                    jsonObject.put("propertyV", jsonArray11);
+                    jo.put(idStr, jsonArray11.get(0) + "/" + jsonArray11.get(1));
                     break;
-                case 12:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getVSongduanCable());
+                case "12":
+                    jo.put(idStr, quDuanInfoEntityV2.getVSongduanCable());
                     break;
-                case 13:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getMaSongduanCable());
+                case "13":
+                    jo.put(idStr, quDuanInfoEntityV2.getMaSongduanCable());
                     break;
-                case 14:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getVShouduanCableHost());
+                case "14":
+                    jo.put(idStr, quDuanInfoEntityV2.getVShouduanCableHost());
                     break;
-                case 15:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getVShouduanCableSpare());
+                case "15":
+                    jo.put(idStr, quDuanInfoEntityV2.getVShouduanCableSpare());
                     break;
-                case 16:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getMaShouduanCable());
+                case "16":
+                    jo.put(idStr, quDuanInfoEntityV2.getMaShouduanCable());
                     break;
-                case 17:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getVInAll());
+                case "17":
+                    jo.put(idStr, quDuanInfoEntityV2.getVInAll());
                     break;
-                case 18:
+                case "18":
                     JSONArray jsonArray18 = new JSONArray();
                     jsonArray18.add(quDuanInfoEntityV2.getMvInZhu());
                     jsonArray18.add(quDuanInfoEntityV2.getMvInBing());
-                    jsonObject.put("propertyV", jsonArray18);
+                    jo.put(idStr, jsonArray18.get(0) + "/" + jsonArray18.get(1));
                     break;
-                case 19:
+                case "19":
                     JSONArray jsonArray19 = new JSONArray();
                     jsonArray19.add(quDuanInfoEntityV2.getMvInDiaoZhu());
                     jsonArray19.add(quDuanInfoEntityV2.getMvInDiaoBing());
-                    jsonObject.put("propertyV", jsonArray19);
+                    jo.put(idStr, jsonArray19.get(0) + "/" + jsonArray19.get(1));
                     break;
-                case 20:
+                case "20":
                     JSONArray jsonArray20 = new JSONArray();
                     jsonArray20.add(quDuanInfoEntityV2.getHzInLowZhu());
                     jsonArray20.add(quDuanInfoEntityV2.getHzInLowBing());
-                    jsonObject.put("propertyV", jsonArray20);
+                    jo.put(idStr, jsonArray20.get(0) + "/" + jsonArray20.get(1));
                     break;
-                case 21:
+                case "21":
                     JSONArray jsonArray21 = new JSONArray();
                     jsonArray21.add(quDuanInfoEntityV2.getGjDriveZhu() == null ? null : quDuanInfoEntityV2.getGjDriveZhu() == 1 ? "正常" : quDuanInfoEntityV2.getGjDriveZhu() == 2 ? "无" : "无效");
                     jsonArray21.add(quDuanInfoEntityV2.getGjDriveBing() == null ? null : quDuanInfoEntityV2.getGjDriveBing() == 1 ? "正常" : quDuanInfoEntityV2.getGjDriveBing() == 2 ? "无" : "无效");
-                    jsonObject.put("propertyV", jsonArray21);
+                    jo.put(idStr, jsonArray21.get(0) + "/" + jsonArray21.get(1));
                     break;
-                case 22:
+                case "22":
                     JSONArray jsonArray22 = new JSONArray();
                     jsonArray22.add(null == quDuanInfoEntityV2.getGjRearCollectionZhu());
                     jsonArray22.add(null == quDuanInfoEntityV2.getGjRearCollectionBing());
-                    jsonObject.put("propertyV", jsonArray22);
+                    jo.put(idStr, jsonArray22.get(0) + "/" + jsonArray22.get(1));
                     break;
-                case 23:
+                case "23":
                     JSONArray jsonArray23 = new JSONArray();
                     jsonArray23.add(null == quDuanInfoEntityV2.getBaojingZhu() ? null : quDuanInfoEntityV2.getBaojingZhu() == 1 ? "正常" : quDuanInfoEntityV2.getBaojingZhu() == 2 ? "报警" : "无效");
                     jsonArray23.add(null == quDuanInfoEntityV2.getBaojingBing() ? null : quDuanInfoEntityV2.getBaojingBing() == 1 ? "正常" : quDuanInfoEntityV2.getBaojingZhu() == 2 ? "报警" : "无效");
-                    jsonObject.put("propertyV", jsonArray23);
+                    jo.put(idStr, jsonArray23.get(0) + "/" + jsonArray23.get(1));
                     break;
 
-                case 24:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getMaCableFbp());
+                case "24":
+                    jo.put(idStr, quDuanInfoEntityV2.getMaCableFbp());
                     break;
-                case 25:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getALonginFbp());
+                case "25":
+                    jo.put(idStr, quDuanInfoEntityV2.getALonginFbp());
                     break;
-                case 26:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getALongoutFbp());
+                case "26":
+                    jo.put(idStr, quDuanInfoEntityV2.getALongoutFbp());
                     break;
-                case 27:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getAShortinFbp());
+                case "27":
+                    jo.put(idStr, quDuanInfoEntityV2.getAShortinFbp());
                     break;
-                case 28:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getAShortoutFbp());
+                case "28":
+                    jo.put(idStr, quDuanInfoEntityV2.getAShortoutFbp());
                     break;
-                case 29:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getTFbp());
+                case "29":
+                    jo.put(idStr, quDuanInfoEntityV2.getTFbp());
                     break;
 
-                case 30:
+                case "30":
                     JSONArray jsonArray30 = new JSONArray();
                     jsonArray30.add(quDuanInfoEntityV2.getALonginFbaZhu());
                     jsonArray30.add(quDuanInfoEntityV2.getALonginFbaDiao());
-                    jsonObject.put("propertyV", jsonArray30);
+                    jo.put(idStr, jsonArray30.get(0) + "/" + jsonArray30.get(1));
                     break;
-                case 31:
+                case "31":
                     JSONArray jsonArray31 = new JSONArray();
                     jsonArray31.add(quDuanInfoEntityV2.getALongoutFbaZhu());
                     jsonArray31.add(quDuanInfoEntityV2.getALongoutFbaDiao());
-                    jsonObject.put("propertyV", jsonArray31);
+                    jo.put(idStr, jsonArray31.get(0) + "/" + jsonArray31.get(1));
                     break;
-                case 32:
+                case "32":
                     JSONArray jsonArray32 = new JSONArray();
                     jsonArray32.add(quDuanInfoEntityV2.getAShortinFbaZhu());
                     jsonArray32.add(quDuanInfoEntityV2.getAShortinFbaDiao());
-                    jsonObject.put("propertyV", jsonArray32);
+                    jo.put(idStr, jsonArray32.get(0) + "/" + jsonArray32.get(1));
                     break;
-                case 33:
+                case "33":
                     JSONArray jsonArray33 = new JSONArray();
                     jsonArray33.add(quDuanInfoEntityV2.getAShortoutFbaZhu());
                     jsonArray33.add(quDuanInfoEntityV2.getAShortoutFbaDiao());
-                    jsonObject.put("propertyV", jsonArray33);
+                    jo.put(idStr, jsonArray33.get(0) + "/" + jsonArray33.get(1));
                     break;
-                case 34:
+                case "34":
                     JSONArray jsonArray34 = new JSONArray();
                     jsonArray34.add(quDuanInfoEntityV2.getALonginJbaZhu());
                     jsonArray34.add(quDuanInfoEntityV2.getALonginJbaDiao());
-                    jsonObject.put("propertyV", jsonArray34);
+                    jo.put(idStr, jsonArray34.get(0) + "/" + jsonArray34.get(1));
                     break;
-                case 35:
+                case "35":
                     JSONArray jsonArray35 = new JSONArray();
                     jsonArray35.add(quDuanInfoEntityV2.getALongoutJbaZhu());
                     jsonArray35.add(quDuanInfoEntityV2.getALongoutJbaDiao());
-                    jsonObject.put("propertyV", jsonArray35);
+                    jo.put(idStr, jsonArray35.get(0) + "/" + jsonArray35.get(1));
                     break;
-                case 36:
+                case "36":
                     JSONArray jsonArray36 = new JSONArray();
                     jsonArray36.add(quDuanInfoEntityV2.getAShortinJbaZhu());
                     jsonArray36.add(quDuanInfoEntityV2.getAShortinJbaDiao());
-                    jsonObject.put("propertyV", jsonArray36);
+                    jo.put(idStr, jsonArray36.get(0) + "/" + jsonArray36.get(1));
                     break;
-                case 37:
+                case "37":
                     JSONArray jsonArray37 = new JSONArray();
                     jsonArray37.add(quDuanInfoEntityV2.getAShortoutJbaZhu());
                     jsonArray37.add(quDuanInfoEntityV2.getAShortoutJbaZhu());
-                    jsonObject.put("propertyV", jsonArray37);
+                    jo.put(idStr, jsonArray37.get(0) + "/" + jsonArray37.get(1));
                     break;
-                case 38:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getMaCableJbp());
+                case "38":
+                    jo.put(idStr, quDuanInfoEntityV2.getMaCableJbp());
                     break;
-                case 39:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getALonginJbp());
+                case "39":
+                    jo.put(idStr, quDuanInfoEntityV2.getALonginJbp());
                     break;
-                case 40:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getALongoutJbp());
+                case "40":
+                    jo.put(idStr, quDuanInfoEntityV2.getALongoutJbp());
                     break;
-                case 41:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getAShortinJbp());
+                case "41":
+                    jo.put(idStr, quDuanInfoEntityV2.getAShortinJbp());
                     break;
-                case 42:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getAShortoutJbp());
+                case "42":
+                    jo.put(idStr, quDuanInfoEntityV2.getAShortoutJbp());
                     break;
-                case 43:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getTJbp());
+                case "43":
+                    jo.put(idStr, quDuanInfoEntityV2.getTJbp());
                     break;
             }
-            jsonArray.add(jsonObject);
         }
-        jo.put("properties", jsonArray);
         return jo;
     }
 

@@ -26,6 +26,8 @@ import java.util.Map;
 public class QuDuanInfoController extends SessionController {
     @Autowired
     private QuDuanInfoService quDuanInfoService;
+    @Autowired
+    private QuDuanInfoPropertyService quDuanInfoPropertyService;
 
 
     /**
@@ -137,21 +139,12 @@ public class QuDuanInfoController extends SessionController {
     /**
      * 实时报表
      *
-     * @param pageNumber 页码
-     * @param pageSize   页数
      * @return
      */
     @GetMapping("/realreport/v2")
-    public Map<String, Object> realreport(@RequestParam("page_number") Integer pageNumber,
-                                          @RequestParam("page_size") Integer pageSize,
-                                          @RequestParam(value = "order_by", required = false) String orderBy,
-                                          @RequestParam("properties") Integer[] properties,
-                                          @RequestParam("cz_id") Integer czId) {
-        PageHelper.startPage(pageNumber, pageSize, orderBy);
-        List<JSONObject> jsonObjects = quDuanInfoService.realTimeReport(properties, czId);
-        PageInfo<JSONObject> pageInfo = new PageInfo<>(jsonObjects);
-        return ResponseDataUtil.ok("查询实时报表成功", pageInfo);
+    public Map<String, Object> realTimeReport(@RequestParam("cz_id") Integer czId, @RequestParam("properties") Integer[] properties) {
+        JSONObject jo = quDuanInfoService.realTimeReport(czId, properties);
+        return ResponseDataUtil.ok("查询实时报表成功", jo);
     }
-
 
 }
