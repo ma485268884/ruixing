@@ -269,8 +269,8 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
                     break;
                 case 22:
                     JSONArray jsonArray22 = new JSONArray();
-                    jsonArray22.add(null == quDuanInfoEntityV2.getGjRearCollectionZhu());
-                    jsonArray22.add(null == quDuanInfoEntityV2.getGjRearCollectionBing());
+                    jsonArray22.add(quDuanInfoEntityV2.getGjRearCollectionZhu() == null ? null : quDuanInfoEntityV2.getGjRearCollectionZhu().equals("10") ? "落下" : quDuanInfoEntityV2.getGjRearCollectionZhu().equals("1") ? "吸起" : "无效");
+                    jsonArray22.add(quDuanInfoEntityV2.getGjRearCollectionBing() == null ? null : quDuanInfoEntityV2.getGjRearCollectionBing().equals("10") ? "落下" : quDuanInfoEntityV2.getGjRearCollectionBing().equals("1") ? "吸起" : "无效");
                     jsonObject.put("propertyV", jsonArray22);
                     jsonObject.put("column", 4);
                     break;
@@ -638,8 +638,8 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
                     break;
                 case "22":
                     JSONArray jsonArray22 = new JSONArray();
-                    jsonArray22.add(null == quDuanInfoEntityV2.getGjRearCollectionZhu());
-                    jsonArray22.add(null == quDuanInfoEntityV2.getGjRearCollectionBing());
+                    jsonArray22.add(quDuanInfoEntityV2.getGjRearCollectionZhu() == null ? null : quDuanInfoEntityV2.getGjRearCollectionZhu().equals("10") ? "落下" : quDuanInfoEntityV2.getGjRearCollectionZhu().equals("1") ? "吸起" : "无效");
+                    jsonArray22.add(quDuanInfoEntityV2.getGjRearCollectionBing() == null ? null : quDuanInfoEntityV2.getGjRearCollectionBing().equals("10") ? "落下" : quDuanInfoEntityV2.getGjRearCollectionBing().equals("1") ? "吸起" : "无效");
                     jo.put(idStr, jsonArray22.get(0) + "/" + jsonArray22.get(1));
                     break;
                 case "23":
