@@ -488,13 +488,28 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         return treeNodeUtils;
     }
 
+
+    /**
+     * 实时 报表
+     *
+     * @param properties 属性集合
+     * @param czId       车站id
+     * @return
+     */
     @Override
-    public List<JSONObject> realTimeReport(Integer[] properties, Integer czId, Date time) {
+    public List<JSONObject> realTimeReport(Integer[] properties, Integer czId) {
         List<JSONObject> jsonObjects = new ArrayList<>();
-        List<QuDuanInfoEntityV2> quDuanInfoEntityV2s = this.findByCzIdAndTime(czId, time);
+        List<QuDuanBaseEntity> quDuanBaseEntities = quDuanBaseService.findByCzId(czId);
         List<QuDuanInfoPropertyEntity> quDuanInfoPropertyEntities = quDuanInfoPropertyService.findByIds(properties);
-        for (QuDuanInfoEntityV2 quDuanInfoEntityV2 : quDuanInfoEntityV2s) {
-            jsonObjects.add(this.findDate(quDuanInfoPropertyEntities, quDuanInfoEntityV2));
+        for (QuDuanBaseEntity quDuanBaseEntity : quDuanBaseEntities) {
+            QuDuanInfoEntityV2 quDuanInfoEntityV2 = this.findFirstByCzId1(czId, quDuanBaseEntity.getQdid());
+            if (quDuanInfoEntityV2 == null) {
+                quDuanInfoEntityV2 = new QuDuanInfoEntityV2();
+            }
+            quDuanInfoEntityV2.setQuDuanBaseEntity(quDuanBaseEntity);
+            JSONObject jo = this.findDate(quDuanInfoPropertyEntities, quDuanInfoEntityV2);
+            jsonObjects.add(jo);
+
         }
         return jsonObjects;
     }
@@ -507,6 +522,7 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
         jo.put("time", quDuanInfoEntityV2.getTime());
         jo.put("type", quDuanInfoEntityV2.getType());
         jo.put("dataZhengchang", quDuanInfoEntityV2.getDataZhengchang());
+        jo.put("quduanyunyingName", quDuanInfoEntityV2.getQuDuanBaseEntity().getQuduanyunyingName());
         JSONArray jsonArray = new JSONArray();
         for (QuDuanInfoPropertyEntity quDuanInfoPropertyEntity : quDuanInfoPropertyEntities) {
             JSONObject jsonObject = new JSONObject(true);
@@ -711,7 +727,6 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
             jsonArray.add(jsonObject);
         }
         jo.put("properties", jsonArray);
-        jo.put("quDuanBaseEntity", quDuanInfoEntityV2.getQuDuanBaseEntity());
         return jo;
     }
 

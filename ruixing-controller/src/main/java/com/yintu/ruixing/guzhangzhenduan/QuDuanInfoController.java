@@ -144,13 +144,11 @@ public class QuDuanInfoController extends SessionController {
     @GetMapping("/realreport/v2")
     public Map<String, Object> realreport(@RequestParam("page_number") Integer pageNumber,
                                           @RequestParam("page_size") Integer pageSize,
-                                          @RequestParam(value = "order_by", required = false, defaultValue = "qb.id ASC") String orderBy,
+                                          @RequestParam(value = "order_by", required = false) String orderBy,
                                           @RequestParam("properties") Integer[] properties,
                                           @RequestParam("cz_id") Integer czId) {
         PageHelper.startPage(pageNumber, pageSize, orderBy);
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.DATE, 4);
-        List<JSONObject> jsonObjects = quDuanInfoService.realTimeReport(properties, czId, c.getTime());
+        List<JSONObject> jsonObjects = quDuanInfoService.realTimeReport(properties, czId);
         PageInfo<JSONObject> pageInfo = new PageInfo<>(jsonObjects);
         return ResponseDataUtil.ok("查询实时报表成功", pageInfo);
     }
