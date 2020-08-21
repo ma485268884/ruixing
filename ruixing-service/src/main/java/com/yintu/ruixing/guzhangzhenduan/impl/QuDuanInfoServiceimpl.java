@@ -155,7 +155,7 @@ public class QuDuanInfoServiceimpl implements QuDuanInfoService {
                     jsonObject.put("column", 1);
                     break;
                 case 2:
-                    jsonObject.put("propertyV", quDuanInfoEntityV2.getDirection());
+                    jsonObject.put("propertyV", quDuanInfoEntityV2.getDirection() == null ? null : quDuanInfoEntityV2.getDirection().equals(1) ? "正向" : quDuanInfoEntityV2.getDirection().equals(2) ? "反向" : "无效");
                     jsonObject.put("column", 1);
                     break;
                 case 3:
