@@ -15,6 +15,8 @@ public class PaiGongGuanLiBusinessTypeEntity {
 
     private String businessname;
 
+    private String suoXie;
+
     public Integer getId() {
         return id;
     }

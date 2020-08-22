@@ -5,9 +5,10 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="parentid" jdbcType="INTEGER" property="parentid" />
     <result column="businessName" jdbcType="VARCHAR" property="businessname" />
+    <result column="suoXie" jdbcType="VARCHAR" property="suoXie" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, parentid, businessName
+    id, parentid, businessName,suoXie
   </sql>
 
   <!--根据业务类别id 查询对应的出差任务-->
@@ -21,7 +22,7 @@
   <!--查询所有的业务类别-->
   <select id="findAllBusinessType"   resultMap="BaseResultMap">
     select
-    id,  businessName
+    id,  businessName ,suoXie
     from mro_paigongguanli_businesstype
     where parentid = 0
   </select>
@@ -90,6 +91,9 @@
       <if test="businessname != null">
         businessName,
       </if>
+      <if test="suoXie != null">
+        suoXie,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -100,6 +104,9 @@
       </if>
       <if test="businessname != null">
         #{businessname,jdbcType=VARCHAR},
+      </if>
+      <if test="suoXie != null">
+        #{suoXie,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -113,6 +120,9 @@
       </if>
       <if test="businessname != null">
         businessName = #{businessname,jdbcType=VARCHAR},
+      </if>
+      <if test="suoXie != null">
+        suoXie = #{suoXie,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

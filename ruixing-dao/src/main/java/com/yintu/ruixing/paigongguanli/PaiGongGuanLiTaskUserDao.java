@@ -8,8 +8,6 @@ import java.util.List;
 
 @Mapper
 public interface PaiGongGuanLiTaskUserDao {
-    int deleteByPrimaryKey(Integer id);
-
     int insert(PaiGongGuanLiTaskUserEntity record);
 
     int insertSelective(PaiGongGuanLiTaskUserEntity record);
@@ -20,13 +18,16 @@ public interface PaiGongGuanLiTaskUserDao {
 
 
     /////////////////////////////////////////////
+
+    int deleteByPrimaryKey(Integer id);
+
     int updateByPrimaryKeySelective(PaiGongGuanLiTaskUserEntity record);
 
     List<Integer> findUid();
 
-    void addTask(@Param("id") Integer id,@Param("uid") Integer uid);
+    void addTask(@Param("id") Integer id, @Param("uid") Integer uid);
 
-    List<PaiGongGuanLiTaskUserEntity> findSomeUserPowerScore(@Param("userName")String userName);
+    List<PaiGongGuanLiTaskUserEntity> findSomeUserPowerScore(@Param("userName") String userName);
 
-    List<PaiGongGuanLiTaskUserEntity> findUserPowerScoreById(Integer id);
+    List<PaiGongGuanLiTaskUserEntity> findUserPowerScoreById(@Param("id") Integer id, @Param("taskTotalName") String taskTotalName);
 }

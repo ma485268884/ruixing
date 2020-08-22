@@ -17,6 +17,7 @@
     <!--根据人员id  查询所有的任务能力数据-->
     <select id="findUserPowerScoreById" resultMap="BaseResultMap">
         SELECT
+        ptu.id,
         u.true_name,
         pt.taskTotalName,
         ptu.score
@@ -24,10 +25,15 @@
         mro_paigongguanli_task_user ptu,
         tb_user u,
         mro_paigongguanli_task pt
-        where
+        <where>
             ptu.uid = u.id
             AND ptu.tid = pt.id
             and ptu.uid=#{id}
+            <if test="taskTotalName !=null">
+                and
+                pt.taskTotalName like concat('%',#{taskTotalName},'%')
+            </if>
+        </where>
         group by ptu.id desc
     </select>
 
@@ -35,6 +41,7 @@
     <!--初始化人员能力配置列表  或者根据人员名查询-->
     <select id="findSomeUserPowerScore" resultMap="BaseResultMap">
       SELECT
+        u.id,
         u.true_name,
         pt.taskTotalName,
         ptu.score
@@ -49,7 +56,7 @@
               AND u.true_name like concat('%',#{userName},'%')
           </if>
       </where>
-        group by ptu.id desc
+        GROUP BY u.true_name
     </select>
 
 
@@ -68,9 +75,11 @@
         from mro_paigongguanli_task_user
         where id = #{id,jdbcType=INTEGER}
     </select>
+
+    <!--根据tid  删除对应的数据-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from mro_paigongguanli_task_user
-    where id = #{id,jdbcType=INTEGER}
+    where tid = #{id,jdbcType=INTEGER}
     </delete>
 
     <!--新增类型的时候  给每个人员新增类型-->
