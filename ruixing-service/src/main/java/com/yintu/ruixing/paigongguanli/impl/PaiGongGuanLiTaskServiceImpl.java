@@ -26,6 +26,14 @@ public class PaiGongGuanLiTaskServiceImpl implements PaiGongGuanLiTaskService {
     private PaiGongGuanLiBusinessTypeDao paiGongGuanLiBusinessTypeDao;
 
     @Override
+    public void deleteTaskByIds(Integer[] ids) {
+        for (int i = 0; i < ids.length; i++) {
+            paiGongGuanLiTaskDao.deleteByPrimaryKey(ids[i]);
+            paiGongGuanLiTaskUserDao.deleteByPrimaryKey(ids[i]);
+        }
+    }
+
+    @Override
     public List<PaiGongGuanLiBusinessTypeEntity> findChuChaiById(Integer id) {
         return paiGongGuanLiBusinessTypeDao.findChuChaiById(id);
     }
@@ -41,8 +49,8 @@ public class PaiGongGuanLiTaskServiceImpl implements PaiGongGuanLiTaskService {
     }
 
     @Override
-    public List<PaiGongGuanLiTaskUserEntity> findUserPowerScoreById(Integer page, Integer size, Integer id) {
-        return paiGongGuanLiTaskUserDao.findUserPowerScoreById(id);
+    public List<PaiGongGuanLiTaskUserEntity> findUserPowerScoreById(Integer page, Integer size, Integer id,String taskTotalName) {
+        return paiGongGuanLiTaskUserDao.findUserPowerScoreById(id,taskTotalName);
     }
 
     @Override
@@ -87,7 +95,7 @@ public class PaiGongGuanLiTaskServiceImpl implements PaiGongGuanLiTaskService {
         List<Integer> Uid = paiGongGuanLiTaskUserDao.findUid();
         if (Uid.size()!=0){
             for (Integer uid : Uid) {
-                paiGongGuanLiTaskUserDao.addTask(id,uid);
+                paiGongGuanLiTaskUserDao.addTask(uid,id);
             }
         }
     }

@@ -39,6 +39,8 @@
     from mro_paigongguanli_task
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <!--根据id  删除对应的任务-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from mro_paigongguanli_task
     where id = #{id,jdbcType=INTEGER}

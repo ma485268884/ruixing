@@ -7,8 +7,6 @@ import java.util.List;
 
 @Mapper
 public interface PaiGongGuanLiTaskDao {
-    int deleteByPrimaryKey(Integer id);
-
     int insert(PaiGongGuanLiTaskEntity record);
 
     PaiGongGuanLiTaskEntity selectByPrimaryKey(Integer id);
@@ -16,7 +14,9 @@ public interface PaiGongGuanLiTaskDao {
     int updateByPrimaryKey(PaiGongGuanLiTaskEntity record);
 
 
+
     ////////////////////////////////////////////////////////
+    int deleteByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(PaiGongGuanLiTaskEntity record);
 
