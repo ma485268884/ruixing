@@ -1,5 +1,9 @@
 package com.yintu.ruixing.guzhangzhenduan;
 
+import cn.hutool.core.img.ImgUtil;
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.extra.qrcode.QrCodeUtil;
+import cn.hutool.extra.qrcode.QrConfig;
 import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.common.util.FileUploadUtil;
 import com.yintu.ruixing.common.util.ResponseDataUtil;
@@ -18,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
@@ -113,7 +118,7 @@ public class TestController {
     @GetMapping("/test6")
     @ResponseBody
     @ApiOperation(value = "方法介绍描述", httpMethod = "GET", response = String.class, notes = "方法介绍描述")
-    public Map<String, Object> test6(@ApiParam("参数描述") HttpServletRequest request, @ApiParam("参数描述") HttpServletResponse resp){
+    public Map<String, Object> test6(@ApiParam("参数描述") HttpServletRequest request, @ApiParam("参数描述") HttpServletResponse resp) {
         JSONObject jo = new JSONObject();
         jo.put("getRequestURI", request.getRequestURI());
         jo.put("getContextPath", request.getContextPath());
@@ -124,5 +129,16 @@ public class TestController {
         return ResponseDataUtil.ok("上传售前技术支持文件信息成功", jo);
     }
 
+    @GetMapping("/test7")
+    public void test7(String czId, HttpServletResponse resp) throws IOException {
+        QrConfig config = new QrConfig(1024, 768);// 设置边距，既二维码和背景之间的边距
+        config.setMargin(3);// 设置前景色，既二维码颜色（青色）
+        config.setForeColor(Color.CYAN);// 设置背景色（灰色）
+        config.setBackColor(Color.GRAY);
+        config.setRatio(1);
+        QrCodeUtil.generate("http://ruixing.iypic.com/welcome/" + RandomUtil.randomNumbers(10) + czId, config, ImgUtil.IMAGE_TYPE_PNG, resp.getOutputStream());// 生成二维码到文件，也可以到流
+        resp.getOutputStream().flush();
+        resp.getOutputStream().close();
+    }
 
 }

@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.extra.qrcode.QrCodeUtil;
 import cn.hutool.extra.qrcode.QrConfig;
+import com.alibaba.fastjson.JSONObject;
 import com.yintu.ruixing.guzhangzhenduan.CheZhanService;
 import com.yintu.ruixing.guzhangzhenduan.QuDuanInfoService;
 import com.yintu.ruixing.guzhangzhenduan.QuDuanInfoTypesPropertyService;
@@ -11,6 +12,7 @@ import com.yintu.ruixing.guzhangzhenduan.SkylightTimeService;
 import com.yintu.ruixing.jiejuefangan.PreSaleFileAuditorEntity;
 import com.yintu.ruixing.jiejuefangan.PreSaleFileAuditorService;
 import com.yintu.ruixing.xitongguanli.RoleEntity;
+import com.yintu.ruixing.xitongguanli.UserDao;
 import com.yintu.ruixing.xitongguanli.UserEntity;
 import com.yintu.ruixing.xitongguanli.UserService;
 import org.junit.jupiter.api.Test;
@@ -30,13 +32,11 @@ import java.util.List;
 class RuixingApplicationTests {
 
     @Autowired
-    private UserService userService;
+    private UserDao userDao;
     @Autowired
     private PreSaleFileAuditorService preSaleFileAuditorService;
     @Autowired
     private QuDuanInfoTypesPropertyService quDuanInfoTypesPropertyService;
-    @Autowired
-    private CheZhanService cheZhanService;
     @Autowired
     private QuDuanInfoService quDuanInfoService;
 
@@ -99,7 +99,7 @@ class RuixingApplicationTests {
         BeanUtils.copyProperties(userEntity1, userEntity2);
         System.out.println(userEntity2);
     }
-/*
+
 
     @Test
     void contextLoads6() {
@@ -112,7 +112,13 @@ class RuixingApplicationTests {
         QrCodeUtil.generate("https://hutool.cn/", 300, 300, FileUtil.file("d:/qrcode.jpg"));
 
     }
-*/
+
+    @Test
+    void contextLoads8() {
+        QuDuanInfoService quDuanInfoService = this.quDuanInfoService;
+        Object o = JSONObject.parseObject("", "111".getClass());
+        System.out.println(o.getClass());
+    }
 
 
 }
